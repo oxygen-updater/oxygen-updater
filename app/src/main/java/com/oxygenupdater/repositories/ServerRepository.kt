@@ -42,28 +42,23 @@ class ServerRepository constructor(
     val updateDataFlow
         get() = updateDataDao.getFlow()
 
-    suspend fun fetchUpdateData() {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
-
-        val data = performServerRequest {
-            serverApi.fetchUpdateData(
-                deviceId,
-                updateMethodId,
-                SystemVersionProperties.oxygenOSOTAVersion,
-                SystemVersionProperties.oxygenOSVersion,
-                SystemVersionProperties.osType,
-                SystemVersionProperties.fingerprint,
-                PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
-                BuildConfig.VERSION_NAME
-            )
-        }.let {
-            if (it?.shouldFetchMostRecent == true) performServerRequest {
-                serverApi.fetchMostRecentUpdateData(deviceId, updateMethodId)
-            } else it
-        }
-
-        if (data != null) updateDataDao.refresh(data)
+    suspend fun fetchUpdateData(deviceId: Long, methodId: Long) = performServerRequest {
+        serverApi.fetchUpdateData(
+            deviceId,
+            methodId,
+            SystemVersionProperties.oxygenOSOTAVersion,
+            SystemVersionProperties.oxygenOSVersion,
+            SystemVersionProperties.osType,
+            SystemVersionProperties.fingerprint,
+            PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
+            BuildConfig.VERSION_NAME
+        )
+    }.let {
+        if (it?.shouldFetchMostRecent == true) performServerRequest {
+            serverApi.fetchMostRecentUpdateData(deviceId, methodId)
+        } else it
+    }.let {
+        updateDataDao.refresh(it)
     }
 
     suspend fun fetchServerStatus() = performServerRequest { serverApi.fetchServerStatus() }.let { status ->

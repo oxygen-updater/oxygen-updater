@@ -86,7 +86,8 @@ fun NewsItemScreen(
     onLoadFinished: (NewsItem) -> Unit,
 ) {
     val (refreshing, data) = state
-    val item = rememberSaveable(data ?: return) { data }
+    // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
+    val item = rememberSaveable(data ?: return, key = data.id.toString()) { data }
 
     Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
         val adLoaded = remember { mutableStateOf(false) }

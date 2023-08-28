@@ -36,9 +36,9 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
     var unreadCount = mutableIntStateOf(flow.value.count { !it.read })
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        refreshingFlow.emit(true)
+        refreshingFlow.value = true
         flow.emit(serverRepository.fetchNews())
-        refreshingFlow.emit(false)
+        refreshingFlow.value = false
     }
 
     fun markAllRead() = viewModelScope.launch(Dispatchers.IO) {

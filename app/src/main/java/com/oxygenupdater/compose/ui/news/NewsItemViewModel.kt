@@ -28,9 +28,9 @@ class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewMo
     )
 
     fun refreshItem(id: Long) = viewModelScope.launch(Dispatchers.IO) {
-        refreshingFlow.emit(true)
+        refreshingFlow.value = true
         flow.emit(serverRepository.fetchNewsItem(id).also { NewsItemActivity.item = it })
-        refreshingFlow.emit(false)
+        refreshingFlow.value = false
     }
 
     fun markRead(item: NewsItem) = viewModelScope.launch(Dispatchers.IO) {

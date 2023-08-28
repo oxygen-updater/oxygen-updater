@@ -399,6 +399,7 @@ class MainActivity : BaseActivity() {
 
         LaunchedEffect(Unit) { // runs once every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()
+            updateViewModel.refreshIfNeeded()
         }
 
         val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable

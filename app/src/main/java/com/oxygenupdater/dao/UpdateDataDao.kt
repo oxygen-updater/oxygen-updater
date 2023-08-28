@@ -22,7 +22,7 @@ interface UpdateDataDao {
     fun getId(): Long?
 
     @Transaction
-    fun refresh(data: UpdateData) = if (data.id == getId()) update(data) else {
+    fun refresh(data: UpdateData?) = if (data == null) deleteAll() else if (data.id == getId()) update(data) else {
         deleteAll() // ensure there's only one row
         insert(data)
     }

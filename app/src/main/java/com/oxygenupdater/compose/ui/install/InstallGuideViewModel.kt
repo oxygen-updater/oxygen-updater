@@ -32,8 +32,8 @@ class InstallGuideViewModel(
     }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        refreshingFlow.emit(true)
+        refreshingFlow.value = true
         flow.emit(serverRepository.fetchInstallGuide() ?: listOf())
-        refreshingFlow.emit(false)
+        refreshingFlow.value = false
     }
 }

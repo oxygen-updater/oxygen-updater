@@ -41,12 +41,13 @@ fun UpdateScreen(
     logDownloadError: (Data) -> Unit,
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
-    val updateData = if (!refreshing && data != null) rememberSaveable(data) { data } else data
-    if (updateData == null) {
+    if (data == null) {
         ErrorState(stringResource(R.string.update_information_error_title), refresh)
         return@PullRefresh // skip the rest
     }
 
+    // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
+    val updateData = if (!refreshing) rememberSaveable(data, key = data.id.toString()) { data } else data
     val filename = updateData.filename
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable

@@ -32,8 +32,8 @@ class FaqViewModel(
     }
 
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
-        refreshingFlow.emit(true)
+        refreshingFlow.value = true
         flow.emit(serverRepository.fetchFaq() ?: listOf())
-        refreshingFlow.emit(false)
+        refreshingFlow.value = false
     }
 }
