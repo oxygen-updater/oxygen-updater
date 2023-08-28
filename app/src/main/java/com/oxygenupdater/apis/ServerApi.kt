@@ -1,6 +1,7 @@
 package com.oxygenupdater.apis
 
 import androidx.collection.ArrayMap
+import com.oxygenupdater.compose.ui.currentLanguage
 import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
@@ -29,12 +30,12 @@ interface ServerApi {
 
     @GET("flattenedFaq")
     suspend fun fetchFaq(
-        @Query("language") language: String = currentLocale.toLanguageTag(),
+        @Query("language") language: String = currentLanguage,
     ): Response<List<InAppFaq>>
 
     @GET("installGuide")
     suspend fun fetchInstallGuide(
-        @Query("language") language: String = currentLocale.toLanguageTag(),
+        @Query("language") language: String = currentLanguage,
     ): Response<List<InstallGuide>>
 
     @GET("devices/{filter}")
@@ -65,18 +66,18 @@ interface ServerApi {
     suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
-        @Query("language") language: String = currentLocale.toLanguageTag(),
+        @Query("language") language: String = currentLanguage,
     ): Response<List<ServerMessage>>
 
     @GET("updateMethods/{deviceId}")
     suspend fun fetchUpdateMethodsForDevice(
         @Path("deviceId") deviceId: Long,
-        @Query("language") language: String = currentLocale.toLanguageTag(),
+        @Query("language") language: String = currentLanguage,
     ): Response<List<UpdateMethod>>
 
     @GET("allUpdateMethods")
     suspend fun fetchAllUpdateMethods(
-        @Query("language") language: String = currentLocale.toLanguageTag(),
+        @Query("language") language: String = currentLanguage,
     ): Response<List<UpdateMethod>>
 
     @GET("news/{deviceId}/{updateMethodId}")

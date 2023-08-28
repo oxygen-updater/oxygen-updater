@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material3.placeholder
@@ -27,7 +28,10 @@ import kotlin.math.ceil
 
 // TODO(compose): switch to https://github.com/fornewid/placeholder
 @Suppress("DEPRECATION")
-fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else composed {
+fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else composed(debugInspectorInfo {
+    name = "withPlaceholder"
+    properties["refreshing"] = refreshing
+}) {
     placeholder(
         refreshing,
         shape = RoundedCornerShape(2.dp),
@@ -38,7 +42,11 @@ fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else c
 fun Modifier.animatedClickable(
     enabled: Boolean = true,
     onClick: (() -> Unit)?,
-) = if (!enabled || onClick == null) this else composed {
+) = if (!enabled || onClick == null) this else composed(debugInspectorInfo {
+    name = "animatedClickable"
+    properties["enabled"] = enabled
+    properties["onClick"] = onClick
+}) {
     var scale by remember { mutableFloatStateOf(1f) }
     val animatedScale by animateFloatAsState(
         scale, spring(dampingRatio = Spring.DampingRatioMediumBouncy),
