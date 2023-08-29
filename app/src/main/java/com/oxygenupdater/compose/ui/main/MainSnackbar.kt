@@ -1,21 +1,27 @@
 package com.oxygenupdater.compose.ui.main
 
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.R
 
 @Composable
 fun MainSnackbar(
-    snackbarHostState: SnackbarHostState,
     snackbarText: MutableState<Pair<Int, Int>?>,
     openPlayStorePage: () -> Unit,
     completeAppUpdate: () -> Unit,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    SnackbarHost(snackbarHostState, Modifier.statusBarsPadding())
+
     val data = snackbarText.value
     if (data == null) {
         snackbarHostState.currentSnackbarData?.dismiss()

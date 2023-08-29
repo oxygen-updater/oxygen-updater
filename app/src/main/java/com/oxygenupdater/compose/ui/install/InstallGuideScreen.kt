@@ -48,11 +48,12 @@ import com.oxygenupdater.models.InstallGuide
 
 @Composable
 fun InstallGuideScreen(
+    modifier: Modifier,
     state: RefreshAwareState<List<InstallGuide>>,
     showDownloadInstructions: Boolean,
     showAds: Boolean,
     bannerAdInit: (AdView) -> Unit,
-) = Column {
+) = Column(modifier) {
     if (showDownloadInstructions) {
         val bodyMedium = MaterialTheme.typography.bodyMedium
         Text(
@@ -71,15 +72,21 @@ fun InstallGuideScreen(
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
-    val adLoaded = remember { mutableStateOf(false) }
+    var adLoaded by remember { mutableStateOf(false) }
 
     LazyColumn(Modifier.weight(1f)) {
         itemsIndexed(list, key = { _, it -> it.id }) { index, it ->
-            InstallGuideItem(refreshing, it, index == lastIndex, adLoaded.value)
+            InstallGuideItem(refreshing, it, index == lastIndex, adLoaded)
         }
     }
 
-    if (showAds) BannerAd(BuildConfig.AD_BANNER_INSTALL_ID, adLoaded, bannerAdInit)
+    if (showAds) BannerAd(
+        BuildConfig.AD_BANNER_INSTALL_ID,
+        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+        if (adLoaded) Modifier.navigationBarsPadding() else Modifier,
+        adLoadListener { adLoaded = it },
+        bannerAdInit
+    )
 }
 
 @Composable
@@ -157,6 +164,7 @@ private fun InstallGuideItem(
 @Composable
 fun PreviewInstallGuideScreen() = PreviewAppTheme {
     InstallGuideScreen(
+        Modifier,
         RefreshAwareState(
             false, listOf(
                 InstallGuide(

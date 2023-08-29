@@ -5,11 +5,9 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.annotation.IntRange
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -46,12 +44,10 @@ abstract class SupportActionBarActivity(
     protected open fun scrollBehavior() = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     @Composable
-    protected open fun TopAppBar() = TopAppBar(scrollBehavior, {
-        onBackPressed()
-    }, stringResource(subtitleResId), false)
+    protected open fun TopAppBar() = TopAppBar(scrollBehavior, ::onBackPressed, stringResource(subtitleResId), false)
 
     @Composable
-    protected abstract fun Content()
+    protected abstract fun Content(modifier: Modifier)
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         setContent {
@@ -59,14 +55,11 @@ abstract class SupportActionBarActivity(
 
             AppTheme {
                 EdgeToEdge()
-                Scaffold(
-                    Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-                    topBar = { TopAppBar() },
-                    // Let children handle it, so that we can achieve "overlay" navbar
-                    contentWindowInsets = WindowInsets(0)
-                ) {
-                    Box(Modifier.padding(it)) {
-                        Content()
+                // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
+                Surface {
+                    Column {
+                        TopAppBar()
+                        Content(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection))
                     }
                 }
             }

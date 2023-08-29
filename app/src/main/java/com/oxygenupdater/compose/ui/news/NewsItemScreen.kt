@@ -27,21 +27,19 @@ import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Notes
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.ButtonDefaults.textButtonColors
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
@@ -73,11 +71,11 @@ import com.oxygenupdater.extensions.shareExternally
 import com.oxygenupdater.models.NewsItem
 import java.time.LocalDateTime
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Suppress("DEPRECATION")
 @Composable
 fun NewsItemScreen(
+    modifier: Modifier,
     state: RefreshAwareState<NewsItem?>,
-    scrollBehavior: TopAppBarScrollBehavior,
     webViewState: WebViewState,
     navigator: WebViewNavigator,
     showAds: Boolean,
@@ -89,8 +87,8 @@ fun NewsItemScreen(
     // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
     val item = rememberSaveable(data ?: return, key = data.id.toString()) { data }
 
-    Column(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)) {
-        val adLoaded = remember { mutableStateOf(false) }
+    Column(modifier) {
+        var adLoaded by remember { mutableStateOf(false) }
         Column(
             Modifier
                 .weight(1f)
@@ -99,14 +97,14 @@ fun NewsItemScreen(
             Buttons(item)
 
             var showDivider = false
-            val modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+            val paddingModifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
             val textModifier = Modifier.withPlaceholder(refreshing)
             val caption = MaterialTheme.typography.bodySmall
 
             item.subtitle?.let {
                 showDivider = true
                 IconText(
-                    modifier, textModifier,
+                    paddingModifier, textModifier,
                     icon = Icons.Rounded.Notes, text = it,
                     style = caption
                 )
@@ -115,7 +113,7 @@ fun NewsItemScreen(
             item.getRelativeTime()?.let {
                 showDivider = true
                 IconText(
-                    modifier, textModifier,
+                    paddingModifier, textModifier,
                     icon = Icons.Rounded.Schedule, text = it,
                     style = caption
                 )
@@ -125,12 +123,18 @@ fun NewsItemScreen(
             val language = if (currentLocale().language == "nl") "NL" else "EN"
             val theme = if (MaterialTheme.colorScheme.light) "Light" else "Dark"
             val url = "${item.apiUrl}/$language/$theme"
-            RefreshAwareWebView(refreshing, webViewState, navigator, url, showDivider, onError, adLoaded.value) {
+            RefreshAwareWebView(refreshing, webViewState, navigator, url, showDivider, onError, adLoaded) {
                 onLoadFinished(item)
             }
         }
 
-        if (showAds) BannerAd(BuildConfig.AD_BANNER_NEWS_ID, adLoaded, bannerAdInit)
+        if (showAds) BannerAd(
+            BuildConfig.AD_BANNER_NEWS_ID,
+            // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+            if (adLoaded) Modifier.navigationBarsPadding() else Modifier,
+            adLoadListener { adLoaded = it },
+            bannerAdInit
+        )
     }
 }
 
@@ -200,6 +204,7 @@ fun ColumnScope.ErrorSheet(
     }
 }
 
+@Suppress("DEPRECATION")
 @Composable
 private fun RefreshAwareWebView(
     refreshing: Boolean,
@@ -319,12 +324,13 @@ private fun NewsItem.getRelativeTime() = epochMilli?.let {
     }
 }?.toString()
 
-@OptIn(ExperimentalMaterial3Api::class)
+@Suppress("DEPRECATION")
 @PreviewThemes
 @Composable
 fun PreviewNewsItemScreen() = PreviewAppTheme {
     val date = LocalDateTime.now().toString()
     NewsItemScreen(
+        Modifier,
         RefreshAwareState(
             false, NewsItem(
                 1,
@@ -338,7 +344,6 @@ fun PreviewNewsItemScreen() = PreviewAppTheme {
                 read = false,
             )
         ),
-        scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
         webViewState = rememberSaveableWebViewState(),
         navigator = rememberWebViewNavigator(),
         showAds = true,

@@ -170,9 +170,7 @@ fun OnboardingScreen(
             contribute, R.string.contribute_agree,
             Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
         ) {
-            IconButton({
-                sheetType = SheetType.Contributor
-            }) {
+            IconButton({ sheetType = SheetType.Contributor }) {
                 Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
             }
         }

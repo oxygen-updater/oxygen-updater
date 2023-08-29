@@ -6,7 +6,6 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MoreVert
@@ -17,9 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -39,7 +36,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -173,14 +169,9 @@ class MainActivity : BaseActivity() {
     @Volatile
     private var currentRoute: String? = null
 
-    private lateinit var navController: NavHostController
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun Content() {
-        navController = rememberNavController()
-        val sheetState = defaultModalBottomSheetState()
-
         val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
         LaunchedEffect(allDevices) {
             viewModel.deviceOsSpec = Utils.checkDeviceOsSpec(allDevices)
@@ -202,10 +193,6 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val startScreen = remember(startPage) {
-            screens.getOrNull(startPage) ?: Screen.Update
-        }
-
         val showDeviceWarningDialog = !PrefManager.getBoolean(PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
         val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, false)
         if (showDeviceWarningDialog) viewModel.deviceOsSpec?.let {
@@ -216,24 +203,12 @@ class MainActivity : BaseActivity() {
             IncorrectDeviceDialog(it)
         }
 
-        val snackbarHostState = remember { SnackbarHostState() }
-        MainSnackbar(
-            snackbarHostState,
-            viewModel.snackbarText,
-            openPlayStorePage = ::openPlayStorePage,
-            completeAppUpdate = viewModel::completeAppUpdate
-        )
-
         AppUpdateInfo(
             viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             viewModel.snackbarText,
             viewModel::unregisterAppUpdateListener,
-            requestUpdate = { launcher, info ->
-                viewModel.requestUpdate(launcher, info)
-            },
-            requestImmediateUpdate = { launcher, info ->
-                viewModel.requestImmediateAppUpdate(launcher, info)
-            },
+            requestUpdate = viewModel::requestUpdate,
+            requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
         )
 
         // Display the "No connection" banner if required
@@ -244,15 +219,16 @@ class MainActivity : BaseActivity() {
             viewModel.snackbarText.value = null
         }
 
-        val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
+        Column {
+            val startScreen = remember(startPage) { screens.getOrNull(startPage) ?: Screen.Update }
+            val initialSubtitle = startScreen.subtitle ?: stringResource(startScreen.labelResId)
+            var subtitle by remember { mutableStateOf(initialSubtitle) }
 
-        val initialSubtitle = startScreen.subtitle ?: stringResource(startScreen.labelResId)
-        var subtitle by remember { mutableStateOf(initialSubtitle) }
-        var showMarkAllRead by remember { mutableStateOf(false) }
-        var sheetType by rememberSheetType()
-
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        Scaffold(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection), topBar = {
+            val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
+            var showMarkAllRead by remember { mutableStateOf(false) }
+            var sheetType by rememberSheetType()
+            val navController = rememberNavController()
+            val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
             TopAppBar(scrollBehavior, {
                 navController.navigateWithDefaults(AboutRoute)
             }, subtitle) {
@@ -275,14 +251,72 @@ class MainActivity : BaseActivity() {
 
                     MainMenu(showMenu, {
                         showMenu = false
-                    }, showMarkAllRead, {
-                        newsListViewModel.markAllRead()
-                    }, showBecomeContributor, openContributorSheet = {
+                    }, showMarkAllRead, newsListViewModel::markAllRead, showBecomeContributor, openContributorSheet = {
                         sheetType = SheetType.Contributor
                     })
                 }
             }
-        }, bottomBar = {
+
+            FlexibleAppUpdateProgress(
+                viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
+                viewModel.snackbarText,
+            )
+
+            val hide = rememberCallback { sheetType = SheetType.None }
+
+            LaunchedEffect(Unit) { // run only on init
+                // Offer contribution to users from app versions below v2.4.0 and v5.10.1
+                if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
+                    sheetType = SheetType.Contributor
+                }
+            }
+
+            val sheetState = defaultModalBottomSheetState()
+            if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
+                when (sheetType) {
+                    SheetType.Contributor -> ContributorSheet(hide, true)
+                    SheetType.ServerMessages -> ServerMessagesSheet(serverMessages)
+                    else -> {}
+                }
+            }
+
+            val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
+            ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
+            ServerStatusBanner(serverStatus)
+
+            // NavHost can't preload other composables, so in order to get NewsList's unread count early,
+            // we're using the initial state here itself. State is refreshed only once the user visits that
+            // screen, so it's easy on the server too (no unnecessarily eager requests).
+            // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
+            val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
+            LaunchedEffect(Unit) { // run only on init
+                val unreadCount = newsListViewModel.unreadCount.intValue
+                Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
+            }
+
+            NavHost(
+                navController, startScreen.route,
+                Modifier
+                    .weight(1f)
+                    .nestedScroll(scrollBehavior.nestedScrollConnection)
+            ) {
+                updateScreen { subtitle = it }
+                newsListScreen(newsListState)
+                deviceScreen(allDevices)
+                aboutScreen()
+                settingsScreen(enabledDevices, updateMismatchStatus = {
+                    viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
+                }, openAboutScreen = {
+                    navController.navigateWithDefaults(AboutRoute)
+                })
+            }
+
+            // Ads should be shown if user hasn't bought the ad-free unlock
+            val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
+                PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+            ).value
+            if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
+
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 currentRoute = navBackStackEntry?.destination?.route
@@ -309,82 +343,27 @@ class MainActivity : BaseActivity() {
                     }, alwaysShowLabel = false)
                 }
             }
-        }, snackbarHost = {
-            SnackbarHost(snackbarHostState)
-        }) { innerPadding ->
-            // TODO(compose/perf): this causes children to recompose every single time on scroll (if scrollBehaviour is used)
-            //  Consider implementing this whole layout without using Scaffold and remove remember*Callback stuff.
-            Box(Modifier.padding(innerPadding)) {
-                val hide = rememberCallback { sheetType = SheetType.None }
 
-                LaunchedEffect(Unit) { // run only on init
-                    // Offer contribution to users from app versions below v2.4.0 and v5.10.1
-                    if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
-                        sheetType = SheetType.Contributor
-                    }
+            // This must be defined on the same level as NavHost, otherwise it won't work
+            // TODO(compose): use PredictiveBackHandler (can only be tested on Android 14). Animate sheet close
+            //  based on progress and delegate to NavHost's default implementation if it does nice things with predictive back.
+            //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
+            //  Adjust all other BackHandlers if required
+            BackHandler {
+                if (sheetState.isVisible) hide()
+                else navController.run {
+                    if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
+                    else if (!popBackStack()) finishAffinity() // nothing to back to => exit
                 }
-
-                if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
-                    when (sheetType) {
-                        SheetType.Contributor -> ContributorSheet(hide, true)
-                        SheetType.ServerMessages -> ServerMessagesSheet(serverMessages)
-                        else -> {}
-                    }
-                }
-
-                Column {
-                    val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
-                    ServerStatusDialogs(serverStatus.status) { openPlayStorePage() }
-                    ServerStatusBanner(serverStatus)
-
-                    // NavHost can't preload other composables, so in order to get NewsList's unread count early,
-                    // we're using the initial state here itself. State is refreshed only once the user visits that
-                    // screen, so it's easy on the server too (no unnecessarily eager requests).
-                    // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
-                    val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
-                    LaunchedEffect(Unit) { // run only on init
-                        val unreadCount = newsListViewModel.unreadCount.intValue
-                        Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
-                    }
-
-                    NavHost(navController, startScreen.route, Modifier.weight(1f)) {
-                        updateScreen { subtitle = it }
-                        newsListScreen(newsListState)
-                        deviceScreen(allDevices)
-                        aboutScreen()
-                        settingsScreen(enabledDevices, updateMismatchStatus = {
-                            viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
-                        })
-                    }
-
-                    // Ads should be shown if user hasn't bought the ad-free unlock
-                    val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                        PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
-                    ).value
-                    if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
-                }
-
-                // This must be defined on the same level as NavHost, otherwise it won't work
-                // We can safely put it outside Column because it's an inline composable
-                // TODO(compose): use PredictiveBackHandler (can only be tested on Android 14). Animate sheet close
-                //  based on progress and delegate to NavHost's default implementation if it does nice things with predictive back.
-                //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
-                //  Adjust all other BackHandlers if required
-                BackHandler {
-                    if (sheetState.isVisible) hide()
-                    else navController.run {
-                        if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
-                        else if (!popBackStack()) finishAffinity() // nothing to back to => exit
-                    }
-                }
-
-                // Gets placed below TopAppBar
-                FlexibleAppUpdateProgress(
-                    viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
-                    viewModel.snackbarText,
-                )
             }
         }
+
+        // Gets placed over TopAppBar
+        MainSnackbar(
+            viewModel.snackbarText,
+            openPlayStorePage = rememberCallback(::openPlayStorePage),
+            completeAppUpdate = rememberCallback(viewModel::completeAppUpdate)
+        )
     }
 
     private fun NavController.navigateWithDefaults(
@@ -451,6 +430,7 @@ class MainActivity : BaseActivity() {
     private fun NavGraphBuilder.settingsScreen(
         cachedEnabledDevices: List<Device>,
         updateMismatchStatus: () -> Unit,
+        openAboutScreen: () -> Unit,
     ) = composable(SettingsRoute) {
         LaunchedEffect(cachedEnabledDevices) {
             // Passthrough from MainViewModel to avoid sending a request again
@@ -517,9 +497,7 @@ class MainActivity : BaseActivity() {
                 this@MainActivity.getString(R.string.notification_no_notification_support),
                 Toast.LENGTH_LONG
             ).show()
-        }, adFreePrice, adFreeConfig, openAboutScreen = rememberCallback {
-            navController.navigateWithDefaults(AboutRoute)
-        })
+        }, adFreePrice, adFreeConfig, openAboutScreen = rememberCallback(openAboutScreen))
     }
 
     private val validatePurchaseTimer = Timer()
@@ -564,14 +542,16 @@ class MainActivity : BaseActivity() {
             this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG
         ).show()
 
+        lifecycle.addObserver(billingViewModel.lifecycleObserver)
+
         setContent {
             AppTheme {
                 EdgeToEdge()
-                Content()
+                Surface {
+                    Content()
+                }
             }
         }
-
-        lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         // TODO(root): move this to the proper place
         hasRootAccess {

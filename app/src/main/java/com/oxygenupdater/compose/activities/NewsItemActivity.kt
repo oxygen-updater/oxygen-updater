@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -123,12 +124,11 @@ class NewsItemActivity : SupportActionBarActivity(
             contentScale = ContentScale.Crop,
             colorFilter = if (imageUrl == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
         )
-    }, item?.title ?: stringResource(R.string.loading), item?.authorName ?: stringResource(R.string.summary_please_wait)) {
-        onBackPressed()
-    }
+    }, item?.title ?: stringResource(R.string.loading), item?.authorName ?: stringResource(R.string.summary_please_wait), ::onBackPressed)
 
+    @Suppress("DEPRECATION")
     @Composable
-    override fun Content() {
+    override fun Content(modifier: Modifier) {
         // Ads should be shown if user hasn't bought the ad-free unlock
         val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
             PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
@@ -160,11 +160,9 @@ class NewsItemActivity : SupportActionBarActivity(
                 }
             }
 
-            NewsItemScreen(state, scrollBehavior, webViewState, navigator, showAds, rememberTypedCallback {
+            NewsItemScreen(modifier, state, webViewState, navigator, showAds, rememberTypedCallback {
                 bannerAdView = it
-            }, rememberTypedCallback {
-                error = it
-            }, rememberTypedCallback(viewModel::markRead))
+            }, { error = it }, rememberTypedCallback(viewModel::markRead))
         }
     }
 

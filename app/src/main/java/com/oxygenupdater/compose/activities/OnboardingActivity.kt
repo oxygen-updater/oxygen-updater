@@ -3,13 +3,11 @@ package com.oxygenupdater.compose.activities
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -51,9 +49,7 @@ class OnboardingActivity : BaseActivity() {
     private val viewModel by viewModel<SettingsViewModel>()
 
     @OptIn(ExperimentalMaterial3Api::class)
-    override fun onCreate(
-        savedInstanceState: Bundle?,
-    ) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         viewModel.fetchEnabledDevices()
 
         val startPage = intent?.getIntExtra(
@@ -61,81 +57,82 @@ class OnboardingActivity : BaseActivity() {
         ) ?: MainActivity.PAGE_UPDATE
 
         setContent {
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            val enabledDevices = state.enabledDevices
-            val deviceName = viewModel.deviceName ?: remember(enabledDevices) {
-                enabledDevices.find {
-                    it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-                }?.name
-            }
-
             AppTheme {
                 EdgeToEdge()
 
-                val context = LocalContext.current
-                val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-                Scaffold(Modifier.navigationBarsPadding(), topBar = {
-                    CollapsingAppBar(scrollBehavior, image = { modifier ->
-                        AsyncImage(
-                            deviceName?.let {
-                                val density = LocalDensity.current
-                                remember(it, maxWidth) {
-                                    ImageRequest.Builder(context)
-                                        .data(Device.constructImageUrl(it))
-                                        .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
-                                        .build()
-                                }
-                            },
-                            stringResource(R.string.device_information_image_description), modifier,
-                            placeholder = rememberVectorPainter(CustomIcons.Image),
-                            error = rememberVectorPainter(CustomIcons.LogoNotification),
-                            contentScale = ContentScale.Crop,
-                            colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
-                        )
-                    }, title = stringResource(R.string.onboarding_title))
-                }) { innerPadding ->
-                    HorizontalDivider()
-                    Box(Modifier.padding(innerPadding)) {
-                        OnboardingScreen(scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
-                            viewModel::saveSelectedDevice
-                        ), viewModel.initialMethodIndex, rememberTypedCallback(
-                            viewModel::saveSelectedMethod
-                        ), startApp = rememberTypedCallback(enabledDevices) { (contribute, submitLogs) ->
-                            if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
-                                // Subscribe to notifications for the newly selected device and update method
-                                viewModel.subscribeToNotificationTopics(enabledDevices)
-                            } else Toast.makeText(
-                                context,
-                                context.getString(R.string.notification_no_notification_support),
-                                Toast.LENGTH_LONG
-                            ).show()
+                // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
+                Surface {
+                    Column(Modifier.navigationBarsPadding()) {
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+                        val enabledDevices = state.enabledDevices
+                        val deviceName = viewModel.deviceName ?: remember(enabledDevices) {
+                            enabledDevices.find {
+                                it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+                            }?.name
+                        }
 
-                            if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-                                PrefManager.putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, submitLogs)
-                                PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
-                                (application as OxygenUpdater?)?.setupCrashReporting(submitLogs)
+                        val context = LocalContext.current
+                        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+                        CollapsingAppBar(scrollBehavior, image = { modifier ->
+                            AsyncImage(
+                                deviceName?.let {
+                                    val density = LocalDensity.current
+                                    remember(it, maxWidth) {
+                                        ImageRequest.Builder(context)
+                                            .data(Device.constructImageUrl(it))
+                                            .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
+                                            .build()
+                                    }
+                                },
+                                stringResource(R.string.device_information_image_description), modifier,
+                                placeholder = rememberVectorPainter(CustomIcons.Image),
+                                error = rememberVectorPainter(CustomIcons.LogoNotification),
+                                contentScale = ContentScale.Crop,
+                                colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
+                            )
+                        }, title = stringResource(R.string.onboarding_title))
 
-                                // If user enables OTA contribution, check if device is rooted and ask for root permission
-                                if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
-                                    Toast.makeText(context, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
-                                    hasRootAccess {
-                                        PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, true)
+                        OnboardingScreen(
+                            scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
+                                viewModel::saveSelectedDevice
+                            ), viewModel.initialMethodIndex, rememberTypedCallback(
+                                viewModel::saveSelectedMethod
+                            ), startApp = rememberTypedCallback(enabledDevices) { (contribute, submitLogs) ->
+                                if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
+                                    // Subscribe to notifications for the newly selected device and update method
+                                    viewModel.subscribeToNotificationTopics(enabledDevices)
+                                } else Toast.makeText(
+                                    context,
+                                    context.getString(R.string.notification_no_notification_support),
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                if (PrefManager.checkIfSetupScreenIsFilledIn()) {
+                                    PrefManager.putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, submitLogs)
+                                    PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+                                    (application as OxygenUpdater?)?.setupCrashReporting(submitLogs)
+
+                                    // If user enables OTA contribution, check if device is rooted and ask for root permission
+                                    if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
+                                        Toast.makeText(context, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+                                        hasRootAccess {
+                                            PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, true)
+                                            startMainActivity(startPage)
+                                            finish()
+                                        }
+                                    } else {
+                                        // Skip shell creation and thus don't show root permission prompt
+                                        PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
                                         startMainActivity(startPage)
                                         finish()
                                     }
                                 } else {
-                                    // Skip shell creation and thus don't show root permission prompt
-                                    PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
-                                    startMainActivity(startPage)
-                                    finish()
+                                    val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
+                                    val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+                                    logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
+                                    Toast.makeText(context, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
                                 }
-                            } else {
-                                val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-                                val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
-                                logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
-                                Toast.makeText(context, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
-                            }
-                        })
+                            })
                     }
                 }
             }

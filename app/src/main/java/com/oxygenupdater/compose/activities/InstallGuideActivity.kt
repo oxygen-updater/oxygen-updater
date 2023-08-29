@@ -2,11 +2,11 @@ package com.oxygenupdater.compose.activities
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.PullRefresh
-import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.install.InstallGuideScreen
 import com.oxygenupdater.compose.ui.install.InstallGuideViewModel
@@ -30,7 +30,7 @@ class InstallGuideActivity : SupportActionBarActivity(
     private var bannerAdView: AdView? = null
 
     @Composable
-    override fun Content() {
+    override fun Content(modifier: Modifier) {
         val state by viewModel.state.collectAsStateWithLifecycle()
 
         // Ads should be shown if user hasn't bought the ad-free unlock
@@ -38,8 +38,8 @@ class InstallGuideActivity : SupportActionBarActivity(
             PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
         ).value
 
-        PullRefresh(state, rememberTypedCallback { it.isEmpty() }, rememberCallback(viewModel::refresh)) {
-            InstallGuideScreen(state, showDownloadInstructions, showAds, rememberTypedCallback {
+        PullRefresh(state, { it.isEmpty() }, viewModel::refresh) {
+            InstallGuideScreen(modifier, state, showDownloadInstructions, showAds, rememberTypedCallback {
                 bannerAdView = it
             })
         }

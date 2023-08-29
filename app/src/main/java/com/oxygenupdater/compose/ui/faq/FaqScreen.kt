@@ -42,14 +42,15 @@ import com.oxygenupdater.models.InAppFaq
 
 @Composable
 fun FaqScreen(
+    modifier: Modifier,
     state: RefreshAwareState<List<InAppFaq>>,
     showAds: Boolean,
     bannerAdInit: (AdView) -> Unit,
-) = Column {
+) = Column(modifier) {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
-    val adLoaded = remember { mutableStateOf(false) }
+    var adLoaded by remember { mutableStateOf(false) }
 
     LazyColumn(Modifier.weight(1f)) {
         itemsIndexed(
@@ -61,11 +62,17 @@ fun FaqScreen(
             },
             contentType = { _, it -> it.type },
         ) { index, it ->
-            FaqItem(refreshing, it, index == lastIndex, adLoaded.value)
+            FaqItem(refreshing, it, index == lastIndex, adLoaded)
         }
     }
 
-    if (showAds) BannerAd(BuildConfig.AD_BANNER_INSTALL_ID, adLoaded, bannerAdInit)
+    if (showAds) BannerAd(
+        BuildConfig.AD_BANNER_FAQ_ID,
+        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+        if (adLoaded) Modifier.navigationBarsPadding() else Modifier,
+        adLoadListener { adLoaded = it },
+        bannerAdInit
+    )
 }
 
 @Composable
@@ -127,6 +134,7 @@ private fun FaqItem(
 @Composable
 fun PreviewFaqScreen() = PreviewAppTheme {
     FaqScreen(
+        Modifier,
         RefreshAwareState(
             false, listOf(
                 InAppFaq(
