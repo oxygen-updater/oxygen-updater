@@ -10,8 +10,6 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,21 +20,22 @@ import androidx.compose.ui.res.stringResource
 @Composable
 @SuppressLint("ModifierParameter")
 fun CheckboxText(
-    checked: MutableState<Boolean> = remember { mutableStateOf(true) },
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     @StringRes textResId: Int,
     modifier: Modifier = Modifier, textModifier: Modifier = Modifier,
     textColor: Color = Color.Unspecified,
     content: @Composable (RowScope.() -> Unit)? = null,
 ) = Row(modifier, verticalAlignment = Alignment.CenterVertically) {
     val interactionSource = remember { MutableInteractionSource() }
-    Checkbox(checked.value, { checked.value = it }, interactionSource = interactionSource)
+    Checkbox(checked, onCheckedChange, interactionSource = interactionSource)
 
     Text(
         stringResource(textResId),
         textModifier
             .weight(1f)
             .clickable(interactionSource, null) {
-                checked.value = !checked.value
+                onCheckedChange(!checked)
             },
         color = textColor,
         style = MaterialTheme.typography.bodySmall

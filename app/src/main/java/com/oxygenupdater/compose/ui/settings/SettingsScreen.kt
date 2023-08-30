@@ -37,7 +37,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -116,7 +115,7 @@ fun SettingsScreen(
 
     val selectedLocale = currentLocale()
 
-    val advancedMode = remember {
+    var advancedMode by remember {
         mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
     }
 
@@ -151,7 +150,7 @@ fun SettingsScreen(
 
             SheetType.AdvancedMode -> AdvancedModeSheet(hide) {
                 putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
-                advancedMode.value = it
+                advancedMode = it
             }
 
             else -> {}
@@ -233,15 +232,19 @@ fun SettingsScreen(
         //region Advanced
         Header(R.string.preference_header_advanced)
 
-        SwitchItem(
-            PrefManager.PROPERTY_ADVANCED_MODE, advancedMode,
-            Icons.Rounded.LockOpen, R.string.settings_advanced_mode
-        ) {
+        SwitchItem(advancedMode, {
+            advancedMode = it
+            putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
+        }, Icons.Rounded.LockOpen, R.string.settings_advanced_mode) {
             sheetType = SheetType.AdvancedMode
         }
 
-        SwitchItem(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, remember {
+        var shareLogs by remember {
             mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true))
+        }
+        SwitchItem(shareLogs, {
+            shareLogs = it
+            putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, it)
         }, Icons.Rounded.TrackChanges, R.string.settings_upload_logs)
         //endregion
 
@@ -317,27 +320,26 @@ private fun Notifications() {
 
 @Composable
 private fun SwitchItem(
-    key: String,
-    checked: MutableState<Boolean>,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     icon: ImageVector,
     @StringRes titleResId: Int,
     showWarning: (() -> Unit)? = null,
 ) {
-    val onCheckedChange by rememberUpdatedState<(Boolean) -> Unit> {
+    val checkedChange by rememberUpdatedState<(Boolean) -> Unit> {
         // Handoff to BottomSheet if necessary, pref will update based on user choice (Cancel/Enable)
         if (it && showWarning != null) showWarning() else {
-            checked.value = it
-            putBoolean(key, it)
+            onCheckedChange(it)
         }
     }
 
-    Item(icon, titleResId, stringResource(if (checked.value) R.string.summary_on else R.string.summary_off), content = {
-        Switch(checked.value, onCheckedChange, thumbContent = {
-            if (!checked.value) return@Switch
+    Item(icon, titleResId, stringResource(if (checked) R.string.summary_on else R.string.summary_off), content = {
+        Switch(checked, checkedChange, thumbContent = {
+            if (!checked) return@Switch
             Icon(Icons.Rounded.Done, null, Modifier.size(SwitchDefaults.IconSize))
         })
     }) {
-        onCheckedChange(!checked.value)
+        checkedChange(!checked)
     }
 }
 

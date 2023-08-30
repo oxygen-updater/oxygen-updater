@@ -7,7 +7,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,23 +14,22 @@ import com.oxygenupdater.R
 
 @Composable
 fun MainSnackbar(
-    snackbarText: MutableState<Pair<Int, Int>?>,
+    snackbarText: Pair<Int, Int>?,
     openPlayStorePage: () -> Unit,
     completeAppUpdate: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     SnackbarHost(snackbarHostState, Modifier.statusBarsPadding())
 
-    val data = snackbarText.value
-    if (data == null) {
+    if (snackbarText == null) {
         snackbarHostState.currentSnackbarData?.dismiss()
         return
     }
 
-    val actionResId = data.second
-    val message = stringResource(data.first)
+    val actionResId = snackbarText.second
+    val message = stringResource(snackbarText.first)
     val action = stringResource(actionResId)
-    LaunchedEffect(data) {
+    LaunchedEffect(snackbarText) {
         val result = snackbarHostState.showSnackbar(
             message, action, false, SnackbarDuration.Indefinite
         )

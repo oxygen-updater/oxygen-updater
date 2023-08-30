@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.R
@@ -17,37 +16,29 @@ import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 
 @Composable
 fun AlertDialog(
-    show: MutableState<Boolean>,
+    action: (Boolean) -> Unit,
     @StringRes titleResId: Int,
     text: String,
-    content: (@Composable ColumnScope.() -> Unit)? = null,
     confirmIconAndResId: Pair<ImageVector, Int>? = null,
-    action: ((Boolean) -> Unit)? = null,
-) {
-    if (!show.value) return
-
-    AlertDialog({
-        show.value = false
-        action?.invoke(false)
-    }, confirmButton = confirm@{
-        val (icon, resId) = confirmIconAndResId ?: return@confirm
-        OutlinedIconButton({
-            show.value = false
-            action?.invoke(true)
-        }, icon, resId)
-    }, dismissButton = {
-        TextButton({
-            show.value = false
-            action?.invoke(false)
-        }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
-            Text(stringResource(R.string.download_error_close))
-        }
-    }, title = {
-        Text(stringResource(titleResId))
-    }, text = {
-        if (content != null) Column {
-            Text(text)
-            content()
-        } else Text(text)
-    }, properties = NonCancellableDialog)
-}
+    content: @Composable() (ColumnScope.() -> Unit)? = null,
+) = AlertDialog({
+    action.invoke(false)
+}, confirmButton = confirm@{
+    val (icon, resId) = confirmIconAndResId ?: return@confirm
+    OutlinedIconButton({
+        action.invoke(true)
+    }, icon, resId)
+}, dismissButton = {
+    TextButton({
+        action.invoke(false)
+    }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
+        Text(stringResource(R.string.download_error_close))
+    }
+}, title = {
+    Text(stringResource(titleResId))
+}, text = {
+    if (content != null) Column {
+        Text(text)
+        content()
+    } else Text(text)
+}, properties = NonCancellableDialog)

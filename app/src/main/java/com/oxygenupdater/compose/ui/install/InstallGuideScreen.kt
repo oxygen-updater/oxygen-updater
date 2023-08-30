@@ -40,6 +40,7 @@ import com.oxygenupdater.compose.ui.common.BannerAd
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.ListItemTextIndent
 import com.oxygenupdater.compose.ui.common.RichText
+import com.oxygenupdater.compose.ui.common.adLoadListener
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme

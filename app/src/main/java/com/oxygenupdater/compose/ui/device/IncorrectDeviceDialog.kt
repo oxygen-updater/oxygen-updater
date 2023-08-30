@@ -3,8 +3,10 @@ package com.oxygenupdater.compose.ui.device
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -17,25 +19,22 @@ import com.oxygenupdater.internal.settings.PrefManager
 
 @Composable
 fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
-    val ignore = remember { mutableStateOf(false) }
-    AlertDialog(
-        remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) },
-        titleResId = R.string.incorrect_device_warning_title,
-        text = stringResource(
-            R.string.incorrect_device_warning_message,
-            mismatchStatus.second,
-            mismatchStatus.third
-        ),
-        content = {
-            CheckboxText(
-                ignore,
-                R.string.device_warning_checkbox_title,
-                Modifier.offset((-12).dp), // bring in line with Text
-                textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
-            )
+    var ignore by remember { mutableStateOf(false) }
+    var show by remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) }
+    if (show) AlertDialog(
+        {
+            PrefManager.putBoolean(PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, ignore)
+            show = false
         },
+        R.string.incorrect_device_warning_title,
+        stringResource(R.string.incorrect_device_warning_message, mismatchStatus.second, mismatchStatus.third),
     ) {
-        PrefManager.putBoolean(PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, ignore.value)
+        CheckboxText(
+            ignore, { ignore = it },
+            R.string.device_warning_checkbox_title,
+            Modifier.offset((-12).dp), // bring in line with Text
+            textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
+        )
     }
 }
 

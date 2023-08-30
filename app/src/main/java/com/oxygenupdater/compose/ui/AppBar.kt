@@ -108,17 +108,15 @@ fun TopAppBar(
         if (actions != null) actions()
     }, colors = colors, scrollBehavior = scrollBehavior)
 
-    // Perf: reduce recompositions by mutating only on true/false
-    val showDivider by remember {
+    // Perf: reduce recompositions by mutating only on value
+    val dividerAlpha by remember {
         derivedStateOf(structuralEqualityPolicy()) {
-            scrollBehavior.state.collapsedFraction != 1f
+            if (scrollBehavior.state.collapsedFraction != 1f) 1f else 0f
         }
     }
 
     // Perf: `if (showDivider) ItemDivider()` causes recomposition; we avoid that by "hiding" via graphicsLayer alpha
-    ItemDivider(Modifier.graphicsLayer {
-        alpha = (if (showDivider) 1f else 0f)
-    })
+    ItemDivider(Modifier.graphicsLayer { alpha = dividerAlpha })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

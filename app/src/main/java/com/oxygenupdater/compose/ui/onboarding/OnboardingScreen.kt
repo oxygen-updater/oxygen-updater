@@ -164,10 +164,10 @@ fun OnboardingScreen(
             style = typography.bodySmall
         )
 
-        val contribute = remember { mutableStateOf(true) }
+        var contribute by remember { mutableStateOf(true) }
         val runningInPreview = LocalInspectionMode.current
         if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) CheckboxText(
-            contribute, R.string.contribute_agree,
+            contribute, { contribute = it }, R.string.contribute_agree,
             Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
         ) {
             IconButton({ sheetType = SheetType.Contributor }) {
@@ -175,13 +175,13 @@ fun OnboardingScreen(
             }
         }
 
-        val submitLogs = remember { mutableStateOf(true) }
+        var submitLogs by remember { mutableStateOf(true) }
         CheckboxText(
-            submitLogs, R.string.settings_upload_logs,
+            submitLogs, { submitLogs = it }, R.string.settings_upload_logs,
             Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
         ) {
             OutlinedIconButton({
-                startApp(contribute.value to submitLogs.value)
+                startApp(contribute to submitLogs)
             }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
         }
     }

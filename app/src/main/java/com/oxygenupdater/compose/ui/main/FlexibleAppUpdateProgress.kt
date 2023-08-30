@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.google.android.play.core.install.InstallState
@@ -14,14 +13,15 @@ import com.google.android.play.core.install.model.InstallStatus
 @Composable
 fun FlexibleAppUpdateProgress(
     state: InstallState?,
-    snackbarText: MutableState<Pair<Int, Int>?>,
+    snackbarMessageId: () -> Int?, // deferred read
+    updateSnackbarText: (Pair<Int, Int>?) -> Unit,
 ) {
     val status = state?.installStatus() ?: return
     if (status == InstallStatus.DOWNLOADED) {
-        snackbarText.value = AppUpdateDownloadedSnackbarData
-    } else if (snackbarText.value?.first == AppUpdateDownloadedSnackbarData.first) {
+        updateSnackbarText(AppUpdateDownloadedSnackbarData)
+    } else if (snackbarMessageId() == AppUpdateDownloadedSnackbarData.first) {
         // Dismiss only this snackbar
-        snackbarText.value = null
+        updateSnackbarText(null)
     }
 
     if (status == InstallStatus.PENDING) LinearProgressIndicator(Modifier.fillMaxWidth())

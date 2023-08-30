@@ -15,8 +15,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -51,8 +53,8 @@ fun ColumnScope.ContributorSheet(
         return // don't show enrollment UI
     }
 
-    val contribute = remember { mutableStateOf(true) }
-    CheckboxText(contribute, R.string.contribute_agree, Modifier.padding(end = 16.dp))
+    var contribute by remember { mutableStateOf(true) }
+    CheckboxText(contribute, { contribute = it }, R.string.contribute_agree, Modifier.padding(end = 16.dp))
 
     Row(
         Modifier
@@ -71,7 +73,7 @@ fun ColumnScope.ContributorSheet(
 
         val context = LocalContext.current
         OutlinedIconButton({
-            if (contribute.value) hasRootAccess {
+            if (contribute) hasRootAccess {
                 if (it) {
                     ContributorUtils.flushSettings(context, true)
                     hide()

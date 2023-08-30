@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -203,9 +204,14 @@ class MainActivity : BaseActivity() {
             IncorrectDeviceDialog(it)
         }
 
+        var snackbarText by remember {
+            // Referential equality because we're reusing static Pairs
+            mutableStateOf<Pair<Int, Int>?>(null, referentialEqualityPolicy())
+        }
         AppUpdateInfo(
             viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
-            viewModel.snackbarText,
+            { snackbarText?.first },
+            { snackbarText = it },
             viewModel::unregisterAppUpdateListener,
             requestUpdate = viewModel::requestUpdate,
             requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
@@ -213,10 +219,10 @@ class MainActivity : BaseActivity() {
 
         // Display the "No connection" banner if required
         val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.observeAsState(true)
-        if (!isNetworkAvailable) viewModel.snackbarText.value = NoConnectionSnackbarData
-        else if (viewModel.snackbarText.value?.first == NoConnectionSnackbarData.first) {
+        if (!isNetworkAvailable) snackbarText = NoConnectionSnackbarData
+        else if (snackbarText?.first == NoConnectionSnackbarData.first) {
             // Dismiss only this snackbar
-            viewModel.snackbarText.value = null
+            snackbarText = null
         }
 
         Column {
@@ -257,10 +263,9 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            FlexibleAppUpdateProgress(
-                viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
-                viewModel.snackbarText,
-            )
+            FlexibleAppUpdateProgress(viewModel.appUpdateStatus.collectAsStateWithLifecycle().value, {
+                snackbarText?.first
+            }) { snackbarText = it }
 
             val hide = rememberCallback { sheetType = SheetType.None }
 
@@ -360,7 +365,7 @@ class MainActivity : BaseActivity() {
 
         // Gets placed over TopAppBar
         MainSnackbar(
-            viewModel.snackbarText,
+            snackbarText,
             openPlayStorePage = rememberCallback(::openPlayStorePage),
             completeAppUpdate = rememberCallback(viewModel::completeAppUpdate)
         )
