@@ -54,6 +54,7 @@ import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Incremental
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.internal.DeviceInformationData
@@ -66,6 +67,7 @@ import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
+import java.text.NumberFormat
 import kotlin.math.roundToLong
 
 fun defaultDeviceName() = "$deviceManufacturer $deviceName"
@@ -246,11 +248,22 @@ private fun DeviceHardwareInfo() {
         DeviceInformationData.soc,
     )
 
-    if (cpuFrequency != null) Item(
-        Icons.Rounded.PermDeviceInformation,
-        R.string.device_information_cpu_frequency,
-        stringResource(R.string.device_information_gigahertz, cpuFrequency),
-    )
+    if (cpuFrequency != null) {
+        val locale = currentLocale()
+        // Format according to locale (decimal vs comma)
+        val formatted = remember(locale) {
+            try {
+                NumberFormat.getInstance(locale).format(cpuFrequency)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+        }
+        if (formatted != null) Item(
+            Icons.Rounded.PermDeviceInformation,
+            R.string.device_information_cpu_frequency,
+            stringResource(R.string.device_information_gigahertz, formatted),
+        )
+    }
 
     // Serial number (Android 7.1.2 and lower only)
     if (serialNumber != null) Item(

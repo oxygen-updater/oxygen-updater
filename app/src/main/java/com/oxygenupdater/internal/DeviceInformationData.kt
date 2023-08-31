@@ -47,8 +47,8 @@ object DeviceInformationData {
             val lastCpuFreq = cpuFreq(lastCpuIndex)
             // Choose higher frequency of the two
             if (firstCpuFreq >= lastCpuFreq) firstCpuFreq else lastCpuFreq
-        }).let {
-            if (it != BigDecimal.ZERO) it.toString() else null
+        }).takeIf {
+            it != BigDecimal.ZERO
         }
     } catch (e: Exception) {
         logVerbose("DeviceInformationData", "CPU Frequency information is not available", e)
