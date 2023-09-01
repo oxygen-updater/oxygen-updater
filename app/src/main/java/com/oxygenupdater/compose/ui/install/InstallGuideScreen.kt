@@ -55,27 +55,27 @@ fun InstallGuideScreen(
     showAds: Boolean,
     bannerAdInit: (AdView) -> Unit,
 ) = Column(modifier) {
-    if (showDownloadInstructions) {
-        val bodyMedium = MaterialTheme.typography.bodyMedium
-        Text(
-            AnnotatedString(
-                stringResource(R.string.install_guide_download_instructions),
-                bodyMedium.toSpanStyle(),
-                bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
-            ),
-            Modifier.padding(16.dp),
-            MaterialTheme.colorScheme.onSurfaceVariant,
-            style = bodyMedium
-        )
-        ItemDivider()
-    }
-
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
     var adLoaded by remember { mutableStateOf(false) }
 
     LazyColumn(Modifier.weight(1f)) {
+        if (showDownloadInstructions) item {
+            val bodyMedium = MaterialTheme.typography.bodyMedium
+            Text(
+                AnnotatedString(
+                    stringResource(R.string.install_guide_download_instructions),
+                    bodyMedium.toSpanStyle(),
+                    bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+                ),
+                Modifier.padding(16.dp),
+                MaterialTheme.colorScheme.onSurfaceVariant,
+                style = bodyMedium
+            )
+            ItemDivider()
+        }
+
         itemsIndexed(list, key = { _, it -> it.id }) { index, it ->
             InstallGuideItem(refreshing, it, index == lastIndex, adLoaded)
         }
