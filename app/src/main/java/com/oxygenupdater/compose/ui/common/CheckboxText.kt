@@ -34,9 +34,7 @@ fun CheckboxText(
         stringResource(textResId),
         textModifier
             .weight(1f)
-            .clickable(interactionSource, null) {
-                onCheckedChange(!checked)
-            },
+            .clickable(interactionSource, null) { onCheckedChange(!checked) },
         color = textColor,
         style = MaterialTheme.typography.bodySmall
     )

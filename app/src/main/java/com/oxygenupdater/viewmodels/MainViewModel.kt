@@ -8,7 +8,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
@@ -47,6 +46,7 @@ import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
+import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.workers.DIRECTORY_ROOT
 import com.oxygenupdater.workers.DownloadWorker
 import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME
@@ -97,9 +97,6 @@ class MainViewModel(
 
     private val appUpdateStatusFlow = MutableStateFlow<InstallState?>(null)
     val appUpdateStatus = appUpdateStatusFlow.asStateFlow()
-
-    // Referential equality because we're reusing static Pairs
-    val snackbarText = mutableStateOf<Pair<Int, Int>?>(null, referentialEqualityPolicy())
 
     /** Ensure init is placed after all `*Flow` declarations */
     init {
@@ -165,7 +162,10 @@ class MainViewModel(
     )
 
     private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.IO) {
-        deviceFlow.emit(serverRepository.fetchDevices(DeviceRequestFilter.All) ?: listOf())
+        val response = serverRepository.fetchDevices(DeviceRequestFilter.All) ?: listOf()
+        deviceOsSpec = Utils.checkDeviceOsSpec(response)
+        deviceMismatch = Utils.checkDeviceMismatch(response)
+        deviceFlow.emit(response)
     }
 
     private fun fetchServerMessages() = viewModelScope.launch(Dispatchers.IO) {

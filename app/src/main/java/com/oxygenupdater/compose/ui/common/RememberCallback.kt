@@ -5,9 +5,11 @@ import androidx.compose.runtime.DisallowComposableCalls
 import androidx.compose.runtime.remember
 
 /**
- * `Scaffold`'s `innerPadding` with `TopAppBar.scrollBehaviour` causes a recompose
- * for as long as `TopAppBar` is collapsing, meaning Screen composables are not skipped
- * because lambdas are recreated each time. We "fix" this by remembering lambdas.
+ * Lambdas that have references to unstable objects are not memoized by Compose,
+ * even if those objects are `Context`, `ViewModel`, and other things that remain
+ * unchanged throughout the composable's lifecycle.
+ *
+ * We need to explicitly remember them to avoid unnecessarily recomposing children.
  */
 @Composable
 fun rememberCallback(
@@ -15,12 +17,25 @@ fun rememberCallback(
 ) = remember { callback }
 
 @Composable
+fun rememberCallback(
+    key1: Any?,
+    callback: @DisallowComposableCalls () -> Unit,
+) = remember(key1) { callback }
+
+@Composable
+fun rememberCallback(
+    key1: Any?,
+    key2: Any?,
+    callback: @DisallowComposableCalls () -> Unit,
+) = remember(key1, key2) { callback }
+
+@Composable
 fun <T, R> rememberTypedCallback(
     callback: @DisallowComposableCalls (T) -> R,
 ) = remember { callback }
 
 @Composable
 fun <T, R> rememberTypedCallback(
-    vararg keys: Any?,
+    key1: Any?,
     callback: @DisallowComposableCalls (T) -> R,
-) = remember(keys) { callback }
+) = remember(key1) { callback }

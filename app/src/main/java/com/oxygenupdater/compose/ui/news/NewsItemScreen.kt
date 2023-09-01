@@ -34,7 +34,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -62,6 +61,7 @@ import com.oxygenupdater.compose.ui.common.IconText
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.adLoadListener
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
@@ -89,7 +89,7 @@ fun NewsItemScreen(
     val item = rememberSaveable(data ?: return, key = data.id.toString()) { data }
 
     Column(modifier) {
-        var adLoaded by remember { mutableStateOf(false) }
+        var adLoaded by rememberSaveableState("adLoaded", false)
         Column(
             Modifier
                 .weight(1f)

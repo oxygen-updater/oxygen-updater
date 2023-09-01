@@ -4,16 +4,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
@@ -22,7 +17,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
@@ -32,7 +29,6 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -49,8 +45,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.icons.Announcement
-import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.TopAppBar
 import com.oxygenupdater.compose.ui.about.AboutScreen
@@ -61,12 +55,6 @@ import com.oxygenupdater.compose.ui.device.DeviceScreen
 import com.oxygenupdater.compose.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.compose.ui.device.UnsupportedDeviceOsSpecDialog
 import com.oxygenupdater.compose.ui.device.defaultDeviceName
-import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
-import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
-import com.oxygenupdater.compose.ui.dialogs.ServerMessagesSheet
-import com.oxygenupdater.compose.ui.dialogs.SheetType
-import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
-import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.main.AboutRoute
 import com.oxygenupdater.compose.ui.main.AppUpdateInfo
 import com.oxygenupdater.compose.ui.main.DeviceRoute
@@ -173,17 +161,12 @@ class MainActivity : BaseActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun Content() {
-        val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
-        LaunchedEffect(allDevices) {
-            viewModel.deviceOsSpec = Utils.checkDeviceOsSpec(allDevices)
-            viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
-        }
-
         val showDeviceBadge = viewModel.deviceOsSpec.let {
             it != null && it != DeviceOsSpec.SUPPORTED_OXYGEN_OS
         } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 
+        val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
         val enabledDevices = remember(allDevices) { allDevices.filter { it.enabled } }
         LaunchedEffect(enabledDevices) {
             // Resubscribe to notification topics, if needed.
@@ -227,63 +210,20 @@ class MainActivity : BaseActivity() {
 
         Column {
             val startScreen = remember(startPage) { screens.getOrNull(startPage) ?: Screen.Update }
-            val initialSubtitle = startScreen.subtitle ?: stringResource(startScreen.labelResId)
-            var subtitle by remember { mutableStateOf(initialSubtitle) }
+            val initialSubtitleResId = if (startScreen.useVersionName) 0 else startScreen.labelResId
+            var subtitleResId by remember { mutableIntStateOf(initialSubtitleResId) }
 
-            val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
-            var showMarkAllRead by remember { mutableStateOf(false) }
-            var sheetType by rememberSheetType()
             val navController = rememberNavController()
             val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-            TopAppBar(scrollBehavior, {
-                navController.navigateWithDefaults(AboutRoute)
-            }, subtitle) {
-                // Server-provided info & warning messages
-                if (serverMessages.isNotEmpty()) IconButton({
-                    sheetType = SheetType.ServerMessages
-                }, Modifier.requiredWidth(40.dp)) {
-                    Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server))
-                }
-
-                val showBecomeContributor = ContributorUtils.isAtLeastQAndPossiblyRooted
-                // Don't show menu if there are no items in it
-                // Box layout is required to make DropdownMenu position correctly (directly under icon)
-                if (showMarkAllRead || showBecomeContributor) Box {
-                    // Hide other menu items behind overflow icon
-                    var showMenu by remember { mutableStateOf(false) }
-                    IconButton({ showMenu = true }, Modifier.requiredWidth(40.dp)) {
-                        Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
-                    }
-
-                    MainMenu(showMenu, {
-                        showMenu = false
-                    }, showMarkAllRead, newsListViewModel::markAllRead, showBecomeContributor, openContributorSheet = {
-                        sheetType = SheetType.Contributor
-                    })
-                }
+            val openAboutScreen = rememberCallback(navController) { navController.navigateWithDefaults(AboutRoute) }
+            TopAppBar(scrollBehavior, openAboutScreen, subtitleResId) {
+                val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
+                MainMenu(serverMessages, subtitleResId == Screen.NewsList.labelResId, rememberCallback(newsListViewModel::markAllRead))
             }
 
             FlexibleAppUpdateProgress(viewModel.appUpdateStatus.collectAsStateWithLifecycle().value, {
                 snackbarText?.first
             }) { snackbarText = it }
-
-            val hide = rememberCallback { sheetType = SheetType.None }
-
-            LaunchedEffect(Unit) { // run only on init
-                // Offer contribution to users from app versions below v2.4.0 and v5.10.1
-                if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
-                    sheetType = SheetType.Contributor
-                }
-            }
-
-            val sheetState = defaultModalBottomSheetState()
-            if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
-                when (sheetType) {
-                    SheetType.Contributor -> ContributorSheet(hide, true)
-                    SheetType.ServerMessages -> ServerMessagesSheet(serverMessages)
-                    else -> {}
-                }
-            }
 
             val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
             ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
@@ -305,47 +245,51 @@ class MainActivity : BaseActivity() {
                     .weight(1f)
                     .nestedScroll(scrollBehavior.nestedScrollConnection)
             ) {
-                updateScreen { subtitle = it }
+                updateScreen { subtitleResId = it }
                 newsListScreen(newsListState)
                 deviceScreen(allDevices)
                 aboutScreen()
                 settingsScreen(enabledDevices, updateMismatchStatus = {
-                    viewModel.deviceMismatch = Utils.checkDeviceMismatch(this@MainActivity, allDevices)
-                }, openAboutScreen = {
-                    navController.navigateWithDefaults(AboutRoute)
-                })
+                    viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices)
+                }, openAboutScreen)
             }
 
             // Ads should be shown if user hasn't bought the ad-free unlock
             val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
                 PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
             ).value
-            if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID) { bannerAdView = it }
+            if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID, view = rememberTypedCallback { bannerAdView = it })
 
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 currentRoute = navBackStackEntry?.destination?.route
-                showMarkAllRead = currentRoute == NewsListRoute
 
                 screens.forEach { screen ->
-                    val route = screen.route
-                    val label = stringResource(screen.labelResId)
-                    val selected = currentRoute == route
-                    if (selected) subtitle = screen.subtitle ?: label
-                    NavigationBarItem(selected, {
-                        navController.navigateWithDefaults(route)
-                    }, icon = {
-                        val badge = screen.badge
-                        if (badge == null) Icon(screen.icon, label) else BadgedBox({
-                            Badge {
-                                Text("$badge".take(3), Modifier.semantics {
-                                    contentDescription = "$badge unread articles"
-                                })
-                            }
-                        }) { Icon(screen.icon, label) }
-                    }, label = {
-                        Text(label)
-                    }, alwaysShowLabel = false)
+                    val labelResId = screen.labelResId
+                    key(labelResId) {
+                        val route = screen.route
+                        val label = stringResource(labelResId)
+                        val selected = currentRoute == route
+                        if (selected) {
+                            // UpdateScreen manages its own subtitle, so avoid race by not setting at all
+                            // 0 => set to app version
+                            if (labelResId != Screen.Update.labelResId) subtitleResId = if (screen.useVersionName) 0 else labelResId
+                        }
+                        NavigationBarItem(selected, rememberCallback(navController, route) {
+                            navController.navigateWithDefaults(route)
+                        }, icon = {
+                            val badge = screen.badge
+                            if (badge == null) Icon(screen.icon, label) else BadgedBox({
+                                Badge {
+                                    Text(badge.take(3), Modifier.semantics {
+                                        contentDescription = "$badge unread articles"
+                                    })
+                                }
+                            }) { Icon(screen.icon, label) }
+                        }, label = {
+                            Text(label)
+                        }, alwaysShowLabel = false)
+                    }
                 }
             }
 
@@ -355,8 +299,7 @@ class MainActivity : BaseActivity() {
             //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
             //  Adjust all other BackHandlers if required
             BackHandler {
-                if (sheetState.isVisible) hide()
-                else navController.run {
+                navController.run {
                     if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
                     else if (!popBackStack()) finishAffinity() // nothing to back to => exit
                 }
@@ -375,7 +318,7 @@ class MainActivity : BaseActivity() {
         route: String,
     ) = if (shouldStopNavigateAwayFromSettings()) showSettingsWarning() else navigate(route, navOptions)
 
-    private fun NavGraphBuilder.updateScreen(setSubtitle: (String) -> Unit) = composable(UpdateRoute) {
+    private fun NavGraphBuilder.updateScreen(setSubtitleResId: (Int) -> Unit) = composable(UpdateRoute) {
         if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
             startOnboardingActivity(startPage)
             return@composable finish()
@@ -393,7 +336,7 @@ class MainActivity : BaseActivity() {
             settingsViewModel.updateCrashlyticsUserId()
             viewModel.fetchServerStatus()
             updateViewModel.refresh()
-        }, rememberTypedCallback(setSubtitle), enqueueDownload = rememberTypedCallback {
+        }, rememberTypedCallback(setSubtitleResId), enqueueDownload = rememberTypedCallback {
             viewModel.setupDownloadWorkRequest(it)
             viewModel.enqueueDownloadWork()
         }, pauseDownload = rememberCallback(viewModel::pauseDownloadWork), cancelDownload = rememberTypedCallback {
@@ -422,11 +365,10 @@ class MainActivity : BaseActivity() {
     }
 
     private fun NavGraphBuilder.deviceScreen(allDevices: List<Device>) = composable(DeviceRoute) {
-        val defaultDeviceName = defaultDeviceName()
         DeviceScreen(remember(allDevices) {
             allDevices.find {
                 it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-            }?.name ?: defaultDeviceName
+            }?.name ?: defaultDeviceName()
         }, viewModel.deviceOsSpec, viewModel.deviceMismatch)
     }
 
@@ -502,7 +444,7 @@ class MainActivity : BaseActivity() {
                 this@MainActivity.getString(R.string.notification_no_notification_support),
                 Toast.LENGTH_LONG
             ).show()
-        }, adFreePrice, adFreeConfig, openAboutScreen = rememberCallback(openAboutScreen))
+        }, adFreePrice, adFreeConfig, openAboutScreen)
     }
 
     private val validatePurchaseTimer = Timer()
@@ -552,9 +494,8 @@ class MainActivity : BaseActivity() {
         setContent {
             AppTheme {
                 EdgeToEdge()
-                Surface {
-                    Content()
-                }
+                // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
+                Surface { Content() }
             }
         }
 

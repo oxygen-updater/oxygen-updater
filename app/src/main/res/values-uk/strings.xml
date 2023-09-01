@@ -232,8 +232,8 @@
 	<string name="news_empty">Ця стаття немає вмісту.</string>
 	<string name="news_load_network_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'Повторити\', щоб відкрити статтю знову.</string>
 	<string name="news_load_id_error"><![CDATA[Не вдалося відкрити новину з недійсного URL: %1$s. Перевірте URL, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
-	<string name="news_unread_count_1">Є %1$d непрочитаних новин.\nНатисніть, щоб показати непрочитані новини</string>
-	<string name="news_unread_count_2">Є %1$d непрочитаних новин.\nНатисніть, щоб показати всі новини</string>
+	<string name="news_unread_count_1">Є %1$d непрочитаних новин. Натисніть, щоб показати непрочитані новини</string>
+	<string name="news_unread_count_2">Є %1$d непрочитаних новин. Натисніть, щоб показати всі новини</string>
 	<string name="news_mark_read">Відзначити як прочитане</string>
 	<string name="news_mark_unread">Позначити як непрочитане</string>
 	<string name="news_mark_all_read">Позначити всі новини як прочитані</string>

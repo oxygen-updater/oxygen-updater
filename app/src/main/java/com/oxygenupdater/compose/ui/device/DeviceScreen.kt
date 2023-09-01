@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -54,6 +53,7 @@ import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.Incremental
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
@@ -91,45 +91,8 @@ private fun DeviceHeader(
     deviceOsSpec: DeviceOsSpec?,
     deviceMismatchStatus: Triple<Boolean, String, String>?,
 ) {
-    val context = LocalContext.current
-    val defaultImage = painterResource(R.drawable.oneplus7pro)
-    val notSupported = deviceOsSpec != DeviceOsSpec.SUPPORTED_OXYGEN_OS
-    var showUnsupportedDialog by remember { mutableStateOf(false) }
-    if (notSupported && showUnsupportedDialog) deviceOsSpec?.let {
-        UnsupportedDeviceOsSpecDialog(it)
-    }
     Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
-        Box(Modifier.animatedClickable(notSupported) { showUnsupportedDialog = true }) {
-            AsyncImage(
-                Device.constructImageUrl(deviceName).let {
-                    val density = LocalDensity.current
-                    remember(it) {
-                        ImageRequest.Builder(context)
-                            .data(it)
-                            .size(density.run { 128.dp.roundToPx() })
-                            .build()
-                    }
-                },
-                stringResource(R.string.device_information_image_description),
-                Modifier.requiredSize(128.dp),
-                placeholder = defaultImage,
-                error = defaultImage,
-            )
-
-            if (notSupported) {
-                Box(
-                    Modifier
-                        .clip(RoundedCornerShape(16.dp))
-                        .requiredSize(128.dp)
-                        .background(Color.Black.copy(alpha = .75f))
-                )
-                Icon(
-                    Icons.Rounded.ErrorOutline, stringResource(R.string.icon),
-                    Modifier.align(Alignment.Center),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
+        DeviceImage(deviceName, deviceOsSpec)
 
         Column(
             Modifier
@@ -177,6 +140,50 @@ private fun DeviceHeader(
             style = MaterialTheme.typography.bodySmall
         )
         ItemDivider()
+    }
+}
+
+
+@Composable
+private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
+    val notSupported = deviceOsSpec != DeviceOsSpec.SUPPORTED_OXYGEN_OS
+    var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
+    if (notSupported && showUnsupportedDialog) deviceOsSpec?.let {
+        UnsupportedDeviceOsSpecDialog(it)
+    }
+
+    Box(Modifier.animatedClickable(notSupported) { showUnsupportedDialog = true }) {
+        val context = LocalContext.current
+        val defaultImage = painterResource(R.drawable.oneplus7pro)
+        AsyncImage(
+            deviceName.let {
+                val size = LocalDensity.current.run { 128.dp.roundToPx() }
+                remember(it, size) {
+                    ImageRequest.Builder(context)
+                        .data(Device.constructImageUrl(it))
+                        .size(size)
+                        .build()
+                }
+            },
+            stringResource(R.string.device_information_image_description),
+            Modifier.requiredSize(128.dp),
+            placeholder = defaultImage,
+            error = defaultImage,
+        )
+
+        if (notSupported) {
+            Box(
+                Modifier
+                    .clip(RoundedCornerShape(16.dp))
+                    .requiredSize(128.dp)
+                    .background(Color.Black.copy(alpha = .75f))
+            )
+            Icon(
+                Icons.Rounded.ErrorOutline, stringResource(R.string.icon),
+                Modifier.align(Alignment.Center),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
     }
 }
 

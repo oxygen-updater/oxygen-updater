@@ -1,14 +1,15 @@
 package com.oxygenupdater.compose.ui.news
 
+import android.annotation.SuppressLint
 import android.text.format.DateUtils
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -74,6 +75,8 @@ import com.oxygenupdater.compose.ui.common.DropdownMenuItem
 import com.oxygenupdater.compose.ui.common.IconText
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.common.PullRefresh
+import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
@@ -97,7 +100,7 @@ fun NewsListScreen(
     openItem: (Long) -> Unit,
 ) = PullRefresh(state, { it.isEmpty() }, refresh) {
     val refreshing = state.refreshing
-    var onlyUnread by remember { mutableStateOf(false) }
+    var onlyUnread by rememberSaveableState("onlyUnread", false)
 
     val data = if (onlyUnread) state.data.filterNot { it.readState.value } else state.data
     val list = if (!refreshing) rememberSaveable(onlyUnread) { data } else data
@@ -110,21 +113,15 @@ fun NewsListScreen(
     Screen.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
 
     Column {
-        var showBannerMenu by remember { mutableStateOf(false) }
-        Banner(showBannerMenu, stringResource(
-            if (onlyUnread) R.string.news_unread_count_2
-            else R.string.news_unread_count_1,
+        Banner(stringResource(
+            if (onlyUnread) R.string.news_unread_count_2 else R.string.news_unread_count_1,
             unreadCount
-        ), onDismiss = {
-            showBannerMenu = false
-        }, onLongClick = {
-            showBannerMenu = true
-        }, onClick = {
+        ), onClick = {
             onlyUnread = !onlyUnread
-        }) {
+        }, onMarkAllReadClick = {
             markAllRead()
             unreadCountState.intValue = 0
-        }
+        })
 
         ItemDivider()
 
@@ -173,161 +170,163 @@ private fun EmptyState(allRead: Boolean) = Column(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun NewsListItem(
     refreshing: Boolean,
     item: NewsItem,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-) {
-    val context = LocalContext.current
+) = Column(Modifier.clickable(!refreshing, onClick = onClick)) {
+    Box {
+        val read by remember { item.readState }
+        if (!refreshing && !read) Badge(Modifier.offset(4.dp, 16.dp))
 
-    var showItemMenu by remember { mutableStateOf(false) }
-    @OptIn(ExperimentalFoundationApi::class)
-    Column(Modifier.combinedClickable(!refreshing, onLongClick = { showItemMenu = true }) {
-        onClick()
-    }) {
-        Box {
-            if (!refreshing && !item.readState.value) Badge(Modifier.offset(4.dp, 16.dp))
-
-            ItemMenu(showItemMenu, { showItemMenu = false }, item, toggleRead)
-
-            Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
-                Column(
+        Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
+            Column(
+                Modifier
+                    .weight(1f)
+                    .requiredHeight(80.dp) // same as image
+                    .padding(end = 8.dp)
+            ) {
+                Text(
+                    item.title ?: "Unknown title",
                     Modifier
-                        .weight(1f)
-                        .requiredHeight(80.dp) // same as image
-                        .padding(end = 8.dp)
-                ) {
-                    Text(
-                        item.title ?: "Unknown title",
-                        Modifier
-                            .withPlaceholder(refreshing)
-                            .graphicsLayer {
-                                if (refreshing) return@graphicsLayer
-                                alpha = if (item.readState.value) 0.7f else 1f
-                            },
-                        overflow = TextOverflow.Ellipsis, maxLines = 2,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    AutoresizeText(
-                        item.subtitle ?: "",
-                        FontSizeRange(12f, 14f),
-                        Modifier.withPlaceholder(refreshing)
-                    )
-                }
-
-                val defaultImage = CustomIcons.Image.run {
-                    rememberVectorPainter(
-                        defaultWidth = defaultWidth,
-                        defaultHeight = defaultHeight,
-                        viewportWidth = viewportWidth,
-                        viewportHeight = viewportHeight,
-                        name = name,
-                        tintColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        tintBlendMode = tintBlendMode,
-                        autoMirror = autoMirror,
-                        content = { _, _ -> RenderVectorGroup(group = root) }
-                    )
-                }
-                AsyncImage(
-                    item.imageUrl?.let {
-                        val density = LocalDensity.current
-                        remember(it) {
-                            ImageRequest.Builder(context)
-                                .data(it)
-                                .size(density.run { 80.dp.roundToPx() })
-                                .build()
-                        }
-                    },
-                    stringResource(R.string.icon),
-                    Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .requiredSize(80.dp)
                         .withPlaceholder(refreshing)
                         .graphicsLayer {
                             if (refreshing) return@graphicsLayer
-                            alpha = if (item.readState.value) 0.87f else 1f
+                            alpha = if (read) 0.7f else 1f
                         },
-                    placeholder = defaultImage,
-                    error = defaultImage,
-                    contentScale = ContentScale.Crop,
+                    overflow = TextOverflow.Ellipsis, maxLines = 2,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                AutoresizeText(
+                    item.subtitle ?: "",
+                    FontSizeRange(12f, 14f),
+                    Modifier.withPlaceholder(refreshing)
                 )
             }
-        }
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            val authorName = item.authorName ?: "Unknown Author"
-
-            Text(
-                item.epochMilli?.let {
-                    DateUtils.getRelativeTimeSpanString(
-                        it,
-                        System.currentTimeMillis(),
-                        DateUtils.SECOND_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL
-                    )
-                }?.let {
-                    "$it \u2022 $authorName"
-                } ?: authorName,
+            val defaultImage = CustomIcons.Image.run {
+                rememberVectorPainter(
+                    defaultWidth = defaultWidth,
+                    defaultHeight = defaultHeight,
+                    viewportWidth = viewportWidth,
+                    viewportHeight = viewportHeight,
+                    name = name,
+                    tintColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tintBlendMode = tintBlendMode,
+                    autoMirror = autoMirror,
+                    content = { _, _ -> RenderVectorGroup(group = root) }
+                )
+            }
+            val context = LocalContext.current
+            AsyncImage(
+                item.imageUrl?.let {
+                    val size = LocalDensity.current.run { 80.dp.roundToPx() }
+                    remember(it, size) {
+                        ImageRequest.Builder(context)
+                            .data(it)
+                            .size(size)
+                            .build()
+                    }
+                },
+                stringResource(R.string.icon),
                 Modifier
-                    .padding(start = 16.dp)
-                    .basicMarquee()
-                    .withPlaceholder(refreshing),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                style = MaterialTheme.typography.bodySmall
+                    .clip(RoundedCornerShape(8.dp))
+                    .requiredSize(80.dp)
+                    .withPlaceholder(refreshing)
+                    .graphicsLayer {
+                        if (refreshing) return@graphicsLayer
+                        alpha = if (read) 0.87f else 1f
+                    },
+                placeholder = defaultImage,
+                error = defaultImage,
+                contentScale = ContentScale.Crop,
             )
-
-            Spacer(Modifier.weight(1f))
-
-            // Offset by 6.dp to bring in line with image
-            IconButton({ showItemMenu = true }, Modifier.offset(x = 6.dp), !refreshing) {
-                Icon(
-                    Icons.Rounded.MoreVert, stringResource(R.string.icon),
-                    Modifier.requiredSize(20.dp),
-                    if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
+    }
+
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        val authorName = item.authorName ?: "Unknown Author"
+
+        Text(
+            item.epochMilli?.let {
+                DateUtils.getRelativeTimeSpanString(
+                    it,
+                    System.currentTimeMillis(),
+                    DateUtils.SECOND_IN_MILLIS,
+                    DateUtils.FORMAT_ABBREV_ALL
+                )
+            }?.let {
+                "$it \u2022 $authorName"
+            } ?: authorName,
+            Modifier
+                .padding(start = 16.dp)
+                .weight(1f)
+                .basicMarquee()
+                .withPlaceholder(refreshing),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            style = MaterialTheme.typography.bodySmall
+        )
+
+        ItemMenuOpener(refreshing, item, toggleRead)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Banner(
-    expanded: Boolean,
     text: String,
-    onDismiss: () -> Unit,
-    onLongClick: () -> Unit,
     onClick: () -> Unit,
     onMarkAllReadClick: () -> Unit,
-) = IconText(
-    Modifier
-        .fillMaxWidth()
-        .combinedClickable(onLongClick = onLongClick, onClick = onClick)
-        .padding(16.dp), // must be after `clickable`
-    icon = CustomIcons.Info, text = text,
 ) {
-    DropdownMenu(expanded, onDismiss, offset = DpOffset(24.dp, 0.dp)) {
-        DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
-            onMarkAllReadClick()
-            onDismiss()
+    var showMenu by rememberSaveableState("showBannerMenu", false)
+    IconText(
+        Modifier
+            .fillMaxWidth()
+            .combinedClickable(onLongClick = { showMenu = true }, onClick = onClick)
+            .padding(16.dp), // must be after `clickable`
+        icon = CustomIcons.Info, text = text,
+    ) {
+        DropdownMenu(showMenu, { showMenu = false }, offset = DpOffset(24.dp, 0.dp)) {
+            DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
+                onMarkAllReadClick()
+                showMenu = false
+            }
         }
     }
 }
 
+@Composable
+private fun ItemMenuOpener(
+    refreshing: Boolean,
+    item: NewsItem,
+    toggleRead: () -> Unit,
+) = Box {
+    var showMenu by rememberSaveableState("showItemMenu", false)
+    ItemMenu(showMenu, { showMenu = false }, item, toggleRead)
+
+    // Offset by 6.dp to bring in line with image
+    IconButton({ showMenu = true }, Modifier.offset(x = 6.dp), !refreshing) {
+        Icon(
+            Icons.Rounded.MoreVert, stringResource(R.string.icon),
+            Modifier.requiredSize(20.dp),
+            if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
+
+@SuppressLint("PrivateResource")
 @Composable
 private fun ItemMenu(
     expanded: Boolean,
     onDismiss: () -> Unit,
     item: NewsItem,
     onToggleReadClick: () -> Unit,
-) = DropdownMenu(expanded, onDismiss, offset = DpOffset(1000.dp, 0.dp)) {
-    val context = LocalContext.current
+) = DropdownMenu(expanded, onDismiss, offset = DpOffset(0.dp, (-40).dp)) {
     var read by remember { item.readState }
-
     DropdownMenuItem(
         if (read) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
         if (read) R.string.news_mark_unread else R.string.news_mark_read,
@@ -338,21 +337,22 @@ private fun ItemMenu(
         onDismiss()
     }
 
+    val context = LocalContext.current
     val customTabIntent = rememberCustomTabsIntent()
-    DropdownMenuItem(Icons.Rounded.OpenInBrowser, androidx.browser.R.string.fallback_menu_item_open_in_browser) {
+    DropdownMenuItem(Icons.Rounded.OpenInBrowser, androidx.browser.R.string.fallback_menu_item_open_in_browser, rememberCallback(context, customTabIntent) {
         customTabIntent.launch(context, item.webUrl)
         onDismiss()
-    }
+    })
 
-    DropdownMenuItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link) {
+    DropdownMenuItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link, rememberCallback(context) {
         context.shareExternally(item.title ?: "", item.webUrl)
         onDismiss()
-    }
+    })
 
-    DropdownMenuItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link) {
+    DropdownMenuItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link, rememberCallback(context) {
         context.copyToClipboard(item.webUrl)
         onDismiss()
-    }
+    })
 }
 
 // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries

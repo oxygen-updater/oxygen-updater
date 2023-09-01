@@ -5,6 +5,7 @@ import androidx.compose.foundation.MutatorMutex
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -83,6 +84,7 @@ fun rememberPullRefreshState(
  * Should be created using [rememberPullRefreshState].
  */
 @ExperimentalMaterial3Api
+@Stable
 // TODO(compose/perf): reduce complexity and make this stable (animationScope is unstable)
 //  or wait until https://issuetracker.google.com/issues/261760718 brings a first-party solution
 class PullRefreshState internal constructor(

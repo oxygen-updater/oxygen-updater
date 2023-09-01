@@ -1,6 +1,5 @@
 package com.oxygenupdater.compose.ui.onboarding
 
-import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,8 +22,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,12 +42,10 @@ import com.oxygenupdater.compose.ui.common.ListItemTextIndent
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.dialogs.ContributorSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.compose.ui.dialogs.SelectableSheet
-import com.oxygenupdater.compose.ui.dialogs.SheetType
-import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
-import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.internal.settings.PrefManager
@@ -68,125 +63,145 @@ fun OnboardingScreen(
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
     startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
+) = Column(
+    Modifier
+        .nestedScroll(scrollBehavior.nestedScrollConnection)
+        .fillMaxHeight()
 ) {
-    val sheetState = defaultModalBottomSheetState()
-    val listState = rememberLazyListState()
-    var sheetType by rememberSheetType()
-    val hide = rememberCallback { sheetType = SheetType.None }
-
-    val (enabledDevices, methodsForDevice) = lists
-    val deviceSelectionEnabled = enabledDevices.isNotEmpty()
-    val methodSelectionEnabled = methodsForDevice.isNotEmpty()
-    val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
-
     val typography = MaterialTheme.typography
-    if (sheetType != SheetType.None) ModalBottomSheet(hide, sheetState) {
-        when (sheetType) {
-            SheetType.Device -> SelectableSheet(
-                hide,
-                listState, enabledDevices,
-                initialDeviceIndex,
-                R.string.settings_device, R.string.onboarding_device_chooser_caption,
-                keyId = PrefManager.PROPERTY_DEVICE_ID,
-            ) {
-                deviceChanged(it)
-            }
-
-            SheetType.Method -> SelectableSheet(
-                hide,
-                listState, methodsForDevice,
-                initialMethodIndex,
-                R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
-                keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
-            ) {
-                methodChanged(it)
-            }
-
-            SheetType.Contributor -> ContributorSheet(hide)
-
-            else -> {}
-        }
-    }
 
     Column(
         Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxHeight()
+            .weight(1f)
+            .verticalScroll(rememberScrollState()),
     ) {
-        Column(
-            Modifier
-                .weight(1f)
-                .verticalScroll(rememberScrollState()),
-        ) {
-            SheetOpener(
-                deviceSelectionEnabled,
-                Icons.Rounded.PhoneAndroid, R.string.settings_device,
-                if (deviceSelectionEnabled) PrefManager.getString(
-                    PrefManager.PROPERTY_DEVICE, notSelected
-                ) ?: notSelected else stringResource(R.string.summary_please_wait),
-            ) {
-                sheetType = SheetType.Device
-            }
+        DeviceChooser(lists.enabledDevices, initialDeviceIndex, deviceChanged)
+        MethodChooser(lists.methodsForDevice, initialMethodIndex, methodChanged)
 
-            SheetOpener(
-                methodSelectionEnabled,
-                Icons.Outlined.CloudDownload, R.string.settings_update_method,
-                if (methodSelectionEnabled) PrefManager.getString(
-                    PrefManager.PROPERTY_UPDATE_METHOD, notSelected
-                ) ?: notSelected else stringResource(R.string.summary_update_method),
-            ) {
-                sheetType = SheetType.Method
-            }
-
-            val bodyMedium = typography.bodyMedium
-            Text(
-                AnnotatedString(
-                    stringResource(R.string.onboarding_app_uses),
-                    bodyMedium.toSpanStyle(),
-                    bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
-                ),
-                Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-                style = bodyMedium
-            )
-
-            Text(
-                stringResource(R.string.onboarding_caption),
-                Modifier.padding(16.dp),
-                style = bodyMedium
-            )
-        }
-
-        ItemDivider()
+        val bodyMedium = typography.bodyMedium
         Text(
-            stringResource(R.string.onboarding_disclaimer),
-            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
-            MaterialTheme.colorScheme.onSurfaceVariant,
-            style = typography.bodySmall
+            AnnotatedString(
+                stringResource(R.string.onboarding_app_uses),
+                bodyMedium.toSpanStyle(),
+                bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+            ),
+            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+            style = bodyMedium
         )
 
-        var contribute by remember { mutableStateOf(true) }
-        val runningInPreview = LocalInspectionMode.current
-        if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) CheckboxText(
+        Text(
+            stringResource(R.string.onboarding_caption),
+            Modifier.padding(16.dp),
+            style = bodyMedium
+        )
+    }
+
+    ItemDivider()
+    Text(
+        stringResource(R.string.onboarding_disclaimer),
+        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+        MaterialTheme.colorScheme.onSurfaceVariant,
+        style = typography.bodySmall
+    )
+
+    StartApp(startApp)
+}
+
+@Composable
+private fun DeviceChooser(
+    enabledDevices: List<Device>,
+    initialDeviceIndex: Int,
+    deviceChanged: (Device) -> Unit,
+) {
+    var showSheet by rememberSaveableState("showDeviceSheet", false)
+
+    val deviceSelectionEnabled = enabledDevices.isNotEmpty()
+    val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
+    SheetOpener(
+        deviceSelectionEnabled,
+        Icons.Rounded.PhoneAndroid, R.string.settings_device,
+        if (deviceSelectionEnabled) PrefManager.getString(
+            PrefManager.PROPERTY_DEVICE, notSelected
+        ) ?: notSelected else stringResource(R.string.summary_please_wait),
+    ) { showSheet = true }
+
+    val listState = rememberLazyListState()
+    val hide = rememberCallback { showSheet = false }
+    if (showSheet) ModalBottomSheet(hide) {
+        SelectableSheet(
+            hide, listState,
+            enabledDevices, initialDeviceIndex,
+            R.string.settings_device, R.string.onboarding_device_chooser_caption,
+            PrefManager.PROPERTY_DEVICE_ID,
+            deviceChanged
+        )
+    }
+}
+
+@Composable
+private fun MethodChooser(
+    methodsForDevice: List<UpdateMethod>,
+    initialMethodIndex: Int,
+    methodChanged: (UpdateMethod) -> Unit,
+) {
+    var showSheet by rememberSaveableState("showMethodSheet", false)
+
+    val methodSelectionEnabled = methodsForDevice.isNotEmpty()
+    val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
+    SheetOpener(
+        methodSelectionEnabled,
+        Icons.Outlined.CloudDownload, R.string.settings_update_method,
+        if (methodSelectionEnabled) PrefManager.getString(
+            PrefManager.PROPERTY_UPDATE_METHOD, notSelected
+        ) ?: notSelected else stringResource(R.string.summary_update_method),
+    ) { showSheet = true }
+
+    val listState = rememberLazyListState()
+    val hide = rememberCallback { showSheet = false }
+    if (showSheet) ModalBottomSheet(hide) {
+        SelectableSheet(
+            hide, listState,
+            methodsForDevice, initialMethodIndex,
+            R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
+            PrefManager.PROPERTY_UPDATE_METHOD_ID,
+            methodChanged
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun StartApp(
+    startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
+) {
+    var contribute by rememberSaveableState("contribute", true)
+    val runningInPreview = LocalInspectionMode.current
+    if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) {
+        var showSheet by rememberSaveableState("showContributorSheet", false)
+        CheckboxText(
             contribute, { contribute = it }, R.string.contribute_agree,
             Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
         ) {
-            IconButton({ sheetType = SheetType.Contributor }) {
+            IconButton({ showSheet = true }) {
                 Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
             }
         }
 
-        var submitLogs by remember { mutableStateOf(true) }
-        CheckboxText(
-            submitLogs, { submitLogs = it }, R.string.settings_upload_logs,
-            Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
-        ) {
-            OutlinedIconButton({
-                startApp(contribute to submitLogs)
-            }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
+        val hide = rememberCallback { showSheet = false }
+        if (showSheet) ModalBottomSheet(hide) {
+            ContributorSheet(hide)
         }
     }
 
-    BackHandler(sheetState.isVisible, hide)
+    var submitLogs by rememberSaveableState("submitLogs", true)
+    CheckboxText(
+        submitLogs, { submitLogs = it }, R.string.settings_upload_logs,
+        Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
+    ) {
+        OutlinedIconButton({
+            startApp(contribute to submitLogs)
+        }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
+    }
 }
 
 @Composable

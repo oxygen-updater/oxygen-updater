@@ -13,7 +13,6 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.compose.ui.TopAppBar
 import com.oxygenupdater.compose.ui.theme.AppTheme
 import com.oxygenupdater.extensions.startMainActivity
@@ -44,7 +43,7 @@ abstract class SupportActionBarActivity(
     protected open fun scrollBehavior() = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     @Composable
-    protected open fun TopAppBar() = TopAppBar(scrollBehavior, ::onBackPressed, stringResource(subtitleResId), false)
+    protected open fun TopAppBar() = TopAppBar(scrollBehavior, ::onBackPressed, subtitleResId, false)
 
     @Composable
     protected abstract fun Content(modifier: Modifier)

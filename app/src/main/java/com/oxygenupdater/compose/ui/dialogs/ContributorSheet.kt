@@ -1,6 +1,8 @@
 package com.oxygenupdater.compose.ui.dialogs
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -16,8 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.CheckboxText
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.hasRootAccess
@@ -48,12 +49,17 @@ fun ColumnScope.ContributorSheet(
         style = MaterialTheme.typography.bodyMedium
     )
 
-    val runningInPreview = LocalInspectionMode.current
-    if (!runningInPreview && (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted)) {
+    if (!LocalInspectionMode.current && (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted)) {
         return // don't show enrollment UI
     }
 
-    var contribute by remember { mutableStateOf(true) }
+    ContributorSheetEnroll(hide)
+}
+
+@RequiresApi(Build.VERSION_CODES.Q)
+@Composable
+private fun ContributorSheetEnroll(hide: () -> Unit) {
+    var contribute by rememberSaveableState("contribute", true)
     CheckboxText(contribute, { contribute = it }, R.string.contribute_agree, Modifier.padding(end = 16.dp))
 
     Row(

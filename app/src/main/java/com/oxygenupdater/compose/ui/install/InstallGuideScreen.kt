@@ -22,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -42,6 +41,7 @@ import com.oxygenupdater.compose.ui.common.ListItemTextIndent
 import com.oxygenupdater.compose.ui.common.RichText
 import com.oxygenupdater.compose.ui.common.adLoadListener
 import com.oxygenupdater.compose.ui.common.animatedClickable
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
@@ -58,7 +58,7 @@ fun InstallGuideScreen(
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
-    var adLoaded by remember { mutableStateOf(false) }
+    var adLoaded by rememberSaveableState("adLoaded", false)
 
     LazyColumn(Modifier.weight(1f)) {
         if (showDownloadInstructions) item {

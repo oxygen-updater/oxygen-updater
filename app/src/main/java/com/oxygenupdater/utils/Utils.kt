@@ -7,7 +7,7 @@ import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
-import com.oxygenupdater.R
+import com.oxygenupdater.compose.ui.device.defaultDeviceName
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -99,9 +99,9 @@ object Utils {
         }
     }
 
-    fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
-        val unknown = context.getString(R.string.device_information_unknown)
-        val savedDeviceName = PrefManager.getString(PrefManager.PROPERTY_DEVICE, unknown) ?: unknown
+    fun checkDeviceMismatch(devices: List<Device>?): Triple<Boolean, String, String> {
+        val default = defaultDeviceName()
+        val savedDeviceName = PrefManager.getString(PrefManager.PROPERTY_DEVICE, default) ?: default
 
         val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
@@ -151,9 +151,9 @@ object Utils {
             }
         } ?: false
 
-        val actualDeviceName = matchedDevice?.name ?: unknown
+        val actualDeviceName = matchedDevice?.name ?: default
 
         // Don't show mismatch dialog if we don't know what the actual device is
-        return Triple(if (actualDeviceName == unknown) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
+        return Triple(if (actualDeviceName == default) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
     }
 }

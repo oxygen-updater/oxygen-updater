@@ -12,7 +12,6 @@ import android.os.Environment
 import android.os.storage.StorageManager
 import android.provider.Settings
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.RequiresApi
@@ -52,7 +51,6 @@ import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Launch
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults.textButtonColors
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -107,14 +105,12 @@ import com.oxygenupdater.compose.ui.common.RichText
 import com.oxygenupdater.compose.ui.common.RichTextType
 import com.oxygenupdater.compose.ui.common.animatedClickable
 import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.common.withPlaceholder
 import com.oxygenupdater.compose.ui.device.DeviceSoftwareInfo
 import com.oxygenupdater.compose.ui.device.defaultDeviceName
 import com.oxygenupdater.compose.ui.dialogs.AlreadyDownloadedSheet
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
-import com.oxygenupdater.compose.ui.dialogs.SheetType
-import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
-import com.oxygenupdater.compose.ui.dialogs.rememberSheetType
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
@@ -152,7 +148,7 @@ import java.util.UUID
 private var previousProgressText: String? = null
 private var previousProgress: Float? = null
 
-@OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalAnimationGraphicsApi::class, ExperimentalPermissionsApi::class)
 @Composable
 fun UpdateAvailable(
     refreshing: Boolean,
@@ -299,12 +295,9 @@ fun UpdateAvailable(
         }
     }
 
-    val sheetState = defaultModalBottomSheetState()
-    var sheetType by rememberSheetType()
-    val hide = rememberCallback { sheetType = SheetType.None }
-    BackHandler(sheetState.isVisible, hide)
-
-    if (sheetType == SheetType.AlreadyDownloaded) ModalBottomSheet(hide, sheetState) {
+    var showAlreadyDownloadedSheet by rememberSaveableState("showAlreadyDownloadedSheet", false)
+    val hide = rememberCallback { showAlreadyDownloadedSheet = false }
+    if (showAlreadyDownloadedSheet) ModalBottomSheet(hide) {
         AlreadyDownloadedSheet(hide) {
             if (it) context.startInstallActivity(false)
             else if (hasDownloadPermissions) downloadAction(DownloadAction.Delete)
@@ -496,7 +489,7 @@ fun UpdateAvailable(
             sizeOrProgressText = context.formatFileSize(downloadSize)
             progress = null
             actionButtonConfig = Triple(false, Icons.Rounded.Launch, colorScheme.primary)
-            onDownloadClick = { sheetType = SheetType.AlreadyDownloaded }
+            onDownloadClick = { showAlreadyDownloadedSheet = true }
 
             // Open install guide automatically, but only after the normal download flow completes
             LaunchedEffect(Unit) {
@@ -577,10 +570,12 @@ fun UpdateAvailable(
             }
 
             actionButtonConfig?.let { (forCancel, icon, tint) ->
-                IconButton({
-                    if (forCancel) downloadAction(DownloadAction.Cancel)
-                    else context.startInstallActivity(false)
-                }, Modifier.requiredSize(56.dp)) {
+                IconButton(
+                    if (forCancel) ({ downloadAction(DownloadAction.Cancel) }) else rememberCallback(context) {
+                        context.startInstallActivity(false)
+                    },
+                    Modifier.requiredSize(56.dp)
+                ) {
                     Icon(icon, iconContentDescription, tint = tint)
                 }
             }
@@ -651,9 +646,20 @@ fun UpToDate(
     DeviceSoftwareInfo(false)
     ItemDivider(Modifier.padding(top = 16.dp))
 
-    val runningInPreview = LocalInspectionMode.current
+    ExpandableChangelog(refreshing, updateData, isDifferentVersion, showAdvancedModeTip)
+
+    ItemDivider()
+}
+
+@Composable
+private fun ExpandableChangelog(
+    refreshing: Boolean,
+    updateData: UpdateData,
+    isDifferentVersion: Boolean,
+    showAdvancedModeTip: Boolean,
+) {
     val expandEnabled = updateData.isUpdateInformationAvailable
-    var expanded by remember { mutableStateOf(runningInPreview) }
+    var expanded by rememberSaveableState("changelogExpanded", LocalInspectionMode.current)
     IconText(
         Modifier
             .fillMaxWidth()
@@ -703,8 +709,6 @@ fun UpToDate(
             updateData.Changelog(changelogModifier)
         } else updateData.Changelog(changelogModifier)
     }
-
-    ItemDivider()
 }
 
 @Composable
@@ -953,6 +957,6 @@ private const val TAG = "UpdateInformationContent"
 /** Amount of free storage space to reserve when downloading an update */
 private const val SAFE_MARGIN = 1048576 * 25L // 25 MB
 
-private const val FULL_ZIP_LIKELY_MIN_SIZE = 1048576 * 2000L // 2 GB
+private const val FULL_ZIP_LIKELY_MIN_SIZE = 1048576 * 2500L // 2.5 GB
 private const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
 private const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE

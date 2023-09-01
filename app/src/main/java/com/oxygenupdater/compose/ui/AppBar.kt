@@ -2,6 +2,7 @@ package com.oxygenupdater.compose.ui
 
 import android.view.animation.AccelerateInterpolator
 import androidx.activity.compose.BackHandler
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec
@@ -40,7 +41,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
@@ -58,10 +58,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.LogoNotification
 import com.oxygenupdater.compose.ui.common.ItemDivider
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -71,7 +73,7 @@ import kotlin.math.roundToInt
 fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navIconClicked: () -> Unit,
-    subtitle: String,
+    @StringRes subtitleResId: Int,
     root: Boolean = true,
     actions: @Composable (RowScope.() -> Unit)? = null,
 ) = Column {
@@ -91,7 +93,7 @@ fun TopAppBar(
                 style = typography.titleLarge
             )
             Text(
-                subtitle,
+                if (subtitleResId == 0) "v${BuildConfig.VERSION_NAME}" else stringResource(subtitleResId),
                 overflow = TextOverflow.Ellipsis, maxLines = 1,
                 style = typography.bodyMedium
             )
@@ -209,7 +211,7 @@ fun CollapsingAppBar(
             val typography = MaterialTheme.typography
 
             // Accessibility: show full title on long press if it overflows
-            var showTooltip by remember { mutableStateOf(false) }
+            var showTooltip by rememberSaveableState("showTooltip", false)
             val tooltipState = rememberRichTooltipState(true)
             BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
 

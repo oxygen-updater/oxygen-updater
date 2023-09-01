@@ -2,7 +2,6 @@ package com.oxygenupdater.compose.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.compose.BackHandler
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
@@ -42,7 +41,6 @@ import com.oxygenupdater.compose.ui.common.PullRefresh
 import com.oxygenupdater.compose.ui.common.rememberCallback
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.dialogs.ModalBottomSheet
-import com.oxygenupdater.compose.ui.dialogs.defaultModalBottomSheetState
 import com.oxygenupdater.compose.ui.news.ErrorSheet
 import com.oxygenupdater.compose.ui.news.NewsItemScreen
 import com.oxygenupdater.compose.ui.news.NewsItemViewModel
@@ -137,25 +135,20 @@ class NewsItemActivity : SupportActionBarActivity(
         val state by viewModel.state.collectAsStateWithLifecycle()
         val webViewState = rememberSaveableWebViewState()
         val navigator = rememberWebViewNavigator()
-        val onRefresh = remember(showAds, navigator) {
-            {
-                if (showAds) {
-                    shouldDelayAdStart = true
-                    setupInterstitialAd()
-                }
-                viewModel.refreshItem(newsItemId)
-                navigator.reload()
+        val onRefresh = rememberCallback(showAds, navigator) {
+            if (showAds) {
+                shouldDelayAdStart = true
+                setupInterstitialAd()
             }
+            viewModel.refreshItem(newsItemId)
+            navigator.reload()
         }
 
         PullRefresh(state, { it?.isFullyLoaded != true }, onRefresh) {
-            val sheetState = defaultModalBottomSheetState()
             var error by remember { mutableStateOf<String?>(null) }
             val hide = rememberCallback { error = null }
-            BackHandler(sheetState.isVisible, hide)
-
             error?.let {
-                ModalBottomSheet(hide, sheetState) {
+                ModalBottomSheet(hide) {
                     ErrorSheet(it, hide, onRefresh)
                 }
             }

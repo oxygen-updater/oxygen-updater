@@ -11,7 +11,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.News
@@ -23,7 +22,7 @@ sealed class Screen(
     val route: String,
     val icon: ImageVector,
     @StringRes val labelResId: Int,
-    val subtitle: String? = null,
+    val useVersionName: Boolean = false,
 ) {
     /** Shown only if not null (max 3 characters) */
     var badge by mutableStateOf<String?>(null)
@@ -39,7 +38,7 @@ sealed class Screen(
     object Device : Screen(DeviceRoute, Icons.Rounded.PhoneAndroid, R.string.device_information_header)
 
     @Stable
-    object About : Screen(AboutRoute, Icons.Rounded.HelpOutline, R.string.about, "v${BuildConfig.VERSION_NAME}")
+    object About : Screen(AboutRoute, Icons.Rounded.HelpOutline, R.string.about, true)
 
     @Stable
     object Settings : Screen(SettingsRoute, CustomIcons.Settings, R.string.settings)

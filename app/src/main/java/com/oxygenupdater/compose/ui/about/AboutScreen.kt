@@ -102,7 +102,7 @@ private fun Buttons() = with(LocalContext.current) {
         }
 
         item {
-            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text) { openEmail() }
+            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, ::openEmail)
         }
 
         item {
@@ -118,7 +118,7 @@ private fun Buttons() = with(LocalContext.current) {
         }
 
         item {
-            GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text) { openPlayStorePage() }
+            GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text, ::openPlayStorePage)
         }
     }
 }

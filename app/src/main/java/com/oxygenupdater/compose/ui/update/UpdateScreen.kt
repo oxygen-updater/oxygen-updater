@@ -20,6 +20,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.RefreshAwareState
 import com.oxygenupdater.compose.ui.common.ErrorState
 import com.oxygenupdater.compose.ui.common.PullRefresh
+import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
@@ -33,7 +34,7 @@ fun UpdateScreen(
     workInfoWithStatus: WorkInfoWithStatus,
     forceDownloadErrorDialog: Boolean,
     refresh: () -> Unit,
-    setSubtitle: (String) -> Unit,
+    setSubtitleResId: (Int) -> Unit,
     enqueueDownload: (UpdateData) -> Unit,
     pauseDownload: () -> Unit,
     cancelDownload: (String?) -> Unit,
@@ -53,21 +54,19 @@ fun UpdateScreen(
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
         || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
     ) {
-        val subtitle = stringResource(
-            if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
-            else R.string.update_information_no_update_data_available
-        )
-        LaunchedEffect(subtitle) { setSubtitle(subtitle) }
+        (if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
+        else R.string.update_information_no_update_data_available).let {
+            LaunchedEffect(it) { setSubtitleResId(it) }
+        }
 
         Screen.Update.badge = null
 
         UpToDate(refreshing, updateData)
     } else {
-        val subtitle = stringResource(
-            if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
-            else R.string.update_notification_channel_name
-        )
-        LaunchedEffect(subtitle) { setSubtitle(subtitle) }
+        (if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
+        else R.string.update_notification_channel_name).let {
+            LaunchedEffect(it) { setSubtitleResId(it) }
+        }
 
         Screen.Update.badge = if (updateData.systemIsUpToDate) null else "new"
 
@@ -92,7 +91,7 @@ fun UpdateScreen(
             onDispose { lifecycle.removeObserver(observer) }
         }
 
-        UpdateAvailable(refreshing, updateData, workInfo, downloadStatus, forceDownloadErrorDialog, downloadAction = {
+        UpdateAvailable(refreshing, updateData, workInfo, downloadStatus, forceDownloadErrorDialog, downloadAction = rememberTypedCallback(updateData) {
             when (it) {
                 DownloadAction.Enqueue -> enqueueDownload(updateData)
 
