@@ -1,12 +1,12 @@
 package com.oxygenupdater.compose.ui.onboarding
 
+import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -107,6 +107,7 @@ fun OnboardingScreen(
     StartApp(startApp)
 }
 
+@SuppressLint("PrivateResource")
 @Composable
 private fun DeviceChooser(
     enabledDevices: List<Device>,
@@ -125,11 +126,10 @@ private fun DeviceChooser(
         ) ?: notSelected else stringResource(R.string.summary_please_wait),
     ) { showSheet = true }
 
-    val listState = rememberLazyListState()
     val hide = rememberCallback { showSheet = false }
     if (showSheet) ModalBottomSheet(hide) {
         SelectableSheet(
-            hide, listState,
+            hide,
             enabledDevices, initialDeviceIndex,
             R.string.settings_device, R.string.onboarding_device_chooser_caption,
             PrefManager.PROPERTY_DEVICE_ID,
@@ -138,6 +138,7 @@ private fun DeviceChooser(
     }
 }
 
+@SuppressLint("PrivateResource")
 @Composable
 private fun MethodChooser(
     methodsForDevice: List<UpdateMethod>,
@@ -156,11 +157,10 @@ private fun MethodChooser(
         ) ?: notSelected else stringResource(R.string.summary_update_method),
     ) { showSheet = true }
 
-    val listState = rememberLazyListState()
     val hide = rememberCallback { showSheet = false }
     if (showSheet) ModalBottomSheet(hide) {
         SelectableSheet(
-            hide, listState,
+            hide,
             methodsForDevice, initialMethodIndex,
             R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
             PrefManager.PROPERTY_UPDATE_METHOD_ID,
@@ -169,7 +169,6 @@ private fun MethodChooser(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun StartApp(
     startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs

@@ -1,5 +1,6 @@
 package com.oxygenupdater.compose.ui.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -182,6 +182,7 @@ private fun BecomeContributor() {
     }
 }
 
+@SuppressLint("PrivateResource")
 @Composable
 private fun DeviceChooser(
     enabledDevices: List<Device>,
@@ -201,11 +202,10 @@ private fun DeviceChooser(
         deviceSelectionEnabled
     ) { showSheet = true }
 
-    val listState = rememberLazyListState()
     val hide = rememberCallback { showSheet = false }
     if (showSheet) ModalBottomSheet(hide) {
         SelectableSheet(
-            hide, listState,
+            hide,
             enabledDevices, initialDeviceIndex,
             R.string.settings_device, R.string.onboarding_device_chooser_caption,
             PrefManager.PROPERTY_DEVICE_ID,
@@ -214,6 +214,7 @@ private fun DeviceChooser(
     }
 }
 
+@SuppressLint("PrivateResource")
 @Composable
 private fun MethodChooser(
     methodsForDevice: List<UpdateMethod>,
@@ -230,11 +231,10 @@ private fun MethodChooser(
         } else stringResource(R.string.summary_update_method), methodSelectionEnabled
     ) { showSheet = true }
 
-    val listState = rememberLazyListState()
     val hide = rememberCallback { showSheet = false }
     if (showSheet) ModalBottomSheet(hide) {
         SelectableSheet(
-            hide, listState,
+            hide,
             methodsForDevice, initialMethodIndex,
             R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
             PrefManager.PROPERTY_UPDATE_METHOD_ID,
