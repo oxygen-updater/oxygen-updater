@@ -29,7 +29,6 @@ import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TrackChanges
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -87,7 +86,6 @@ private var previousAdFreeConfig: Triple<Boolean, Int, (() -> Unit)?> = Triple(
     false, R.string.settings_buy_ad_free_label, null
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     lists: SettingsListWrapper,

@@ -8,7 +8,7 @@ import androidx.core.content.edit
 import com.oxygenupdater.compose.ui.Theme
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
-import com.oxygenupdater.utils.Logger
+import com.oxygenupdater.utils.Logger.logError
 import org.koin.java.KoinJavaComponent.getKoin
 
 object PrefManager {
@@ -63,12 +63,12 @@ object PrefManager {
     ) = sharedPreferences.run {
         if (key == null) return@run defaultValue
         when (typecastValue) {
-            null, is String -> PrefManager.getString(key, null)
-            is Int -> PrefManager.getInt(key, NOT_SET)
-            is Long -> PrefManager.getLong(key, NOT_SET_L)
-            is Float -> PrefManager.getFloat(key, -1f)
-            is Boolean -> PrefManager.getBoolean(key, false)
-            is Collection<*> -> PrefManager.getStringSet(key, null)
+            null, is String -> getString(key, null)
+            is Int -> getInt(key, NOT_SET)
+            is Long -> getLong(key, NOT_SET_L)
+            is Float -> getFloat(key, -1f)
+            is Boolean -> getBoolean(key, false)
+            is Collection<*> -> getStringSet(key, null)
             else -> if (contains(key)) all[key] else defaultValue
         } as T
     }
@@ -109,7 +109,7 @@ object PrefManager {
             }
         }
     } catch (e: Exception) {
-        Logger.logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
+        logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
 
         // If this doesn't work, try to use String instead.
         sharedPreferences.edit {

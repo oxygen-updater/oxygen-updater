@@ -90,8 +90,7 @@ class NewsItemActivity : SupportActionBarActivity(
             if (shouldDelayAdStart) {
                 logDebug(TAG, "Showing interstitial ad in 5s")
 
-                // Ensure only the latest task goes through
-                timer.cancel()
+                timer.cancel() // ensure only the latest task goes through
                 timer.schedule(5000) {
                     if (!isFinishing) ad.show(this@NewsItemActivity)
                 }

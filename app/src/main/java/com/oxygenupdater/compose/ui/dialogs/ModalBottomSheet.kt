@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
+import com.oxygenupdater.compose.ui.theme.backgroundVariant
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,10 +29,13 @@ fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Un
     val sheetState = rememberModalBottomSheetState(true)
     BackHandler(sheetState.isVisible, hide)
 
+    val colorScheme = MaterialTheme.colorScheme
     ModalBottomSheet(
         hide,
         sheetState = sheetState,
-        windowInsets = WindowInsets.navigationBars, // allow scrim over status bar
+        containerColor = colorScheme.backgroundVariant, // match bottom nav bar
+        contentColor = colorScheme.onSurface,
+        windowInsets = WindowInsets.navigationBars, // draw behind status bar only, not navigation
         content = content
     )
 }

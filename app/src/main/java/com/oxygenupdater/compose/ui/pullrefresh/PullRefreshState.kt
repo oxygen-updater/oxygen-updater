@@ -85,8 +85,7 @@ fun rememberPullRefreshState(
  */
 @ExperimentalMaterial3Api
 @Stable
-// TODO(compose/perf): reduce complexity and make this stable (animationScope is unstable)
-//  or wait until https://issuetracker.google.com/issues/261760718 brings a first-party solution
+// TODO(compose): switch to first-party solution when it's out: https://issuetracker.google.com/issues/261760718
 class PullRefreshState internal constructor(
     private val animationScope: CoroutineScope,
     private val onRefreshState: State<() -> Unit>,
