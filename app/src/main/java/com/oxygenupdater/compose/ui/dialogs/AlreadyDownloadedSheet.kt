@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Launch
+import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material3.ButtonDefaults.textButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,7 +49,7 @@ fun AlreadyDownloadedSheet(
         OutlinedIconButton({
             onClick(true)
             hide()
-        }, Icons.Rounded.Launch, R.string.install)
+        }, Icons.AutoMirrored.Rounded.Launch, R.string.install)
     }
 }
 

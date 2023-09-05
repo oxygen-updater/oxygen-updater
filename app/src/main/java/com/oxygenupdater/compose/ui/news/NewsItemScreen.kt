@@ -21,10 +21,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Notes
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.Notes
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.ButtonDefaults.textButtonColors
 import androidx.compose.material3.LinearProgressIndicator
@@ -106,7 +106,7 @@ fun NewsItemScreen(
                 showDivider = true
                 IconText(
                     paddingModifier, textModifier,
-                    icon = Icons.Rounded.Notes, text = it,
+                    icon = Icons.AutoMirrored.Rounded.Notes, text = it,
                     style = caption
                 )
             }

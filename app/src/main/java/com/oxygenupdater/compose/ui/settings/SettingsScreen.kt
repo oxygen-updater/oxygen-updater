@@ -343,11 +343,11 @@ private fun AdvancedMode() {
         showSheet = true
     }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
-        AdvancedModeSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) {
+        AdvancedModeSheet {
             putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
             advancedMode = it
+            showSheet = false
         }
     }
 }

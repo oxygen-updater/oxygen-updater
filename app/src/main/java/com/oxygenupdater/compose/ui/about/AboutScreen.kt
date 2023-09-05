@@ -11,7 +11,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.HelpOutline
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.material.icons.rounded.StarOutline
@@ -90,7 +90,7 @@ private fun Buttons() = with(LocalContext.current) {
         userScrollEnabled = false
     ) {
         item {
-            GridItem(Icons.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) }
+            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) }
         }
 
         item {

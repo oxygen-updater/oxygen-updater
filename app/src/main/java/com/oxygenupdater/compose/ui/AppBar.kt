@@ -1,7 +1,6 @@
 package com.oxygenupdater.compose.ui
 
 import android.view.animation.AccelerateInterpolator
-import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.AnimationState
@@ -24,25 +23,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RichTooltipBox
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
-import androidx.compose.material3.rememberRichTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,7 +58,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
 import com.oxygenupdater.compose.icons.LogoNotification
 import com.oxygenupdater.compose.ui.common.ItemDivider
-import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -102,7 +96,7 @@ fun TopAppBar(
         // Nav icon
         IconButton(navIconClicked) {
             Icon(
-                if (root) CustomIcons.LogoNotification else Icons.Rounded.ArrowBack,
+                if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
                 if (root) stringResource(R.string.about) else null,
             )
         }
@@ -131,8 +125,6 @@ fun CollapsingAppBar(
     onNavIconClick: (() -> Unit)? = null,
 ) {
     val (minHeight, maxHeight) = remember { CollapsingAppBarHeight }
-    val (minTitleSize, maxTitleSize) = remember { CollapsingAppBarTitleSize }
-    val (minSubtitleSize, maxSubtitleSize) = remember { CollapsingAppBarSubtitleSize }
 
     val statusBarHeightPx: Int
     val heightOffset: Dp
@@ -191,7 +183,7 @@ fun CollapsingAppBar(
                 .height(minHeight)
                 .padding(horizontal = 4.dp),
         ) {
-            Icon(Icons.Rounded.ArrowBack, null)
+            Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
         }
 
         Column(
@@ -208,53 +200,18 @@ fun CollapsingAppBar(
                     } else 16.dp, end = 16.dp
                 )
         ) {
-            val typography = MaterialTheme.typography
-
-            // Accessibility: show full title on long press if it overflows
-            var showTooltip by rememberSaveableState("showTooltip", false)
-            val tooltipState = rememberRichTooltipState(true)
-            BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
-
-            val colorScheme = MaterialTheme.colorScheme
-            RichTooltipBox(
-                { Text(title) },
-                tooltipState = tooltipState,
-                colors = TooltipDefaults.richTooltipColors(
-                    containerColor = colorScheme.inverseSurface,
-                    contentColor = colorScheme.inverseOnSurface,
-                )
-            ) {
-                Text(
-                    title,
-                    if (showTooltip) Modifier.tooltipTrigger() else Modifier,
-                    overflow = TextOverflow.Ellipsis, maxLines = remember {
-                        derivedStateOf(structuralEqualityPolicy()) {
-                            lerp(4, 1, scrollBehavior.state.collapsedFraction)
-                        }
-                    }.value,
-                    onTextLayout = {
-                        showTooltip = it.hasVisualOverflow
-                    },
-                    style = remember {
-                        derivedStateOf(structuralEqualityPolicy()) {
-                            typography.headlineSmall.copy(
-                                fontSize = lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction).sp
-                            )
-                        }
-                    }.value
-                )
-            }
+            CollapsingAppBarTitle(scrollBehavior, title)
 
             if (subtitle != null) Text(
                 subtitle,
-                overflow = TextOverflow.Ellipsis, maxLines = 1,
-                style = remember {
+                fontSize = remember {
                     derivedStateOf(structuralEqualityPolicy()) {
-                        typography.bodyLarge.copy(
-                            fontSize = lerp(maxSubtitleSize, minSubtitleSize, scrollBehavior.state.collapsedFraction).sp
-                        )
+                        val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
+                        lerp(maxSubtitleSize, minSubtitleSize, scrollBehavior.state.collapsedFraction).sp
                     }
-                }.value
+                }.value,
+                overflow = TextOverflow.Ellipsis, maxLines = 1,
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }, appBarModifier) { measurables, constraints ->
@@ -284,6 +241,38 @@ fun CollapsingAppBar(
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title: String) {
+    // TODO(compose/bug): tooltip is temporarily disabled because it causes a crash when backgrounding the app
+    //  on Compose 1.6.0-alpha05: https://issuetracker.google.com/issues/299500338
+    // Accessibility: show full title on long press if it overflows
+    // var showTooltip by rememberSaveableState("showTooltip", false)
+    // val tooltipState = rememberTooltipState(isPersistent = true)
+    // BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
+    //
+    // TooltipBox(TooltipDefaults.rememberRichTooltipPositionProvider(), {
+    //     val colorScheme = MaterialTheme.colorScheme
+    //     RichTooltip(
+    //         colors = TooltipDefaults.richTooltipColors(
+    //             containerColor = colorScheme.inverseSurface,
+    //             contentColor = colorScheme.inverseOnSurface,
+    //         )
+    //     ) { Text(title) }
+    // }, tooltipState, enableUserInput = showTooltip) {
+    Text(title, fontSize = remember {
+        derivedStateOf(structuralEqualityPolicy()) {
+            val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
+            lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction).sp
+        }
+    }.value, overflow = TextOverflow.Ellipsis, maxLines = remember {
+        derivedStateOf(structuralEqualityPolicy()) {
+            lerp(4, 1, scrollBehavior.state.collapsedFraction)
+        }
+    }.value, /*onTextLayout = { showTooltip = it.hasVisualOverflow },*/ style = MaterialTheme.typography.headlineSmall)
+    // }
 }
 
 private const val LayoutIdImage = "image"

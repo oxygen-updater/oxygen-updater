@@ -20,13 +20,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material.icons.rounded.HighlightOff
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.OpenInBrowser
-import androidx.compose.material.icons.rounded.PlaylistAddCheck
 import androidx.compose.material3.Badge
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -291,7 +291,7 @@ private fun Banner(
         icon = CustomIcons.Info, text = text,
     ) {
         DropdownMenu(showMenu, { showMenu = false }, offset = DpOffset(24.dp, 0.dp)) {
-            DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
+            DropdownMenuItem(Icons.AutoMirrored.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
                 onMarkAllReadClick()
                 showMenu = false
             }

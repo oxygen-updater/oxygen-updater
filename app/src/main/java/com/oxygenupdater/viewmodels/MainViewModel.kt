@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
@@ -119,8 +118,8 @@ class MainViewModel(
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
-    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_DOWNLOAD).asFlow().combine(
-        workManager.getWorkInfosForUniqueWorkLiveData(WORK_UNIQUE_MD5_VERIFICATION).asFlow()
+    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkFlow(WORK_UNIQUE_DOWNLOAD).combine(
+        workManager.getWorkInfosForUniqueWorkFlow(WORK_UNIQUE_MD5_VERIFICATION)
     ) { download, verification ->
         val infoAndStatus = if (download.isNotEmpty()) download[0].let {
             val status = when (it.state) {

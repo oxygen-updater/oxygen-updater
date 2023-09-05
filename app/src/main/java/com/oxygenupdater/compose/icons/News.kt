@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 val CustomIcons.News: ImageVector
     get() {
         if (_news != null) return _news!!
-        _news = materialIcon("News") {
+        _news = materialIcon("News", autoMirror = true) {
             materialPath {
                 moveTo(20f, 3f)
                 horizontalLineTo(4f)

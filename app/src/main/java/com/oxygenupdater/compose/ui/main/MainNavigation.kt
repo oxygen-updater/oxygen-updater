@@ -2,7 +2,7 @@ package com.oxygenupdater.compose.ui.main
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.HelpOutline
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
 import androidx.compose.runtime.Immutable
@@ -38,7 +38,7 @@ sealed class Screen(
     object Device : Screen(DeviceRoute, Icons.Rounded.PhoneAndroid, R.string.device_information_header)
 
     @Stable
-    object About : Screen(AboutRoute, Icons.Rounded.HelpOutline, R.string.about, true)
+    object About : Screen(AboutRoute, Icons.AutoMirrored.Rounded.HelpOutline, R.string.about, true)
 
     @Stable
     object Settings : Screen(SettingsRoute, CustomIcons.Settings, R.string.settings)

@@ -26,10 +26,7 @@ import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
 
 @Composable
-fun ColumnScope.AdvancedModeSheet(
-    hide: () -> Unit,
-    onClick: (Boolean) -> Unit,
-) {
+fun ColumnScope.AdvancedModeSheet(onClick: (Boolean) -> Unit) {
     SheetHeader(R.string.settings_advanced_mode)
 
     Column(
@@ -71,14 +68,12 @@ fun ColumnScope.AdvancedModeSheet(
     ) {
         TextButton({
             onClick(false)
-            hide()
         }, Modifier.padding(end = 8.dp), colors = textButtonColors(contentColor = colorScheme.error)) {
             Text(stringResource(android.R.string.cancel))
         }
 
         OutlinedIconButton({
             onClick(true)
-            hide()
         }, Icons.Rounded.CheckCircleOutline, R.string.enable)
     }
 }
@@ -86,5 +81,5 @@ fun ColumnScope.AdvancedModeSheet(
 @PreviewThemes
 @Composable
 fun PreviewAdvancedModeSheet() = PreviewModalBottomSheet {
-    AdvancedModeSheet(hide = {}) {}
+    AdvancedModeSheet {}
 }

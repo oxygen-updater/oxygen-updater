@@ -3,9 +3,9 @@ package com.oxygenupdater.compose.ui.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.GroupAdd
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.PlaylistAddCheck
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,7 +54,7 @@ fun MainMenu(
         val hide = rememberCallback { showMenu = false }
         DropdownMenu(showMenu, hide) {
             // Mark all articles read
-            if (showMarkAllRead) DropdownMenuItem(Icons.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
+            if (showMarkAllRead) DropdownMenuItem(Icons.AutoMirrored.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
                 markAllRead()
                 hide()
             }

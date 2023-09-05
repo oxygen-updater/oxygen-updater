@@ -40,6 +40,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material.icons.rounded.Close
@@ -48,7 +49,6 @@ import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
-import androidx.compose.material.icons.rounded.Launch
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults.textButtonColors
 import androidx.compose.material3.HorizontalDivider
@@ -275,7 +275,7 @@ fun UpdateAvailable(
         listOf(VERIFY_FILE_PERMISSION, DOWNLOAD_FILE_PERMISSION)
     )
 
-    val hasDownloadPermissions = if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermission) {
+    val hasDownloadPermissions = if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermissionState) {
         downloadPermissionState.status.isGranted
     } else if (downloadPermissionState is MultiplePermissionsState) downloadPermissionState.allPermissionsGranted else {
         // If state is somehow something else, we can't check if permissions are granted.
@@ -287,7 +287,7 @@ fun UpdateAvailable(
 
     val requestDownloadPermissions = remember(downloadPermissionState) {
         {
-            if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermission) {
+            if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermissionState) {
                 downloadPermissionState.launchPermissionRequest()
             } else if (downloadPermissionState is MultiplePermissionsState) {
                 downloadPermissionState.launchMultiplePermissionRequest()
@@ -488,7 +488,7 @@ fun UpdateAvailable(
             details = null
             sizeOrProgressText = context.formatFileSize(downloadSize)
             progress = null
-            actionButtonConfig = Triple(false, Icons.Rounded.Launch, colorScheme.primary)
+            actionButtonConfig = Triple(false, Icons.AutoMirrored.Rounded.Launch, colorScheme.primary)
             onDownloadClick = { showAlreadyDownloadedSheet = true }
 
             // Open install guide automatically, but only after the normal download flow completes
@@ -794,7 +794,7 @@ private fun ManageStorageDialog(
             .putExtra(StorageManager.EXTRA_REQUESTED_BYTES, bytes)
         launcher.launch(intent)
         hide()
-    }, Icons.Rounded.Launch, android.R.string.ok)
+    }, Icons.AutoMirrored.Rounded.Launch, android.R.string.ok)
 }, dismissButton = {
     TextButton(hide, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
         Text(stringResource(R.string.download_error_close))
@@ -808,7 +808,7 @@ private fun ManageStorageDialog(
 @RequiresApi(VERSION_CODES.R)
 @Composable
 private fun rememberAllFilesPermissionState(context: Context) = remember(context) {
-    AllFilesPermission(context)
+    AllFilesPermissionState(context)
 }.also {
     // Refresh the permission status when the lifecycle is resumed
     PermissionLifecycleCheckerEffect(it)
@@ -821,7 +821,7 @@ private fun rememberAllFilesPermissionState(context: Context) = remember(context
 @RequiresApi(VERSION_CODES.R)
 @Composable
 private fun PermissionLifecycleCheckerEffect(
-    permissionState: AllFilesPermission,
+    permissionState: AllFilesPermissionState,
     lifecycleEvent: Lifecycle.Event = Lifecycle.Event.ON_RESUME,
 ) {
     // Check if the permission was granted when the lifecycle is resumed.
@@ -845,7 +845,7 @@ private fun PermissionLifecycleCheckerEffect(
 
 @OptIn(ExperimentalPermissionsApi::class)
 @RequiresApi(VERSION_CODES.R)
-private class AllFilesPermission(private val context: Context) : PermissionState {
+private class AllFilesPermissionState(private val context: Context) : PermissionState {
 
     override val permission = Manifest.permission.MANAGE_EXTERNAL_STORAGE
     override var status by mutableStateOf(permissionStatus)

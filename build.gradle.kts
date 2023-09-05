@@ -1,33 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    // https://developer.android.com/studio/releases/gradle-plugin
+    // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
+    id("com.android.application") version "8.1.1" apply false
 
-    dependencies {
-        // https://developer.android.com/studio/releases/gradle-plugin
-        classpath("com.android.tools.build:gradle:8.1.1")
+    // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
+    id("com.google.gms.google-services") version "4.3.15" apply false
 
-        // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-        classpath("com.google.gms:google-services:4.3.15")
+    // https://firebase.google.com/support/release-notes/android
+    id("com.google.firebase.crashlytics") version "2.9.9" apply false
 
-        // https://firebase.google.com/support/release-notes/android
-        classpath("com.google.firebase:firebase-crashlytics-gradle:2.9.8")
+    id("com.google.devtools.ksp") version KSP_VERSION apply false
 
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN_VERSION")
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle.kts files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+    id("org.jetbrains.kotlin.android") version KOTLIN_VERSION apply false
 }
 
 tasks.register("clean").configure {

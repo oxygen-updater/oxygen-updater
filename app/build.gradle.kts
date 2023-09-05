@@ -7,8 +7,7 @@ plugins {
     id("com.google.firebase.crashlytics")
     id("kotlin-parcelize")
     kotlin("android")
-    kotlin("kapt")
-    id("com.google.devtools.ksp") version KSP_VERSION
+    id("com.google.devtools.ksp")
 }
 
 fun loadProperties(
@@ -67,6 +66,7 @@ android {
             // This ensures that the app won't crash if the user selects a
             // language that isn't in their device language list.
             // This'll obviously increase APK size significantly.
+            @Suppress("UnstableApiUsage")
             enableSplit = false
         }
     }
@@ -74,10 +74,9 @@ android {
     packaging {
         resources.excludes.addAll(
             arrayOf(
-                "META-INF/NOTICE.txt",
-                "META-INF/LICENSE.txt",
-                "META-INF/LICENSE",
-                "META-INF/NOTICE",
+                "/META-INF/{NOTICE,LICENSE}.txt",
+                "/META-INF/{NOTICE,LICENSE}",
+                "/META-INF/{AL2.0,LGPL2.1}",
             )
         )
     }
@@ -219,6 +218,7 @@ android {
 
     androidResources {
         // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
+        @Suppress("UnstableApiUsage")
         generateLocaleConfig = true
     }
 
@@ -247,17 +247,6 @@ ksp {
     arg("room.incremental", "true")
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io") // for com.github.topjohnwu.libsu
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
@@ -270,18 +259,18 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines")
 
     // https://developer.android.com/jetpack/androidx/releases/annotation
-    val annotation = "1.6.0"
+    val annotation = "1.7.0"
     implementation("androidx.annotation:annotation:$annotation")
 
     // https://developer.android.com/jetpack/androidx/releases/browser
     implementation("androidx.browser:browser:1.6.0")
 
     // https://developer.android.com/jetpack/androidx/releases/core
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
-    val lifecycle = "2.6.1"
+    val lifecycle = "2.6.2"
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
@@ -297,11 +286,11 @@ dependencies {
     implementation("androidx.preference:preference-ktx:1.2.1")
 
     // https://developer.android.com/jetpack/androidx/releases/work
-    implementation("androidx.work:work-runtime-ktx:2.8.1")
+    implementation("androidx.work:work-runtime:2.9.0-beta01")
 
     // https://developer.android.com/jetpack/androidx/releases/compose#versions
-    val compose = "1.6.0-alpha04" // keep in sync with Kotlin & accompanist version
-    val composeM3 = "1.2.0-alpha06"
+    val compose = "1.6.0-alpha05" // keep in sync with Kotlin & accompanist version
+    val composeM3 = "1.2.0-alpha07"
     implementation("androidx.compose.animation:animation:$compose")
     implementation("androidx.compose.animation:animation-graphics:$compose")
     implementation("androidx.compose.foundation:foundation:$compose")
@@ -314,10 +303,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:$compose")
 
     // https://developer.android.com/jetpack/androidx/releases/activity
-    implementation("androidx.activity:activity-compose:1.8.0-alpha07")
+    implementation("androidx.activity:activity-compose:1.8.0-beta01")
 
     // https://developer.android.com/jetpack/androidx/releases/navigation#versions
-    implementation("androidx.navigation:navigation-compose:2.7.1")
+    implementation("androidx.navigation:navigation-compose:2.7.2")
 
     // https://github.com/google/accompanist#compose-versions
     // https://github.com/google/accompanist/releases
@@ -328,13 +317,13 @@ dependencies {
     implementation("com.google.accompanist:accompanist-webview:$accompanist")
 
     // https://firebase.google.com/support/release-notes/android
-    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
 
     // https://developer.android.com/google/play/billing/release-notes
-    val playBilling = "5.1.0"
+    val playBilling = "5.2.1"
     implementation("com.android.billingclient:billing:$playBilling")
     implementation("com.android.billingclient:billing-ktx:$playBilling")
 
@@ -374,7 +363,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
-    val libsu = "5.1.0"
+    val libsu = "5.2.1"
     implementation("com.github.topjohnwu.libsu:core:$libsu")
     implementation("com.github.topjohnwu.libsu:nio:$libsu")
     implementation("com.github.topjohnwu.libsu:service:$libsu")
@@ -384,10 +373,4 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_VERSION")
     testImplementation("io.insert-koin:koin-test:$koin")
     testImplementation("androidx.annotation:annotation:$annotation")
-
-    // https://developer.android.com/jetpack/androidx/releases/test
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.test:rules:1.5.0")
-    androidTestImplementation("androidx.test:runner:1.5.2")
 }
