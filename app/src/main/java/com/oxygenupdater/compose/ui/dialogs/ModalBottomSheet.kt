@@ -1,6 +1,5 @@
 package com.oxygenupdater.compose.ui.dialogs
 
-import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,6 +13,7 @@ import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -29,6 +29,7 @@ import com.oxygenupdater.compose.ui.theme.backgroundVariant
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@NonRestartableComposable
 fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
     val colorScheme = MaterialTheme.colorScheme
     // TODO(compose/bug): content behind sheet not clickable if dismissed via swipe
@@ -43,9 +44,8 @@ fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Un
 }
 
 @Composable
-fun SheetHeader(
-    @StringRes titleResId: Int,
-) = Text(
+@NonRestartableComposable
+fun SheetHeader(@StringRes titleResId: Int) = Text(
     stringResource(titleResId),
     Modifier.padding(start = 16.dp, end = 4.dp, bottom = 16.dp),
     MaterialTheme.colorScheme.primary,
@@ -54,6 +54,7 @@ fun SheetHeader(
 )
 
 @Composable
+@NonRestartableComposable
 fun SheetCaption(@StringRes captionResId: Int) {
     ItemDivider()
     Text(

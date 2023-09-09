@@ -36,6 +36,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -414,6 +415,7 @@ private fun SwitchItem(
 }
 
 @Composable
+@NonRestartableComposable
 private fun Header(@StringRes textResId: Int) {
     ItemDivider(Modifier.padding(bottom = 16.dp))
     Text(
@@ -426,6 +428,7 @@ private fun Header(@StringRes textResId: Int) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
+@NonRestartableComposable
 private fun Item(
     icon: ImageVector,
     @StringRes titleResId: Int, subtitle: String?,

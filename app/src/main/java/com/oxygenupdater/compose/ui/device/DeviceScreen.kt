@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -229,6 +230,7 @@ fun DeviceSoftwareInfo(showHeader: Boolean = true) {
 }
 
 @Composable
+@NonRestartableComposable
 private fun Header(@StringRes textResId: Int) = Text(
     stringResource(textResId),
     Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
@@ -283,6 +285,7 @@ private fun DeviceHardwareInfo() {
 }
 
 @Composable
+@NonRestartableComposable
 private fun Item(
     icon: ImageVector,
     @StringRes titleResId: Int,

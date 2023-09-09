@@ -9,12 +9,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 
 @Composable
+@NonRestartableComposable
 fun AlertDialog(
     action: (Boolean) -> Unit,
     @StringRes titleResId: Int,
@@ -22,15 +24,15 @@ fun AlertDialog(
     confirmIconAndResId: Pair<ImageVector, Int>? = null,
     content: @Composable() (ColumnScope.() -> Unit)? = null,
 ) = AlertDialog({
-    action.invoke(false)
+    action(false)
 }, confirmButton = confirm@{
     val (icon, resId) = confirmIconAndResId ?: return@confirm
     OutlinedIconButton({
-        action.invoke(true)
+        action(true)
     }, icon, resId)
 }, dismissButton = {
     TextButton({
-        action.invoke(false)
+        action(false)
     }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
         Text(stringResource(R.string.download_error_close))
     }

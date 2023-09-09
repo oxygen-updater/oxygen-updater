@@ -20,9 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -51,6 +48,7 @@ import com.oxygenupdater.compose.ui.TopAppBar
 import com.oxygenupdater.compose.ui.about.AboutScreen
 import com.oxygenupdater.compose.ui.common.BannerAd
 import com.oxygenupdater.compose.ui.common.rememberCallback
+import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.common.rememberTypedCallback
 import com.oxygenupdater.compose.ui.device.DeviceScreen
 import com.oxygenupdater.compose.ui.device.IncorrectDeviceDialog
@@ -189,10 +187,8 @@ class MainActivity : BaseActivity() {
             IncorrectDeviceDialog(it)
         }
 
-        var snackbarText by remember {
-            // Referential equality because we're reusing static Pairs
-            mutableStateOf<Pair<Int, Int>?>(null, referentialEqualityPolicy())
-        }
+        // Referential equality because we're reusing static Pairs
+        var snackbarText by rememberSaveableState<Pair<Int, Int>?>("snackbarText", null, true)
         AppUpdateInfo(
             viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             { snackbarText?.first },
@@ -212,8 +208,7 @@ class MainActivity : BaseActivity() {
 
         Column {
             val startScreen = remember(startPage) { screens.getOrNull(startPage) ?: Screen.Update }
-            val initialSubtitleResId = if (startScreen.useVersionName) 0 else startScreen.labelResId
-            var subtitleResId by remember { mutableIntStateOf(initialSubtitleResId) }
+            var subtitleResId by rememberSaveableState("subtitleResId", if (startScreen.useVersionName) 0 else startScreen.labelResId)
 
             val navController = rememberNavController()
             val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()

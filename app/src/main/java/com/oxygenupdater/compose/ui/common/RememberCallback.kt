@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.oxygenupdater.compose.ui.common
 
 import androidx.compose.runtime.Composable
@@ -12,30 +14,30 @@ import androidx.compose.runtime.remember
  * We need to explicitly remember them to avoid unnecessarily recomposing children.
  */
 @Composable
-fun rememberCallback(
-    callback: @DisallowComposableCalls () -> Unit,
+inline fun rememberCallback(
+    noinline callback: @DisallowComposableCalls () -> Unit,
 ) = remember { callback }
 
 @Composable
-fun rememberCallback(
+inline fun rememberCallback(
     key1: Any?,
-    callback: @DisallowComposableCalls () -> Unit,
+    noinline callback: @DisallowComposableCalls () -> Unit,
 ) = remember(key1) { callback }
 
 @Composable
-fun rememberCallback(
+inline fun rememberCallback(
     key1: Any?,
     key2: Any?,
-    callback: @DisallowComposableCalls () -> Unit,
+    noinline callback: @DisallowComposableCalls () -> Unit,
 ) = remember(key1, key2) { callback }
 
 @Composable
-fun <T, R> rememberTypedCallback(
-    callback: @DisallowComposableCalls (T) -> R,
+inline fun <T, R> rememberTypedCallback(
+    noinline callback: @DisallowComposableCalls (T) -> R,
 ) = remember { callback }
 
 @Composable
-fun <T, R> rememberTypedCallback(
+inline fun <T, R> rememberTypedCallback(
     key1: Any?,
-    callback: @DisallowComposableCalls (T) -> R,
+    noinline callback: @DisallowComposableCalls (T) -> R,
 ) = remember(key1) { callback }

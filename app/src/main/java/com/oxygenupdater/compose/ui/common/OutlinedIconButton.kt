@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -22,6 +23,7 @@ import com.oxygenupdater.compose.ui.theme.PreviewThemes
 
 /** Leading [icon] with [Text] in an [OutlinedButton] with a tined border */
 @Composable
+@NonRestartableComposable
 fun OutlinedIconButton(
     onClick: () -> Unit,
     icon: ImageVector,
