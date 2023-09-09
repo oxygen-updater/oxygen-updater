@@ -152,10 +152,7 @@ class ReadOtaDbWorker(
         }
 
         val count = validSubmittedFilenames.size
-        if (count != 0) LocalNotifications.showContributionSuccessfulNotification(
-            context,
-            validSubmittedFilenames
-        )
+        if (count != 0) LocalNotifications.showContributionSuccessfulNotification(context, validSubmittedFilenames)
 
         // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
         PrefManager.putInt(

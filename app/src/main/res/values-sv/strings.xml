@@ -91,7 +91,7 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="summary_please_wait">Var god vänta…</string>
 	<string name="summary_update_method">Välj en enhet först</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Vissa viktiga meddelanden är inaktiverade: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Vissa viktiga meddelanden är inaktiverade:</string>
 	<string name="summary_theme">Välj tema</string>
 	<string name="summary_language">Ställ in språk</string>
 	<string name="summary_privacy_policy">Visa online</string>
@@ -209,6 +209,8 @@ Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetod
 	<string name="about_email_button_text">E-post</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Håll dig underrättad"</string>
+	<string name="notification_permission_text">"Tillåt att appen meddelar dig om OTA-uppdateringar, nyheter, pågående nedladdningsstatus och andra viktiga saker. Du kan finjustera dina preferenser senare i appens inställningar."</string>
 	<string name="notification_new_device_text">"%1$s har nu våran support. Öppna appen för att välja denna enhet."</string>
 	<string name="notification_no_notification_support">"Installera eller uppdatera Google Play services för att slå på push-notifikationer."</string>
 	<string name="notification_version">"%1$s är nu tillgänglig för %2$s!"</string>

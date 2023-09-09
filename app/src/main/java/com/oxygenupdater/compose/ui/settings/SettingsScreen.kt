@@ -35,6 +35,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,9 +47,12 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.compose.icons.CustomIcons
@@ -77,9 +81,7 @@ import com.oxygenupdater.internal.settings.PrefManager.putBoolean
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.utils.ContributorUtils
-import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotificationUtils
 
 private var previousAdFreeConfig: Triple<Boolean, Int, (() -> Unit)?> = Triple(
@@ -157,8 +159,7 @@ fun SettingsScreen(
 
     Item(
         CustomIcons.LogoNotification,
-        R.string.app_name,
-        "v${BuildConfig.VERSION_NAME}",
+        R.string.app_name, "v${BuildConfig.VERSION_NAME}",
         onClick = openAboutScreen
     )
     //endregion
@@ -170,8 +171,7 @@ private fun BecomeContributor() {
     val runningInPreview = LocalInspectionMode.current
     if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
         Icons.Outlined.GroupAdd,
-        R.string.contribute,
-        stringResource(R.string.settings_contribute_label),
+        R.string.contribute, stringResource(R.string.settings_contribute_label),
     ) { showSheet = true }
 
     val hide = rememberCallback { showSheet = false }
@@ -191,13 +191,14 @@ private fun DeviceChooser(
 
     val deviceSelectionEnabled = enabledDevices.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
+    val subtitle = if (deviceSelectionEnabled) {
+        PrefManager.getString(PrefManager.PROPERTY_DEVICE, notSelected) ?: notSelected
+    } else stringResource(R.string.summary_please_wait)
     Item(
         Icons.Rounded.PhoneAndroid,
-        R.string.settings_device,
-        if (deviceSelectionEnabled) {
-            PrefManager.getString(PrefManager.PROPERTY_DEVICE, notSelected) ?: notSelected
-        } else stringResource(R.string.summary_please_wait),
-        deviceSelectionEnabled
+        R.string.settings_device, subtitle,
+        deviceSelectionEnabled,
+        subtitleIsError = subtitle == notSelected
     ) { showSheet = true }
 
     val hide = rememberCallback { showSheet = false }
@@ -223,10 +224,14 @@ private fun MethodChooser(
 
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
+    val subtitle = if (methodSelectionEnabled) {
+        PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, notSelected) ?: notSelected
+    } else stringResource(R.string.summary_update_method)
     Item(
-        Icons.Outlined.CloudDownload, R.string.settings_update_method, if (methodSelectionEnabled) {
-            PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, notSelected) ?: notSelected
-        } else stringResource(R.string.summary_update_method), methodSelectionEnabled
+        Icons.Outlined.CloudDownload,
+        R.string.settings_update_method, subtitle,
+        methodSelectionEnabled,
+        subtitleIsError = subtitle == notSelected
     ) { showSheet = true }
 
     val hide = rememberCallback { showSheet = false }
@@ -247,34 +252,54 @@ private fun Notifications() {
     val notificationUtils = remember { NotificationUtils(context) }
 
     val runningInPreview = LocalInspectionMode.current
-    val notifSummary = if (runningInPreview) stringResource(R.string.summary_on)
-    else if (notificationUtils.isDisabled) stringResource(R.string.summary_off)
-    else {
-        val disabled1 = notificationUtils.isDisabled(UPDATE_NOTIFICATION_CHANNEL_ID)
-        val disabled2 = notificationUtils.isDisabled(NEWS_NOTIFICATION_CHANNEL_ID)
-        val disabled3 = notificationUtils.isDisabled(DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
-        val disabled = arrayOf(disabled1, disabled2, disabled3)
-        if (disabled.none { it }) stringResource(R.string.summary_on) else {
-            val builder = StringBuilder()
-            disabled.forEachIndexed { index, flag ->
-                if (index > 0) builder.append("\", \"")
-                if (flag) when (index) {
-                    0 -> R.string.update_notification_channel_name
-                    1 -> R.string.news_notification_channel_name
-                    2 -> R.string.download_and_installation_notifications_group_name
-                    else -> throw ArrayIndexOutOfBoundsException(index)
-                }.let {
-                    builder.append(stringResource(it))
-                }
+    var notifStatus by remember {
+        mutableStateOf(if (runningInPreview) NotifStatus() else notificationUtils.toNotifStatus())
+    }
+
+    if (!runningInPreview) {
+        // Re-run above onResume
+        val observer = remember {
+            LifecycleEventObserver { _, event ->
+                if (event != Lifecycle.Event.ON_RESUME) return@LifecycleEventObserver
+
+                notifStatus = notificationUtils.toNotifStatus()
             }
-            stringResource(R.string.summary_important_notifications_disabled, builder.toString())
         }
+
+        val lifecycle = LocalLifecycleOwner.current.lifecycle
+        DisposableEffect(lifecycle, observer) {
+            lifecycle.addObserver(observer)
+            onDispose { lifecycle.removeObserver(observer) }
+        }
+    }
+
+    val disabled = notifStatus.disabled
+    val subtitleIsError: Boolean
+    val notifSummary = if (disabled.isNullOrEmpty()) {
+        subtitleIsError = true
+        stringResource(R.string.summary_off)
+    } else if (disabled.none { it }) {
+        subtitleIsError = false
+        stringResource(R.string.summary_on)
+    } else {
+        subtitleIsError = true
+        val builder = StringBuilder()
+        disabled.forEachIndexed { index, flag ->
+            if (!flag) return@forEachIndexed
+            when (index) {
+                0 -> R.string.update_notification_channel_name
+                1 -> R.string.news_notification_channel_name
+                2 -> R.string.download_status_notification_channel_name
+                else -> throw ArrayIndexOutOfBoundsException(index)
+            }.let { builder.append("\n\u2022 " + stringResource(it)) }
+        }
+        stringResource(R.string.summary_important_notifications_disabled) + builder.toString()
     }
 
     Item(
         Icons.Rounded.NotificationsNone,
-        R.string.preference_header_notifications,
-        notifSummary,
+        R.string.preference_header_notifications, notifSummary,
+        subtitleIsError = subtitleIsError
     ) {
         val packageName = context.packageName
         val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Intent(
@@ -405,6 +430,7 @@ private fun Item(
     icon: ImageVector,
     @StringRes titleResId: Int, subtitle: String?,
     enabled: Boolean = true,
+    subtitleIsError: Boolean = false,
     content: @Composable (RowScope.() -> Unit)? = null,
     onClick: () -> Unit,
 ) = Row(
@@ -415,7 +441,10 @@ private fun Item(
         .padding(16.dp), // must be after `clickable`
     verticalAlignment = Alignment.CenterVertically
 ) {
-    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
+    val colorScheme = MaterialTheme.colorScheme
+    val typography = MaterialTheme.typography
+
+    Icon(icon, stringResource(R.string.icon), tint = colorScheme.primary)
 
     Column(
         Modifier
@@ -425,14 +454,14 @@ private fun Item(
         Text(
             stringResource(titleResId),
             Modifier.basicMarquee(), maxLines = 1,
-            style = MaterialTheme.typography.titleMedium
+            style = typography.titleMedium
         )
 
         if (subtitle != null) Text(
             subtitle,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (subtitleIsError) colorScheme.error else colorScheme.onSurfaceVariant,
             overflow = TextOverflow.Ellipsis, maxLines = 10,
-            style = MaterialTheme.typography.bodyMedium
+            style = typography.bodyMedium
         )
     }
 

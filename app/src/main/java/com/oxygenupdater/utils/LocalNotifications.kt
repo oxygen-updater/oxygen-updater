@@ -27,7 +27,6 @@ import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID
 import org.koin.java.KoinJavaComponent.getKoin
 
-// TODO(compose): convert to composables (e.g. getString -> stringResource)
 object LocalNotifications {
 
     private const val TAG = "LocalNotifications"
@@ -37,10 +36,7 @@ object LocalNotifications {
     /**
      * Contribute: shows a notification that a update file has been submitted successfully.
      */
-    fun showContributionSuccessfulNotification(
-        context: Context,
-        filenameSet: Set<String>,
-    ) = try {
+    fun showContributionSuccessfulNotification(context: Context, filenameSet: Set<String>) = try {
         val contentIntent = PendingIntent.getActivity(
             context,
             0,

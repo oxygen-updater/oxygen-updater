@@ -99,7 +99,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Lütfen bekleyin…</string>
 	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Bazı önemli bildirimler devre dışı bırakılır: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Bazı önemli bildirimler devre dışı bırakılır:</string>
 	<string name="summary_theme">Temayı seçiniz</string>
 	<string name="summary_language">Dili ayarla</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
@@ -209,6 +209,8 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="about_email_button_text">E-posta</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Haberdar olun"</string>
+	<string name="notification_permission_text">"Lütfen uygulamanın sizi OTA güncellemeleri, haberler, devam eden indirme durumu ve diğer önemli şeyler hakkında bilgilendirmesine izin verin. Tercihlerinize daha sonra uygulamanın ayarlarından ince ayar yapabilirsiniz."</string>
 	<string name="notification_new_device_text">"Artık bu cihazda destekleniyor %1$s. Cihazı seçmek için uygulamayı açın."</string>
 	<string name="notification_no_notification_support">Bildirimler için uygulamayı güncel tutmayı unutmayın.</string>
 	<string name="notification_version">%1$s artık mevcut %2$s bu cihazlar için!</string>

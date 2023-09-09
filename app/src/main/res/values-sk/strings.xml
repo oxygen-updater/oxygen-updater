@@ -91,7 +91,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="summary_please_wait">Prosím čakajte…</string>
 	<string name="summary_update_method">Najskôr vyberte zariadenie</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Niektoré dôležité oznámenia sú vypnuté: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Niektoré dôležité oznámenia sú vypnuté:</string>
 	<string name="summary_theme">Nastaviť tému</string>
 	<string name="summary_language">Nastaviť jazyk</string>
 	<string name="summary_privacy_policy">Zobraziť online</string>
@@ -199,6 +199,8 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Zostaňte informovaní"</string>
+	<string name="notification_permission_text">"Povoľte aplikácii, aby vás upozorňovala na aktualizácie OTA, novinky, stav prebiehajúceho sťahovania a ďalšie dôležité veci. Svoje nastavenia môžete neskôr doladiť v nastaveniach aplikácie."</string>
 	<string name="notification_new_device_text">%1$s je teraz podporovaný. Otvorte aplikáciu a vyberte toto zariadenie.</string>
 	<string name="notification_no_notification_support">Nainštalujte alebo aktualizujte Google Play services a povoľte push notifikácie.</string>
 	<string name="notification_version">%1$s je k dispozícii pre %2$s!</string>

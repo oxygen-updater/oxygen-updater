@@ -93,7 +93,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Vent venligst …</string>
 	<string name="summary_update_method">vælg en enhed først</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Nogle vigtige meddelelser er deaktiveret: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Nogle vigtige meddelelser er deaktiveret:</string>
 	<string name="summary_theme">Vælg et tema</string>
 	<string name="summary_language">Indstil sprog</string>
 	<string name="summary_privacy_policy">Se online</string>
@@ -203,6 +203,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Bliv underrettet"</string>
+	<string name="notification_permission_text">"Tillad venligst, at appen giver dig besked om OTA-opdateringer, nyheder, status for igangværende download og andre vigtige ting. Du kan finjustere dine præferencer senere i appens indstillinger."</string>
 	<string name="notification_new_device_text">Enheden %1$s undertstøttes nu. Åben appen, for at vælge denne enhed.</string>
 	<string name="notification_no_notification_support">Installer eller opdatér Google Play tjenester, for at aktivere push-meddelelser.</string>
 	<string name="notification_version">%1$s er nu tilgængelig til enheden %2$s!</string>

@@ -90,7 +90,7 @@
 	<string name="summary_off">已禁用</string>
 	<string name="summary_please_wait">请稍等…</string>
 	<string name="summary_update_method">请先选择一个设备</string>
-	<string name="summary_important_notifications_disabled">一些重要的通知被禁用：\"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">一些重要的通知被禁用:</string>
 	<string name="summary_theme">设定主题</string>
 	<string name="summary_language">设定语言</string>
 	<string name="summary_privacy_policy">在线查看</string>
@@ -197,6 +197,8 @@
 	<string name="about_email_button_text">邮箱</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"保持通知"</string>
+	<string name="notification_permission_text">"请允许应用程序通知您 OTA 更新、新闻、正在进行的下载状态以及其他重要信息。您可以稍后在应用程序的设置中对偏好进行微调。"</string>
 	<string name="notification_new_device_text">现已支持 %1$s。打开 App 来选择您的设备。</string>
 	<string name="notification_no_notification_support">安装或升级您的 Google Play 服务来开启推送服务</string>
 	<string name="notification_version">恭喜 %2$s! 喜提 %1$s！</string>

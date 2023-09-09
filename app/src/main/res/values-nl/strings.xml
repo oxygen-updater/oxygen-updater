@@ -91,7 +91,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="summary_please_wait">Even geduld…</string>
 	<string name="summary_update_method">Selecteer eerst een apparaat</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Sommige belangrijke meldingen zijn uitgeschakeld: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Sommige belangrijke meldingen zijn uitgeschakeld:</string>
 	<string name="summary_theme">Selecteer een thema</string>
 	<string name="summary_language">Taal instellen</string>
 	<string name="summary_privacy_policy">Bekijk online</string>
@@ -202,6 +202,8 @@ Dit kan handig zijn als je:"</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Blijf op de hoogte"</string>
+	<string name="notification_permission_text">"Sta de app toe om je op de hoogte te stellen van OTA-updates, nieuws, de downloadstatus en andere belangrijke zaken. Je kunt je voorkeuren later aanpassen in de instellingen van de app."</string>
 	<string name="notification_new_device_text">De %1$s wordt nu ondersteund. Open de app om dit apparaat te kiezen.</string>
 	<string name="notification_no_notification_support">Installeer Google Play Services of werk deze bij om pushnotificaties te kunnen ontvangen.</string>
 	<string name="notification_version">%1$s is nu beschikbaar voor de %2$s!</string>

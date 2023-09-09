@@ -85,7 +85,7 @@
 	<string name="summary_please_wait">пожалуйста, подождите…</string>
 	<string name="summary_update_method">Сначала выберите устройство</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Некоторые важные уведомления отключены: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Некоторые важные уведомления отключены:</string>
 	<string name="summary_theme">Выберите тему</string>
 	<string name="summary_language">Установить язык</string>
 	<string name="summary_privacy_policy">Просмотреть онлайн</string>
@@ -200,6 +200,8 @@
 	<string name="about_email_button_text">Эл. адрес</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Оставайтесь в курсе событий"</string>
+	<string name="notification_permission_text">"Разрешите приложению уведомлять вас об обновлениях OTA, новостях, текущем состоянии загрузки и других важных вещах. В дальнейшем вы можете изменить свои предпочтения в настройках приложения."</string>
 	<string name="notification_new_device_text">"%1$s теперь поддерживается. Откройте приложение, чтобы выбрать это устройство."</string>
 	<string name="notification_no_notification_support">"Установите или обновите службы Google Play, чтобы включить push-уведомления."</string>
 	<string name="notification_version">"%1$s доступен для %2$s!"</string>

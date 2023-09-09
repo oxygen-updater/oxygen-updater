@@ -90,7 +90,7 @@ Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a 
 	<string name="summary_please_wait">Vă rugăm așteptați…</string>
 	<string name="summary_update_method">Mai întâi selectați un dispozitiv</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Unele notificări importante sunt dezactivate: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Unele notificări importante sunt dezactivate:</string>
 	<string name="summary_theme">Alegeți tema</string>
 	<string name="summary_language">Alegeți limba</string>
 	<string name="summary_privacy_policy">Vizualizați online</string>
@@ -198,6 +198,8 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="about_email_button_text">E-mail</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Rămâneți notificat"</string>
+	<string name="notification_permission_text">"Permiteți aplicației să vă notifice cu privire la actualizări OTA, noutăți, starea descărcării în curs și alte lucruri importante. Vă puteți ajusta ulterior preferințele în setările aplicației."</string>
 	<string name="notification_new_device_text">%1$s este acum suportat. Deschideți aplicația pentru a alege acest dispozitiv.</string>
 	<string name="notification_no_notification_support">Instalați sau actualizați serviciile Google Play pentru a activa notificările push.</string>
 	<string name="notification_version">Actualizarea %1$s este acum disponibilă pentru %2$s!</string>

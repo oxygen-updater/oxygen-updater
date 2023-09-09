@@ -93,7 +93,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="summary_please_wait">Kérlek várj…</string>
 	<string name="summary_update_method">Először válassz ki egy eszközt</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva:</string>
 	<string name="summary_theme">Téma beállítása</string>
 	<string name="summary_language">Állítsa be a nyelvet</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
@@ -201,6 +201,8 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Maradjon értesítve"</string>
+	<string name="notification_permission_text">"Engedélyezze, hogy az alkalmazás értesítse Önt az OTA-frissítésekről, hírekről, a folyamatban lévő letöltés állapotáról és egyéb fontos dolgokról. A beállításokat később az alkalmazás beállításaiban finomhangolhatja."</string>
 	<string name="notification_new_device_text">A %1$s már támogatott. Nyisd meg az alkalmazást ahhoz hogy kiválaszd ezt az eszközt.</string>
 	<string name="notification_no_notification_support">Telepítsd vagy frissítsd a Google Play szolgáltatásokat a push értesítések engedélyezéséhez.</string>
 	<string name="notification_version">%1$s már elérhető a %2$s számára!</string>

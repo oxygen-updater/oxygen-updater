@@ -67,11 +67,13 @@ fun AppTheme(content: @Composable () -> Unit) {
  */
 @Composable
 fun PreviewAppTheme(content: @Composable () -> Unit) {
-    val context = LocalContext.current
-    if (GlobalContext.getOrNull() == null) startKoin {
-        androidLogger(Level.ERROR)
-        androidContext(context)
-        modules(preferencesModule)
+    if (GlobalContext.getOrNull() == null) {
+        val context = LocalContext.current
+        startKoin {
+            androidLogger(Level.ERROR)
+            androidContext(context)
+            modules(preferencesModule)
+        }
     }
 
     AppTheme(content = { Surface(content = content) })

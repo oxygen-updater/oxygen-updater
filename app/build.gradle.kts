@@ -44,9 +44,7 @@ android {
         applicationId = "com.arjanvlek.oxygenupdater"
 
         minSdk = 21
-        // TODO: 31st August 2023 onwards, app updates require targeting 33
-        //  Request POST_NOTIFICATIONS if targeting A13+: https://firebase.google.com/docs/cloud-messaging/android/client#request-permission13
-        targetSdk = 31
+        targetSdk = 34
 
         versionCode = 100
         versionName = "5.11.3"

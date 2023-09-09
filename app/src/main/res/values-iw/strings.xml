@@ -91,7 +91,7 @@
 	<string name="summary_please_wait">אנא המתן…</string>
 	<string name="summary_update_method">אנא בחר ראשית מכשיר</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">כמה התראות חשובות מושבתות: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">כמה התראות חשובות מושבתות:</string>
 	<string name="summary_theme">בחר עיצוב</string>
 	<string name="summary_language">בחר שפה</string>
 	<string name="summary_privacy_policy">צפה בדפדפן</string>
@@ -199,6 +199,8 @@
 	<string name="about_email_button_text">מייל</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">הישארו מעודכנים</string>
+	<string name="notification_permission_text">אנא אפשר לאפליקציה להודיע לך על עדכוני OTA, חדשות, סטטוס הורדה מתמשך ודברים חשובים אחרים. תוכל לכוונן את ההעדפות שלך מאוחר יותר בהגדרות האפליקציה.</string>
 	<string name="notification_new_device_text">%1$s נתמך כעת. פתח את היישום כדי לבחור מכשיר זה.</string>
 	<string name="notification_no_notification_support">התקן או עדכן את שירותי Google Play כדי לאפשר התראות דחיפה.</string>
 	<string name="notification_version">%1$s עכשיו זמין עבור %2$s!</string>

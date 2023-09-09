@@ -7,6 +7,8 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.annotation.Size
+import androidx.compose.runtime.Immutable
 import androidx.core.app.NotificationManagerCompat
 import com.oxygenupdater.R
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
@@ -18,15 +20,23 @@ private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
 class NotificationUtils(private val context: Context) {
 
-    val isDisabled
+    private val isDisabled
         get() = !notificationManager.areNotificationsEnabled()
 
-    fun isDisabled(channelId: String) = notificationManager.run {
+    private fun isDisabled(channelId: String) = notificationManager.run {
         !areNotificationsEnabled() || getNotificationChannel(channelId)?.run {
             importance == NotificationManager.IMPORTANCE_NONE ||
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getNotificationChannelGroup(group)?.isBlocked == true)
         } ?: false
     }
+
+    fun toNotifStatus() = if (isDisabled) NotifStatus() else NotifStatus(
+        listOf(
+            isDisabled(PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID),
+            isDisabled(PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID),
+            isDisabled(DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        )
+    )
 
     /**
      * Deletes all old notification channels
@@ -34,16 +44,10 @@ class NotificationUtils(private val context: Context) {
     @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.O)
     fun deleteOldNotificationChannels() {
-        notificationManager.deleteNotificationChannel(
-            NotificationChannels.OLD_PUSH_NOTIFICATION_CHANNEL_ID
-        )
-        notificationManager.deleteNotificationChannel(
-            NotificationChannels.OLD_PROGRESS_NOTIFICATION_CHANNEL_ID
-        )
+        notificationManager.deleteNotificationChannel(NotificationChannels.OLD_PUSH_NOTIFICATION_CHANNEL_ID)
+        notificationManager.deleteNotificationChannel(NotificationChannels.OLD_PROGRESS_NOTIFICATION_CHANNEL_ID)
         // No longer used in v5.9.0+
-        notificationManager.deleteNotificationChannel(
-            MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID
-        )
+        notificationManager.deleteNotificationChannel(MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID)
     }
 
     /**
@@ -184,7 +188,7 @@ class NotificationUtils(private val context: Context) {
         channelDescription: String,
         importance: Int,
         lightsEnabled: Boolean = true,
-        vibrationEnabled: Boolean = false
+        vibrationEnabled: Boolean = false,
     ) = NotificationChannel(
         channelId,
         channelName,
@@ -205,6 +209,10 @@ class NotificationUtils(private val context: Context) {
         enableVibration(vibrationEnabled)
     }
 }
+
+/** @param disabled if null or empty, it's assumed notifications are disabled as a whole */
+@Immutable
+data class NotifStatus(@Size(3) val disabled: List<Boolean>? = null)
 
 /**
  * Generally, the format is:

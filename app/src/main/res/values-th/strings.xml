@@ -99,7 +99,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">รอสักครู่…</string>
 	<string name="summary_update_method">เลือกอุปกรณ์</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">การแจ้งเตือนที่สำคัญบางอย่างถูกปิดใช้งาน: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">การแจ้งเตือนที่สำคัญบางอย่างถูกปิดใช้งาน:</string>
 	<string name="summary_theme">ตั้งค่าธีม</string>
 	<string name="summary_language">ตั้งค่าภาษา</string>
 	<string name="summary_privacy_policy">ดูออนไลน์</string>
@@ -210,6 +210,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="about_email_button_text">อีเมล์</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"รับการแจ้งเตือน"</string>
+	<string name="notification_permission_text">"โปรดอนุญาตให้แอปแจ้งให้คุณทราบถึงการอัปเดต OTA ข่าวสาร สถานะการดาวน์โหลดที่กำลังดำเนินอยู่ และสิ่งที่สำคัญอื่น ๆ คุณสามารถปรับแต่งการตั้งค่าของคุณได้ในภายหลังในการตั้งค่าของแอป"</string>
 	<string name="notification_new_device_text">%1$s ได้รับการสนับสนุนแล้ว เปิดแอพเพื่อเลือกอุปกรณ์นี้</string>
 	<string name="notification_no_notification_support">ติดตั้งหรืออัปเดตบริการ Google Play เพื่อเปิดใช้งานการแจ้งเตือนแบบพุช</string>
 	<string name="notification_version">%1$s พร้อมใช้งานสำหรับ %2$s!</string>

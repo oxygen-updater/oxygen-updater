@@ -94,7 +94,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">فضلاً إنتظر…</string>
 	<string name="summary_update_method">إختر جهازاً أولاً</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">تم تعطيل بعض الإشعارات المهمة: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">تم تعطيل بعض الإشعارات المهمة:</string>
 	<string name="summary_theme">تعيين شكل</string>
 	<string name="summary_language">لغة مجموعة</string>
 	<string name="summary_privacy_policy">مشاهدة حية</string>
@@ -196,6 +196,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="about_email_button_text">البريد الإلكتروني</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">ابق على اطلاع</string>
+	<string name="notification_permission_text">يرجى السماح للتطبيق بإعلامك بتحديثات OTA والأخبار وحالة التنزيل المستمرة والأشياء المهمة الأخرى. يمكنك ضبط تفضيلاتك لاحقًا في إعدادات التطبيق.</string>
 	<string name="notification_new_device_text">%1$s مدعوم الآن. إفتح التطبيق لإختيار هذا الجهاز.</string>
 	<string name="notification_no_notification_support">ثبت أو حدث خدمات متجر بلاي لتمكين الإشعارات.</string>
 	<string name="notification_version">%1$s متاح الآن لجهاز %2$s!</string>

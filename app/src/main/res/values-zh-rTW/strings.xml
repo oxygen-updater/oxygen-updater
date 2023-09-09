@@ -90,7 +90,7 @@
 	<string name="summary_off">已停用</string>
 	<string name="summary_please_wait">請稍等…</string>
 	<string name="summary_update_method">請先選擇一個裝置</string>
-	<string name="summary_important_notifications_disabled">一些重要的通知被停用。\"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">一些重要的通知被停用。:</string>
 	<string name="summary_theme">設定佈景主題</string>
 	<string name="summary_language">設定語言</string>
 	<string name="summary_privacy_policy">線上檢視</string>
@@ -197,6 +197,8 @@
 	<string name="about_email_button_text">電子郵件</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"保持通知"</string>
+	<string name="notification_permission_text">"請允許應用程序通知您 OTA 更新、新聞、正在進行的下載狀態和其他重要信息。 您可以稍後在應用程序的設置中微調您的偏好。"</string>
 	<string name="notification_new_device_text">現已支援 %1$s。 打開應用程式來選擇您的裝置。</string>
 	<string name="notification_no_notification_support">安裝或升級您的 Google Play 服務來開啟推送服務</string>
 	<string name="notification_version">%1$s 現在可用於 %2$s！</string>

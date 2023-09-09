@@ -90,7 +90,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_off">Disabled</string>
 	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
-	<string name="summary_important_notifications_disabled">Some important notifications are disabled: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Some important notifications are disabled:</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_language">Set language</string>
 	<string name="summary_privacy_policy">View online</string>
@@ -203,6 +203,8 @@ This can be useful if you want to:"</string>
 	<string name="about_patreon_button_text" translatable="false">Patreon</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Stay notified"</string>
+	<string name="notification_permission_text">"Please allow the app to notify you of OTA updates, news, ongoing download status, and other important things. You can fine-tune your preferences later in the app's settings."</string>
 	<string name="notification_new_device_text">The %1$s is now supported. Open the app to choose this device.</string>
 	<string name="notification_no_notification_support">Install or update Google Play services to enable push notifications.</string>
 	<string name="notification_version">%1$s is now available for the %2$s!</string>

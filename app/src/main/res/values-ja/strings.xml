@@ -92,7 +92,7 @@
 	<string name="summary_please_wait">お待ち下さい…</string>
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。\"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。:</string>
 	<string name="summary_theme">テーマの設定</string>
 	<string name="summary_language">言語を設定する</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
@@ -201,6 +201,8 @@
 	<string name="about_email_button_text">メール</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"通知を受け取る"</string>
+	<string name="notification_permission_text">"OTAアップデート、ニュース、進行中のダウンロード状況、その他重要なことをアプリが通知するようにしてください。設定はアプリの設定で変更できます。"</string>
 	<string name="notification_new_device_text">%1$s がサポートされました。 アプリを開き、このデバイスを選択。</string>
 	<string name="notification_no_notification_support">Google Play サービスをインストール/アップデートしプッシュ通知を有効化する</string>
 	<string name="notification_version">%2$s 向けの %1$s が利用可能です!</string>

@@ -93,7 +93,7 @@ Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto
 	<string name="summary_please_wait">Vennligst vent…</string>
 	<string name="summary_update_method">Velg en enhet først</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Noen viktige varsler er deaktivert: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Noen viktige varsler er deaktivert:</string>
 	<string name="summary_theme">Sett tema</string>
 	<string name="summary_language">Sett språk</string>
 	<string name="summary_privacy_policy">Se på nettet</string>
@@ -203,6 +203,8 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="about_email_button_text">E-post</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Hold deg varslet"</string>
+	<string name="notification_permission_text">"Tillat at appen varsler deg om OTA-oppdateringer, nyheter, pågående nedlastingsstatus og andre viktige ting. Du kan finjustere innstillingene dine senere i appens innstillinger."</string>
 	<string name="notification_new_device_text">%1$s støttes nå. Åpne appen for å velge denne enheten.</string>
 	<string name="notification_no_notification_support">Installer eller oppdater Google Play-tjenester for å aktivere push-varsler.</string>
 	<string name="notification_version">%1$s er nå tilgjengelig for %2$s!</string>

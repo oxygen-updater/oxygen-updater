@@ -91,7 +91,7 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="summary_please_wait">Ole hyvä ja odota…</string>
 	<string name="summary_update_method">Valitse laite ensin</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Jotkin tärkeät ilmoitukset on poistettu käytöstä: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Jotkin tärkeät ilmoitukset on poistettu käytöstä:</string>
 	<string name="summary_theme">Aseta teema</string>
 	<string name="summary_language">Aseta kieli</string>
 	<string name="summary_privacy_policy">Katso verkkosivuilta</string>
@@ -209,6 +209,8 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="about_email_button_text">Sähköposti</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Pysy ilmoitettuna"</string>
+	<string name="notification_permission_text">"Anna sovelluksen ilmoittaa sinulle OTA-päivityksistä, uutisista, käynnissä olevasta lataustilanteesta ja muista tärkeistä asioista. Voit hienosäätää asetuksiasi myöhemmin sovelluksen asetuksissa."</string>
 	<string name="notification_new_device_text">"%1$s on nyt tuettu. Avaa sovellus valitaksesi tämä laite."</string>
 	<string name="notification_no_notification_support">"Asenna tai päivitä Google Play palvelut mahdollistaaksesi push ilmoitukset"</string>
 	<string name="notification_version">"%1$s on nyt saatavissa laitteelle %2$s!"</string>

@@ -92,7 +92,7 @@
 	<string name="summary_please_wait">Будь ласка, зачекайте…</string>
 	<string name="summary_update_method">Спершу виберіть пристрій</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Деякі важливі сповіщення вимкнено: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Деякі важливі сповіщення вимкнено:</string>
 	<string name="summary_theme">Вибрати тему оформлення</string>
 	<string name="summary_language">Встановити мову</string>
 	<string name="summary_privacy_policy">Переглянути онлайн</string>
@@ -201,6 +201,8 @@
 	<string name="about_email_button_text">Електронна пошта</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Отримувати сповіщення"</string>
+	<string name="notification_permission_text">"Будь ласка, дозвольте додатку повідомляти вас про оновлення OTA, новини, поточний статус завантаження та інші важливі речі. Ви можете налаштувати свої уподобання пізніше в налаштуваннях програми."</string>
 	<string name="notification_new_device_text">Додано підтримку нового пристою — %1$s! Відкрити застосунок.</string>
 	<string name="notification_no_notification_support">Встановіть або оновіть Сервіси Google Play, щоб увімкнути пуш-сповіщення.</string>
 	<string name="notification_version">%1$s доступне для %2$s!</string>

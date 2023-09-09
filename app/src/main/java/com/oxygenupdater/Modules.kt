@@ -18,7 +18,6 @@ import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.database.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.NotificationUtils
 import com.oxygenupdater.utils.createDownloadClient
 import com.oxygenupdater.utils.createNetworkClient
 import com.oxygenupdater.utils.createOkHttpCache
@@ -71,7 +70,6 @@ private val databaseModule = module {
 
 private val notificationModule = module {
     single { NotificationManagerCompat.from(androidContext()) }
-    single { NotificationUtils(androidContext()) }
 }
 
 private val miscellaneousSingletonModule = module {

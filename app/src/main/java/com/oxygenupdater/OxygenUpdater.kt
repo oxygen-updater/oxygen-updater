@@ -73,11 +73,10 @@ class OxygenUpdater : Application() {
         setupNetworkCallback()
         setupMobileAds()
 
-        val notificationUtils by inject<NotificationUtils>()
         // Support functions for Android 8.0 "Oreo" and up.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationUtils.deleteOldNotificationChannels()
-            notificationUtils.createNewNotificationGroupsAndChannels()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationUtils(this).run {
+            deleteOldNotificationChannels()
+            createNewNotificationGroupsAndChannels()
         }
 
         // Save app's version code to aid in future migrations (added in 5.4.0)

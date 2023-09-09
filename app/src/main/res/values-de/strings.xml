@@ -89,7 +89,7 @@ Wenn du mehr erfahren willst, kannst du uns gerne kontaktieren entweder über <a
 	<string name="summary_please_wait">Bitte warten…</string>
 	<string name="summary_update_method">Bitte wähle zuerst dein Gerät aus</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Einige wichtige Benachrichtigungen sind deaktiviert: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Einige wichtige Benachrichtigungen sind deaktiviert:</string>
 	<string name="summary_theme">Theme einstellen</string>
 	<string name="summary_language">Sprache einstellen</string>
 	<string name="summary_privacy_policy">Online ansehen</string>
@@ -209,6 +209,8 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="about_email_button_text">E-Mail</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Bleiben Sie benachrichtigt"</string>
+	<string name="notification_permission_text">"Bitte erlauben Sie der App, Sie über OTA-Updates, Neuigkeiten, den aktuellen Download-Status und andere wichtige Dinge zu informieren. Sie können Ihre Präferenzen später in den Einstellungen der App feinabstimmen."</string>
 	<string name="notification_new_device_text">"Das %1$s wird jetzt unterstützt. Öffne die App um dieses Gerät auszuwählen."</string>
 	<string name="notification_no_notification_support">"Installiere oder Update die Google Play Dienste um Push Nachrichten zu erlauben."</string>
 	<string name="notification_version">"%1$s ist jetzt verfügbar für das %2$s!"</string>

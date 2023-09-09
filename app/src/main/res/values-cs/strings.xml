@@ -91,7 +91,7 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="summary_please_wait">Prosím, počkejte…</string>
 	<string name="summary_update_method">Nejprve vyberte zařízení</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Některá důležitá oznámení jsou zakázána: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Některá důležitá oznámení jsou zakázána:</string>
 	<string name="summary_theme">Nastavení vzhledu</string>
 	<string name="summary_language">Nastavení jazyka</string>
 	<string name="summary_privacy_policy">Podívat se online</string>
@@ -199,6 +199,8 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="about_email_button_text">Email</string>
 
 	<!-- Řetězce LocalNotifications -->
+	<string name="notification_permission_title">"Zůstaňte informováni"</string>
+	<string name="notification_permission_text">"Povolte aplikaci, aby vás upozorňovala na aktualizace OTA, novinky, průběžný stav stahování a další důležité věci. Své preference můžete později doladit v nastavení aplikace."</string>
 	<string name="notification_new_device_text">Nyní je podporován %1$s. Otevřete aplikaci a vyberte toto zařízení.</string>
 	<string name="notification_no_notification_support">Instalace nebo aktualizace služeb Google Play pro povolení push oznámení.</string>
 	<string name="notification_version">%1$s je nyní k dispozici pro %2$s!</string>

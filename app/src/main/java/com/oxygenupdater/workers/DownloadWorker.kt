@@ -1,7 +1,11 @@
 package com.oxygenupdater.workers
 
+import android.app.Notification
 import android.app.Notification.CATEGORY_PROGRESS
 import android.content.Context
+import android.content.pm.ServiceInfo
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
@@ -62,6 +66,7 @@ class DownloadWorker(
 
     private lateinit var tempFile: File
     private lateinit var zipFile: File
+    private lateinit var notification: Notification
 
     private val downloadApi: DownloadApi
     private val workManager: WorkManager
@@ -77,7 +82,7 @@ class DownloadWorker(
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
-        setForeground(createInitialForegroundInfo())
+        trySetForeground(createInitialNotification())
 
         when {
             updateData?.downloadUrl == null -> {
@@ -100,13 +105,13 @@ class DownloadWorker(
         }
     }
 
-    private fun createInitialForegroundInfo(): ForegroundInfo {
+    private fun createInitialNotification(): Notification {
         // This PendingIntent can be used to cancel the worker
         val cancelPendingIntent = workManager.createCancelPendingIntent(id)
 
         val text = context.getString(R.string.download_pending)
 
-        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)
@@ -124,15 +129,15 @@ class DownloadWorker(
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        return ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
+        return notification
     }
 
-    private fun createProgressForegroundInfo(
+    private fun createProgressNotification(
         bytesDone: Long,
         totalBytes: Long,
         progress: Int,
         downloadEta: String?,
-    ): ForegroundInfo {
+    ): Notification {
         // This PendingIntent can be used to cancel the worker
         val cancelPendingIntent = workManager.createCancelPendingIntent(id)
 
@@ -141,7 +146,7 @@ class DownloadWorker(
 
         val text = "$bytesDoneStr / $totalBytesStr ($progress%)"
 
-        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)
@@ -156,10 +161,7 @@ class DownloadWorker(
                 context.getString(android.R.string.cancel),
                 cancelPendingIntent
             )
-            .setStyle(
-                NotificationCompat.BigTextStyle()
-                    .setSummaryText(downloadEta ?: "")
-            )
+            .setStyle(NotificationCompat.BigTextStyle().setSummaryText(downloadEta ?: ""))
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
@@ -168,8 +170,31 @@ class DownloadWorker(
             cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
         }
 
-        return ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
+        return notification
     }
+
+    /**
+     * Wrapped in a try/catch to ignore a potential [java.lang.IllegalStateException] when using [WorkRequest.Builder.setExpedited].
+     *
+     * Android 12+ will throw a more specific [android.app.ForegroundServiceStartNotAllowedException].
+     *
+     * @see <a href="https://developer.android.com/guide/background/persistent/getting-started/define-work#coroutineworker">Executing expedited work — Coroutine Worker</a>
+     */
+    private suspend fun trySetForeground(notification: Notification) = try {
+        setForeground(foregroundInfo(notification))
+    } catch (e: Exception) {
+        logError(TAG, "setForeground failed", e)
+    }
+
+    /** Must be overridden because we use [WorkRequest.Builder.setExpedited] */
+    override suspend fun getForegroundInfo() = foregroundInfo(
+        if (::notification.isInitialized) notification else createInitialNotification()
+    )
+
+    private fun foregroundInfo(notification: Notification) = if (SDK_INT >= Build.VERSION_CODES.Q) ForegroundInfo(
+        NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification,
+        ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC // keep in sync with `foregroundServiceType` in AndroidManifest
+    ) else ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
@@ -181,12 +206,10 @@ class DownloadWorker(
         if (startingByte != NOT_SET) {
             logDebug(TAG, "Looks like a resume operation. Adding $rangeHeader to the request")
 
-            if (tempFile.length() > startingByte) {
-                logWarning(
-                    TAG,
-                    "Partially downloaded ZIP size differs from skipped bytes (${tempFile.length()} vs $startingByte)."
-                )
-            } else if (tempFile.length() < startingByte) {
+            if (tempFile.length() > startingByte) logWarning(
+                TAG,
+                "Partially downloaded ZIP size differs from skipped bytes (${tempFile.length()} vs $startingByte)."
+            ) else if (tempFile.length() < startingByte) {
                 logWarning(
                     TAG,
                     "Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state."
@@ -197,10 +220,7 @@ class DownloadWorker(
             }
         }
 
-        val response = downloadApi.downloadZip(
-            updateData.downloadUrl!!,
-            rangeHeader
-        )
+        val response = downloadApi.downloadZip(updateData.downloadUrl!!, rangeHeader)
 
         val body = response.body()
 
@@ -228,12 +248,10 @@ class DownloadWorker(
                 var bytesRead = startingByte.coerceAtLeast(0L)
                 val contentLength = bytesRead + body.contentLength()
 
-                if (abs(contentLength - updateData.downloadSize) > THRESHOLD_BYTES_DIFFERENCE_WITH_BACKEND) {
-                    logWarning(
-                        TAG,
-                        "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
-                    )
-                }
+                if (abs(contentLength - updateData.downloadSize) > THRESHOLD_BYTES_DIFFERENCE_WITH_BACKEND) logWarning(
+                    TAG,
+                    "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
+                )
 
                 if (startingByte != NOT_SET) {
                     logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
@@ -297,9 +315,7 @@ class DownloadWorker(
 
                                 // Try deleting the file to allow retrying this work with a fresh state
                                 // Even if it doesn't get deleted, we can overwrite data to the same file
-                                if (!tempFile.delete()) {
-                                    logWarning(TAG, "Could not delete the partially downloaded ZIP")
-                                }
+                                if (!tempFile.delete()) logWarning(TAG, "Could not delete the partially downloaded ZIP")
 
                                 Result.failure(Data.Builder().apply {
                                     putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.Unknown.value)
@@ -373,9 +389,7 @@ class DownloadWorker(
      */
     @Throws(IOException::class)
     private fun moveTempFileToCorrectLocation() {
-        if (zipFile.exists() && !zipFile.delete()) {
-            throw IOException("Deletion Failed")
-        }
+        if (zipFile.exists() && !zipFile.delete()) throw IOException("Deletion Failed")
 
         // Move operation: rename `tempFile` to `zipFile`
         if (!tempFile.renameTo(zipFile)) {
@@ -385,9 +399,7 @@ class DownloadWorker(
         }
 
         // Delete `tempFile`, if it still exists after the rename operation
-        if (tempFile.exists() && zipFile.exists()) {
-            tempFile.delete()
-        }
+        if (tempFile.exists() && zipFile.exists()) tempFile.delete()
     }
 
     /**
@@ -415,14 +427,7 @@ class DownloadWorker(
                 totalBytes
             )?.toString(context)
 
-            setForeground(
-                createProgressForegroundInfo(
-                    bytesDone,
-                    totalBytes,
-                    progress,
-                    downloadEta
-                )
-            )
+            trySetForeground(createProgressNotification(bytesDone, totalBytes, progress, downloadEta))
             setProgress(Data.Builder().apply {
                 putLong(WORK_DATA_DOWNLOAD_BYTES_DONE, bytesDone)
                 putLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, totalBytes)
@@ -451,9 +456,7 @@ class DownloadWorker(
             val secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(currentTimestamp - previousProgressTimestamp)
             bytesDonePerSecond = if (secondsElapsed > 0L) {
                 (bytesDone - previousBytesDone) / secondsElapsed.toDouble()
-            } else {
-                0.0
-            }
+            } else 0.0
 
             // Sometimes no new progress data is available.
             // If no new data is available, return the previously stored data to keep the UI showing that.
@@ -461,37 +464,22 @@ class DownloadWorker(
 
             if (validMeasurement) {
                 // In case of no network, clear all measurements to allow displaying the now-unknown ETA
-                if (bytesDonePerSecond == 0.0) {
-                    measurements.clear()
-                }
+                if (bytesDonePerSecond == 0.0) measurements.clear()
 
                 // Remove old measurements to keep the average calculation based on 5 measurements
-                if (measurements.size > 10) {
-                    measurements.subList(0, 1).clear()
-                }
+                if (measurements.size > 10) measurements.subList(0, 1).clear()
 
                 measurements.add(bytesDonePerSecond)
             }
 
             // Calculate number of seconds remaining based off average download speed
-            val averageBytesPerSecond = if (measurements.isEmpty()) {
-                0L
-            } else {
-                (measurements.sum() / measurements.size).toLong()
-            }
-
+            val averageBytesPerSecond = if (measurements.isEmpty()) 0L else (measurements.sum() / measurements.size).toLong()
             secondsRemaining = if (averageBytesPerSecond > 0) {
                 (totalBytes - bytesDone) / averageBytesPerSecond
-            } else {
-                NOT_SET
-            }
+            } else NOT_SET
         }
 
-        return if (secondsRemaining != NOT_SET) {
-            TimeRemaining(secondsRemaining)
-        } else {
-            null
-        }
+        return if (secondsRemaining != NOT_SET) TimeRemaining(secondsRemaining) else null
     }
 
     companion object {

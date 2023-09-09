@@ -90,7 +90,7 @@
 	<string name="summary_off">Оневозможено</string>
 	<string name="summary_please_wait">Ве молиме почекајте…</string>
 	<string name="summary_update_method">Најпрво изберете уред</string>
-	<string name="summary_important_notifications_disabled">Некои по важни нотификации се оневозможени: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Некои по важни нотификации се оневозможени:</string>
 	<string name="summary_theme">Избери тема</string>
 	<string name="summary_language">Избери јазик</string>
 	<string name="summary_privacy_policy">Погледнете онлајн</string>
@@ -198,6 +198,8 @@
 	<string name="about_email_button_text">Е-Пошта</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Останете известени"</string>
+	<string name="notification_permission_text">"Дозволете апликацијата да ве известува за OTA ажурирања, новости, статус на тековно преземање и други важни работи. Подоцна можете да ги прилагодите вашите параметри во поставките на апликацијата."</string>
 	<string name="notification_new_device_text">%1$s сега е поддржан. Отворете ја апликацијата за да го изберете овој уред.</string>
 	<string name="notification_no_notification_support">Инсталирајте или ажурирајте ги сервисите на Google Play за да овозможите нотификации.</string>
 	<string name="notification_version">%1$s е сега достапна за %2$s!</string>

@@ -100,7 +100,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Por favor, espera…</string>
 	<string name="summary_update_method">Selecciona un dispositivo primero</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Algunas notificaciones importantes están desactivadas: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Algunas notificaciones importantes están desactivadas:</string>
 	<string name="summary_theme">Establecer tema</string>
 	<string name="summary_language">Elegir lenguaje</string>
 	<string name="summary_privacy_policy">Ver online</string>
@@ -211,6 +211,8 @@ Esto puede ser útil si quieres:"</string>
 	<string name="about_email_button_text">Correo electrónico</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Mantente informado"</string>
+	<string name="notification_permission_text">"Permite que la aplicación te notifique las actualizaciones OTA, las noticias, el estado de las descargas en curso y otras cosas importantes. Puedes ajustar tus preferencias más adelante en los ajustes de la aplicación."</string>
 	<string name="notification_new_device_text">El %1$s está ya soportado. Abre la app para eslegir este dispositivo.</string>
 	<string name="notification_no_notification_support">Instala o actualiza los servicios de Google Play para activar las notificaciones push.</string>
 	<string name="notification_version">%1$s está ahora disponible para el %2$s!</string>

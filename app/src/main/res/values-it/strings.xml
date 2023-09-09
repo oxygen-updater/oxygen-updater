@@ -88,7 +88,7 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="summary_off">Disattivato</string>
 	<string name="summary_please_wait">Attendi…</string>
 	<string name="summary_update_method">Seleziona un dispositivo</string>
-	<string name="summary_important_notifications_disabled">Alcune notifiche importanti sono disattivate: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Alcune notifiche importanti sono disattivate:</string>
 	<string name="summary_theme">Scegli il tema</string>
 	<string name="summary_language">Imposta la lingua</string>
 	<string name="summary_privacy_policy">Visualizza online</string>
@@ -206,6 +206,8 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Rimani informato"</string>
+	<string name="notification_permission_text">"Consentite all'app di notificarvi gli aggiornamenti OTA, le novità, lo stato dei download in corso e altre cose importanti. È possibile regolare le proprie preferenze in un secondo momento nelle impostazioni dell'app."</string>
 	<string name="notification_new_device_text">"Il %1$s è ora supportato. Apri l'app o scegli il dispositivo."</string>
 	<string name="notification_no_notification_support">"Installa o aggiorna i servizi Google Play per abilitare le notifiche push."</string>
 	<string name="notification_version">"%1$s è ora disponibile per %2$s!"</string>

@@ -94,7 +94,7 @@
 	<string name="summary_please_wait">Молимо сачекајте…</string>
 	<string name="summary_update_method">Прво селектујте уређај</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Нека важна обавештења су онемогућена: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Нека важна обавештења су онемогућена:</string>
 	<string name="summary_theme">Поставите тему</string>
 	<string name="summary_language">Поставите језик</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
@@ -202,6 +202,8 @@
 	<string name="about_email_button_text">Емаил</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Будите обавештени"</string>
+	<string name="notification_permission_text">"Дозволите апликацији да вас обавештава о ОТА ажурирањима, вестима, статусу преузимања у току и другим важним стварима. Касније можете фино подесити своја подешавања у подешавањима апликације."</string>
 	<string name="notification_new_device_text">%1$s је сада доступан. Отвори апликацију да изабереш овај уређај.</string>
 	<string name="notification_no_notification_support">Инсталирај или ажурирај Google Play сервисе да омогућиш обавештења.</string>
 	<string name="notification_version">%1$s је сада доступан за %2$s!</string>

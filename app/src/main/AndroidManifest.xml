@@ -18,6 +18,7 @@
 		android:minSdkVersion="30"
 		tools:ignore="ScopedStorage" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
 	<!-- Push notification permissions -->
 	<uses-permission android:name="android.permission.VIBRATE" />
@@ -179,6 +180,12 @@
 				android:name="autoStoreLocales"
 				android:value="true" />
 		</service>
+
+		<!-- For DownloadWorker: https://developer.android.com/guide/background/persistent/how-to/long-running#declare-foreground-service-types-manifest -->
+		<service
+			android:name="androidx.work.impl.foreground.SystemForegroundService"
+			android:foregroundServiceType="dataSync"
+			tools:node="merge" />
 
 		<!-- Receiver to auto start RootFileService at device startup or app update -->
 		<receiver

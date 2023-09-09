@@ -1,5 +1,6 @@
 package com.oxygenupdater.compose.activities
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -63,6 +64,7 @@ import com.oxygenupdater.compose.ui.main.MainMenu
 import com.oxygenupdater.compose.ui.main.MainSnackbar
 import com.oxygenupdater.compose.ui.main.NewsListRoute
 import com.oxygenupdater.compose.ui.main.NoConnectionSnackbarData
+import com.oxygenupdater.compose.ui.main.NotificationPermission
 import com.oxygenupdater.compose.ui.main.Screen
 import com.oxygenupdater.compose.ui.main.ServerStatusBanner
 import com.oxygenupdater.compose.ui.main.ServerStatusDialogs
@@ -254,6 +256,14 @@ class MainActivity : BaseActivity() {
                 }, openAboutScreen)
             }
 
+            // This must be defined on the same level as NavHost, otherwise it won't work
+            BackHandler {
+                navController.run {
+                    if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
+                    else if (!popBackStack()) finishAffinity() // nothing to back to => exit
+                }
+            }
+
             // Ads should be shown if user hasn't bought the ad-free unlock
             val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
                 PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
@@ -290,18 +300,6 @@ class MainActivity : BaseActivity() {
                             Text(label)
                         }, alwaysShowLabel = false)
                     }
-                }
-            }
-
-            // This must be defined on the same level as NavHost, otherwise it won't work
-            // TODO(compose): use PredictiveBackHandler (can only be tested on Android 14). Animate sheet close
-            //  based on progress and delegate to NavHost's default implementation if it does nice things with predictive back.
-            //  https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture#opt-predictive
-            //  Adjust all other BackHandlers if required
-            BackHandler {
-                navController.run {
-                    if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
-                    else if (!popBackStack()) finishAffinity() // nothing to back to => exit
                 }
             }
         }
@@ -494,6 +492,9 @@ class MainActivity : BaseActivity() {
         setContent {
             AppTheme {
                 EdgeToEdge()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
+
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
                 Surface { Content() }
             }

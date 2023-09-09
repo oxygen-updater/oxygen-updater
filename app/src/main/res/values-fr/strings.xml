@@ -94,7 +94,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="summary_please_wait">Veuillez patienter…</string>
 	<string name="summary_update_method">Veuillez sélectionner un appareil</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Certaines notifications importantes sont désactivées: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Certaines notifications importantes sont désactivées:</string>
 	<string name="summary_theme">Choisissez un thème</string>
 	<string name="summary_language">Définir la langue</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
@@ -210,6 +210,8 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Restez informé"</string>
+	<string name="notification_permission_text">"Autorisez l'application à vous informer des mises à jour OTA, des nouvelles, de l'état des téléchargements en cours et d'autres choses importantes. Vous pouvez affiner vos préférences ultérieurement dans les paramètres de l'application."</string>
 	<string name="notification_new_device_text">"Le %1$s est maintenant disponible. Ouvrez l'application pour choisir cet appareil."</string>
 	<string name="notification_no_notification_support">"Installez ou mettez à jour les services Google Play pour activer les notifications push."</string>
 	<string name="notification_version">"%1$s est maintenant disponible pour le %2$s !"</string>

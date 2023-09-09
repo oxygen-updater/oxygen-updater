@@ -87,7 +87,7 @@
 	<string name="summary_please_wait">Molim te pričekaj…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Neke važne obavijesti su onemogućene: \"%1$s\"</string>
+	<string name="summary_important_notifications_disabled">Neke važne obavijesti su onemogućene:</string>
 	<string name="summary_theme">Set theme</string>
 	<string name="summary_language">Postavite jezik</string>
 	<string name="summary_privacy_policy">Pogledajte na mreži</string>
@@ -210,6 +210,8 @@ Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranj
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Ostanite obaviješteni"</string>
+	<string name="notification_permission_text">"Dopustite aplikaciji da vas obavještava o OTA ažuriranjima, novostima, statusu preuzimanja u tijeku i drugim važnim stvarima. Kasnije možete fino podesiti svoje postavke u postavkama aplikacije."</string>
 	<string name="notification_new_device_text">"%1$s je sada podržan. Otvorite aplikaciju da izaberete ovaj uređaj."</string>
 	<string name="notification_no_notification_support">"Instalirajte ili ažurirajte Googe Play usluge da omogućite push notifikacije."</string>
 	<string name="notification_version">"%1$s je sada dostupan za %2$s!"</string>
