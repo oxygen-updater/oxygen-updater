@@ -23,16 +23,18 @@ import com.oxygenupdater.compose.ui.common.ItemDivider
 import com.oxygenupdater.compose.ui.theme.PreviewAppTheme
 import com.oxygenupdater.compose.ui.theme.backgroundVariant
 
+/**
+ * [hide] is automatically called when user presses back button.
+ * See [androidx.compose.material3.ModalBottomSheetWindow.dispatchKeyEvent].
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
-    val sheetState = rememberModalBottomSheetState(true)
-    BackHandler(sheetState.isVisible, hide)
-
     val colorScheme = MaterialTheme.colorScheme
+    // TODO(compose/bug): content behind sheet not clickable if dismissed via swipe
     ModalBottomSheet(
         hide,
-        sheetState = sheetState,
+        sheetState = rememberModalBottomSheetState(true),
         containerColor = colorScheme.backgroundVariant, // match bottom nav bar
         contentColor = colorScheme.onSurface,
         windowInsets = WindowInsets.navigationBars, // draw behind status bar only, not navigation
