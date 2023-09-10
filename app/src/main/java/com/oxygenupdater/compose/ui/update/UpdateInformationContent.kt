@@ -11,7 +11,6 @@ import android.os.Build.VERSION_CODES
 import android.os.Environment
 import android.os.storage.StorageManager
 import android.provider.Settings
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.RequiresApi
@@ -127,6 +126,7 @@ import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFICATION_COMPLETED
 import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.compose.ui.update.DownloadStatus.VERIFYING
 import com.oxygenupdater.extensions.formatFileSize
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
@@ -860,7 +860,7 @@ private class AllFilesPermissionState(private val context: Context) : Permission
         context.startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
 
         // Show a toast asking users what to do
-        Toast.makeText(context, R.string.grant_all_files_access, Toast.LENGTH_LONG).show()
+        context.showToast(R.string.grant_all_files_access)
     } catch (e: ActivityNotFoundException) {
         logError(TAG, "Couldn't open MANAGE_ALL_FILES_ACCESS settings screen", e)
     }

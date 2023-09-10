@@ -39,8 +39,8 @@ class Md5VerificationWorker(
     init {
         val inputData = parameters.inputData
 
-        filename = inputData.getString("filename")
-        md5 = inputData.getString("md5sum")
+        filename = inputData.getString(FILENAME)
+        md5 = inputData.getString(MD5)
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -148,5 +148,7 @@ class Md5VerificationWorker(
 
     companion object {
         private const val TAG = "Md5VerificationWorker"
+        const val FILENAME = "filename"
+        const val MD5 = "md5"
     }
 }

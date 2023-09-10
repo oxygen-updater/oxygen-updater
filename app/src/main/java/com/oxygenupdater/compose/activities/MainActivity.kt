@@ -2,7 +2,6 @@ package com.oxygenupdater.compose.activities
 
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -79,6 +78,7 @@ import com.oxygenupdater.compose.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.compose.ui.update.UpdateScreen
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.openPlayStorePage
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startNewsItemActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.PrefManager
@@ -383,11 +383,7 @@ class MainActivity : BaseActivity() {
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
 
         val markPending = rememberCallback {
-            Toast.makeText(
-                this@MainActivity,
-                getString(R.string.purchase_error_pending_payment),
-                Toast.LENGTH_LONG
-            ).show()
+            showToast(R.string.purchase_error_pending_payment)
         }
 
         val adFreeConfig = adFreeConfig(adFreeState, markPending, makePurchase = rememberTypedCallback {
@@ -408,11 +404,7 @@ class MainActivity : BaseActivity() {
 
                     else -> {
                         logBillingError(TAG, "Purchase of the ad-free version failed due to an unknown error during the purchase flow: $responseCode")
-                        Toast.makeText(
-                            this@MainActivity,
-                            getString(R.string.purchase_error_after_payment),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast(R.string.purchase_error_after_payment)
                     }
                 }
             }
@@ -427,11 +419,7 @@ class MainActivity : BaseActivity() {
             if (checkPlayServices(this@MainActivity, true)) {
                 // Subscribe to notifications for the newly selected device and update method
                 NotificationTopicSubscriber.resubscribeIfNeeded(state.enabledDevices, state.methodsForDevice)
-            } else Toast.makeText(
-                this@MainActivity,
-                this@MainActivity.getString(R.string.notification_no_notification_support),
-                Toast.LENGTH_LONG
-            ).show()
+            } else showToast(R.string.notification_no_notification_support)
         }, adFreePrice, adFreeConfig, openAboutScreen)
     }
 
@@ -473,9 +461,7 @@ class MainActivity : BaseActivity() {
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
 
-        if (!checkPlayServices(this, false)) Toast.makeText(
-            this, getString(R.string.notification_no_notification_support), Toast.LENGTH_LONG
-        ).show()
+        if (!checkPlayServices(this, false)) showToast(R.string.notification_no_notification_support)
 
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
@@ -522,10 +508,8 @@ class MainActivity : BaseActivity() {
 
         if (deviceId == NOT_SET_L || updateMethodId == NOT_SET_L) {
             logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
-            Toast.makeText(this, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, getString(R.string.settings_saving), Toast.LENGTH_LONG).show()
-        }
+            showToast(R.string.settings_entered_incorrectly)
+        } else showToast(R.string.settings_saving)
     }
 
     companion object {

@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.text.format.Formatter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.material3.MaterialTheme
@@ -57,6 +58,8 @@ fun Context.formatFileSize(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
 )
 
+fun Context.showToast(@StringRes resId: Int) = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+
 fun Context.shareExternally(title: String, text: String) {
     val prefix = "${getString(R.string.app_name)}: $title"
     val intent = Intent(Intent.ACTION_SEND)
@@ -75,39 +78,29 @@ fun Context.shareExternally(title: String, text: String) {
 fun Context.copyToClipboard(text: String) = getSystemService<ClipboardManager>()?.setPrimaryClip(
     ClipData.newPlainText(getString(R.string.app_name), text)
 )?.let {
-    Toast.makeText(
-        this, getString(androidx.browser.R.string.copy_toast_msg), Toast.LENGTH_LONG
-    ).show()
+    showToast(androidx.browser.R.string.copy_toast_msg)
 }
 
 fun Context.openPlayStorePage() {
-    val appPackageName = packageName
+    val packageName = packageName
 
     try {
         // Try opening Play Store
         startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                "market://details?id=$appPackageName".toUri()
-            ).withAppReferrer(this)
+            Intent(Intent.ACTION_VIEW, "market://details?id=$packageName".toUri()).withAppReferrer(this)
         )
     } catch (e: ActivityNotFoundException) {
         try {
             // Try opening browser
             startActivity(
                 Intent(
-                    Intent.ACTION_VIEW,
-                    "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
+                    Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$packageName".toUri()
                 ).withAppReferrer(this)
             )
         } catch (e1: ActivityNotFoundException) {
             // Give up and cry
-            Toast.makeText(
-                this,
-                getString(R.string.error_unable_to_rate_app),
-                Toast.LENGTH_LONG
-            ).show()
-            logWarning("AboutActivity", "App rating without google play store support", e1)
+            showToast(R.string.error_unable_to_rate_app)
+            logWarning("ContextExtensions", "Can't open Play Store app page", e1)
         }
     }
 }

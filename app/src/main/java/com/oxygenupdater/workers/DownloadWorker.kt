@@ -9,7 +9,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.app.NotificationManagerCompat
@@ -27,6 +26,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.compose.ui.update.DownloadFailure
 import com.oxygenupdater.extensions.formatFileSize
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.TimeRemaining
@@ -356,17 +356,13 @@ class DownloadWorker(
     private fun enqueueVerificationWork() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Since download has completed successfully, we can start the verification work immediately
-            Toast.makeText(
-                context,
-                context.getString(R.string.download_verifying_start),
-                Toast.LENGTH_LONG
-            ).show()
+            context.showToast(R.string.download_verifying_start)
         }, 0)
 
         val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
             .setInputData(Data.Builder().apply {
-                putString("filename", updateData!!.filename!!)
-                putString("md5sum", updateData.md5sum)
+                putString(Md5VerificationWorker.FILENAME, updateData!!.filename!!)
+                putString(Md5VerificationWorker.MD5, updateData.md5sum)
             }.build())
             .setBackoffCriteria(
                 BackoffPolicy.LINEAR,

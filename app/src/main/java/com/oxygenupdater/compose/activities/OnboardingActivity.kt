@@ -1,7 +1,6 @@
 package com.oxygenupdater.compose.activities
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -34,6 +33,7 @@ import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.compose.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.compose.ui.settings.SettingsViewModel
 import com.oxygenupdater.compose.ui.theme.AppTheme
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
@@ -101,11 +101,7 @@ class OnboardingActivity : BaseActivity() {
                                 if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
                                     // Subscribe to notifications for the newly selected device and update method
                                     viewModel.subscribeToNotificationTopics(enabledDevices)
-                                } else Toast.makeText(
-                                    context,
-                                    context.getString(R.string.notification_no_notification_support),
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                } else context.showToast(R.string.notification_no_notification_support)
 
                                 if (PrefManager.checkIfSetupScreenIsFilledIn()) {
                                     PrefManager.putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, submitLogs)
@@ -114,7 +110,7 @@ class OnboardingActivity : BaseActivity() {
 
                                     // If user enables OTA contribution, check if device is rooted and ask for root permission
                                     if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
-                                        Toast.makeText(context, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+                                        context.showToast(R.string.contribute_allow_storage)
                                         hasRootAccess {
                                             PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, true)
                                             startMainActivity(startPage)
@@ -130,7 +126,7 @@ class OnboardingActivity : BaseActivity() {
                                     val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
                                     val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
                                     logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
-                                    Toast.makeText(context, getString(R.string.settings_entered_incorrectly), Toast.LENGTH_LONG).show()
+                                    context.showToast(R.string.settings_entered_incorrectly)
                                 }
                             })
                     }

@@ -1,7 +1,6 @@
 package com.oxygenupdater.compose.ui.dialogs
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
@@ -30,6 +29,7 @@ import com.oxygenupdater.compose.ui.common.CheckboxText
 import com.oxygenupdater.compose.ui.common.OutlinedIconButton
 import com.oxygenupdater.compose.ui.common.rememberSaveableState
 import com.oxygenupdater.compose.ui.theme.PreviewThemes
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.hasRootAccess
 
@@ -83,7 +83,7 @@ private fun ContributorSheetEnroll(hide: () -> Unit) {
                 if (it) {
                     ContributorUtils.flushSettings(context, true)
                     hide()
-                } else Toast.makeText(context, R.string.contribute_allow_storage, Toast.LENGTH_LONG).show()
+                } else context.showToast(R.string.contribute_allow_storage)
             } else {
                 ContributorUtils.flushSettings(context, false)
                 hide()

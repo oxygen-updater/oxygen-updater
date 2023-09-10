@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
+import com.oxygenupdater.workers.Md5VerificationWorker
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -67,8 +68,8 @@ data class UpdateData(
         putString("description", description)
         putString("downloadUrl", downloadUrl)
         putLong("downloadSize", downloadSize)
-        putString("filename", filename)
-        putString("md5sum", md5sum)
+        putString(Md5VerificationWorker.FILENAME, filename)
+        putString(Md5VerificationWorker.MD5, md5sum)
         putString("information", information)
         putBoolean("updateInformationAvailable", updateInformationAvailable)
         putBoolean("systemIsUpToDate", systemIsUpToDate)
@@ -86,8 +87,8 @@ data class UpdateData(
             description = inputData.getString("description"),
             downloadUrl = inputData.getString("downloadUrl"),
             downloadSize = inputData.getLong("downloadSize", NOT_SET_L),
-            filename = inputData.getString("filename"),
-            md5sum = inputData.getString("md5sum"),
+            filename = inputData.getString(Md5VerificationWorker.FILENAME),
+            md5sum = inputData.getString(Md5VerificationWorker.MD5),
             information = inputData.getString("information"),
             updateInformationAvailable = inputData.getBoolean("updateInformationAvailable", false),
             systemIsUpToDate = inputData.getBoolean("systemIsUpToDate", false)
