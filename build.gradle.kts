@@ -19,3 +19,13 @@ plugins {
 tasks.register("clean").configure {
     delete("build")
 }
+
+// https://docs.gradle.org/current/userguide/performance.html#execute_tests_in_parallel
+tasks.withType<Test>().configureEach {
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+}
+
+// https://docs.gradle.org/current/userguide/performance.html#run_the_compiler_as_a_separate_process
+tasks.withType<JavaCompile>().configureEach {
+    options.isFork = true
+}
