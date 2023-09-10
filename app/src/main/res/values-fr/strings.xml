@@ -118,7 +118,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="theme_additional_note">Note: si le thème choisi est « Automatique » et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie.</string>
 
 	<string name="settings">"Paramètres"</string>
-	<string name="settings_buy_button_buy">"%1$s"</string>
+	<string name="settings_buy_button_buy">"Achat (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Acheté"</string>
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>

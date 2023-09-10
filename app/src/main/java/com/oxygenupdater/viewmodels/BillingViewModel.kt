@@ -11,6 +11,7 @@ import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,18 +31,12 @@ class BillingViewModel(
     val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree
     val newPurchase = billingRepository.newPurchase.asLiveData()
 
-    // Clients need to observe this LiveData so that internal logic is guaranteed to run
-    val pendingPurchase by lazy(LazyThreadSafetyMode.NONE) {
-        billingRepository.pendingPurchase.mapNotNull {
-            logPendingAdFreePurchase(it)
-        }.asLiveData()
-    }
-
-    // Clients need to observe this LiveData so that internal logic is guaranteed to run
-    val purchaseStateChange by lazy(LazyThreadSafetyMode.NONE) {
-        billingRepository.purchaseStateChange.mapNotNull {
-            logPendingAdFreePurchase(it)
-        }.asLiveData()
+    init {
+        // These flows need to be collected (terminal operation) so that we can log them to the server
+        viewModelScope.launch(Dispatchers.IO) {
+            billingRepository.pendingPurchase.mapNotNull { logPendingAdFreePurchase(it) }.collect()
+            billingRepository.purchaseStateChange.mapNotNull { logPendingAdFreePurchase(it) }.collect()
+        }
     }
 
     /**

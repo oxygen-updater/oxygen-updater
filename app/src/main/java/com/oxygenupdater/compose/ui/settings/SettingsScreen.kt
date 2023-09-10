@@ -85,7 +85,7 @@ import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotificationUtils
 
-private var previousAdFreeConfig: Triple<Boolean, Int, (() -> Unit)?> = Triple(
+private var previousAdFreeConfig = Triple<Boolean, Int, (() -> Unit)?>(
     false, R.string.settings_buy_ad_free_label, null
 )
 

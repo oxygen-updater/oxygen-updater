@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import androidx.annotation.UiThread
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -139,8 +141,8 @@ class BillingRepository(
             logDebug(TAG, "[adFreeState] $it")
 
             // Fallback to SharedPreferences if purchases haven't been processed yet
-            if (it == SkuState.UNKNOWN) PrefManager.getBoolean(PROPERTY_AD_FREE, false)
-            else it == SkuState.PURCHASED_AND_ACKNOWLEDGED
+            if (it == SkuState.Unknown) PrefManager.getBoolean(PROPERTY_AD_FREE, false)
+            else it == SkuState.PurchasedAndAcknowledged
         }.distinctUntilChanged().onEach {
             logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
@@ -191,7 +193,7 @@ class BillingRepository(
 
             else -> {
                 PrefManager.putBoolean(PROPERTY_AD_FREE, false)
-                setProductState(SKU_INAPP_AD_FREE, SkuState.NOT_PURCHASED)
+                setProductState(SKU_INAPP_AD_FREE, SkuState.NotPurchased)
             }
         }
 
@@ -240,7 +242,7 @@ class BillingRepository(
      * @param skuList a List<String> of SKUs representing purchases and subscriptions
      */
     private fun addSkuFlows(skuList: List<String>) = skuList.forEach { sku ->
-        val skuState = MutableStateFlow(SkuState.UNKNOWN)
+        val skuState = MutableStateFlow(SkuState.Unknown)
         val details = MutableStateFlow<ProductDetails?>(null)
 
         // Flow is considered "active" if there's at least one subscriber.
@@ -343,7 +345,7 @@ class BillingRepository(
         }
     }
 
-    private fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.UNKNOWN).also {
+    private fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.Unknown).also {
         logWarning(TAG, "[getSkuState] unknown SKU: $sku")
     }
 
@@ -412,11 +414,13 @@ class BillingRepository(
      * @return true if launch is successful
      */
     @UiThread
-    fun launchBillingFlow(
-        activity: Activity,
-        sku: String,
-        upgradeSkus: Array<String>? = null,
-    ) {
+    fun launchBillingFlow(activity: Activity, sku: String, upgradeSkus: Array<String>? = null) {
+        /**
+         * Mark initiated so that [com.oxygenupdater.compose.ui.settings.SettingsScreen]
+         * disables the button and sets text to "Please wait…".
+         */
+        setProductState(sku, SkuState.PurchaseInitiated)
+
         val details = productDetailsMap[sku]?.value ?: return logBillingError(
             TAG, "[launchBillingFlow] unknown SKU: $sku"
         )
@@ -497,7 +501,8 @@ class BillingRepository(
      *
      * @see <a href="https://developer.android.com/google/play/billing/test">Test Google Play Billing Library integration</a>
      */
-    fun debugConsumeAdFree() = CoroutineScope(Dispatchers.IO).launch {
+    @Deprecated("Only for local testing: should not be part of checked-in code or an APK release", level = DeprecationLevel.ERROR)
+    fun debugConsumeAdFree() = ioScope.launch {
         consumeInAppPurchase(SKU_INAPP_AD_FREE)
     }
 
@@ -670,15 +675,15 @@ class BillingRepository(
 
         val oldState = skuStateFlow.value
         when (state) {
-            PurchaseState.PENDING -> SkuState.PENDING
-            PurchaseState.UNSPECIFIED_STATE -> SkuState.NOT_PURCHASED
+            PurchaseState.PENDING -> SkuState.Pending
+            PurchaseState.UNSPECIFIED_STATE -> SkuState.NotPurchased
             PurchaseState.PURCHASED -> if (purchase.isAcknowledged) {
-                SkuState.PURCHASED_AND_ACKNOWLEDGED
-            } else SkuState.PURCHASED
+                SkuState.PurchasedAndAcknowledged
+            } else SkuState.Purchased
 
             else -> null
         }?.let { newState ->
-            if (newState == SkuState.PENDING) _pendingPurchase.tryEmit(purchase)
+            if (newState == SkuState.Pending) _pendingPurchase.tryEmit(purchase)
             else if (newState != oldState) _purchaseStateChange.tryEmit(purchase)
             skuStateFlow.tryEmit(newState)
         } ?: logBillingError(TAG, "[setSkuStateFromPurchase] unknown purchase state: $state")
@@ -769,7 +774,7 @@ class BillingRepository(
                         if (result.responseCode == BillingResponseCode.OK) {
                             // Purchase acknowledged
                             purchase.products.forEach {
-                                setProductState(it, SkuState.PURCHASED_AND_ACKNOWLEDGED)
+                                setProductState(it, SkuState.PurchasedAndAcknowledged)
                             }
                             _newPurchase.tryEmit(Pair(BillingResponseCode.OK, purchase))
                         } else logBillingError(TAG, "[processPurchaseList] error acknowledging: ${purchase.products}")
@@ -781,8 +786,8 @@ class BillingRepository(
         // Clear purchase state of anything that didn't come with this purchase list if this is
         // part of a refresh.
         skusToUpdate?.forEach {
-            if (productDetailsMap[it]?.value == null) setProductState(it, SkuState.UNKNOWN)
-            else if (!updatedSkus.contains(it)) setProductState(it, SkuState.NOT_PURCHASED)
+            if (productDetailsMap[it]?.value == null) setProductState(it, SkuState.Unknown)
+            else if (!updatedSkus.contains(it)) setProductState(it, SkuState.NotPurchased)
         }
     }
 
@@ -808,7 +813,7 @@ class BillingRepository(
             _consumedPurchaseSkus.emit(purchase.products)
             // Since we've consumed the purchase
             purchase.products.forEach {
-                setProductState(it, SkuState.NOT_PURCHASED)
+                setProductState(it, SkuState.NotPurchased)
             }
         } else logBillingError(TAG, "[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}")
     }
@@ -825,12 +830,39 @@ class BillingRepository(
         purchase.signature
     )
 
-    enum class SkuState {
-        UNKNOWN,
-        NOT_PURCHASED,
-        PENDING,
-        PURCHASED,
-        PURCHASED_AND_ACKNOWLEDGED
+    @JvmInline
+    @Immutable
+    value class SkuState(val value: Int) {
+
+        override fun toString() = when (this) {
+            Unknown -> "Unknown"
+            NotPurchased -> "NotPurchased"
+            PurchaseInitiated -> "PurchaseInitiated"
+            Pending -> "Pending"
+            Purchased -> "Purchased"
+            PurchasedAndAcknowledged -> "PurchasedAndAcknowledged"
+            else -> "Unknown"
+        }
+
+        companion object {
+            @Stable
+            val Unknown = SkuState(0)
+
+            @Stable
+            val NotPurchased = SkuState(1)
+
+            @Stable
+            val PurchaseInitiated = SkuState(2)
+
+            @Stable
+            val Pending = SkuState(3)
+
+            @Stable
+            val Purchased = SkuState(4)
+
+            @Stable
+            val PurchasedAndAcknowledged = SkuState(5)
+        }
     }
 
     companion object {

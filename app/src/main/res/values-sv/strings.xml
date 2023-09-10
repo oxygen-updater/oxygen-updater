@@ -114,7 +114,7 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="theme_additional_note">Obs. om \"Auto\" är aktivt och batterispararläget är på kommer det mörka temat användas oavsett tid på dygnet för att spara batteri</string>
 
 	<string name="settings">"Inställningar"</string>
-	<string name="settings_buy_button_buy">"(%1$s)"</string>
+	<string name="settings_buy_button_buy">"Köp (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Köpt"</string>
 	<string name="settings_buy_button_not_possible">"Otillgänglig"</string>
 	<string name="settings_buy_ad_free_label">"Uppgradera till reklamfritt"</string>

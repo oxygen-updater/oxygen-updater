@@ -376,18 +376,13 @@ class MainActivity : BaseActivity() {
             settingsViewModel.fetchEnabledDevices(cachedEnabledDevices)
         }
 
-        val state by settingsViewModel.state.collectAsStateWithLifecycle()
-
-        // TODO(compose/settings): test all this thoroughly
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
 
-        val markPending = rememberCallback {
-            showToast(R.string.purchase_error_pending_payment)
-        }
-
-        val adFreeConfig = adFreeConfig(adFreeState, markPending, makePurchase = rememberTypedCallback {
+        val adFreeConfig = adFreeConfig(adFreeState, rememberTypedCallback {
             billingViewModel.makePurchase(this@MainActivity, it)
+        }, rememberCallback {
+            showToast(R.string.purchase_error_pending_payment)
         })
 
         // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
@@ -410,6 +405,7 @@ class MainActivity : BaseActivity() {
             }
         })
 
+        val state by settingsViewModel.state.collectAsStateWithLifecycle()
         SettingsScreen(state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
             settingsViewModel.saveSelectedDevice(it)
             updateMismatchStatus()

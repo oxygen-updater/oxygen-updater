@@ -115,10 +115,10 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 		conserve battery</string>
 
 	<string name="settings">Settings</string>
-	<string name="settings_buy_button_buy">Buy (%1$s)</string>
+	<string name="settings_buy_button_buy">Purchase (%1$s)</string>
 	<string name="settings_buy_button_bought">Purchased</string>
 	<string name="settings_buy_button_not_possible">Unavailable</string>
-	<string name="settings_buy_ad_free_label">Upgrade to Ad-Free</string>
+	<string name="settings_buy_ad_free_label">Upgrade to ad-free</string>
 
 	<string name="settings_contribute_label">Help improve the app</string>
 
