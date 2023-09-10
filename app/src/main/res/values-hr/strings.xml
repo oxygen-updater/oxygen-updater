@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
-
 	<!-- Update information strings -->
 	<!-- TODO: translate this string below -->
 	<string name="enable">Omogućiti</string>
@@ -21,9 +17,7 @@
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled napredni način, you can download the latest ZIP for \"%1$s\". You can turn napredni način off from settings.</string>
 	<string name="update_information_different_version_changelog_notice_base">Napomena: ovaj dnevnik promjena je za posljednju dostupnu verziju (%1$s) u metodi ažuriranja \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Ako namjeravate instalirati ovo ažuriranje, morate omogućiti \"Napredni način\" u postavkama.</string>
-	<string name="update_information_last_checked_on">"Zadnja provjera: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Nema novosti o ažuriranju"</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Tvoj sistem koristi najnovija ažuriranja."</string>
 	<string name="update_information_unknown_update_name">"Neimenovano ažuriranje za %1$s"</string>
 	<string name="update_information_view_update_information">"Pogledaj podatke o ažuriranju"</string>
@@ -88,8 +82,6 @@
 	<string name="summary_update_method">Select a device first</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Neke važne obavijesti su onemogućene:</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_language">Postavite jezik</string>
 	<string name="summary_privacy_policy">Pogledajte na mreži</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
@@ -124,7 +116,6 @@
 
 	<string name="settings_device">"Uređaj"</string>
 	<string name="settings_entered_incorrectly">"Greška pri spremanju postavki. Molimo vas ponovno odaberite vaš uređaj / metodu ažuriranja."</string>
-	<string name="settings_explanation_incremental_full_update">"Djelomično ažurianje može biti insalirano s bilo koje verzije (ako nemate bootloader otključan; onda biste uvjek trebali izabrati metodu punog ažuriranja), dok god mi imamo to djelomično ažuriranje.\n\nA Cjeli ažuriranje će uvjek biti instalirano - nevezano sa sadašnjom verzijom softwera korištenog na uređaju\n\nA Beta verzije OxygenOSa može uvjek biti instalirano kao i stabilna verzija. Da napravite to morate uključiti "napredni mod" u postavkama. Naćin ažuriranja je isti kao i kad ste na stabilnoj verziji."</string>
 	<string name="settings_push_from_server">"Važna poruka je dostupna"</string>
 	<string name="settings_saving">"Vaše postavke se još uvijek spremaju. Ako ovo potraje predugo: Provjerite vašu internet vezu , izađite iz aplikacije i pokrenite je ponovno."</string>
 	<string name="settings_advanced_mode">"Napredni način"</string>
@@ -240,11 +231,8 @@ Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranj
 
 	<!-- News strings -->
 	<string name="news">"Vijesti"</string>
-	<string name="news_date_published">"Najnovije vijesti: %1$s"</string>
-	<string name="news_empty">"Ovaj članak nema komentara"</string>
 	<string name="news_load_network_error">"Došlo je do pogreške. Molimo provjerite vašu internet vezu i pritisnite \"Retry\" tipku da otvorite članak"</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
@@ -272,8 +260,6 @@ Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranj
 	<string name="error_app_outdated">"O ne!"</string>
 	<string name="error_app_outdated_message">"Ova verzija aplikacije je zastarjela. Vrijeme je da je ažurirate! Pritisnite na \"Google Play\". U Google play-u pritisnite \"Ažuriraj\""</string>
 	<string name="error_app_requires_network_connection">"Nema internetske veze"</string>
-	<string name="error_app_requires_network_connection_message">"Neuspješno povezivanje na server. Molimo provjerite vašu vezu. Aplikacija će se sada zatvoriti."</string>
-	<string name="error_no_internet_connection">"Nema internetske veze"</string>
 	<string name="error_maintenance">"Održavanje servera"</string>
 	<string name="error_maintenance_message">"Molimo pričekajte. Serveri će uskoro biti dostupni."</string>
 	<!-- TODO: translate this string below -->
@@ -306,7 +292,6 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 
 	<!-- Other strings -->
 	<!-- TODO: translate this string below -->
-	<string name="error">Pogreška</string>
 	<string name="icon">"Ikona"</string>
 	<string name="loading">"Učitavanje…"</string>
 	<string name="processing">"Procesiranje…"</string>

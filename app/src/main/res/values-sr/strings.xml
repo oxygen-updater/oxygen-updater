@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Није могуће преузети листу подржаних уређаја</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Омогући</string>
 	<string name="update_information_description_not_available">Нема званичних информација о новим могућностима овог ажурирања. Обично, овакво ажурирање поправња грешке, повећавање перформанси, и / или критична ажурирања сигурности за ваш уређај.</string>
@@ -18,9 +16,7 @@
 	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\". Можете искључити напредни мод из подешавања.</string>
 	<string name="update_information_different_version_changelog_notice_base">Напомена: овај дневник промена је за најновију доступну верзију (%1$s) у методи ажурирања \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Ако намеравате да инсталирате ову исправку, морате да омогућите „Напредни мод“ у подешавањима.</string>
-	<string name="update_information_last_checked_on">Задња провера: %1$s</string>
 	<string name="update_information_no_update_data_available">Нема новости о ажурирању</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Твој систем користи најновија ажурирања</string>
 	<string name="update_information_unknown_update_name">Неименовано ажурирање за %1$s</string>
 	<string name="update_information_view_update_information">Погледај податке о ажурирању</string>
@@ -95,8 +91,6 @@
 	<string name="summary_update_method">Прво селектујте уређај</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Нека важна обавештења су онемогућена:</string>
-	<string name="summary_theme">Поставите тему</string>
-	<string name="summary_language">Поставите језик</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
 	<string name="summary_rate_app">Оставите нам 5 звездица</string>
 
@@ -127,7 +121,6 @@
 
 	<string name="settings_device">Уређај</string>
 	<string name="settings_entered_incorrectly">Грешка приликом чувања ваших подешавања. Молимо вас и изаберите ваш уређај / методу ажурирања.</string>
-	<string name="settings_explanation_incremental_full_update">Делимично ажурирање се може извршити са било које верзије (ако немате "bootloader" откључан; онда бисте требали изабрати методу пуног ажурирања).\n\nA beta ажурирање OxygenOS-а може увек бити инсталирано, и када сте на стабилној верзији. За пребацивање са стабилне на beta верзију, морате да омогућите напредни мод у подешавањима. За beta-е, методе целог и делимичног ажурирања раде на исти начин као на стабилним верзијама.</string>
 
 	<string name="settings_push_from_server">Важна порука је доступна</string>
 
@@ -232,11 +225,7 @@
 
 	<!-- News strings -->
 	<string name="news">Вести</string>
-	<string name="news_date_published">Последње ажурирање: %1$s</string>
-	<string name="news_empty">Ова вест нема садржај.</string>
 	<string name="news_load_network_error">Грешка приликом отварања вести. Проверите конекцију и притисните \'Понови\' дугме да отворите вест.</string>
-
-	<string name="news_load_id_error"><![CDATA[Није успео отварање чланка са неважеће УРЛ адресе: %1$s. Проверите УРЛ или нам то пријавите или путем <a href="mailto:support@oxygenupdater.com">email</a> или на нашем <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 
 	<string name="news_unread_count_1">Имате %1$d непрочитаних вести. Кликните овде да их погледате.</string>
 	<string name="news_unread_count_2">Имате %1$d непрочитаних вести. Кликните овде да видите све непрочитане вести.</string>
@@ -263,9 +252,7 @@
 	<string name="error_app_outdated">О не!</string>
 	<string name="error_app_outdated_message">Ова верзија апликације није ажурирана. Време је да је ажурирате! Притисните на \"Google Play\" испод. У Google Play, притисните на \"Ажурирај\".</string>
 	<string name="error_app_requires_network_connection">Нема конекције</string>
-	<string name="error_app_requires_network_connection_message">Грешка у повезивању са сервером. Проверите да ли имате интернет конецкију која ради. Апликација ће се сада затворити.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Нема конекције.</string>
 	<string name="error_maintenance">Одржавање сервера</string>
 	<string name="error_maintenance_message">Молимо вас сачекајте. Сервер ће ускоро бити поново доступан.</string>
 
@@ -296,7 +283,6 @@
 	<string name="purchase_error_after_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута. Ако сте већ платили, молимо вас контактирајте Google Play подршку.</string>
 
 	<!-- Other strings-->
-	<string name="error">Грешка</string>
 	<string name="icon">Иконица</string>
 	<string name="loading">Учитавање…</string>
 	<string name="processing">Обрада…</string>

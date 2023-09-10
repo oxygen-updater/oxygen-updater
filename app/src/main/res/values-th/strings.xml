@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
-
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
 	<string name="enable">เปิดใช้งาน</string>
@@ -21,9 +18,7 @@
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled โหมดขั้นสูง, you can download the latest ZIP for \"%1$s\". You can turn โหมดขั้นสูง off from settings.</string>
 	<string name="update_information_different_version_changelog_notice_base">หมายเหตุ: บันทึกการเปลี่ยนแปลงนี้มีไว้สำหรับเวอร์ชันล่าสุดที่มีอยู่ (%1$s) ในวิธีการอัปเดต \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced"> หากคุณต้องการติดตั้งการอัปเดตนี้ คุณต้องเปิดใช้งาน \"โหมดขั้นสูง\" ในการตั้งค่า</string>
-	<string name="update_information_last_checked_on">ตรวจสอบครั้งสุดท้ายเมื่อ: %1$s</string>
 	<string name="update_information_no_update_data_available">ยังไม่มีการอัพเดทถูกปล่อยออกมา</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">ระบบของคุณเป็นเวอร์ชั่นล่าสุดแล้ว</string>
 	<string name="update_information_unknown_update_name">มีอัพเดทจากแหล่งที่มาที่ไม่รู้จักสำหรับ %1$s</string>
 	<string name="update_information_view_update_information">ดูรายละเอียดการอัพเดท</string>
@@ -100,8 +95,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_update_method">เลือกอุปกรณ์</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">การแจ้งเตือนที่สำคัญบางอย่างถูกปิดใช้งาน:</string>
-	<string name="summary_theme">ตั้งค่าธีม</string>
-	<string name="summary_language">ตั้งค่าภาษา</string>
 	<string name="summary_privacy_policy">ดูออนไลน์</string>
 	<string name="summary_rate_app">ถ้าชอบพวกเรากรุณาให้ 5 ดาว</string>
 
@@ -132,7 +125,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="settings_device">อุปกรณ์</string>
 	<string name="settings_entered_incorrectly">เกิดข้อผิดพลาดระหว่างบันทึกการตั้งค่า กรุณากลับไปเลือกอุปกรณ์หรือวิธีติดตั้งใหม่</string>
-	<string name="settings_explanation_incremental_full_update">การอัพเดทแบบปกติสามารถอัพเดทจากเวอร์ชั่นไหนก็ได้ (ยกเว้นคุณจะปลดล็อค bootloader แล้ว คุณควรเลือกวิธีติดตั้งแบบเต็มรูปแบบ)\n\nOxygenOS เวอร์ชั่นทดลองสามารถติดตั้งได้ตลอดเวลาตราบใดที่คุณอยู่บนเวอร์ชั่นสเถียร การที่คุณจะเปลี่ยนไปใช้เวอร์ชั่นทดลองนั้น คุณต้องเปิดขั้นสูงในตั้งค่าก่อนและสำหรับเวอร์ชั่นทดลองนั้น การติดตั้งแบบเต็มรูปแบบกับธรรมดาสามารถใช้แทนกันได้</string>
 
 	<string name="settings_push_from_server">แจ้งเตือนข้อมูลและข้อควรระวัง</string>
 
@@ -240,11 +232,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- News strings -->
 	<string name="news">ข่าว</string>
-	<string name="news_date_published">การอัพเดทครั้งล่าสุด: %1$s</string>
-	<string name="news_empty">บทความนี้ไม่มีเนื้อหา</string>
 	<string name="news_load_network_error">ไม่สามารถเปิดบทความ ตรวจสอบการเชื่อมต่อของคุณและกดปุ่ม \'ลองอีกครั้ง \' เพื่อเปิดบทความ</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
@@ -272,9 +261,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="error_app_outdated">ไม่นะ!</string>
 	<string name="error_app_outdated_message">แอพเวอร์ชันนี้ล้าสมัยแล้ว ได้เวลาอัปเดตแล้ว! แตะที่ \"Google Play \" ด้านล่าง ภายใน Google Play ให้แตะที่ \"อัปเดต \"</string>
 	<string name="error_app_requires_network_connection">ไม่มีการเชื่อมต่อ</string>
-	<string name="error_app_requires_network_connection_message">ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ โปรดตรวจสอบให้แน่ใจว่าคุณมีการเชื่อมต่อที่ใช้งานได้ แอพพลิเคชั่นจะปิดลง</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">ไม่มีการเชื่อมต่อ</string>
 	<string name="error_maintenance">การบำรุงรักษาเซิร์ฟเวอร์</string>
 	<string name="error_maintenance_message">โปรดรอ. เซิร์ฟเวอร์จะพร้อมใช้งานในไม่ช้า</string>
 	<!-- TODO: translate this string below -->
@@ -307,7 +294,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">ข้อผิดพลาด</string>
 	<string name="icon">ไอคอน</string>
 	<string name="loading">กำลังโหลด…</string>
 	<string name="processing">กำลังประมวลผล…</string>

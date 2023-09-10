@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Неможе да се врати листа од поддржани уреди</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Овозможи</string>
 	<string name="update_information_description_not_available">Нема официјални информации за новите функции која ова ажурирање ги овозможува. Обично, вакво ажурирање се состои од поправки на грешки, подобрување на перформанси, и/или критични безбедносни закрпи за вашиот уред.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Бидејќи имате овозможено напреден режим, можете да ја превземете најновата ZIP датотека за \"%1$s\". Можете да го исклучите напредниот режим во поставките.</string>
 	<string name="update_information_different_version_changelog_notice_base">Забелешка: овој дневник е за најновата достапна верзија (%1$s) во методот за ажурирање \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Ако имате намера да го инсталирате ова ажурирање, мора да овозможите \"Напреден режим\" во поставките.</string>
-	<string name="update_information_last_checked_on">Последно проверено на: %1$s</string>
 	<string name="update_information_no_update_data_available">Не се достапни податоци за ажурирање</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Вашиот систем е ажуриран</string>
 	<string name="update_information_unknown_update_name">Безимено ажурирање за %1$s</string>
 	<string name="update_information_view_update_information">Погледни ги информациите за ажурирањето</string>
@@ -91,8 +87,6 @@
 	<string name="summary_please_wait">Ве молиме почекајте…</string>
 	<string name="summary_update_method">Најпрво изберете уред</string>
 	<string name="summary_important_notifications_disabled">Некои по важни нотификации се оневозможени:</string>
-	<string name="summary_theme">Избери тема</string>
-	<string name="summary_language">Избери јазик</string>
 	<string name="summary_privacy_policy">Погледнете онлајн</string>
 	<string name="summary_rate_app">Оставете преглед од 5 ѕвезди</string>
 
@@ -123,7 +117,6 @@
 
 	<string name="settings_device">Уред</string>
 	<string name="settings_entered_incorrectly">Грешка при зачувување на вашите поставки. Ве молиме вратете се назад и изберете го вашиот уред / метод на ажурирање повторно.</string>
-	<string name="settings_explanation_incremental_full_update">Инкрементално ажурирање може да биде инсталирано од било која верзија (освен ако имате отклучен bootloader; тогаш секогаш би требало да го избирате методот на целосно ажурирање).\n\nБета ажурирање за OxygenOS секогаш може да биде инсталирано, и кога сте на стабилна верзија. За да промените од стабилно на бета, мора да овозможите напреден режим од поставките. За бета ажурирањата, целосните и инкременталните методи работат на истиот начин како и кај стабилните верзии.</string>
 
 	<string name="settings_push_from_server">Информациони и предупредувачки пораки</string>
 
@@ -227,10 +220,7 @@
 
 	<!-- News strings -->
 	<string name="news">Новости</string>
-	<string name="news_date_published">Последно ажурирање: %1$s</string>
-	<string name="news_empty">Оваа статија нема никаква содржина.</string>
 	<string name="news_load_network_error">Грешка при отварање на статија. Проверете ја вашата конекција и притиснете \"Обидете се повторно\" копчето за да ја отворите статијата.</string>
-	<string name="news_load_id_error"><![CDATA[Грешка при отварање на статија со неважечко URL: %1$s. Проверете го URL-то или пријавете го на <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
 	<string name="news_unread_count_1">Имате %1$d непрочитани статии. Притиснете овде за да ги видите.</string>
 	<string name="news_unread_count_2">Имате %1$d непрочитани статии. Притиснете за да се прикажат сите статии.</string>
 	<string name="news_mark_read">Означи како прочитани</string>
@@ -256,9 +246,7 @@
 	<string name="error_app_outdated">Ох не!</string>
 	<string name="error_app_outdated_message">Оваа верзија на апликацијата е застарена. Време е да ја ажурирате! Притиснете на \"Google Play\" подоле. Во Google Play, притиснете на \"Ажурирај\".</string>
 	<string name="error_app_requires_network_connection">Нема конекција</string>
-	<string name="error_app_requires_network_connection_message">Грешка при конектирање со серверот. Ве молиме проверете дали имате стабилна конекција. Апликацијата сега ке се исклучи.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Нема конекција.</string>
 	<string name="error_maintenance">Одржување на серверот</string>
 	<string name="error_maintenance_message">Ве молиме почекајте. Серверот ќе биде достапен наскоро.</string>
 	<string name="error_maintenance_retry"><![CDATA[Серверот најверојатно е под рутинска поправка. Обидете се повторно после некое време, или пријавете на нашата <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
@@ -286,7 +274,6 @@
 	<string name="purchase_error_after_payment">Купувањето на верзијата без реклами беше неуспешно, заради внатрешна грешка. Ве молиме обидете се повторно за неколку минути. Доколку веќе сте платиле, ве молиме исконтактирајте ја поддршката на Google Play за помош.</string>
 
 	<!-- Other strings-->
-	<string name="error">Грешка</string>
 	<string name="icon">Икона</string>
 	<string name="loading">Вчитување…</string>
 	<string name="processing">Процесирање…</string>

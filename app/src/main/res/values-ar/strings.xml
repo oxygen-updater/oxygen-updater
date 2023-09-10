@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
-
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
 	<string name="enable">ممكن</string>
@@ -21,9 +18,7 @@
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled الوضع المطور, you can download the latest ZIP for \"%1$s\". You can turn الوضع المطور off from settings.</string>
 	<string name="update_information_different_version_changelog_notice_base">ملاحظة: سجل التغيير هذا لأحدث إصدار متوفر (%1$s) في طريقة التحديث \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. إذا كنت تنوي تثبيت هذا التحديث ، يجب تمكين \"الوضع المطور\" في الإعدادات.</string>
-	<string name="update_information_last_checked_on">أخر فحص تم في: %1$s</string>
 	<string name="update_information_no_update_data_available">لا توجد بيانات متاحة عن التحديث</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">نظامك محدث بالفعل</string>
 	<string name="update_information_unknown_update_name">تحديث بلا إسم لـ %1$s</string>
 	<string name="update_information_view_update_information">مشاهدة بيانات التحديث</string>
@@ -95,8 +90,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_update_method">إختر جهازاً أولاً</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">تم تعطيل بعض الإشعارات المهمة:</string>
-	<string name="summary_theme">تعيين شكل</string>
-	<string name="summary_language">لغة مجموعة</string>
 	<string name="summary_privacy_policy">مشاهدة حية</string>
 	<string name="summary_rate_app">أترك مراجعة من خمس نجوم</string>
 	<string name="label_buy_ad_free">إزالة الإعلانات</string>
@@ -123,7 +116,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="settings_contribute_label">المساعدة في تحسين التطبيق</string>
 	<string name="settings_device">الجهاز</string>
 	<string name="settings_entered_incorrectly">خطأ في حفظ إعداداتك. فضلاً عد وإختر جهازك وطريقة التحديث مرة أخرى.</string>
-	<string name="settings_explanation_incremental_full_update">التحديث التدريجي يمكن تثبيته فوق أي إصدار ( ماعدا اذا قمت بفك البوت لودر; إذاً فمن الأفضل دائماً إختيار التحديث الشامل كطريقة التحديث المثلى).\n\nA التحديث التجريبي من نظام أكسجين يمكن تثبيته دائماً, حتى اذا كنت على إصدار مستقر. للإنتقال من إصدار مستقر لإصدار تجريبي, يجب عليك تفعيل الوضع المطور من داخل الإعدادات. أما للإصدارات التجريبية فالتحديثات التدريجية والكاملة تعمل بنفس الطريقة السابقة كأن جهازك يعمل فعلاً بإصدار مستقر حالي.</string>
 	<string name="settings_push_from_server">رسائل معلوماتية وتحذيرية</string>
 	<string name="settings_saving">جاري حفظ إعداداتك. اذا إستغرق ذلك وقتاً طويلاً: أفحص اتصالك, وأخرج من التطبيق وأفتحه مجدداً.</string>
 	<string name="settings_advanced_mode">الوضع المطور</string>
@@ -226,11 +218,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- News strings -->
 	<string name="news">أخبار</string>
-	<string name="news_date_published">آخر تحديث: %1$s</string>
-	<string name="news_empty">لا توجد محتويات داخل هذا المقال.</string>
 	<string name="news_load_network_error">فشل فتح المقال. تحقق من اتصالك واضغط على زر \'إعادة المحاولة\' لفتح المقال.</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
@@ -258,9 +247,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="error_app_outdated">كلا!</string>
 	<string name="error_app_outdated_message">هذا الإصدار من التطبيق قديم. لقد حان الوقت لتحديثه! اضغط على \"متجر بلاي\" أدناه. ومن داخل متجر بلاي ، انقر فوق زر \"تحديث\".</string>
 	<string name="error_app_requires_network_connection">لا يوجد إتصال</string>
-	<string name="error_app_requires_network_connection_message">فشل الاتصال بالخادم. يرجى التأكد من أن لديك إتصال فعال بالإنترنت. سيتم إغلاق التطبيق الآن.</string>
 	<string name="error_google_play_button_text">متجر بلاي</string>
-	<string name="error_no_internet_connection">لا يوجد إتصال.</string>
 	<string name="error_maintenance">صيانة الخادم</string>
 	<string name="error_maintenance_message">فضلاً إنتظر. سيكون الخادم متاح قريباً جداً.</string>
 	<!-- TODO: translate this string below -->
@@ -291,7 +278,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">خطأ</string>
 	<string name="icon">أيقونة</string>
 	<string name="loading">جاري التحميل…</string>
 	<string name="processing">جاري المعالجة…</string>

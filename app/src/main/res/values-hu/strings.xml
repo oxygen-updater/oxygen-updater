@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Nem sikerült beolvasni a támogatott eszközök listáját</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Engedélyezés</string>
 	<string name="update_information_description_not_available">A frissítés által nyújtott új funkciókról nincs hivatalos információ. Az ilyen frissítés rendszerint hibajavításokat, teljesítményjavításokat és / vagy kritikus biztonsági frissítéseket biztosít az eszközödhöz.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára. A haladó módot a beállításokban kapcsolhatod ki.</string>
 	<string name="update_information_different_version_changelog_notice_base">Megjegyzés: ez a változásjegyzék a legújabb elérhető verzióra (%1$s) vonatkozik a \"%2$s\" frissítési módszerrel</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Ha ezt a frissítést kívánja telepíteni, engedélyeznie kell a \"Haladó mód\" opciót a beállításokban.</string>
-	<string name="update_information_last_checked_on">Utoljára ellenőrizve: %1$s</string>
 	<string name="update_information_no_update_data_available">Nem állnak rendelkezésre frissítési információk</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">A rendszer naprakész</string>
 	<string name="update_information_unknown_update_name">Névtelen frissítés a következőhöz: %1$s</string>
 	<string name="update_information_view_update_information">frissítési információk megtekintése</string>
@@ -94,8 +90,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="summary_update_method">Először válassz ki egy eszközt</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva:</string>
-	<string name="summary_theme">Téma beállítása</string>
-	<string name="summary_language">Állítsa be a nyelvet</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
 	<string name="summary_rate_app">Hagyj 5 csillagos értékelést</string>
 
@@ -126,7 +120,6 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 
 	<string name="settings_device">Eszköz</string>
 	<string name="settings_entered_incorrectly">Hiba a beállítások mentésekor. Kérjük, menj vissza, és válaszd ki újra eszközöd / frissítési módszered.</string>
-	<string name="settings_explanation_incremental_full_update">Az inkrementális frissítés bármilyen verzióból telepíthető (kivéve, ha nyitott bootloadered van; ilyenkor mindig a teljes frissítést kell frissítési módszerként választanod).\n\nAz OxygenOS bétafrissítése mindig telepíthető, és akkor is, ha stabil verzión vagy. A stabilról béta módra váltáshoz engedélyezned kell a haladó módot a beállításokban. A béta esetén a teljes és az inkrementális frissítési módszerek ugyanúgy működnek, mint a stabil verziók esetében.</string>
 
 	<string name="settings_push_from_server">Tájékoztató és figyelmeztető üzenetek</string>
 
@@ -230,10 +223,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 
 	<!-- News strings -->
 	<string name="news">Hírek</string>
-	<string name="news_date_published">Utolsó frissítés: %1$s</string>
-	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
 	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"Újra\" gombot a cikk megnyitásához.</string>
-	<string name="news_load_id_error"><![CDATA[Nem sikerült megnyitni a cikket érvénytelen URL-ről: %1$s. Ellenőrizd az URL-t, vagy jelentsd nekünk ezt <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="news_unread_count_1">%1$d olvasatlan híred van. Érints meg a megtekintésükhöz.</string>
 	<string name="news_unread_count_2">%1$d olvasatlan híred van. Érints meg az összes megtekintéséhez.</string>
 	<string name="news_mark_read">Jelöld olvasottként</string>
@@ -259,9 +249,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="error_app_outdated">Jajj ne!</string>
 	<string name="error_app_outdated_message">Az alkalmazás e verziója elavult. Ideje frissíteni! Érintsd meg az alábbi \"Google Play\" lehetőséget. A Google Playen belül érintsd meg a \"Frissítés\" elemet.</string>
 	<string name="error_app_requires_network_connection">Nincs kapcsolat</string>
-	<string name="error_app_requires_network_connection_message">Nem sikerült kapcsolódni a szerverhez. Kérjük, ellenőrizd, hogy működőképes-e a kapcsolat. Az alkalmazás bezárul.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Nincs kapcsolat.</string>
 	<string name="error_maintenance">Szerver karbantartás</string>
 	<string name="error_maintenance_message">Kérlek várj. A szerver hamarosan elérhető lesz.</string>
 	<string name="error_maintenance_retry"><![CDATA[Lehetséges, hogy a szerver nem működik karbantartás miatt. Próbáld újra egy idő után, vagy jelentsd nekünk <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
@@ -289,7 +277,6 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
 
 	<!-- Other strings-->
-	<string name="error">Hiba</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Betöltés…</string>
 	<string name="processing">Feldolgozás…</string>

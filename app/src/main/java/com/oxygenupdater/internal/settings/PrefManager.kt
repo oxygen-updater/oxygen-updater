@@ -5,9 +5,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.edit
-import com.oxygenupdater.compose.ui.Theme
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
+import com.oxygenupdater.ui.Theme
+import com.oxygenupdater.ui.onboarding.NOT_SET
+import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger.logError
 import org.koin.java.KoinJavaComponent.getKoin
 

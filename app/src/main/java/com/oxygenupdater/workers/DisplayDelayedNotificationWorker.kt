@@ -18,9 +18,8 @@ import androidx.work.WorkerParameters
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.activities.MainActivity
-import com.oxygenupdater.compose.activities.NewsItemActivity
-import com.oxygenupdater.compose.ui.currentLocale
+import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
@@ -29,6 +28,7 @@ import com.oxygenupdater.enums.NotificationType.NEWS
 import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
 import com.oxygenupdater.enums.NotificationType.NEW_VERSION
 import com.oxygenupdater.extensions.setBigTextStyle
+import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID

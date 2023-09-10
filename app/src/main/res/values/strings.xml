@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Enable</string>
 	<string name="update_information_description_not_available">There is no official information about the new features this update provides. Usually, such an update provides bug fixes, performance enhancements, and / or critical security updates for your device.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled advanced mode, you can download the latest ZIP for \"%1$s\". You can turn advanced mode off from settings.</string>
 	<string name="update_information_different_version_changelog_notice_base">Note: this changelog is for the latest available version (%1$s) in the \"%2$s\" update method</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. If you intend to install this update, you must enable \"Advanced mode\" in settings.</string>
-	<string name="update_information_last_checked_on">Last checked on: %1$s</string>
 	<string name="update_information_no_update_data_available">No update information is available</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Your system is up to date</string>
 	<string name="update_information_unknown_update_name">Unnamed update for %1$s</string>
 	<string name="update_information_view_update_information">View update information</string>
@@ -91,8 +87,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_please_wait">Please wait…</string>
 	<string name="summary_update_method">Select a device first</string>
 	<string name="summary_important_notifications_disabled">Some important notifications are disabled:</string>
-	<string name="summary_theme">Set theme</string>
-	<string name="summary_language">Set language</string>
 	<string name="summary_privacy_policy">View online</string>
 	<string name="summary_rate_app">Leave a 5 star review</string>
 
@@ -124,7 +118,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="settings_device">Device</string>
 	<string name="settings_entered_incorrectly">Error saving your settings. Please go back and select your device / update method again.</string>
-	<string name="settings_explanation_incremental_full_update">An incremental update can be installed from any version (except if you have an unlocked bootloader; then you should always pick the full update as update method).\n\nA beta update of OxygenOS can always be installed, as well when you\'re on a stable version. To switch from stable to beta, you have to enable the advanced mode in the settings. For the betas, the full and incremental update methods work the same way as on the stable versions.</string>
 
 	<string name="settings_push_from_server">Informational and warning messages</string>
 
@@ -232,10 +225,7 @@ This can be useful if you want to:"</string>
 
 	<!-- News strings -->
 	<string name="news">News</string>
-	<string name="news_date_published">Last update: %1$s</string>
-	<string name="news_empty">This article has no contents.</string>
 	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"Retry\" button to open the article.</string>
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
 	<string name="news_mark_read">Mark as read</string>
@@ -261,9 +251,7 @@ This can be useful if you want to:"</string>
 	<string name="error_app_outdated">Oh no!</string>
 	<string name="error_app_outdated_message">This version of the app is outdated. It\'s time to update it! Tap on \"Google Play\" below. Within Google Play, tap on \"Update\".</string>
 	<string name="error_app_requires_network_connection">No connection</string>
-	<string name="error_app_requires_network_connection_message">Failed to connect to the server. Please make sure you have a working connection. The app will now close.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">No connection.</string>
 	<string name="error_maintenance">Server maintenance</string>
 	<string name="error_maintenance_message">Please wait. The server will be available very soon.</string>
 	<string name="error_maintenance_retry"><![CDATA[The server may be down for maintenance. Try again after some time, or report it to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
@@ -291,7 +279,6 @@ This can be useful if you want to:"</string>
 	<string name="purchase_error_after_payment">The purchase of the ad-free version failed, because an internal error occurred. Please try again in a few minutes. If you have already paid, please contact Google Play support for assistance.</string>
 
 	<!-- Other strings-->
-	<string name="error">Error</string>
 	<string name="icon">Icon</string>
 	<string name="loading">Loading…</string>
 	<string name="processing">Processing…</string>

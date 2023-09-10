@@ -30,10 +30,7 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.compose.activities.MainActivity
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET
-import com.oxygenupdater.compose.ui.update.DownloadStatus
-import com.oxygenupdater.compose.ui.update.WorkInfoWithStatus
+import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -42,6 +39,9 @@ import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
+import com.oxygenupdater.ui.onboarding.NOT_SET
+import com.oxygenupdater.ui.update.DownloadStatus
+import com.oxygenupdater.ui.update.WorkInfoWithStatus
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
@@ -248,9 +248,6 @@ class MainViewModel(
 
     /**
      * This method is called in [MainActivity.onDestroy], to prune finished work.
-     *
-     * This is done to avoid getting callbacks to respective work observers when the fragment is created,
-     * as it results in unnecessary calls to [updateDownloadStatus]
      */
     fun maybePruneWork() {
         if (workInfoWithStatus.value.downloadStatus.run { successful || failed }) {

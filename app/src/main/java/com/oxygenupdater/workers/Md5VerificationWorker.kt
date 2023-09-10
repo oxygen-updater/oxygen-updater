@@ -5,7 +5,7 @@ import android.os.Environment
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
-import com.oxygenupdater.compose.ui.update.Md5VerificationFailure
+import com.oxygenupdater.ui.update.Md5VerificationFailure
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError

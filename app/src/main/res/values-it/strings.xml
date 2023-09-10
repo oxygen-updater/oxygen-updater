@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-	<string name="device_chooser_error_title">Errore nel recuperare la lista dei dispositivi supportati.</string>
-
 	<!-- Update information strings -->
 	<string name="enable">Attiva</string>
 	<string name="update_information_file_name">"Nome file: %1$s"</string>
@@ -16,9 +13,7 @@
 	<string name="update_information_header_advanced_mode_helper">Grazie alla modalità avanzata, puoi scaricare l\'ultima ZIP per \"%1$s\". Puoi disattivare la modalità avanzata nelle impostazioni.</string>
 	<string name="update_information_different_version_changelog_notice_base">Nota: questo changelog riguarda l\'ultima versione disponibile (%1$s) nel metodo di aggiornamento \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Se si intende installare questo aggiornamento, è necessario attivare la modalità avanzata nelle impostazioni.</string>
-	<string name="update_information_last_checked_on">"Ultima verifica: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Non è disponibile alcuna informazione sull'aggiornamento."</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Il tuo sistema è aggiornato."</string>
 	<string name="update_information_unknown_update_name">"Aggiornamento sconosciuto per %1$s"</string>
 	<string name="update_information_view_update_information">"Vedi info aggiornamento"</string>
@@ -89,8 +84,6 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 	<string name="summary_please_wait">Attendi…</string>
 	<string name="summary_update_method">Seleziona un dispositivo</string>
 	<string name="summary_important_notifications_disabled">Alcune notifiche importanti sono disattivate:</string>
-	<string name="summary_theme">Scegli il tema</string>
-	<string name="summary_language">Imposta la lingua</string>
 	<string name="summary_privacy_policy">Visualizza online</string>
 	<string name="summary_rate_app">Rilascia una recensione da 5 stelle</string>
 
@@ -121,11 +114,6 @@ Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:s
 
 	<string name="settings_device">"Dispositivo"</string>
 	<string name="settings_entered_incorrectly">"Errore nel salvare le impostazioni. Seleziona il tuo dispositivo / il modo d'aggiornamento e ritenta."</string>
-	<string name="settings_explanation_incremental_full_update">"Un aggiornamento incrementale può essere installatato da qualsiasi versione, eccetto nel caso di bootloader sbloccato, nel quale sei consigliato ad usare l'update intero. Per attivarlo basta attivare la modalità avanzata nelle impostazioni.
-
-Un aggiornamento completo può essere installato sempre - indipendentemente dalla versione attuale presente sul tuo dispositivo.
-
-Un aggiornamento beta può essere installato solo se ti trovi già' sul branch delle beta."</string>
 	<string name="settings_push_from_server">"È disponibile un messaggio critico"</string>
 	<string name="settings_saving">"Le tue impostazioni si stanno ancora salvando. Se questo impiega troppo tempo controlla la tua connessione, riavvia l'applicazione e ritenta."</string>
 	<string name="settings_advanced_mode">"Modalità avanzata"</string>
@@ -235,10 +223,7 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 
 	<!-- News strings -->
 	<string name="news">"Novità"</string>
-	<string name="news_date_published">"Ultimo aggiornamento: %1$s"</string>
-	<string name="news_empty">"Questo articolo non ha commenti."</string>
 	<string name="news_load_network_error">"Errore nell'aprire l'articolo. Controlla la tua connesisone e ritenta."</string>
-	<string name="news_load_id_error"><![CDATA[Impossibile aprire l\'articolo da un URL non valido:: %1$s. Controlla l\'URL o segnalacelo tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>.]]></string>
 	<string name="news_unread_count_1">Hai %1$d articoli non letti. Premi qui per visualizzarli.</string>
 	<string name="news_unread_count_2">Hai %1$d articoli non letti. Premi per mostrare tutti gli articoli.</string>
 	<string name="news_mark_read">Segna come letto</string>
@@ -263,8 +248,6 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="error_app_outdated">"Oh no!"</string>
 	<string name="error_app_outdated_message">"Questa versione è obsoleta. Aggiorna!"</string>
 	<string name="error_app_requires_network_connection">"Nessuna connessione"</string>
-	<string name="error_app_requires_network_connection_message">"Errore nel connettere al server. Assicurati di avere una connessione stabile. L'app terminerà ora."</string>
-	<string name="error_no_internet_connection">"Nessuna connesione."</string>
 	<string name="error_maintenance">"Manutenzione"</string>
 	<string name="error_maintenance_message">"Attendi. Il server tornerà disponibile presto."</string>
 	<string name="error_maintenance_retry"><![CDATA[Il server potrebbe essere sotto manutenzione. Riprova più tardi o facci sapere tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
@@ -293,7 +276,6 @@ Altri dispositivi della OnePlus su custom ROM, non sono supportati."</string>
 	<string name="purchase_error_after_payment">"Il pagamento non è andato a buon fine a causa di un errore interno. Ritenta in alcuni minuti. Se hai già pagato, contatta Google Play Support per assistenza."</string>
 
 	<!-- Other strings -->
-	<string name="error">Errore</string>
 	<string name="icon">"Icona"</string>
 	<string name="loading">"Caricando…"</string>
 	<string name="processing">"Processando…"</string>

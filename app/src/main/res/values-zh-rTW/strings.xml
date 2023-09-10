@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">無法搜尋支援的裝置列表</string>
-
 	<!-- Update information strings-->
 	<string name="enable">啟用</string>
 	<string name="update_information_description_not_available">沒有關於此更新的新功能資訊的官方訊息。一般情況下，此類更新會為您的裝置提供錯誤修復，效能改進或關鍵安全性更新。</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">由於您開啟了進階模式，您可以手動下載 \"%1$s\" 的 ZIP 包。 您可以在設定中關閉進階模式。</string>
 	<string name="update_information_different_version_changelog_notice_base">注意：此更改日誌適用於“%2$s”更新方法中的最新可用版本 (%1$s)</string>
 	<string name="update_information_different_version_changelog_notice_advanced">。 如果您打算安裝此更新，則必須在設置中啟用“進階模式”。</string>
-	<string name="update_information_last_checked_on">上一次檢查更新在： %1$s</string>
 	<string name="update_information_no_update_data_available">沒有可用的更新訊息</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">您的系統已是最新版本</string>
 	<string name="update_information_unknown_update_name">適用於 %1$s 的未知更新</string>
 	<string name="update_information_view_update_information">檢視更新訊息</string>
@@ -91,8 +87,6 @@
 	<string name="summary_please_wait">請稍等…</string>
 	<string name="summary_update_method">請先選擇一個裝置</string>
 	<string name="summary_important_notifications_disabled">一些重要的通知被停用。:</string>
-	<string name="summary_theme">設定佈景主題</string>
-	<string name="summary_language">設定語言</string>
 	<string name="summary_privacy_policy">線上檢視</string>
 	<string name="summary_rate_app">留下 5 星評分</string>
 
@@ -122,7 +116,6 @@
 
 	<string name="settings_device">裝置</string>
 	<string name="settings_entered_incorrectly">儲存設定時發生錯誤。請返回並重新選擇您的裝置 / 更新方法。</string>
-	<string name="settings_explanation_incremental_full_update">增量更新可以在任何版本中安裝（但是如果您解鎖了 Bootloader，那麼您將只能選擇安裝完整包）。\n\nOxygenOS 的公開測試版也可以在任何版本（包括正式版）中安裝。如果您想從正式版升級到測試版，那麼請在設定中打開進階模式。測試版和正式版一樣，都會要求您在解鎖了 Bootloader 的情況下下載全量包。</string>
 
 	<string name="settings_push_from_server">重要通知</string>
 
@@ -226,11 +219,7 @@
 
 	<!-- News strings -->
 	<string name="news">新聞</string>
-	<string name="news_date_published">上次更新：%1$s</string>
-	<string name="news_empty">此文章還沒有留言</string>
 	<string name="news_load_network_error">無法打開文章。請檢查您的網際網路連線並點選「重試」按鈕重新打開。</string>
-
-	<string name="news_load_id_error"><![CDATA[無法從該連結打開文章： %1$s，請檢查連結。 您也可以透過我們的 <a href="mailto:support@oxygenupdater.com">Mail</a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a> 傳送建議]]></string>
 
 	<string name="news_unread_count_1">您有 %1$d 篇未讀文章，點選即可瀏覽</string>
 	<string name="news_unread_count_2">您有 %1$d 篇未讀文章，點選即可全部顯示</string>
@@ -257,9 +246,7 @@
 	<string name="error_app_outdated">糟糕！</string>
 	<string name="error_app_outdated_message">更新器不是最新版本，請前往 Google Play 商店進行更新。</string>
 	<string name="error_app_requires_network_connection">無網際網路連線</string>
-	<string name="error_app_requires_network_connection_message">無法連線伺服器，請您確保您已經連線至網際網路。應用程式即將關閉。</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">無網際網路連線</string>
 	<string name="error_maintenance">伺服器維護中…</string>
 	<string name="error_maintenance_message">伺服器馬上就好，請待會再來吧～</string>
 	<string name="error_maintenance_retry"><![CDATA[伺服器也許正在維護中，請稍候嘗試。您也可以透過我們的 <a href="mailto:support@oxygenupdater.com">Mail</a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a> 傳送建議]]></string>
@@ -287,7 +274,6 @@
 	<string name="purchase_error_after_payment">由於內部錯誤，購買移除廣告服務失敗，請稍候重試。 如果您已付款，請與 Google Play 支援小組聯絡以取得協助。</string>
 
 	<!-- Other strings-->
-	<string name="error">錯誤</string>
 	<string name="icon">圖示</string>
 	<string name="loading">載入中…</string>
 	<string name="processing">正在處理…</string>

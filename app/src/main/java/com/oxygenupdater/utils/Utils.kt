@@ -6,7 +6,6 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.oxygenupdater.compose.ui.device.defaultDeviceName
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -15,6 +14,7 @@ import com.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
 import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.device.defaultDeviceName
 import com.oxygenupdater.utils.Logger.logVerbose
 import java.time.ZoneId
 

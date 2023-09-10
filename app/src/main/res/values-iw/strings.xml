@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">לא ניתן להשיג רשימה של המכשירים הנתמכים</string>
-
 	<!-- Update information strings-->
 	<string name="enable">הפעל</string>
 	<string name="update_information_description_not_available">עדכון זה אינו מציג מידע רשמי עבור תכונות חדשות. לרוב, עדכונים אלו מציגים תיקוני באגים, שיפורי ביצועים ו/או עדכוני אבטחה קריטיים למכשיר שלך</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">בחרת במסלול \"%1$s\" הפעל מצב מתקדם אם ברצונך לקבל עדכון ממסלול זה.</string>
 	<string name="update_information_different_version_changelog_notice_base">הערה: יומן שינויים זה מיועד לגרסה האחרונה הזמינה (%1$s) בשיטת העדכון \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. אם בכוונתך להתקין עדכון זה, עליך להפעיל את \"מצב מתקדם\" בהגדרות.</string>
-	<string name="update_information_last_checked_on">נבדק בפעם האחרונה %1$s</string>
 	<string name="update_information_no_update_data_available">אין מידע זמין עבור עדכון זה</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">המערכת שלך מעודכנת</string>
 	<string name="update_information_unknown_update_name">שם חסר עדכון עבור: %1$s</string>
 	<string name="update_information_view_update_information">צפה במידע על העדכון</string>
@@ -92,8 +88,6 @@
 	<string name="summary_update_method">אנא בחר ראשית מכשיר</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">כמה התראות חשובות מושבתות:</string>
-	<string name="summary_theme">בחר עיצוב</string>
-	<string name="summary_language">בחר שפה</string>
 	<string name="summary_privacy_policy">צפה בדפדפן</string>
 	<string name="summary_rate_app">השאר דירוג 5 כוכבים</string>
 
@@ -125,7 +119,6 @@
 
 	<string name="settings_device">מכשיר</string>
 	<string name="settings_entered_incorrectly">שגיאה בשמירת ההגדרות. אנא חזור אחורה ובחר את המכשיר/ שיטת העדכון שנית</string>
-	<string name="settings_explanation_incremental_full_update">עדכון מצטבר יכול להיות מותקן בכל מקרה (חוץ ממקרה בו פתחת את ה-bootloader, אז עליך לקחת את שיטת העדכון המלא).\n\nעדכון בטא של OxygenOS יכול תמיד להיות מותקן גם על גרסת בטא וגם על גרסה יציבה. כדי להחליף מגרסה יציבה לגרסת בטא, עליך להפעיל את מצב מתקדם בהגדרות. שיטות העדכונים: Beta, Full, Incremental.</string>
 	<string name="settings_push_from_server">הודעות ואזהרות - כללי</string>
 
 	<string name="settings_saving">ההגדרות שלך עדיין בתהליך שמירה. אם תהליך זה לוקח זמן רב מדי, אנא בדוק את חיבור הרשת שלך, ונסה לסגור את האפליקציה ולהפעילה מחדש.</string>
@@ -228,10 +221,7 @@
 
 	<!-- News strings -->
 	<string name="news">חדשות</string>
-	<string name="news_date_published">עדכון אחרון: %1$s</string>
-	<string name="news_empty">לכתבה זאת אין תוכן.</string>
 	<string name="news_load_network_error">Failed to open article. Check your connection and press the \"Retry\" button to open the article.</string>
-	<string name="news_load_id_error"><![CDATA[אירעה שגיאה בעת פתיחת המאמר משום שהקישור לא תקין: %1$s. בדוק את קישור הURL ודווח לנו זאת דרך <a href="mailto:support@oxygenupdater.com">המייל</a> או דרך <a href="https://discord.gg/5TXdhKJ">שרת הDiscord שלנו </a>.]]></string>
 	<string name="news_unread_count_1">גילינו שלא קראת %1$d כתבות. לחץ כאן כדי לקרוא אותם.</string>
 	<string name="news_unread_count_2">יש לך %1$d כתבות שלא קראת. לחץ כאן כדי להציג את כל הכתבות.</string>
 	<string name="news_mark_read">סמן כנקרא</string>
@@ -257,9 +247,7 @@
 	<string name="error_app_outdated">אוי לא!</string>
 	<string name="error_app_outdated_message">גרסה זו של האפליקציה מיושנת. הגיע הזמן לעדכן! הקש על \"Google Play\" מתחת. ובתוך Google Play, הקש על \"עדכן\".</string>
 	<string name="error_app_requires_network_connection">אין חיבור</string>
-	<string name="error_app_requires_network_connection_message">החיבור לשרת נכשל. אנא וודא שיש ברשותך חיבור יציב לרשת האינטרנט. אפליקציה זאת עכשיו תסגר.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">אין חיבור.</string>
 	<string name="error_maintenance">השרת תחת תחזוקה</string>
 	<string name="error_maintenance_message">אנא המתן. השרת יהיה זמין בקרוב מאוד.</string>
 	<string name="error_maintenance_retry"><![CDATA[השרת עלול להיות סגור בגלל בעיות תחזוקה. אנא נסה שוב מאוחר יותר, או דווח זאת דרך ה-<a href="mailto:support@oxygenupdater.com">מייל</a> או באמצעות <a href="https://discord.gg/5TXdhKJ">שרת הDiscordשלנו </a>.]]></string>
@@ -285,7 +273,6 @@
 	<string name="purchase_error_pending_payment">הרכישה שלך נמצאת במצב \"תשלום בהמתנה\". לאחר השלמת התשלום, תקבל את כל ההטבות שאתה זכאי להן.</string>
 	<string name="purchase_error_after_payment">רכישת הגרסה חסרת המודעות נכשלה, מכיוון שהתרחש שגיאה פנימית. נסה שוב בעוד מספר דקות. אם חוייבת בכרטיס האשראי, אנאא פנה לתמיכה של Google Play לקבלת סיוע.</string>
 
-	<string name="error">שגיאה</string>
 	<string name="icon">סמל</string>
 	<string name="loading">טוען…</string>
 	<string name="processing">מעבד…</string>

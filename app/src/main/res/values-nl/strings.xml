@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Kon lijst van ondersteunde apparaten niet ophalen.</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Inschakelen</string>
 	<string name="update_information_description_not_available">Er is geen officiële informatie beschikbaar over nieuwe functies die deze update toevoegt. Doorgaans bevatten deze updates oplossingen voor bugs, prestatie verbeteringen, en/of kritieke beveiligingsupdates voor jouw apparaat.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Omdat je geavanceerde modus hebt ingeschakeld, kan je de laatste ZIP voor \"%1$s\" downloaden. Je kan geavanceerde modus uitzetten in de instellingen.</string>
 	<string name="update_information_different_version_changelog_notice_base">Let op: deze lijst met veranderingen is voor de laatst beschikbare versie (%1$s) in de \"%2$s\" update methode</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Als je van plan bent om deze update te installeren, moet je "Geavanceerde modus" aanzetten in de instellingen.</string>
-	<string name="update_information_last_checked_on">Voor het laatst gecontroleerd om: %1$s</string>
 	<string name="update_information_no_update_data_available">Er is geen update-informatie beschikbaar</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Je apparaat is volledig bijgewerkt</string>
 	<string name="update_information_unknown_update_name">Naamloze update voor %1$s</string>
 	<string name="update_information_view_update_information">Bekijk update-informatie</string>
@@ -92,8 +88,6 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="summary_update_method">Selecteer eerst een apparaat</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Sommige belangrijke meldingen zijn uitgeschakeld:</string>
-	<string name="summary_theme">Selecteer een thema</string>
-	<string name="summary_language">Taal instellen</string>
 	<string name="summary_privacy_policy">Bekijk online</string>
 	<string name="summary_rate_app">Geef een 5-sterren review</string>
 
@@ -122,7 +116,6 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="settings_contribute_label">Verbeter de app voor anderen</string>
 	<string name="settings_device">Apparaat</string>
 	<string name="settings_entered_incorrectly">Fout tijdens opslaan van je instellingen. Ga terug en stel je instellingen opnieuw in.</string>
-	<string name="settings_explanation_incremental_full_update">"Een incrementele update kan worden geïnstalleerd vanaf elke versie (behalve als je een ontgrendelde bootloader hebt; dan moet je altijd voor de update-methode \"volledige update\" kiezen).\n\nEen bèta-versie kan te allen tijde geïnstalleerd worden. Ook als je een stabiele versie draait. Om te wisselen van de stabiele versies naar bèta's, moet je \"geavanceerde modus\" aanzetten in de instellingen. Bij bèta's werken incrementele en volledige updates op dezelfde manier als bij de stabiele versie."</string>
 
 	<string name="settings_push_from_server">Informatie- en waarschuwingsberichten</string>
 
@@ -231,10 +224,7 @@ Dit kan handig zijn als je:"</string>
 
 	<!-- News strings -->
 	<string name="news">Nieuws</string>
-	<string name="news_date_published">Laatste update: %1$s</string>
-	<string name="news_empty">Dit artikel bevat geen inhoud.</string>
 	<string name="news_load_network_error">Kan artikel niet laden. Controleer je verbinding en tik op \"Opnieuw\" om het artikel opnieuw te laden.</string>
-	<string name="news_load_id_error"><![CDATA[Kan artikel niet openen vanaf een geldige URL: %1$s. Bekijk de URL of meld dit aan ons via <a href="mailto:support@oxygenupdater.com">email</a> of op onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om ze te tonen.</string>
 	<string name="news_unread_count_2">Je hebt %1$d ongelezen nieuwsartikelen. Tik hier om alle artikelen te tonen.</string>
 	<string name="news_mark_read">Markeer als gelezen</string>
@@ -260,9 +250,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="error_app_outdated">Oeps!</string>
 	<string name="error_app_outdated_message">Deze versie van de app is wel erg oud. Het is tijd om hem bij te werken! Dit kan door hieronder op \"Play Store\" te tikken. Tik vervolgens in de Google Play Store op \"Bijwerken\".</string>
 	<string name="error_app_requires_network_connection">Geen verbinding</string>
-	<string name="error_app_requires_network_connection_message">Kan geen verbinding met de server maken. Zorg ervoor dat je een werkende internetverbinding hebt. De app zal nu afsluiten.</string>
 	<string name="error_google_play_button_text">Google Play Store</string>
-	<string name="error_no_internet_connection">Geen verbinding.</string>
 	<string name="error_maintenance">Serveronderhoud</string>
 	<string name="error_maintenance_message">Een ogenblik geduld. De server zal zeer snel weer beschikbaar zijn.</string>
 	<string name="error_maintenance_retry"><![CDATA[Het kan zijn dat de server niet beschikbaar is vanwege onderhoud. Probeer het later opnieuw, of meld het aan ons via <a href="mailto:support@oxygenupdater.com">email</a> dan wel via onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>]]></string>
@@ -289,7 +277,6 @@ Dit kan handig zijn als je:"</string>
 	<string name="purchase_error_after_payment">De aankoop van de reclamevrije versie is mislukt, omdat er een onverwachte fout is opgetreden. Probeer het over enkele ogenblikken opnieuw. Als je al hebt betaald, neem dan a.u.b. contact op met de Google Play Store helpdesk.</string>
 
 	<!-- Other strings -->
-	<string name="error">Fout</string>
 	<string name="icon">Icoon</string>
 	<string name="loading">Laden…</string>
 	<string name="processing">Verwerken…</string>

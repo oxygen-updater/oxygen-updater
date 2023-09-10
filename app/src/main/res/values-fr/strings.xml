@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-	<string name="device_chooser_error_title">Impossible de récupérer la liste des appareils supportés</string>
-
 	<!-- Update information strings -->
 	<string name="enable">Activer</string>
 	<string name="update_information_file_name">"Nom du fichier: %1$s"</string>
@@ -16,9 +13,7 @@
 	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier fichier d\'installation (.zip) pour la méthode de mise à jour \"%1$s\". Vous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
 	<string name="update_information_different_version_changelog_notice_base">Remarque : ce journal des modifications concerne la dernière version disponible (%1$s) dans la méthode de mise à jour \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Si vous avez l\'intention d\'installer cette mise à jour, vous devez activer le mode avancé dans les paramètres.</string>
-	<string name="update_information_last_checked_on">"Dernière vérification: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Votre système est à jour"</string>
 	<string name="update_information_unknown_update_name">"Mise à jour non nommée pour: %1$s"</string>
 	<string name="update_information_view_update_information">"Voir les informations de mise à jour"</string>
@@ -95,8 +90,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="summary_update_method">Veuillez sélectionner un appareil</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Certaines notifications importantes sont désactivées:</string>
-	<string name="summary_theme">Choisissez un thème</string>
-	<string name="summary_language">Définir la langue</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
 	<string name="summary_rate_app">Donner 5 étoiles</string>
 
@@ -127,7 +120,6 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 
 	<string name="settings_device">"Appareil"</string>
 	<string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre appareil et méthode de mise à jour."</string>
-	<string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale peut être installée depuis n'importe quelle version (sauf si votre bootloader est déverouillé, auquel cas vous devriez toujours choisir la mise à jour entière en tant que méthode de mise à jour).\n\nLes versions bêta d'OxygenOS peuvent toujours être installées, même si vous exécutez actuellement une version stable. Pour passer de la version stable à la version bêta, vous devez activer le mode avancé dans les réglages. Les méthodes de mises à jour incrémentale et entières marchent de la même manière pour les versions bêta et stables."</string>
 	<string name="settings_push_from_server">"Un message critique est disponible"</string>
 	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à Internet, quittez l'application et réessayez."</string>
 	<string name="settings_advanced_mode">"Mode avancé"</string>
@@ -241,10 +233,7 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 
 	<!-- News strings -->
 	<string name="news">"Articles"</string>
-	<string name="news_date_published">"Dernière mise à jour : %1$s"</string>
-	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_network_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
-	<string name="news_load_id_error"><![CDATA[Échec de l\'ouverture de l\'article à partir d\'une URL invalide: %1$s. Vérifiez l\'URL ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="news_unread_count_1">Vous avez %1$d articles non lus. Appuyez ici pour les voir.</string>
 	<string name="news_unread_count_2">Vous avez %1$d articles non lus. Appuyez ici pour voir tous les articles.</string>
 	<string name="news_mark_read">Marquer comme lu</string>
@@ -270,8 +259,6 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="error_app_outdated">"Oh non !"</string>
 	<string name="error_app_outdated_message">"Cette version de l'application est obsolète. Il est temps de la mettre à jour ! Cliquez sur le bouton « Play Store » en dessous, puis sélectionnez « Mettre à jour »."</string>
 	<string name="error_app_requires_network_connection">"Pas de connexion"</string>
-	<string name="error_app_requires_network_connection_message">"Erreur de connexion au serveur. Veuillez vous assurer que votre connexion Internet fonctionne. L'application va maintenant se fermer."</string>
-	<string name="error_no_internet_connection">"Pas de connexion."</string>
 	<string name="error_maintenance">"Maintenance du serveur"</string>
 	<string name="error_maintenance_message">"Veuillez patienter. Le serveur sera disponible bientôt."</string>
 	<string name="error_maintenance_retry"><![CDATA[Le serveur est probablement en cours de maintenance. Veuillez réessayez dans quelques instants ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
@@ -301,7 +288,6 @@ Les autres appareils, incluant les appareils OnePlus fonctionnant sous des roms 
 	<string name="purchase_error_after_payment">"L'achat de la version sans publicités a échoué en raison d'une erreur interne. Veuillez réessayer dans quelques minutes. Si vous avez déjà payé, veuillez contacter le support du Play Store."</string>
 
 	<!-- Other strings -->
-	<string name="error">Erreur</string>
 	<string name="icon">"Icône"</string>
 	<string name="loading">"Chargement…"</string>
 	<string name="processing">"Achat en cours…"</string>

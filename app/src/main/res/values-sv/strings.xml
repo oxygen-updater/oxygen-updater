@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-	<string name="device_chooser_error_title">Det gick inte att hämta en lista över enheter som stöds</string>
-
 	<!-- Update information strings -->
 	<string name="enable">Aktivera</string>
 	<string name="update_information_file_name">"Filnamn: %1$s"</string>
@@ -18,9 +15,7 @@
 	<string name="update_information_header_advanced_mode_helper">Eftersom du har aktiverat avancerat läge kan du ladda ner den senaste ZIP-filen för \"%1$s\". Du kan avaktivera avancerat läge i inställningarna.</string>
 	<string name="update_information_different_version_changelog_notice_base">Observera: Denna ändringslogg gäller den senaste tillgängliga versionen (%1$s) i uppdateringsmetoden \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Om du vill installera den här uppdateringen måste du aktivera "Avancerat läge" i inställningarna.</string>
-	<string name="update_information_last_checked_on">"Kollade senast den: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Ingen uppdateringsinformation är tillgänglig."</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Din enhet är uppdaterad"</string>
 	<string name="update_information_unknown_update_name">"Namnlös uppdatering för: %1$s"</string>
 	<string name="update_information_view_update_information">"Visa uppdateringsinformation"</string>
@@ -92,8 +87,6 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 	<string name="summary_update_method">Välj en enhet först</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Vissa viktiga meddelanden är inaktiverade:</string>
-	<string name="summary_theme">Välj tema</string>
-	<string name="summary_language">Ställ in språk</string>
 	<string name="summary_privacy_policy">Visa online</string>
 	<string name="summary_rate_app">Ge ett femstjärnigt omdöme</string>
 
@@ -123,11 +116,6 @@ Om du vill veta mer får du kontakta oss antingen genom <a href="mailto:support@
 
 	<string name="settings_device">"Enhet"</string>
 	<string name="settings_entered_incorrectly">"Kunde inte spara dina inställningar. Gå tillbaka och välj din enhet och uppdateringsmetod igen."</string>
-	<string name="settings_explanation_incremental_full_update">"En inkrementell uppdatering kan installeras från vilken version som helst (förutom om du har en olåst bootloader, då ska du alltid välja den fullständiga uppdateringen som uppdateringsmetod) så länge vi har den uppdateringen tillgänglig.
-
-En fullständig uppdatering kan alltid installeras - oavsett vilken systemversion som körs på din enhet.
-
-En betauppdatering av OxygenOS kan alltid installeras, även när du har den stabila versionen av OxygenOS installerad. För att göra detta måste du aktivera avancerat läge i inställningarna. Uppdateringsmetoden är densamma som för de stabila uppdateringarna.</string>
 	<string name="settings_push_from_server">"Viktigt meddelande är tillgängligt"</string>
 	<string name="settings_saving">"Dina inställningar sparas fortfarande. Om detta tar för lång tid: Kolla din nätverksanslutning, stäng sedan av applikationen och starta den igen."</string>
 	<string name="settings_advanced_mode">"Avancerat läge"</string>
@@ -239,10 +227,7 @@ Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetod
 
 	<!-- News strings -->
 	<string name="news">"Nyheter"</string>
-	<string name="news_date_published">"Senaste uppdatering: %1$s"</string>
-	<string name="news_empty">"Denna artikel har inget innehåll."</string>
 	<string name="news_load_network_error">"Misslyckades att öppna artikeln. Kontrollera din anslutning och tryck sedan på 'Försök igen' knappen för att öppna artikeln."</string>
-	<string name="news_load_id_error"><![CDATA[Misslyckades att öppna artikel från ogiltig länk: %1$s. Kolla länken eller rapportera detta till oss genom att antingen <a href="mailto:support@oxygenupdater.com">maila oss</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Du har %1$d olästa nyhetsartiklar. Tryck här för att se dem.</string>
 	<string name="news_unread_count_2">Du har %1$d olästa nyhetsartiklar. Tryck för att visa alla artiklar.</string>
 	<string name="news_mark_read">Markera som läst</string>
@@ -267,9 +252,7 @@ Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetod
 	<string name="error_app_outdated">"Åh nej!"</string>
 	<string name="error_app_outdated_message">"Den här versionen av appen är utdaterad- Det är dags att uppdatera den! Tryck på \"Google Pay\" nedan. Klicka sedan på \"Uppdatera\" inuti appen."</string>
 	<string name="error_app_requires_network_connection">Ingen anslutning</string>
-	<string name="error_app_requires_network_connection_message">Misslyckades att ansluta til servern. Kolla så att du har en fungerande anslutning. Appen kommer att stängas.</string>
 	<string name="error_google_play_button_text">"Google Play"</string>
-	<string name="error_no_internet_connection">"Ingen anslutning."</string>
 	<string name="error_maintenance">"Serverunderhåll"</string>
 	<string name="error_maintenance_message">"Var god vänta. Servern är strax tillgänglig."</string>
 	<string name="error_maintenance_retry"><![CDATA[Servern kan vara nere för underhåll. Försök igen om en stund eller rapportera det via <a href="mailto:support@oxygenupdater.com">e-post</a> eller i vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
@@ -300,7 +283,6 @@ Andra enheter samt OnePlus enheter som har \"Custom ROMs\" installerade är inte
 	<string name="purchase_error_after_payment">"Köpet av den reklamfria utgåvan misslyckades på grund av ett internt fel. Vänligen försök igen om några minuter. Har du redan betalat kan du kontakta Google Play supporten för assistans."</string>
 
 	<!-- Other strings -->
-	<string name="error">Fel</string>
 	<string name="icon">"Ikon"</string>
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>

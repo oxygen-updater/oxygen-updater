@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Kunne ikke hente en liste over støttede enheter</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Aktiver</string>
 	<string name="update_information_description_not_available">Det er ingen offisiell informasjon om de nye funksjonene denne oppdateringen gir. Vanligvis gir en slik oppdatering feilrettinger, ytelsesforbedringer og / eller kritiske sikkerhetsoppdateringer for enheten din.</string>
@@ -17,9 +15,7 @@
 	<string name="update_information_header_advanced_mode_helper">Siden du har aktivert avansert modus, kan du laste ned den nyeste ZIP for \"%1$s\". Du kan slå avansert modus av fra innstillinger</string>
 	<string name="update_information_different_version_changelog_notice_base">Merk: Denne endringsloggen gjelder den siste tilgjengelige versjonen (%1$s) i oppdateringsmetoden \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Hvis du vil installere denne oppdateringen, må du aktivere "Avansert modus" i innstillingene.</string>
-	<string name="update_information_last_checked_on">Sist sjekket: %1$s</string>
 	<string name="update_information_no_update_data_available">Ingen oppdateringsinformasjon er tilgjengelig</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Systemet ditt er oppdatert</string>
 	<string name="update_information_unknown_update_name">Ukjent oppdatering for %1$s</string>
 	<string name="update_information_view_update_information">Vis oppdateringsinformasjon</string>
@@ -94,8 +90,6 @@ Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto
 	<string name="summary_update_method">Velg en enhet først</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Noen viktige varsler er deaktivert:</string>
-	<string name="summary_theme">Sett tema</string>
-	<string name="summary_language">Sett språk</string>
 	<string name="summary_privacy_policy">Se på nettet</string>
 	<string name="summary_rate_app">Legg igjen en 5-stjerners anmeldelse</string>
 
@@ -127,7 +121,6 @@ spare batteri</string>
 
 	<string name="settings_device">Enhet</string>
 	<string name="settings_entered_incorrectly">Feil ved lagring av innstillingene. Gå tilbake og velg din enhet / oppdateringsmetode igjen.</string>
-	<string name="settings_explanation_incremental_full_update">En inkrementell oppdatering kan installeres fra hvilken som helst versjon (bortsett fra hvis du har en ulåst oppstartslaster; du bør alltid velge full oppdatering som oppdateringsmetode).\n\nEn betaoppdatering av OxygenOS kan alltid installeres, også når du er på en stabil versjon. For å bytte fra stabil til beta, må du aktivere den avanserte modusen i innstillingene. For betas fungerer de fulle og trinnvise oppdateringsmetodene på samme måte som på stabile versjoner.</string>
 
 	<string name="settings_push_from_server">Informasjons- og advarselsmeldinger</string>
 
@@ -233,10 +226,7 @@ Dette kan være nyttig hvis du vil:"</string>
 
 	<!-- News strings -->
 	<string name="news">Nyheter</string>
-	<string name="news_date_published">Siste oppdatering: %1$s</string>
-	<string name="news_empty">Denne artikkelen har ikke noe innhold.</string>
 	<string name="news_load_network_error">Kunne ikke åpne artikkelen. Sjekk forbindelsen din og trykk på \"Prøv på nytt\" -knappen for å åpne artikkelen.</string>
-	<string name="news_load_id_error"><![CDATA[Kunne ikke åpne artikkelen fra en ugyldig URL: %1$s. Sjekk URL-en eller rapporter dette til oss via <a href="mailto:support@oxygenupdater.com">e-post</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Du har %1$d uleste nyhetsartikler. Trykk her for å se dem.</string>
 	<string name="news_unread_count_2">Du har %1$d uleste nyhetsartikler. Trykk for å vise alle artiklene.</string>
 	<!-- TODO: translate these 2 strings below -->
@@ -263,9 +253,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="error_app_outdated">Å nei!</string>
 	<string name="error_app_outdated_message">Denne versjonen av appen er utdatert. Det er på tide å oppdatere det! Trykk på \"Google Play\" nedenfor. Trykk på \"Oppdater\" i Google Play.</string>
 	<string name="error_app_requires_network_connection">Ingen forbindelse</string>
-	<string name="error_app_requires_network_connection_message">Kunne ikke koble til serveren. Forsikre deg om at du har en fungerende forbindelse. Appen lukkes nå.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Ingen forbindelse.</string>
 	<string name="error_maintenance">Server vedlikehold</string>
 	<string name="error_maintenance_message">Vennligst vent. Serveren vil være tilgjengelig veldig snart.</string>
 	<string name="error_maintenance_retry"><![CDATA[Serveren kan være nede for vedlikehold. Prøv igjen etter en stund, eller rapporter det til oss enten via <a href="mailto:support@oxygenupdater.com">e-post</a> eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
@@ -294,7 +282,6 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="purchase_error_after_payment">Kjøpet av den annonsefrie versjonen mislyktes fordi det oppstod en intern feil. Vennligst prøv igjen om noen minutter. Hvis du allerede har betalt, kan du kontakte brukerstøtten for Google Play for å få hjelp.</string>
 
 	<!-- Other strings-->
-	<string name="error">Feil</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Laster inn…</string>
 	<string name="processing">Behandler…</string>

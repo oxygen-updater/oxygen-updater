@@ -3,13 +3,13 @@ package com.oxygenupdater.utils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DEVICE_ID
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_NOTIFICATION_TOPIC
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_UPDATE_METHOD_ID
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
+import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 

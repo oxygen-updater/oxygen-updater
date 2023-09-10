@@ -29,10 +29,10 @@ import java.util.concurrent.TimeUnit
  */
 
 private const val TAG = "OxygenUpdaterNetwork"
-private const val USER_AGENT_TAG = "User-Agent"
-private const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
-private const val CACHE_SIZE = 10L * 1024 * 1024 // 10 MB
-private const val API_BASE_URL = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
+private const val UserAgentTag = "User-Agent"
+private const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
+private const val DefaultCacheSize = 10L * 1024 * 1024 // 10 MB
+private const val AppBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 
 const val HEADER_READ_TIMEOUT = "X-Read-Timeout"
 
@@ -43,19 +43,19 @@ fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
  * Create a [Cache] for [OkHttpClient].
  *
  * Limit cache size to stay under quota if device is Oreo and above.
- * Otherwise, default to [CACHE_SIZE]
+ * Otherwise, default to [DefaultCacheSize]
  */
 fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     context.getSystemService<StorageManager>()?.run {
         try {
             val quota = getCacheQuotaBytes(getUuidForPath(context.cacheDir))
-            if (quota > 0L) quota else CACHE_SIZE
+            if (quota > 0L) quota else DefaultCacheSize
         } catch (e: IOException) {
-            CACHE_SIZE
+            DefaultCacheSize
         }
-    } ?: CACHE_SIZE
+    } ?: DefaultCacheSize
 } else {
-    CACHE_SIZE
+    DefaultCacheSize
 }.let {
     Cache(context.cacheDir, it)
 }
@@ -64,7 +64,7 @@ private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)
     addInterceptor { chain ->
         val request = chain.request()
-        val builder = request.newBuilder().header(USER_AGENT_TAG, APP_USER_AGENT)
+        val builder = request.newBuilder().header(UserAgentTag, AppUserAgent)
         val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
             builder.removeHeader(HEADER_READ_TIMEOUT)
             it
@@ -89,7 +89,7 @@ private fun httpClientForDownload() = OkHttpClient.Builder().apply {
 }.build()
 
 private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(API_BASE_URL)
+    .baseUrl(AppBaseUrl)
     .client(httpClient)
     .addConverterFactory(
         JacksonConverterFactory.create(
@@ -103,7 +103,7 @@ private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
     ).build()
 
 private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(API_BASE_URL)
+    .baseUrl(AppBaseUrl)
     .client(httpClient)
     .build()
 

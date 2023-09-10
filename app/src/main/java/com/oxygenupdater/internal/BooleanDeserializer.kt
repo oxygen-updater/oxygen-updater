@@ -13,4 +13,3 @@ class BooleanDeserializer : JsonDeserializer<Boolean>() {
         else -> false
     }
 }
-

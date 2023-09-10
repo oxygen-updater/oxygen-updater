@@ -53,7 +53,6 @@ import kotlinx.coroutines.withContext
 import kotlin.collections.set
 import kotlin.math.min
 
-
 /**
  * The BillingRepository implements all billing functionality for our test application.
  * Purchases can happen while in the app or at any time while out of the app, so the
@@ -133,7 +132,7 @@ class BillingRepository(
 
     /**
      * Returns whether or not the user has purchased ad-free. It does this by returning
-     * a Flow that returns true if the SKU is in the [PURCHASED][SkuState.PURCHASED] state and
+     * a Flow that returns true if the SKU is in the [SkuState.Purchased] state and
      * the [Purchase] has been acknowledged.
      */
     val hasPurchasedAdFree
@@ -416,7 +415,7 @@ class BillingRepository(
     @UiThread
     fun launchBillingFlow(activity: Activity, sku: String, upgradeSkus: Array<String>? = null) {
         /**
-         * Mark initiated so that [com.oxygenupdater.compose.ui.settings.SettingsScreen]
+         * Mark initiated so that [com.oxygenupdater.ui.settings.SettingsScreen]
          * disables the button and sets text to "Please wait…".
          */
         setProductState(sku, SkuState.PurchaseInitiated)
@@ -720,11 +719,11 @@ class BillingRepository(
      * that they paid for something that the app is not giving to them.
      *
      * If a [skusToUpdate] list is passed-into this method, any purchases not in the list of
-     * purchases will have their state set to [SkuState.NOT_PURCHASED].
+     * purchases will have their state set to [SkuState.NotPurchased].
      *
      * @param purchases the List of purchases to process.
      * @param skusToUpdate a list of skus that we want to update the state from --- this allows us
-     * to set the state of non-returned SKUs to [SkuState.NOT_PURCHASED].
+     * to set the state of non-returned SKUs to [SkuState.NotPurchased].
      */
     private fun processPurchaseList(
         purchases: List<Purchase>?,

@@ -5,7 +5,6 @@ import com.android.billingclient.api.Purchase
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.settings.PrefManager
@@ -13,6 +12,7 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.performServerRequest
 
 /**

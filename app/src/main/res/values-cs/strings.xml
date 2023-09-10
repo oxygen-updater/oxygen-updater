@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Nelze načíst seznam podporovaných zařízení</string>
-
 	<!-- Aktualizace informačních řetězců-->
 	<string name="enable">Povolit</string>
 	<string name="update_information_description_not_available">Nejsou k dispozici žádné oficiální informace o nových funkcích, které tato aktualizace poskytuje. Obvykle taková aktualizace poskytuje opravy chyb, vylepšení výkonu a/nebo kritické aktualizace zabezpečení vašeho zařízení.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Protože jste povolili pokročilý režim, můžete si stáhnout nejnovější ZIP pro \"%1$s\". Pokročilý režim můžete vypnout v nastavení.</string>
 	<string name="update_information_different_version_changelog_notice_base">Poznámka: tento seznam změn se týká poslední dostupné verze (%1$s) v metodě aktualizace \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Pokud chcete tuto aktualizaci nainstalovat, musíte v nastavení povolit \"Pokročilý režim\".</string>
-	<string name="update_information_last_checked_on">Poslední kontrola: %1$s</string>
 	<string name="update_information_no_update_data_available">Není k dispozici žádná informace o aktualizaci</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Váš systém je aktuální</string>
 	<string name="update_information_unknown_update_name">Nejmenovaná aktualizace pro %1$s</string>
 	<string name="update_information_view_update_information">Zobrazit informace o aktualizaci</string>
@@ -92,8 +88,6 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 	<string name="summary_update_method">Nejprve vyberte zařízení</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Některá důležitá oznámení jsou zakázána:</string>
-	<string name="summary_theme">Nastavení vzhledu</string>
-	<string name="summary_language">Nastavení jazyka</string>
 	<string name="summary_privacy_policy">Podívat se online</string>
 	<string name="summary_rate_app">Zanechat pětihvězdičkové hodnocení</string>
 
@@ -124,7 +118,6 @@ Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednict
 
 	<string name="settings_device">Zařízení</string>
 	<string name="settings_entered_incorrectly">Chyba uložení nastavení. Vraťte se prosím zpět a vyberte své zařízení / způsob aktualizace znovu.</string>
-	<string name="settings_explanation_incremental_full_update">Aktualizaci typu incremental lze nainstalovat z libovolné verze (kromě případů, kdy máte odemčený zavaděč - bootloader; pak byste měli jako metodu aktualizace vždy zvolit aktualizaci typu full).\n\nAktualizaci beta verze systému OxygenOS lze nainstalovat vždy, stejně jako když máte nainstalovanou stabilní verzi. Chcete-li přejít ze stabilní verze na beta verzi, musíte v nastavení povolit rozšířený režim. U beta verzí fungují metody full a incremental stejně jako u stabilních verzí.</string>
 
 	<string name="settings_push_from_server">Informační a varovné zprávy</string>
 
@@ -230,10 +223,7 @@ To může být užitečné, pokud chcete:"</string>
 
 	<!-- News strings -->
 	<string name="news">Novinky</string>
-	<string name="news_date_published">Poslední aktualizace: %1$s</string>
-	<string name="news_empty">Tento článek nemá žádný obsah</string>
 	<string name="news_load_network_error">Nepodařilo se otevřít článek. Zkontrolujte připojení a stisknutím tlačítka \"Opakovat\" článek otevřete.</string>
-	<string name="news_load_id_error"><![CDATA[Chyba otevření článku z neplatné adresy: %1$s. Zkontrolujte adresu URL nebo nám to nahlaste buď prostřednictvím <a href="mailto:support@oxygenupdater.com">e-mailu</a>, nebo na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="news_unread_count_1">Máte %1$d nepřečtených novinek. Klepněte sem pro jejich zobrazení.</string>
 	<string name="news_unread_count_2">Máte %1$d nepřečtených novinových článků. Klepnutím na zobrazíte všechny články.</string>
 	<string name="news_mark_read">Označit jako přečtené</string>
@@ -259,9 +249,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="error_app_outdated">Ale ne!</string>
 	<string name="error_app_outdated_message">Tato verze aplikace je zastaralá. Je čas ji aktualizovat! Klepněte na \"Google Play\" níže. V Google Play klepněte na \"Aktualizovat\".</string>
 	<string name="error_app_requires_network_connection">Není připojení</string>
-	<string name="error_app_requires_network_connection_message">Nepodařilo se připojit k serveru. Ujistěte se, že máte funkční připojení. Aplikace se nyní zavře.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Není dostupné žádné připojení.</string>
 	<string name="error_maintenance">Údržba serveru</string>
 	<string name="error_maintenance_message">Počkejte prosím. Server bude brzy k dispozici.</string>
 	<string name="error_maintenance_retry"><![CDATA[Server může být odstaven z důvodu údržby. Zkuste to znovu po nějaké době nebo nám to nahlaste prostřednictvím <a href="mailto:support@oxygenupdater.com">email</a> na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
@@ -289,7 +277,6 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="purchase_error_after_payment">Nákup verze bez reklam se nezdařil, protože došlo k interní chybě. Zkuste to prosím za několik minut znovu. Pokud jste již zaplatili, kontaktujte prosím podporu Google Play a požádejte o pomoc.</string>
 
 	<!-- Other strings-->
-	<string name="error">Chyba</string>
 	<string name="icon">Ikona</string>
 	<string name="loading">Načítání…</string>
 	<string name="processing">Zpracovávání…</string>

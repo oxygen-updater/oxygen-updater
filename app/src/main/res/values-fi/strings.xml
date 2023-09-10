@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-	<string name="device_chooser_error_title">Ei voitu hakea listaa tuetuista laitteista</string>
-
 	<!-- Update information strings -->
 	<string name="enable">Ota käyttöön</string>
 	<string name="update_information_file_name">"Tiedostonimi: %1$s"</string>
@@ -17,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Edistynyt tila on käytössä, voit ladata viimeisimmän \"%1$s\" ZIP:in. Edistyneen tilan saat pois käytöstä asetuksista.</string>
 	<string name="update_information_different_version_changelog_notice_base">Huomautus: tämä muutosluettelo koskee uusinta saatavilla olevaa versiota (%1$s) \"%2$s\" päivitysmenetelmällä</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Jos aiot asentaa tämän päivityksen, sinun on otettava asetuksissa käyttöön \"Kehittynyt tila\".</string>
-	<string name="update_information_last_checked_on">"Viimeksi tarkistettu: %1$s"</string>
 	<string name="update_information_no_update_data_available">"Päivitystietoja ei saatavilla"</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Järjestelmäsi on ajan tasalla."</string>
 	<string name="update_information_unknown_update_name">"Versionumeroton päivitys laitteelle %1$s"</string>
 	<string name="update_information_view_update_information">"Katso päivityksen tiedot"</string>
@@ -92,8 +87,6 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 	<string name="summary_update_method">Valitse laite ensin</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Jotkin tärkeät ilmoitukset on poistettu käytöstä:</string>
-	<string name="summary_theme">Aseta teema</string>
-	<string name="summary_language">Aseta kieli</string>
 	<string name="summary_privacy_policy">Katso verkkosivuilta</string>
 	<string name="summary_rate_app">Anna 5 tähden arvostelu</string>
 
@@ -124,11 +117,6 @@ Jos haluat tietää enemmän, voit ottaa yhtettä joko <a href="mailto:support@o
 
 	<string name="settings_device">"Laite"</string>
 	<string name="settings_entered_incorrectly">"Virhe tallennettaessa asetuksia. Ole hyvä mene takaisin ja valitse laite / päivitystapa uudelleen."</string>
-	<string name="settings_explanation_incremental_full_update">"Lisäävä päivitys voidaan asentaa vain jos käytössäsi on viimeisin järjestelmäversio ennen kuin tämä päivitys julkaistiin.
-
-Täydellinen päivitys voidaan asentaa aina - huolimatta nykyisestä järjestelmäversiosta joka on asennettuna.
-
-Beta päivitys voidaan asentaa vain jos sinulla on jo käytössäsi OxygenOS beta versio."</string>
 	<string name="settings_push_from_server">"Tiedotus- ja varoitusviestit"</string>
 	<string name="settings_saving">"Asetuksiasi tallennetaan edelleen. Jos tämä tuntuu vievän liian pitkään varmista verkkoyhteytesi, sulje sovellus ja käynnistä se uudelleen."</string>
 	<string name="settings_advanced_mode">"Kehittynyt tila"</string>
@@ -239,10 +227,7 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 
 	<!-- News strings -->
 	<string name="news">"Uutiset"</string>
-	<string name="news_date_published">"Viimeisin päivitys: %1$s"</string>
-	<string name="news_empty">"Tällä artikkelilla ei ole kommentteja"</string>
 	<string name="news_load_network_error">"Artikkelin avaus epäonnistui. Tarkista verkkoyhteys ja paina 'Uudelleen' painiketta avataksesi artikkeli."</string>
-	<string name="news_load_id_error"><![CDATA[Artikkelin avaaminen viallisesta URL epäonnistui: %1$s. Tarkista URL tai kerro tästä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord serverillä</a>.]]></string>
 
 	<string name="news_unread_count_1">Sinulla on %1$d lukematonta artikkelia. Paina tästä nähdäksesi ne.</string>
 	<string name="news_unread_count_2">Sinulla on %1$d lukematonta artikkelia. Paina nähdäksesi kaikki artikkelit.</string>
@@ -269,8 +254,6 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="error_app_outdated">"Voi ei!"</string>
 	<string name="error_app_outdated_message">"Tämä versio sovelluksesta on vanhentunut. On aika päivittää se! Napsauta alhaalta \"Play Kauppa\". Play Kaupassa, napsauta \"Päivitä\"."</string>
 	<string name="error_app_requires_network_connection">"Ei yhteyttä"</string>
-	<string name="error_app_requires_network_connection_message">"Palvelimeeen yhdistäminen ei onnistunut. Ole hyvä ja varmista että sinulla on toimiva verkkoyhteys. Sovellus sulkeutuu nyt."</string>
-	<string name="error_no_internet_connection">"Ei yhteyttä"</string>
 	<string name="error_maintenance">"Palvelimella huoltokatko"</string>
 	<string name="error_maintenance_message">"Ole hyvä ja odota. Palvelin on hyvin pian taas käytettävissä."</string>
 	<string name="error_maintenance_retry"><![CDATA[Palvelimella saattaa olla huoltokatko. Yritä uudestaan pian, tai ilmoita siitä meille joko <a href="mailto:support@oxygenupdater.com">sähköpostilla</a> tai meidän <a href="https://discord.gg/5TXdhKJ">Discord palvelimella</a>.]]></string>
@@ -300,7 +283,6 @@ Muut laitteet, mukaan lukien OnePlus laitteet joille on asennettu kustomoitu kä
 	<string name="purchase_error_after_payment">"Mainosvapaan version ostaminen epäonnistui, koska sattui sisäinen virhe. Ole hyvä ja yritä uudelleen muutaman minuutin kuluttua. Jos olet jo maksanut, ole hyvä ja ota yhteyttä Play Kaupan tukeen saadaksesi apua."</string>
 
 	<!-- Other strings -->
-	<string name="error">Virhe</string>
 	<string name="icon">"Ikoni"</string>
 	<string name="loading">"Ladataan…"</string>
 	<string name="processing">"Prosessoidaan…"</string>

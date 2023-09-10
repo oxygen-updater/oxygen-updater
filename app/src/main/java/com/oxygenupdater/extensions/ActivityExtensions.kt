@@ -6,12 +6,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.IntRange
-import com.oxygenupdater.compose.activities.InstallGuideActivity
-import com.oxygenupdater.compose.activities.MainActivity
-import com.oxygenupdater.compose.activities.MainActivity.Companion.PAGE_SETTINGS
-import com.oxygenupdater.compose.activities.MainActivity.Companion.PAGE_UPDATE
-import com.oxygenupdater.compose.activities.NewsItemActivity
-import com.oxygenupdater.compose.activities.OnboardingActivity
+import com.oxygenupdater.activities.InstallGuideActivity
+import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.activities.MainActivity.Companion.PAGE_SETTINGS
+import com.oxygenupdater.activities.MainActivity.Companion.PAGE_UPDATE
+import com.oxygenupdater.activities.NewsItemActivity
+import com.oxygenupdater.activities.OnboardingActivity
 
 inline fun <reified T : Activity> Context.startActivity() = startActivity(
     Intent(this, T::class.java)

@@ -22,9 +22,9 @@ import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.ui.theme.light
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.theme.light
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logWarning
 

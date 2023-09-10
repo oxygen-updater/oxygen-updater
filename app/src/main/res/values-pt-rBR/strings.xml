@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Não foi possível obter a lista de dispositivos</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Ativar</string>
 	<string name="update_information_description_not_available">Não há informações oficiais sobre os novos recursos que esta atualização oferece. Normalmente, essa atualização fornece correções de bugs, melhorias de desempenho e/ou atualizações críticas de segurança para o seu dispositivo.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Uma vez que ativou o modo avançado, você pode baixar o ZIP mais recente \"%1$s\". Você pode desabilitar o modo avançado nas configurações.</string>
 	<string name="update_information_different_version_changelog_notice_base">Observação: este registro de alterações se refere à versão mais recente disponível (%1$s) no método de atualização \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Se você pretende instalar essa atualização, deve ativar o \"Modo Avançado\" nas configurações.</string>
-	<string name="update_information_last_checked_on">Última verificação: %1$s</string>
 	<string name="update_information_no_update_data_available">Nenhuma informação de atualização está disponível</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Seu sistema está atualizado</string>
 	<string name="update_information_unknown_update_name">Atualização sem nome para %1$s</string>
 	<string name="update_information_view_update_information">Ver informações de atualização</string>
@@ -92,8 +88,6 @@ Se você quiser saber mais, sinta-se à vontade para nos contatar via <a href="m
 	<string name="summary_update_method">Selecione um dispositivo</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Algumas notificações importantes são desativadas:</string>
-	<string name="summary_theme">Definir tema</string>
-	<string name="summary_language">Definir idioma</string>
 	<string name="summary_privacy_policy">Ver on-line</string>
 	<string name="summary_rate_app">Avalie-nos com 5 estrelas</string>
 
@@ -125,7 +119,6 @@ conservar bateria</string>
 
 	<string name="settings_device">Device</string>
 	<string name="settings_entered_incorrectly">Erro ao salvar suas configurações. Volte e selecione seu dispositivo / método de atualização novamente.</string>
-	<string name="settings_explanation_incremental_full_update">Uma atualização incremental pode ser instalada de qualquer versão (exceto se você tiver um bootloader desbloqueado; então você deve sempre escolher a atualização completa como método de atualização).\n\nUma atualização beta do OxygenOS sempre pode ser instalada, se você estiver em uma versão estável. Para mudar de estável para beta, você deve habilitar o modo avançado nas configurações. Para os betas, os métodos de atualização completa e incremental funcionam da mesma maneira que nas versões estáveis.</string>
 
 	<string name="settings_push_from_server">Mensagens informativas e de aviso</string>
 
@@ -229,10 +222,7 @@ Isso pode ser útil se você quiser:"</string>
 
 	<!-- News strings -->
 	<string name="news">Notícias</string>
-	<string name="news_date_published">Última atualizalçao: %1$s</string>
-	<string name="news_empty">Este artigo não tem conteúdo.</string>
 	<string name="news_load_network_error">Falha ao abrir o artigo. Verifique sua conexão e pressione o botão \"Tentar Novamente\"para abrir o artigo.</string>
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Você tem %1$d artigos de notícias não lidos. Clique para visualizar todos.</string>
 	<string name="news_unread_count_2">Você tem %1$d artigos de notícias não lidos. Cliquei para mostrar todos os artigos.</string>
 	<string name="news_mark_read">Marcar como lido</string>
@@ -258,9 +248,7 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="error_app_outdated">Ah não!</string>
 	<string name="error_app_outdated_message">Esta versão do aplicativo está desatualizada. É hora de atualizá-lo! Toque em \"Google Play\" abaixo. No Google Play, toque em \"Atualizar\".</string>
 	<string name="error_app_requires_network_connection">Sem conexão</string>
-	<string name="error_app_requires_network_connection_message">Falhou ao conectar com o servidor. Por favor, certifique-se de que você tenha uma conexão funcionando. O aplicativo será fechado agora.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Sem conexão.</string>
 	<string name="error_maintenance">Manutenção do servidor</string>
 	<string name="error_maintenance_message">Por favor, espere. O servidor estará disponível em breve.</string>
 	<string name="error_maintenance_retry"><![CDATA[O servidor pode estar inativo para manutenção. Tente novamente depois de algum tempo ou informe-nos via <a href="mailto:support@oxygenupdater.com">email</a> ou pelo nosso <a href="https://discord.gg/5TXdhKJ">servidor do Discord</a>.]]></string>
@@ -288,7 +276,6 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="purchase_error_after_payment">A compra da versão sem anúncios falhou porque ocorreu um erro interno. Por favor, tente novamente em alguns minutos. Se você já pagou, entre em contato com o suporte do Google Play para obter assistência.</string>
 
 	<!-- Other strings-->
-	<string name="error">Erro</string>
 	<string name="icon">Icone</string>
 	<string name="loading">Carregando…</string>
 	<string name="processing">Processando…</string>

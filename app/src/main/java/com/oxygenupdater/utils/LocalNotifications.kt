@@ -16,11 +16,11 @@ import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
-import com.oxygenupdater.compose.activities.InstallGuideActivity
-import com.oxygenupdater.compose.activities.MainActivity
-import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
-import com.oxygenupdater.compose.ui.update.KEY_DOWNLOAD_ERROR_RESUMABLE
+import com.oxygenupdater.activities.InstallGuideActivity
+import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
+import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
+import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_RESUMABLE
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID

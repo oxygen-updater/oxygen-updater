@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Не вдалося отримати список підтримуваних пристроїв</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Увімкнути</string>
 	<string name="update_information_description_not_available">Немає офіційної інформації про зміни і нові функції, які містить це оновлення. Зазвичай, таке оновлення містить виправлення помилок, покращення продуктивності, та / або важливі оновлення безпеки для вашого пристрою.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Оскільки увімкнено розширений режим, ви можете завантажити останній ZIP з \"%1$s\". Розширений режим можна вимкнути в налаштуваннях.</string>
 	<string name="update_information_different_version_changelog_notice_base">Примітка: цей журнал змін стосується останньої доступної версії (%1$s) у методі оновлення \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Якщо ви маєте намір встановити це оновлення, вам слід увімкнути \"Розширений режим\" у налаштуваннях.</string>
-	<string name="update_information_last_checked_on">Востаннє перевірено: %1$s</string>
 	<string name="update_information_no_update_data_available">Немає інформації про оновлення</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Система оновлена</string>
 	<string name="update_information_unknown_update_name">Оновлення без назви для %1$s</string>
 	<string name="update_information_view_update_information">Інформація про оновлення</string>
@@ -93,8 +89,6 @@
 	<string name="summary_update_method">Спершу виберіть пристрій</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Деякі важливі сповіщення вимкнено:</string>
-	<string name="summary_theme">Вибрати тему оформлення</string>
-	<string name="summary_language">Встановити мову</string>
 	<string name="summary_privacy_policy">Переглянути онлайн</string>
 	<string name="summary_rate_app">Зилишіть відгук з 5-ма зірочками</string>
 
@@ -125,7 +119,6 @@
 
 	<string name="settings_device">Вибрати пристрій</string>
 	<string name="settings_entered_incorrectly">Помилка під час збереження налаштувань. Будь ласка, верніться назад і виберіть ваш пристрій / спосіб оновлення знову.</string>
-	<string name="settings_explanation_incremental_full_update">Інкрементне оновлення (Incremental update) можна встановлювати з будь-якої версії, якщо у вас заблокований завантажувач. Інакше, якщо завантажувач розблоковано — слід вибрати \"Повне оновлення\" (Full update).\n\nБета оновлення (Open Beta) для OxygenOS можна встановлювати, якщо у вас стабільна версія. Щоб встановити бета версію, потрібно увімкнути \"Розширений режим\" в налаштуваннях. Для бета версій, способи Повного та Інкрементного оновлення працюють так само, як і у стабільних версіях.</string>
 
 	<string name="settings_push_from_server">Інформаційні повідомлення та попередження</string>
 
@@ -230,10 +223,7 @@
 
 	<!-- News strings -->
 	<string name="news">Новини</string>
-	<string name="news_date_published">Останнє оновлення: %1$s</string>
-	<string name="news_empty">Ця стаття немає вмісту.</string>
 	<string name="news_load_network_error">Не вдалося відкрити статтю. Перевірте з\'єднання і натисніть кнопку \'Повторити\', щоб відкрити статтю знову.</string>
-	<string name="news_load_id_error"><![CDATA[Не вдалося відкрити новину з недійсного URL: %1$s. Перевірте URL, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
 	<string name="news_unread_count_1">Є %1$d непрочитаних новин. Натисніть, щоб показати непрочитані новини</string>
 	<string name="news_unread_count_2">Є %1$d непрочитаних новин. Натисніть, щоб показати всі новини</string>
 	<string name="news_mark_read">Відзначити як прочитане</string>
@@ -259,9 +249,7 @@
 	<string name="error_app_outdated">От халепа!</string>
 	<string name="error_app_outdated_message">Цей застосунок застарів. Час його оновити! Натисніть на \"Google Play\" нижче. В Google Play, виберіть \"Оновлення\".</string>
 	<string name="error_app_requires_network_connection">Немає з\'єднання</string>
-	<string name="error_app_requires_network_connection_message">Не вдалося з\'єднатися з сервером. Будь ласка, переконайтеся, що у вас є доступ до мережі. Застосунок зараз закриється.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Немає з\'єднання.</string>
 	<string name="error_maintenance">Сервер на обслуговуванні</string>
 	<string name="error_maintenance_message">Будь ласка, зачекайте. Сервер незабаром стане доступним.</string>
 	<string name="error_maintenance_retry"><![CDATA[Сервер може бути закритий на обслуговування. Спробуйте знову через декілька хвилин, або повідомте нам про це через <a href="mailto:support@oxygenupdater.com">електронну пошту</a> або напишіть в <a href="https://discord.gg/5TXdhKJ">чат на Discord</a>.]]></string>
@@ -289,7 +277,6 @@
 	<string name="purchase_error_after_payment">Не вдалося купити видалення реклами, тому що виникла внутрішня помилка. Будь ласка, спробуйте знову через декілька хвилин. Якщо ви вже купляли, будь ласка, зверніться до підтримки Google Play за допомогою.</string>
 
 	<!-- Other strings-->
-	<string name="error">Помилка</string>
 	<string name="icon">Значок</string>
 	<string name="loading">Завантажується…</string>
 	<string name="processing">Опрацювання…</string>

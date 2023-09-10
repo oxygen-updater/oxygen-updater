@@ -24,13 +24,13 @@ import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
-import com.oxygenupdater.compose.ui.update.DownloadFailure
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.ui.update.DownloadFailure
 import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.Logger.logDebug

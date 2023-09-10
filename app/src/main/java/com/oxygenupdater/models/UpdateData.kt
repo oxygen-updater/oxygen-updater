@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.OxygenUpdater
-import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
+import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.workers.Md5VerificationWorker
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize

@@ -1,8 +1,6 @@
 package com.oxygenupdater.apis
 
 import androidx.collection.ArrayMap
-import com.oxygenupdater.compose.ui.currentLanguage
-import com.oxygenupdater.compose.ui.currentLocale
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuide
@@ -12,6 +10,8 @@ import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.models.UpdateMethod
+import com.oxygenupdater.ui.currentLanguage
+import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.utils.HEADER_READ_TIMEOUT
 import retrofit2.Response
 import retrofit2.http.Body

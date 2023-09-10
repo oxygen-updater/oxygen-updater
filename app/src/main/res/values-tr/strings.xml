@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<!-- TODO: translate this string below -->
-	<string name="device_chooser_error_title">Couldn\'t retrieve list of supported devices</string>
-
 	<!-- Update information strings-->
 	<!-- TODO: translate this string below -->
 	<string name="enable">Etkinleştirme</string>
@@ -21,9 +18,7 @@
 	<string name="update_information_header_advanced_mode_helper">Since you\'ve enabled gelişmiş mod, you can download the latest ZIP for \"%1$s\". You can turn gelişmiş mod off from settings.</string>
 	<string name="update_information_different_version_changelog_notice_base">Not: Bu değişiklik günlüğü \"%2$s\" güncelleme yöntemindeki mevcut en son sürüm (%1$s) içindir</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Bu güncellemeyi yüklemek istiyorsanız, ayarlarda \"Gelişmiş mod\" seçeneğini etkinleştirmeniz gerekir.</string>
-	<string name="update_information_last_checked_on">Son kontrol: %1$s</string>
 	<string name="update_information_no_update_data_available">Herhangi bir güncelleme bilgisi bulunmamaktadır.</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Sisteminiz güncel.</string>
 	<string name="update_information_unknown_update_name">İsimsiz güncelleme: %1$s</string>
 	<string name="update_information_view_update_information">Güncelleme bilgilerini görüntüle</string>
@@ -100,8 +95,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_update_method">Lütfen öncelikle cihazınızı belirtin.</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Bazı önemli bildirimler devre dışı bırakılır:</string>
-	<string name="summary_theme">Temayı seçiniz</string>
-	<string name="summary_language">Dili ayarla</string>
 	<string name="summary_privacy_policy">Online görüntüleyiniz.</string>
 	<string name="summary_rate_app">5 yıldızlı yorum bırakınız.</string>
 	<string name="label_buy_ad_free">Reklamları kaldırın</string>
@@ -131,7 +124,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="settings_device">Aygıt</string>
 	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
-	<string name="settings_explanation_incremental_full_update">Artımlı güncelleme her versiyonda yapılabilir. (Eğer bootloaderınız açıksa, tam güncellemeleri seçmeniz önerilir.).\n\nOxygenOSun herhangi bir beta versiyonu kurulabililr, ayrıca sabit bir sürümde de aynısı geçerlidir. Sabit sürümden beta sürüme geçmek için, cihazınızın bootloaderı açık olması gerekmektedir. Beta versiyonlar içinde tam ve artımlı sürüm güncellemeleri de aynı şekilde çalışmaktadır.</string>
 
 	<string name="settings_push_from_server">Bilgilendirme ve uyarı mesajları.</string>
 
@@ -239,11 +231,8 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<!-- News strings -->
 	<string name="news">Haberler</string>
-	<string name="news_date_published">Son güncelleme: %1$s</string>
-	<string name="news_empty">Bu içerikte bir şey bulunmamakta.</string>
 	<string name="news_load_network_error">İçerik açılamadı. İnternet bağlantınızı kontrol edin ve \"Tekrar\" tuşuna basınız.</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<!-- TODO: translate these 2 strings below -->
 	<string name="news_unread_count_1">You have %1$d unread news articles. Tap here to view them.</string>
 	<string name="news_unread_count_2">You have %1$d unread news articles. Tap to show all articles.</string>
@@ -271,9 +260,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="error_app_outdated">Oh olamaz!</string>
 	<string name="error_app_outdated_message">Uygulamanızın sürümü eski. Güncelleme vakti gelmiş!</string>
 	<string name="error_app_requires_network_connection">Bağlantı bulunamadı</string>
-	<string name="error_app_requires_network_connection_message">Sunucuya bağlanılamadı. Çalışan bir bağlantınızın olduğundan emin olun. Uygulama kapatılacak.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Bağlantı yok.</string>
 	<string name="error_maintenance">Sunucu bakımı</string>
 	<string name="error_maintenance_message">Lütfen bekleyiniz. Sunucu en kısa zamanda tekrar aktif olacak.</string>
 	<!-- TODO: translate this string below -->
@@ -306,7 +293,6 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Hata</string>
 	<string name="icon">İkon</string>
 	<string name="loading">Yükleniyor…</string>
 	<string name="processing">İşleniyor…</string>

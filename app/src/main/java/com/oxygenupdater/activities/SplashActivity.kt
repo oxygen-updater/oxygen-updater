@@ -3,7 +3,6 @@ package com.oxygenupdater.activities
 import android.app.Activity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.oxygenupdater.compose.activities.MainActivity
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
 import com.oxygenupdater.internal.settings.PrefManager

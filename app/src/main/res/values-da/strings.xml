@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Liste af supporterede enheder kunne ikke udhentes</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Aktiver</string>
 	<string name="update_information_description_not_available">Der er ingen officiel information om nye egenskaber, som denne opdatering indeholder. Normalt tilbyder denne slags opdatering eks. fejlretninger, forbedringer af ydeevnen, og/eller kritiske sikkerhedsopdateringer til din egen enhed.</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">Eftersom du har slået avanceret tilstand til, kan du nu downloade den seneste ZIP for \"%1$s\". Du kan slå avanceret tilstand fra under indstillinger.</string>
 	<string name="update_information_different_version_changelog_notice_base">Bemærk: Denne changelog er for den seneste tilgængelige version (%1$s) i opdateringsmetoden \"%2$s\"</string>
 	<string name="update_information_different_version_changelog_notice_advanced">. Hvis du vil installere denne opdatering, skal du aktivere "Avanceret tilstand" i indstillingerne.</string>
-	<string name="update_information_last_checked_on">Senest checket den: %1$s</string>
 	<string name="update_information_no_update_data_available">Ingen opdatering information tilgængelig</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Dit system er opdateret</string>
 	<string name="update_information_unknown_update_name">Unavngiven opdatering for %1$s</string>
 	<string name="update_information_view_update_information">Se opdateringsinformation</string>
@@ -94,8 +90,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="summary_update_method">vælg en enhed først</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Nogle vigtige meddelelser er deaktiveret:</string>
-	<string name="summary_theme">Vælg et tema</string>
-	<string name="summary_language">Indstil sprog</string>
 	<string name="summary_privacy_policy">Se online</string>
 	<string name="summary_rate_app">Giv os en 5-stjernet anmeldelse</string>
 
@@ -126,7 +120,6 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="settings_device">Enhed</string>
 	<string name="settings_entered_incorrectly">Vi kan ikke gemme dine indstillinger. Gå tilbage, og vælg din enhed/opdateringsmetode igen.</string>
-	<string name="settings_explanation_incremental_full_update">En trinvis opdatering kan installeres fra en hvilken som helst version (undtagen hvis du har en ulåst bootloader; da skal du altid vælge fuld opdateringsmetode).\n\nA beta opdatering af OxygenOS kan altid installeres, lige så vel, som når det er en stabil version. For at skifte fra stabil til beta, så skal du aktivere avanceret tilstand, i indstillingerne. Vedrørende beta, den fulde og de trinvise opdaterings-metode, gør det på samme måde som ved den stabile versions.</string>
 
 	<string name="settings_push_from_server">Information- og -advarselsbeskeder</string>
 
@@ -235,11 +228,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<!-- News strings -->
 	<string name="news">Nyheder</string>
-	<string name="news_date_published">Sidst opdateret: %1$s</string>
-	<string name="news_empty">Ingen kommentarer, til denne artikkel.</string>
 	<string name="news_load_network_error">Kan ikke åbne denne artikkel. Check din forbindelse og tryk på \'Forsøg igen\' -knappen for at åbne artikllen.</string>
 	<!-- TODO: translate this string below -->
-	<string name="news_load_id_error"><![CDATA[Failed to open article from an invalid URL: %1$s. Check the URL or report this to us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="news_unread_count_1">Du har %1$d ulæst nyhedsartikel. Tryk her for at læse.</string>
 	<string name="news_unread_count_2">Du har %1$d ulæst nyhedsartikel. Tryk her for at få vist alle artikler.</string>
 	<string name="news_mark_read">Marker som læst</string>
@@ -265,9 +255,7 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="error_app_outdated">Åh nej!</string>
 	<string name="error_app_outdated_message">Appens version er forældet. Det er nu tid til at opdatere den. Tryk på \"Google Play\" herunder. Via Google Play, tryk på \"Opdatér\".</string>
 	<string name="error_app_requires_network_connection">Ingen netværksforbindelse</string>
-	<string name="error_app_requires_network_connection_message">Det lykkedes ikke at forbinde til serveren. Værk sikker på at du har en fungerende internet forbindelse. App\'en vil nu lukke.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Ingen netværksforbindelse.</string>
 	<string name="error_maintenance">Server vedligeholdelse</string>
 	<string name="error_maintenance_message">Vent venligst. Serveren vil være tilgængelig meget snart.</string>
 	<!-- TODO: translate this string below -->
@@ -299,7 +287,6 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<!-- Other strings-->
 	<!-- TODO: translate this string below -->
-	<string name="error">Fejl</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Indlæser…</string>
 	<string name="processing">Arbejder…</string>

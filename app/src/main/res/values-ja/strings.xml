@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">サポートされているデバイスの取得ができませんでした</string>
-
 	<!-- Update information strings-->
 	<string name="enable">有効にする</string>
 	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグフィックス、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
@@ -16,9 +14,7 @@
 	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。 設定から拡張モードをオフにすることができます。</string>
 	<string name="update_information_different_version_changelog_notice_base">注意: この変更履歴は、\"%2$s\"アップデート方法で利用可能な最新バージョン(%1$s)のものです</string>
 	<string name="update_information_different_version_changelog_notice_advanced">。このアップデートをインストールする場合は、設定で\"拡張モード\"を有効にしてください。</string>
-	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
 	<string name="update_information_unknown_update_name">%1$s 向けの名前のないアップデート</string>
 	<string name="update_information_view_update_information">アップデート情報を表示</string>
@@ -93,8 +89,6 @@
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
 	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。:</string>
-	<string name="summary_theme">テーマの設定</string>
-	<string name="summary_language">言語を設定する</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
 	<string name="summary_rate_app">レビューに 5 つ星を残す</string>
 
@@ -125,7 +119,6 @@
 
 	<string name="settings_device">デバイス</string>
 	<string name="settings_entered_incorrectly">設定の保存に失敗しました。デバイス / 更新方法を再選択して下さい。</string>
-	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
 
 	<string name="settings_push_from_server">通知と警告メッセージ</string>
 
@@ -230,10 +223,7 @@
 
 	<!-- News strings -->
 	<string name="news">ニュース</string>
-	<string name="news_date_published">最終更新日: %1$s</string>
-	<string name="news_empty">この記事には内容がありません。</string>
 	<string name="news_load_network_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
-	<string name="news_load_id_error"><![CDATA[無効な URL から記事を開くのに失敗しました: %1$s。URL を確認するか<a href="mailto:support@oxygenupdater.com">メール</a>または<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>からご報告ください。]]></string>
 	<string name="news_unread_count_1">%1$d 件未読のニュース記事。ここをタップして表示。</string>
 	<string name="news_unread_count_2">%1$d 件未読のニュース記事。ここをタップしてすべての記事を表示。</string>
 	<string name="news_mark_read">既読にする</string>
@@ -259,9 +249,7 @@
 	<string name="error_app_outdated">Oh no!</string>
 	<string name="error_app_outdated_message">このバージョンのアプリは古くなっています。 更新する時が来ました！ 下の\"Google Play\" をタップし、 Google Play 内で、\"更新\"をタップします。</string>
 	<string name="error_app_requires_network_connection">接続なし</string>
-	<string name="error_app_requires_network_connection_message">サーバへの接続に失敗しました。ネットワーク接続が正常であるか確認して下さい。アプリケーションを閉じます。</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">接続なし</string>
 	<string name="error_maintenance">サーバメンテナンス</string>
 	<string name="error_maintenance_message">お待ちください。 サーバーはまもなく利用可能になります。</string>
 	<string name="error_maintenance_retry"><![CDATA[サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。]]></string>
@@ -289,7 +277,6 @@
 	<string name="purchase_error_after_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。 既に支払いを済ませている場合は、Google Play サポートにお問い合わせください。</string>
 
 	<!-- Other strings-->
-	<string name="error">エラー</string>
 	<string name="icon">アイコン</string>
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>
