@@ -3,6 +3,7 @@ package com.oxygenupdater.repositories
 import androidx.collection.ArrayMap
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.compose.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.database.LocalAppDb
@@ -12,7 +13,6 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.performServerRequest
 
 /**
@@ -68,7 +68,7 @@ class ServerRepository constructor(
             10
         )
 
-        val response = if (status == null && Utils.checkNetworkConnection()) ServerStatus(
+        val response = if (status == null && OxygenUpdater.isNetworkAvailable.value) ServerStatus(
             ServerStatus.Status.UNREACHABLE,
             BuildConfig.VERSION_NAME,
             automaticInstallationEnabled,

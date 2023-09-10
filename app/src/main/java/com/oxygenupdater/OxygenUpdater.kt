@@ -8,8 +8,6 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
 import androidx.core.content.getSystemService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -20,6 +18,8 @@ import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.NotificationUtils
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -57,11 +57,11 @@ class OxygenUpdater : Application() {
                 false
             }
 
-            _isNetworkAvailable.postValue(networkAvailability)
+            _isNetworkAvailable.tryEmit(networkAvailability)
         }
 
         override fun onAvailable(network: Network) {
-            _isNetworkAvailable.postValue(true)
+            _isNetworkAvailable.tryEmit(true)
         }
     }
 
@@ -97,7 +97,7 @@ class OxygenUpdater : Application() {
         // Posting initial value is required, as [networkCallback]'s
         // methods get called only when network connectivity changes
         @Suppress("DEPRECATION")
-        _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
+        _isNetworkAvailable.tryEmit(activeNetworkInfo?.isConnectedOrConnecting == true)
 
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -162,9 +162,8 @@ class OxygenUpdater : Application() {
     companion object {
         private const val TAG = "OxygenUpdater"
 
-        private val _isNetworkAvailable = MutableLiveData<Boolean>()
-        val isNetworkAvailable: LiveData<Boolean>
-            get() = _isNetworkAvailable
+        private val _isNetworkAvailable = MutableStateFlow(true)
+        val isNetworkAvailable = _isNetworkAvailable.asStateFlow()
 
         // Test devices for ads.
         private val ADS_TEST_DEVICES = mutableListOf(

@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -199,7 +198,7 @@ class MainActivity : BaseActivity() {
         )
 
         // Display the "No connection" banner if required
-        val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.observeAsState(true)
+        val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.collectAsStateWithLifecycle()
         if (!isNetworkAvailable) snackbarText = NoConnectionSnackbarData
         else if (snackbarText?.first == NoConnectionSnackbarData.first) {
             // Dismiss only this snackbar
@@ -397,10 +396,6 @@ class MainActivity : BaseActivity() {
 
         // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
         // in an IllegalArgumentException (can't reuse the same observer with different lifecycles)
-
-        // no-op observe because the actual work is being done in BillingViewModel
-        billingViewModel.purchaseStateChange.observe(this@MainActivity, remember { Observer<Purchase> {} })
-        billingViewModel.pendingPurchase.observe(this@MainActivity, remember { Observer<Purchase?> { markPending() } })
         billingViewModel.newPurchase.observe(this@MainActivity, remember {
             Observer<Pair<Int, Purchase?>> {
                 val (responseCode, purchase) = it

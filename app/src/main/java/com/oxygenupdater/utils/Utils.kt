@@ -6,7 +6,6 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
 import com.oxygenupdater.compose.ui.device.defaultDeviceName
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
@@ -59,8 +58,6 @@ object Utils {
             result
         }
     }
-
-    fun checkNetworkConnection() = isNetworkAvailable.value == true
 
     fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
         // <brand>/<product>/<device>:<version.release>/<id>/<version.incremental>:<type>/<tags>
