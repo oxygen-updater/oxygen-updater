@@ -169,8 +169,7 @@ fun SettingsScreen(
 @Composable
 private fun BecomeContributor() {
     var showSheet by rememberSaveableState("showContributorSheet", false)
-    val runningInPreview = LocalInspectionMode.current
-    if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
+    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
         Icons.Outlined.GroupAdd,
         R.string.contribute, stringResource(R.string.settings_contribute_label),
     ) { showSheet = true }

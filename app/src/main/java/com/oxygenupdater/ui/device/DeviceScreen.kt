@@ -242,8 +242,7 @@ private fun DeviceHardwareInfo() {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
-    val runningInPreview = LocalInspectionMode.current
-    val bytes = if (runningInPreview) 1L else remember { getRamBytes(context) }
+    val bytes = if (LocalInspectionMode.current) 1L else remember { getRamBytes(context) }
     if (bytes != 0L) Item(
         Icons.Rounded.Memory,
         R.string.device_information_amount_of_memory,

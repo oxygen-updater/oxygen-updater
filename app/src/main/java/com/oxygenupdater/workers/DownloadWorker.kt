@@ -431,9 +431,7 @@ class DownloadWorker(
                 putString(WORK_DATA_DOWNLOAD_ETA, downloadEta)
             }.build())
 
-            if (!isFirstPublish) {
-                previousProgressTimestamp = currentTimestamp
-            }
+            if (!isFirstPublish) previousProgressTimestamp = currentTimestamp
 
             isFirstPublish = false
         }

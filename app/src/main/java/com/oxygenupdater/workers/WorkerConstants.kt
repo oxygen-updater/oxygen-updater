@@ -36,6 +36,6 @@ const val DIRECTORY_ROOT = ""
 
 /**
  * Minimum milliseconds that should have passed since the previous publish progress event.
- * Currently: `2s`
+ * Currently: `1s`
  */
-const val THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED = 2000L
+const val THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED = 1000L

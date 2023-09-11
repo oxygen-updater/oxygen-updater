@@ -174,8 +174,7 @@ private fun StartApp(
     startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
 ) {
     var contribute by rememberSaveableState("contribute", true)
-    val runningInPreview = LocalInspectionMode.current
-    if (runningInPreview || ContributorUtils.isAtLeastQAndPossiblyRooted) {
+    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) {
         var showSheet by rememberSaveableState("showContributorSheet", false)
         CheckboxText(
             contribute, { contribute = it }, R.string.contribute_agree,

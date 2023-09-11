@@ -19,9 +19,9 @@ inline fun rememberCallback(
 ) = remember { callback }
 
 @Composable
-inline fun rememberCallback(
+inline fun <T> rememberCallback(
     key1: Any?,
-    noinline callback: @DisallowComposableCalls () -> Unit,
+    noinline callback: @DisallowComposableCalls () -> T,
 ) = remember(key1) { callback }
 
 @Composable
