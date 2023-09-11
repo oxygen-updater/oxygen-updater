@@ -24,7 +24,7 @@ import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTE
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.workers.ReadOtaDbWorker
-import com.oxygenupdater.workers.WORK_UNIQUE_READ_OTA_DB
+import com.oxygenupdater.workers.WorkUniqueReadOtaDb
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ipc.RootService
 import org.koin.java.KoinJavaComponent.getKoin
@@ -83,7 +83,7 @@ object ContributorUtils {
         // Give time for RootFileService to copy ota.db (`setInitialDelay` doesn't work)
         Handler(Looper.getMainLooper()).postDelayed({
             workManager.enqueueUniquePeriodicWork(
-                WORK_UNIQUE_READ_OTA_DB,
+                WorkUniqueReadOtaDb,
                 ExistingPeriodicWorkPolicy.UPDATE,
                 PeriodicWorkRequestBuilder<ReadOtaDbWorker>(MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)
                     .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
@@ -95,7 +95,7 @@ object ContributorUtils {
 
     fun stopDbCheckingProcess(context: Context) {
         if (isAtLeastQ) RootService.stop(rootServiceIntent(context))
-        workManager.cancelUniqueWork(WORK_UNIQUE_READ_OTA_DB)
+        workManager.cancelUniqueWork(WorkUniqueReadOtaDb)
     }
 
     /** Does nothing if app doesn't have root access */

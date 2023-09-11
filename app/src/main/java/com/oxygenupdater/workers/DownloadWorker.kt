@@ -89,7 +89,7 @@ class DownloadWorker(
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
                 Result.failure(Data.Builder().apply {
-                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.NullUpdateDataOrDownloadUrl.value)
+                    putInt(WorkDataDownloadFailureType, DownloadFailure.NullUpdateDataOrDownloadUrl.value)
                 }.build())
             }
 
@@ -97,7 +97,7 @@ class DownloadWorker(
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
 
                 Result.failure(Data.Builder().apply {
-                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.DownloadUrlInvalidScheme.value)
+                    putInt(WorkDataDownloadFailureType, DownloadFailure.DownloadUrlInvalidScheme.value)
                 }.build())
             }
 
@@ -198,7 +198,7 @@ class DownloadWorker(
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
-        zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, updateData.filename!!)
+        zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, updateData.filename!!)
 
         var startingByte = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
         var rangeHeader = if (startingByte != NOT_SET) "bytes=$startingByte-" else null
@@ -226,13 +226,13 @@ class DownloadWorker(
 
         if (!response.isSuccessful || body == null) {
             return@withContext Result.failure(Data.Builder().apply {
-                putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.UnsuccessfulResponse.value)
-                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL, updateData.downloadUrl)
-                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME, updateData.filename)
-                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION, updateData.versionNumber)
-                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION, updateData.otaVersionNumber)
-                putInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, response.code())
-                putString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE, response.message())
+                putInt(WorkDataDownloadFailureType, DownloadFailure.UnsuccessfulResponse.value)
+                putString(WorkDataDownloadFailureExtraUrl, updateData.downloadUrl)
+                putString(WorkDataDownloadFailureExtraFilename, updateData.filename)
+                putString(WorkDataDownloadFailureExtraVersion, updateData.versionNumber)
+                putString(WorkDataDownloadFailureExtraOtaVersion, updateData.otaVersionNumber)
+                putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
+                putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
             }.build())
         }
 
@@ -288,7 +288,7 @@ class DownloadWorker(
                                     )
 
                                     Result.failure(Data.Builder().apply {
-                                        putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.ServerError.value)
+                                        putInt(WorkDataDownloadFailureType, DownloadFailure.ServerError.value)
                                     }.build())
                                 }
                             }
@@ -305,7 +305,7 @@ class DownloadWorker(
                                 )
 
                                 Result.failure(Data.Builder().apply {
-                                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.ConnectionError.value)
+                                    putInt(WorkDataDownloadFailureType, DownloadFailure.ConnectionError.value)
                                 }.build())
                             }
 
@@ -318,7 +318,7 @@ class DownloadWorker(
                                 if (!tempFile.delete()) logWarning(TAG, "Could not delete the partially downloaded ZIP")
 
                                 Result.failure(Data.Builder().apply {
-                                    putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.Unknown.value)
+                                    putInt(WorkDataDownloadFailureType, DownloadFailure.Unknown.value)
                                 }.build())
                             }
                         }
@@ -329,9 +329,9 @@ class DownloadWorker(
                 PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
 
                 setProgress(Data.Builder().apply {
-                    putLong(WORK_DATA_DOWNLOAD_BYTES_DONE, contentLength)
-                    putLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, contentLength)
-                    putInt(WORK_DATA_DOWNLOAD_PROGRESS, 100)
+                    putLong(WorkDataDownloadBytesDone, contentLength)
+                    putLong(WorkDataDownloadTotalBytes, contentLength)
+                    putInt(WorkDataDownloadProgress, 100)
                 }.build())
 
                 // Copy file to root directory of internal storage
@@ -342,7 +342,7 @@ class DownloadWorker(
                     logError(TAG, "Could not rename file", e)
 
                     return@withContext Result.failure(Data.Builder().apply {
-                        putInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, DownloadFailure.CouldNotMoveTempFile.value)
+                        putInt(WorkDataDownloadFailureType, DownloadFailure.CouldNotMoveTempFile.value)
                     }.build())
                 }
             }
@@ -371,7 +371,7 @@ class DownloadWorker(
             ).build()
 
         workManager.enqueueUniqueWork(
-            WORK_UNIQUE_MD5_VERIFICATION,
+            WorkUniqueMd5Verification,
             ExistingWorkPolicy.REPLACE,
             verificationWorkRequest
         )
@@ -399,7 +399,7 @@ class DownloadWorker(
     }
 
     /**
-     * Publish progress if at least [THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED] milliseconds have passed since the previous event.
+     * Publish progress if at least [MinMsBetweenProgressPublish] milliseconds have passed since the previous event.
      *
      * Additionally, we're calling [setProgress] only if this worker is not in the stopped state.
      *
@@ -410,7 +410,7 @@ class DownloadWorker(
         if (isStopped) return@withContext
 
         val currentTimestamp = System.currentTimeMillis()
-        if (isFirstPublish || currentTimestamp - previousProgressTimestamp > THRESHOLD_PUBLISH_PROGRESS_TIME_PASSED) {
+        if (isFirstPublish || currentTimestamp - previousProgressTimestamp > MinMsBetweenProgressPublish) {
             val progress = (bytesDone * 100 / totalBytes).toInt()
             val previousBytesDone = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
 
@@ -425,10 +425,10 @@ class DownloadWorker(
 
             trySetForeground(createProgressNotification(bytesDone, totalBytes, progress, downloadEta))
             setProgress(Data.Builder().apply {
-                putLong(WORK_DATA_DOWNLOAD_BYTES_DONE, bytesDone)
-                putLong(WORK_DATA_DOWNLOAD_TOTAL_BYTES, totalBytes)
-                putInt(WORK_DATA_DOWNLOAD_PROGRESS, progress)
-                putString(WORK_DATA_DOWNLOAD_ETA, downloadEta)
+                putLong(WorkDataDownloadBytesDone, bytesDone)
+                putLong(WorkDataDownloadTotalBytes, totalBytes)
+                putInt(WorkDataDownloadProgress, progress)
+                putString(WorkDataDownloadEta, downloadEta)
             }.build())
 
             if (!isFirstPublish) previousProgressTimestamp = currentTimestamp

@@ -3,7 +3,6 @@ package com.oxygenupdater.ui.update
 import android.content.Context
 import android.os.Environment
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,35 +10,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.work.Data
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.PullRefresh
-import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.main.Screen
+import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.workers.DIRECTORY_ROOT
+import com.oxygenupdater.workers.DirectoryRoot
 import java.io.File
 
 @Composable
 fun UpdateScreen(
     state: RefreshAwareState<UpdateData?>,
-    workInfoWithStatus: WorkInfoWithStatus,
-    forceDownloadErrorDialog: Boolean,
     refresh: () -> Unit,
+    @Suppress("LocalVariableName") _downloadStatus: DownloadStatus,
+    failureType: Int?,
+    workProgress: WorkProgress?,
+    forceDownloadErrorDialog: Boolean,
     setSubtitleResId: (Int) -> Unit,
     enqueueDownload: (UpdateData) -> Unit,
     pauseDownload: () -> Unit,
     cancelDownload: (String?) -> Unit,
     deleteDownload: (String?) -> Boolean,
-    logDownloadError: (Data) -> Unit,
+    logDownloadError: () -> Unit,
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
     if (data == null) {
@@ -71,27 +69,14 @@ fun UpdateScreen(
         Screen.Update.badge = if (updateData.systemIsUpToDate) null else "new"
 
         val context = LocalContext.current
-        val (workInfo, @Suppress("LocalVariableName") _downloadStatus) = workInfoWithStatus
-        var downloadStatus by remember(_downloadStatus, filename) {
-            mutableStateOf(correctStatus(context, _downloadStatus, filename))
+        var downloadStatus by remember(_downloadStatus) { mutableStateOf(_downloadStatus) }
+        LifecycleResumeEffect(context, filename) {
+            // Correct download status onResume
+            downloadStatus = correctStatus(context, downloadStatus, filename)
+            onPauseOrDispose {}
         }
 
-        // Re-run above onResume
-        val observer = remember(downloadStatus, filename) {
-            LifecycleEventObserver { _, event ->
-                if (event != Lifecycle.Event.ON_RESUME) return@LifecycleEventObserver
-
-                downloadStatus = correctStatus(context, downloadStatus, filename)
-            }
-        }
-
-        val lifecycle = LocalLifecycleOwner.current.lifecycle
-        DisposableEffect(lifecycle, observer) {
-            lifecycle.addObserver(observer)
-            onDispose { lifecycle.removeObserver(observer) }
-        }
-
-        UpdateAvailable(refreshing, updateData, workInfo, downloadStatus, forceDownloadErrorDialog, downloadAction = rememberTypedCallback(updateData) {
+        UpdateAvailable(refreshing, updateData, downloadStatus, failureType, workProgress, forceDownloadErrorDialog, {
             when (it) {
                 DownloadAction.Enqueue -> enqueueDownload(updateData)
 
@@ -117,7 +102,7 @@ fun UpdateScreen(
 private fun checkDownloadCompleted(filename: String?) = if (filename == null) {
     logInfo(TAG, "Can't check download completion; filename = null")
     false
-} else File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT), filename).exists()
+} else File(Environment.getExternalStoragePublicDirectory(DirectoryRoot), filename).exists()
 
 private fun checkDownloadPaused(context: Context?, filename: String?) = if (filename == null) {
     logInfo(TAG, "Can't check download paused; filename = null")
@@ -126,15 +111,34 @@ private fun checkDownloadPaused(context: Context?, filename: String?) = if (file
     File(it.getExternalFilesDir(null), filename).exists()
 } ?: false
 
-fun correctStatus(context: Context?, status: DownloadStatus, filename: String?) = when {
-    // File already existing implies download is complete
-    checkDownloadCompleted(filename) -> DownloadStatus.DOWNLOAD_COMPLETED
-    status == DownloadStatus.NOT_DOWNLOADING -> if (checkDownloadPaused(context, filename)) {
-        // Temp file existing implies download was in progress, so user must have paused it
+private fun correctStatus(
+    context: Context?,
+    status: DownloadStatus,
+    filename: String?,
+) = if (checkDownloadCompleted(filename)) {
+    logDebug(TAG, "$filename exists; setting status to COMPLETED")
+    DownloadStatus.DOWNLOAD_COMPLETED
+} else when (status) {
+    // If previous condition was false, file doesn't exist, so make sure we correct existing status
+    // (e.g. user manually deleted the file and switched back to the app)
+    DownloadStatus.DOWNLOAD_COMPLETED -> {
+        logDebug(TAG, "$filename does not exist; setting status to NOT_DOWNLOADING")
+        DownloadStatus.NOT_DOWNLOADING
+    }
+    // Correct initial status by checking for pause status (e.g. user paused and exited the app, then returned later)
+    DownloadStatus.NOT_DOWNLOADING, DownloadStatus.DOWNLOAD_PAUSED -> if (checkDownloadPaused(context, filename)) {
+        logDebug(TAG, "Temporary $filename exists; setting status to PAUSED")
+        // Temp file exists; download was in progress but paused by user
         DownloadStatus.DOWNLOAD_PAUSED
-    } else status
+    } else {
+        logDebug(TAG, "Temporary $filename does not exist; setting status to NOT_DOWNLOADING")
+        DownloadStatus.NOT_DOWNLOADING
+    }
 
-    else -> status
+    else -> {
+        logDebug(TAG, "No download status corrections needed; $status")
+        status
+    }
 }
 
 private const val TAG = "UpdateScreen"

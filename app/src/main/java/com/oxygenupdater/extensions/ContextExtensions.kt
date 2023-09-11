@@ -153,17 +153,19 @@ fun CustomTabsIntent.launch(context: Context, url: String) = apply {
 @Composable
 fun rememberCustomTabsIntent(): CustomTabsIntent {
     val colorScheme = MaterialTheme.colorScheme
-    return remember(colorScheme) {
+    val surface = colorScheme.surface
+    val light = colorScheme.light
+    return remember(surface, light) {
         CustomTabsIntent.Builder()
             .setShowTitle(true)
             .setUrlBarHidingEnabled(true)
-            .setDefaultColorSchemeParams(colorScheme.surface.toArgb().let {
+            .setDefaultColorSchemeParams(surface.toArgb().let {
                 CustomTabColorSchemeParams.Builder()
                     .setToolbarColor(it)
                     .setNavigationBarColor(it)
                     .build()
             }).setColorScheme(
-                if (colorScheme.light) CustomTabsIntent.COLOR_SCHEME_DARK
+                if (light) CustomTabsIntent.COLOR_SCHEME_DARK
                 else CustomTabsIntent.COLOR_SCHEME_LIGHT
             ).build()
     }

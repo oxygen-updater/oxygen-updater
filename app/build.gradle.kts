@@ -268,9 +268,9 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // https://developer.android.com/jetpack/androidx/releases/lifecycle
-    val lifecycle = "2.6.2"
+    val lifecycle = "2.7.0-alpha02"
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle")
+    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle")
 

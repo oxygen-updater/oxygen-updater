@@ -78,6 +78,7 @@ import com.oxygenupdater.ui.main.SettingsRoute
 import com.oxygenupdater.ui.main.UpdateRoute
 import com.oxygenupdater.ui.news.NewsListScreen
 import com.oxygenupdater.ui.news.NewsListViewModel
+import com.oxygenupdater.ui.onboarding.NOT_SET
 import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
@@ -86,6 +87,7 @@ import com.oxygenupdater.ui.theme.AppTheme
 import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
 import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
+import com.oxygenupdater.ui.update.WorkProgress
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logDebug
@@ -96,6 +98,11 @@ import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.utils.hasRootAccess
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
+import com.oxygenupdater.workers.WorkDataDownloadBytesDone
+import com.oxygenupdater.workers.WorkDataDownloadEta
+import com.oxygenupdater.workers.WorkDataDownloadFailureType
+import com.oxygenupdater.workers.WorkDataDownloadProgress
+import com.oxygenupdater.workers.WorkDataDownloadTotalBytes
 import kotlinx.coroutines.Job
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -322,20 +329,33 @@ class MainActivity : BaseActivity() {
         }
 
         val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable
-        val workInfoWithStatus by viewModel.workInfoWithStatus.collectAsStateWithLifecycle()
+        val (workInfo, downloadStatus) = viewModel.workInfoWithStatus.collectAsStateWithLifecycle().value
 
-        UpdateScreen(state, workInfoWithStatus, downloadErrorMessage != null, rememberCallback {
+        val outputData = workInfo?.outputData
+        val progress = workInfo?.progress
+        val failureType = outputData?.getInt(WorkDataDownloadFailureType, NOT_SET)
+        UpdateScreen(state, rememberCallback {
             settingsViewModel.updateCrashlyticsUserId()
             viewModel.fetchServerStatus()
             updateViewModel.refresh()
-        }, rememberTypedCallback(setSubtitleResId), enqueueDownload = rememberTypedCallback {
+        }, downloadStatus, failureType, if (progress == null) null else remember(progress) {
+            WorkProgress(
+                progress.getLong(WorkDataDownloadBytesDone, NOT_SET_L),
+                progress.getLong(WorkDataDownloadTotalBytes, NOT_SET_L),
+                progress.getInt(WorkDataDownloadProgress, NOT_SET),
+                progress.getString(WorkDataDownloadEta),
+            )
+        }, downloadErrorMessage != null, rememberTypedCallback(setSubtitleResId), enqueueDownload = rememberTypedCallback {
             viewModel.setupDownloadWorkRequest(it)
             viewModel.enqueueDownloadWork()
         }, pauseDownload = rememberCallback(viewModel::pauseDownloadWork), cancelDownload = rememberTypedCallback {
             viewModel.cancelDownloadWork(this@MainActivity, it)
         }, deleteDownload = rememberTypedCallback {
             viewModel.deleteDownloadedFile(this@MainActivity, it)
-        }, logDownloadError = rememberTypedCallback(viewModel::logDownloadError))
+        }, logDownloadError = rememberCallback(outputData) {
+            if (outputData == null) return@rememberCallback
+            viewModel.logDownloadError(outputData)
+        })
     }
 
     private fun NavGraphBuilder.newsListScreen(state: RefreshAwareState<List<NewsItem>>) = composable(NewsListRoute) {

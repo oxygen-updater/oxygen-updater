@@ -53,7 +53,7 @@ class Md5VerificationWorker(
         if (filename == null || md5 == null) {
             logWarning(TAG, "Required parameters are null: $filename, $md5")
             Result.failure(Data.Builder().apply {
-                putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullUpdateData.value)
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullUpdateData.value)
             }.build())
         } else {
             logDebug(TAG, "Verifying $filename")
@@ -61,14 +61,14 @@ class Md5VerificationWorker(
             if (md5.isEmpty()) {
                 logWarning(TAG, "MD5 is empty")
                 Result.failure(Data.Builder().apply {
-                    putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullOrEmptyProvidedChecksum.value)
+                    putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullOrEmptyProvidedChecksum.value)
                 }.build())
             } else {
                 val calculatedDigest = calculateMd5()
                 if (calculatedDigest == null) {
                     logWarning(TAG, "calculatedDigest = null")
                     Result.failure(Data.Builder().apply {
-                        putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.NullCalculatedChecksum.value)
+                        putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullCalculatedChecksum.value)
                     }.build())
                 } else {
                     logVerbose(TAG, "Calculated digest: $calculatedDigest")
@@ -81,7 +81,7 @@ class Md5VerificationWorker(
                         LocalNotifications.showVerificationFailedNotification(context)
                         logWarning(TAG, "md5 != calculatedDigest")
                         Result.failure(Data.Builder().apply {
-                            putInt(WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE, Md5VerificationFailure.ChecksumsNotEqual.value)
+                            putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.ChecksumsNotEqual.value)
                         }.build())
                     }
                 }
@@ -97,7 +97,7 @@ class Md5VerificationWorker(
             return@withContext null
         }
 
-        val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, filename!!)
+        val zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, filename!!)
 
         var retryCount = 0
         while (!zipFile.exists()) {

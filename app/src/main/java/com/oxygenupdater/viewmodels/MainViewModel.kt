@@ -46,17 +46,17 @@ import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
-import com.oxygenupdater.workers.DIRECTORY_ROOT
+import com.oxygenupdater.workers.DirectoryRoot
 import com.oxygenupdater.workers.DownloadWorker
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
-import com.oxygenupdater.workers.WORK_UNIQUE_DOWNLOAD
-import com.oxygenupdater.workers.WORK_UNIQUE_MD5_VERIFICATION
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraFilename
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraHttpCode
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraHttpMessage
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraOtaVersion
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraUrl
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraVersion
+import com.oxygenupdater.workers.WorkDataDownloadFailureType
+import com.oxygenupdater.workers.WorkUniqueDownload
+import com.oxygenupdater.workers.WorkUniqueMd5Verification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -118,15 +118,15 @@ class MainViewModel(
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
-    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkFlow(WORK_UNIQUE_DOWNLOAD).combine(
-        workManager.getWorkInfosForUniqueWorkFlow(WORK_UNIQUE_MD5_VERIFICATION)
+    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkFlow(WorkUniqueDownload).combine(
+        workManager.getWorkInfosForUniqueWorkFlow(WorkUniqueMd5Verification)
     ) { download, verification ->
         val infoAndStatus = if (download.isNotEmpty()) download[0].let {
             val status = when (it.state) {
                 State.ENQUEUED, State.BLOCKED -> DownloadStatus.DOWNLOAD_QUEUED
                 State.RUNNING -> DownloadStatus.DOWNLOADING
                 State.SUCCEEDED -> DownloadStatus.DOWNLOAD_COMPLETED
-                State.FAILED -> if (it.outputData.getInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, NOT_SET) != NOT_SET) {
+                State.FAILED -> if (it.outputData.getInt(WorkDataDownloadFailureType, NOT_SET) != NOT_SET) {
                     DownloadStatus.NOT_DOWNLOADING
                 } else DownloadStatus.DOWNLOAD_FAILED
 
@@ -191,30 +191,22 @@ class MainViewModel(
      */
     fun deleteDownloadedFile(context: Context, filename: String?): Boolean {
         if (filename == null) {
-            logWarning(TAG, "Can't delete downloaded file; filename null")
+            logWarning(TAG, "Can't delete downloaded file: filename null")
             return false
         }
 
         logDebug(TAG, "Deleting any associated tracker preferences for downloaded file")
         PrefManager.remove(PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE)
-
         logDebug(TAG, "Deleting downloaded update file $filename")
 
-        val tempFile = File(context.getExternalFilesDir(null), filename)
-
-        val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, filename)
-
-        if (tempFile.exists() && !tempFile.delete()) {
-            logWarning(TAG, "Can't delete temporary file $filename")
+        File(context.getExternalFilesDir(null), filename).run {
+            if (exists() && !delete()) logWarning(TAG, "Can't delete temporary file $filename")
         }
 
-        var deleted = true
-        if (zipFile.exists() && !zipFile.delete()) {
-            logWarning(TAG, "Can't delete downloaded file $filename")
-            deleted = false
+        return File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, filename).run {
+            if (exists() && !delete()) logWarning(TAG, "Can't delete downloaded file $filename").let { false }
+            true
         }
-
-        return deleted
     }
 
     fun setupDownloadWorkRequest(updateData: UpdateData) {
@@ -230,20 +222,20 @@ class MainViewModel(
     }
 
     fun enqueueDownloadWork() = workManager.enqueueUniqueWork(
-        WORK_UNIQUE_DOWNLOAD,
+        WorkUniqueDownload,
         ExistingWorkPolicy.REPLACE,
         downloadWorkRequest
     )
 
     fun cancelDownloadWork(context: Context, filename: String?) {
         cancelShouldPauseDownload.set(false) // make work's CANCELLED state map to DownloadStatus.NOT_DOWNLOADING
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
+        workManager.cancelUniqueWork(WorkUniqueDownload)
         deleteDownloadedFile(context, filename)
     }
 
     fun pauseDownloadWork() {
         cancelShouldPauseDownload.set(true) // make work's CANCELLED state map to DownloadStatus.DOWNLOAD_PAUSED
-        workManager.cancelUniqueWork(WORK_UNIQUE_DOWNLOAD)
+        workManager.cancelUniqueWork(WorkUniqueDownload)
     }
 
     /**
@@ -257,12 +249,12 @@ class MainViewModel(
 
     fun logDownloadError(data: Data) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.logDownloadError(
-            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_URL),
-            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_FILENAME),
-            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_VERSION),
-            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_OTA_VERSION),
-            data.getInt(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_CODE, NOT_SET),
-            data.getString(WORK_DATA_DOWNLOAD_FAILURE_EXTRA_HTTP_MESSAGE)
+            data.getString(WorkDataDownloadFailureExtraUrl),
+            data.getString(WorkDataDownloadFailureExtraFilename),
+            data.getString(WorkDataDownloadFailureExtraVersion),
+            data.getString(WorkDataDownloadFailureExtraOtaVersion),
+            data.getInt(WorkDataDownloadFailureExtraHttpCode, NOT_SET),
+            data.getString(WorkDataDownloadFailureExtraHttpMessage),
         )
     }.let {}
 

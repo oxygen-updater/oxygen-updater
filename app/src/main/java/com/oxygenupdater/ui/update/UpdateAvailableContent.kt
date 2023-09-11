@@ -46,6 +46,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -58,8 +59,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.work.Data
-import androidx.work.WorkInfo
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.PermissionState
@@ -93,18 +92,18 @@ import com.oxygenupdater.ui.update.DownloadStatus.NOT_DOWNLOADING
 import com.oxygenupdater.ui.update.DownloadStatus.VERIFICATION_FAILED
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
-import com.oxygenupdater.workers.WORK_DATA_DOWNLOAD_FAILURE_TYPE
 import java.util.UUID
 
 @Composable
 fun UpdateAvailable(
     refreshing: Boolean,
     updateData: UpdateData,
-    workInfo: WorkInfo?,
     downloadStatus: DownloadStatus,
+    failureType: Int?,
+    workProgress: WorkProgress?,
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
-    logDownloadError: (Data) -> Unit,
+    logDownloadError: () -> Unit,
 ) = Column {
     Column(
         Modifier
@@ -168,9 +167,7 @@ fun UpdateAvailable(
             )
         }
 
-        val outputData = workInfo?.outputData
-        if (downloadStatus == VERIFICATION_FAILED
-            || (downloadStatus == DOWNLOAD_FAILED && outputData?.getInt(WORK_DATA_DOWNLOAD_FAILURE_TYPE, NOT_SET).let {
+        if (downloadStatus == VERIFICATION_FAILED || (downloadStatus == DOWNLOAD_FAILED && failureType.let {
                 // Note: show download link only if failure is any of these:
                 // - NullUpdateDataOrDownloadUrl
                 // - DownloadUrlInvalidScheme
@@ -188,8 +185,10 @@ fun UpdateAvailable(
     }
 
     DownloadButton(
+        refreshing,
         updateData.downloadSize,
-        workInfo,
+        failureType,
+        workProgress,
         downloadStatus,
         forceDownloadErrorDialog,
         downloadAction,
@@ -229,12 +228,14 @@ private fun DownloadLink(url: String) {
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun DownloadButton(
+    refreshing: Boolean,
     downloadSize: Long,
-    workInfo: WorkInfo?,
+    failureType: Int?,
+    workProgress: WorkProgress?,
     downloadStatus: DownloadStatus,
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
-    logDownloadError: (Data) -> Unit,
+    logDownloadError: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -301,11 +302,13 @@ private fun DownloadButton(
     }
 
     DownloadButton(
+        refreshing,
         downloadStatus,
         downloadAction,
         downloadButtonConfig(
             downloadSize,
-            workInfo,
+            failureType,
+            workProgress,
             downloadStatus,
             downloadAction,
             logDownloadError,
@@ -322,6 +325,7 @@ private fun DownloadButton(
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun DownloadButton(
+    refreshing: Boolean,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
     buttonConfig: DownloadButtonConfig,
@@ -331,8 +335,9 @@ private fun DownloadButton(
     Box(
         Modifier
             .fillMaxWidth()
+            .alpha(if (refreshing) 0.38f else 1f)
             .background(colorScheme.backgroundVariant)
-            .animatedClickable(onDownloadClick != null, onDownloadClick)
+            .animatedClickable(!refreshing && onDownloadClick != null, onDownloadClick)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             val iconContentDescription = stringResource(R.string.icon)
@@ -384,8 +389,8 @@ private fun DownloadButton(
             }
         }
 
-        if (titleResId != R.string.paused) progress?.let {
-            if (it == 0f) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
+        progress?.let {
+            if (it == -1f) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
                 val animatedProgress by animateFloatAsState(
                     it, ProgressIndicatorDefaults.ProgressAnimationSpec,
                     label = "DownloadProgressAnimation"
@@ -499,12 +504,12 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
                 systemIsUpToDate = false,
             )
         },
-        workInfo = null,
         downloadStatus = NOT_DOWNLOADING,
+        failureType = null,
+        workProgress = null,
         forceDownloadErrorDialog = false,
         downloadAction = {},
-        logDownloadError = {},
-    )
+    ) {}
 }
 
 private const val TAG = "UpdateInformationContent"
