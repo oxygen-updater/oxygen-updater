@@ -349,13 +349,11 @@ dependencies {
     // https://github.com/square/retrofit/blob/master/CHANGELOG.md
     val retrofit = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit")
-    implementation("com.squareup.retrofit2:converter-jackson:$retrofit")
-
-    // Note: Before updating version, make sure this library's kotlin-reflect dependency's version is the same as kotlin-stdlib's version above
-    // Note: Stay on 2.13.x, as 2.14.x doesn't support Android 7.1/Nougat and below (API < 26)
-    // Check https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin/<version>
-    //noinspection GradleDependency
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.5")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit")
+    // https://github.com/square/moshi/blob/master/CHANGELOG.md
+    val moshi = "1.15.0"
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
+    implementation("com.squareup.moshi:moshi:$moshi")
 
     // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
     implementation("io.coil-kt:coil-compose:2.4.0")

@@ -7,36 +7,39 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.work.Data
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.workers.Md5VerificationWorker
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-@Entity(tableName = "update_data")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Immutable
+@Entity(tableName = "update_data")
+@JsonClass(generateAdapter = true)
 data class UpdateData(
     @PrimaryKey
     val id: Long?,
 
     @ColumnInfo("version_number")
+    @Json(name = "version_number")
     val versionNumber: String? = null,
 
     @ColumnInfo("ota_version_number")
+    @Json(name = "ota_version_number")
     val otaVersionNumber: String? = null,
 
     val changelog: String? = null,
     val description: String? = null,
 
     @ColumnInfo("download_url")
+    @Json(name = "download_url")
     val downloadUrl: String? = null,
 
     @ColumnInfo("download_size")
+    @Json(name = "download_size")
     val downloadSize: Long = 0,
 
     val filename: String? = null,
@@ -44,10 +47,11 @@ data class UpdateData(
     val information: String? = null,
 
     @ColumnInfo("update_information_available")
-    @JsonProperty("update_information_available", defaultValue = "0")
+    @Json(name = "update_information_available")
     val updateInformationAvailable: Boolean = false,
 
     @ColumnInfo("system_is_up_to_date", defaultValue = "0")
+    @Json(name = "system_is_up_to_date")
     val systemIsUpToDate: Boolean = false,
 ) : Parcelable {
 
@@ -76,10 +80,8 @@ data class UpdateData(
     }.build()
 
     companion object {
-        @JsonIgnore
         fun getBuildDate(otaVersionNumber: String?) = otaVersionNumber?.substringAfterLast('_')?.toLongOrNull() ?: 0
 
-        @JsonIgnore
         fun createFromWorkData(inputData: Data?) = if (inputData != null) UpdateData(
             id = inputData.getLong("id", NOT_SET_L),
             versionNumber = inputData.getString("versionNumber"),

@@ -4,10 +4,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
+import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.collection.ArraySet
-import androidx.core.os.bundleOf
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -95,7 +95,7 @@ class ReadOtaDbWorker(
         val size = otaDbCopies.size
         urls = ArraySet(size)
         val validSubmittedFilenames = ArraySet<String>(size)
-        val rows = ArrayList<ArrayMap<String, Any?>>(size) // Cursor.toMap ensures unique (based on URL) entries
+        val rows = ArrayList<Map<String, Any?>>(size) // Cursor.toMap ensures unique (based on URL) entries
         otaDbCopies.forEach { file ->
             val filename = file.name
             if (!file.canRead()) return@forEach logDebug(TAG, "Can't read copied $filename")
@@ -166,7 +166,7 @@ class ReadOtaDbWorker(
     @Suppress("NOTHING_TO_INLINE")
     private inline fun Cursor.toMap() = columnCount.let { columnCount ->
         // Memory efficient, albeit slower compared to HashMap
-        // Note: SimpleArrayMap can't be used; Jackson can't serialize it
+        // Note: we can't use SimpleArrayMap as it doesn't implement Map, thus can't be serialized by Moshi
         val map = ArrayMap<String, Any?>(columnCount)
         for (index in 0 until columnCount) when (getType(index)) {
             Cursor.FIELD_TYPE_NULL -> map[getColumnName(index)] = null
@@ -192,7 +192,7 @@ class ReadOtaDbWorker(
      * @return array of [SubmittedUpdateFile]s
      */
     private inline fun CoroutineScope.insertInDb(
-        rows: List<ArrayMap<String, Any?>>,
+        rows: List<Map<String, Any?>>,
         success: Boolean,
         action: (String) -> Unit = {},
     ) {
@@ -208,7 +208,7 @@ class ReadOtaDbWorker(
             @Suppress("DeferredResultUnused") async {
                 analytics.logEvent(
                     if (success) "CONTRIBUTION_SUCCESSFUL" else "CONTRIBUTION_NOT_NEEDED",
-                    bundleOf("CONTRIBUTION_URL" to url)
+                    Bundle(1).apply { putString("CONTRIBUTION_URL", url) }
                 )
             }
 

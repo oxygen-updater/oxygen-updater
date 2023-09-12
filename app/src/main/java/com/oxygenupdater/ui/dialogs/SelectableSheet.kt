@@ -103,13 +103,13 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
             Device(
                 id = 1,
                 name = "OnePlus 7 Pro",
-                productNamesCsv = "OnePlus7Pro",
+                productNames = listOf("OnePlus7Pro"),
                 enabled = true,
             ),
             Device(
                 id = 2,
                 name = "OnePlus 8T",
-                productNamesCsv = "OnePlus8T",
+                productNames = listOf("OnePlus8T"),
                 enabled = true,
             ),
         ),

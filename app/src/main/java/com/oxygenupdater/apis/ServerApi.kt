@@ -1,6 +1,5 @@
 package com.oxygenupdater.apis
 
-import androidx.collection.ArrayMap
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuide
@@ -98,7 +97,7 @@ interface ServerApi {
 
     /**
      * @param body includes the following fields:
-     * * `rows: List<ArrayMap<String, Any?>>`,
+     * * `rows: List<Map<String, Any?>>`,
      * * `otaVersion: String`,
      * * `isEuBuild: Boolean`,
      * * `appVersion: String`,
@@ -106,7 +105,7 @@ interface ServerApi {
      * * `actualDeviceName: String`,
      */
     @POST("submit-update-url")
-    suspend fun submitOtaDbRows(@Body body: ArrayMap<String, Any>): Response<ServerPostResult>
+    suspend fun submitOtaDbRows(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
@@ -118,9 +117,9 @@ interface ServerApi {
      * * `deviceName: String`
      */
     @POST("log-download-error")
-    suspend fun logDownloadError(@Body body: HashMap<String, Any?>): Response<ServerPostResult>
+    suspend fun logDownloadError(@Body body: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 
     @POST("verify-purchase")
     @Headers("$HEADER_READ_TIMEOUT:120")
-    suspend fun verifyPurchase(@Body purchaseData: HashMap<String, Any?>): Response<ServerPostResult>
+    suspend fun verifyPurchase(@Body purchaseData: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 }

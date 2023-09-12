@@ -3,12 +3,13 @@ package com.oxygenupdater.models
 import android.os.Parcelable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
-import com.fasterxml.jackson.annotation.JsonIgnore
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Stable
+@JsonClass(generateAdapter = true)
 data class InstallGuide(
     val id: Long,
     val title: String,
@@ -18,6 +19,5 @@ data class InstallGuide(
 
     /** To preserve expand/collapse state in LazyColumn */
     @IgnoredOnParcel
-    @JsonIgnore
     val expanded = mutableStateOf(false)
 }

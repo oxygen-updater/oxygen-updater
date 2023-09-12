@@ -1,24 +1,23 @@
 package com.oxygenupdater.models
 
 import androidx.compose.runtime.Immutable
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.internal.CsvList
+import com.oxygenupdater.internal.ForceBoolean
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @Immutable // required because we have a List field (productNames)
+@JsonClass(generateAdapter = true)
 data class Device(
     override val id: Long,
     override val name: String?,
 
-    @JsonProperty("product_names")
-    private val productNamesCsv: String?,
+    @Json(name = "product_names")
+    @CsvList val productNames: List<String>,
 
-    val enabled: Boolean,
+    @ForceBoolean val enabled: Boolean,
 ) : SelectableModel {
-
-    @JsonIgnore
-    @JvmField
-    val productNames = productNamesCsv?.trim()?.split(",")?.map { it.trim() } ?: listOf()
 
     companion object {
         private val IMAGE_URL_PREFIX = buildString(37) {

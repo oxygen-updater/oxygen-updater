@@ -4,15 +4,14 @@ import android.content.Context
 import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.internal.BooleanDeserializer
+import com.oxygenupdater.internal.BooleanJsonAdapter
+import com.oxygenupdater.internal.CsvListJsonAdapter
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.utils.Logger.logWarning
+import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -20,7 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -92,15 +91,14 @@ private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
     .baseUrl(AppBaseUrl)
     .client(httpClient)
     .addConverterFactory(
-        JacksonConverterFactory.create(
-            jacksonObjectMapper().registerModule(
-                // Coerce strings to booleans
-                SimpleModule().addDeserializer(Boolean::class.java, BooleanDeserializer())
-            ).setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
-            // ^ Tell ObjectMapper to convert camelCase to snake_case (Server API responses have fields in snake case)
-            // This helps us avoid annotating every field with `@JsonProperty` unnecessarily
+        MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(BooleanJsonAdapter()) // coerce strings/numbers to boolean
+                .add(CsvListJsonAdapter())
+                .build()
         )
-    ).build()
+    )
+    .build()
 
 private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
     .baseUrl(AppBaseUrl)

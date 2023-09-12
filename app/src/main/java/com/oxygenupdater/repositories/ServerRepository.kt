@@ -127,7 +127,7 @@ class ServerRepository constructor(
     ) = newsItemDao.toggleRead(newsItem, read)
 
     suspend fun markNewsItemRead(newsItemId: Long) = performServerRequest {
-        serverApi.markNewsItemRead(mapOf("news_item_id" to newsItemId))
+        serverApi.markNewsItemRead(ArrayMap<String, Long>(1).apply { put("news_item_id", newsItemId) })
     }
 
     suspend fun fetchUpdateMethodsForDevice(deviceId: Long) = performServerRequest {
@@ -138,7 +138,7 @@ class ServerRepository constructor(
         serverApi.fetchAllUpdateMethods()
     }
 
-    suspend fun submitOtaDbRows(rows: List<ArrayMap<String, Any?>>) = performServerRequest {
+    suspend fun submitOtaDbRows(rows: List<Map<String, Any?>>) = performServerRequest {
         serverApi.submitOtaDbRows(
             ArrayMap<String, Any>(7).apply {
                 put("rows", rows)
@@ -161,17 +161,17 @@ class ServerRepository constructor(
         httpMessage: String?,
     ) = performServerRequest {
         serverApi.logDownloadError(
-            hashMapOf(
-                "url" to url,
-                "filename" to filename,
-                "version" to version,
-                "otaVersion" to otaVersion,
-                "httpCode" to httpCode,
-                "httpMessage" to httpMessage,
-                "appVersion" to BuildConfig.VERSION_NAME,
-                "deviceName" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"),
-                "actualDeviceName" to SystemVersionProperties.oxygenDeviceName
-            )
+            ArrayMap<String, Any?>(9).apply {
+                put("url", url)
+                put("filename", filename)
+                put("version", version)
+                put("otaVersion", otaVersion)
+                put("httpCode", httpCode)
+                put("httpMessage", httpMessage)
+                put("appVersion", BuildConfig.VERSION_NAME)
+                put("deviceName", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"))
+                put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
+            }
         )
     }
 
@@ -181,21 +181,21 @@ class ServerRepository constructor(
         purchaseType: PurchaseType,
     ) = performServerRequest {
         serverApi.verifyPurchase(
-            hashMapOf(
-                "orderId" to purchase.orderId,
-                "packageName" to purchase.packageName,
-                "productId" to purchase.products.joinToString(","),
-                "purchaseTime" to purchase.purchaseTime,
-                "purchaseState" to purchase.purchaseState,
-                "developerPayload" to purchase.developerPayload,
-                "token" to purchase.purchaseToken,
-                "purchaseToken" to purchase.purchaseToken,
-                "autoRenewing" to purchase.isAutoRenewing,
-                "purchaseType" to purchaseType.name,
-                "itemType" to purchaseType.type,
-                "signature" to purchase.signature,
-                "amount" to amount
-            )
+            ArrayMap<String, Any?>(13).apply {
+                put("orderId", purchase.orderId)
+                put("packageName", purchase.packageName)
+                put("productId", purchase.products.joinToString(","))
+                put("purchaseTime", purchase.purchaseTime)
+                put("purchaseState", purchase.purchaseState)
+                put("developerPayload", purchase.developerPayload)
+                put("token", purchase.purchaseToken)
+                put("purchaseToken", purchase.purchaseToken)
+                put("autoRenewing", purchase.isAutoRenewing)
+                put("purchaseType", purchaseType.name)
+                put("itemType", purchaseType.type)
+                put("signature", purchase.signature)
+                put("amount", amount)
+            }
         )
     }
 }

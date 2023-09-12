@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -60,10 +60,10 @@ object ContributorUtils {
         if (isFirstTime || wasContributing != isContributing) {
             PrefManager.putBoolean(PROPERTY_CONTRIBUTE, isContributing)
 
-            val analyticsEventData = bundleOf(
-                "CONTRIBUTOR_DEVICE" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
-                "CONTRIBUTOR_UPDATEMETHOD" to PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
-            )
+            val analyticsEventData = Bundle(2).apply {
+                putString("CONTRIBUTOR_DEVICE", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<<UNKNOWN>>"))
+                putString("CONTRIBUTOR_UPDATEMETHOD", PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>"))
+            }
 
             if (isContributing) {
                 analytics.logEvent("CONTRIBUTOR_SIGNUP", analyticsEventData)

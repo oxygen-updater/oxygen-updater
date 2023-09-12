@@ -7,18 +7,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.utils.Utils
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 
 @Parcelize
-@Entity(tableName = "news_item")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Stable
+@Entity(tableName = "news_item")
+@JsonClass(generateAdapter = true)
 data class NewsItem(
     @PrimaryKey
     val id: Long?,
@@ -28,19 +28,23 @@ data class NewsItem(
     val text: String?,
 
     @ColumnInfo("image_url")
+    @Json(name = "image_url")
     val imageUrl: String?,
 
     @ColumnInfo("date_published")
+    @Json(name = "date_published")
     val datePublished: String?,
 
     @ColumnInfo("date_last_edited")
+    @Json(name = "date_last_edited")
     val dateLastEdited: String?,
 
     @ColumnInfo("author_name")
+    @Json(name = "author_name")
     val authorName: String?,
 
     @ColumnInfo(defaultValue = "0")
-    @JsonIgnore
+    @Transient
     @Deprecated(
         "Don't read boolean column directly, use MutableState instead",
         ReplaceWith("readState.value"),
@@ -50,7 +54,6 @@ data class NewsItem(
 
     @Suppress("DEPRECATION")
     @IgnoredOnParcel
-    @JsonIgnore
     @Ignore
     val readState = mutableStateOf(read)
 
