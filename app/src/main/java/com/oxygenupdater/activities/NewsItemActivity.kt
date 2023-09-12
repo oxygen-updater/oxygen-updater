@@ -144,13 +144,14 @@ class NewsItemActivity : SupportActionBarActivity(
         }
 
         PullRefresh(state, { it?.isFullyLoaded != true }, onRefresh) {
-            var error by remember { mutableStateOf<String?>(null) }
-            val hide = rememberCallback { error = null }
-            error?.let { ModalBottomSheet(hide) { ArticleErrorSheet(hide, it, onRefresh) } }
+            var errorTitle by remember { mutableStateOf<String?>(null) }
+            errorTitle?.let { title ->
+                ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, onRefresh) }
+            }
 
             NewsItemScreen(modifier, state, webViewState, navigator, showAds, rememberTypedCallback {
                 bannerAdView = it
-            }, { error = it }, rememberTypedCallback(viewModel::markRead))
+            }, { errorTitle = it }, rememberTypedCallback(viewModel::markRead))
         }
     }
 

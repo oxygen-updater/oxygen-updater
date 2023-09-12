@@ -75,9 +75,7 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
         Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server))
     }
 
-    if (showSheet) ModalBottomSheet({ showSheet = false }) {
-        ServerMessagesSheet(serverMessages)
-    }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { ServerMessagesSheet(serverMessages) }
 }
 
 @Composable
@@ -96,10 +94,7 @@ private fun ContributorMenuItem(onDismiss: () -> Unit) {
         onDismiss()
     }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
-        ContributorSheet(hide, true)
-    }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it, true) }
 }
 
 @PreviewThemes

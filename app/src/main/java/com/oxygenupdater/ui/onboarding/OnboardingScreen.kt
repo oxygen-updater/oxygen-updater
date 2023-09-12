@@ -44,7 +44,6 @@ import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.animatedClickable
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
@@ -126,8 +125,7 @@ private fun DeviceChooser(
         ) ?: notSelected else stringResource(R.string.summary_please_wait),
     ) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
             hide,
             enabledDevices, initialDeviceIndex,
@@ -157,8 +155,7 @@ private fun MethodChooser(
         ) ?: notSelected else stringResource(R.string.summary_update_method),
     ) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
             hide,
             methodsForDevice, initialMethodIndex,
@@ -185,10 +182,7 @@ private fun StartApp(
             }
         }
 
-        val hide = rememberCallback { showSheet = false }
-        if (showSheet) ModalBottomSheet(hide) {
-            ContributorSheet(hide)
-        }
+        if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it) }
     }
 
     var submitLogs by rememberSaveableState("submitLogs", true)

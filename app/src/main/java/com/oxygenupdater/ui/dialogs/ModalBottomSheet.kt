@@ -30,8 +30,9 @@ import com.oxygenupdater.ui.theme.backgroundVariant
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @NonRestartableComposable
-fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Unit) {
+fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.(() -> Unit) -> Unit) {
     val colorScheme = MaterialTheme.colorScheme
+    // TODO(compose/sheet): move common layouts out of *Sheet
     // TODO(compose/bug): content behind sheet not clickable if dismissed via swipe
     ModalBottomSheet(
         hide,
@@ -39,7 +40,7 @@ fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.() -> Un
         containerColor = colorScheme.backgroundVariant, // match bottom nav bar
         contentColor = colorScheme.onSurface,
         windowInsets = WindowInsets.navigationBars, // draw behind status bar only, not navigation
-        content = content
+        content = { content(hide) }
     )
 }
 

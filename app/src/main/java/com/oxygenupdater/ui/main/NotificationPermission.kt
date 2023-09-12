@@ -50,8 +50,7 @@ fun NotificationPermission() {
     }
 
     // TODO: consider adding logic to avoid showing this sheet if the user has clicked "Cancel" too many times
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         NotificationPermissionSheet(hide) {
             launchPermissionRequest()
             invokeTime = System.currentTimeMillis()

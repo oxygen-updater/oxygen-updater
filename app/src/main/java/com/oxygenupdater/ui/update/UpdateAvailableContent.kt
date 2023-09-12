@@ -265,8 +265,7 @@ private fun DownloadButton(
 
     var showAlreadyDownloadedSheet by rememberSaveableState("showAlreadyDownloadedSheet", false)
     if (showAlreadyDownloadedSheet) {
-        val hide = rememberCallback { showAlreadyDownloadedSheet = false }
-        ModalBottomSheet(hide) {
+        ModalBottomSheet({ showAlreadyDownloadedSheet = false }) { hide ->
             AlreadyDownloadedSheet(hide) {
                 if (it) context.startInstallActivity(false)
                 else if (hasDownloadPermissions()) downloadAction(DownloadAction.Delete)
@@ -280,18 +279,16 @@ private fun DownloadButton(
     var canShowDownloadErrorDialog by remember { mutableStateOf(forceDownloadErrorDialog) }
     var downloadErrorDialogParams by remember { mutableStateOf<DownloadErrorParams?>(null) }
     if (canShowDownloadErrorDialog) downloadErrorDialogParams?.let {
-        val hide = rememberCallback {
+        ModalBottomSheet({
             canShowDownloadErrorDialog = false
             downloadErrorDialogParams = null
-        }
-        ModalBottomSheet(hide) { DownloadErrorSheet(hide, it) }
+        }) { hide -> DownloadErrorSheet(hide, it) }
     }
 
     var manageStorageDialogData by remember { mutableStateOf<Pair<UUID, Long>?>(null) }
     if (SDK_INT >= VERSION_CODES.O) manageStorageDialogData?.let {
-        val hide = rememberCallback { manageStorageDialogData = null }
         val text = stringResource(R.string.download_error_storage)
-        ModalBottomSheet(hide) {
+        ModalBottomSheet({ manageStorageDialogData = null }) { hide ->
             ManageStorageSheet(hide, it, downloadAction) {
                 downloadErrorDialogParams = DownloadErrorParams(text)
             }

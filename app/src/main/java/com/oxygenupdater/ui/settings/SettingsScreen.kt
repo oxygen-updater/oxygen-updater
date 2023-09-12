@@ -171,10 +171,7 @@ private fun BecomeContributor() {
         R.string.contribute, stringResource(R.string.settings_contribute_label),
     ) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
-        ContributorSheet(hide, true)
-    }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it, true) }
 }
 
 @SuppressLint("PrivateResource")
@@ -198,8 +195,7 @@ private fun DeviceChooser(
         subtitleIsError = subtitle == notSelected
     ) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
             hide,
             enabledDevices, initialDeviceIndex,
@@ -231,8 +227,7 @@ private fun MethodChooser(
         subtitleIsError = subtitle == notSelected
     ) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
             hide,
             methodsForDevice, initialMethodIndex,
@@ -302,12 +297,9 @@ private fun Notifications() {
 @Composable
 private fun Theme() {
     var showSheet by rememberSaveableState("showThemeSheet", false)
-    Item(Icons.Outlined.Palette, R.string.label_theme, PrefManager.theme.toString()) {
-        showSheet = true
-    }
+    Item(Icons.Outlined.Palette, R.string.label_theme, PrefManager.theme.toString()) { showSheet = true }
 
-    val hide = rememberCallback { showSheet = false }
-    if (showSheet) ModalBottomSheet(hide) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         ThemeSheet(hide) { PrefManager.theme = it }
     }
 }
@@ -333,10 +325,7 @@ private fun Language() {
         var showSheet by rememberSaveableState("showLanguageSheet", false)
         Item(Icons.Outlined.Language, R.string.label_language, language) { showSheet = true }
 
-        val hide = rememberCallback { showSheet = false }
-        if (showSheet) ModalBottomSheet(hide) {
-            LanguageSheet(hide, selectedLocale)
-        }
+        if (showSheet) ModalBottomSheet({ showSheet = false }) { LanguageSheet(it, selectedLocale) }
     }
 }
 
@@ -354,11 +343,11 @@ private fun AdvancedMode() {
         showSheet = true
     }
 
-    if (showSheet) ModalBottomSheet({ showSheet = false }) {
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         AdvancedModeSheet {
             putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
             advancedMode = it
-            showSheet = false
+            hide()
         }
     }
 }
