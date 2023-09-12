@@ -248,6 +248,7 @@ class MainViewModel(
     }
 
     fun logDownloadError(data: Data) = viewModelScope.launch(Dispatchers.IO) {
+        maybePruneWork() // prune to avoid re-sending the same error on recompose
         serverRepository.logDownloadError(
             data.getString(WorkDataDownloadFailureExtraUrl),
             data.getString(WorkDataDownloadFailureExtraFilename),

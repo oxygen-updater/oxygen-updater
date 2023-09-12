@@ -132,7 +132,7 @@ fun downloadButtonConfig(
             sizeOrProgressText = context.formatFileSize(downloadSize),
             progress = null,
             actionButtonConfig = null,
-            onDownloadClick = null,
+            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
         ).also {
             previousProgress = null
             previousProgressText = null

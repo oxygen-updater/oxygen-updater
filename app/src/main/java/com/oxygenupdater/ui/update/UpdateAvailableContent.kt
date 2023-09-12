@@ -38,7 +38,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +48,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -57,8 +55,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.MultiplePermissionsState
 import com.google.accompanist.permissions.PermissionState
@@ -418,26 +415,13 @@ private fun rememberAllFilesPermissionState(context: Context) = remember(context
 @OptIn(ExperimentalPermissionsApi::class)
 @RequiresApi(VERSION_CODES.R)
 @Composable
-private fun PermissionLifecycleCheckerEffect(
-    permissionState: AllFilesPermissionState,
-    lifecycleEvent: Lifecycle.Event = Lifecycle.Event.ON_RESUME,
-) {
+private fun PermissionLifecycleCheckerEffect(permissionState: AllFilesPermissionState) {
     // Check if the permission was granted when the lifecycle is resumed.
     // The user might've gone to the Settings screen and granted the permission.
-    val observer = remember(permissionState) {
-        LifecycleEventObserver { _, event ->
-            if (event != lifecycleEvent) return@LifecycleEventObserver
-
-            // If the permission is revoked, check again.
-            // We don't check if the permission was denied as that triggers a process restart.
-            if (permissionState.status != PermissionStatus.Granted) permissionState.refreshPermissionStatus()
-        }
-    }
-
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(lifecycle, observer) {
-        lifecycle.addObserver(observer)
-        onDispose { lifecycle.removeObserver(observer) }
+    LifecycleResumeEffect(permissionState) {
+        // We don't check if the permission was denied as that triggers a process restart.
+        if (permissionState.status != PermissionStatus.Granted) permissionState.refreshPermissionStatus()
+        onPauseOrDispose {}
     }
 }
 

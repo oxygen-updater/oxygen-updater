@@ -35,7 +35,6 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,12 +47,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.launch
@@ -256,21 +253,10 @@ private fun Notifications() {
         mutableStateOf(if (runningInPreview) NotifStatus() else notificationUtils.toNotifStatus())
     }
 
-    if (!runningInPreview) {
-        // Re-run above onResume
-        val observer = remember {
-            LifecycleEventObserver { _, event ->
-                if (event != Lifecycle.Event.ON_RESUME) return@LifecycleEventObserver
-
-                notifStatus = notificationUtils.toNotifStatus()
-            }
-        }
-
-        val lifecycle = LocalLifecycleOwner.current.lifecycle
-        DisposableEffect(lifecycle, observer) {
-            lifecycle.addObserver(observer)
-            onDispose { lifecycle.removeObserver(observer) }
-        }
+    if (!runningInPreview) LifecycleResumeEffect {
+        // Check again in case user changed settings and came back to the app
+        notifStatus = notificationUtils.toNotifStatus()
+        onPauseOrDispose {}
     }
 
     val disabled = notifStatus.disabled
