@@ -16,12 +16,10 @@
 #   public *;
 #}
 
-# BEGIN: Crashlytics suggestions
-# Allow for meaningful crash reports
--keepattributes *Annotation*,EnclosingMethod,Signature,SourceFile,LineNumberTable
-# Custom exceptions should be be skipped during obfuscation
--keep public class * extends java.lang.Exception
-# BEGIN: Crashlytics suggestions
+# BEGIN: Crashlytics suggestions: https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=android#config-r8-proguard-dexguard
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+# END: Crashlytics suggestions
 
 # BEGIN: fix https://github.com/square/retrofit/issues/3751
 # Note: remove this block once the issue is resolved, i.e. a new Retrofit version is released
