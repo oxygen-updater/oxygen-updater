@@ -64,7 +64,7 @@ abstract class SystemVersionPropertiesTest {
 
         val deviceOsSpec = checkDeviceOsSpec(allOnePlusDevicesApp232AndNewer)
 
-        assertSame(deviceOsSpec, DeviceOsSpec.SUPPORTED_OXYGEN_OS)
+        assertSame(deviceOsSpec, DeviceOsSpec.SupportedOxygenOs)
 
         return true
     }

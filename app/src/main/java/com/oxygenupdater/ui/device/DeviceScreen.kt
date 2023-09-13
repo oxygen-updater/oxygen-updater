@@ -112,10 +112,10 @@ private fun DeviceHeader(
             Text(
                 stringResource(remember(deviceOsSpec) {
                     when (deviceOsSpec) {
-                        DeviceOsSpec.SUPPORTED_OXYGEN_OS -> R.string.device_information_supported_oxygen_os
-                        DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS -> R.string.device_information_carrier_exclusive_oxygen_os
-                        DeviceOsSpec.UNSUPPORTED_OXYGEN_OS -> R.string.device_information_unsupported_oxygen_os
-                        DeviceOsSpec.UNSUPPORTED_OS -> R.string.device_information_unsupported_os
+                        DeviceOsSpec.SupportedOxygenOs -> R.string.device_information_supported_oxygen_os
+                        DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.device_information_carrier_exclusive_oxygen_os
+                        DeviceOsSpec.UnsupportedOxygenOs -> R.string.device_information_unsupported_oxygen_os
+                        DeviceOsSpec.UnsupportedOs -> R.string.device_information_unsupported_os
                         else -> R.string.device_information_unsupported_os
                     }
                 }),
@@ -146,7 +146,7 @@ private fun DeviceHeader(
 
 @Composable
 private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
-    val notSupported = deviceOsSpec != DeviceOsSpec.SUPPORTED_OXYGEN_OS
+    val notSupported = deviceOsSpec != DeviceOsSpec.SupportedOxygenOs
     var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
     if (notSupported && showUnsupportedDialog) deviceOsSpec?.let {
         UnsupportedDeviceOsSpecDialog(it)
@@ -332,7 +332,7 @@ fun PreviewDeviceScreen() = PreviewAppTheme {
     val name = "OnePlus 8T (India)"
     DeviceScreen(
         deviceName = name,
-        deviceOsSpec = DeviceOsSpec.SUPPORTED_OXYGEN_OS,
+        deviceOsSpec = DeviceOsSpec.SupportedOxygenOs,
         deviceMismatchStatus = Triple(false, name, name),
     )
 }

@@ -1,7 +1,9 @@
 package com.oxygenupdater.models
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 
+@Immutable
 @JvmInline
 value class DeviceRequestFilter(val value: String) {
     override fun toString() = value

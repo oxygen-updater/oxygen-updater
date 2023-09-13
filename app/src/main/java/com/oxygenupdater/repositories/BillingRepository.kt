@@ -829,8 +829,8 @@ class BillingRepository(
         purchase.signature
     )
 
-    @JvmInline
     @Immutable
+    @JvmInline
     value class SkuState(val value: Int) {
 
         override fun toString() = when (this) {

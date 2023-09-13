@@ -168,7 +168,7 @@ class MainActivity : BaseActivity() {
     @Composable
     private fun Content() {
         val showDeviceBadge = viewModel.deviceOsSpec.let {
-            it != null && it != DeviceOsSpec.SUPPORTED_OXYGEN_OS
+            it != null && it != DeviceOsSpec.SupportedOxygenOs
         } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 

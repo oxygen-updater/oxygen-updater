@@ -9,10 +9,10 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
-import com.oxygenupdater.models.DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS
-import com.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
-import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
-import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
+import com.oxygenupdater.models.DeviceOsSpec.Companion.CarrierExclusiveOxygenOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.SupportedOxygenOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOxygenOs
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.device.defaultDeviceName
 import com.oxygenupdater.utils.Logger.logVerbose
@@ -72,7 +72,7 @@ object Utils {
         if (devices.isNullOrEmpty()) {
             // To prevent incorrect results on empty server response.
             // This still checks if official ROM is used and if an OxygenOS version is found on the device.
-            return if (firmwareIsSupported) SUPPORTED_OXYGEN_OS else UNSUPPORTED_OS
+            return if (firmwareIsSupported) SupportedOxygenOs else UnsupportedOxygenOs
         }
 
         return if (firmwareIsSupported) {
@@ -81,18 +81,18 @@ object Utils {
                 // Find the user's device in the list of devices retrieved from the server
                 if ((fingerprintParts.size > 2 && it.productNames.contains(fingerprintParts[1]))
                     || it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-                ) return if (it.enabled) SUPPORTED_OXYGEN_OS else {
+                ) return if (it.enabled) SupportedOxygenOs else {
                     // Device found, but is disabled, which means it's carrier-exclusive
                     // (only carrier-exclusive devices are disabled in the database)
-                    CARRIER_EXCLUSIVE_OXYGEN_OS
+                    CarrierExclusiveOxygenOs
                 }
             }
 
             // Device not found among the server-provided list; assume it's a newly-released OnePlus device that we're yet to add support for
-            UNSUPPORTED_OXYGEN_OS
+            UnsupportedOxygenOs
         } else {
             // Device isn't running OxygenOS at all. Note that it may still be a OnePlus device running a custom ROM.
-            UNSUPPORTED_OS
+            UnsupportedOs
         }
     }
 
