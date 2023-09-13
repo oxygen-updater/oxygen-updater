@@ -9,6 +9,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -57,7 +58,11 @@ import com.oxygenupdater.utils.UpdateDataVersionFormatter
 fun UpToDate(
     refreshing: Boolean,
     updateData: UpdateData,
-) = Column(Modifier.verticalScroll(rememberScrollState())) {
+) = Column(
+    Modifier
+        .fillMaxHeight()
+        .verticalScroll(rememberScrollState())
+) {
     val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
     val method = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "") ?: ""
 
