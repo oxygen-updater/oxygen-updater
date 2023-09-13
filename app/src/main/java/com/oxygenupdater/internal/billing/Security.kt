@@ -23,8 +23,8 @@ import java.security.spec.X509EncodedKeySpec
 object Security {
 
     private const val TAG = "IABUtil/Security"
-    private const val KEY_FACTORY_ALGORITHM = "RSA"
-    private const val SIGNATURE_ALGORITHM = "SHA1withRSA"
+    private const val KeyFactoryAlgorithm = "RSA"
+    private const val SignatureAlgorithm = "SHA1withRSA"
 
     /**
      * Verifies that the data was signed with the given signature
@@ -57,7 +57,7 @@ object Security {
      */
     @Throws(IllegalArgumentException::class, NoSuchAlgorithmException::class)
     fun generatePublicKey(encodedPublicKey: String?): PublicKey = try {
-        KeyFactory.getInstance(KEY_FACTORY_ALGORITHM).generatePublic(
+        KeyFactory.getInstance(KeyFactoryAlgorithm).generatePublic(
             X509EncodedKeySpec(Base64.decode(encodedPublicKey, Base64.DEFAULT))
         )
     } catch (e: InvalidKeySpecException) {
@@ -88,7 +88,7 @@ object Security {
         }
 
         try {
-            Signature.getInstance(SIGNATURE_ALGORITHM).run {
+            Signature.getInstance(SignatureAlgorithm).run {
                 initVerify(publicKey)
                 update(signedData.toByteArray())
 

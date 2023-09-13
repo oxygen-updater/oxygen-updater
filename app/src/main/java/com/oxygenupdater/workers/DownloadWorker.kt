@@ -26,8 +26,9 @@ import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.showToast
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE
+import com.oxygenupdater.internal.settings.PrefManager.KeyDownloadBytesDone
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.update.DownloadFailure
@@ -37,7 +38,7 @@ import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
-import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import kotlinx.coroutines.Dispatchers
@@ -111,7 +112,7 @@ class DownloadWorker(
 
         val text = context.getString(R.string.download_pending)
 
-        notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)
@@ -146,7 +147,7 @@ class DownloadWorker(
 
         val text = "$bytesDoneStr / $totalBytesStr ($progress%)"
 
-        notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
             .setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle(UpdateDataVersionFormatter.getFormattedVersionNumber(updateData))
             .setContentText(text)
@@ -166,8 +167,8 @@ class DownloadWorker(
             .build()
 
         notificationManager.apply {
-            cancel(NotificationIds.LOCAL_DOWNLOAD)
-            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+            cancel(NotificationIds.LocalDownload)
+            cancel(NotificationIds.LocalMd5Verification)
         }
 
         return notification
@@ -192,18 +193,18 @@ class DownloadWorker(
     )
 
     private fun foregroundInfo(notification: Notification) = if (SDK_INT >= Build.VERSION_CODES.Q) ForegroundInfo(
-        NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification,
+        NotificationIds.LocalDownloadForeground, notification,
         ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC // keep in sync with `foregroundServiceType` in AndroidManifest
-    ) else ForegroundInfo(NotificationIds.LOCAL_DOWNLOAD_FOREGROUND, notification)
+    ) else ForegroundInfo(NotificationIds.LocalDownloadForeground, notification)
 
     private suspend fun download(): Result = withContext(Dispatchers.IO) {
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
         zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, updateData.filename!!)
 
-        var startingByte = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
-        var rangeHeader = if (startingByte != NOT_SET) "bytes=$startingByte-" else null
+        var startingByte = PrefManager.getLong(KeyDownloadBytesDone, NotSetL)
+        var rangeHeader = if (startingByte != NotSetL) "bytes=$startingByte-" else null
 
-        if (startingByte != NOT_SET) {
+        if (startingByte != NotSetL) {
             logDebug(TAG, "Looks like a resume operation. Adding $rangeHeader to the request")
 
             if (tempFile.length() > startingByte) logWarning(
@@ -215,7 +216,7 @@ class DownloadWorker(
                     "Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state."
                 )
 
-                startingByte = NOT_SET
+                startingByte = NotSetL
                 rangeHeader = null
             }
         }
@@ -248,12 +249,12 @@ class DownloadWorker(
                 var bytesRead = startingByte.coerceAtLeast(0L)
                 val contentLength = bytesRead + body.contentLength()
 
-                if (abs(contentLength - updateData.downloadSize) > THRESHOLD_BYTES_DIFFERENCE_WITH_BACKEND) logWarning(
+                if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) logWarning(
                     TAG,
                     "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
                 )
 
-                if (startingByte != NOT_SET) {
+                if (startingByte != NotSetL) {
                     logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
                     randomAccessFile.seek(startingByte)
                 }
@@ -311,7 +312,7 @@ class DownloadWorker(
 
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
-                                PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
+                                PrefManager.remove(KeyDownloadBytesDone)
 
                                 // Try deleting the file to allow retrying this work with a fresh state
                                 // Even if it doesn't get deleted, we can overwrite data to the same file
@@ -326,7 +327,7 @@ class DownloadWorker(
                 }
 
                 logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
-                PrefManager.remove(PROPERTY_DOWNLOAD_BYTES_DONE)
+                PrefManager.remove(KeyDownloadBytesDone)
 
                 setProgress(Data.Builder().apply {
                     putLong(WorkDataDownloadBytesDone, contentLength)
@@ -412,9 +413,9 @@ class DownloadWorker(
         val currentTimestamp = System.currentTimeMillis()
         if (isFirstPublish || currentTimestamp - previousProgressTimestamp > MinMsBetweenProgressPublish) {
             val progress = (bytesDone * 100 / totalBytes).toInt()
-            val previousBytesDone = PrefManager.getLong(PROPERTY_DOWNLOAD_BYTES_DONE, NOT_SET)
+            val previousBytesDone = PrefManager.getLong(KeyDownloadBytesDone, NotSetL)
 
-            PrefManager.putLong(PROPERTY_DOWNLOAD_BYTES_DONE, bytesDone)
+            PrefManager.putLong(KeyDownloadBytesDone, bytesDone)
 
             val downloadEta = calculateDownloadEta(
                 currentTimestamp,
@@ -444,9 +445,9 @@ class DownloadWorker(
         totalBytes: Long,
     ): TimeRemaining? {
         val bytesDonePerSecond: Double
-        var secondsRemaining = NOT_SET
+        var secondsRemaining = NotSetL
 
-        if (previousBytesDone != NOT_SET) {
+        if (previousBytesDone != NotSetL) {
             val secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(currentTimestamp - previousProgressTimestamp)
             bytesDonePerSecond = if (secondsElapsed > 0L) {
                 (bytesDone - previousBytesDone) / secondsElapsed.toDouble()
@@ -470,21 +471,19 @@ class DownloadWorker(
             val averageBytesPerSecond = if (measurements.isEmpty()) 0L else (measurements.sum() / measurements.size).toLong()
             secondsRemaining = if (averageBytesPerSecond > 0) {
                 (totalBytes - bytesDone) / averageBytesPerSecond
-            } else NOT_SET
+            } else NotSetL
         }
 
-        return if (secondsRemaining != NOT_SET) TimeRemaining(secondsRemaining) else null
+        return if (secondsRemaining != NotSetL) TimeRemaining(secondsRemaining) else null
     }
 
     companion object {
         private const val TAG = "DownloadWorker"
 
-        private const val NOT_SET = -1L
-
         /**
          * Minimum difference between file size reported by `body.contentLength()` and what's saved in our backend.
          * Currently: `1 MB`
          */
-        private const val THRESHOLD_BYTES_DIFFERENCE_WITH_BACKEND = 1048576L
+        private const val ThresholdBytesDifferenceWithBackend = 1048576L
     }
 }

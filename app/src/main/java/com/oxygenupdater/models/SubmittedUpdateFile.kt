@@ -18,5 +18,5 @@ data class SubmittedUpdateFile(
     val name: String?,
 
     @ColumnInfo("date_submitted", defaultValue = "CURRENT_TIMESTAMP")
-    val dateSubmitted: String = LocalDateTime.now(Utils.SERVER_TIME_ZONE).toString(),
+    val dateSubmitted: String = LocalDateTime.now(Utils.ServerTimeZone).toString(),
 )

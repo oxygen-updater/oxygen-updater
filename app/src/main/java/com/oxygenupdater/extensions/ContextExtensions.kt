@@ -106,9 +106,9 @@ fun Context.openPlayStorePage() {
 }
 
 fun Context.openEmail() {
-    val chosenDevice = PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>")
-    val chosenMethod = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
-    val advancedMode = PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false)
+    val chosenDevice = PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>")
+    val chosenMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>")
+    val advancedMode = PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false)
     val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
         if (it.isNotEmpty()) " ($it)" else ""
     }

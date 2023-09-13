@@ -20,12 +20,12 @@ object DatabaseBuilders {
         }
     }
 
-    const val APP_DB = "oxygen_updater"
+    const val AppDb = "oxygen_updater"
 
     fun buildLocalAppDatabase(context: Context) = Room.databaseBuilder(
         context,
         LocalAppDb::class.java,
-        APP_DB
+        AppDb
     ).addCallback(prepopulateFromOldData)
         .fallbackToDestructiveMigrationOnDowngrade()
         .build()

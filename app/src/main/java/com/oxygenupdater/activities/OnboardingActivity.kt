@@ -29,12 +29,12 @@ import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.LogoNotification
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.CollapsingAppBar
 import com.oxygenupdater.ui.common.rememberTypedCallback
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.theme.AppTheme
@@ -53,8 +53,8 @@ class OnboardingActivity : BaseActivity() {
         viewModel.fetchEnabledDevices()
 
         val startPage = intent?.getIntExtra(
-            MainActivity.INTENT_START_PAGE, MainActivity.PAGE_UPDATE
-        ) ?: MainActivity.PAGE_UPDATE
+            MainActivity.IntentStartPage, MainActivity.PageUpdate
+        ) ?: MainActivity.PageUpdate
 
         setContent {
             AppTheme {
@@ -104,27 +104,27 @@ class OnboardingActivity : BaseActivity() {
                                 } else context.showToast(R.string.notification_no_notification_support)
 
                                 if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-                                    PrefManager.putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, submitLogs)
-                                    PrefManager.putBoolean(PrefManager.PROPERTY_SETUP_DONE, true)
+                                    PrefManager.putBoolean(PrefManager.KeyShareAnalyticsAndLogs, submitLogs)
+                                    PrefManager.putBoolean(PrefManager.KeySetupDone, true)
                                     (application as OxygenUpdater?)?.setupCrashReporting(submitLogs)
 
                                     // If user enables OTA contribution, check if device is rooted and ask for root permission
                                     if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
                                         context.showToast(R.string.contribute_allow_storage)
                                         hasRootAccess {
-                                            PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, true)
+                                            PrefManager.putBoolean(PrefManager.KeyContribute, true)
                                             startMainActivity(startPage)
                                             finish()
                                         }
                                     } else {
                                         // Skip shell creation and thus don't show root permission prompt
-                                        PrefManager.putBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)
+                                        PrefManager.putBoolean(PrefManager.KeyContribute, false)
                                         startMainActivity(startPage)
                                         finish()
                                     }
                                 } else {
-                                    val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-                                    val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+                                    val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
+                                    val updateMethodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
                                     logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
                                     context.showToast(R.string.settings_entered_incorrectly)
                                 }

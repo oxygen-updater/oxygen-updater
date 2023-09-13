@@ -10,7 +10,7 @@ object UpdateDataVersionFormatter {
     /**
      * Prefix to check if we can format anything of the update info.
      */
-    private const val OS_VERSION_LINE_HEADING = "#"
+    private const val OsVersionLineHeading = "#"
 
     /**
      * Basic semver (`major.minor.patch` only), but modified to include:
@@ -19,7 +19,7 @@ object UpdateDataVersionFormatter {
      *
      * @see <a href="https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string">semver.org</a>
      */
-    private val STABLE_PATTERN = Pattern.compile(
+    private val StablePattern = Pattern.compile(
         "((?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)\\.(?:0|[1-9]\\d*)(?:\\.(?:0|[1-9]\\d*))?(?:\\.[A-Z]{2}\\d{2}[A-Z]{2})?)$",
         Pattern.CASE_INSENSITIVE
     )
@@ -28,7 +28,7 @@ object UpdateDataVersionFormatter {
      * Expression which indicates that this update is a beta update of OxygenOS.
      * `_\\w`: because sometimes a date string is appended to the version number
      */
-    private val ALPHA_BETA_DP_PATTERN = Pattern.compile(
+    private val AlphaBetaDpPattern = Pattern.compile(
         "(open|beta|alpha|dp)_(\\w+)$",
         Pattern.CASE_INSENSITIVE
     )
@@ -36,22 +36,22 @@ object UpdateDataVersionFormatter {
     /**
      * User-readable name for regular versions of OxygenOS
      */
-    private const val OXYGEN_OS_PREFIX = "OxygenOS"
+    private const val OxygenOsPrefix = "OxygenOS"
 
     /**
      * User-readable name for beta versions of OxygenOS
      */
-    private const val BETA_PREFIX = "Open Beta"
+    private const val BetaPrefix = "Open Beta"
 
     /**
      * User-readable name for alpha versions of OxygenOS
      */
-    private const val ALPHA_PREFIX = "Closed Beta"
+    private const val AlphaPrefix = "Closed Beta"
 
     /**
      * User-readable name for developer preview versions of OxygenOS
      */
-    private const val DP_PREFIX = "DP"
+    private const val DpPrefix = "DP"
 
     /**
      * Get the formatted version number of the passed update version information. The output is as
@@ -77,21 +77,21 @@ object UpdateDataVersionFormatter {
         // `canVersionInfoBeFormatted(versionInfo)` calls `getFirstLine(versionInfo)`, which is also called to set the value for `firstLine`.
         // `firstLine` is used in the else branch, so it's better to call `getFirstLine(versionInfo)` only once.
         // `getFirstLine(versionInfo)` constructs a `BufferedReader` and a `StringReader`, so this optimization saves some CPU cycles, and some memory as well
-        val canVersionInfoBeFormatted = firstLine.trim().startsWith(OS_VERSION_LINE_HEADING)
+        val canVersionInfoBeFormatted = firstLine.trim().startsWith(OsVersionLineHeading)
         return if (canVersionInfoBeFormatted) {
-            val alphaBetaDpMatcher = ALPHA_BETA_DP_PATTERN.matcher(firstLine)
-            val regularMatcher = STABLE_PATTERN.matcher(firstLine)
+            val alphaBetaDpMatcher = AlphaBetaDpPattern.matcher(firstLine)
+            val regularMatcher = StablePattern.matcher(firstLine)
 
             when {
                 alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
-                    "alpha" -> "$OXYGEN_OS_PREFIX $ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                    "beta" -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                    "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                    else -> "$OXYGEN_OS_PREFIX $BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                    "alpha" -> "$OxygenOsPrefix $AlphaPrefix ${alphaBetaDpMatcher.group(2)}"
+                    "beta" -> "$OxygenOsPrefix $BetaPrefix ${alphaBetaDpMatcher.group(2)}"
+                    "dp" -> "Android ${DeviceInformationData.osVersion} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
+                    else -> "$OxygenOsPrefix $BetaPrefix ${alphaBetaDpMatcher.group(2)}"
                 }
 
-                regularMatcher.find() -> "$OXYGEN_OS_PREFIX ${regularMatcher.group()}"
-                else -> firstLine.replace(OS_VERSION_LINE_HEADING, "")
+                regularMatcher.find() -> "$OxygenOsPrefix ${regularMatcher.group()}"
+                else -> firstLine.replace(OsVersionLineHeading, "")
             }
         } else versionInfo?.versionNumber.run {
             if (isNullOrBlank()) default else this
@@ -102,16 +102,16 @@ object UpdateDataVersionFormatter {
      * Used for formatting [com.oxygenupdater.models.SystemVersionProperties.oxygenOSVersion]
      */
     fun getFormattedOxygenOsVersion(version: String): String {
-        val alphaBetaDpMatcher = ALPHA_BETA_DP_PATTERN.matcher(version)
-        val regularMatcher = STABLE_PATTERN.matcher(version)
+        val alphaBetaDpMatcher = AlphaBetaDpPattern.matcher(version)
+        val regularMatcher = StablePattern.matcher(version)
 
         return when {
             version.isBlank() -> Build.UNKNOWN
             alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
-                "alpha" -> "$ALPHA_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                "beta" -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                "dp" -> "Android ${DeviceInformationData.osVersion} $DP_PREFIX ${alphaBetaDpMatcher.group(2)}"
-                else -> "$BETA_PREFIX ${alphaBetaDpMatcher.group(2)}"
+                "alpha" -> "$AlphaPrefix ${alphaBetaDpMatcher.group(2)}"
+                "beta" -> "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
+                "dp" -> "Android ${DeviceInformationData.osVersion} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
+                else -> "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
             }
 
             regularMatcher.find() -> regularMatcher.group()

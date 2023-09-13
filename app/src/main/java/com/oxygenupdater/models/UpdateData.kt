@@ -8,7 +8,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.work.Data
 import com.oxygenupdater.OxygenUpdater
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.workers.Md5VerificationWorker
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -63,10 +63,10 @@ data class UpdateData(
     @IgnoredOnParcel
     @Ignore
     @JvmField
-    val shouldFetchMostRecent = information != null && information == OxygenUpdater.UNABLE_TO_FIND_A_MORE_RECENT_BUILD && isUpdateInformationAvailable && systemIsUpToDate
+    val shouldFetchMostRecent = information != null && information == OxygenUpdater.UnableToFindAMoreRecentBuild && isUpdateInformationAvailable && systemIsUpToDate
 
     fun toWorkData() = Data.Builder().apply {
-        putLong("id", id ?: NOT_SET_L)
+        putLong("id", id ?: NotSetL)
         putString("versionNumber", versionNumber)
         putString("otaVersionNumber", otaVersionNumber)
         putString("description", description)
@@ -83,12 +83,12 @@ data class UpdateData(
         fun getBuildDate(otaVersionNumber: String?) = otaVersionNumber?.substringAfterLast('_')?.toLongOrNull() ?: 0
 
         fun createFromWorkData(inputData: Data?) = if (inputData != null) UpdateData(
-            id = inputData.getLong("id", NOT_SET_L),
+            id = inputData.getLong("id", NotSetL),
             versionNumber = inputData.getString("versionNumber"),
             otaVersionNumber = inputData.getString("otaVersionNumber"),
             description = inputData.getString("description"),
             downloadUrl = inputData.getString("downloadUrl"),
-            downloadSize = inputData.getLong("downloadSize", NOT_SET_L),
+            downloadSize = inputData.getLong("downloadSize", NotSetL),
             filename = inputData.getString(Md5VerificationWorker.FILENAME),
             md5sum = inputData.getString(Md5VerificationWorker.MD5),
             information = inputData.getString("information"),

@@ -19,12 +19,12 @@ import com.oxygenupdater.R
 import com.oxygenupdater.activities.InstallGuideActivity
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
-import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
-import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_RESUMABLE
+import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
+import com.oxygenupdater.ui.update.KeyDownloadErrorResumable
 import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VerificationStatusNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OtaUrlSubmittedNotifChannelId
 import org.koin.java.KoinJavaComponent.getKoin
 
 object LocalNotifications {
@@ -57,7 +57,7 @@ object LocalNotifications {
             inboxStyle.addLine("\u2022 $it")
         }
 
-        val notification = NotificationCompat.Builder(context, OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, OtaUrlSubmittedNotifChannelId)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(title)
             .setContentText(text)
@@ -70,7 +70,7 @@ object LocalNotifications {
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        notificationManager.notify(NotificationIds.LOCAL_CONTRIBUTION, notification)
+        notificationManager.notify(NotificationIds.LocalContribution, notification)
     } catch (e: Exception) {
         logError(TAG, "Can't display 'successful contribution' notification", e)
     }
@@ -91,7 +91,7 @@ object LocalNotifications {
         val title = context.getString(R.string.download_complete)
         val text = context.getString(R.string.download_complete_notification)
 
-        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
             .setSmallIcon(R.drawable.download)
             .setContentTitle(title)
             .setContentText(text)
@@ -105,8 +105,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.run {
-            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
-            notify(NotificationIds.LOCAL_DOWNLOAD, notification)
+            cancel(NotificationIds.LocalMd5Verification)
+            notify(NotificationIds.LocalDownload, notification)
         }
     } catch (e: Exception) {
         logError(TAG, "Can't display 'download complete' notification", e)
@@ -122,8 +122,8 @@ object LocalNotifications {
         // need to add any flags to avoid creating multiple instances
         val intent = Intent(context, MainActivity::class.java)
             // Show a dialog detailing the download failure
-            .putExtra(KEY_DOWNLOAD_ERROR_MESSAGE, context.getString(message))
-            .putExtra(KEY_DOWNLOAD_ERROR_RESUMABLE, resumable)
+            .putExtra(KeyDownloadErrorMessage, context.getString(message))
+            .putExtra(KeyDownloadErrorResumable, resumable)
 
         val contentIntent = PendingIntent.getActivity(
             context,
@@ -134,7 +134,7 @@ object LocalNotifications {
             } else 0
         )
 
-        val notification = NotificationCompat.Builder(context, DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
             .setSmallIcon(R.drawable.download)
             .setContentTitle(context.getString(R.string.download_failed))
             .setBigTextStyle(context.getString(notificationMessage))
@@ -148,8 +148,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.run {
-            cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
-            notify(NotificationIds.LOCAL_DOWNLOAD, notification)
+            cancel(NotificationIds.LocalMd5Verification)
+            notify(NotificationIds.LocalDownload, notification)
         }
     } catch (e: Exception) {
         logError(TAG, "Can't display download failed notification: ", e)
@@ -159,7 +159,7 @@ object LocalNotifications {
         val title = context.getString(R.string.download_verifying_error)
         val text = context.getString(R.string.download_notification_error_corrupt)
 
-        val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, VerificationStatusNotifChannelId)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(title)
             .setBigTextStyle(text)
@@ -171,8 +171,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.run {
-            cancel(NotificationIds.LOCAL_DOWNLOAD)
-            notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
+            cancel(NotificationIds.LocalDownload)
+            notify(NotificationIds.LocalMd5Verification, notification)
         }
     }
 
@@ -180,7 +180,7 @@ object LocalNotifications {
      * Shows a notification that the downloaded update file is being verified on MD5 sums.
      */
     fun showVerifyingNotification(context: Context) = try {
-        val notification = NotificationCompat.Builder(context, VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID)
+        val notification = NotificationCompat.Builder(context, VerificationStatusNotifChannelId)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(context.getString(R.string.download_verifying))
             .setProgress(100, 50, true)
@@ -192,8 +192,8 @@ object LocalNotifications {
             .build()
 
         notificationManager.run {
-            cancel(NotificationIds.LOCAL_DOWNLOAD)
-            notify(NotificationIds.LOCAL_MD5_VERIFICATION, notification)
+            cancel(NotificationIds.LocalDownload)
+            notify(NotificationIds.LocalMd5Verification, notification)
         }
     } catch (e: Exception) {
         logError(TAG, "Can't display 'verifying' notification", e)
@@ -206,8 +206,8 @@ object LocalNotifications {
     fun hideDownloadCompleteNotification() {
         try {
             notificationManager.apply {
-                cancel(NotificationIds.LOCAL_DOWNLOAD)
-                cancel(NotificationIds.LOCAL_MD5_VERIFICATION)
+                cancel(NotificationIds.LocalDownload)
+                cancel(NotificationIds.LocalMd5Verification)
             }
         } catch (e: Exception) {
             logError(TAG, "Can't hide 'download complete' notification", e)

@@ -3,6 +3,8 @@ package com.oxygenupdater.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
@@ -10,8 +12,6 @@ import com.oxygenupdater.models.SystemVersionProperties.oxygenDeviceName
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.SettingsListWrapper
-import com.oxygenupdater.ui.onboarding.NOT_SET
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
@@ -26,8 +26,8 @@ class SettingsViewModel(
     private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
-    var initialDeviceIndex = NOT_SET
-    var initialMethodIndex = NOT_SET
+    var initialDeviceIndex = NotSet
+    var initialMethodIndex = NotSet
     var deviceName: String? = null
 
     private val enabledDevicesFlow = MutableStateFlow<List<Device>>(listOf())
@@ -51,13 +51,13 @@ class SettingsViewModel(
     }
 
     private fun setup(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
-        var selectedDeviceIndex = NOT_SET
-        initialDeviceIndex = NOT_SET
+        var selectedDeviceIndex = NotSet
+        initialDeviceIndex = NotSet
         deviceName = null
 
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
+        val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
         for ((index, device) in enabledDevices.withIndex()) {
-            if (selectedDeviceIndex != NOT_SET && initialDeviceIndex != NOT_SET && deviceName != null) break // take first match only
+            if (selectedDeviceIndex != NotSet && initialDeviceIndex != NotSet && deviceName != null) break // take first match only
 
             var matched: Boolean? = null  // save computation for future use
             if (deviceName == null) { // take first match only
@@ -65,24 +65,24 @@ class SettingsViewModel(
                 if (matched) deviceName = device.name
             }
 
-            if (deviceId != NOT_SET_L && deviceId == device.id) selectedDeviceIndex = index
+            if (deviceId != NotSetL && deviceId == device.id) selectedDeviceIndex = index
             if (matched ?: device.productNames.contains(oxygenDeviceName)) initialDeviceIndex = index
         }
 
         // If there's only one device, select it, otherwise fallback to initial index
         val size = enabledDevices.size
-        if (selectedDeviceIndex == NOT_SET) selectedDeviceIndex = if (size == 1) 0 else initialDeviceIndex
+        if (selectedDeviceIndex == NotSet) selectedDeviceIndex = if (size == 1) 0 else initialDeviceIndex
 
-        if (selectedDeviceIndex != NOT_SET && selectedDeviceIndex < size) {
+        if (selectedDeviceIndex != NotSet && selectedDeviceIndex < size) {
             // Persist only if there's no device saved yet. This call also fetches methods for device.
-            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId == NOT_SET_L)
+            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId == NotSetL)
         }
     }
 
     private fun fetchMethodsForDevice(deviceId: Long) = viewModelScope.launch(Dispatchers.IO) {
         val methods = serverRepository.fetchUpdateMethodsForDevice(deviceId) ?: listOf()
-        val methodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
-        var selectedMethodIndex = if (methodId == NOT_SET_L) NOT_SET else methods.indexOfFirst {
+        val methodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+        var selectedMethodIndex = if (methodId == NotSetL) NotSet else methods.indexOfFirst {
             it.id == methodId
         }
 
@@ -93,11 +93,11 @@ class SettingsViewModel(
 
         // If there's only one method, select it, otherwise fallback to initial index
         val size = methods.size
-        if (selectedMethodIndex == NOT_SET) selectedMethodIndex = if (size == 1) 0 else initialMethodIndex
+        if (selectedMethodIndex == NotSet) selectedMethodIndex = if (size == 1) 0 else initialMethodIndex
 
-        if (selectedMethodIndex != NOT_SET && selectedMethodIndex < size) {
+        if (selectedMethodIndex != NotSet && selectedMethodIndex < size) {
             // Persist only if there's no method saved yet
-            saveSelectedMethod(methods[selectedMethodIndex], methodId == NOT_SET_L)
+            saveSelectedMethod(methods[selectedMethodIndex], methodId == NotSetL)
         }
 
         methodsForDeviceFlow.emit(methods)
@@ -111,16 +111,16 @@ class SettingsViewModel(
         val id = device.id
 
         // Clear methods if device changed
-        val oldId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-        if (oldId != NOT_SET_L && oldId != id) {
+        val oldId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
+        if (oldId != NotSetL && oldId != id) {
             methodsForDeviceFlow.value = listOf()
-            PrefManager.remove(PrefManager.PROPERTY_UPDATE_METHOD_ID)
-            PrefManager.remove(PrefManager.PROPERTY_UPDATE_METHOD)
+            PrefManager.remove(PrefManager.KeyUpdateMethodId)
+            PrefManager.remove(PrefManager.KeyUpdateMethod)
         }
 
         if (persist) {
-            PrefManager.putLong(PrefManager.PROPERTY_DEVICE_ID, id)
-            PrefManager.putString(PrefManager.PROPERTY_DEVICE, device.name)
+            PrefManager.putLong(PrefManager.KeyDeviceId, id)
+            PrefManager.putString(PrefManager.KeyDevice, device.name)
         }
 
         fetchMethodsForDevice(id)
@@ -132,16 +132,16 @@ class SettingsViewModel(
      */
     fun saveSelectedMethod(method: UpdateMethod, persist: Boolean = true) {
         if (persist) {
-            PrefManager.putLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, method.id)
-            PrefManager.putString(PrefManager.PROPERTY_UPDATE_METHOD, method.name)
+            PrefManager.putLong(PrefManager.KeyUpdateMethodId, method.id)
+            PrefManager.putString(PrefManager.KeyUpdateMethod, method.name)
         }
 
         updateCrashlyticsUserId()
     }
 
     fun updateCrashlyticsUserId() {
-        val device = PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>")
-        val method = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>")
+        val device = PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>")
+        val method = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>")
         crashlytics.setUserId("Device: $device, Update Method: $method")
     }
 

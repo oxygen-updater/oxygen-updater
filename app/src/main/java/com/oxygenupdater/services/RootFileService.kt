@@ -107,7 +107,7 @@ class RootFileService : RootService() {
     private class FolderObserver(
         folder: ExtendedFile,
         private val callback: (Int) -> Unit,
-    ) : FileObserver(folder, OBSERVER_MASK) {
+    ) : FileObserver(folder, ObserverMask) {
 
         private val timer = Timer()
 
@@ -132,7 +132,7 @@ class RootFileService : RootService() {
         private const val FOLDER = "/data/data/com.oplus.ota/databases"
         const val FILENAME = "ota.db"
 
-        private const val OBSERVER_MASK = FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF
+        private const val ObserverMask = FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF
 
         /**
          *  [Log] must be used directly, because [com.oxygenupdater.utils.Logger]

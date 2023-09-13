@@ -23,7 +23,7 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
     var show by remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) }
     if (show) AlertDialog(
         {
-            PrefManager.putBoolean(PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, ignore)
+            PrefManager.putBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, ignore)
             show = false
         },
         R.string.incorrect_device_warning_title,

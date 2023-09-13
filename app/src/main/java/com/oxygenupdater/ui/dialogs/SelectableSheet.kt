@@ -23,13 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.common.animatedClickable
-import com.oxygenupdater.ui.onboarding.NOT_SET
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
@@ -46,10 +46,10 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     if (list.isEmpty()) return
 
     val selectedId = remember(list, initialIndex) {
-        PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: NOT_SET_L)
+        PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: NotSetL)
     }
-    val initialFirstVisibleItemIndex = if (selectedId == NOT_SET_L) 0 else remember(list, selectedId) {
-        list.indexOfFirst { it.id == selectedId }.let { if (it == NOT_SET) 0 else it }
+    val initialFirstVisibleItemIndex = if (selectedId == NotSetL) 0 else remember(list, selectedId) {
+        list.indexOfFirst { it.id == selectedId }.let { if (it == NotSet) 0 else it }
     }
 
     val colorScheme = MaterialTheme.colorScheme
@@ -116,7 +116,7 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
         initialIndex = 1,
         titleResId = R.string.onboarding_device_chooser_title,
         captionResId = R.string.onboarding_device_chooser_caption,
-        keyId = PrefManager.PROPERTY_DEVICE_ID,
+        keyId = PrefManager.KeyDeviceId,
     ) {}
 }
 
@@ -144,6 +144,6 @@ fun PreviewMethodSheet() = PreviewModalBottomSheet {
         initialIndex = 1,
         titleResId = R.string.onboarding_method_chooser_title,
         captionResId = R.string.onboarding_method_chooser_caption,
-        keyId = PrefManager.PROPERTY_UPDATE_METHOD_ID,
+        keyId = PrefManager.KeyUpdateMethodId,
     ) {}
 }

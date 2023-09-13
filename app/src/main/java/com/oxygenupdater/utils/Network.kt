@@ -29,11 +29,11 @@ import java.util.concurrent.TimeUnit
 
 private const val TAG = "OxygenUpdaterNetwork"
 private const val UserAgentTag = "User-Agent"
-private const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
 private const val DefaultCacheSize = 10L * 1024 * 1024 // 10 MB
-private const val AppBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 
-const val HEADER_READ_TIMEOUT = "X-Read-Timeout"
+const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
+const val ApiBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
+const val HeaderReadTimeout = "X-Read-Timeout"
 
 fun createNetworkClient(cache: Cache) = retrofitClient(httpClient(cache))
 fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
@@ -64,8 +64,8 @@ private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     addInterceptor { chain ->
         val request = chain.request()
         val builder = request.newBuilder().header(UserAgentTag, AppUserAgent)
-        val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
-            builder.removeHeader(HEADER_READ_TIMEOUT)
+        val readTimeout = request.header(HeaderReadTimeout)?.toInt()?.let {
+            builder.removeHeader(HeaderReadTimeout)
             it
         }
 
@@ -88,7 +88,7 @@ private fun httpClientForDownload() = OkHttpClient.Builder().apply {
 }.build()
 
 private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(AppBaseUrl)
+    .baseUrl(ApiBaseUrl)
     .client(httpClient)
     .addConverterFactory(
         MoshiConverterFactory.create(
@@ -101,7 +101,7 @@ private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
     .build()
 
 private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(AppBaseUrl)
+    .baseUrl(ApiBaseUrl)
     .client(httpClient)
     .build()
 

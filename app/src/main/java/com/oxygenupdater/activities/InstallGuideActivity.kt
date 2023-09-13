@@ -15,7 +15,7 @@ import com.oxygenupdater.viewmodels.BillingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InstallGuideActivity : SupportActionBarActivity(
-    MainActivity.PAGE_UPDATE,
+    MainActivity.PageUpdate,
     R.string.install_guide,
 ) {
 
@@ -23,7 +23,7 @@ class InstallGuideActivity : SupportActionBarActivity(
     private val billingViewModel by viewModel<BillingViewModel>()
 
     private val showDownloadInstructions = intent.let {
-        it == null || it.getBooleanExtra(INTENT_SHOW_DOWNLOAD_INSTRUCTIONS, false)
+        it == null || it.getBooleanExtra(IntentShowDownloadInstructions, false)
     }
 
     @Volatile
@@ -35,7 +35,7 @@ class InstallGuideActivity : SupportActionBarActivity(
 
         // Ads should be shown if user hasn't bought the ad-free unlock
         val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+            PrefManager.getBoolean(PrefManager.KeyAdFree, false)
         ).value
 
         PullRefresh(state, { it.isEmpty() }, viewModel::refresh) {
@@ -58,6 +58,6 @@ class InstallGuideActivity : SupportActionBarActivity(
     }
 
     companion object {
-        const val INTENT_SHOW_DOWNLOAD_INSTRUCTIONS = "show_download_instructions"
+        const val IntentShowDownloadInstructions = "show_download_instructions"
     }
 }

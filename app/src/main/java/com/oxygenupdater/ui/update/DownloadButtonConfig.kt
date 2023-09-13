@@ -19,10 +19,11 @@ import androidx.core.content.getSystemService
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.startInstallActivity
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetF
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.rememberCallback
-import com.oxygenupdater.ui.onboarding.NOT_SET
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOADING
 import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_COMPLETED
 import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_FAILED
@@ -75,7 +76,7 @@ fun downloadButtonConfig(
             previousProgress = null
             previousProgressText = null
 
-            if (failureType != null && failureType != NOT_SET) when (failureType) {
+            if (failureType != null && failureType != NotSet) when (failureType) {
                 DownloadFailure.ServerError.value,
                 DownloadFailure.ConnectionError.value,
                 -> setDownloadErrorDialogParams(DownloadErrorParams(
@@ -140,17 +141,17 @@ fun downloadButtonConfig(
 
         DOWNLOAD_QUEUED, DOWNLOADING -> {
             val (bytesDone, totalBytes, currentProgress, downloadEta) = workProgress ?: WorkProgress(
-                NOT_SET_L, NOT_SET_L, 0, null,
+                NotSetL, NotSetL, 0, null,
             )
 
-            val sizeOrProgressText = if (bytesDone != NOT_SET_L && totalBytes != NOT_SET_L) {
+            val sizeOrProgressText = if (bytesDone != NotSetL && totalBytes != NotSetL) {
                 val bytesDoneStr = context.formatFileSize(bytesDone)
                 val totalBytesStr = context.formatFileSize(totalBytes)
                 "$bytesDoneStr / $totalBytesStr ($currentProgress%)"
             } else previousProgressText ?: context.formatFileSize(downloadSize)
             previousProgressText = sizeOrProgressText
 
-            val progress = if (currentProgress == NOT_SET) -1f else currentProgress / 100f
+            val progress = if (currentProgress == NotSet) NotSetF else currentProgress / 100f
             previousProgress = progress
 
             DownloadButtonConfig(
@@ -192,7 +193,7 @@ fun downloadButtonConfig(
             titleResId = R.string.download_verifying,
             details = stringResource(R.string.download_progress_text_verifying),
             sizeOrProgressText = context.formatFileSize(downloadSize),
-            progress = -1f,
+            progress = NotSetF,
             actionButtonConfig = null,
             onDownloadClick = null,
         )

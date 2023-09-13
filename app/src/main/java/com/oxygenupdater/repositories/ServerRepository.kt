@@ -7,12 +7,12 @@ import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.enums.PurchaseType
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.performServerRequest
 
 /**
@@ -50,7 +50,7 @@ class ServerRepository constructor(
             SystemVersionProperties.oxygenOSVersion,
             SystemVersionProperties.osType,
             SystemVersionProperties.fingerprint,
-            PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false),
+            PrefManager.getBoolean(PrefManager.KeyIsEuBuild, false),
             BuildConfig.VERSION_NAME
         )
     }.let {
@@ -64,7 +64,7 @@ class ServerRepository constructor(
     suspend fun fetchServerStatus() = performServerRequest { serverApi.fetchServerStatus() }.let { status ->
         val automaticInstallationEnabled = false
         val pushNotificationsDelaySeconds = PrefManager.getInt(
-            PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            PrefManager.KeyNotificationDelayInSeconds,
             10
         )
 
@@ -81,7 +81,7 @@ class ServerRepository constructor(
         )
 
         PrefManager.putInt(
-            PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS,
+            PrefManager.KeyNotificationDelayInSeconds,
             response.pushNotificationDelaySeconds
         )
 
@@ -90,8 +90,8 @@ class ServerRepository constructor(
 
     suspend fun fetchServerMessages() = performServerRequest {
         serverApi.fetchServerMessages(
-            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L),
-            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+            PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL),
+            PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
         )
     }
 
@@ -103,8 +103,8 @@ class ServerRepository constructor(
 
     suspend fun fetchNews() = performServerRequest {
         serverApi.fetchNews(
-            PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L),
-            PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+            PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL),
+            PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
         )
     }.let {
         if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)
@@ -144,9 +144,9 @@ class ServerRepository constructor(
                 put("rows", rows)
                 put("fingerprint", SystemVersionProperties.fingerprint)
                 put("currentOtaVersion", SystemVersionProperties.oxygenOSOTAVersion)
-                put("isEuBuild", PrefManager.getBoolean(PrefManager.PROPERTY_IS_EU_BUILD, false))
+                put("isEuBuild", PrefManager.getBoolean(PrefManager.KeyIsEuBuild, false))
                 put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>") ?: "<UNKNOWN>")
+                put("deviceName", PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>") ?: "<UNKNOWN>")
                 put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
             }
         )
@@ -169,7 +169,7 @@ class ServerRepository constructor(
                 put("httpCode", httpCode)
                 put("httpMessage", httpMessage)
                 put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<UNKNOWN>"))
+                put("deviceName", PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>"))
                 put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
             }
         )

@@ -50,7 +50,7 @@ fun UpdateScreen(
     val filename = updateData.filename
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
-        || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
+        || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false))
     ) {
         (if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
         else R.string.update_information_no_update_data_available).let {
@@ -143,5 +143,5 @@ private fun correctStatus(
 
 private const val TAG = "UpdateScreen"
 
-const val KEY_DOWNLOAD_ERROR_MESSAGE = "download_error_message"
-const val KEY_DOWNLOAD_ERROR_RESUMABLE = "download_error_resumable"
+const val KeyDownloadErrorMessage = "download_error_message"
+const val KeyDownloadErrorResumable = "download_error_resumable"

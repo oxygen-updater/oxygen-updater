@@ -25,7 +25,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         logDebug(TAG, "Received new Firebase token: $token")
-        PrefManager.putString(PrefManager.PROPERTY_FIREBASE_TOKEN, token)
+        PrefManager.putString(PrefManager.KeyFirebaseToken, token)
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) = try {
@@ -47,7 +47,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         }.let {
             if (!it) return@let // new version notifications should be shown immediately
 
-            val serverSpecifiedDelay = PrefManager.getInt(PrefManager.PROPERTY_NOTIFICATION_DELAY_IN_SECONDS, 10)
+            val serverSpecifiedDelay = PrefManager.getInt(PrefManager.KeyNotificationDelayInSeconds, 10)
             val delay = random.nextLong(1, serverSpecifiedDelay.coerceAtLeast(2).toLong())
             logDebug(TAG, "Displaying push notification in $delay second(s)")
             oneTimeWorkRequest.setInitialDelay(delay, TimeUnit.SECONDS)

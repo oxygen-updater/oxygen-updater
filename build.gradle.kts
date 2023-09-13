@@ -11,9 +11,9 @@ plugins {
     // https://firebase.google.com/support/release-notes/android
     id("com.google.firebase.crashlytics") version "2.9.9" apply false
 
-    id("com.google.devtools.ksp") version KSP_VERSION apply false
+    id("com.google.devtools.ksp") version KspVersion apply false
 
-    id("org.jetbrains.kotlin.android") version KOTLIN_VERSION apply false
+    id("org.jetbrains.kotlin.android") version KotlinVersion apply false
 }
 
 tasks.register("clean").configure {

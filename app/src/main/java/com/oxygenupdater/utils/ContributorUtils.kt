@@ -20,7 +20,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTE
+import com.oxygenupdater.internal.settings.PrefManager.KeyContribute
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.workers.ReadOtaDbWorker
@@ -54,15 +54,15 @@ object ContributorUtils {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     fun flushSettings(context: Context, isContributing: Boolean) {
-        val isFirstTime = !PrefManager.contains(PROPERTY_CONTRIBUTE)
-        val wasContributing = PrefManager.getBoolean(PROPERTY_CONTRIBUTE, false)
+        val isFirstTime = !PrefManager.contains(KeyContribute)
+        val wasContributing = PrefManager.getBoolean(KeyContribute, false)
 
         if (isFirstTime || wasContributing != isContributing) {
-            PrefManager.putBoolean(PROPERTY_CONTRIBUTE, isContributing)
+            PrefManager.putBoolean(KeyContribute, isContributing)
 
             val analyticsEventData = Bundle(2).apply {
-                putString("CONTRIBUTOR_DEVICE", PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<<UNKNOWN>>"))
-                putString("CONTRIBUTOR_UPDATEMETHOD", PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>"))
+                putString("CONTRIBUTOR_DEVICE", PrefManager.getString(PrefManager.KeyDevice, "<<UNKNOWN>>"))
+                putString("CONTRIBUTOR_UPDATEMETHOD", PrefManager.getString(PrefManager.KeyUpdateMethod, "<<UNKNOWN>>"))
             }
 
             if (isContributing) {
@@ -76,7 +76,7 @@ object ContributorUtils {
     }
 
     fun startDbCheckingProcess(context: Context) {
-        if (!isAtLeastQ || !PrefManager.getBoolean(PROPERTY_CONTRIBUTE, false)) return
+        if (!isAtLeastQ || !PrefManager.getBoolean(KeyContribute, false)) return
 
         startRootService(context)
 

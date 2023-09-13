@@ -23,7 +23,7 @@ fun UnsupportedDeviceOsSpecDialog(spec: DeviceOsSpec) {
     var ignore by remember { mutableStateOf(false) }
     var show by remember(spec) { mutableStateOf(spec != DeviceOsSpec.SUPPORTED_OXYGEN_OS) }
     if (show) AlertDialog({
-        PrefManager.putBoolean(PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, ignore)
+        PrefManager.putBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, ignore)
         show = false
     }, R.string.unsupported_device_warning_title, stringResource(remember(spec) {
         when (spec) {

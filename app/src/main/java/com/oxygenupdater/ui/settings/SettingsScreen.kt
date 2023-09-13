@@ -186,7 +186,7 @@ private fun DeviceChooser(
     val deviceSelectionEnabled = enabledDevices.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
     val subtitle = if (deviceSelectionEnabled) {
-        PrefManager.getString(PrefManager.PROPERTY_DEVICE, notSelected) ?: notSelected
+        PrefManager.getString(PrefManager.KeyDevice, notSelected) ?: notSelected
     } else stringResource(R.string.summary_please_wait)
     Item(
         Icons.Rounded.PhoneAndroid,
@@ -200,7 +200,7 @@ private fun DeviceChooser(
             hide,
             enabledDevices, initialDeviceIndex,
             R.string.settings_device, R.string.onboarding_device_chooser_caption,
-            PrefManager.PROPERTY_DEVICE_ID,
+            PrefManager.KeyDeviceId,
             deviceChanged
         )
     }
@@ -218,7 +218,7 @@ private fun MethodChooser(
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
     val subtitle = if (methodSelectionEnabled) {
-        PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, notSelected) ?: notSelected
+        PrefManager.getString(PrefManager.KeyUpdateMethod, notSelected) ?: notSelected
     } else stringResource(R.string.summary_update_method)
     Item(
         Icons.Outlined.CloudDownload,
@@ -232,7 +232,7 @@ private fun MethodChooser(
             hide,
             methodsForDevice, initialMethodIndex,
             R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
-            PrefManager.PROPERTY_UPDATE_METHOD_ID,
+            PrefManager.KeyUpdateMethodId,
             methodChanged
         )
     }
@@ -334,18 +334,18 @@ private fun AdvancedMode() {
     var showSheet by rememberSaveableState("showAdvancedModeSheet", false)
 
     var advancedMode by remember {
-        mutableStateOf(PrefManager.getBoolean(PrefManager.PROPERTY_ADVANCED_MODE, false))
+        mutableStateOf(PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false))
     }
     SwitchItem(advancedMode, {
         advancedMode = it
-        putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
+        putBoolean(PrefManager.KeyAdvancedMode, it)
     }, Icons.Rounded.LockOpen, R.string.settings_advanced_mode) {
         showSheet = true
     }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         AdvancedModeSheet {
-            putBoolean(PrefManager.PROPERTY_ADVANCED_MODE, it)
+            putBoolean(PrefManager.KeyAdvancedMode, it)
             advancedMode = it
             hide()
         }
@@ -355,11 +355,11 @@ private fun AdvancedMode() {
 @Composable
 private fun Analytics() {
     var shareLogs by rememberSaveableState(
-        "shareLogs", PrefManager.getBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, true)
+        "shareLogs", PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
     )
     SwitchItem(shareLogs, {
         shareLogs = it
-        putBoolean(PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS, it)
+        putBoolean(PrefManager.KeyShareAnalyticsAndLogs, it)
     }, Icons.Rounded.TrackChanges, R.string.settings_upload_logs)
 }
 

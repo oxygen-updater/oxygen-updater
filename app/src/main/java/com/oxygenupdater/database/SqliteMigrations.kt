@@ -2,9 +2,9 @@ package com.oxygenupdater.database
 
 import android.content.Context
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.oxygenupdater.database.DatabaseBuilders.APP_DB
+import com.oxygenupdater.database.DatabaseBuilders.AppDb
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_SQL_TO_ROOM_MIGRATION_DONE
+import com.oxygenupdater.internal.settings.PrefManager.KeySqlToRoomMigrationDone
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import org.koin.java.KoinJavaComponent.getKoin
@@ -20,11 +20,11 @@ import org.koin.java.KoinJavaComponent.getKoin
 object SqliteMigrations {
 
     private const val TAG = "DatabaseMigrations"
-    private const val NEWS_ITEM_TABLE = "news_item"
-    private const val SUBMITTED_UPDATE_FILE_TABLE = "submitted_update_file"
-    private const val PURCHASES_OLD_DB = "purchase_db"
-    private const val NEWS_ITEMS_OLD_DB = "NewsItems.db"
-    private const val SUBMITTED_UPDATE_FILES_OLD_DB = "SubmittedUpdateFiles.db"
+    private const val NewsItemTable = "news_item"
+    private const val SubmittedUpdateFileTable = "submitted_update_file"
+    private const val PurchasesOldDb = "purchase_db"
+    private const val NewsItemsOldDb = "NewsItems.db"
+    private const val SubmittedUpdateFilesOldDb = "SubmittedUpdateFiles.db"
 
     /**
      * Was used from 4.3.0 — 5.3.0, when the app had migrated away from AIDL to
@@ -32,7 +32,7 @@ object SqliteMigrations {
      * IAB responses, but in 5.4.0 when we upgraded GPBL to v4, we no longer
      * needed a DB cache (code was simplified quite a bit).
      */
-    fun deleteLocalBillingDatabase(context: Context) = context.deleteDatabase(PURCHASES_OLD_DB)
+    fun deleteLocalBillingDatabase(context: Context) = context.deleteDatabase(PurchasesOldDb)
 
     /**
      * Migration that pre-populates Room DB with old SQLite data.
@@ -55,7 +55,7 @@ object SqliteMigrations {
      */
     fun prepopulateFromSqlite(db: SupportSQLiteDatabase) = db.run {
         val migrationDone = PrefManager.getBoolean(
-            PROPERTY_SQL_TO_ROOM_MIGRATION_DONE,
+            KeySqlToRoomMigrationDone,
             false
         )
 
@@ -67,22 +67,22 @@ object SqliteMigrations {
 
             migrateFromOldDb(
                 context,
-                SUBMITTED_UPDATE_FILES_OLD_DB,
-                NEWS_ITEM_TABLE,
-                SUBMITTED_UPDATE_FILE_TABLE,
+                SubmittedUpdateFilesOldDb,
+                NewsItemTable,
+                SubmittedUpdateFileTable,
                 "`id`, `name`, `date_submitted`"
             )
 
             migrateFromOldDb(
                 context,
-                NEWS_ITEMS_OLD_DB,
-                NEWS_ITEM_TABLE,
-                NEWS_ITEM_TABLE,
+                NewsItemsOldDb,
+                NewsItemTable,
+                NewsItemTable,
                 "`id`, `dutch_title`, `english_title`, `dutch_subtitle`, `english_subtitle`, `image_url`, `dutch_text`, `english_text`, `date_published`, `date_last_edited`, `author_name`, `read`"
             )
 
             PrefManager.putBoolean(
-                PROPERTY_SQL_TO_ROOM_MIGRATION_DONE,
+                KeySqlToRoomMigrationDone,
                 true
             )
         } else {
@@ -97,7 +97,7 @@ object SqliteMigrations {
         newTableName: String,
         columnSqlStr: String,
     ) = context.getDatabasePath(oldDbName).run {
-        val migrationLogStr = "`$oldDbName`.`$oldTableName` to `$APP_DB`.`$newTableName`"
+        val migrationLogStr = "`$oldDbName`.`$oldTableName` to `$AppDb`.`$newTableName`"
 
         if (exists()) {
             logDebug(TAG, "Migrating $migrationLogStr")

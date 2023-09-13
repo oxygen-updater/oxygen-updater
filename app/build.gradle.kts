@@ -206,7 +206,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion = ComposeCompiler
     }
 
     buildFeatures {
@@ -366,7 +366,7 @@ dependencies {
 
     // https://github.com/junit-team/junit4/releases
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KOTLIN_VERSION")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KotlinVersion")
     testImplementation("io.insert-koin:koin-test:$koin")
     testImplementation("androidx.annotation:annotation:$annotation")
 }

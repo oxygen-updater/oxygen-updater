@@ -46,20 +46,20 @@ abstract class SystemVersionPropertiesTest {
         val testDataSet = readBuildPropFile(propertiesInDir, propertiesOfVersion)
         val testDataType = testDataSet.first
         val properties = testDataSet.second
-        val deviceDisplayName23x = readProperty(DEVICE_NAME_LOOKUP_KEY, properties, testDataType)
+        val deviceDisplayName23x = readProperty(DeviceNameLookupKey, properties, testDataType)
         val deviceDisplayName12x = readProperty("ro.display.series", properties, testDataType)
         val deviceDisplayName11x = readProperty("ro.build.product", properties, testDataType)
-        val oxygenOSDisplayVersion = readProperty(OS_VERSION_NUMBER_LOOKUP_KEY, properties, testDataType)
-        val oxygenOSOtaVersion = readProperty(OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties, testDataType)
-        val buildFingerPrint = readProperty(BUILD_FINGERPRINT_LOOKUP_KEY, properties, testDataType)
-        val abPartitionLayout = java.lang.Boolean.parseBoolean(readProperty(AB_PARTITION_LAYOUT_LOOKUP_KEY, properties, testDataType))
+        val oxygenOSDisplayVersion = readProperty(OsVersionNumberLookupKey, properties, testDataType)
+        val oxygenOSOtaVersion = readProperty(OsOtaVersionNumberLookupKey, properties, testDataType)
+        val buildFingerPrint = readProperty(BuildFingerprintLookupKey, properties, testDataType)
+        val abPartitionLayout = readProperty(AbPartitionLayoutLookupKey, properties, testDataType).toBoolean()
 
         assertEquals(expectedDeviceDisplayName23x, deviceDisplayName23x)
         assertEquals(expectedDeviceDisplayName12x, deviceDisplayName12x)
         assertEquals(expectedDeviceDisplayName11x, deviceDisplayName11x)
         assertEquals(expectedOxygenOs, oxygenOSDisplayVersion)
         assertEquals(expectedOxygenOsOta, oxygenOSOtaVersion)
-        assertTrue(buildFingerPrint.contains(SUPPORTED_BUILD_FINGERPRINT_KEYS))
+        assertTrue(buildFingerPrint.contains(SupportedBuildFingerprintKeys))
         assertEquals(expectedAbPartitionLayout, abPartitionLayout)
 
         val deviceOsSpec = checkDeviceOsSpec(allOnePlusDevicesApp232AndNewer)
@@ -73,7 +73,7 @@ abstract class SystemVersionPropertiesTest {
         val testDataSet = readBuildPropFile(propertiesInDir, propertiesOfVersion)
         val testDataType = testDataSet.first
         val properties = testDataSet.second
-        val deviceDisplayName23x = readProperty(DEVICE_NAME_LOOKUP_KEY, properties, testDataType)
+        val deviceDisplayName23x = readProperty(DeviceNameLookupKey, properties, testDataType)
 
         return allOnePlusDevicesApp232AndNewer
             .find { it.productNames.contains(deviceDisplayName23x) }
@@ -98,7 +98,7 @@ abstract class SystemVersionPropertiesTest {
         // Convert input stream to String using Scanner method.
         val scanner = Scanner(propertiesStream).useDelimiter("\\A")
 
-        return Pair(testDataType, if (scanner.hasNext()) scanner.next() else "")
+        return testDataType to if (scanner.hasNext()) scanner.next() else ""
     }
 
     private fun readProperty(key: String, testData: String, testDataType: TestDataType): String {
@@ -159,50 +159,50 @@ abstract class SystemVersionPropertiesTest {
 
     // do *not* add new devices here, it is pointless to support app versions from 2016-2017 on them \\
     private val allOnePlusDevicesApp11AndOlder = listOf(
-        Device(5, "OnePlus One", "OnePlus", true),
-        Device(1, "OnePlus 2", "OnePlus2", true),
-        Device(3, "OnePlus X", "OnePlus", true),
-        Device(2, "OnePlus 3", "OnePlus3", true),
-        Device(6, "OnePlus 3T", "OnePlus3", true),
-        Device(7, "OnePlus 5", "OnePlus5", true),
-        Device(8, "OnePlus 5T", "OnePlus5T", true),
-        Device(9, "OnePlus 6", "OnePlus6", true),
-        Device(10, "OnePlus 6T (Global)", "OnePlus6T", true)
+        Device(5, "OnePlus One", listOf("OnePlus"), true),
+        Device(1, "OnePlus 2", listOf("OnePlus2"), true),
+        Device(3, "OnePlus X", listOf("OnePlus"), true),
+        Device(2, "OnePlus 3", listOf("OnePlus3"), true),
+        Device(6, "OnePlus 3T", listOf("OnePlus3"), true),
+        Device(7, "OnePlus 5", listOf("OnePlus5"), true),
+        Device(8, "OnePlus 5T", listOf("OnePlus5T"), true),
+        Device(9, "OnePlus 6", listOf("OnePlus6"), true),
+        Device(10, "OnePlus 6T (Global)", listOf("OnePlus6T"), true)
     )
 
     // do *not* add new devices here, it is pointless to support app versions from 2016-2017 on them \\
     private val allOnePlusDevicesApp12Until231 = listOf(
-        Device(5, "OnePlus One", "OnePlus", true),
-        Device(1, "OnePlus 2", "OnePlus2", true),
-        Device(3, "OnePlus X", "OnePlus", true),
-        Device(2, "OnePlus 3", "OnePlus3", true),
-        Device(6, "OnePlus 3T", "OnePlus3", true),
-        Device(7, "OnePlus 5", "OnePlus5", true),
-        Device(8, "OnePlus 5T", "OnePlus5T", true),
-        Device(9, "OnePlus 6", "OnePlus6", true),
-        Device(10, "OnePlus 6T (Global)", "OnePlus6T", true)
+        Device(5, "OnePlus One", listOf("OnePlus"), true),
+        Device(1, "OnePlus 2", listOf("OnePlus2"), true),
+        Device(3, "OnePlus X", listOf("OnePlus"), true),
+        Device(2, "OnePlus 3", listOf("OnePlus3"), true),
+        Device(6, "OnePlus 3T", listOf("OnePlus3"), true),
+        Device(7, "OnePlus 5", listOf("OnePlus5"), true),
+        Device(8, "OnePlus 5T", listOf("OnePlus5T"), true),
+        Device(9, "OnePlus 6", listOf("OnePlus6"), true),
+        Device(10, "OnePlus 6T (Global)", listOf("OnePlus6T"), true)
     )
 
     private val allOnePlusDevicesApp232AndNewer = listOf(
-        Device(5, "OnePlus One", "OnePlus, One", true),
-        Device(1, "OnePlus 2", "OnePlus2", true),
-        Device(3, "OnePlus X", "OnePlus X", true),
-        Device(2, "OnePlus 3", "OnePlus 3", true),
-        Device(6, "OnePlus 3T", "OnePlus 3T", true),
-        Device(7, "OnePlus 5", "OnePlus 5", true),
-        Device(8, "OnePlus 5T", "OnePlus 5T", true),
-        Device(9, "OnePlus 6", "OnePlus 6", true),
-        Device(10, "OnePlus 6T (Global)", "OnePlus 6T", true),
-        Device(11, "OnePlus 7", "OnePlus7", true),
-        Device(11, "OnePlus 7 Pro (EU)", "OnePlus7Pro_EEA", true),
-        Device(12, "OnePlus 7 Pro", "OnePlus7Pro", true),
-        Device(13, "OnePlus 7 Pro 5G (EU)", "OnePlus7ProNR_EEA", true),
-        Device(11, "OnePlus 7T (EU)", "OnePlus7T_EEA", true),
-        Device(12, "OnePlus 7T", "OnePlus7T", true),
-        Device(13, "OnePlus 7T (India)", "OnePlus7T_IN", true),
-        Device(11, "OnePlus 7T Pro (EU)", "OnePlus7TPro_EEA", true),
-        Device(12, "OnePlus 7T Pro", "OnePlus7TPro", true),
-        Device(13, "OnePlus 7T Pro (India)", "OnePlus7TPro_IN", true)
+        Device(5, "OnePlus One", listOf("OnePlus, One"), true),
+        Device(1, "OnePlus 2", listOf("OnePlus2"), true),
+        Device(3, "OnePlus X", listOf("OnePlus X"), true),
+        Device(2, "OnePlus 3", listOf("OnePlus 3"), true),
+        Device(6, "OnePlus 3T", listOf("OnePlus 3T"), true),
+        Device(7, "OnePlus 5", listOf("OnePlus 5"), true),
+        Device(8, "OnePlus 5T", listOf("OnePlus 5T"), true),
+        Device(9, "OnePlus 6", listOf("OnePlus 6"), true),
+        Device(10, "OnePlus 6T (Global)", listOf("OnePlus 6T"), true),
+        Device(11, "OnePlus 7", listOf("OnePlus7"), true),
+        Device(11, "OnePlus 7 Pro (EU)", listOf("OnePlus7Pro_EEA"), true),
+        Device(12, "OnePlus 7 Pro", listOf("OnePlus7Pro"), true),
+        Device(13, "OnePlus 7 Pro 5G (EU)", listOf("OnePlus7ProNR_EEA"), true),
+        Device(11, "OnePlus 7T (EU)", listOf("OnePlus7T_EEA"), true),
+        Device(12, "OnePlus 7T", listOf("OnePlus7T"), true),
+        Device(13, "OnePlus 7T (India)", listOf("OnePlus7T_IN"), true),
+        Device(11, "OnePlus 7T Pro (EU)", listOf("OnePlus7TPro_EEA"), true),
+        Device(12, "OnePlus 7T Pro", listOf("OnePlus7TPro"), true),
+        Device(13, "OnePlus 7T Pro (India)", listOf("OnePlus7TPro_IN"), true)
     )
 
     private enum class TestDataType {
@@ -210,14 +210,12 @@ abstract class SystemVersionPropertiesTest {
         GETPROP_COMMAND_OUTPUT
     }
 
-    private class Pair<F, S>(val first: F, val second: S)
-
     companion object {
-        private const val OS_OTA_VERSION_NUMBER_LOOKUP_KEY = "ro.build.version.ota"
-        private const val OS_VERSION_NUMBER_LOOKUP_KEY = "ro.rom.version, ro.oxygen.version, ro.build.ota.versionname"
-        private const val SUPPORTED_BUILD_FINGERPRINT_KEYS = "release-keys"
-        private const val BUILD_FINGERPRINT_LOOKUP_KEY = "ro.build.oemfingerprint, ro.build.fingerprint"
-        private const val DEVICE_NAME_LOOKUP_KEY = "ro.display.series, ro.build.product"
-        private const val AB_PARTITION_LAYOUT_LOOKUP_KEY = "ro.build.ab_update"
+        private const val OsOtaVersionNumberLookupKey = "ro.build.version.ota"
+        private const val OsVersionNumberLookupKey = "ro.rom.version, ro.oxygen.version, ro.build.ota.versionname"
+        private const val SupportedBuildFingerprintKeys = "release-keys"
+        private const val BuildFingerprintLookupKey = "ro.build.oemfingerprint, ro.build.fingerprint"
+        private const val DeviceNameLookupKey = "ro.display.series, ro.build.product"
+        private const val AbPartitionLayoutLookupKey = "ro.build.ab_update"
     }
 }

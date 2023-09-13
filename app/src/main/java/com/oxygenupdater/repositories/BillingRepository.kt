@@ -32,7 +32,7 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.billing.Security
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_AD_FREE
+import com.oxygenupdater.internal.settings.PrefManager.KeyAdFree
 import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logInfo
@@ -106,12 +106,12 @@ class BillingRepository(
     /**
      * How long before the data source tries to reconnect to Google Play
      */
-    private var reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
+    private var reconnectMilliseconds = ReconnectTimerStartMs
 
     /**
      * When was the last successful ProductDetailsResponse?
      */
-    private var productDetailsResponseTime = -PRODUCT_DETAILS_REQUERY_TIME
+    private var productDetailsResponseTime = -ProductDetailsRequeryTimeMs
 
     // Maps that are mostly maintained so they can be transformed into observables
     private val skuStateMap = mutableMapOf<String, MutableStateFlow<SkuState>>()
@@ -122,13 +122,13 @@ class BillingRepository(
      * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [price][ProductDetails.OneTimePurchaseOfferDetails.getFormattedPrice]
      */
     val adFreePrice
-        get() = getSkuPrice(SKU_INAPP_AD_FREE).distinctUntilChanged()
+        get() = getSkuPrice(SkuInappAdFree).distinctUntilChanged()
 
     /**
      * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [SkuState]
      */
     val adFreeState
-        get() = getSkuState(SKU_INAPP_AD_FREE).distinctUntilChanged()
+        get() = getSkuState(SkuInappAdFree).distinctUntilChanged()
 
     /**
      * Returns whether or not the user has purchased ad-free. It does this by returning
@@ -140,12 +140,12 @@ class BillingRepository(
             logDebug(TAG, "[adFreeState] $it")
 
             // Fallback to SharedPreferences if purchases haven't been processed yet
-            if (it == SkuState.Unknown) PrefManager.getBoolean(PROPERTY_AD_FREE, false)
+            if (it == SkuState.Unknown) PrefManager.getBoolean(KeyAdFree, false)
             else it == SkuState.PurchasedAndAcknowledged
         }.distinctUntilChanged().onEach {
             logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            PrefManager.putBoolean(PROPERTY_AD_FREE, it)
+            PrefManager.putBoolean(KeyAdFree, it)
         }
 
     /**
@@ -181,7 +181,7 @@ class BillingRepository(
         logDebug(TAG, "[newPurchaseFlow] $responseCode: ${purchase?.products}")
 
         when (responseCode) {
-            BillingResponseCode.OK -> PrefManager.putBoolean(PROPERTY_AD_FREE, purchase != null)
+            BillingResponseCode.OK -> PrefManager.putBoolean(KeyAdFree, purchase != null)
             BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // This is tricky to deal with. Even pending purchases show up as "items already owned",
                 // so we can't grant entitlement i.e. set [PROPERTY_AD_FREE] to `true`.
@@ -191,14 +191,14 @@ class BillingRepository(
             }
 
             else -> {
-                PrefManager.putBoolean(PROPERTY_AD_FREE, false)
-                setProductState(SKU_INAPP_AD_FREE, SkuState.NotPurchased)
+                PrefManager.putBoolean(KeyAdFree, false)
+                setProductState(SkuInappAdFree, SkuState.NotPurchased)
             }
         }
 
         purchase?.products?.forEach {
             when (it) {
-                SKU_SUBS_AD_FREE_MONTHLY, SKU_SUBS_AD_FREE_YEARLY -> {
+                SkuSubsAdFreeMonthly, SkuSubsAdFreeYearly -> {
                     // Make sure that subscriptions upgrades/downgrades
                     // are reflected correctly in the UI
                     refreshPurchases()
@@ -229,8 +229,8 @@ class BillingRepository(
         // Initialize flows for all known SKUs, so that state & details can be
         // observed in ViewModels. This repository exposes mappings that are
         // more useful for the rest of the application (via ViewModels).
-        addSkuFlows(INAPP_SKUS)
-        addSkuFlows(SUBS_SKUS)
+        addSkuFlows(InappSkus)
+        addSkuFlows(SubsSkus)
 
         billingClient.startConnection(this)
     }
@@ -247,7 +247,7 @@ class BillingRepository(
         // Flow is considered "active" if there's at least one subscriber.
         // `distinctUntilChanged`: ensure we only react to true<->false changes.
         details.subscriptionCount.map { it > 0 }.distinctUntilChanged().onEach { active ->
-            if (active && (SystemClock.elapsedRealtime() - productDetailsResponseTime > PRODUCT_DETAILS_REQUERY_TIME)) {
+            if (active && (SystemClock.elapsedRealtime() - productDetailsResponseTime > ProductDetailsRequeryTimeMs)) {
                 logVerbose(TAG, "[addSkuFlows] stale SKUs; requerying")
                 productDetailsResponseTime = SystemClock.elapsedRealtime()
                 queryProductDetails()
@@ -277,7 +277,7 @@ class BillingRepository(
                 queryProductDetails()
                 refreshPurchases()
             }.also {
-                reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
+                reconnectMilliseconds = ReconnectTimerStartMs
             }
 
             else -> reconnectWithExponentialBackoff()
@@ -291,14 +291,14 @@ class BillingRepository(
 
     /**
      * Reconnect to [BillingClient] with exponential backoff, with a max of
-     * [RECONNECT_TIMER_MAX_TIME_MILLISECONDS]
+     * [ReconnectTimerMaxTimeMs]
      */
     private fun reconnectWithExponentialBackoff() = handler.postDelayed(
         { billingClient.startConnection(this) }, reconnectMilliseconds
     ).let {
         reconnectMilliseconds = min(
             reconnectMilliseconds * 2,
-            RECONNECT_TIMER_MAX_TIME_MILLISECONDS
+            ReconnectTimerMaxTimeMs
         )
     }
 
@@ -372,7 +372,7 @@ class BillingRepository(
         var responseCode = billingResult.responseCode
         var debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
-            processPurchaseList(purchasesResult.purchasesList, INAPP_SKUS)
+            processPurchaseList(purchasesResult.purchasesList, InappSkus)
         } else logBillingError(TAG, "[refreshPurchases] INAPP $responseCode: $debugMessage")
 
         purchasesResult = billingClient.queryPurchasesAsync(
@@ -384,7 +384,7 @@ class BillingRepository(
         responseCode = billingResult.responseCode
         debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
-            processPurchaseList(purchasesResult.purchasesList, SUBS_SKUS)
+            processPurchaseList(purchasesResult.purchasesList, SubsSkus)
         } else logBillingError(TAG, "[refreshPurchases] SUBS $responseCode: $debugMessage")
 
         logDebug(TAG, "[refreshPurchases] finish")
@@ -394,8 +394,8 @@ class BillingRepository(
      * Automatic support for upgrading/downgrading subscription
      */
     fun makePurchase(activity: Activity, sku: String) = when (sku) {
-        SKU_SUBS_AD_FREE_MONTHLY -> SKU_SUBS_AD_FREE_YEARLY
-        SKU_SUBS_AD_FREE_YEARLY -> SKU_SUBS_AD_FREE_MONTHLY
+        SkuSubsAdFreeMonthly -> SkuSubsAdFreeYearly
+        SkuSubsAdFreeYearly -> SkuSubsAdFreeMonthly
         else -> null
     }?.let { oldSku ->
         launchBillingFlow(activity, sku, arrayOf(oldSku))
@@ -502,7 +502,7 @@ class BillingRepository(
      */
     @Deprecated("Only for local testing: should not be part of checked-in code or an APK release", level = DeprecationLevel.ERROR)
     fun debugConsumeAdFree() = ioScope.launch {
-        consumeInAppPurchase(SKU_INAPP_AD_FREE)
+        consumeInAppPurchase(SkuInappAdFree)
     }
 
     /**
@@ -587,7 +587,7 @@ class BillingRepository(
 
         productDetailsResponseTime = if (responseCode == BillingResponseCode.OK) {
             SystemClock.elapsedRealtime()
-        } else -PRODUCT_DETAILS_REQUERY_TIME
+        } else -ProductDetailsRequeryTimeMs
     }
 
     /**
@@ -596,15 +596,15 @@ class BillingRepository(
      * required to make a purchase.
      */
     private suspend fun queryProductDetails() = withContext(Dispatchers.IO) {
-        if (INAPP_SKUS.isNotEmpty() || SUBS_SKUS.isNotEmpty()) {
+        if (InappSkus.isNotEmpty() || SubsSkus.isNotEmpty()) {
             val products = buildList {
-                addAll(INAPP_SKUS.map {
+                addAll(InappSkus.map {
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(it)
                         .setProductType(ProductType.INAPP)
                         .build()
                 })
-                addAll(SUBS_SKUS.map {
+                addAll(SubsSkus.map {
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(it)
                         .setProductType(ProductType.SUBS)
@@ -746,7 +746,7 @@ class BillingRepository(
                 var isConsumable = false
                 ioScope.launch {
                     for (sku in purchase.products) {
-                        if (CONSUMABLE_SKUS.contains(sku)) isConsumable = true
+                        if (ConsumableSkus.contains(sku)) isConsumable = true
                         else if (isConsumable) {
                             isConsumable = false
                             logBillingError(
@@ -870,28 +870,28 @@ class BillingRepository(
         /**
          * 1 second
          */
-        private const val RECONNECT_TIMER_START_MILLISECONDS = 1000L
+        private const val ReconnectTimerStartMs = 1000L
 
         /**
          * 15 minutes
          */
-        private const val RECONNECT_TIMER_MAX_TIME_MILLISECONDS = 1000L * 60L * 15L
+        private const val ReconnectTimerMaxTimeMs = 1000L * 60L * 15L
 
         /**
          * 4 hours
          */
-        private const val PRODUCT_DETAILS_REQUERY_TIME = 1000L * 60L/* * 60L * 4L*/
+        private const val ProductDetailsRequeryTimeMs = 1000L * 60L/* * 60L * 4L*/
 
-        val SKU_INAPP_AD_FREE = PurchaseType.AD_FREE.sku
-        private val SKU_SUBS_AD_FREE_MONTHLY = PurchaseType.AD_FREE_MONTHLY.sku
-        private val SKU_SUBS_AD_FREE_YEARLY = PurchaseType.AD_FREE_YEARLY.sku
+        val SkuInappAdFree = PurchaseType.AD_FREE.sku
+        private val SkuSubsAdFreeMonthly = PurchaseType.AD_FREE_MONTHLY.sku
+        private val SkuSubsAdFreeYearly = PurchaseType.AD_FREE_YEARLY.sku
 
         // Ideally SKUs should be fetched from the server, so that the app
         // doesn't need to be updated every time we add a new product.
         // However, we don't add products at all, so it's fine for now.
-        private val INAPP_SKUS = listOf(SKU_INAPP_AD_FREE)
-        private val SUBS_SKUS = listOf<String>()
-        private val CONSUMABLE_SKUS = listOf<String>()
+        private val InappSkus = listOf(SkuInappAdFree)
+        private val SubsSkus = listOf<String>()
+        private val ConsumableSkus = listOf<String>()
 
         private val handler = Handler(Looper.getMainLooper())
     }

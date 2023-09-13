@@ -55,10 +55,10 @@ object DeviceInformationData {
         null
     }
 
-    private const val CPUFREQ_PATH_PREFIX = "/sys/devices/system/cpu/cpu"
-    private const val CPUFREQ_PATH_SUFFIX = "/cpufreq/cpuinfo_max_freq"
+    private const val CpuFreqPathPrefix = "/sys/devices/system/cpu/cpu"
+    private const val CpuFreqPathSuffix = "/cpufreq/cpuinfo_max_freq"
     private fun cpuFreq(index: Int) = try {
-        val file = File(CPUFREQ_PATH_PREFIX + index + CPUFREQ_PATH_SUFFIX)
+        val file = File(CpuFreqPathPrefix + index + CpuFreqPathSuffix)
         if (file.canRead()) BigDecimal(file.readText().trim()).divide(
             BigDecimal(1000000), 6, RoundingMode.HALF_EVEN
         ).stripTrailingZeros() else BigDecimal.ZERO

@@ -31,6 +31,7 @@ import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_T
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -39,7 +40,6 @@ import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.ui.onboarding.NOT_SET
 import com.oxygenupdater.ui.update.DownloadStatus
 import com.oxygenupdater.ui.update.WorkInfoWithStatus
 import com.oxygenupdater.utils.Logger.logDebug
@@ -126,7 +126,7 @@ class MainViewModel(
                 State.ENQUEUED, State.BLOCKED -> DownloadStatus.DOWNLOAD_QUEUED
                 State.RUNNING -> DownloadStatus.DOWNLOADING
                 State.SUCCEEDED -> DownloadStatus.DOWNLOAD_COMPLETED
-                State.FAILED -> if (it.outputData.getInt(WorkDataDownloadFailureType, NOT_SET) != NOT_SET) {
+                State.FAILED -> if (it.outputData.getInt(WorkDataDownloadFailureType, NotSet) != NotSet) {
                     DownloadStatus.NOT_DOWNLOADING
                 } else DownloadStatus.DOWNLOAD_FAILED
 
@@ -196,7 +196,7 @@ class MainViewModel(
         }
 
         logDebug(TAG, "Deleting any associated tracker preferences for downloaded file")
-        PrefManager.remove(PrefManager.PROPERTY_DOWNLOAD_BYTES_DONE)
+        PrefManager.remove(PrefManager.KeyDownloadBytesDone)
         logDebug(TAG, "Deleting downloaded update file $filename")
 
         File(context.getExternalFilesDir(null), filename).run {
@@ -254,7 +254,7 @@ class MainViewModel(
             data.getString(WorkDataDownloadFailureExtraFilename),
             data.getString(WorkDataDownloadFailureExtraVersion),
             data.getString(WorkDataDownloadFailureExtraOtaVersion),
-            data.getInt(WorkDataDownloadFailureExtraHttpCode, NOT_SET),
+            data.getInt(WorkDataDownloadFailureExtraHttpCode, NotSet),
             data.getString(WorkDataDownloadFailureExtraHttpMessage),
         )
     }.let {}
@@ -267,19 +267,19 @@ class MainViewModel(
             DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> appUpdateInfoFlow.tryEmit(it)
             UPDATE_AVAILABLE -> {
                 val lastCheckedDate = PrefManager.getString(
-                    PrefManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE,
+                    PrefManager.KeyLastAppUpdateCheckDate,
                     LocalDate.MIN.toString()
                 )
 
                 // Check for app updates at most once every 2 days
                 val today = LocalDate.now()
-                if (LocalDate.parse(lastCheckedDate).plusDays(DAYS_FOR_APP_UPDATE_CHECK) <= today) {
-                    PrefManager.putString(PrefManager.PROPERTY_LAST_APP_UPDATE_CHECKED_DATE, today.toString())
+                if (LocalDate.parse(lastCheckedDate).plusDays(DaysForAppUpdateCheck) <= today) {
+                    PrefManager.putString(PrefManager.KeyLastAppUpdateCheckDate, today.toString())
                     appUpdateInfoFlow.tryEmit(it)
                 }
             }
             // Reset ignore count
-            else -> PrefManager.putInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
+            else -> PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
         }
     }
 
@@ -305,7 +305,7 @@ class MainViewModel(
         info: AppUpdateInfo,
     ) {
         // Reset ignore count
-        PrefManager.putInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
+        PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
 
         // If an in-app update is already running, resume the update.
         appUpdateManager.startUpdateFlowForResult(info, launcher, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE))
@@ -333,15 +333,15 @@ class MainViewModel(
         //  (the library doesn't yet have an annotation interface for priority constants)
         appUpdateType = if (info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val stalenessDays = info.clientVersionStalenessDays() ?: 0
-            val ignoreCount = PrefManager.getInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
+            val ignoreCount = PrefManager.getInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
 
             // Force update if user has ignored a flexible update 7 times, or if it's been 14 days since the update arrived
-            if (stalenessDays >= MAX_FLEXIBLE_UPDATE_STALE_DAYS || ignoreCount >= MAX_FLEXIBLE_UPDATE_IGNORE_COUNT) {
+            if (stalenessDays >= MaxFlexibleUpdateStaleDays || ignoreCount >= MaxFlexibleUpdateIgnoreCount) {
                 AppUpdateType.IMMEDIATE
             } else AppUpdateType.FLEXIBLE
         } else {
             // Reset ignore count
-            PrefManager.putInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
+            PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
 
             AppUpdateType.IMMEDIATE
         }
@@ -364,8 +364,8 @@ class MainViewModel(
     companion object {
         private const val TAG = "MainViewModel"
 
-        private const val DAYS_FOR_APP_UPDATE_CHECK = 2L
-        private const val MAX_FLEXIBLE_UPDATE_STALE_DAYS = 14
-        private const val MAX_FLEXIBLE_UPDATE_IGNORE_COUNT = 7
+        private const val DaysForAppUpdateCheck = 2L
+        private const val MaxFlexibleUpdateStaleDays = 14
+        private const val MaxFlexibleUpdateIgnoreCount = 7
     }
 }

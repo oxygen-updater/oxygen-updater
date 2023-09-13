@@ -64,7 +64,7 @@ fun UpToDate(
         .verticalScroll(rememberScrollState())
 ) {
     val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
-    val method = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "") ?: ""
+    val method = PrefManager.getString(PrefManager.KeyUpdateMethod, "") ?: ""
 
     val incomingOtaVersion = updateData.otaVersionNumber
     val isDifferentVersion = incomingOtaVersion != currentOtaVersion
@@ -160,7 +160,7 @@ private fun ExpandableChangelog(
                 stringResource(
                     R.string.update_information_different_version_changelog_notice_base,
                     UpdateDataVersionFormatter.getFormattedVersionNumber(updateData),
-                    PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>") ?: "<UNKNOWN>"
+                    PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
                 ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
                 Modifier
                     .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)

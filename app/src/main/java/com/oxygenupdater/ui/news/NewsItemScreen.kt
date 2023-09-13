@@ -42,7 +42,6 @@ import com.google.accompanist.web.rememberSaveableWebViewState
 import com.google.accompanist.web.rememberWebViewNavigator
 import com.google.android.gms.ads.AdView
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.shareExternally
 import com.oxygenupdater.models.NewsItem
@@ -58,6 +57,7 @@ import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.light
+import com.oxygenupdater.utils.AppUserAgent
 import java.time.LocalDateTime
 
 @Suppress("DEPRECATION")
@@ -185,7 +185,7 @@ private fun RefreshAwareWebView(
 
     val context = LocalContext.current
     val client = remember(context) { WebViewClient(context) }
-    val userAgent = OxygenUpdater.APP_USER_AGENT + try {
+    val userAgent = AppUserAgent + try {
         " " + WebSettings.getDefaultUserAgent(context)
     } catch (e: Exception) {
         ""

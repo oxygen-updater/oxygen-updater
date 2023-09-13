@@ -49,7 +49,7 @@ fun ColumnScope.ThemeSheet(
             Row(
                 Modifier
                     .animatedClickable {
-                        PrefManager.putInt(PrefManager.PROPERTY_THEME_ID, it.value)
+                        PrefManager.putInt(PrefManager.ThemeId, it.value)
                         onClick(it)
                         hide()
                     }

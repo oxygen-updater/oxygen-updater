@@ -11,7 +11,7 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.currentLanguage
 import com.oxygenupdater.ui.currentLocale
-import com.oxygenupdater.utils.HEADER_READ_TIMEOUT
+import com.oxygenupdater.utils.HeaderReadTimeout
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -120,6 +120,6 @@ interface ServerApi {
     suspend fun logDownloadError(@Body body: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 
     @POST("verify-purchase")
-    @Headers("$HEADER_READ_TIMEOUT:120")
+    @Headers("$HeaderReadTimeout:120")
     suspend fun verifyPurchase(@Body purchaseData: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 }

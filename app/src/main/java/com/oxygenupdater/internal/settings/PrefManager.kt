@@ -5,9 +5,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.content.edit
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetF
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.Theme
-import com.oxygenupdater.ui.onboarding.NOT_SET
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger.logError
 import org.koin.java.KoinJavaComponent.getKoin
 
@@ -64,9 +65,9 @@ object PrefManager {
         if (key == null) return@run defaultValue
         when (typecastValue) {
             null, is String -> getString(key, null)
-            is Int -> getInt(key, NOT_SET)
-            is Long -> getLong(key, NOT_SET_L)
-            is Float -> getFloat(key, -1f)
+            is Int -> getInt(key, NotSet)
+            is Long -> getLong(key, NotSetL)
+            is Float -> getFloat(key, NotSetF)
             is Boolean -> getBoolean(key, false)
             is Collection<*> -> getStringSet(key, null)
             else -> if (contains(key)) all[key] else defaultValue
@@ -138,8 +139,8 @@ object PrefManager {
      *
      * @return if the user has chosen a device and an update method.
      */
-    fun checkIfSetupScreenIsFilledIn() = getLong(PROPERTY_DEVICE_ID, NOT_SET_L) != NOT_SET_L
-            && getLong(PROPERTY_UPDATE_METHOD_ID, NOT_SET_L) != NOT_SET_L
+    fun checkIfSetupScreenIsFilledIn() = getLong(KeyDeviceId, NotSetL) != NotSetL
+            && getLong(KeyUpdateMethodId, NotSetL) != NotSetL
 
     /**
      * Checks if a user has completed the initial setup screen. This means the user has filled it in
@@ -148,7 +149,7 @@ object PrefManager {
      * @return if the user has completed the setup screen.
      */
     fun checkIfSetupScreenHasBeenCompleted() = checkIfSetupScreenIsFilledIn()
-            && getBoolean(PROPERTY_SETUP_DONE, false)
+            && getBoolean(KeySetupDone, false)
 
     private const val TAG = "SettingsManager"
 
@@ -157,27 +158,27 @@ object PrefManager {
      *
      * @see [com.oxygenupdater.BuildConfig.VERSION_CODE]
      */
-    const val PROPERTY_VERSION_CODE = "version_code"
+    const val KeyVersionCode = "version_code"
 
     // Settings properties
-    const val PROPERTY_DEVICE = "device"
-    const val PROPERTY_DEVICE_ID = "device_id"
-    const val PROPERTY_UPDATE_METHOD = "update_method"
-    const val PROPERTY_UPDATE_METHOD_ID = "update_method_id"
+    const val KeyDevice = "device"
+    const val KeyDeviceId = "device_id"
+    const val KeyUpdateMethod = "update_method"
+    const val KeyUpdateMethodId = "update_method_id"
 
-    const val PROPERTY_THEME_ID = "theme_id"
+    const val ThemeId = "theme_id"
 
-    const val PROPERTY_ADVANCED_MODE = "advanced_mode"
-    const val PROPERTY_SETUP_DONE = "setup_done"
-    const val PROPERTY_SQL_TO_ROOM_MIGRATION_DONE = "sql_to_room_migration_done"
-    const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
-    const val PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS = "ignore_incorrect_device_warnings"
-    const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
+    const val KeyAdvancedMode = "advanced_mode"
+    const val KeySetupDone = "setup_done"
+    const val KeySqlToRoomMigrationDone = "sql_to_room_migration_done"
+    const val KeyIgnoreUnsupportedDeviceWarnings = "ignore_unsupported_device_warnings"
+    const val KeyIgnoreIncorrectDeviceWarnings = "ignore_incorrect_device_warnings"
+    const val KeyDownloadBytesDone = "download_bytes_done"
 
     /**
      * Value cannot be changed - is from older version where it was called 'upload_logs'
      */
-    const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs"
+    const val KeyShareAnalyticsAndLogs = "upload_logs"
 
     /**
      * Note: contribution was a feature in app v2.7.0 - v5.8.3. v5.9.0 removed it, as it wasn't useful anymore.
@@ -186,22 +187,22 @@ object PrefManager {
      *
      * It was brought back in app v5.11.0, because we failed to realize that URLs were saved in a SQLite database.
      */
-    const val PROPERTY_CONTRIBUTE = "contribute"
-    const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
+    const val KeyContribute = "contribute"
+    const val KeyContributionCount = "contribution_count"
 
-    const val PROPERTY_IS_EU_BUILD = "isEuBuild"
+    const val KeyIsEuBuild = "isEuBuild"
 
-    const val PROPERTY_LAST_APP_UPDATE_CHECKED_DATE = "lastAppUpdateCheckDate"
-    const val PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT = "flexibleAppUpdateIgnoreCount"
+    const val KeyLastAppUpdateCheckDate = "lastAppUpdateCheckDate"
+    const val KeyFlexibleAppUpdateIgnoreCount = "flexibleAppUpdateIgnoreCount"
 
     // Notifications properties
-    const val PROPERTY_FIREBASE_TOKEN = "firebase_token"
-    const val PROPERTY_NOTIFICATION_TOPIC = "notification_topic"
-    const val PROPERTY_NOTIFICATION_DELAY_IN_SECONDS = "notification_delay_in_seconds"
+    const val KeyFirebaseToken = "firebase_token"
+    const val KeyNotificationTopic = "notification_topic"
+    const val KeyNotificationDelayInSeconds = "notification_delay_in_seconds"
 
     // IAB properties
-    const val PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj"
+    const val KeyAdFree = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj"
 
-    var theme by mutableStateOf(Theme.from(getInt(PROPERTY_THEME_ID, Theme.System.value)))
+    var theme by mutableStateOf(Theme.from(getInt(ThemeId, Theme.System.value)))
         internal set
 }

@@ -74,6 +74,7 @@ import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.Info
 import com.oxygenupdater.icons.NewsMultiple
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.DropdownMenuItem
@@ -84,7 +85,6 @@ import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.main.Screen
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import java.time.LocalDateTime
@@ -134,7 +134,7 @@ fun NewsListScreen(
                     unreadCountState.intValue += if (it.readState.value) 1 else -1
                 }) {
                     NewsItemActivity.item = it
-                    openItem(it.id ?: NOT_SET_L)
+                    openItem(it.id ?: NotSetL)
                 }
             }
         }
@@ -401,7 +401,7 @@ private fun AutoresizeText(
 private data class FontSizeRange(
     val min: Float,
     val max: Float,
-    val step: Float = DEFAULT_STEP,
+    val step: Float = DefaultStep,
 ) {
     init {
         require(min <= max) { "min should be less than or equal to max, $this" }
@@ -409,7 +409,7 @@ private data class FontSizeRange(
     }
 
     companion object {
-        private const val DEFAULT_STEP = 1f
+        private const val DefaultStep = 1f
     }
 }
 

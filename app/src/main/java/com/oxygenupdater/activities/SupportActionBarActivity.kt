@@ -31,7 +31,7 @@ abstract class SupportActionBarActivity(
      * Certain activities (e.g. install, news) can take advantage of this to
      * tie back to the correct tab, if opened from a notification for example.
      */
-    @IntRange(MainActivity.PAGE_UPDATE.toLong(), MainActivity.PAGE_SETTINGS.toLong())
+    @IntRange(MainActivity.PageUpdate.toLong(), MainActivity.PageSettings.toLong())
     private val startPage: Int,
 
     @StringRes private val subtitleResId: Int,

@@ -13,7 +13,7 @@ import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.LocalAppDb
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTION_COUNT
+import com.oxygenupdater.internal.settings.PrefManager.KeyContributionCount
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.services.RootFileService
@@ -134,7 +134,7 @@ class ReadOtaDbWorker(
             val errorMessage = result.errorMessage
             // If file is already in our database or if file is an invalid temporary file (server decides when this is the case),
             // mark this file as submitted but don't inform the user about it.
-            if (errorMessage != null && (errorMessage == URL_ALREADY_IN_DATABASE || errorMessage == URL_INVALID)) {
+            if (errorMessage != null && (errorMessage == UrlAlreadyInDatabase || errorMessage == UrlInvalid)) {
                 logInfo(TAG, "Ignoring submitted URLs, already in database or not relevant")
                 otaDbCopies.forEach { it.delete() }
                 insertInDb(rows, false)
@@ -156,8 +156,8 @@ class ReadOtaDbWorker(
 
         // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
         PrefManager.putInt(
-            PROPERTY_CONTRIBUTION_COUNT,
-            PrefManager.getInt(PROPERTY_CONTRIBUTION_COUNT, 0) + count
+            KeyContributionCount,
+            PrefManager.getInt(KeyContributionCount, 0) + count
         )
 
         if (failed) Result.failure() else Result.success()
@@ -197,7 +197,7 @@ class ReadOtaDbWorker(
         action: (String) -> Unit = {},
     ) {
         // Perf: just once out of loop
-        val now = LocalDateTime.now(Utils.SERVER_TIME_ZONE).toString()
+        val now = LocalDateTime.now(Utils.ServerTimeZone).toString()
         val mapped = rows.map {
             // By this point, any row in this list is guaranteed to have either `active_url` or `url`,
             // because those without either of these fields are discarded in the `Cursor.toMap` extension.
@@ -230,7 +230,7 @@ class ReadOtaDbWorker(
     companion object {
         private const val TAG = "ReadOtaDbWorker"
 
-        private const val URL_ALREADY_IN_DATABASE = "E_URL_ALREADY_IN_DB"
-        private const val URL_INVALID = "E_URL_INVALID"
+        private const val UrlAlreadyInDatabase = "E_URL_ALREADY_IN_DB"
+        private const val UrlInvalid = "E_URL_INVALID"
     }
 }

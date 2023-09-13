@@ -3,13 +3,13 @@ package com.oxygenupdater.utils
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.ktx.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_DEVICE_ID
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_NOTIFICATION_TOPIC
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_UPDATE_METHOD_ID
+import com.oxygenupdater.internal.settings.PrefManager.KeyDeviceId
+import com.oxygenupdater.internal.settings.PrefManager.KeyNotificationTopic
+import com.oxygenupdater.internal.settings.PrefManager.KeyUpdateMethodId
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 
@@ -17,14 +17,14 @@ object NotificationTopicSubscriber {
 
     private const val TAG = "NotificationTopicSubscriber"
     private const val PREFIX = "${NOTIFICATIONS_PREFIX}device_"
-    private const val UPDATE_METHOD_TOPIC_PREFIX = "_update-method_"
+    private const val UpdateMethodTopicPrefix = "_update-method_"
 
     private val topic: String
         get() {
-            val deviceId = PrefManager.getLong(PROPERTY_DEVICE_ID, NOT_SET_L)
-            val updateMethodId = PrefManager.getLong(PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+            val deviceId = PrefManager.getLong(KeyDeviceId, NotSetL)
+            val updateMethodId = PrefManager.getLong(KeyUpdateMethodId, NotSetL)
 
-            return PREFIX + deviceId + UPDATE_METHOD_TOPIC_PREFIX + updateMethodId
+            return PREFIX + deviceId + UpdateMethodTopicPrefix + updateMethodId
         }
 
     private val messaging by lazy(LazyThreadSafetyMode.NONE) {
@@ -45,7 +45,7 @@ object NotificationTopicSubscriber {
         // unsubscribe from all possible topics first to prevent duplicate/wrong notifications.
 
         // Allocate here to avoid repeated string concatenation
-        val methodTopic = UPDATE_METHOD_TOPIC_PREFIX + method.id
+        val methodTopic = UpdateMethodTopicPrefix + method.id
 
         deviceList.forEach { device ->
             unsubscribeFromTopic(PREFIX + device.id + methodTopic)
@@ -57,7 +57,7 @@ object NotificationTopicSubscriber {
      */
     private fun subscribeToNewTopic(newTopic: String) {
         messaging.subscribeToTopic(newTopic)
-        PrefManager.putString(PROPERTY_NOTIFICATION_TOPIC, newTopic)
+        PrefManager.putString(KeyNotificationTopic, newTopic)
         logDebug(TAG, "Subscribed to topic: $newTopic")
     }
 
@@ -69,7 +69,7 @@ object NotificationTopicSubscriber {
     fun resubscribe(
         deviceList: List<Device>,
         updateMethodList: List<UpdateMethod>,
-        oldTopic: String? = PrefManager.getString(PROPERTY_NOTIFICATION_TOPIC, null),
+        oldTopic: String? = PrefManager.getString(KeyNotificationTopic, null),
         newTopic: String = this.topic,
     ) {
         unsubscribeFromOldTopics(deviceList, updateMethodList, oldTopic)
@@ -90,7 +90,7 @@ object NotificationTopicSubscriber {
         updateMethodList: List<UpdateMethod>,
         newTopic: String = this.topic,
     ) {
-        val oldTopic = PrefManager.getString(PROPERTY_NOTIFICATION_TOPIC, null)
+        val oldTopic = PrefManager.getString(KeyNotificationTopic, null)
         if (oldTopic.isNullOrEmpty() || oldTopic != newTopic) {
             logWarning(TAG, "Resubscribing: saved topic is incorrect ($oldTopic vs $newTopic)")
             resubscribe(deviceList, updateMethodList, oldTopic, newTopic)

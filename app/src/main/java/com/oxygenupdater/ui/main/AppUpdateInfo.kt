@@ -47,14 +47,14 @@ fun AppUpdateInfo(
             val code = it.resultCode
             if (code == RESULT_OK) {
                 // Reset ignore count
-                PrefManager.putInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT, 0)
+                PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
                 if (snackbarMessageId() == AppUpdateFailedSnackbarData.first) {
                     // Dismiss only this snackbar
                     updateSnackbarText(null)
                 }
             } else if (code == RESULT_CANCELED) {
                 // Increment ignore count and show app update banner
-                PrefManager.incrementInt(PrefManager.PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT)
+                PrefManager.incrementInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount)
                 updateSnackbarText(AppUpdateFailedSnackbarData)
             } else if (code == RESULT_IN_APP_UPDATE_FAILED) {
                 // Show app update banner

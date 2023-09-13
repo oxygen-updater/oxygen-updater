@@ -15,7 +15,7 @@ import com.oxygenupdater.viewmodels.BillingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FaqActivity : SupportActionBarActivity(
-    MainActivity.PAGE_ABOUT,
+    MainActivity.PageAbout,
     R.string.faq,
 ) {
 
@@ -31,7 +31,7 @@ class FaqActivity : SupportActionBarActivity(
 
         // Ads should be shown if user hasn't bought the ad-free unlock
         val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+            PrefManager.getBoolean(PrefManager.KeyAdFree, false)
         ).value
 
         PullRefresh(state, { it.isEmpty() }, viewModel::refresh) {

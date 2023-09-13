@@ -9,7 +9,7 @@ import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.google.accompanist.web.AccompanistWebViewClient
-import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.utils.ApiBaseUrl
 import com.oxygenupdater.utils.Logger.logDebug
 
 /**
@@ -70,12 +70,10 @@ class WebViewClient(private val context: Context) : AccompanistWebViewClient() {
         // but also reports a "net::ERR_CONNECTION_REFUSED" error. Prelim investigation didn't lead anywhere, until we
         // discovered those errors originated from script URLs that are loaded within the main URL's page (e.g. Google
         // AdSense and Cloudflare Web Analytics). I'm not sure if this workaround is still needed; keeping it anyway.
-        if (requestUrl.startsWith(API_BASE_URL)) super.onReceivedError(view, request, error)
+        if (requestUrl.startsWith(ApiBaseUrl)) super.onReceivedError(view, request, error)
     }
 
     companion object {
         private const val TAG = "WebViewClient"
-
-        private const val API_BASE_URL = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
     }
 }

@@ -21,20 +21,20 @@ class SplashActivity : Activity() {
         // Since app shortcuts open this activity, we need to forward the
         // corresponding `startPage` so that MainActivity eventually receives it
         val startPage = when (intent?.action) {
-            ACTION_PAGE_UPDATE -> MainActivity.PAGE_UPDATE
-            ACTION_PAGE_NEWS -> MainActivity.PAGE_NEWS
-            ACTION_PAGE_DEVICE -> MainActivity.PAGE_DEVICE
-            else -> MainActivity.PAGE_UPDATE
+            ActionPageUpdate -> MainActivity.PageUpdate
+            ActionPageNews -> MainActivity.PageNews
+            ActionPageDevice -> MainActivity.PageDevice
+            else -> MainActivity.PageUpdate
         }
 
-        if (!PrefManager.getBoolean(PrefManager.PROPERTY_SETUP_DONE, false)) {
+        if (!PrefManager.getBoolean(PrefManager.KeySetupDone, false)) {
             startOnboardingActivity(startPage) // setup needed; launch Onboarding
         } else startMainActivity(startPage) // setup complete; launch Main
     }
 
     companion object {
-        private const val ACTION_PAGE_UPDATE = "com.oxygenupdater.action.page_update"
-        private const val ACTION_PAGE_NEWS = "com.oxygenupdater.action.page_news"
-        private const val ACTION_PAGE_DEVICE = "com.oxygenupdater.action.page_device"
+        private const val ActionPageUpdate = "com.oxygenupdater.action.page_update"
+        private const val ActionPageNews = "com.oxygenupdater.action.page_news"
+        private const val ActionPageDevice = "com.oxygenupdater.action.page_device"
     }
 }

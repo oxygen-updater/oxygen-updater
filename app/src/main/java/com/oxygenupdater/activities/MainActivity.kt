@@ -46,6 +46,8 @@ import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startNewsItemActivity
 import com.oxygenupdater.extensions.startOnboardingActivity
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -78,13 +80,11 @@ import com.oxygenupdater.ui.main.SettingsRoute
 import com.oxygenupdater.ui.main.UpdateRoute
 import com.oxygenupdater.ui.news.NewsListScreen
 import com.oxygenupdater.ui.news.NewsListViewModel
-import com.oxygenupdater.ui.onboarding.NOT_SET
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.settings.adFreeConfig
 import com.oxygenupdater.ui.theme.AppTheme
-import com.oxygenupdater.ui.update.KEY_DOWNLOAD_ERROR_MESSAGE
+import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
 import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
 import com.oxygenupdater.ui.update.WorkProgress
@@ -124,9 +124,9 @@ class MainActivity : BaseActivity() {
         val intent = intent
 
         startPage = try {
-            intent?.getIntExtra(INTENT_START_PAGE, PAGE_UPDATE) ?: PAGE_UPDATE
+            intent?.getIntExtra(IntentStartPage, PageUpdate) ?: PageUpdate
         } catch (ignored: IndexOutOfBoundsException) {
-            PAGE_UPDATE
+            PageUpdate
         }
 
         // Force-show download error dialog if started from an intent with error info
@@ -135,7 +135,7 @@ class MainActivity : BaseActivity() {
         //  immediately in the UI itself, in both cases: app in foreground and background/killed.
         //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
         downloadErrorMessage = try {
-            intent?.getStringExtra(KEY_DOWNLOAD_ERROR_MESSAGE)
+            intent?.getStringExtra(KeyDownloadErrorMessage)
         } catch (ignored: IndexOutOfBoundsException) {
             null
         }
@@ -183,8 +183,8 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val showDeviceWarningDialog = !PrefManager.getBoolean(PrefManager.PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS, false)
-        val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS, false)
+        val showDeviceWarningDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, false)
+        val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, false)
         if (showDeviceWarningDialog) viewModel.deviceOsSpec?.let {
             UnsupportedDeviceOsSpecDialog(it)
         }
@@ -267,7 +267,7 @@ class MainActivity : BaseActivity() {
 
             // Ads should be shown if user hasn't bought the ad-free unlock
             val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+                PrefManager.getBoolean(PrefManager.KeyAdFree, false)
             ).value
             if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID, view = rememberTypedCallback { bannerAdView = it })
 
@@ -333,16 +333,16 @@ class MainActivity : BaseActivity() {
 
         val outputData = workInfo?.outputData
         val progress = workInfo?.progress
-        val failureType = outputData?.getInt(WorkDataDownloadFailureType, NOT_SET)
+        val failureType = outputData?.getInt(WorkDataDownloadFailureType, NotSet)
         UpdateScreen(state, rememberCallback {
             settingsViewModel.updateCrashlyticsUserId()
             viewModel.fetchServerStatus()
             updateViewModel.refresh()
         }, downloadStatus, failureType, if (progress == null) null else remember(progress) {
             WorkProgress(
-                progress.getLong(WorkDataDownloadBytesDone, NOT_SET_L),
-                progress.getLong(WorkDataDownloadTotalBytes, NOT_SET_L),
-                progress.getInt(WorkDataDownloadProgress, NOT_SET),
+                progress.getLong(WorkDataDownloadBytesDone, NotSetL),
+                progress.getLong(WorkDataDownloadTotalBytes, NotSetL),
+                progress.getInt(WorkDataDownloadProgress, NotSet),
                 progress.getString(WorkDataDownloadEta),
             )
         }, downloadErrorMessage != null, rememberTypedCallback(setSubtitleResId), enqueueDownload = rememberTypedCallback {
@@ -519,10 +519,10 @@ class MainActivity : BaseActivity() {
     private fun NavController.shouldStopNavigateAwayFromSettings() = currentDestination?.route == SettingsRoute && !PrefManager.checkIfSetupScreenHasBeenCompleted()
 
     private fun showSettingsWarning() {
-        val deviceId = PrefManager.getLong(PrefManager.PROPERTY_DEVICE_ID, NOT_SET_L)
-        val updateMethodId = PrefManager.getLong(PrefManager.PROPERTY_UPDATE_METHOD_ID, NOT_SET_L)
+        val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
+        val updateMethodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
 
-        if (deviceId == NOT_SET_L || updateMethodId == NOT_SET_L) {
+        if (deviceId == NotSetL || updateMethodId == NotSetL) {
             logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
             showToast(R.string.settings_entered_incorrectly)
         } else showToast(R.string.settings_saving)
@@ -531,11 +531,11 @@ class MainActivity : BaseActivity() {
     companion object {
         private const val TAG = "MainActivity"
 
-        const val PAGE_UPDATE = 0
-        const val PAGE_NEWS = 1
-        const val PAGE_DEVICE = 2
-        const val PAGE_ABOUT = 3
-        const val PAGE_SETTINGS = 4
-        const val INTENT_START_PAGE = "start_page"
+        const val PageUpdate = 0
+        const val PageNews = 1
+        const val PageDevice = 2
+        const val PageAbout = 3
+        const val PageSettings = 4
+        const val IntentStartPage = "start_page"
     }
 }

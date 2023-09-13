@@ -20,10 +20,10 @@ import java.time.ZoneId
 
 object Utils {
 
-    val SERVER_TIME_ZONE: ZoneId = ZoneId.of("Europe/Amsterdam")
+    val ServerTimeZone: ZoneId = ZoneId.of("Europe/Amsterdam")
 
     private const val TAG = "Utils"
-    private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
+    private const val PlayServicesResolutionRequest = 9000
 
     fun dpToPx(context: Context, @Dimension(unit = Dimension.DP) dp: Float) = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
@@ -44,7 +44,7 @@ object Utils {
 
         return if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
             if (googleApiAvailability.isUserResolvableError(resultCode)) googleApiAvailability.getErrorDialog(
-                activity, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST
+                activity, resultCode, PlayServicesResolutionRequest
             )?.show()
 
             logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
@@ -98,7 +98,7 @@ object Utils {
 
     fun checkDeviceMismatch(devices: List<Device>?): Triple<Boolean, String, String> {
         val default = defaultDeviceName()
-        val savedDeviceName = PrefManager.getString(PrefManager.PROPERTY_DEVICE, default) ?: default
+        val savedDeviceName = PrefManager.getString(PrefManager.KeyDevice, default) ?: default
 
         val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {

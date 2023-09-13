@@ -65,6 +65,8 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startInstallActivity
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ItemDivider
@@ -79,7 +81,6 @@ import com.oxygenupdater.ui.dialogs.AlreadyDownloadedSheet
 import com.oxygenupdater.ui.dialogs.DownloadErrorSheet
 import com.oxygenupdater.ui.dialogs.ManageStorageSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
-import com.oxygenupdater.ui.onboarding.NOT_SET
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.backgroundVariant
@@ -114,7 +115,7 @@ fun UpdateAvailable(
                     it.isNotBlank() && it != "-" && it != "null"
                 } ?: stringResource(
                     R.string.update_information_unknown_update_name,
-                    defaultDeviceName().let { PrefManager.getString(PrefManager.PROPERTY_DEVICE, it) ?: it }
+                    defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
                 ),
                 Modifier.withPlaceholder(refreshing),
                 style = MaterialTheme.typography.titleLarge
@@ -134,7 +135,7 @@ fun UpdateAvailable(
         val bodySmall = MaterialTheme.typography.bodySmall
         if (updateData.systemIsUpToDate) {
             // Remind user why they're seeing this update
-            val updateMethod = PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<UNKNOWN>") ?: "<UNKNOWN>"
+            val updateMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
             Text(
                 stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
                 Modifier.padding(horizontal = 16.dp),
@@ -174,7 +175,7 @@ fun UpdateAvailable(
                 // - Unknown
                 // For simplicity, we're negating boolean logic by checking for the only other possible values:
                 // null and CouldNotMoveTempFile. This will need to be adjusted later if new failures are added.
-                it != null && it != NOT_SET && it != DownloadFailure.CouldNotMoveTempFile.value
+                it != null && it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
             })
         ) {
             DownloadLink(updateData.downloadUrl ?: "null")
@@ -384,7 +385,7 @@ private fun DownloadButton(
         }
 
         progress?.let {
-            if (it == -1f) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
+            if (it == NotSetF) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
                 val animatedProgress by animateFloatAsState(
                     it, ProgressIndicatorDefaults.ProgressAnimationSpec,
                     label = "DownloadProgressAnimation"

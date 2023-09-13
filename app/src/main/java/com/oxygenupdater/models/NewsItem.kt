@@ -8,6 +8,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.utils.ApiBaseUrl
 import com.oxygenupdater.utils.Utils
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -60,7 +61,7 @@ data class NewsItem(
     @IgnoredOnParcel
     @Ignore
     @JvmField
-    val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id"
+    val apiUrl = "${ApiBaseUrl}news-content/$id"
 
     @IgnoredOnParcel
     @Ignore
@@ -72,7 +73,7 @@ data class NewsItem(
     @JvmField
     val epochMilli = (dateLastEdited ?: datePublished)?.let {
         LocalDateTime.parse(it.replace(" ", "T"))
-            .atZone(Utils.SERVER_TIME_ZONE)
+            .atZone(Utils.ServerTimeZone)
             .toInstant().toEpochMilli()
     }
 

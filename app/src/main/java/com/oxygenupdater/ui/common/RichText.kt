@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
-import com.oxygenupdater.ui.onboarding.NOT_SET
+import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.ui.theme.DefaultTextStyle
 
 // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
@@ -127,7 +127,7 @@ private fun htmlToAnnotatedString(
     spanned.getSpans<Any>().forEach { span ->
         val start = spanned.getSpanStart(span)
         val end = spanned.getSpanEnd(span)
-        if (start == NOT_SET || end == NOT_SET) return@forEach
+        if (start == NotSet || end == NotSet) return@forEach
 
         when (span) {
             is StyleSpan -> when (span.style) {

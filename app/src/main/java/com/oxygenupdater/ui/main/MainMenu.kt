@@ -84,7 +84,7 @@ private fun ContributorMenuItem(onDismiss: () -> Unit) {
 
     LaunchedEffect(Unit) { // run only on init
         // Offer contribution to users from app versions below v2.4.0 and v5.10.1
-        if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.PROPERTY_CONTRIBUTE)) {
+        if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.KeyContribute)) {
             showSheet = true
         }
     }

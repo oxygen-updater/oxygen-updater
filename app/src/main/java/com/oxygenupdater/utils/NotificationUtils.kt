@@ -32,9 +32,9 @@ class NotificationUtils(private val context: Context) {
 
     fun toNotifStatus() = if (isDisabled) NotifStatus() else NotifStatus(
         listOf(
-            isDisabled(PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID),
-            isDisabled(PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID),
-            isDisabled(DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID)
+            isDisabled(PushNotificationsGroup.UpdateNotifChannelId),
+            isDisabled(PushNotificationsGroup.NewsNotifChannelId),
+            isDisabled(DownloadAndInstallationGroup.DownloadStatusNotifChannelId)
         )
     )
 
@@ -44,10 +44,10 @@ class NotificationUtils(private val context: Context) {
     @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.O)
     fun deleteOldNotificationChannels() {
-        notificationManager.deleteNotificationChannel(NotificationChannels.OLD_PUSH_NOTIFICATION_CHANNEL_ID)
-        notificationManager.deleteNotificationChannel(NotificationChannels.OLD_PROGRESS_NOTIFICATION_CHANNEL_ID)
+        notificationManager.deleteNotificationChannel(NotificationChannels.OldPushNotifChannelId)
+        notificationManager.deleteNotificationChannel(NotificationChannels.OldProgressNotifChannelId)
         // No longer used in v5.9.0+
-        notificationManager.deleteNotificationChannel(MiscellaneousGroup.OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID)
+        notificationManager.deleteNotificationChannel(MiscellaneousGroup.OtaFilenameSubmittedNotifChannelId)
     }
 
     /**
@@ -102,7 +102,7 @@ class NotificationUtils(private val context: Context) {
             listOf(
                 //// BEGIN: DownloadAndInstallationGroup
                 createNotificationChannel(
-                    DownloadAndInstallationGroup.DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID,
+                    DownloadAndInstallationGroup.DownloadStatusNotifChannelId,
                     DownloadAndInstallationGroup.ID,
                     context.getString(R.string.download_status_notification_channel_name),
                     context.getString(R.string.download_status_notification_channel_description),
@@ -110,7 +110,7 @@ class NotificationUtils(private val context: Context) {
                     lightsEnabled = false
                 ),
                 createNotificationChannel(
-                    DownloadAndInstallationGroup.VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID,
+                    DownloadAndInstallationGroup.VerificationStatusNotifChannelId,
                     DownloadAndInstallationGroup.ID,
                     context.getString(R.string.verification_status_notification_channel_name),
                     context.getString(R.string.verification_status_notification_channel_description),
@@ -118,7 +118,7 @@ class NotificationUtils(private val context: Context) {
                     lightsEnabled = false
                 ),
                 createNotificationChannel(
-                    DownloadAndInstallationGroup.INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID,
+                    DownloadAndInstallationGroup.InstallationStatusNotifChannelId,
                     DownloadAndInstallationGroup.ID,
                     context.getString(R.string.installation_status_notification_channel_name),
                     context.getString(R.string.installation_status_notification_channel_description),
@@ -129,7 +129,7 @@ class NotificationUtils(private val context: Context) {
 
                 //// BEGIN: PushNotificationsGroup
                 createNotificationChannel(
-                    PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID,
+                    PushNotificationsGroup.UpdateNotifChannelId,
                     PushNotificationsGroup.ID,
                     context.getString(R.string.update_notification_channel_name),
                     context.getString(R.string.update_notification_channel_description),
@@ -137,7 +137,7 @@ class NotificationUtils(private val context: Context) {
                     vibrationEnabled = true
                 ),
                 createNotificationChannel(
-                    PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID,
+                    PushNotificationsGroup.NewsNotifChannelId,
                     PushNotificationsGroup.ID,
                     context.getString(R.string.news_notification_channel_name),
                     context.getString(R.string.news_notification_channel_description),
@@ -145,14 +145,14 @@ class NotificationUtils(private val context: Context) {
                     vibrationEnabled = true
                 ),
                 createNotificationChannel(
-                    PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID,
+                    PushNotificationsGroup.DeviceNotifChannelId,
                     PushNotificationsGroup.ID,
                     context.getString(R.string.device_notification_channel_name),
                     context.getString(R.string.device_notification_channel_description),
                     NotificationManager.IMPORTANCE_DEFAULT
                 ),
                 createNotificationChannel(
-                    PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID,
+                    PushNotificationsGroup.GeneralNotifChannelId,
                     PushNotificationsGroup.ID,
                     context.getString(R.string.general_notification_channel_name),
                     context.getString(R.string.general_notification_channel_description),
@@ -163,7 +163,7 @@ class NotificationUtils(private val context: Context) {
 
                 //// BEGIN: MiscellaneousGroup
                 createNotificationChannel(
-                    MiscellaneousGroup.OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID,
+                    MiscellaneousGroup.OtaUrlSubmittedNotifChannelId,
                     MiscellaneousGroup.ID,
                     context.getString(R.string.url_submitted_notification_channel_name),
                     context.getString(R.string.url_submitted_notification_channel_description),
@@ -228,26 +228,26 @@ object NotificationIds {
     private const val localIdMultiplier = 10
     private const val remoteIdMultiplier = 1000000
 
-    const val LOCAL_DOWNLOAD = 1 * localIdMultiplier
-    const val LOCAL_DOWNLOAD_FOREGROUND = 10 * localIdMultiplier
+    const val LocalDownload = 1 * localIdMultiplier
+    const val LocalDownloadForeground = 10 * localIdMultiplier
 
-    const val LOCAL_MD5_VERIFICATION = 2 * localIdMultiplier
-    const val LOCAL_CONTRIBUTION = 3 * localIdMultiplier
-    const val LOCAL_INSTALLATION_STATUS = 4 * localIdMultiplier
+    const val LocalMd5Verification = 2 * localIdMultiplier
+    const val LocalContribution = 3 * localIdMultiplier
+    const val LocalInstallationStatus = 4 * localIdMultiplier
 
-    const val REMOTE_NEW_UPDATE = 1 * remoteIdMultiplier
+    const val RemoteNewUpdate = 1 * remoteIdMultiplier
 
-    const val REMOTE_NEW_DEVICE = 2 * remoteIdMultiplier
-    const val REMOTE_NEW_DEVICE_GROUP = 20 * remoteIdMultiplier
+    const val RemoteNewDevice = 2 * remoteIdMultiplier
+    const val RemoteNewDeviceGroup = 20 * remoteIdMultiplier
 
-    const val REMOTE_NEWS = 3 * remoteIdMultiplier
-    const val REMOTE_NEWS_GROUP = 30 * remoteIdMultiplier
+    const val RemoteNews = 3 * remoteIdMultiplier
+    const val RemoteNewsGroup = 30 * remoteIdMultiplier
 
-    const val REMOTE_GENERAL = 4 * remoteIdMultiplier
-    const val REMOTE_GENERAL_GROUP = 40 * remoteIdMultiplier
+    const val RemoteGeneral = 4 * remoteIdMultiplier
+    const val RemoteGeneralGroup = 40 * remoteIdMultiplier
 
-    const val REMOTE_UNKNOWN = 5 * remoteIdMultiplier
-    const val REMOTE_UNKNOWN_GROUP = 50 * remoteIdMultiplier
+    const val RemoteUnknown = 5 * remoteIdMultiplier
+    const val RemoteUnknownGroup = 50 * remoteIdMultiplier
 }
 
 /**
@@ -270,20 +270,20 @@ object NotificationChannels {
          * Name: Download status
          * Description: Notifications that reflect the current state of a download: pending, active, completed, or failed
          */
-        const val DOWNLOAD_STATUS_NOTIFICATION_CHANNEL_ID = "$channelPrefix.download"
+        const val DownloadStatusNotifChannelId = "$channelPrefix.download"
 
         /**
          * Name: Verification status
          * Description: Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.
          * MD5 checksums for downloaded files are verified to ensure the file hasn't been tampered with, and is a valid update file.
          */
-        const val VERIFICATION_STATUS_NOTIFICATION_CHANNEL_ID = "$channelPrefix.verification"
+        const val VerificationStatusNotifChannelId = "$channelPrefix.verification"
 
         /**
          * Name: Installation status
          * Description: Get notified if an update was successfully installed or not
          */
-        const val INSTALLATION_STATUS_NOTIFICATION_CHANNEL_ID = "$channelPrefix.installation"
+        const val InstallationStatusNotifChannelId = "$channelPrefix.installation"
     }
 
     object PushNotificationsGroup {
@@ -297,25 +297,25 @@ object NotificationChannels {
          * Name: System update available
          * Description: Get notified when there's a new update available for your selected device & update method
          */
-        const val UPDATE_NOTIFICATION_CHANNEL_ID = "$channelPrefix.update"
+        const val UpdateNotifChannelId = "$channelPrefix.update"
 
         /**
          * Name: News article published
          * Description: Get notified when we publish a news article
          */
-        const val NEWS_NOTIFICATION_CHANNEL_ID = "$channelPrefix.news"
+        const val NewsNotifChannelId = "$channelPrefix.news"
 
         /**
          * Name: New device supported
          * Description: Get notified when the app adds support for a new device
          */
-        const val DEVICE_NOTIFICATION_CHANNEL_ID = "$channelPrefix.device"
+        const val DeviceNotifChannelId = "$channelPrefix.device"
 
         /**
          * Name: General
          * Description: General notifications that don't fit into other categories
          */
-        const val GENERAL_NOTIFICATION_CHANNEL_ID = "$channelPrefix.general"
+        const val GeneralNotifChannelId = "$channelPrefix.general"
     }
 
     object MiscellaneousGroup {
@@ -339,9 +339,9 @@ object NotificationChannels {
             """,
             level = DeprecationLevel.WARNING
         )
-        const val OTA_FILENAME_SUBMITTED_NOTIFICATION_CHANNEL_ID = "$channelPrefix.filename"
+        const val OtaFilenameSubmittedNotifChannelId = "$channelPrefix.filename"
 
-        const val OTA_URL_SUBMITTED_NOTIFICATION_CHANNEL_ID = "$channelPrefix.url"
+        const val OtaUrlSubmittedNotifChannelId = "$channelPrefix.url"
     }
 
     /**
@@ -356,7 +356,7 @@ object NotificationChannels {
         """,
         level = DeprecationLevel.WARNING
     )
-    const val OLD_PUSH_NOTIFICATION_CHANNEL_ID = "com.oxygenupdater.internal.notifications"
+    const val OldPushNotifChannelId = "com.oxygenupdater.internal.notifications"
 
     /**
      * **Note: don't ever change this string's value**
@@ -369,5 +369,5 @@ object NotificationChannels {
         """,
         level = DeprecationLevel.WARNING
     )
-    const val OLD_PROGRESS_NOTIFICATION_CHANNEL_ID = "com.oxygenupdater.progress"
+    const val OldProgressNotifChannelId = "com.oxygenupdater.progress"
 }

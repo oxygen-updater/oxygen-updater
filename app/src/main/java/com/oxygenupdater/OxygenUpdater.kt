@@ -80,7 +80,7 @@ class OxygenUpdater : Application() {
         }
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
-        PrefManager.putInt(PrefManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
+        PrefManager.putInt(PrefManager.KeyVersionCode, BuildConfig.VERSION_CODE)
         SqliteMigrations.deleteLocalBillingDatabase(this)
     }
 
@@ -145,7 +145,7 @@ class OxygenUpdater : Application() {
      */
     fun setupCrashReporting(
         shouldShareLogs: Boolean = PrefManager.getBoolean(
-            PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+            PrefManager.KeyShareAnalyticsAndLogs,
             true
         ),
     ) {
@@ -166,19 +166,14 @@ class OxygenUpdater : Application() {
         val isNetworkAvailable = _isNetworkAvailable.asStateFlow()
 
         // Test devices for ads.
-        private val ADS_TEST_DEVICES = mutableListOf(
+        private val AdsTestDevices = mutableListOf(
             AdRequest.DEVICE_ID_EMULATOR
         )
 
-        // Permissions constants
-        const val PERMISSION_REQUEST_CODE = 200
-
-        const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
-        const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
-        const val UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build"
-        const val NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR"
-        const val SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR"
-        const val APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR"
+        const val UnableToFindAMoreRecentBuild = "unable to find a more recent build"
+        const val NetworkConnectionError = "NETWORK_CONNECTION_ERROR"
+        const val ServerMaintenanceError = "SERVER_MAINTENANCE_ERROR"
+        const val AppOutdatedError = "APP_OUTDATED_ERROR"
 
         fun buildAdRequest(): AdRequest = AdRequest.Builder().build()
     }

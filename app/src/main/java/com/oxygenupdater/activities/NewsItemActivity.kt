@@ -36,6 +36,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.LogoNotification
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.ui.CollapsingAppBar
@@ -46,7 +47,6 @@ import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.news.NewsItemScreen
 import com.oxygenupdater.ui.news.NewsItemViewModel
-import com.oxygenupdater.ui.onboarding.NOT_SET_L
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.viewmodels.BillingViewModel
@@ -56,7 +56,7 @@ import kotlin.concurrent.schedule
 
 @OptIn(ExperimentalMaterial3Api::class)
 class NewsItemActivity : SupportActionBarActivity(
-    MainActivity.PAGE_NEWS,
+    MainActivity.PageNews,
     R.string.news
 ) {
 
@@ -64,7 +64,7 @@ class NewsItemActivity : SupportActionBarActivity(
     private val billingViewModel by viewModel<BillingViewModel>()
 
     private var shouldDelayAdStart = false
-    private var newsItemId = NOT_SET_L
+    private var newsItemId = NotSetL
 
     private val fullScreenAdContentCallback = if (BuildConfig.DEBUG) object : FullScreenContentCallback() {
         override fun onAdDismissedFullScreenContent() = logDebug(TAG, "Interstitial ad was dismissed")
@@ -128,7 +128,7 @@ class NewsItemActivity : SupportActionBarActivity(
     override fun Content(modifier: Modifier) {
         // Ads should be shown if user hasn't bought the ad-free unlock
         val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            PrefManager.getBoolean(PrefManager.PROPERTY_AD_FREE, false)
+            PrefManager.getBoolean(PrefManager.KeyAdFree, false)
         ).value
 
         val state by viewModel.state.collectAsStateWithLifecycle()
@@ -180,9 +180,9 @@ class NewsItemActivity : SupportActionBarActivity(
         // However, if the URL is clicked outside of the app, Android adds a "browser_id" extra,
         // which is set to the app's package name. So we need to explicitly check if the extras
         // we want (NEWS_ITEM_ID) or (DELAY_AD_START) are present.
-        intent.hasExtra(INTENT_NEWS_ITEM_ID) || intent.hasExtra(INTENT_DELAY_AD_START) -> {
-            shouldDelayAdStart = intent.getBooleanExtra(INTENT_DELAY_AD_START, false)
-            newsItemId = intent.getLongExtra(INTENT_NEWS_ITEM_ID, NOT_SET_L)
+        intent.hasExtra(IntentNewsItemId) || intent.hasExtra(IntentDelayAdStart) -> {
+            shouldDelayAdStart = intent.getBooleanExtra(IntentDelayAdStart, false)
+            newsItemId = intent.getLongExtra(IntentNewsItemId, NotSetL)
             newsItemId >= 0L
         }
 
@@ -193,20 +193,20 @@ class NewsItemActivity : SupportActionBarActivity(
             when (data.scheme) {
                 "http", "https" -> {
                     val path = data.path ?: return@let false
-                    val groupValues = LINK_PATH_REGEX.matchEntire(path)?.groupValues ?: return@let false
+                    val groupValues = LinkPathRegex.matchEntire(path)?.groupValues ?: return@let false
                     newsItemId = if (groupValues.size > 1) try {
                         groupValues[1].toLong()
                     } catch (e: NumberFormatException) {
-                        NOT_SET_L
+                        NotSetL
                     } else return@let false
                     newsItemId >= 0L
                 }
                 // oxygenupdater://news/<id>
                 "oxygenupdater" -> {
                     newsItemId = try {
-                        data.lastPathSegment?.toLong() ?: NOT_SET_L
+                        data.lastPathSegment?.toLong() ?: NotSetL
                     } catch (e: NumberFormatException) {
-                        NOT_SET_L
+                        NotSetL
                     }
                     newsItemId >= 0L
                 }
@@ -241,14 +241,14 @@ class NewsItemActivity : SupportActionBarActivity(
          * https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
          * https://oxygenupdater.com/article/<id>/
          */
-        private val LINK_PATH_REGEX = "^/(?:api/[v\\d.]+/news-content|article)/(\\d+)/?.*".toRegex(
+        private val LinkPathRegex = "^/(?:api/[v\\d.]+/news-content|article)/(\\d+)/?.*".toRegex(
             RegexOption.IGNORE_CASE
         )
 
         var item by mutableStateOf<NewsItem?>(null)
             internal set
 
-        const val INTENT_NEWS_ITEM_ID = "NEWS_ITEM_ID"
-        const val INTENT_DELAY_AD_START = "DELAY_AD_START"
+        const val IntentNewsItemId = "NEWS_ITEM_ID"
+        const val IntentDelayAdStart = "DELAY_AD_START"
     }
 }

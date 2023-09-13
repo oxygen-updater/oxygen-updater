@@ -121,7 +121,7 @@ private fun DeviceChooser(
         deviceSelectionEnabled,
         Icons.Rounded.PhoneAndroid, R.string.settings_device,
         if (deviceSelectionEnabled) PrefManager.getString(
-            PrefManager.PROPERTY_DEVICE, notSelected
+            PrefManager.KeyDevice, notSelected
         ) ?: notSelected else stringResource(R.string.summary_please_wait),
     ) { showSheet = true }
 
@@ -130,7 +130,7 @@ private fun DeviceChooser(
             hide,
             enabledDevices, initialDeviceIndex,
             R.string.settings_device, R.string.onboarding_device_chooser_caption,
-            PrefManager.PROPERTY_DEVICE_ID,
+            PrefManager.KeyDeviceId,
             deviceChanged
         )
     }
@@ -151,7 +151,7 @@ private fun MethodChooser(
         methodSelectionEnabled,
         Icons.Outlined.CloudDownload, R.string.settings_update_method,
         if (methodSelectionEnabled) PrefManager.getString(
-            PrefManager.PROPERTY_UPDATE_METHOD, notSelected
+            PrefManager.KeyUpdateMethod, notSelected
         ) ?: notSelected else stringResource(R.string.summary_update_method),
     ) { showSheet = true }
 
@@ -160,7 +160,7 @@ private fun MethodChooser(
             hide,
             methodsForDevice, initialMethodIndex,
             R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
-            PrefManager.PROPERTY_UPDATE_METHOD_ID,
+            PrefManager.KeyUpdateMethodId,
             methodChanged
         )
     }
@@ -273,5 +273,5 @@ fun PreviewOnboardingScreen() = PreviewAppTheme {
     )
 }
 
-const val NOT_SET = -1
-const val NOT_SET_L = -1L
+const val NotSet = -1
+const val NotSetL = -1L
