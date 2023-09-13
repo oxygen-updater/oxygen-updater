@@ -123,12 +123,12 @@ class MainViewModel(
     ) { download, verification ->
         val infoAndStatus = if (download.isNotEmpty()) download[0].let {
             val status = when (it.state) {
-                State.ENQUEUED, State.BLOCKED -> DownloadStatus.DOWNLOAD_QUEUED
-                State.RUNNING -> DownloadStatus.DOWNLOADING
-                State.SUCCEEDED -> DownloadStatus.DOWNLOAD_COMPLETED
+                State.ENQUEUED, State.BLOCKED -> DownloadStatus.DownloadQueued
+                State.RUNNING -> DownloadStatus.Downloading
+                State.SUCCEEDED -> DownloadStatus.DownloadCompleted
                 State.FAILED -> if (it.outputData.getInt(WorkDataDownloadFailureType, NotSet) != NotSet) {
-                    DownloadStatus.NOT_DOWNLOADING
-                } else DownloadStatus.DOWNLOAD_FAILED
+                    DownloadStatus.NotDownloading
+                } else DownloadStatus.DownloadFailed
 
                 // Downloads are paused by cancelling work (we're tracking `bytesDone` and sending a `Range` header for
                 // resume operations). The only place from where the user can cancel the download is the action button,
@@ -136,28 +136,28 @@ class MainViewModel(
                 // in UpdateInformationFragment's downloadAction callback right after pausing/cancelling work.
                 State.CANCELLED -> {
                     val pause = cancelShouldPauseDownload.getAndSet(false) // reset to initial value
-                    if (pause) DownloadStatus.DOWNLOAD_PAUSED else DownloadStatus.NOT_DOWNLOADING
+                    if (pause) DownloadStatus.DownloadPaused else DownloadStatus.NotDownloading
                 }
             }
             WorkInfoWithStatus(it, status)
         } else if (verification.isNotEmpty()) verification[0].let {
             val status = when (it.state) {
-                State.ENQUEUED, State.BLOCKED, State.RUNNING -> DownloadStatus.VERIFYING
-                State.SUCCEEDED -> DownloadStatus.VERIFICATION_COMPLETED
-                State.FAILED, State.CANCELLED -> DownloadStatus.VERIFICATION_FAILED
+                State.ENQUEUED, State.BLOCKED, State.RUNNING -> DownloadStatus.Verifying
+                State.SUCCEEDED -> DownloadStatus.VerificationCompleted
+                State.FAILED, State.CANCELLED -> DownloadStatus.VerificationFailed
             }
             WorkInfoWithStatus(it, status)
-        } else return@combine WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
+        } else return@combine WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
 
         val status = infoAndStatus.downloadStatus
         // Post value only if it's changed, or if status is DOWNLOADING (because we need to update views for progress)
-        if (status != lastDownloadStatus || status == DownloadStatus.DOWNLOADING) infoAndStatus.also {
+        if (status != lastDownloadStatus || status == DownloadStatus.Downloading) infoAndStatus.also {
             lastDownloadStatus = status
-        } else WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
+        } else WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = WorkInfoWithStatus(null, DownloadStatus.NOT_DOWNLOADING)
+        initialValue = WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
     )
 
     private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.IO) {

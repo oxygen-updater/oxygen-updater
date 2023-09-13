@@ -24,15 +24,14 @@ import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.rememberCallback
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOADING
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_COMPLETED
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_FAILED
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_PAUSED
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_QUEUED
-import com.oxygenupdater.ui.update.DownloadStatus.NOT_DOWNLOADING
-import com.oxygenupdater.ui.update.DownloadStatus.VERIFICATION_COMPLETED
-import com.oxygenupdater.ui.update.DownloadStatus.VERIFICATION_FAILED
-import com.oxygenupdater.ui.update.DownloadStatus.VERIFYING
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadCompleted
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadPaused
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadQueued
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.Downloading
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationCompleted
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.Verifying
 import com.oxygenupdater.utils.LocalNotifications
 import java.io.IOException
 import java.util.UUID
@@ -72,7 +71,94 @@ fun downloadButtonConfig(
     }
 
     return when (downloadStatus) {
-        NOT_DOWNLOADING -> {
+        DownloadFailed -> DownloadButtonConfig(
+            titleResId = R.string.download,
+            details = stringResource(R.string.download_failed),
+            sizeOrProgressText = context.formatFileSize(downloadSize),
+            progress = null,
+            actionButtonConfig = null,
+            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
+        ).also {
+            previousProgress = null
+            previousProgressText = null
+        }
+
+        DownloadQueued, Downloading -> {
+            val (bytesDone, totalBytes, currentProgress, downloadEta) = workProgress ?: WorkProgress(
+                NotSetL, NotSetL, 0, null,
+            )
+
+            val sizeOrProgressText = if (bytesDone != NotSetL && totalBytes != NotSetL) {
+                val bytesDoneStr = context.formatFileSize(bytesDone)
+                val totalBytesStr = context.formatFileSize(totalBytes)
+                "$bytesDoneStr / $totalBytesStr ($currentProgress%)"
+            } else previousProgressText ?: context.formatFileSize(downloadSize)
+            previousProgressText = sizeOrProgressText
+
+            val progress = if (currentProgress == NotSet) NotSetF else currentProgress / 100f
+            previousProgress = progress
+
+            DownloadButtonConfig(
+                titleResId = R.string.downloading,
+                details = downloadEta ?: stringResource(R.string.summary_please_wait),
+                sizeOrProgressText = sizeOrProgressText,
+                progress = progress,
+                actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
+                onDownloadClick = { downloadAction(DownloadAction.Pause) },
+            )
+        }
+
+        DownloadPaused -> DownloadButtonConfig(
+            titleResId = R.string.paused,
+            details = stringResource(R.string.download_progress_text_paused),
+            sizeOrProgressText = previousProgressText ?: context.formatFileSize(downloadSize),
+            progress = previousProgress,
+            actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
+            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
+        )
+
+        DownloadCompleted, VerificationCompleted -> DownloadButtonConfig(
+            titleResId = R.string.downloaded,
+            details = null,
+            sizeOrProgressText = context.formatFileSize(downloadSize),
+            progress = null,
+            actionButtonConfig = Triple(false, Icons.AutoMirrored.Rounded.Launch, MaterialTheme.colorScheme.primary),
+            onDownloadClick = showAlreadyDownloadedSheet,
+        ).also {
+            // Open install guide automatically, but only after the normal download flow completes
+            LaunchedEffect(Unit) {
+                if (previousProgress != null) context.startInstallActivity(false)
+                previousProgress = null
+                previousProgressText = null
+            }
+        }
+
+        Verifying -> DownloadButtonConfig(
+            titleResId = R.string.download_verifying,
+            details = stringResource(R.string.download_progress_text_verifying),
+            sizeOrProgressText = context.formatFileSize(downloadSize),
+            progress = NotSetF,
+            actionButtonConfig = null,
+            onDownloadClick = null,
+        )
+
+        VerificationFailed -> DownloadButtonConfig(
+            titleResId = R.string.download_verifying_error,
+            details = stringResource(R.string.download_notification_error_corrupt),
+            sizeOrProgressText = context.formatFileSize(downloadSize),
+            progress = null,
+            actionButtonConfig = null,
+            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
+        ).also { config ->
+            previousProgress = null
+            previousProgressText = null
+            setDownloadErrorDialogParams(DownloadErrorParams(context.getString(R.string.download_error_corrupt)) {
+                setCanShowDownloadErrorDialog()
+                config.onDownloadClick?.invoke()
+            })
+        }
+
+        else -> { // covers NotDownloading
             previousProgress = null
             previousProgressText = null
 
@@ -125,93 +211,6 @@ fun downloadButtonConfig(
                 actionButtonConfig = null,
                 onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
             )
-        }
-
-        DOWNLOAD_FAILED -> DownloadButtonConfig(
-            titleResId = R.string.download,
-            details = stringResource(R.string.download_failed),
-            sizeOrProgressText = context.formatFileSize(downloadSize),
-            progress = null,
-            actionButtonConfig = null,
-            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
-        ).also {
-            previousProgress = null
-            previousProgressText = null
-        }
-
-        DOWNLOAD_QUEUED, DOWNLOADING -> {
-            val (bytesDone, totalBytes, currentProgress, downloadEta) = workProgress ?: WorkProgress(
-                NotSetL, NotSetL, 0, null,
-            )
-
-            val sizeOrProgressText = if (bytesDone != NotSetL && totalBytes != NotSetL) {
-                val bytesDoneStr = context.formatFileSize(bytesDone)
-                val totalBytesStr = context.formatFileSize(totalBytes)
-                "$bytesDoneStr / $totalBytesStr ($currentProgress%)"
-            } else previousProgressText ?: context.formatFileSize(downloadSize)
-            previousProgressText = sizeOrProgressText
-
-            val progress = if (currentProgress == NotSet) NotSetF else currentProgress / 100f
-            previousProgress = progress
-
-            DownloadButtonConfig(
-                titleResId = R.string.downloading,
-                details = downloadEta ?: stringResource(R.string.summary_please_wait),
-                sizeOrProgressText = sizeOrProgressText,
-                progress = progress,
-                actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
-                onDownloadClick = { downloadAction(DownloadAction.Pause) },
-            )
-        }
-
-        DOWNLOAD_PAUSED -> DownloadButtonConfig(
-            titleResId = R.string.paused,
-            details = stringResource(R.string.download_progress_text_paused),
-            sizeOrProgressText = previousProgressText ?: context.formatFileSize(downloadSize),
-            progress = previousProgress,
-            actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
-            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
-        )
-
-        DOWNLOAD_COMPLETED, VERIFICATION_COMPLETED -> DownloadButtonConfig(
-            titleResId = R.string.downloaded,
-            details = null,
-            sizeOrProgressText = context.formatFileSize(downloadSize),
-            progress = null,
-            actionButtonConfig = Triple(false, Icons.AutoMirrored.Rounded.Launch, MaterialTheme.colorScheme.primary),
-            onDownloadClick = showAlreadyDownloadedSheet,
-        ).also {
-            // Open install guide automatically, but only after the normal download flow completes
-            LaunchedEffect(Unit) {
-                if (previousProgress != null) context.startInstallActivity(false)
-                previousProgress = null
-                previousProgressText = null
-            }
-        }
-
-        VERIFYING -> DownloadButtonConfig(
-            titleResId = R.string.download_verifying,
-            details = stringResource(R.string.download_progress_text_verifying),
-            sizeOrProgressText = context.formatFileSize(downloadSize),
-            progress = NotSetF,
-            actionButtonConfig = null,
-            onDownloadClick = null,
-        )
-
-        VERIFICATION_FAILED -> DownloadButtonConfig(
-            titleResId = R.string.download_verifying_error,
-            details = stringResource(R.string.download_notification_error_corrupt),
-            sizeOrProgressText = context.formatFileSize(downloadSize),
-            progress = null,
-            actionButtonConfig = null,
-            onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
-        ).also { config ->
-            previousProgress = null
-            previousProgressText = null
-            setDownloadErrorDialogParams(DownloadErrorParams(context.getString(R.string.download_error_corrupt)) {
-                setCanShowDownloadErrorDialog()
-                config.onDownloadClick?.invoke()
-            })
         }
     }
 }

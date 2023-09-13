@@ -45,7 +45,7 @@ value class DownloadFailure(val value: Int) {
 
         /** If an [java.io.IOException] is thrown while downloading/writing the file */
         @Stable
-        val ConnectionError = DownloadFailure(2)
+        val ConnectionError = DownloadFailure(3)
 
         /**
          * If the Retrofit response returns unsuccessfully, i.e. an HTTP code that does not lie between 200 and 300.
@@ -53,17 +53,17 @@ value class DownloadFailure(val value: Int) {
          * (e.g. when OnePlus pulls an update, or a human error while adding update data)
          */
         @Stable
-        val UnsuccessfulResponse = DownloadFailure(3)
+        val UnsuccessfulResponse = DownloadFailure(4)
 
         /**
          * If the temporary downloaded file can't be copied to the root directory of internal storage
          */
         @Stable
-        val CouldNotMoveTempFile = DownloadFailure(4)
+        val CouldNotMoveTempFile = DownloadFailure(5)
 
         /** Unknown error */
         @Stable
-        val Unknown = DownloadFailure(5)
+        val Unknown = DownloadFailure(6)
 
         // If new failures are added, adjust show download link logic in UpdateInformationContent.kt
     }

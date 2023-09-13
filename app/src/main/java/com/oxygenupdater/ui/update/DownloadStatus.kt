@@ -1,47 +1,72 @@
 package com.oxygenupdater.ui.update
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 @Immutable
-enum class DownloadStatus {
+@JvmInline
+value class DownloadStatus(val value: Int) {
 
-    /** No update is being downloaded and the update has not been downloaded yet */
-    NOT_DOWNLOADING,
+    override fun toString() = when (this) {
+        NotDownloading -> "NotDownloading"
+        DownloadQueued -> "DownloadQueued"
+        Downloading -> "Downloading"
+        DownloadPaused -> "DownloadPaused"
+        DownloadCompleted -> "DownloadCompleted"
+        DownloadFailed -> "DownloadFailed"
+        Verifying -> "Verifying"
+        VerificationCompleted -> "VerificationCompleted"
+        VerificationFailed -> "VerificationFailed"
+        else -> "Invalid"
+    }
 
-    /** The download is in the queue of the download executor, it will start soon */
-    DOWNLOAD_QUEUED,
+    companion object {
+        /** No update is being downloaded and the update has not been downloaded yet */
+        @Stable
+        val NotDownloading = DownloadStatus(0)
 
-    /** The download is in progress */
-    DOWNLOADING,
+        /** The download is in the queue of the download executor, it will start soon */
+        @Stable
+        val DownloadQueued = DownloadStatus(1)
 
-    /** The download has been paused by the user */
-    DOWNLOAD_PAUSED,
+        /** The download is in progress */
+        @Stable
+        val Downloading = DownloadStatus(2)
 
-    /** The file has been successfully downloaded */
-    DOWNLOAD_COMPLETED,
+        /** The download has been paused by the user */
+        @Stable
+        val DownloadPaused = DownloadStatus(3)
 
-    /** The file could not be downloaded */
-    DOWNLOAD_FAILED,
+        /** The file has been successfully downloaded */
+        @Stable
+        val DownloadCompleted = DownloadStatus(4)
 
-    /** The downloaded file's MD5 checksum is being verified */
-    VERIFYING,
+        /** The file could not be downloaded */
+        @Stable
+        val DownloadFailed = DownloadStatus(5)
 
-    /** The downloaded file's MD5 checksum has been verified */
-    VERIFICATION_COMPLETED,
+        /** The downloaded file's MD5 checksum is being verified */
+        @Stable
+        val Verifying = DownloadStatus(6)
 
-    /** The downloaded file's MD5 checksum could not be verified */
-    VERIFICATION_FAILED;
+        /** The downloaded file's MD5 checksum has been verified */
+        @Stable
+        val VerificationCompleted = DownloadStatus(7)
+
+        /** The downloaded file's MD5 checksum could not be verified */
+        @Stable
+        val VerificationFailed = DownloadStatus(8)
+    }
 
     val successful
-        get() = this == DOWNLOAD_COMPLETED || this == VERIFICATION_COMPLETED
+        get() = this == DownloadCompleted || this == VerificationCompleted
 
     val failed
-        get() = this == DOWNLOAD_FAILED || this == VERIFICATION_FAILED
+        get() = this == DownloadFailed || this == VerificationFailed
 
     val inProgress
-        get() = this == DOWNLOAD_QUEUED || this == DOWNLOADING
+        get() = this == DownloadQueued || this == Downloading
 }

@@ -85,9 +85,9 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.positive
-import com.oxygenupdater.ui.update.DownloadStatus.DOWNLOAD_FAILED
-import com.oxygenupdater.ui.update.DownloadStatus.NOT_DOWNLOADING
-import com.oxygenupdater.ui.update.DownloadStatus.VERIFICATION_FAILED
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.NotDownloading
+import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import java.util.UUID
@@ -165,7 +165,7 @@ fun UpdateAvailable(
             )
         }
 
-        if (downloadStatus == VERIFICATION_FAILED || (downloadStatus == DOWNLOAD_FAILED && failureType.let {
+        if (downloadStatus == VerificationFailed || (downloadStatus == DownloadFailed && failureType.let {
                 // Note: show download link only if failure is any of these:
                 // - NullUpdateDataOrDownloadUrl
                 // - DownloadUrlInvalidScheme
@@ -486,7 +486,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
                 systemIsUpToDate = false,
             )
         },
-        downloadStatus = NOT_DOWNLOADING,
+        downloadStatus = NotDownloading,
         failureType = null,
         workProgress = null,
         forceDownloadErrorDialog = false,

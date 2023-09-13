@@ -82,17 +82,17 @@ fun UpdateScreen(
 
                 DownloadAction.Pause -> {
                     pauseDownload()
-                    downloadStatus = DownloadStatus.DOWNLOAD_PAUSED
+                    downloadStatus = DownloadStatus.DownloadPaused
                 }
 
                 DownloadAction.Cancel -> {
                     cancelDownload(filename)
-                    downloadStatus = DownloadStatus.NOT_DOWNLOADING
+                    downloadStatus = DownloadStatus.NotDownloading
                 }
 
                 DownloadAction.Delete -> {
                     // Change status only if the file was successfully deleted
-                    if (deleteDownload(filename)) downloadStatus = DownloadStatus.NOT_DOWNLOADING
+                    if (deleteDownload(filename)) downloadStatus = DownloadStatus.NotDownloading
                 }
             }
         }, logDownloadError)
@@ -117,22 +117,22 @@ private fun correctStatus(
     filename: String?,
 ) = if (checkDownloadCompleted(filename)) {
     logDebug(TAG, "$filename exists; setting status to COMPLETED")
-    DownloadStatus.DOWNLOAD_COMPLETED
+    DownloadStatus.DownloadCompleted
 } else when (status) {
     // If previous condition was false, file doesn't exist, so make sure we correct existing status
     // (e.g. user manually deleted the file and switched back to the app)
-    DownloadStatus.DOWNLOAD_COMPLETED -> {
+    DownloadStatus.DownloadCompleted -> {
         logDebug(TAG, "$filename does not exist; setting status to NOT_DOWNLOADING")
-        DownloadStatus.NOT_DOWNLOADING
+        DownloadStatus.NotDownloading
     }
     // Correct initial status by checking for pause status (e.g. user paused and exited the app, then returned later)
-    DownloadStatus.NOT_DOWNLOADING, DownloadStatus.DOWNLOAD_PAUSED -> if (checkDownloadPaused(context, filename)) {
+    DownloadStatus.NotDownloading, DownloadStatus.DownloadPaused -> if (checkDownloadPaused(context, filename)) {
         logDebug(TAG, "Temporary $filename exists; setting status to PAUSED")
         // Temp file exists; download was in progress but paused by user
-        DownloadStatus.DOWNLOAD_PAUSED
+        DownloadStatus.DownloadPaused
     } else {
         logDebug(TAG, "Temporary $filename does not exist; setting status to NOT_DOWNLOADING")
-        DownloadStatus.NOT_DOWNLOADING
+        DownloadStatus.NotDownloading
     }
 
     else -> {
