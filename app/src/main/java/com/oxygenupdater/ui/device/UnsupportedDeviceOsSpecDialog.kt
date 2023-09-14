@@ -19,12 +19,13 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun UnsupportedDeviceOsSpecDialog(spec: DeviceOsSpec) {
+fun UnsupportedDeviceOsSpecDialog(show: Boolean, hide: () -> Unit, spec: DeviceOsSpec) {
+    if (spec == DeviceOsSpec.SupportedOxygenOs) return
+
     var ignore by remember { mutableStateOf(false) }
-    var show by remember(spec) { mutableStateOf(spec != DeviceOsSpec.SupportedOxygenOs) }
     if (show) AlertDialog({
         PrefManager.putBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, ignore)
-        show = false
+        hide()
     }, R.string.unsupported_device_warning_title, stringResource(remember(spec) {
         when (spec) {
             DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.carrier_exclusive_device_warning_message
@@ -45,17 +46,17 @@ fun UnsupportedDeviceOsSpecDialog(spec: DeviceOsSpec) {
 @PreviewThemes
 @Composable
 fun PreviewCarrierExclusiveDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(DeviceOsSpec.CarrierExclusiveOxygenOs)
+    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.CarrierExclusiveOxygenOs)
 }
 
 @PreviewThemes
 @Composable
 fun PreviewUnsupportedOxygenOsDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(DeviceOsSpec.UnsupportedOxygenOs)
+    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.UnsupportedOxygenOs)
 }
 
 @PreviewThemes
 @Composable
 fun PreviewUnsupportedOsDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(DeviceOsSpec.UnsupportedOs)
+    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.UnsupportedOs)
 }

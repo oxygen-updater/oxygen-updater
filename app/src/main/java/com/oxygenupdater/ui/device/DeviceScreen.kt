@@ -120,7 +120,9 @@ private fun DeviceHeader(
                     }
                 }),
                 Modifier.padding(vertical = 8.dp),
-                MaterialTheme.colorScheme.onSurfaceVariant,
+                if (deviceOsSpec == DeviceOsSpec.SupportedOxygenOs) {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                } else MaterialTheme.colorScheme.error,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodySmall
             )
@@ -148,8 +150,8 @@ private fun DeviceHeader(
 private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
     val notSupported = deviceOsSpec != DeviceOsSpec.SupportedOxygenOs
     var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
-    if (notSupported && showUnsupportedDialog) deviceOsSpec?.let {
-        UnsupportedDeviceOsSpecDialog(it)
+    if (notSupported) deviceOsSpec?.let {
+        UnsupportedDeviceOsSpecDialog(showUnsupportedDialog, { showUnsupportedDialog = false }, it)
     }
 
     Box(Modifier.animatedClickable(notSupported) { showUnsupportedDialog = true }) {

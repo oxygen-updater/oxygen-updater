@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -183,12 +184,14 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        val showDeviceWarningDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, false)
-        val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, false)
-        if (showDeviceWarningDialog) viewModel.deviceOsSpec?.let {
-            UnsupportedDeviceOsSpecDialog(it)
+        viewModel.deviceOsSpec?.let {
+            var show by remember {
+                mutableStateOf(!PrefManager.getBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, false))
+            }
+            UnsupportedDeviceOsSpecDialog(show, { show = false }, it)
         }
 
+        val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, false)
         if (showIncorrectDeviceDialog) viewModel.deviceMismatch?.let {
             IncorrectDeviceDialog(it)
         }
