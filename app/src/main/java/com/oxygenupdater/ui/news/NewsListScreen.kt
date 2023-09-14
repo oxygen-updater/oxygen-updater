@@ -109,7 +109,7 @@ fun NewsListScreen(
         unreadCountState.intValue = if (onlyUnread) list.size else list.count { !it.readState.value }
     }
 
-    val unreadCount = unreadCountState.intValue
+    val unreadCount by remember { unreadCountState }
     Screen.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
 
     Column {
@@ -133,6 +133,10 @@ fun NewsListScreen(
                     toggleRead(it)
                     unreadCountState.intValue += if (it.readState.value) 1 else -1
                 }) {
+                    // Decrease unread count because we're making it read
+                    if (!it.readState.value) unreadCountState.intValue--
+                    it.readState.value = true
+
                     NewsItemActivity.item = it
                     openItem(it.id ?: NotSetL)
                 }
