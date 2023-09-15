@@ -206,7 +206,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = ComposeCompiler
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     buildFeatures {
@@ -248,124 +248,76 @@ ksp {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    // https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+    coreLibraryDesugaring(libs.android.desugar)
 
-    // https://github.com/Kotlin/kotlinx.coroutines/releases
-    val kotlinCoroutines = "1.7.3"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    // https://developer.android.com/jetpack/androidx/releases/annotation
-    val annotation = "1.7.0"
-    implementation("androidx.annotation:annotation:$annotation")
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.work.runtime)
 
-    // https://developer.android.com/jetpack/androidx/releases/browser
-    implementation("androidx.browser:browser:1.6.0")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
 
-    // https://developer.android.com/jetpack/androidx/releases/core
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.androidx.lifecycle.common.java8)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
-    // https://developer.android.com/jetpack/androidx/releases/lifecycle
-    val lifecycle = "2.7.0-alpha02"
-    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-livedata:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle")
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
-    // https://developer.android.com/jetpack/androidx/releases/room
-    val room = "2.5.2"
-    implementation("androidx.room:room-ktx:$room")
-    implementation("androidx.room:room-runtime:$room")
-    ksp("androidx.room:room-compiler:$room")
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.animation.graphics)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.text.google.fonts)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
-    // https://developer.android.com/jetpack/androidx/releases/preference
-    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
-    // https://developer.android.com/jetpack/androidx/releases/work
-    implementation("androidx.work:work-runtime:2.9.0-beta01")
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.accompanist.placeholder.material3)
+    implementation(libs.accompanist.webview)
 
-    // https://developer.android.com/jetpack/androidx/releases/compose#versions
-    val compose = "1.6.0-alpha05" // keep in sync with Kotlin & accompanist version
-    val composeM3 = "1.2.0-alpha07"
-    implementation("androidx.compose.animation:animation:$compose")
-    implementation("androidx.compose.animation:animation-graphics:$compose")
-    implementation("androidx.compose.foundation:foundation:$compose")
-    implementation("androidx.compose.material3:material3:$composeM3")
-    implementation("androidx.compose.material:material-icons-extended:$compose")
-    implementation("androidx.compose.runtime:runtime-livedata:$compose")
-    implementation("androidx.compose.ui:ui:$compose")
-    implementation("androidx.compose.ui:ui-text-google-fonts:$compose")
-    debugImplementation("androidx.compose.ui:ui-tooling:$compose")
-    implementation("androidx.compose.ui:ui-tooling-preview:$compose")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
+    implementation(libs.firebase.messaging.ktx)
 
-    // https://developer.android.com/jetpack/androidx/releases/activity
-    implementation("androidx.activity:activity-compose:1.8.0-beta01")
+    implementation(libs.billing)
+    implementation(libs.billing.ktx)
 
-    // https://developer.android.com/jetpack/androidx/releases/navigation#versions
-    implementation("androidx.navigation:navigation-compose:2.7.2")
+    implementation(libs.google.play.app.update)
+    implementation(libs.google.play.services.base)
+    implementation(libs.google.play.services.ads)
 
-    // https://github.com/google/accompanist#compose-versions
-    // https://github.com/google/accompanist/releases
-    val accompanist = "0.33.1-alpha" // keep in sync with Compose version
-    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanist")
-    implementation("com.google.accompanist:accompanist-permissions:$accompanist")
-    implementation("com.google.accompanist:accompanist-placeholder-material3:$accompanist")
-    implementation("com.google.accompanist:accompanist-webview:$accompanist")
+    implementation(libs.koin.android)
 
-    // https://firebase.google.com/support/release-notes/android
-    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation(libs.okhttp.logging.interceptor)
 
-    // https://developer.android.com/google/play/billing/release-notes
-    val playBilling = "5.2.1"
-    implementation("com.android.billingclient:billing:$playBilling")
-    implementation("com.android.billingclient:billing-ktx:$playBilling")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
 
-    // https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
-    implementation("com.google.android.play:app-update:2.1.0")
+    implementation(libs.coil.compose)
 
-    // https://developers.google.com/android/guides/releases
-    // https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
-    implementation("com.google.android.gms:play-services-base:18.2.0")
-    // https://developers.google.com/admob/android/rel-notes
-    implementation("com.google.android.gms:play-services-ads:22.3.0")
+    implementation(libs.libsu.core)
+    implementation(libs.libsu.nio)
+    implementation(libs.libsu.service)
 
-    // https://mvnrepository.com/artifact/io.insert-koin/koin-android
-    // https://github.com/InsertKoinIO/koin/releases
-    implementation(platform("io.insert-koin:koin-bom:3.5.0"))
-    implementation("io.insert-koin:koin-android")
-
-    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    // https://github.com/square/okhttp/blob/master/CHANGELOG.md
-    // https://square.github.io/okhttp/changelog/
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-
-    // https://github.com/square/retrofit/tags
-    // https://github.com/square/retrofit/blob/master/CHANGELOG.md
-    val retrofit = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit")
-    implementation("com.squareup.retrofit2:converter-moshi:$retrofit")
-    // https://github.com/square/moshi/blob/master/CHANGELOG.md
-    val moshi = "1.15.0"
-    implementation("com.squareup.moshi:moshi:$moshi")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
-
-    // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    // https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
-    val libsu = "5.2.1"
-    implementation("com.github.topjohnwu.libsu:core:$libsu")
-    implementation("com.github.topjohnwu.libsu:nio:$libsu")
-    implementation("com.github.topjohnwu.libsu:service:$libsu")
-
-    // https://github.com/junit-team/junit4/releases
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KotlinVersion")
-    testImplementation("io.insert-koin:koin-test")
-    testImplementation("androidx.annotation:annotation:$annotation")
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.androidx.annotation)
 }

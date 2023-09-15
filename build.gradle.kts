@@ -1,19 +1,11 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-    // https://developer.android.com/studio/releases/gradle-plugin
-    // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    id("com.android.application") version "8.1.1" apply false
-
-    // https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-    id("com.google.gms.google-services") version "4.3.15" apply false
-
-    // https://firebase.google.com/support/release-notes/android
-    id("com.google.firebase.crashlytics") version "2.9.9" apply false
-
-    id("com.google.devtools.ksp") version KspVersion apply false
-
-    id("org.jetbrains.kotlin.android") version KotlinVersion apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.google.ksp) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 tasks.register("clean").configure {
