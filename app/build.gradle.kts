@@ -276,9 +276,9 @@ dependencies {
 
     // https://developer.android.com/jetpack/androidx/releases/room
     val room = "2.5.2"
-    ksp("androidx.room:room-compiler:$room")
     implementation("androidx.room:room-ktx:$room")
     implementation("androidx.room:room-runtime:$room")
+    ksp("androidx.room:room-compiler:$room")
 
     // https://developer.android.com/jetpack/androidx/releases/preference
     implementation("androidx.preference:preference-ktx:1.2.1")
@@ -335,10 +335,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:22.3.0")
 
     // https://mvnrepository.com/artifact/io.insert-koin/koin-android
-    // https://github.com/InsertKoinIO/koin/tags
-    // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    val koin = "3.4.3"
-    implementation("io.insert-koin:koin-android:$koin")
+    // https://github.com/InsertKoinIO/koin/releases
+    implementation(platform("io.insert-koin:koin-bom:3.5.0"))
+    implementation("io.insert-koin:koin-android")
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     // https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -352,8 +351,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:$retrofit")
     // https://github.com/square/moshi/blob/master/CHANGELOG.md
     val moshi = "1.15.0"
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
     implementation("com.squareup.moshi:moshi:$moshi")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
 
     // https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
     implementation("io.coil-kt:coil-compose:2.4.0")
@@ -367,6 +366,6 @@ dependencies {
     // https://github.com/junit-team/junit4/releases
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$KotlinVersion")
-    testImplementation("io.insert-koin:koin-test:$koin")
+    testImplementation("io.insert-koin:koin-test")
     testImplementation("androidx.annotation:annotation:$annotation")
 }

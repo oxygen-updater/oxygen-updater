@@ -1,7 +1,7 @@
 package com.oxygenupdater.repositories
 
 import android.app.Activity
-import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -92,13 +92,13 @@ import kotlin.math.min
  * @see <a href="https://github.com/android/play-billing-samples/blob/3f75352320c232fc6a14526b67fef07a49cc6d17/TrivialDriveKotlin/app/src/main/java/com/sample/android/trivialdrivesample/billing/BillingRepository.kt">android/play-billing-samples@3f75352:BillingRepository.kt</a>
  */
 class BillingRepository(
-    application: Application,
+    context: Context,
 ) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
-    private val billingClient = BillingClient.newBuilder(application)
+    private val billingClient = BillingClient.newBuilder(context)
         .enablePendingPurchases()
         .setListener(this)
         .build()

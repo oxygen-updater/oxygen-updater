@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.apis.DownloadApi
+import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.internal.BooleanJsonAdapter
 import com.oxygenupdater.internal.CsvListJsonAdapter
 import com.oxygenupdater.utils.Logger.logDebug
@@ -20,6 +22,7 @@ import retrofit2.HttpException
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -35,8 +38,24 @@ const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
 const val ApiBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 const val HeaderReadTimeout = "X-Read-Timeout"
 
-fun createNetworkClient(cache: Cache) = retrofitClient(httpClient(cache))
-fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
+fun createServerApi(context: Context) = Retrofit.Builder()
+    .baseUrl(ApiBaseUrl)
+    .client(httpClient(createOkHttpCache(context)))
+    .addConverterFactory(
+        MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(BooleanJsonAdapter()) // coerce strings/numbers to boolean
+                .add(CsvListJsonAdapter())
+                .build()
+        )
+    ).build().create<ServerApi>()
+
+fun createDownloadApi() = Retrofit.Builder()
+    .baseUrl(ApiBaseUrl)
+    .client(OkHttpClient.Builder().apply {
+        if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
+    }.build())
+    .build().create<DownloadApi>()
 
 /**
  * Create a [Cache] for [OkHttpClient].
@@ -44,7 +63,7 @@ fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
  * Limit cache size to stay under quota if device is Oreo and above.
  * Otherwise, default to [DefaultCacheSize]
  */
-fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+private fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
     context.getSystemService<StorageManager>()?.run {
         try {
             val quota = getCacheQuotaBytes(getUuidForPath(context.cacheDir))
@@ -82,28 +101,6 @@ private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
 
     if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
 }.build()
-
-private fun httpClientForDownload() = OkHttpClient.Builder().apply {
-    if (BuildConfig.DEBUG) addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
-}.build()
-
-private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(ApiBaseUrl)
-    .client(httpClient)
-    .addConverterFactory(
-        MoshiConverterFactory.create(
-            Moshi.Builder()
-                .add(BooleanJsonAdapter()) // coerce strings/numbers to boolean
-                .add(CsvListJsonAdapter())
-                .build()
-        )
-    )
-    .build()
-
-private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(ApiBaseUrl)
-    .client(httpClient)
-    .build()
 
 @Suppress("RedundantSuspendModifier")
 suspend inline fun <reified R> performServerRequest(block: () -> Response<R>): R? {
