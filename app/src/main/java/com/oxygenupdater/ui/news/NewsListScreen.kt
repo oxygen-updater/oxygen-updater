@@ -251,7 +251,11 @@ private fun NewsListItem(
         }
     }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         val bodySmall = MaterialTheme.typography.bodySmall
         val authorName = item.authorName ?: "Unknown Author"
         Text(
@@ -267,7 +271,7 @@ private fun NewsListItem(
             } ?: authorName,
             Modifier
                 .padding(start = 16.dp)
-                .weight(1f)
+                .weight(1f, false)
                 .basicMarquee()
                 .withPlaceholder(refreshing, bodySmall),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
