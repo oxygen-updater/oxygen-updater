@@ -87,8 +87,8 @@ fun NewsItemScreen(
 
             var showDivider = false
             val paddingModifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
-            val textModifier = Modifier.withPlaceholder(refreshing)
             val bodySmall = MaterialTheme.typography.bodySmall
+            val textModifier = Modifier.withPlaceholder(refreshing, bodySmall)
 
             item.subtitle?.let {
                 showDivider = true

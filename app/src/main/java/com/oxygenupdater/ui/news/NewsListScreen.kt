@@ -192,16 +192,17 @@ private fun NewsListItem(
                     .requiredHeight(80.dp) // same as image
                     .padding(end = 8.dp)
             ) {
+                val titleMedium = MaterialTheme.typography.titleMedium
                 Text(
                     item.title ?: "Unknown title",
                     Modifier
-                        .withPlaceholder(refreshing)
+                        .withPlaceholder(refreshing, titleMedium)
                         .graphicsLayer {
                             if (refreshing) return@graphicsLayer
                             alpha = if (item.readState) 0.7f else 1f
                         },
                     overflow = TextOverflow.Ellipsis, maxLines = 2,
-                    style = MaterialTheme.typography.titleMedium
+                    style = titleMedium
                 )
                 AutoresizeText(
                     item.subtitle ?: "",
@@ -251,8 +252,8 @@ private fun NewsListItem(
     }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
+        val bodySmall = MaterialTheme.typography.bodySmall
         val authorName = item.authorName ?: "Unknown Author"
-
         Text(
             item.epochMilli?.let {
                 DateUtils.getRelativeTimeSpanString(
@@ -268,10 +269,10 @@ private fun NewsListItem(
                 .padding(start = 16.dp)
                 .weight(1f)
                 .basicMarquee()
-                .withPlaceholder(refreshing),
+                .withPlaceholder(refreshing, bodySmall),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
-            style = MaterialTheme.typography.bodySmall
+            style = bodySmall
         )
 
         ItemMenuOpener(refreshing, item, toggleRead)

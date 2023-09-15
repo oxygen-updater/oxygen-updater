@@ -82,52 +82,52 @@ private fun FaqItem(
     item: InAppFaq,
     last: Boolean,
     adLoaded: Boolean,
-) {
-    if (item.type == TypeCategory) Text(
+) = if (item.type == TypeCategory) {
+    val titleMedium = MaterialTheme.typography.titleMedium
+    Text(
         item.title ?: "",
         Modifier
             .padding(start = 16.dp, top = 16.dp, end = 16.dp)
-            .withPlaceholder(refreshing),
-        style = MaterialTheme.typography.titleMedium
-    ) else {
-        var expanded by remember { item.expanded }
-        IconText(
+            .withPlaceholder(refreshing, titleMedium),
+        style = titleMedium
+    )
+} else {
+    var expanded by remember { item.expanded }
+    IconText(
+        Modifier
+            .fillMaxWidth()
+            .animatedClickable { expanded = !expanded }
+            .padding(16.dp), // must be after `clickable`
+        Modifier.withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
+        icon = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+        text = item.title ?: "",
+    )
+
+    AnimatedVisibility(
+        expanded,
+        // Don't re-consume navigation bar insets
+        if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier,
+        enter = remember {
+            expandVertically(
+                spring(visibilityThreshold = IntSize.VisibilityThreshold)
+            ) + fadeIn(initialAlpha = .3f)
+        },
+        exit = remember {
+            shrinkVertically(
+                spring(visibilityThreshold = IntSize.VisibilityThreshold)
+            ) + fadeOut()
+        },
+    ) {
+        RichText(
+            item.body,
             Modifier
-                .fillMaxWidth()
-                .animatedClickable { expanded = !expanded }
-                .padding(16.dp), // must be after `clickable`
-            Modifier.withPlaceholder(refreshing),
-            icon = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
-            text = item.title ?: "",
+                .padding(start = 56.dp, end = 16.dp, bottom = 16.dp)
+                .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
+            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+    }
 
-        AnimatedVisibility(
-            expanded,
-            if (last) {
-                // Don't re-consume navigation bar insets
-                if (adLoaded) Modifier else Modifier.navigationBarsPadding()
-            } else Modifier,
-            enter = remember {
-                expandVertically(
-                    spring(visibilityThreshold = IntSize.VisibilityThreshold)
-                ) + fadeIn(initialAlpha = .3f)
-            },
-            exit = remember {
-                shrinkVertically(
-                    spring(visibilityThreshold = IntSize.VisibilityThreshold)
-                ) + fadeOut()
-            },
-        ) {
-            RichText(
-                item.body,
-                Modifier
-                    .padding(start = 56.dp, end = 16.dp, bottom = 16.dp)
-                    .withPlaceholder(refreshing),
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        if (!last) ItemDivider()
+    if (!last) ItemDivider() else {
     }
 }
 

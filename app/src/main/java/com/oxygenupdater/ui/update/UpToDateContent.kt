@@ -85,15 +85,16 @@ fun UpToDate(
 
     Box(Modifier.fillMaxWidth()) {
         val positive = MaterialTheme.colorScheme.positive
+        val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
         IconText(
             Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp),
-            Modifier.withPlaceholder(refreshing),
+            Modifier.withPlaceholder(refreshing, titleMedium),
             icon = Icons.Rounded.CheckCircleOutline,
             text = stringResource(R.string.update_information_system_is_up_to_date),
             iconTint = positive,
-            style = MaterialTheme.typography.titleMedium.copy(color = positive)
+            style = titleMedium
         )
 
         Icon(
@@ -154,8 +155,9 @@ private fun ExpandableChangelog(
     ) {
         val changelogModifier = Modifier
             .padding(start = 20.dp, end = 16.dp, bottom = 16.dp)
-            .withPlaceholder(refreshing)
+            .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium)
         if (isDifferentVersion) Column {
+            val bodySmall = MaterialTheme.typography.bodySmall
             Text(
                 stringResource(
                     R.string.update_information_different_version_changelog_notice_base,
@@ -164,9 +166,9 @@ private fun ExpandableChangelog(
                 ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
                 Modifier
                     .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)
-                    .withPlaceholder(refreshing),
+                    .withPlaceholder(refreshing, bodySmall),
                 MaterialTheme.colorScheme.onSurfaceVariant,
-                style = MaterialTheme.typography.bodySmall
+                style = bodySmall
             )
 
             updateData.Changelog(changelogModifier)

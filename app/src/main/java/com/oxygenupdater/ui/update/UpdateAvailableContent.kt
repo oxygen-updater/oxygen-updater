@@ -110,6 +110,7 @@ fun UpdateAvailable(
             .padding(vertical = 16.dp) // must be after `verticalScroll`
     ) {
         SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
+            val titleLarge = MaterialTheme.typography.titleLarge
             Text(
                 UpdateDataVersionFormatter.getFormattedVersionNumber(updateData, "").takeIf {
                     it.isNotBlank() && it != "-" && it != "null"
@@ -117,15 +118,15 @@ fun UpdateAvailable(
                     R.string.update_information_unknown_update_name,
                     defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
                 ),
-                Modifier.withPlaceholder(refreshing),
-                style = MaterialTheme.typography.titleLarge
+                Modifier.withPlaceholder(refreshing, titleLarge),
+                style = titleLarge
             )
         }
 
         updateData.Changelog(
             Modifier
                 .padding(start = 16.dp, top = 4.dp, end = 16.dp)
-                .withPlaceholder(refreshing),
+                .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
             true
         )
 
@@ -149,7 +150,7 @@ fun UpdateAvailable(
         SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
             Text(
                 stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
-                Modifier.withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing, bodySmall),
                 MaterialTheme.colorScheme.onSurfaceVariant,
                 style = bodySmall
             )
@@ -159,7 +160,7 @@ fun UpdateAvailable(
         SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
             Text(
                 stringResource(R.string.update_information_md5, updateData.md5sum ?: Build.UNKNOWN),
-                Modifier.withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing, bodySmall),
                 MaterialTheme.colorScheme.onSurfaceVariant,
                 style = bodySmall
             )

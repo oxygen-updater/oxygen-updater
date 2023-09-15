@@ -19,7 +19,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.motionEventSpy
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material3.placeholder
@@ -28,14 +30,26 @@ import com.oxygenupdater.compose.ui.theme.backgroundVariant
 import kotlin.math.ceil
 
 // TODO(compose): switch to https://github.com/fornewid/placeholder
+/**
+ * @param textStyle if not null, it assumes composable is a Text, and uses [textShape] over [RoundedCornerShape]
+ */
 @Suppress("DEPRECATION")
-fun Modifier.withPlaceholder(refreshing: Boolean) = if (!refreshing) this else composed(debugInspectorInfo {
+fun Modifier.withPlaceholder(
+    refreshing: Boolean,
+    textStyle: TextStyle? = null,
+) = if (!refreshing) this else composed(debugInspectorInfo {
     name = "withPlaceholder"
     properties["refreshing"] = refreshing
+    properties["textStyle"] = textStyle
 }) {
     placeholder(
         refreshing,
-        shape = RoundedCornerShape(2.dp),
+        shape = if (textStyle != null) {
+            val density = LocalDensity.current
+            remember(density, textStyle) {
+                textShape(density, fontSize = textStyle.fontSize, lineHeight = textStyle.lineHeight)
+            }
+        } else RoundedCornerShape(4.dp),
         highlight = PlaceholderHighlight.shimmer(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
     )
 }

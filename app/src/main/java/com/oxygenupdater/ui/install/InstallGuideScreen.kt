@@ -118,13 +118,13 @@ private fun InstallGuideItem(
         Column {
             Text(
                 item.title,
-                Modifier.withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing, typography.titleMedium),
                 style = typography.titleMedium
             )
 
             Text(
                 item.subtitle,
-                Modifier.withPlaceholder(refreshing),
+                Modifier.withPlaceholder(refreshing, typography.bodySmall),
                 contentColor,
                 style = typography.bodySmall
             )
@@ -133,10 +133,8 @@ private fun InstallGuideItem(
 
     AnimatedVisibility(
         expanded,
-        if (last) {
-            // Don't re-consume navigation bar insets
-            if (adLoaded) Modifier else Modifier.navigationBarsPadding()
-        } else Modifier,
+        // Don't re-consume navigation bar insets
+        if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier,
         enter = remember {
             expandVertically(
                 spring(visibilityThreshold = IntSize.VisibilityThreshold)
@@ -152,7 +150,7 @@ private fun InstallGuideItem(
             item.body,
             Modifier
                 .padding(start = 20.dp, end = 16.dp, bottom = 16.dp)
-                .withPlaceholder(refreshing),
+                .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
             textIndent = ListItemTextIndent,
             contentColor = contentColor,
         )
