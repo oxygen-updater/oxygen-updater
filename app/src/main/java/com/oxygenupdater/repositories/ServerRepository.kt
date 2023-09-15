@@ -121,9 +121,9 @@ class ServerRepository constructor(
         newsItemDao.getById(newsItemId)
     }
 
-    fun toggleNewsItemReadLocally(
+    suspend fun toggleNewsItemReadLocally(
         newsItem: NewsItem,
-        read: Boolean = !newsItem.readState.value,
+        read: Boolean = !newsItem.readState,
     ) = newsItemDao.toggleRead(newsItem, read)
 
     suspend fun markNewsItemRead(newsItemId: Long) = performServerRequest {

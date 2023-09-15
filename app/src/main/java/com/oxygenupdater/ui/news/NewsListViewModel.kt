@@ -44,14 +44,14 @@ class NewsListViewModel(private val serverRepository: ServerRepository) : ViewMo
     fun markAllRead() = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.markAllReadLocally()
         // Propagate to NewsListScreen
-        flow.value.forEach { it.readState.value = true }
+        flow.value.forEach { it.readState = true }
         Screen.NewsList.badge = null
         unreadCount.intValue = 0
     }
 
     fun toggleRead(
         newsItem: NewsItem,
-        newRead: Boolean = !newsItem.readState.value,
+        newRead: Boolean = !newsItem.readState,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.toggleNewsItemReadLocally(newsItem, newRead)
     }.let {}

@@ -29,7 +29,7 @@ interface NewsItemDao {
     @Transaction
     fun toggleRead(
         newsItem: NewsItem,
-        read: Boolean = !newsItem.readState.value,
+        read: Boolean = !newsItem.readState,
     ) = toggleRead(newsItem.id!!, read)
 
     @Query("UPDATE `news_item` SET `read` = 1")
@@ -39,7 +39,7 @@ interface NewsItemDao {
     @Transaction
     fun insertOrUpdate(newsItem: NewsItem) = getById(newsItem.id)?.let {
         // Make sure the `read` column isn't overwritten
-        update(newsItem.copy(read = it.readState.value))
+        update(newsItem.copy(read = it.readState))
     } ?: insert(newsItem)
 
     @Transaction

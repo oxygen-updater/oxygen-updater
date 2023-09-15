@@ -2,7 +2,9 @@ package com.oxygenupdater.models
 
 import android.os.Parcelable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
@@ -48,15 +50,16 @@ data class NewsItem(
     @Transient
     @Deprecated(
         "Don't read boolean column directly, use MutableState instead",
-        ReplaceWith("readState.value"),
+        ReplaceWith("readState"),
     )
     val read: Boolean = false,
 ) : Parcelable {
 
     @Suppress("DEPRECATION")
     @IgnoredOnParcel
-    @Ignore
-    val readState = mutableStateOf(read)
+    @get:Ignore
+    var readState by mutableStateOf(read)
+        internal set
 
     @IgnoredOnParcel
     @Ignore

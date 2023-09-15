@@ -102,11 +102,11 @@ fun NewsListScreen(
     val refreshing = state.refreshing
     var onlyUnread by rememberSaveableState("onlyUnread", false)
 
-    val data = if (onlyUnread) state.data.filterNot { it.readState.value } else state.data
+    val data = if (onlyUnread) state.data.filterNot { it.readState } else state.data
     val list = if (!refreshing) rememberSaveable(onlyUnread) { data } else data
 
     LaunchedEffect(onlyUnread) {
-        unreadCountState.intValue = if (onlyUnread) list.size else list.count { !it.readState.value }
+        unreadCountState.intValue = if (onlyUnread) list.size else list.count { !it.readState }
     }
 
     val unreadCount by remember { unreadCountState }
@@ -131,11 +131,11 @@ fun NewsListScreen(
             items(list, { it.id ?: Random.nextLong() }) {
                 NewsListItem(refreshing, it, toggleRead = {
                     toggleRead(it)
-                    unreadCountState.intValue += if (it.readState.value) 1 else -1
+                    unreadCountState.intValue += if (it.readState) 1 else -1
                 }) {
                     // Decrease unread count because we're making it read
-                    if (!it.readState.value) unreadCountState.intValue--
-                    it.readState.value = true
+                    if (!it.readState) unreadCountState.intValue--
+                    it.readState = true
 
                     NewsItemActivity.item = it
                     openItem(it.id ?: NotSetL)
@@ -183,8 +183,7 @@ private fun NewsListItem(
     onClick: () -> Unit,
 ) = Column(Modifier.clickable(!refreshing, onClick = onClick)) {
     Box {
-        val read by remember { item.readState }
-        if (!refreshing && !read) Badge(Modifier.offset(4.dp, 16.dp))
+        if (!refreshing && !item.readState) Badge(Modifier.offset(4.dp, 16.dp))
 
         Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
             Column(
@@ -199,7 +198,7 @@ private fun NewsListItem(
                         .withPlaceholder(refreshing)
                         .graphicsLayer {
                             if (refreshing) return@graphicsLayer
-                            alpha = if (read) 0.7f else 1f
+                            alpha = if (item.readState) 0.7f else 1f
                         },
                     overflow = TextOverflow.Ellipsis, maxLines = 2,
                     style = MaterialTheme.typography.titleMedium
@@ -242,7 +241,7 @@ private fun NewsListItem(
                     .withPlaceholder(refreshing)
                     .graphicsLayer {
                         if (refreshing) return@graphicsLayer
-                        alpha = if (read) 0.87f else 1f
+                        alpha = if (item.readState) 0.87f else 1f
                     },
                 placeholder = defaultImage,
                 error = defaultImage,
@@ -330,13 +329,12 @@ private fun ItemMenu(
     item: NewsItem,
     onToggleReadClick: () -> Unit,
 ) = DropdownMenu(expanded, onDismiss, offset = DpOffset(0.dp, (-40).dp)) {
-    var read by remember { item.readState }
     DropdownMenuItem(
-        if (read) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
-        if (read) R.string.news_mark_unread else R.string.news_mark_read,
+        if (item.readState) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
+        if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
     ) {
         onToggleReadClick()
-        read = !read
+        item.readState = !item.readState
 
         onDismiss()
     }
