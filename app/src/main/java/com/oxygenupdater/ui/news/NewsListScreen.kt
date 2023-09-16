@@ -132,6 +132,7 @@ fun NewsListScreen(
                 NewsListItem(refreshing, it, toggleRead = {
                     toggleRead(it)
                     unreadCountState.intValue += if (it.readState) 1 else -1
+                    it.readState = !it.readState
                 }) {
                     // Decrease unread count because we're making it read
                     if (!it.readState) unreadCountState.intValue--
@@ -339,8 +340,6 @@ private fun ItemMenu(
         if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
     ) {
         onToggleReadClick()
-        item.readState = !item.readState
-
         onDismiss()
     }
 
