@@ -1,13 +1,12 @@
-import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.gms.services)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
-    kotlin("android")
-    id("com.google.devtools.ksp")
 }
 
 fun loadProperties(
@@ -57,27 +56,21 @@ android {
         )
     }
 
-    bundle {
-        language {
-            // Because the app has an in-app language switch feature, we need
-            // to disable splitting configuration APKs for language resources.
-            // This ensures that the app won't crash if the user selects a
-            // language that isn't in their device language list.
-            // This'll obviously increase APK size significantly.
-            @Suppress("UnstableApiUsage")
-            enableSplit = false
-        }
-    }
+    // Because the app has an in-app language switch feature, we need
+    // to disable splitting configuration APKs for language resources.
+    // This ensures that the app won't crash if the user selects a
+    // language that isn't in their device language list.
+    // This'll obviously increase APK size significantly.
+    @Suppress("UnstableApiUsage")
+    bundle.language.enableSplit = false
 
-    packaging {
-        resources.excludes.addAll(
-            arrayOf(
-                "/META-INF/{NOTICE,LICENSE}.txt",
-                "/META-INF/{NOTICE,LICENSE}",
-                "/META-INF/{AL2.0,LGPL2.1}",
-            )
-        )
-    }
+    packaging.resources.excludes += setOf(
+        "{NOTICE,LICENSE}*",
+        "META-INF/{AL2.0,LGPL2.1}",
+        "META-INF/*.version",  // AndroidX version files
+        "/*.properties",
+        "META-INF/*.properties",
+    )
 
     signingConfigs {
         val keystore = loadProperties(
@@ -153,7 +146,8 @@ android {
             isShrinkResources = true
             isDebuggable = true
 
-            configure<CrashlyticsExtension> {
+            // Disable mapping.txt upload for non-release builds
+            configure<com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension> {
                 mappingFileUploadEnabled = false
             }
         }
@@ -176,49 +170,43 @@ android {
             it.buildConfigField("String", "BASE64_PUBLIC_KEY", "\"${billing["base64PublicKey"]}\"")
             it.buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
-            if (it.name != "release") {
-                it.versionNameSuffix = "-${it.name}"
-                it.applicationIdSuffix = ".${it.name}"
-                it.resValue("string", "app_name", "Oxygen Updater (${it.name})")
+            val buildName = it.name
+            if (buildName != "release") {
+                it.versionNameSuffix = "-$buildName"
+                it.applicationIdSuffix = ".$buildName"
+                it.resValue("string", "app_name", "Oxygen Updater ($buildName)")
             } else {
                 it.resValue("string", "app_name", "Oxygen Updater")
             }
 
             it.addManifestPlaceholders(
                 mapOf(
-                    "hostName" to "${if (it.name != "release") "test." else ""}oxygenupdater.com",
+                    "hostName" to "${if (buildName != "release") "test." else ""}oxygenupdater.com",
                     "advertisingAppId" to "ca-app-pub-1816831161514116~4275332954",
-                    "shortcutXml" to "@xml/shortcuts_${it.name.lowercase()}",
+                    "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
                 )
             )
         }
     }
 
     val javaVersion = JavaVersion.VERSION_17 // keep in sync with `jvmToolchain` below
+    kotlinOptions.jvmTarget = javaVersion.toString()
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = javaVersion.toString()
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
+    composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 
     buildFeatures {
         viewBinding = true
         compose = true
     }
 
-    androidResources {
-        // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
-        @Suppress("UnstableApiUsage")
-        generateLocaleConfig = true
-    }
+    // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
+    @Suppress("UnstableApiUsage")
+    androidResources.generateLocaleConfig = true
 
     testBuildType = "debug"
 }

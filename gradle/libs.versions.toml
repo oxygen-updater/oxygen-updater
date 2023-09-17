@@ -1,13 +1,13 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-androidGradlePlugin = "8.1.1"
+agp = "8.1.1"
 
 # https://firebase.google.com/support/release-notes/android
-crashlyticsPlugin = "2.9.9"
+crashlytics-plugin = "2.9.9"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-googleServicesPlugin = "4.3.15"
+google-services-plugin = "4.3.15"
 
 # https://github.com/google/ksp/releases
 ksp = "1.9.10-1.0.13"
@@ -18,11 +18,11 @@ ksp = "1.9.10-1.0.13"
 kotlin = "1.9.10"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlinCoroutines = "1.7.3"
+kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
 compose = "1.6.0-alpha05" # keep in sync with Kotlin & accompanist version
-composeM3 = "1.2.0-alpha07"
+compose-m3 = "1.2.0-alpha07"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-compiler = "1.5.3"
@@ -32,7 +32,7 @@ compose-compiler = "1.5.3"
 accompanist = "0.33.1-alpha" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activityCompose = "1.8.0-beta01"
+activity-compose = "1.8.0-beta01"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
 annotation = "1.7.0"
@@ -54,7 +54,7 @@ core-splashscreen = "1.0.1"
 desugar = "2.0.3"
 
 # https://firebase.google.com/support/release-notes/android
-firebaseBom = "32.3.1"
+firebase-bom = "32.3.1"
 
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
@@ -72,7 +72,7 @@ lifecycle = "2.7.0-alpha02"
 moshi = "1.15.0"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation#versions
-navigationCompose = "2.7.2"
+navigation-compose = "2.7.2"
 
 # https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
@@ -80,11 +80,11 @@ navigationCompose = "2.7.2"
 okhttp = "4.11.0"
 
 # https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
-playAppUpdate = "2.1.0"
+play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
-playServicesBase = "18.2.0"
+play-services-base = "18.2.0"
 # https://developers.google.com/admob/android/rel-notes
-playServicesAds = "22.4.0"
+play-services-ads = "22.4.0"
 
 # https://developer.android.com/jetpack/androidx/releases/preference
 preference = "1.2.1"
@@ -128,28 +128,28 @@ androidx-compose-animation = { module = "androidx.compose.animation:animation", 
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
-androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "composeM3" }
+androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-m3" }
 androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 
 billing = { module = "com.android.billingclient:billing", version.ref = "billing" }
 billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
 
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
 
-google-play-app-update = { module = "com.google.android.play:app-update", version.ref = "playAppUpdate" }
-google-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
-google-play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
+google-play-app-update = { module = "com.google.android.play:app-update", version.ref = "play-app-update" }
+google-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
+google-play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "play-services-base" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 
@@ -158,8 +158,8 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
 
 libsu-core = { module = "com.github.topjohnwu.libsu:core", version.ref = "libsu" }
 libsu-nio = { module = "com.github.topjohnwu.libsu:nio", version.ref = "libsu" }
@@ -172,10 +172,10 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsPlugin" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
-google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics-plugin" }
+gms-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
