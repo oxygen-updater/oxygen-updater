@@ -11,14 +11,6 @@ import kotlin.test.assertTrue
 
 abstract class SystemVersionPropertiesTest {
 
-    private val systemVersionProperties = com.oxygenupdater.models.SystemVersionProperties(
-        null,
-        null,
-        null,
-        null,
-        null,
-    )
-
     /**
      * Test if a device is supported in the app
      *
@@ -121,7 +113,7 @@ abstract class SystemVersionPropertiesTest {
 
             readBuildPropItem.isAccessible = true
 
-            val rawResult = readBuildPropItem.invoke(systemVersionProperties, key, propertyFileContents, null) as String
+            val rawResult = readBuildPropItem.invoke(SystemVersionProperties, key, propertyFileContents, null) as String
 
             if (rawResult != Build.UNKNOWN) {
                 val keyValue = rawResult.split("=")
@@ -147,7 +139,7 @@ abstract class SystemVersionPropertiesTest {
             val readBuildPropItem = SystemVersionProperties::class.java.getDeclaredMethod("readBuildPropItem", String::class.java, String::class.java, String::class.java)
 
             readBuildPropItem.isAccessible = true
-            readBuildPropItem.invoke(systemVersionProperties, key, getPropCommandOutput, null) as String
+            readBuildPropItem.invoke(SystemVersionProperties, key, getPropCommandOutput, null) as String
         } catch (e: NoSuchMethodException) {
             throw RuntimeException(e)
         } catch (e: IllegalAccessException) {

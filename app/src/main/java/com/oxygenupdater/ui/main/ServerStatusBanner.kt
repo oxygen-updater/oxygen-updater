@@ -31,7 +31,7 @@ import com.oxygenupdater.ui.theme.warn
 @Composable
 fun ServerStatusBanner(serverStatus: ServerStatus) {
     val latestAppVersion = serverStatus.latestAppVersion
-    if (latestAppVersion != null && (LocalInspectionMode.current || !serverStatus.checkIfAppIsUpToDate())) {
+    if (latestAppVersion != null && (LocalInspectionMode.current || serverStatus.shouldShowAppUpdateNotice())) {
         val context = LocalContext.current
         IconText(
             Modifier
