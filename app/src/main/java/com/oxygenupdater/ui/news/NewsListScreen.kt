@@ -131,11 +131,17 @@ fun NewsListScreen(
             items(list, { it.id ?: Random.nextLong() }) {
                 NewsListItem(refreshing, it, toggleRead = {
                     toggleRead(it)
-                    unreadCountState.intValue += if (it.readState) 1 else -1
+                    if (it.readState) unreadCountState.intValue++ else {
+                        // Coerce to at least 0, just in case there's an inconsistency
+                        if (unreadCountState.intValue > 0) unreadCountState.intValue--
+                    }
                     it.readState = !it.readState
                 }) {
                     // Decrease unread count because we're making it read
-                    if (!it.readState) unreadCountState.intValue--
+                    if (!it.readState) {
+                        // Coerce to at least 0, just in case there's an inconsistency
+                        if (unreadCountState.intValue > 0) unreadCountState.intValue--
+                    }
                     it.readState = true
 
                     NewsItemActivity.item = it
