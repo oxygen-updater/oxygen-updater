@@ -176,7 +176,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="device_information_image_description">Enhetsbilde</string>
 	<string name="device_information_incremental_os_version">Inkrementell OS-versjon:</string>
 	<string name="device_information_os_version">Android-versjon:</string>
-	<string name="device_information_oxygen_os_version">OxygenOS-versjon:</string>
+	<string name="device_information_oxygen_os_version">OS-versjon:</string>
 	<string name="device_information_oxygen_os_ota_version">OTA-versjon:</string>
 	<string name="device_information_patch_level_version">Sikkerhetsoppdateringsdato:</string>
 	<string name="device_information_serial_number">Serienummer:</string>

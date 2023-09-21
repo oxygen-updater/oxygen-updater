@@ -172,7 +172,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="device_information_image_description">Imaginea dispozitivului</string>
 	<string name="device_information_incremental_os_version">Versiunea incrementală de OS</string>
 	<string name="device_information_os_version">Versiunea de Android</string>
-	<string name="device_information_oxygen_os_version">Versiunea de OxygenOS</string>
+	<string name="device_information_oxygen_os_version">Versiunea de OS</string>
 	<string name="device_information_oxygen_os_ota_version">Versiunea OTA</string>
 	<string name="device_information_patch_level_version">Data pachetului de securitate</string>
 	<string name="device_information_serial_number">Numărul de serie</string>

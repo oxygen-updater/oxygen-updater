@@ -183,7 +183,7 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="device_information_image_description">"Image de l'appareil"</string>
 	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS:"</string>
 	<string name="device_information_os_version">"Version d'Android:"</string>
-	<string name="device_information_oxygen_os_version">"Version d'OxygenOS:"</string>
+	<string name="device_information_oxygen_os_version">"Version d'OS:"</string>
 	<string name="device_information_oxygen_os_ota_version">"Version OTA:"</string>
 	<string name="device_information_patch_level_version">"Niveau du correctif de sécurité:"</string>
 	<string name="device_information_serial_number">"Numéro de série:"</string>

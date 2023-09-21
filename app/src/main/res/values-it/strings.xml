@@ -175,7 +175,7 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="device_information_image_description">"Immagine Dispositivo"</string>
 	<string name="device_information_incremental_os_version">"Versone di sistema incrementale:"</string>
 	<string name="device_information_os_version">"Versione Android"</string>
-	<string name="device_information_oxygen_os_version">"Versione OxygenOS:"</string>
+	<string name="device_information_oxygen_os_version">"Versione OS:"</string>
 	<string name="device_information_oxygen_os_ota_version">"Versione OTA:"</string>
 	<string name="device_information_patch_level_version">"Data security patch:"</string>
 	<string name="device_information_serial_number">"Numero seriale:"</string>

@@ -186,7 +186,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="device_information_image_description">Obraz urządzenia</string>
 	<string name="device_information_incremental_os_version">Częściowa wersja systemu operacyjnego</string>
 	<string name="device_information_os_version">Wersja Androida</string>
-	<string name="device_information_oxygen_os_version">Wersja OxygenOS</string>
+	<string name="device_information_oxygen_os_version">Wersja OS</string>
 	<string name="device_information_oxygen_os_ota_version">Wersja OTA</string>
 	<string name="device_information_patch_level_version">Poziom poprawek zabezpieczeń Android</string>
 	<string name="device_information_serial_number">Numer seryjny</string>

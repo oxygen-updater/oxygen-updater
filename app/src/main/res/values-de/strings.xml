@@ -178,7 +178,7 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="device_information_image_description">"Geräte Bild"</string>
 	<string name="device_information_incremental_os_version">Inkrementelle OS Version</string>
 	<string name="device_information_os_version">"Android Version"</string>
-	<string name="device_information_oxygen_os_version">"OxygenOS Version"</string>
+	<string name="device_information_oxygen_os_version">"OS Version"</string>
 	<string name="device_information_oxygen_os_ota_version">"OTA Version"</string>
 	<string name="device_information_patch_level_version">Sicherheitspatch-Level</string>
 	<string name="device_information_serial_number">"Seriennummer"</string>

@@ -175,7 +175,7 @@
 	<string name="device_information_image_description">デバイスイメージ</string>
 	<string name="device_information_incremental_os_version">インクリメンタル OS バージョン</string>
 	<string name="device_information_os_version">Android バージョン</string>
-	<string name="device_information_oxygen_os_version">OxygenOS バージョン</string>
+	<string name="device_information_oxygen_os_version">OS バージョン</string>
 	<string name="device_information_oxygen_os_ota_version">OTA バージョン</string>
 	<string name="device_information_patch_level_version">セキュリティパッチ日時</string>
 	<string name="device_information_serial_number">シリアル番号</string>

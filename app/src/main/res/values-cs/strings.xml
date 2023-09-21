@@ -173,7 +173,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="device_information_image_description">Obrázek zařízení</string>
 	<string name="device_information_incremental_os_version">Inkrementální verze OS</string>
 	<string name="device_information_os_version">Verze systému Android</string>
-	<string name="device_information_oxygen_os_version">OxygenOS verze</string>
+	<string name="device_information_oxygen_os_version">OS verze</string>
 	<string name="device_information_oxygen_os_ota_version">OTA verze</string>
 	<string name="device_information_patch_level_version">Datum bezpečnostní záplaty</string>
 	<string name="device_information_serial_number">Sériové číslo</string>

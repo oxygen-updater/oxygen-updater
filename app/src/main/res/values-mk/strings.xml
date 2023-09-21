@@ -172,7 +172,7 @@
 	<string name="device_information_image_description">Слика од уредот</string>
 	<string name="device_information_incremental_os_version">Инкрементална верзија на ОС</string>
 	<string name="device_information_os_version">Андроид верзија</string>
-	<string name="device_information_oxygen_os_version">OxygenOS верзија</string>
+	<string name="device_information_oxygen_os_version">OS верзија</string>
 	<string name="device_information_oxygen_os_ota_version">OTA верзија</string>
 	<string name="device_information_patch_level_version">Датум на безбедносна закрпа</string>
 	<string name="device_information_serial_number">Сериски број</string>

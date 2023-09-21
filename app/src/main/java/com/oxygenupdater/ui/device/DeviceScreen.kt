@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.PermDeviceInformation
 import androidx.compose.material.icons.rounded.Security
+import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.TripOrigin
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -268,7 +269,7 @@ private fun DeviceHardwareInfo() {
             }
         }
         if (formatted != null) Item(
-            Icons.Rounded.PermDeviceInformation,
+            Icons.Rounded.Speed,
             R.string.device_information_cpu_frequency,
             stringResource(R.string.device_information_gigahertz, formatted),
         )

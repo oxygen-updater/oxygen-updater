@@ -182,7 +182,7 @@ Esto puede ser útil si quieres:"</string>
 	<string name="device_information_image_description">Imagen de dispositivo</string>
 	<string name="device_information_incremental_os_version">Versión Incremental del SO</string>
 	<string name="device_information_os_version">Versión de Android</string>
-	<string name="device_information_oxygen_os_version">Versión de OxygenOS</string>
+	<string name="device_information_oxygen_os_version">Versión de OS</string>
 	<string name="device_information_oxygen_os_ota_version">Versión de OTA</string>
 	<string name="device_information_patch_level_version">Fecha del parche de seguridad</string>
 	<string name="device_information_serial_number">Número de serie</string>

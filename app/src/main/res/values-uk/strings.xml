@@ -175,7 +175,7 @@
 	<string name="device_information_image_description">Зображення пристрою</string>
 	<string name="device_information_incremental_os_version">Номер складання</string>
 	<string name="device_information_os_version">Версія Android</string>
-	<string name="device_information_oxygen_os_version">Версія OxygenOS</string>
+	<string name="device_information_oxygen_os_version">Версія OS</string>
 	<string name="device_information_oxygen_os_ota_version">Версія ПЗ</string>
 	<string name="device_information_patch_level_version">Дата патчу безпеки</string>
 	<string name="device_information_serial_number">Серійний номер</string>

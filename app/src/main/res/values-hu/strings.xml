@@ -175,7 +175,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="device_information_image_description">Eszköz kép</string>
 	<string name="device_information_incremental_os_version">Inkrementális OS verzió</string>
 	<string name="device_information_os_version">Android verzió</string>
-	<string name="device_information_oxygen_os_version">OxygenOS verzió</string>
+	<string name="device_information_oxygen_os_version">OS verzió</string>
 	<string name="device_information_oxygen_os_ota_version">OTA verzió</string>
 	<string name="device_information_patch_level_version">Biztonsági javítás dátuma</string>
 	<string name="device_information_serial_number">Sorozatszám</string>

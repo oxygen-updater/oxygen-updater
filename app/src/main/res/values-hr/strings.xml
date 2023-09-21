@@ -180,7 +180,7 @@ Ako imate beta verziju OxygenOS izaberite (jednu od) Open Beta metoda ažuriranj
 	<string name="device_information_image_description">"Slika uređaja"</string>
 	<string name="device_information_incremental_os_version">"Inkrementalna OS verzija:"</string>
 	<string name="device_information_os_version">"Android verzija"</string>
-	<string name="device_information_oxygen_os_version">"OxygenOS verzija:"</string>
+	<string name="device_information_oxygen_os_version">"OS verzija:"</string>
 	<string name="device_information_oxygen_os_ota_version">"OTA verzija:"</string>
 	<string name="device_information_patch_level_version">"Datum security patch-a:"</string>
 	<string name="device_information_serial_number">"Serial number:"</string>
