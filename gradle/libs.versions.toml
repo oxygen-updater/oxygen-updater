@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.1.1"
+agp = "8.1.2"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "2.9.9"
@@ -21,18 +21,18 @@ kotlin = "1.9.10"
 kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.6.0-alpha05" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.0-alpha07"
+compose = "1.6.0-alpha06" # keep in sync with Kotlin & accompanist version
+compose-m3 = "1.2.0-alpha08"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-compiler = "1.5.3"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
-accompanist = "0.33.1-alpha" # keep in sync with Compose version
+accompanist = "0.33.2-alpha" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.8.0-beta01"
+activity-compose = "1.8.0-rc01"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
 annotation = "1.7.0"
@@ -72,7 +72,7 @@ lifecycle = "2.7.0-alpha02"
 moshi = "1.15.0"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation#versions
-navigation-compose = "2.7.2"
+navigation-compose = "2.7.3"
 
 # https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md

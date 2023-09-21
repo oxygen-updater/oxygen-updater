@@ -33,7 +33,6 @@ import com.oxygenupdater.ui.theme.backgroundVariant
 fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.(() -> Unit) -> Unit) {
     val colorScheme = MaterialTheme.colorScheme
     // TODO(compose/sheet): move common layouts out of *Sheet
-    // TODO(compose/bug): content behind sheet not clickable if dismissed via swipe
     ModalBottomSheet(
         hide,
         sheetState = rememberModalBottomSheetState(true),
