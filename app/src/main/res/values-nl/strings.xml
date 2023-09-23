@@ -138,10 +138,9 @@ Dit kan handig zijn als je:"</string>
 
 
 	<!-- First-time setup screen strings -->
-	<string name="onboarding">Welkom</string>
+	<string name="onboarding">Instellingen</string>
 	<string name="onboarding_finished_button">Start de app</string>
 
-	<string name="onboarding_title">Welkom bij Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Met deze app kun je:\n\n&#8226; De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n&#8226; Een \"rooted\" apparaat eenvoudig bijwerken\n&#8226; Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n&#8226; Nieuwsberichten over OxygenOS en OnePlus lezen</string>
 
 	<string name="onboarding_disclaimer">Dit is geen officiële app van OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. Door deze app te gebruiken, ga je hiermee akkoord.</string>

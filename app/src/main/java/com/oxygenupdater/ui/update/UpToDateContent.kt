@@ -9,10 +9,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -24,7 +28,8 @@ import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -43,25 +48,26 @@ import com.oxygenupdater.icons.Info
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.DeviceSoftwareInfo
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
+import com.oxygenupdater.ui.theme.PreviewWindowSize
+import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.positive
-import com.oxygenupdater.utils.UpdateDataVersionFormatter
 
 @Composable
 fun UpToDate(
+    navType: NavType,
+    windowWidthSize: WindowWidthSizeClass,
     refreshing: Boolean,
     updateData: UpdateData,
-) = Column(
-    Modifier
-        .fillMaxHeight()
-        .verticalScroll(rememberScrollState())
 ) {
     val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
     val method = PrefManager.getString(PrefManager.KeyUpdateMethod, "") ?: ""
@@ -74,44 +80,100 @@ fun UpToDate(
             // …and incoming is likely a full ZIP, or the selected update method is "full"
             // (incrementals are only for specific source/target version combos)
             && (updateData.downloadSize >= FullZipLikelyMinSize || method.endsWith("(full)") || method.endsWith("(volledig)"))
-    if (showAdvancedModeTip) {
-        IconText(
-            Modifier.padding(16.dp),
-            icon = CustomIcons.Info,
-            text = stringResource(R.string.update_information_banner_advanced_mode_tip)
-        )
+
+    if (windowWidthSize == WindowWidthSizeClass.Expanded) Column {
+        AdvancedModeTip(showAdvancedModeTip)
+
+        Row(Modifier.fillMaxWidth()) {
+            Column(
+                Modifier
+                    .width(IntrinsicSize.Max)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                val positive = MaterialTheme.colorScheme.positive
+                val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
+                IconText(
+                    Modifier.padding(16.dp),
+                    Modifier.withPlaceholder(refreshing, titleMedium),
+                    icon = Icons.Rounded.CheckCircleOutline,
+                    text = stringResource(R.string.update_information_system_is_up_to_date),
+                    iconTint = positive,
+                    style = titleMedium
+                )
+
+                ItemDivider()
+                DeviceSoftwareInfo(false)
+                ConditionalNavBarPadding(navType)
+            }
+
+            VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+
+            ChangelogContainer(
+                refreshing = refreshing,
+                updateData = updateData,
+                isDifferentVersion = isDifferentVersion,
+                showAdvancedModeTip = showAdvancedModeTip,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(top = 16.dp) // must be after `verticalScroll`
+            ) {
+                ConditionalNavBarPadding(navType)
+            }
+        }
+    } else Column(
+        Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
+        AdvancedModeTip(showAdvancedModeTip)
+
+        Box(Modifier.fillMaxWidth()) {
+            val positive = MaterialTheme.colorScheme.positive
+            val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
+            IconText(
+                Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(start = 16.dp),
+                Modifier.withPlaceholder(refreshing, titleMedium),
+                icon = Icons.Rounded.CheckCircleOutline,
+                text = stringResource(R.string.update_information_system_is_up_to_date),
+                iconTint = positive,
+                style = titleMedium
+            )
+
+            Icon(
+                Icons.Rounded.DoneAll, stringResource(R.string.icon),
+                Modifier
+                    .graphicsLayer(scaleX = 2f, scaleY = 2f, alpha = .1f)
+                    .align(Alignment.CenterEnd)
+                    .requiredSize(64.dp)
+            )
+        }
+
+        ItemDivider(Modifier.padding(top = 2.dp))
+        DeviceSoftwareInfo(false)
+        ItemDivider(Modifier.padding(top = 16.dp))
+
+        ExpandableChangelog(refreshing, updateData, isDifferentVersion, showAdvancedModeTip)
+
         ItemDivider()
+        ConditionalNavBarPadding(navType)
     }
+}
 
-    Box(Modifier.fillMaxWidth()) {
-        val positive = MaterialTheme.colorScheme.positive
-        val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
-        IconText(
-            Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 16.dp),
-            Modifier.withPlaceholder(refreshing, titleMedium),
-            icon = Icons.Rounded.CheckCircleOutline,
-            text = stringResource(R.string.update_information_system_is_up_to_date),
-            iconTint = positive,
-            style = titleMedium
-        )
+@Suppress("NOTHING_TO_INLINE")
+@Composable
+private inline fun AdvancedModeTip(show: Boolean) {
+    if (!show) return
 
-        Icon(
-            Icons.Rounded.DoneAll, stringResource(R.string.icon),
-            Modifier
-                .graphicsLayer(scaleX = 2f, scaleY = 2f, alpha = .1f)
-                .align(Alignment.CenterEnd)
-                .requiredSize(64.dp)
-        )
-    }
-
-    ItemDivider(Modifier.padding(top = 2.dp))
-    DeviceSoftwareInfo(false)
-    ItemDivider(Modifier.padding(top = 16.dp))
-
-    ExpandableChangelog(refreshing, updateData, isDifferentVersion, showAdvancedModeTip)
-
+    IconText(
+        icon = CustomIcons.Info,
+        text = stringResource(R.string.update_information_banner_advanced_mode_tip),
+        modifier = Modifier.padding(16.dp),
+    )
     ItemDivider()
 }
 
@@ -153,33 +215,22 @@ private fun ExpandableChangelog(
             ) + fadeOut()
         },
     ) {
-        val changelogModifier = Modifier
-            .padding(start = 20.dp, end = 16.dp, bottom = 16.dp)
-            .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium)
-        if (isDifferentVersion) Column {
-            val bodySmall = MaterialTheme.typography.bodySmall
-            Text(
-                stringResource(
-                    R.string.update_information_different_version_changelog_notice_base,
-                    UpdateDataVersionFormatter.getFormattedVersionNumber(updateData),
-                    PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
-                ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
-                Modifier
-                    .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)
-                    .withPlaceholder(refreshing, bodySmall),
-                MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodySmall
-            )
-
-            updateData.Changelog(changelogModifier)
-        } else updateData.Changelog(changelogModifier)
+        ChangelogContainer(
+            refreshing = refreshing,
+            updateData = updateData,
+            isDifferentVersion = isDifferentVersion,
+            showAdvancedModeTip = showAdvancedModeTip,
+        )
     }
 }
 
 @PreviewThemes
 @Composable
 fun PreviewUpToDate() = PreviewAppTheme {
+    val windowSize = PreviewWindowSize
     UpToDate(
+        navType = NavType.from(windowSize.widthSizeClass),
+        windowWidthSize = windowSize.widthSizeClass,
         refreshing = false,
         updateData = """##Personalization
 • Expands Omoji's functionality and library

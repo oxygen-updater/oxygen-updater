@@ -4,28 +4,27 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -58,6 +57,7 @@ import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.about.AboutScreen
 import com.oxygenupdater.ui.common.BannerAd
+import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.rememberTypedCallback
@@ -70,7 +70,11 @@ import com.oxygenupdater.ui.main.AppUpdateInfo
 import com.oxygenupdater.ui.main.DeviceRoute
 import com.oxygenupdater.ui.main.FlexibleAppUpdateProgress
 import com.oxygenupdater.ui.main.MainMenu
+import com.oxygenupdater.ui.main.MainNavigationBar
+import com.oxygenupdater.ui.main.MainNavigationRail
+import com.oxygenupdater.ui.main.MainScreens
 import com.oxygenupdater.ui.main.MainSnackbar
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.NewsListRoute
 import com.oxygenupdater.ui.main.NoConnectionSnackbarData
 import com.oxygenupdater.ui.main.NotificationPermission
@@ -85,6 +89,7 @@ import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.settings.adFreeConfig
 import com.oxygenupdater.ui.theme.AppTheme
+import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
 import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
@@ -142,17 +147,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private val screens = arrayOf(
-        Screen.Update,
-        Screen.NewsList,
-        Screen.Device,
-        Screen.About,
-        Screen.Settings,
-    )
-
     private val navOptions = NavOptions.Builder()
         // Pop up to the start destination to avoid polluting back stack
-        .setPopUpTo(screens.getOrNull(startPage)?.route ?: UpdateRoute, inclusive = false, saveState = true)
+        .setPopUpTo(MainScreens.getOrNull(startPage)?.route ?: UpdateRoute, inclusive = false, saveState = true)
         // Avoid multiple copies of the same destination when reselecting
         .setLaunchSingleTop(true)
         // Restore state on reselect
@@ -167,7 +164,7 @@ class MainActivity : BaseActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun Content() {
+    private fun Content(windowSize: WindowSizeClass) {
         val showDeviceBadge = viewModel.deviceOsSpec.let {
             it != null && it != DeviceOsSpec.SupportedOxygenOs
         } || viewModel.deviceMismatch.let { it != null && it.first }
@@ -215,95 +212,95 @@ class MainActivity : BaseActivity() {
             snackbarText = null
         }
 
-        Column {
-            val startScreen = remember(startPage) { screens.getOrNull(startPage) ?: Screen.Update }
+        Row {
+            val startScreen = remember(startPage) { MainScreens.getOrNull(startPage) ?: Screen.Update }
             var subtitleResId by rememberSaveableState("subtitleResId", if (startScreen.useVersionName) 0 else startScreen.labelResId)
-
             val navController = rememberNavController()
-            val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            currentRoute = navBackStackEntry?.destination?.route
+
             val openAboutScreen = rememberCallback(navController) { navController.navigateWithDefaults(AboutRoute) }
-            TopAppBar(scrollBehavior, openAboutScreen, subtitleResId) {
-                val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
-                MainMenu(serverMessages, subtitleResId == Screen.NewsList.labelResId, rememberCallback(newsListViewModel::markAllRead))
+
+            val windowWidthSize = windowSize.widthSizeClass
+            val navType = NavType.from(windowWidthSize)
+
+            AnimatedVisibility(navType == NavType.SideRail) {
+                MainNavigationRail(currentRoute, navigateTo = {
+                    navController.navigateWithDefaults(it)
+                }, openAboutScreen = openAboutScreen, setSubtitleResId = { subtitleResId = it })
             }
 
-            FlexibleAppUpdateProgress(viewModel.appUpdateStatus.collectAsStateWithLifecycle().value, {
-                snackbarText?.first
-            }) { snackbarText = it }
-
-            val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
-            ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
-            ServerStatusBanner(serverStatus)
-
-            // NavHost can't preload other composables, so in order to get NewsList's unread count early,
-            // we're using the initial state here itself. State is refreshed only once the user visits that
-            // screen, so it's easy on the server too (no unnecessarily eager requests).
-            // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
-            val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
-            LaunchedEffect(Unit) { // run only on init
-                val unreadCount = newsListViewModel.unreadCount.intValue
-                Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
+            AnimatedVisibility(navType == NavType.SideRail) {
+                VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
             }
 
-            NavHost(
-                navController, startScreen.route,
-                Modifier
-                    .weight(1f)
-                    .nestedScroll(scrollBehavior.nestedScrollConnection)
-            ) {
-                updateScreen { subtitleResId = it }
-                newsListScreen(newsListState)
-                deviceScreen(allDevices)
-                aboutScreen()
-                settingsScreen(enabledDevices, updateMismatchStatus = {
-                    viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices)
-                }, openAboutScreen)
-            }
-
-            // This must be defined on the same level as NavHost, otherwise it won't work
-            BackHandler {
-                navController.run {
-                    if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
-                    else if (!popBackStack()) finishAffinity() // nothing to back to => exit
+            Column {
+                val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+                TopAppBar(scrollBehavior, openAboutScreen, subtitleResId, navType == NavType.BottomBar) {
+                    val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
+                    MainMenu(serverMessages, subtitleResId == Screen.NewsList.labelResId, rememberCallback(newsListViewModel::markAllRead))
                 }
-            }
 
-            // Ads should be shown if user hasn't bought the ad-free unlock
-            val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                PrefManager.getBoolean(PrefManager.KeyAdFree, false)
-            ).value
-            if (showAds) BannerAd(BuildConfig.AD_BANNER_MAIN_ID, view = rememberTypedCallback { bannerAdView = it })
+                FlexibleAppUpdateProgress(viewModel.appUpdateStatus.collectAsStateWithLifecycle().value, {
+                    snackbarText?.first
+                }) { snackbarText = it }
 
-            NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                currentRoute = navBackStackEntry?.destination?.route
+                val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
+                ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
+                ServerStatusBanner(serverStatus)
 
-                screens.forEach { screen ->
-                    val labelResId = screen.labelResId
-                    key(labelResId) {
-                        val route = screen.route
-                        val label = stringResource(labelResId)
-                        val selected = currentRoute == route
-                        if (selected) {
-                            // UpdateScreen manages its own subtitle, so avoid race by not setting at all
-                            // 0 => set to app version
-                            if (labelResId != Screen.Update.labelResId) subtitleResId = if (screen.useVersionName) 0 else labelResId
-                        }
-                        NavigationBarItem(selected, rememberCallback(navController, route) {
-                            navController.navigateWithDefaults(route)
-                        }, icon = {
-                            val badge = screen.badge
-                            if (badge == null) Icon(screen.icon, label) else BadgedBox({
-                                Badge {
-                                    Text(badge.take(3), Modifier.semantics {
-                                        contentDescription = "$badge unread articles"
-                                    })
-                                }
-                            }) { Icon(screen.icon, label) }
-                        }, label = {
-                            Text(label)
-                        }, alwaysShowLabel = false)
+                // NavHost can't preload other composables, so in order to get NewsList's unread count early,
+                // we're using the initial state here itself. State is refreshed only once the user visits that
+                // screen, so it's easy on the server too (no unnecessarily eager requests).
+                // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
+                val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
+                LaunchedEffect(Unit) { // run only on init
+                    val unreadCount = newsListViewModel.unreadCount.intValue
+                    Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
+                }
+
+                NavHost(
+                    navController, startScreen.route,
+                    Modifier
+                        .weight(1f)
+                        .nestedScroll(scrollBehavior.nestedScrollConnection)
+                ) {
+                    updateScreen(navType, windowWidthSize) { subtitleResId = it }
+                    newsListScreen(navType, windowSize, newsListState)
+                    deviceScreen(navType, windowWidthSize, allDevices)
+                    aboutScreen(navType, windowWidthSize)
+                    settingsScreen(navType, enabledDevices, updateMismatchStatus = {
+                        viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices)
+                    }, openAboutScreen)
+                }
+
+                // This must be defined on the same level as NavHost, otherwise it won't work
+                BackHandler {
+                    navController.run {
+                        if (shouldStopNavigateAwayFromSettings()) showSettingsWarning()
+                        else if (!popBackStack()) finishAffinity() // nothing to back to => exit
                     }
+                }
+
+                // Ads should be shown if user hasn't bought the ad-free unlock
+                val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
+                    PrefManager.getBoolean(PrefManager.KeyAdFree, false)
+                ).value
+                if (showAds) {
+                    var adLoaded by rememberSaveableState("adLoaded", false)
+                    BannerAd(
+                        adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
+                        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+                        modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier,
+                        adListener = adLoadListener { adLoaded = it },
+                        view = rememberTypedCallback { bannerAdView = it }
+                    )
+                }
+
+                AnimatedVisibility(navType == NavType.BottomBar) {
+                    MainNavigationBar(currentRoute, navigateTo = {
+                        navController.navigateWithDefaults(it)
+                    }, setSubtitleResId = { subtitleResId = it })
                 }
             }
         }
@@ -320,7 +317,11 @@ class MainActivity : BaseActivity() {
         route: String,
     ) = if (shouldStopNavigateAwayFromSettings()) showSettingsWarning() else navigate(route, navOptions)
 
-    private fun NavGraphBuilder.updateScreen(setSubtitleResId: (Int) -> Unit) = composable(UpdateRoute) {
+    private fun NavGraphBuilder.updateScreen(
+        navType: NavType,
+        windowWidthSize: WindowWidthSizeClass,
+        setSubtitleResId: (Int) -> Unit,
+    ) = composable(UpdateRoute) {
         if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
             startOnboardingActivity(startPage)
             return@composable finish()
@@ -337,7 +338,7 @@ class MainActivity : BaseActivity() {
         val outputData = workInfo?.outputData
         val progress = workInfo?.progress
         val failureType = outputData?.getInt(WorkDataDownloadFailureType, NotSet)
-        UpdateScreen(state, rememberCallback {
+        UpdateScreen(navType, windowWidthSize, state, rememberCallback {
             settingsViewModel.updateCrashlyticsUserId()
             viewModel.fetchServerStatus()
             updateViewModel.refresh()
@@ -361,7 +362,11 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private fun NavGraphBuilder.newsListScreen(state: RefreshAwareState<List<NewsItem>>) = composable(NewsListRoute) {
+    private fun NavGraphBuilder.newsListScreen(
+        navType: NavType,
+        windowSize: WindowSizeClass,
+        state: RefreshAwareState<List<NewsItem>>,
+    ) = composable(NewsListRoute) {
         LaunchedEffect(Unit) {
             // Avoid refreshing every time this screen is visited by guessing
             // if it's the first load (`refreshing` is true only initially)
@@ -369,7 +374,7 @@ class MainActivity : BaseActivity() {
         }
 
         NewsListScreen(
-            state, rememberCallback {
+            navType, windowSize, state, rememberCallback {
                 viewModel.fetchServerStatus()
                 newsListViewModel.refresh()
             }, newsListViewModel.unreadCount,
@@ -379,17 +384,25 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun NavGraphBuilder.deviceScreen(allDevices: List<Device>) = composable(DeviceRoute) {
-        DeviceScreen(remember(allDevices) {
+    private fun NavGraphBuilder.deviceScreen(
+        navType: NavType,
+        windowWidthSize: WindowWidthSizeClass,
+        allDevices: List<Device>,
+    ) = composable(DeviceRoute) {
+        DeviceScreen(navType, windowWidthSize, remember(allDevices) {
             allDevices.find {
                 it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
             }?.name ?: defaultDeviceName()
         }, viewModel.deviceOsSpec, viewModel.deviceMismatch)
     }
 
-    private fun NavGraphBuilder.aboutScreen() = composable(AboutRoute) { AboutScreen() }
+    private fun NavGraphBuilder.aboutScreen(
+        navType: NavType,
+        windowWidthSize: WindowWidthSizeClass,
+    ) = composable(AboutRoute) { AboutScreen(navType, windowWidthSize) }
 
     private fun NavGraphBuilder.settingsScreen(
+        navType: NavType,
         cachedEnabledDevices: List<Device>,
         updateMismatchStatus: () -> Unit,
         openAboutScreen: () -> Unit,
@@ -429,7 +442,7 @@ class MainActivity : BaseActivity() {
         })
 
         val state by settingsViewModel.state.collectAsStateWithLifecycle()
-        SettingsScreen(state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
+        SettingsScreen(navType, state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
             settingsViewModel.saveSelectedDevice(it)
             updateMismatchStatus()
         }, settingsViewModel.initialMethodIndex, rememberTypedCallback(state) {
@@ -476,6 +489,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
@@ -485,13 +499,15 @@ class MainActivity : BaseActivity() {
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
         setContent {
+            val windowSize = calculateWindowSizeClass(this)
+
             AppTheme {
                 EdgeToEdge()
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
 
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
-                Surface { Content() }
+                Surface { Content(windowSize) }
             }
         }
 

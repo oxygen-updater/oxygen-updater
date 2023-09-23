@@ -124,9 +124,8 @@
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Добро пожаловать"</string>
+	<string name="onboarding">"Настройка"</string>
 	<string name="onboarding_finished_button">"Начать"</string>
-	<string name="onboarding_title">"Добро пожаловать в Oxygen Updater!"</string>
 	<string name="onboarding_app_uses">"Данное приложение позволит вам:
 
 &#8226; Получить мгновенный доступ к последним версиям Android для устройств под управлением OxygenOS

@@ -67,7 +67,7 @@ android {
     packaging.resources.excludes += setOf(
         "{NOTICE,LICENSE}*",
         "META-INF/{AL2.0,LGPL2.1}",
-        "META-INF/*.version",  // AndroidX version files
+        "META-INF/*.version", // AndroidX version files
         "/*.properties",
         "META-INF/*.properties",
     )
@@ -262,6 +262,7 @@ dependencies {
     implementation(libs.androidx.compose.animation.graphics)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.window.size)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.runtime.livedata)
     implementation(libs.androidx.compose.ui)

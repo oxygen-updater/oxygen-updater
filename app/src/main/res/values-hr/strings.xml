@@ -134,9 +134,8 @@ Ovo može biti korisno ako želite:"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Dobrodošli"</string>
+	<string name="onboarding">"Postaviti"</string>
 	<string name="onboarding_finished_button">"Pokretanje aplikacije"</string>
-	<string name="onboarding_title">"Dobrodošli u Oxygen Updater!"</string>
 	<string name="onboarding_app_uses">"Ova aplikacija vam omogućava:
 
 &#8226; Dobivanje ažuriranje brže na vaše OxygenOS uređaje

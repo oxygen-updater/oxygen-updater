@@ -49,7 +49,7 @@ fun Modifier.withPlaceholder(
             remember(density, textStyle) {
                 textShape(density, fontSize = textStyle.fontSize, lineHeight = textStyle.lineHeight)
             }
-        } else RoundedCornerShape(4.dp),
+        } else MaterialTheme.shapes.extraSmall,
         highlight = PlaceholderHighlight.shimmer(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
     )
 }

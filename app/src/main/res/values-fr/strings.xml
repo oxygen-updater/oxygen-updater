@@ -137,9 +137,8 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Bienvenue"</string>
+	<string name="onboarding">"Setup"</string>
 	<string name="onboarding_finished_button">"Démarrer l'application"</string>
-	<string name="onboarding_title">"Bienvenue dans Oxygen Updater !"</string>
 	<string name="onboarding_app_uses">"Cette application vous permettra:
 
 &#8226; D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS

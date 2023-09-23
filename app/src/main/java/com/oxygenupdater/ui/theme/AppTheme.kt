@@ -8,13 +8,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.structuralEqualityPolicy
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.preferencesModule
@@ -79,6 +84,15 @@ fun PreviewAppTheme(content: @Composable () -> Unit) {
     AppTheme(content = { Surface(content = content) })
 }
 
+val PreviewWindowSize
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+    @Composable
+    get() = with(LocalConfiguration.current) {
+        WindowSizeClass.calculateFromSize(DpSize(screenWidthDp.dp, screenHeightDp.dp))
+    }
+
 @Preview("Light", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview("Dark", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview("SizeMedium", device = "spec:width=600dp,height=480dp", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview("SizeExpanded", device = "spec:width=840dp,height=900dp", showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 annotation class PreviewThemes

@@ -134,9 +134,8 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="faq_menu_item">"UKK"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Tervetuloa"</string>
+	<string name="onboarding">"Setup"</string>
 	<string name="onboarding_finished_button">"Käynnistä sovellus"</string>
-	<string name="onboarding_title">"Tervetuloa Oxygen Updateriin!"</string>
 	<string name="onboarding_app_uses">"Tämä sovellus mahdollistaa sinulle:
 
 &#8226; Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi

@@ -186,7 +186,8 @@ private fun RefreshAwareWebView(
         ""
     }
 
-    // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap
+    // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap.
+    // Also see https://github.com/android/nowinandroid/pull/722.
     val runningInPreview = LocalInspectionMode.current
     WebView(
         webViewState,

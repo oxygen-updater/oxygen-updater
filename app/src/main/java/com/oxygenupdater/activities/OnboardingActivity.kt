@@ -3,14 +3,15 @@ package com.oxygenupdater.activities
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -34,6 +35,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.CollapsingAppBar
+import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
@@ -48,7 +50,7 @@ class OnboardingActivity : BaseActivity() {
 
     private val viewModel by viewModel<SettingsViewModel>()
 
-    @OptIn(ExperimentalMaterial3Api::class)
+    @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         viewModel.fetchEnabledDevices()
 
@@ -57,12 +59,14 @@ class OnboardingActivity : BaseActivity() {
         ) ?: MainActivity.PageUpdate
 
         setContent {
+            val windowSize = calculateWindowSizeClass(this)
+
             AppTheme {
                 EdgeToEdge()
 
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
                 Surface {
-                    Column(Modifier.navigationBarsPadding()) {
+                    Column {
                         val state by viewModel.state.collectAsStateWithLifecycle()
                         val enabledDevices = state.enabledDevices
                         val deviceName = viewModel.deviceName ?: remember(enabledDevices) {
@@ -73,7 +77,14 @@ class OnboardingActivity : BaseActivity() {
 
                         val context = LocalContext.current
                         val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-                        CollapsingAppBar(scrollBehavior, image = { modifier ->
+
+                        // Use normal app bar if height isn't enough (e.g. landscape phones)
+                        if (windowSize.heightSizeClass == WindowHeightSizeClass.Compact) TopAppBar(
+                            scrollBehavior = scrollBehavior,
+                            navIconClicked = {},
+                            subtitleResId = R.string.onboarding,
+                            showIcon = false,
+                        ) else CollapsingAppBar(scrollBehavior, image = { modifier ->
                             AsyncImage(
                                 deviceName?.let {
                                     val density = LocalDensity.current
@@ -90,23 +101,24 @@ class OnboardingActivity : BaseActivity() {
                                 contentScale = ContentScale.Crop,
                                 colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
                             )
-                        }, title = stringResource(R.string.onboarding_title))
+                        }, title = stringResource(R.string.app_name), subtitle = stringResource(R.string.onboarding))
 
                         OnboardingScreen(
-                            scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
+                            windowSize.widthSizeClass, scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
                                 viewModel::saveSelectedDevice
                             ), viewModel.initialMethodIndex, rememberTypedCallback(
                                 viewModel::saveSelectedMethod
-                            ), startApp = rememberTypedCallback(enabledDevices) { (contribute, submitLogs) ->
+                            ), startApp = rememberTypedCallback(enabledDevices) { contribute ->
                                 if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
                                     // Subscribe to notifications for the newly selected device and update method
                                     viewModel.subscribeToNotificationTopics(enabledDevices)
                                 } else context.showToast(R.string.notification_no_notification_support)
 
                                 if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-                                    PrefManager.putBoolean(PrefManager.KeyShareAnalyticsAndLogs, submitLogs)
                                     PrefManager.putBoolean(PrefManager.KeySetupDone, true)
-                                    (application as OxygenUpdater?)?.setupCrashReporting(submitLogs)
+                                    (application as OxygenUpdater?)?.setupCrashReporting(
+                                        PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
+                                    )
 
                                     // If user enables OTA contribution, check if device is rooted and ask for root permission
                                     if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {

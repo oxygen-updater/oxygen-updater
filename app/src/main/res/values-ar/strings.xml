@@ -133,9 +133,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="faq_menu_item">التعليمات</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">مرحباً</string>
+	<string name="onboarding">نصب</string>
 	<string name="onboarding_finished_button">بدء التطبيق</string>
-	<string name="onboarding_title">مرحباً بك في Oxygen Updater!</string>
 	<string name="onboarding_app_uses">هذا التطبيق يتيح لك:\n\n&#8226; الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n&#8226; التحديث بشكل مبسط للأجهزة التي تملك (روت)\n&#8226; مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n&#8226; قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين</string>
 	<string name="onboarding_disclaimer">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق. بإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.</string>
 	<string name="onboarding_device_chooser_title">إختر جهازك</string>

@@ -136,10 +136,9 @@
 	<string name="faq_menu_item">常見問題</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">歡迎</string>
+	<string name="onboarding">設定</string>
 	<string name="onboarding_finished_button">開始吧！</string>
 
-	<string name="onboarding_title">歡迎使用 Oxygen 更新器！</string>
 	<string name="onboarding_app_uses">這款 App 可以協助您：\n\n&#8226; 更快地接收 OxygenOS 的最新更新\n&#8226; 更輕鬆地升級 Root 過的裝置\n&#8226; 檢視目前系統版本的更新資訊\n&#8226; 了解關於 OnePlus 與 OxygenOS 的最新通知</string>
 	<string name="onboarding_disclaimer">本應用程式不是 OnePlus 官方推出的應用程式，使用此應用程式完全由您自己承擔風險。OnePlus 和本程式開發者都不對您的行為負責，包括使用此應用程式造成的任何損害。 使用此應用程式即表示您同意上述條款。</string>
 	<string name="onboarding_device_chooser_title">選擇您的裝置：</string>

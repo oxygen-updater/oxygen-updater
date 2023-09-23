@@ -141,10 +141,9 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="faq_menu_item">GYIK</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Üdvözölünk</string>
+	<string name="onboarding">Beállítás</string>
 	<string name="onboarding_finished_button">Alkalmazás elindítása</string>
 
-	<string name="onboarding_title">Üdvözlünk az Oxygen Updater-ben!</string>
 	<string name="onboarding_app_uses">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban</string>
 	<string name="onboarding_disclaimer">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
 	<string name="onboarding_device_chooser_title">Válaszd ki a készüléked</string>

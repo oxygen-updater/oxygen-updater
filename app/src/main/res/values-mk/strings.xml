@@ -138,10 +138,9 @@
 	<string name="faq_menu_item">ЧПП</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Добредојдовте</string>
+	<string name="onboarding">Поставување</string>
 	<string name="onboarding_finished_button">Стартувај ја апликација</string>
 
-	<string name="onboarding_title">Добредојдовте во Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Оваа апликација ви овозможува:\n\n&#8226; Добивање побрз пристап до најновите Андроид ажурирања за вашиот OxygenOS уред\n&#8226; Лесно ажурирање на рутиран уред\n&#8226; Преглед на што е ново кај системскиот софтвер кој го користите\n&#8226; Читање на најновите вести за OnePlus и OxygenOS\n\nЛизгајте на лево за да продолжите.</string>
 	<string name="onboarding_disclaimer">Ова не е официјална OnePlus апликација. Користењето на оваа апликација е на ваш ризик. Ниту OnePlus ниту развивачот на оваа апликација се одговорни за вашите постапки, вклучувајчи секаква штета настаната од користење на оваа апликација. Со користење на оваа апликација, се согласувате со условите како што е наведено погоре.</string>
 	<string name="onboarding_device_chooser_title">Изберете го вашиот уред</string>

@@ -142,10 +142,9 @@
 	<string name="faq_menu_item">FAQ</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">Добродошли</string>
+	<string name="onboarding">Подесити</string>
 	<string name="onboarding_finished_button">Покрените апликацију</string>
 
-	<string name="onboarding_title">Добродошли у Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Ова апликација ће вам омогућити:\n\n&#8226; Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n&#8226; Лако ажурирајте рутован уређај\n&#8226; Погледајте шта има ново у софтверу који тренутно користите\n&#8226; Прочитајте последње вести о OnePlus-у и OxgenOS-у</string>
 	<string name="onboarding_disclaimer">Ово није званична OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације. Коришћењем ове апликације прихватате услове наведене изнад.</string>
 	<string name="onboarding_device_chooser_title">Изаберите ваш уређај</string>

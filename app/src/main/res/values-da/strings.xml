@@ -141,10 +141,9 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="faq_menu_item">FAQ</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">Velkommen …</string>
+	<string name="onboarding">Opsætning</string>
 	<string name="onboarding_finished_button">start app</string>
 
-	<string name="onboarding_title">Velkommen til Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Denne app vil tillade dig at:\n\n&#8226; Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS styrede enhed\n&#8226; Nem opdatering en root\'et enhed\n&#8226; Se hvad der er nyt, i det syste,-software du allerede anvender\n&#8226; Læs seneste nyt om OnePlus og OxygenOS</string>
 	<string name="onboarding_disclaimer">Dette er ikke en officel OnePlus applikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage. Ved at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
 	<string name="onboarding_device_chooser_title">Vælg din enhed</string>

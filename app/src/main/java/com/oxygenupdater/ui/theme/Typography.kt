@@ -135,11 +135,9 @@ fun appTypography(): Typography {
 val DefaultTextStyle = TextStyle.Default.copy(
     fontFamily = FontFamily.Default,
     // These are defaults in M2 v1.6 & M3 v1.2 onwards
-    platformStyle = PlatformTextStyle(
-        includeFontPadding = false
-    ),
+    platformStyle = PlatformTextStyle(includeFontPadding = false),
     lineHeightStyle = LineHeightStyle(
-        LineHeightStyle.Alignment.Center,
-        LineHeightStyle.Trim.None
+        alignment = LineHeightStyle.Alignment.Center,
+        trim = LineHeightStyle.Trim.None,
     ),
 )

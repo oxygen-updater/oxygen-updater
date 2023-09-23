@@ -133,9 +133,8 @@ Detta kan vara användbart om du vill:"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Välkommen"</string>
+	<string name="onboarding">"Inställning"</string>
 	<string name="onboarding_finished_button">Starta appen</string>
-	<string name="onboarding_title">"Välkommen till Oxygen Updater!"</string>
 	<string name="onboarding_app_uses">"Denna app kommer låta dig:
 
 &#8226; Få snabbare tillgång till Android uppdateringar för din enhet med OxygenOS

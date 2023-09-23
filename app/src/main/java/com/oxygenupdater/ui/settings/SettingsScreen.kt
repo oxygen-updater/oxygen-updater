@@ -11,9 +11,14 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -64,6 +69,7 @@ import com.oxygenupdater.internal.settings.PrefManager.putBoolean
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListWrapper
+import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.rememberCallback
@@ -75,6 +81,7 @@ import com.oxygenupdater.ui.dialogs.LanguageSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.SelectableSheet
 import com.oxygenupdater.ui.dialogs.ThemeSheet
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.backgroundVariant
@@ -88,6 +95,7 @@ private var previousAdFreeConfig = Triple<Boolean, Int, (() -> Unit)?>(
 
 @Composable
 fun SettingsScreen(
+    navType: NavType,
     lists: SettingsListWrapper,
     initialDeviceIndex: Int,
     deviceChanged: (Device) -> Unit,
@@ -108,7 +116,7 @@ fun SettingsScreen(
             stringResource(subtitleResId, adFreePrice)
         } else stringResource(subtitleResId)
 
-        Item(Icons.Outlined.Paid, R.string.label_buy_ad_free, subtitle, enabled) {
+        SettingsItem(Icons.Outlined.Paid, R.string.label_buy_ad_free, subtitle, enabled) {
             onClick?.invoke()
         }
 
@@ -132,7 +140,7 @@ fun SettingsScreen(
     //region Advanced
     Header(R.string.preference_header_advanced)
     AdvancedMode()
-    Analytics()
+    SettingsAnalytics()
     //endregion
 
     //region About
@@ -140,7 +148,7 @@ fun SettingsScreen(
 
     val context = LocalContext.current
     val customTabIntent = rememberCustomTabsIntent()
-    Item(
+    SettingsItem(
         Icons.Outlined.Policy,
         R.string.label_privacy_policy, stringResource(R.string.summary_privacy_policy),
         onClick = rememberCallback(context) {
@@ -149,24 +157,26 @@ fun SettingsScreen(
         }
     )
 
-    Item(
+    SettingsItem(
         Icons.Rounded.StarOutline,
         R.string.label_rate_app, stringResource(R.string.summary_rate_app),
         onClick = rememberCallback(context, context::openPlayStorePage)
     )
 
-    Item(
+    SettingsItem(
         CustomIcons.LogoNotification,
         R.string.app_name, "v${BuildConfig.VERSION_NAME}",
         onClick = openAboutScreen
     )
     //endregion
+
+    ConditionalNavBarPadding(navType)
 }
 
 @Composable
 private fun BecomeContributor() {
     var showSheet by rememberSaveableState("showContributorSheet", false)
-    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) Item(
+    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) SettingsItem(
         Icons.Outlined.GroupAdd,
         R.string.contribute, stringResource(R.string.settings_contribute_label),
     ) { showSheet = true }
@@ -188,7 +198,8 @@ private fun DeviceChooser(
     val subtitle = if (deviceSelectionEnabled) {
         PrefManager.getString(PrefManager.KeyDevice, notSelected) ?: notSelected
     } else stringResource(R.string.summary_please_wait)
-    Item(
+
+    SettingsItem(
         Icons.Rounded.PhoneAndroid,
         R.string.settings_device, subtitle,
         deviceSelectionEnabled,
@@ -220,7 +231,8 @@ private fun MethodChooser(
     val subtitle = if (methodSelectionEnabled) {
         PrefManager.getString(PrefManager.KeyUpdateMethod, notSelected) ?: notSelected
     } else stringResource(R.string.summary_update_method)
-    Item(
+
+    SettingsItem(
         Icons.Outlined.CloudDownload,
         R.string.settings_update_method, subtitle,
         methodSelectionEnabled,
@@ -277,7 +289,7 @@ private fun Notifications() {
         stringResource(R.string.summary_important_notifications_disabled) + builder.toString()
     }
 
-    Item(
+    SettingsItem(
         Icons.Rounded.NotificationsNone,
         R.string.preference_header_notifications, notifSummary,
         subtitleIsError = subtitleIsError
@@ -297,7 +309,7 @@ private fun Notifications() {
 @Composable
 private fun Theme() {
     var showSheet by rememberSaveableState("showThemeSheet", false)
-    Item(Icons.Outlined.Palette, R.string.label_theme, stringResource(PrefManager.theme.titleResId)) { showSheet = true }
+    SettingsItem(Icons.Outlined.Palette, R.string.label_theme, stringResource(PrefManager.theme.titleResId)) { showSheet = true }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         ThemeSheet(hide) { PrefManager.theme = it }
@@ -316,14 +328,14 @@ private fun Language() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         // Delegate to system API on Android 13+
         val context = LocalContext.current
-        Item(
+        SettingsItem(
             Icons.Outlined.Language, R.string.label_language, language,
             onClick = rememberCallback(context, context::openAppLocalePage)
         )
     } else {
         // Otherwise use our own sheet
         var showSheet by rememberSaveableState("showLanguageSheet", false)
-        Item(Icons.Outlined.Language, R.string.label_language, language) { showSheet = true }
+        SettingsItem(Icons.Outlined.Language, R.string.label_language, language) { showSheet = true }
 
         if (showSheet) ModalBottomSheet({ showSheet = false }) { LanguageSheet(it, selectedLocale) }
     }
@@ -336,7 +348,7 @@ private fun AdvancedMode() {
     var advancedMode by remember {
         mutableStateOf(PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false))
     }
-    SwitchItem(advancedMode, {
+    SettingsSwitchItem(advancedMode, {
         advancedMode = it
         putBoolean(PrefManager.KeyAdvancedMode, it)
     }, Icons.Rounded.LockOpen, R.string.settings_advanced_mode) {
@@ -353,18 +365,18 @@ private fun AdvancedMode() {
 }
 
 @Composable
-private fun Analytics() {
+fun SettingsAnalytics() {
     var shareLogs by rememberSaveableState(
         "shareLogs", PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
     )
-    SwitchItem(shareLogs, {
+    SettingsSwitchItem(shareLogs, {
         shareLogs = it
         putBoolean(PrefManager.KeyShareAnalyticsAndLogs, it)
     }, Icons.Rounded.TrackChanges, R.string.settings_upload_logs)
 }
 
 @Composable
-private fun SwitchItem(
+fun SettingsSwitchItem(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     icon: ImageVector,
@@ -378,8 +390,11 @@ private fun SwitchItem(
         }
     }
 
-    Item(icon, titleResId, stringResource(if (checked) R.string.summary_on else R.string.summary_off), content = {
-        Switch(checked, checkedChange, thumbContent = {
+    SettingsItem(icon, titleResId, stringResource(if (checked) R.string.summary_on else R.string.summary_off), content = {
+        Switch(checked, checkedChange, Modifier.windowInsetsPadding(
+            // Leave space for 2/3-button nav bar in landscape mode
+            WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
+        ), thumbContent = {
             if (!checked) return@Switch
             Icon(Icons.Rounded.Done, null, Modifier.size(SwitchDefaults.IconSize))
         })
@@ -403,7 +418,7 @@ private fun Header(@StringRes textResId: Int) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
-private fun Item(
+fun SettingsItem(
     icon: ImageVector,
     @StringRes titleResId: Int, subtitle: String?,
     enabled: Boolean = true,
@@ -450,7 +465,8 @@ private fun Item(
 @Composable
 fun PreviewSettingsScreen() = PreviewAppTheme {
     SettingsScreen(
-        SettingsListWrapper(
+        navType = NavType.BottomBar,
+        lists = SettingsListWrapper(
             listOf(
                 Device(
                     id = 1,

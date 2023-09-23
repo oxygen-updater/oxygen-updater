@@ -16,10 +16,12 @@ import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -37,6 +39,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -69,6 +73,7 @@ import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
@@ -81,8 +86,10 @@ import com.oxygenupdater.ui.dialogs.AlreadyDownloadedSheet
 import com.oxygenupdater.ui.dialogs.DownloadErrorSheet
 import com.oxygenupdater.ui.dialogs.ManageStorageSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
+import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.positive
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
@@ -94,6 +101,8 @@ import java.util.UUID
 
 @Composable
 fun UpdateAvailable(
+    navType: NavType,
+    windowWidthSize: WindowWidthSizeClass,
     refreshing: Boolean,
     updateData: UpdateData,
     downloadStatus: DownloadStatus,
@@ -102,88 +111,63 @@ fun UpdateAvailable(
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
     logDownloadError: () -> Unit,
-) = Column {
+) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(Modifier.fillMaxWidth()) {
     Column(
         Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
+            .padding(vertical = 16.dp) // must be after `verticalScroll`
+    ) {
+        VersionAndChangelog(refreshing, updateData)
+
+        ConditionalNavBarPadding(navType)
+    }
+
+    VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
+            .weight(1f)
+            .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
+            .padding(bottom = 16.dp) // must be after `verticalScroll`
+    ) {
+        DownloadButtonContainer(
+            navType,
+            refreshing,
+            updateData.downloadSize,
+            failureType,
+            workProgress,
+            downloadStatus,
+            forceDownloadErrorDialog,
+            downloadAction,
+            logDownloadError,
+        )
+
+        ExtraInfo(refreshing, updateData, downloadStatus, failureType)
+
+        ConditionalNavBarPadding(navType)
+    }
+} else Column {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())
             .padding(vertical = 16.dp) // must be after `verticalScroll`
     ) {
-        SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
-            val titleLarge = MaterialTheme.typography.titleLarge
-            Text(
-                UpdateDataVersionFormatter.getFormattedVersionNumber(updateData, "").takeIf {
-                    it.isNotBlank() && it != "-" && it != "null"
-                } ?: stringResource(
-                    R.string.update_information_unknown_update_name,
-                    defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
-                ),
-                Modifier.withPlaceholder(refreshing, titleLarge),
-                style = titleLarge
-            )
-        }
-
-        updateData.Changelog(
-            Modifier
-                .padding(start = 16.dp, top = 4.dp, end = 16.dp)
-                .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
-            true
-        )
+        VersionAndChangelog(refreshing, updateData)
 
         Spacer(Modifier.weight(1f))
-        ItemDivider(Modifier.padding(vertical = 16.dp))
+        ItemDivider()
 
-        val bodySmall = MaterialTheme.typography.bodySmall
-        if (updateData.systemIsUpToDate) {
-            // Remind user why they're seeing this update
-            val updateMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
-            Text(
-                stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
-                Modifier.padding(horizontal = 16.dp),
-                MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodySmall
-            )
-
-            ItemDivider(Modifier.padding(vertical = 16.dp))
-        }
-
-        SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
-            Text(
-                stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
-                Modifier.withPlaceholder(refreshing, bodySmall),
-                MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodySmall
-            )
-        }
-
-        // Needs to be a separate container to avoid losing Column context
-        SelectionContainer(Modifier.padding(start = 16.dp, end = 8.dp)) {
-            Text(
-                stringResource(R.string.update_information_md5, updateData.md5sum ?: Build.UNKNOWN),
-                Modifier.withPlaceholder(refreshing, bodySmall),
-                MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodySmall
-            )
-        }
-
-        if (downloadStatus == VerificationFailed || (downloadStatus == DownloadFailed && failureType.let {
-                // Note: show download link only if failure is any of these:
-                // - NullUpdateDataOrDownloadUrl
-                // - DownloadUrlInvalidScheme
-                // - ServerError
-                // - ConnectionError
-                // - UnsuccessfulResponse
-                // - Unknown
-                // For simplicity, we're negating boolean logic by checking for the only other possible values:
-                // null and CouldNotMoveTempFile. This will need to be adjusted later if new failures are added.
-                it != null && it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
-            })
-        ) {
-            DownloadLink(updateData.downloadUrl ?: "null")
-        }
+        ExtraInfo(refreshing, updateData, downloadStatus, failureType)
     }
 
-    DownloadButton(
+    DownloadButtonContainer(
+        navType,
         refreshing,
         updateData.downloadSize,
         failureType,
@@ -193,6 +177,88 @@ fun UpdateAvailable(
         downloadAction,
         logDownloadError,
     )
+
+    ConditionalNavBarPadding(navType)
+}
+
+@Composable
+private fun VersionAndChangelog(refreshing: Boolean, updateData: UpdateData) {
+    SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
+        val titleLarge = MaterialTheme.typography.titleLarge
+        Text(
+            UpdateDataVersionFormatter.getFormattedVersionNumber(updateData, "").takeIf {
+                it.isNotBlank() && it != "-" && it != "null"
+            } ?: stringResource(
+                R.string.update_information_unknown_update_name,
+                defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
+            ),
+            Modifier.withPlaceholder(refreshing, titleLarge),
+            style = titleLarge
+        )
+    }
+
+    updateData.Changelog(
+        refreshing = refreshing,
+        extraTextPadding = true,
+        modifier = Modifier.padding(start = 16.dp, top = 4.dp, end = 16.dp)
+    )
+}
+
+@Composable
+private fun ExtraInfo(
+    refreshing: Boolean,
+    updateData: UpdateData,
+    downloadStatus: DownloadStatus,
+    failureType: Int?,
+) {
+    if (updateData.systemIsUpToDate) {
+        // User is already up-to-date, so remind them why they're seeing this update: they enabled advanced mode
+        val updateMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
+        Text(
+            text = stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.padding(horizontal = 16.dp),
+        )
+
+        ItemDivider()
+    }
+
+    // Filename & MD5
+    SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
+        val bodySmall = MaterialTheme.typography.bodySmall
+        Column {
+            Text(
+                text = stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = bodySmall,
+                modifier = Modifier.withPlaceholder(refreshing, bodySmall)
+            )
+
+            Text(
+                text = stringResource(R.string.update_information_md5, updateData.md5sum ?: Build.UNKNOWN),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = bodySmall,
+                modifier = Modifier.withPlaceholder(refreshing, bodySmall)
+            )
+        }
+    }
+
+    if (downloadStatus == VerificationFailed || (downloadStatus == DownloadFailed && failureType.let {
+            // Note: show download link only if failure is any of these:
+            // - NullUpdateDataOrDownloadUrl
+            // - DownloadUrlInvalidScheme
+            // - ServerError
+            // - ConnectionError
+            // - UnsuccessfulResponse
+            // - Unknown
+            // For simplicity, we're negating boolean logic by checking for the only other possible values:
+            // null and CouldNotMoveTempFile. This will need to be adjusted later if new failures are added.
+            it != null && it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
+        })
+    ) {
+        DownloadLink(updateData.downloadUrl ?: "null")
+    }
 }
 
 @Composable
@@ -206,7 +272,7 @@ private fun DownloadLink(url: String) {
     @Suppress("NAME_SHADOWING")
     RichText(
         text,
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+        Modifier.padding(horizontal = 16.dp),
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         type = RichTextType.Custom
     ) { text, contentColor, urlColor ->
@@ -226,7 +292,8 @@ private fun DownloadLink(url: String) {
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun DownloadButton(
+private fun DownloadButtonContainer(
+    navType: NavType,
     refreshing: Boolean,
     downloadSize: Long,
     failureType: Int?,
@@ -298,6 +365,7 @@ private fun DownloadButton(
     }
 
     DownloadButton(
+        navType,
         refreshing,
         downloadStatus,
         downloadAction,
@@ -321,6 +389,7 @@ private fun DownloadButton(
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun DownloadButton(
+    navType: NavType,
     refreshing: Boolean,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
@@ -344,19 +413,18 @@ private fun DownloadButton(
                 LaunchedEffect(Unit) { atEnd = true /* start immediately */ } // run only on init
 
                 Icon(
-                    rememberAnimatedVectorPainter(
-                        AnimatedImageVector.animatedVectorResource(R.drawable.download_anim),
-                        atEnd
+                    painter = rememberAnimatedVectorPainter(
+                        AnimatedImageVector.animatedVectorResource(R.drawable.download_anim), atEnd
                     ),
-                    iconContentDescription,
-                    Modifier.requiredWidth(56.dp),
-                    tint = colorScheme.positive
+                    contentDescription = iconContentDescription,
+                    tint = colorScheme.positive,
+                    modifier = Modifier.requiredWidth(56.dp),
                 )
             } else Icon(
-                if (successful) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Download,
-                iconContentDescription,
-                Modifier.requiredWidth(56.dp),
-                tint = if (successful) colorScheme.positive else colorScheme.primary
+                imageVector = if (successful) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Download,
+                contentDescription = iconContentDescription,
+                tint = if (successful) colorScheme.positive else colorScheme.primary,
+                modifier = Modifier.requiredWidth(56.dp),
             )
 
             Column(
@@ -388,14 +456,15 @@ private fun DownloadButton(
         progress?.let {
             if (it == NotSetF) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
                 val animatedProgress by animateFloatAsState(
-                    it, ProgressIndicatorDefaults.ProgressAnimationSpec,
+                    targetValue = it,
+                    animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
                     label = "DownloadProgressAnimation"
                 )
                 LinearProgressIndicator(animatedProgress, Modifier.fillMaxWidth())
             }
         }
 
-        HorizontalDivider(Modifier.align(Alignment.BottomStart))
+        if (navType == NavType.BottomBar) HorizontalDivider(Modifier.align(Alignment.BottomStart))
     }
 }
 
@@ -455,7 +524,10 @@ private class AllFilesPermissionState(private val context: Context) : Permission
 @PreviewThemes
 @Composable
 fun PreviewUpdateAvailable() = PreviewAppTheme {
+    val windowSize = PreviewWindowSize
     UpdateAvailable(
+        navType = NavType.from(windowSize.widthSizeClass),
+        windowWidthSize = windowSize.widthSizeClass,
         refreshing = false,
         updateData = """##Personalization
 • Expands Omoji's functionality and library.

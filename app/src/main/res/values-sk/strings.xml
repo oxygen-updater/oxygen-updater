@@ -139,10 +139,9 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="faq_menu_item">FAQ</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Vitajte</string>
+	<string name="onboarding">Nastavenie</string>
 	<string name="onboarding_finished_button">Spustiť aplikáciu</string>
 
-	<string name="onboarding_title">Vitajte v Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n&#8226; Ľahko aktualizujte rootované zariadenie\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS</string>
 	<string name="onboarding_disclaimer">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie. Používaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
 	<string name="onboarding_device_chooser_title">Vyberte svoje zariadenie</string>

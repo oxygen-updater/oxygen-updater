@@ -2,8 +2,8 @@ package com.oxygenupdater.ui.about
 
 import android.content.Context
 import android.content.Intent
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +14,7 @@ import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,57 +33,60 @@ import com.oxygenupdater.icons.Discord
 import com.oxygenupdater.icons.Faq
 import com.oxygenupdater.icons.GitHub
 import com.oxygenupdater.icons.Patreon
+import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun AboutScreen() = Column(
-    Modifier
-        .verticalScroll(rememberScrollState())
-        .padding(bottom = 16.dp), // must be after `verticalScroll`
-    Arrangement.spacedBy(16.dp)
+fun AboutScreen(navType: NavType, windowWidthSize: WindowWidthSizeClass) = Column(
+    modifier = Modifier.verticalScroll(rememberScrollState())
 ) {
-    Buttons()
+    Buttons(windowWidthSize)
 
     RichText(
         stringResource(R.string.about_description),
-        Modifier.padding(horizontal = 16.dp),
+        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
     )
 
     RichText(
         stringResource(R.string.about_support),
-        Modifier.padding(horizontal = 16.dp),
+        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
     )
 
     Text(
         stringResource(R.string.about_background_story_header),
-        Modifier.padding(horizontal = 16.dp),
+        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
         style = MaterialTheme.typography.titleMedium
     )
 
     RichText(
         stringResource(R.string.about_background_story),
-        Modifier.padding(horizontal = 16.dp),
+        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
     )
 
-    ItemDivider()
+    Spacer(Modifier.weight(1f))
+    ItemDivider(Modifier.padding(vertical = 16.dp))
 
     Text(
         stringResource(R.string.about_third_party_app_notice),
-        Modifier.padding(horizontal = 16.dp),
+        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall
     )
+
+    ConditionalNavBarPadding(navType)
 }
 
 @Composable
-private fun Buttons() = with(LocalContext.current) {
+private fun Buttons(windowWidthSize: WindowWidthSizeClass) = with(LocalContext.current) {
     LazyVerticalGrid(
-        columnCount = 2,
+        // We have 8 total items, so group evenly by 4 if we have enough space; otherwise 2
+        columnCount = if (windowWidthSize == WindowWidthSizeClass.Expanded) 4 else 2,
         items = arrayOf(
             GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) },
             GridItem(CustomIcons.Faq, R.string.faq_menu_item) { startActivity<FaqActivity>() },
@@ -116,5 +120,5 @@ private value class LinkType(val value: String) {
 @PreviewThemes
 @Composable
 fun PreviewAboutScreen() = PreviewAppTheme {
-    AboutScreen()
+    AboutScreen(NavType.BottomBar, WindowWidthSizeClass.Compact)
 }

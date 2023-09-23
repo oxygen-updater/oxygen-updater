@@ -1,11 +1,13 @@
 package com.oxygenupdater.ui.onboarding
 
 import android.annotation.SuppressLint
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,13 +22,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.VerticalDivider
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
@@ -43,39 +45,103 @@ import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.OutlinedIconButton
-import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.SelectableSheet
+import com.oxygenupdater.ui.settings.SettingsAnalytics
+import com.oxygenupdater.ui.settings.SettingsItem
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
+import com.oxygenupdater.ui.theme.PreviewWindowSize
+import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.utils.ContributorUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OnboardingScreen(
+    windowWidthSize: WindowWidthSizeClass,
     scrollBehavior: TopAppBarScrollBehavior,
     lists: SettingsListWrapper,
     initialDeviceIndex: Int,
     deviceChanged: (Device) -> Unit,
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
-) = Column(
+    startApp: (Boolean) -> Unit, // contribute, submitLogs
+) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(
     Modifier
         .nestedScroll(scrollBehavior.nestedScrollConnection)
-        .fillMaxHeight()
+        .fillMaxWidth()
+) {
+    val typography = MaterialTheme.typography
+    Column(Modifier.weight(1f)) {
+        Column(
+            Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+        ) {
+            DeviceChooser(lists.enabledDevices, initialDeviceIndex, deviceChanged)
+            MethodChooser(lists.methodsForDevice, initialMethodIndex, methodChanged)
+            SettingsAnalytics()
+        }
+
+        // Note: if moving this to the right side of the screen, leave space for 2/3-button nav bar in landscape mode (same as Switch)
+        StartApp(startApp)
+        Spacer(Modifier.navigationBarsPadding())
+    }
+
+    VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+
+    Column(Modifier.weight(1f)) {
+        Column(
+            Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+        ) {
+            val bodyMedium = typography.bodyMedium
+            Text(
+                AnnotatedString(
+                    stringResource(R.string.onboarding_app_uses),
+                    bodyMedium.toSpanStyle(),
+                    bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+                ),
+                Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+                style = bodyMedium
+            )
+
+            Text(
+                stringResource(R.string.onboarding_caption),
+                Modifier.padding(16.dp),
+                style = bodyMedium
+            )
+        }
+
+        ItemDivider()
+        Text(
+            stringResource(R.string.onboarding_disclaimer),
+            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+            MaterialTheme.colorScheme.onSurfaceVariant,
+            style = typography.bodySmall
+        )
+        Spacer(Modifier.navigationBarsPadding())
+    }
+} else Column(
+    Modifier
+        .nestedScroll(scrollBehavior.nestedScrollConnection)
+        .fillMaxSize()
 ) {
     val typography = MaterialTheme.typography
 
     Column(
         Modifier
             .weight(1f)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
     ) {
         DeviceChooser(lists.enabledDevices, initialDeviceIndex, deviceChanged)
         MethodChooser(lists.methodsForDevice, initialMethodIndex, methodChanged)
+        SettingsAnalytics()
 
         val bodyMedium = typography.bodyMedium
         Text(
@@ -104,6 +170,7 @@ fun OnboardingScreen(
     )
 
     StartApp(startApp)
+    Spacer(Modifier.navigationBarsPadding())
 }
 
 @SuppressLint("PrivateResource")
@@ -117,13 +184,19 @@ private fun DeviceChooser(
 
     val deviceSelectionEnabled = enabledDevices.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
-    SheetOpener(
-        deviceSelectionEnabled,
-        Icons.Rounded.PhoneAndroid, R.string.settings_device,
-        if (deviceSelectionEnabled) PrefManager.getString(
-            PrefManager.KeyDevice, notSelected
-        ) ?: notSelected else stringResource(R.string.summary_please_wait),
-    ) { showSheet = true }
+    val subtitle = if (deviceSelectionEnabled) {
+        PrefManager.getString(PrefManager.KeyDevice, notSelected) ?: notSelected
+    } else stringResource(R.string.summary_please_wait)
+
+    SettingsItem(
+        icon = Icons.Rounded.PhoneAndroid,
+        titleResId = R.string.settings_device,
+        subtitle = subtitle,
+        subtitleIsError = subtitle == notSelected,
+        enabled = deviceSelectionEnabled,
+    ) {
+        showSheet = true
+    }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
@@ -147,13 +220,19 @@ private fun MethodChooser(
 
     val methodSelectionEnabled = methodsForDevice.isNotEmpty()
     val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
-    SheetOpener(
-        methodSelectionEnabled,
-        Icons.Outlined.CloudDownload, R.string.settings_update_method,
-        if (methodSelectionEnabled) PrefManager.getString(
-            PrefManager.KeyUpdateMethod, notSelected
-        ) ?: notSelected else stringResource(R.string.summary_update_method),
-    ) { showSheet = true }
+    val subtitle = if (methodSelectionEnabled) {
+        PrefManager.getString(PrefManager.KeyUpdateMethod, notSelected) ?: notSelected
+    } else stringResource(R.string.summary_update_method)
+
+    SettingsItem(
+        icon = Icons.Outlined.CloudDownload,
+        titleResId = R.string.settings_update_method,
+        subtitle = subtitle,
+        subtitleIsError = subtitle == notSelected,
+        enabled = methodSelectionEnabled,
+    ) {
+        showSheet = true
+    }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
@@ -167,64 +246,31 @@ private fun MethodChooser(
 }
 
 @Composable
-private fun StartApp(
-    startApp: (Pair<Boolean, Boolean>) -> Unit, // contribute, submitLogs
+private fun StartApp(startApp: (Boolean) -> Unit) = Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = Modifier.padding(end = 16.dp)
 ) {
     var contribute by rememberSaveableState("contribute", true)
     if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) {
-        var showSheet by rememberSaveableState("showContributorSheet", false)
         CheckboxText(
             contribute, { contribute = it }, R.string.contribute_agree,
-            Modifier.padding(end = 4.dp), Modifier.padding(end = 16.dp),
-        ) {
-            IconButton({ showSheet = true }) {
-                Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
-            }
+            Modifier
+                .weight(1f)
+                .padding(start = 4.dp, end = 16.dp),
+            Modifier.padding(end = 16.dp),
+        )
+
+        var showSheet by rememberSaveableState("showContributorSheet", false)
+        IconButton({ showSheet = true }) {
+            Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
         }
 
         if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it) }
-    }
+    } else Spacer(Modifier.weight(1f)) // always right-align start button
 
-    var submitLogs by rememberSaveableState("submitLogs", true)
-    CheckboxText(
-        submitLogs, { submitLogs = it }, R.string.settings_upload_logs,
-        Modifier.padding(end = 16.dp, bottom = 16.dp), Modifier.padding(end = 16.dp),
-    ) {
-        OutlinedIconButton({
-            startApp(contribute to submitLogs)
-        }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
-    }
-}
-
-@Composable
-private fun SheetOpener(
-    enabled: Boolean,
-    icon: ImageVector, @StringRes labelResId: Int,
-    selectedName: String,
-    onClick: () -> Unit,
-) {
-    val colorScheme = MaterialTheme.colorScheme
-    val typography = MaterialTheme.typography
-
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .alpha(if (enabled) 1f else 0.38f)
-            .animatedClickable(enabled, onClick)
-            .padding(horizontal = 16.dp), // must be after 'clickable`
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(icon, stringResource(R.string.icon), Modifier.padding(end = 16.dp), tint = colorScheme.primary)
-
-        Column(Modifier.padding(vertical = 16.dp)) {
-            Text(stringResource(labelResId), style = typography.titleMedium)
-            Text(
-                selectedName,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = typography.bodyMedium
-            )
-        }
-    }
+    OutlinedIconButton({
+        startApp(contribute)
+    }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -232,8 +278,9 @@ private fun SheetOpener(
 @Composable
 fun PreviewOnboardingScreen() = PreviewAppTheme {
     OnboardingScreen(
+        windowWidthSize = PreviewWindowSize.widthSizeClass,
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
-        SettingsListWrapper(
+        lists = SettingsListWrapper(
             listOf(
                 Device(
                     id = 1,

@@ -131,9 +131,8 @@ Questo può essere utile se si desidera:"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Benvenuto"</string>
+	<string name="onboarding">"Configurazione"</string>
 	<string name="onboarding_finished_button">"Avvia app"</string>
-	<string name="onboarding_title">"Benvenuto su Oxygen Updater!"</string>
 	<string name="onboarding_app_uses">"Questa app ti permetterà di:
 
 &#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS

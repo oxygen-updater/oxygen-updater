@@ -133,9 +133,8 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Herzlich Willkommen"</string>
+	<string name="onboarding">"Setup"</string>
 	<string name="onboarding_finished_button">"App starten"</string>
-	<string name="onboarding_title">"Herzlich Willkommen im Oxygen Updater!"</string>
 	<string name="onboarding_app_uses">"Diese App erlaubt es dir:
 
 &#8226; Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen

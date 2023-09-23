@@ -9,13 +9,15 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,6 +32,7 @@ import androidx.compose.material.icons.rounded.TripOrigin
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
@@ -37,8 +40,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -46,6 +47,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import coil.compose.AsyncImage
@@ -61,12 +63,15 @@ import com.oxygenupdater.internal.DeviceInformationData.serialNumber
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.currentLocale
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
+import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import java.text.NumberFormat
@@ -76,79 +81,125 @@ fun defaultDeviceName() = "$deviceManufacturer $deviceName"
 
 @Composable
 fun DeviceScreen(
+    navType: NavType,
+    windowWidthSize: WindowWidthSizeClass,
     deviceName: String,
     deviceOsSpec: DeviceOsSpec?,
     deviceMismatchStatus: Triple<Boolean, String, String>?,
-) = Column(Modifier.verticalScroll(rememberScrollState())) {
-    DeviceHeader(deviceName, deviceOsSpec, deviceMismatchStatus)
+) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(Modifier.fillMaxWidth()) {
+    DeviceHeaderExpanded(navType, deviceName, deviceOsSpec)
+    // TODO(compose/screens): movableContentOf, see https://github.com/android/user-interface-samples/blob/main/CanonicalLayouts/list-detail-compose/app/src/main/java/com/example/listdetailcompose/ui/ListDetail.kt
+
+    Column(
+        Modifier
+            .weight(1f)
+            .verticalScroll(rememberScrollState())
+    ) {
+        DeviceMismatchStatus(deviceMismatchStatus)
+
+        DeviceSoftwareInfo()
+        ItemDivider(Modifier.padding(top = 16.dp))
+        DeviceHardwareInfo(navType)
+    }
+} else Column(Modifier.verticalScroll(rememberScrollState())) {
+    DeviceHeaderCompact(deviceName, deviceOsSpec, deviceMismatchStatus)
 
     DeviceSoftwareInfo()
     ItemDivider(Modifier.padding(top = 16.dp))
-    DeviceHardwareInfo()
+    DeviceHardwareInfo(navType)
 }
 
 @Composable
-private fun DeviceHeader(
+private fun DeviceHeaderCompact(
     deviceName: String,
     deviceOsSpec: DeviceOsSpec?,
     deviceMismatchStatus: Triple<Boolean, String, String>?,
 ) {
     Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
-        DeviceImage(deviceName, deviceOsSpec)
+        DeviceImage(deviceName, deviceOsSpec, size = 128.dp)
 
         Column(
             Modifier
                 .padding(start = 16.dp)
                 .height(128.dp), // same size as image
         ) {
-            Text(deviceName, style = MaterialTheme.typography.titleLarge)
-            SelectionContainer(Modifier.weight(1f)) {
-                Text(
-                    DeviceInformationData.model,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-
-            Text(
-                stringResource(remember(deviceOsSpec) {
-                    when (deviceOsSpec) {
-                        DeviceOsSpec.SupportedOxygenOs -> R.string.device_information_supported_oxygen_os
-                        DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.device_information_carrier_exclusive_oxygen_os
-                        DeviceOsSpec.UnsupportedOxygenOs -> R.string.device_information_unsupported_oxygen_os
-                        DeviceOsSpec.UnsupportedOs -> R.string.device_information_unsupported_os
-                        else -> R.string.device_information_unsupported_os
-                    }
-                }),
-                Modifier.padding(vertical = 8.dp),
-                if (deviceOsSpec == DeviceOsSpec.SupportedOxygenOs) {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                } else MaterialTheme.colorScheme.error,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall
-            )
+            DeviceNameWithSpec(deviceName, deviceOsSpec, Modifier.weight(1f))
         }
     }
 
     ItemDivider()
-
-    if (deviceMismatchStatus?.first == true) {
-        Text(
-            stringResource(
-                R.string.incorrect_device_warning_message,
-                deviceMismatchStatus.second,
-                deviceMismatchStatus.third
-            ),
-            Modifier.padding(16.dp),
-            MaterialTheme.colorScheme.error,
-            style = MaterialTheme.typography.bodySmall
-        )
-        ItemDivider()
-    }
+    DeviceMismatchStatus(deviceMismatchStatus)
 }
 
 @Composable
-private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
+private fun DeviceHeaderExpanded(
+    navType: NavType,
+    deviceName: String,
+    deviceOsSpec: DeviceOsSpec?,
+) = Column(
+    Modifier
+        .width(IntrinsicSize.Min)
+        .padding(start = 16.dp, top = 16.dp, end = 16.dp)
+) {
+    DeviceImage(deviceName, deviceOsSpec, size = 192.dp)
+    Spacer(Modifier.padding(top = 16.dp))
+    DeviceNameWithSpec(deviceName, deviceOsSpec)
+    ConditionalNavBarPadding(navType)
+}
+
+@Composable
+private fun DeviceNameWithSpec(
+    deviceName: String,
+    deviceOsSpec: DeviceOsSpec?,
+    modifier: Modifier = Modifier,
+) {
+    Text(deviceName, style = MaterialTheme.typography.titleLarge)
+    SelectionContainer(modifier) {
+        Text(
+            DeviceInformationData.model,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+
+    Text(
+        stringResource(remember(deviceOsSpec) {
+            when (deviceOsSpec) {
+                DeviceOsSpec.SupportedOxygenOs -> R.string.device_information_supported_oxygen_os
+                DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.device_information_carrier_exclusive_oxygen_os
+                DeviceOsSpec.UnsupportedOxygenOs -> R.string.device_information_unsupported_oxygen_os
+                DeviceOsSpec.UnsupportedOs -> R.string.device_information_unsupported_os
+                else -> R.string.device_information_unsupported_os
+            }
+        }),
+        Modifier.padding(vertical = 8.dp),
+        if (deviceOsSpec == DeviceOsSpec.SupportedOxygenOs) {
+            MaterialTheme.colorScheme.onSurfaceVariant
+        } else MaterialTheme.colorScheme.error,
+        overflow = TextOverflow.Ellipsis,
+        style = MaterialTheme.typography.bodySmall
+    )
+}
+
+@Composable
+fun DeviceMismatchStatus(status: Triple<Boolean, String, String>?) {
+    if (status?.first != true) return
+
+    Text(
+        stringResource(
+            R.string.incorrect_device_warning_message,
+            status.second,
+            status.third
+        ),
+        Modifier.padding(16.dp),
+        MaterialTheme.colorScheme.error,
+        style = MaterialTheme.typography.bodySmall
+    )
+    ItemDivider()
+}
+
+@Composable
+private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: Dp) {
     val notSupported = deviceOsSpec != DeviceOsSpec.SupportedOxygenOs
     var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
     if (notSupported) deviceOsSpec?.let {
@@ -160,7 +211,7 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
         val defaultImage = painterResource(R.drawable.oneplus7pro)
         AsyncImage(
             deviceName.let {
-                val size = LocalDensity.current.run { 128.dp.roundToPx() }
+                val size = LocalDensity.current.run { size.roundToPx() }
                 remember(it, size) {
                     ImageRequest.Builder(context)
                         .data(Device.constructImageUrl(it))
@@ -169,7 +220,7 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
                 }
             },
             stringResource(R.string.device_information_image_description),
-            Modifier.requiredSize(128.dp),
+            Modifier.requiredSize(size),
             placeholder = defaultImage,
             error = defaultImage,
         )
@@ -177,14 +228,13 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?) {
         if (notSupported) {
             Box(
                 Modifier
-                    .clip(RoundedCornerShape(16.dp))
-                    .requiredSize(128.dp)
-                    .background(Color.Black.copy(alpha = .75f))
+                    .requiredSize(size)
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = .75f))
             )
             Icon(
                 Icons.Rounded.ErrorOutline, stringResource(R.string.icon),
                 Modifier.align(Alignment.Center),
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.error
             )
         }
     }
@@ -241,7 +291,7 @@ private fun Header(@StringRes textResId: Int) = Text(
 )
 
 @Composable
-private fun DeviceHardwareInfo() {
+private fun DeviceHardwareInfo(navType: NavType) {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
@@ -283,6 +333,7 @@ private fun DeviceHardwareInfo() {
     )
 
     Spacer(Modifier.height(16.dp))
+    ConditionalNavBarPadding(navType)
 }
 
 @Composable
@@ -332,8 +383,11 @@ private fun getRamBytes(context: Context) = try {
 @PreviewThemes
 @Composable
 fun PreviewDeviceScreen() = PreviewAppTheme {
-    val name = "OnePlus 8T (India)"
+    val name = defaultDeviceName()
+    val windowSize = PreviewWindowSize
     DeviceScreen(
+        navType = NavType.from(windowSize.widthSizeClass),
+        windowWidthSize = windowSize.widthSizeClass,
         deviceName = name,
         deviceOsSpec = DeviceOsSpec.SupportedOxygenOs,
         deviceMismatchStatus = Triple(false, name, name),

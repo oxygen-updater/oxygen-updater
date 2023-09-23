@@ -75,6 +75,7 @@ fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     navIconClicked: () -> Unit,
     @StringRes subtitleResId: Int,
+    showIcon: Boolean = true,
     root: Boolean = true,
     actions: @Composable (RowScope.() -> Unit)? = null,
 ) = Column {
@@ -99,7 +100,9 @@ fun TopAppBar(
                 style = typography.bodyMedium
             )
         }
-    }, navigationIcon = {
+    }, navigationIcon = icon@{
+        if (!showIcon) return@icon
+
         // Nav icon
         IconButton(navIconClicked) {
             Icon(

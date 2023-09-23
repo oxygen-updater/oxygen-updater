@@ -28,6 +28,8 @@ fun ColumnScope.BannerAd(
 } else AndroidView(factory = { context ->
     AdView(context).apply {
         setAdUnitId(adUnitId)
+        // TODO(compose/bug): size doesn't adjust to screen changes
+        // TODO(compose/bug): FULL_WIDTH is not suitable for use with NavType.SideRail, as that takes up some of the screen's width
         setAdSize(AdSize(AdSize.FULL_WIDTH, AdSize.AUTO_HEIGHT))
 
         loadAd(OxygenUpdater.buildAdRequest())

@@ -145,10 +145,9 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="faq_menu_item">SSS</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">Hoşgelidiniz</string>
+	<string name="onboarding">Kurulum</string>
 	<string name="onboarding_finished_button">Uygulamayı başlat</string>
 
-	<string name="onboarding_title">Oxygen Updatera hoşgeldiniz!</string>
 	<string name="onboarding_app_uses">Bu uygulama size:\n\n&#8226; En sonki Android güncellemelerini OxygenOS kullanan cihazınıza kurmanızda yardımcı olacak.\n&#8226; Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n&#8226; Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n&#8226; OnePlus ve OxygenOS hakkındaki yenilikleri görmek için yardımcı olacak.</string>
 	<string name="onboarding_disclaimer">Orijinal bir OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OnePlus ve uygulama geliştiricileri sorumlu değildir. Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
 	<string name="onboarding_device_chooser_title">Cihazınızı seçin</string>

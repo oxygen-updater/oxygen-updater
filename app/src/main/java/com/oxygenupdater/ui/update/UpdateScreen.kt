@@ -2,6 +2,7 @@ package com.oxygenupdater.ui.update
 
 import android.content.Context
 import android.os.Environment
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
@@ -18,6 +18,7 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.PullRefresh
+import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logInfo
@@ -26,6 +27,8 @@ import java.io.File
 
 @Composable
 fun UpdateScreen(
+    navType: NavType,
+    windowWidthSize: WindowWidthSizeClass,
     state: RefreshAwareState<UpdateData?>,
     refresh: () -> Unit,
     @Suppress("LocalVariableName") _downloadStatus: DownloadStatus,
@@ -41,7 +44,7 @@ fun UpdateScreen(
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
     if (data == null) {
-        ErrorState(stringResource(R.string.update_information_error_title), refresh)
+        ErrorState(navType, R.string.update_information_error_title, refresh = refresh)
         return@PullRefresh // skip the rest
     }
 
@@ -59,7 +62,7 @@ fun UpdateScreen(
 
         Screen.Update.badge = null
 
-        UpToDate(refreshing, updateData)
+        UpToDate(navType, windowWidthSize, refreshing, updateData)
     } else {
         (if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
         else R.string.update_notification_channel_name).let {
@@ -76,7 +79,7 @@ fun UpdateScreen(
             onPauseOrDispose {}
         }
 
-        UpdateAvailable(refreshing, updateData, downloadStatus, failureType, workProgress, forceDownloadErrorDialog, {
+        UpdateAvailable(navType, windowWidthSize, refreshing, updateData, downloadStatus, failureType, workProgress, forceDownloadErrorDialog, {
             when (it) {
                 DownloadAction.Enqueue -> enqueueDownload(updateData)
 

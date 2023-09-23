@@ -43,7 +43,12 @@ abstract class SupportActionBarActivity(
     protected open fun scrollBehavior() = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     @Composable
-    protected open fun TopAppBar() = TopAppBar(scrollBehavior, ::onBackPressed, subtitleResId, false)
+    protected open fun TopAppBar() = TopAppBar(
+        scrollBehavior = scrollBehavior,
+        navIconClicked = ::onBackPressed,
+        subtitleResId = subtitleResId,
+        root = false,
+    )
 
     @Composable
     protected abstract fun Content(modifier: Modifier)

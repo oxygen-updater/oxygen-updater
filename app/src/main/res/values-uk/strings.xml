@@ -140,10 +140,9 @@
 	<string name="faq_menu_item">ЧаПи</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Вітання</string>
+	<string name="onboarding">Налаштування</string>
 	<string name="onboarding_finished_button">розпочати</string>
 
-	<string name="onboarding_title">Ласкаво просимо до Oxygen Updater!</string>
 	<string name="onboarding_app_uses">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS\n&#8226; Легко оновлювати пристрій з рутом\n&#8226; Переглядати, що нового на встановленій прошивці\n&#8226; Читати останні новини про OnePlus і OxygenOS</string>
 	<string name="onboarding_disclaimer">Це не офіційний застосунок від компанії OnePlus. Ви використовуєте його на свій страх і ризик. OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
 	<string name="onboarding_device_chooser_title">Виберіть ваш пристрій</string>
