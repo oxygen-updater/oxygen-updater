@@ -10,11 +10,8 @@ import android.webkit.WebSettings
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -50,6 +47,7 @@ import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
+import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
@@ -131,19 +129,16 @@ fun NewsItemScreen(
 @Composable
 private fun Buttons(item: NewsItem) = with(LocalContext.current) {
     LazyVerticalGrid(
-        GridCells.Fixed(2),
-        // 32dp total vertical padding + 24dp icon
-        Modifier.height(56.dp),
-        userScrollEnabled = false
-    ) {
-        item {
-            GridItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link) { shareExternally(item.title ?: "", item.webUrl) }
-        }
-
-        item {
-            GridItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link) { copyToClipboard(item.webUrl) }
-        }
-    }
+        columnCount = 2,
+        items = arrayOf(
+            GridItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link) {
+                shareExternally(item.title ?: "", item.webUrl)
+            },
+            GridItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link) {
+                copyToClipboard(item.webUrl)
+            },
+        ),
+    )
 }
 
 @Suppress("DEPRECATION")

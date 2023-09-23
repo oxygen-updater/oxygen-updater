@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -82,18 +82,21 @@ fun Modifier.animatedClickable(
         }
 }
 
-fun Modifier.borderExceptTop(color: Color) = drawWithCache {
-    onDrawBehind {
-        val stroke = ceil(1.dp.value)
-        val size = size
-        val width = size.width - stroke
-        val height = size.height - stroke
+fun Modifier.borderExceptTop(
+    color: Color,
+    ltr: Boolean,
+    drawEnd: Boolean = false,
+) = drawBehind {
+    val stroke = ceil(1.dp.value)
+    val size = size
+    val width = size.width - stroke
+    val height = size.height - stroke
 
-        // Left
-        drawLine(color, Offset(stroke, 0f), Offset(stroke, height), stroke)
-        // Bottom
-        drawLine(color, Offset(stroke, height), Offset(width, height), stroke * 2)
-        // Right
-        drawLine(color, Offset(width, height), Offset(width, stroke), stroke)
+    // Bottom
+    drawLine(color, Offset(stroke, height), Offset(width, height), stroke * 2)
+
+    if (drawEnd) {
+        if (ltr) drawLine(color, Offset(width, height), Offset(width, stroke), stroke) // right
+        else drawLine(color, Offset(stroke, 0f), Offset(stroke, height), stroke)    // left
     }
 }

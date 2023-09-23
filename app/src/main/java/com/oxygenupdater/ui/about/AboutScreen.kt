@@ -4,10 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -37,6 +34,7 @@ import com.oxygenupdater.icons.GitHub
 import com.oxygenupdater.icons.Patreon
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.ItemDivider
+import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -84,43 +82,18 @@ fun AboutScreen() = Column(
 @Composable
 private fun Buttons() = with(LocalContext.current) {
     LazyVerticalGrid(
-        GridCells.Fixed(2),
-        // 4 items of 56dp height each (32dp total vertical padding + 24dp icon)
-        Modifier.height(224.dp),
-        userScrollEnabled = false
-    ) {
-        item {
-            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) }
-        }
-
-        item {
-            GridItem(CustomIcons.Faq, R.string.faq_menu_item) { startActivity<FaqActivity>() }
-        }
-
-        item {
-            GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord) }
-        }
-
-        item {
-            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, ::openEmail)
-        }
-
-        item {
-            GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub) }
-        }
-
-        item {
-            GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website) }
-        }
-
-        item {
-            GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon) }
-        }
-
-        item {
-            GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text, ::openPlayStorePage)
-        }
-    }
+        columnCount = 2,
+        items = arrayOf(
+            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) },
+            GridItem(CustomIcons.Faq, R.string.faq_menu_item) { startActivity<FaqActivity>() },
+            GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord) },
+            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, ::openEmail),
+            GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub) },
+            GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website) },
+            GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon) },
+            GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text, ::openPlayStorePage),
+        ),
+    )
 }
 
 private fun Context.openLink(link: LinkType) = startActivity(
