@@ -7,7 +7,7 @@ import androidx.compose.runtime.Stable
 @JvmInline
 value class DownloadAction(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "DownloadAction." + when (this) {
         Enqueue -> "Enqueue"
         Pause -> "Pause"
         Cancel -> "Cancel"

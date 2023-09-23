@@ -297,7 +297,7 @@ private fun Notifications() {
 @Composable
 private fun Theme() {
     var showSheet by rememberSaveableState("showThemeSheet", false)
-    Item(Icons.Outlined.Palette, R.string.label_theme, PrefManager.theme.toString()) { showSheet = true }
+    Item(Icons.Outlined.Palette, R.string.label_theme, stringResource(PrefManager.theme.titleResId)) { showSheet = true }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         ThemeSheet(hide) { PrefManager.theme = it }

@@ -6,7 +6,8 @@ import androidx.compose.runtime.Stable
 @Immutable
 @JvmInline
 value class DeviceRequestFilter(val value: String) {
-    override fun toString() = value
+
+    override fun toString() = "DeviceRequestFilter.$value"
 
     companion object {
         @Stable

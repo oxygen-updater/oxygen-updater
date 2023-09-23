@@ -10,7 +10,7 @@ import androidx.compose.runtime.Stable
 @JvmInline
 value class DownloadStatus(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "DownloadStatus." + when (this) {
         NotDownloading -> "NotDownloading"
         DownloadQueued -> "DownloadQueued"
         Downloading -> "Downloading"

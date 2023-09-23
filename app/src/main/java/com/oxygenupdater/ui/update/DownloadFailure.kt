@@ -10,7 +10,7 @@ import androidx.compose.runtime.Stable
 @JvmInline
 value class DownloadFailure(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "DownloadFailure." + when (this) {
         NullUpdateDataOrDownloadUrl -> "NullUpdateDataOrDownloadUrl"
         DownloadUrlInvalidScheme -> "DownloadUrlInvalidScheme"
         ServerError -> "ServerError"

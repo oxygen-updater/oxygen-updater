@@ -12,7 +12,7 @@ import androidx.compose.runtime.Stable
 @JvmInline
 value class DeviceOsSpec(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "DeviceOsSpec." + when (this) {
         SupportedOxygenOs -> "SupportedOxygenOs"
         CarrierExclusiveOxygenOs -> "CarrierExclusiveOxygenOs"
         UnsupportedOxygenOs -> "UnsupportedOxygenOs"

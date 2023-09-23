@@ -10,7 +10,7 @@ import androidx.compose.runtime.Stable
 @JvmInline
 value class Md5VerificationFailure(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "Md5VerificationFailure." + when (this) {
         NullUpdateData -> "NullUpdateData"
         NullOrEmptyProvidedChecksum -> "NullOrEmptyProvidedChecksum"
         NullCalculatedChecksum -> "NullCalculatedChecksum"

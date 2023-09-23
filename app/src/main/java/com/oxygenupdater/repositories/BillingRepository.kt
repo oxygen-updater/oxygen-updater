@@ -833,7 +833,7 @@ class BillingRepository(
     @JvmInline
     value class SkuState(val value: Int) {
 
-        override fun toString() = when (this) {
+        override fun toString() = "SkuState." + when (this) {
             Unknown -> "Unknown"
             NotPurchased -> "NotPurchased"
             PurchaseInitiated -> "PurchaseInitiated"

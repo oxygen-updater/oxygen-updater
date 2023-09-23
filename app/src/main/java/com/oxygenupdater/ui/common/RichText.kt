@@ -267,7 +267,7 @@ private fun changelogToAnnotatedString(
 @JvmInline
 value class RichTextType(val value: Int) {
 
-    override fun toString() = when (this) {
+    override fun toString() = "RichTextType." + when (this) {
         Custom -> "Custom"
         Html -> "Html"
         Markdown -> "Markdown"

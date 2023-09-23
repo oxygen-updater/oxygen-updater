@@ -32,7 +32,7 @@ sealed class Theme(
     @Stable
     object Auto : Theme(3, R.string.theme_auto, R.string.theme_auto_subtitle)
 
-    override fun toString() = when (this) {
+    override fun toString() = "Theme." + when (this) {
         Light -> "Light"
         Dark -> "Dark"
         System -> "System"
