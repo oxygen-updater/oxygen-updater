@@ -143,11 +143,7 @@ Questo può essere utile se si desidera:"</string>
 	<string name="onboarding_device_chooser_title">"Seleziona il tuo dispositivo:"</string>
 	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra."</string>
 	<string name="onboarding_method_chooser_title">"Seleziona il tuo metodo d'aggiornamento."</string>
-	<string name="onboarding_method_chooser_caption">"Di solito, l'aggiornamento progressivo è la scelta corretta, perché offre download molto più facili e piccoli.
-
-Però, non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo.
-
-Se hai una versione beta, seleziona una delle opzioni Open Beta."</string>
+	<string name="onboarding_method_chooser_caption">"Di solito, l'aggiornamento progressivo è la scelta corretta, perché offre download molto più facili e piccoli. Però, non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo. Se hai una versione beta, seleziona una delle opzioni Open Beta."</string>
 	<string name="onboarding_caption">"Goditi l'app! Puoi cambiare le tue impostazioni in qualsiasi momento."</string>
 
 	<!-- Automatic install strings -->

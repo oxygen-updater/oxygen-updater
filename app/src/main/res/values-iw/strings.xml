@@ -147,7 +147,7 @@
 	<string name="onboarding_device_chooser_title">בחר את המכשיר שלך</string>
 	<string name="onboarding_device_chooser_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית. אך אם לא בחר את המכשיר בצורה ידנית</string>
 	<string name="onboarding_method_chooser_title">בחר את שיטת העדכון</string>
-	<string name="onboarding_method_chooser_caption">בדרך כלל, שיטת Incremental update הוא הבחירה הנכונה, מכיוון שהוא מציע הורדה מהירה יותר, וקבצים קלי משקל לעומת שיטת ה־ Full\n\nם זאת, שיטת Incremental update איננה נתמכת במכשירים עם גישת Root. אם ברשותך מכשיר עם גישת Root, אנא בחר את שיטת Full update.\n\nם הינך מריץ גרסת בטא של מערכת ההפעלה OxygenOS, אנא בחר אחד משיטות העדכונים שמיועדים לבטא (Open Beta).</string>
+	<string name="onboarding_method_chooser_caption">בדרך כלל, שיטת Incremental update הוא הבחירה הנכונה, מכיוון שהוא מציע הורדה מהירה יותר, וקבצים קלי משקל לעומת שיטת ה־ Full ם זאת, שיטת Incremental update איננה נתמכת במכשירים עם גישת Root. אם ברשותך מכשיר עם גישת Root, אנא בחר את שיטת Full update. ם הינך מריץ גרסת בטא של מערכת ההפעלה OxygenOS, אנא בחר אחד משיטות העדכונים שמיועדים לבטא (Open Beta).</string>
 	<string name="onboarding_caption">מאחלים לך הנאה בזמן שימוש באפליקציה! ברשותך תמיד האפשרות לשנות את ההגדרות שלך.</string>
 
 	<!-- Automatic install strings -->

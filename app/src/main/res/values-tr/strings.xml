@@ -153,7 +153,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="onboarding_device_chooser_title">Cihazınızı seçin</string>
 	<string name="onboarding_device_chooser_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
 	<string name="onboarding_method_chooser_title">Güncelleme metodunuzu seçiniz</string>
-	<string name="onboarding_method_chooser_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır.\n\nAncak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz.\n\nEğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
+	<string name="onboarding_method_chooser_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır. Ancak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz. Eğer OxygenOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
 	<string name="onboarding_caption">Uygulamayı güle kullanın! Her zaman ayarlarınızı daha sonra değiştirebilirsiniz.</string>
 
 	<!-- Automatic install strings -->

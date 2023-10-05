@@ -145,11 +145,7 @@ Detta kan vara användbart om du vill:"</string>
 	<string name="onboarding_device_chooser_title">"Välj din enhet:"</string>
 	<string name="onboarding_device_chooser_caption">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan."</string>
 	<string name="onboarding_method_chooser_title">"Välj din uppdateringsmetod:"</string>
-	<string name="onboarding_method_chooser_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek.
-
-Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet.
-
-Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetoderna för Open Beta."</string>
+	<string name="onboarding_method_chooser_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek. Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet. Om du har installerat en beta version av OxygenOS, välj en av uppdateringsmetoderna för Open Beta."</string>
 	<string name="onboarding_caption">"Hoppas du kommer tycka om appen! Du kan alltid ändra inställningar senare."</string>
 
 	<!-- Automatic install strings -->

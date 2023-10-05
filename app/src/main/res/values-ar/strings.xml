@@ -140,7 +140,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding_device_chooser_title">إختر جهازك</string>
 	<string name="onboarding_device_chooser_caption">جهازك غالباً تم إختياره بالأعلى. إذا لم يكن كذلك قم انت بإختياره من الأعلى.إسحب إلى اليسار للإستمرار.</string>
 	<string name="onboarding_method_chooser_title">إختر الطريقة التي تفضلها للتحديث</string>
-	<string name="onboarding_method_chooser_caption">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر.\n\nعلى كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.</string>
+	<string name="onboarding_method_chooser_caption">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر. على كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.</string>
 	<string name="onboarding_caption">إستمتع بهذا التطبيق! يمكنك دائماً تغيير إعداداتك لاحقاً.</string>
 
 	<!-- Automatic install strings -->

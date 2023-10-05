@@ -159,7 +159,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="onboarding_device_chooser_title">Wybierz swoje urządzenie</string>
 	<string name="onboarding_device_chooser_caption">Twoje urządzenie jest zazwyczaj wybrane powyżej. Jeśli nie, wybierz twoje urządzenie wyżej.</string>
 	<string name="onboarding_method_chooser_title">Wybierz metodę aktualizacji</string>
-	<string name="onboarding_method_chooser_caption">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku.\n\nAczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację.\n\nJeśli masz wersję beta OxygenOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.</string>
+	<string name="onboarding_method_chooser_caption">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku. Aczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację. Jeśli masz wersję beta OxygenOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.</string>
 	<string name="onboarding_caption">Miłego korzystania z tej aplikacji! Możesz zawsze zmienić swoje ustawienia w dowolnym momencie.</string>
 
 	<!-- Automatic install strings -->

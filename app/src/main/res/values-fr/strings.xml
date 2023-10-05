@@ -149,11 +149,7 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 	<string name="onboarding_device_chooser_title">"Choisissez votre appareil:"</string>
 	<string name="onboarding_device_chooser_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus."</string>
 	<string name="onboarding_method_chooser_title">"Choisissez votre méthode de mise à jour."</string>
-	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit.
-
-Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète.
-
-Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
+	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit. Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète. Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
 	<string name="onboarding_caption">"Profitez de cette application ! Vous pourrez changer vos réglages plus tard si vous le souhaitez."</string>
 
 	<!-- Automatic install strings -->

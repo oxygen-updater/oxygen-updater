@@ -148,7 +148,7 @@
 	<string name="onboarding_device_chooser_title">Виберіть ваш пристрій</string>
 	<string name="onboarding_device_chooser_caption">Зазвичай пристрій визначається автоматично. Якщо ні, тоді виберіть його зі списку.</string>
 	<string name="onboarding_method_chooser_title">Виберіть спосіб оновлення</string>
-	<string name="onboarding_method_chooser_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів.\n\nОднак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update).\n\nЯкщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open Beta).</string>
+	<string name="onboarding_method_chooser_caption">Зазвичай, інкрементне оновлення (Incremental update) є оптимальним вибором, тому що під час нього завантажується менше файлів. Однак, такий спосіб не сумісний з рутованими пристроями. Якщо у вас пристрій з рут правами, виберіть \"Повне оновлення\" (Full update). Якщо ви користуєтеся бета версіями OxygenOS, тоді виберіть спосіб \"Бета оновлення\" (Open Beta).</string>
 	<string name="onboarding_caption">Сподіваємося, вам буде приємно користуватися цим застосунком! Ви завжди можете змінити налаштування.</string>
 
 	<!-- Automatic install strings -->

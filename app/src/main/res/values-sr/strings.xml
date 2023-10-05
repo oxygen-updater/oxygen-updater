@@ -150,7 +150,7 @@
 	<string name="onboarding_device_chooser_title">Изаберите ваш уређај</string>
 	<string name="onboarding_device_chooser_caption">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.</string>
 	<string name="onboarding_method_chooser_title">Изаберите методу ажурирањ</string>
-	<string name="onboarding_method_chooser_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања.\n\nАли тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање.\n\nАко имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
+	<string name="onboarding_method_chooser_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања. Али тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање. Ако имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
 	<string name="onboarding_caption">Уживајте у коришћењу апликације! Можете увек променити поставке у подешавањима касније.</string>
 
 	<!-- Automatic install strings -->

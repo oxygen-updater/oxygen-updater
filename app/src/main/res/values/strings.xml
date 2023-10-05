@@ -147,7 +147,7 @@ This can be useful if you want to:"</string>
 	<string name="onboarding_device_chooser_title">Choose your device</string>
 	<string name="onboarding_device_chooser_caption">Your device is usually already selected above. If not, select your device above.</string>
 	<string name="onboarding_method_chooser_title">Choose your update method</string>
-	<string name="onboarding_method_chooser_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads.\n\nHowever, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update.\n\nIf you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
+	<string name="onboarding_method_chooser_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads. However, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update. If you have a beta version of OxygenOS, choose (one of) the Open Beta update method(s).</string>
 	<string name="onboarding_caption">Enjoy using this app! You can always change your settings later on.</string>
 
 	<!-- Automatic install strings -->

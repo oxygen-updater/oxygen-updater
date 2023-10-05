@@ -148,7 +148,7 @@
 	<string name="onboarding_device_chooser_title">あなたのデバイスを選択</string>
 	<string name="onboarding_device_chooser_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
 	<string name="onboarding_method_chooser_title">アップデート方法を選択</string>
-	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
+	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。 ただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。 OxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
 	<string name="onboarding_caption">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
 
 	<!-- Automatic install strings -->

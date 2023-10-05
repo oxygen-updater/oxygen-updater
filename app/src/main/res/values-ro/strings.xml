@@ -146,7 +146,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="onboarding_device_chooser_title">Selectați-vă dispozitivul</string>
 	<string name="onboarding_device_chooser_caption">De regulă, dispozitivul dumneavoastră este preselectat mai sus. În caz contrar, selectați-vă dispozitivul mai sus.</string>
 	<string name="onboarding_method_chooser_title">Alegeți metoda de actualizare</string>
-	<string name="onboarding_method_chooser_caption">De obicei, actualizarea incrementală este alegerea potrivită aici, deoarece oferă descărcări mult mai rapide și mai mici.\n\nCu toate acestea, nu este compatibilă cu dispozitivele rootate. Dacă aveți un dispozitiv rootat, alegeți Actualizarea completă.\n\nDacă aveți o versiune beta a OxygenOS, alegeți (una) dintre metodele de actualizare Open Beta.</string>
+	<string name="onboarding_method_chooser_caption">De obicei, actualizarea incrementală este alegerea potrivită aici, deoarece oferă descărcări mult mai rapide și mai mici. Cu toate acestea, nu este compatibilă cu dispozitivele rootate. Dacă aveți un dispozitiv rootat, alegeți Actualizarea completă. Dacă aveți o versiune beta a OxygenOS, alegeți (una) dintre metodele de actualizare Open Beta.</string>
 	<string name="onboarding_caption">Bucurați-vă de utilizarea acestei aplicații! Vă puteți schimba oricând setările mai târziu.</string>
 
 	<!-- Automatic install strings -->

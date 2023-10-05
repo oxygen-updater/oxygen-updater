@@ -154,7 +154,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="onboarding_device_chooser_title">เลือกอุปกรณ์ของคุณ</string>
 	<string name="onboarding_device_chooser_caption">โดยปกติอุปกรณ์ของคุณจะถูกเลือกไว้ด้านบน หากไม่ คุณสามารถเลือกอุปกรณ์ของคุณด้านบน</string>
 	<string name="onboarding_method_chooser_title">เลือกวิธีการอัพเดทของคุณ</string>
-	<string name="onboarding_method_chooser_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก\n\nอย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ\n\nหากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
+	<string name="onboarding_method_chooser_caption">โดยปกติแล้วการอัปเดตธรรมดาจะเป็นตัวเลือกที่เหมาะสมเนื่องจากมีการดาวน์โหลดที่เร็วกว่าและเล็กกว่ามาก อย่างไรก็ตามมันเข้ากันไม่ได้กับอุปกรณ์ที่รูท หากคุณมีอุปกรณ์รูทให้เลือกการอัพเดทแบบเต็มรูปแบบ หากคุณมี OxygenOS รุ่นเบต้าให้เลือก (หนึ่งใน) วิธีการอัปเดต Open Beta</string>
 	<string name="onboarding_caption">ขอสนุกกับการใช้แอพนี้! คุณสามารถเปลี่ยนการตั้งค่าได้ในภายหลัง.</string>
 
 	<!-- Automatic install strings -->

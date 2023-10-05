@@ -149,7 +149,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="onboarding_device_chooser_title">Válaszd ki a készüléked</string>
 	<string name="onboarding_device_chooser_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
 	<string name="onboarding_method_chooser_title">Válaszd ki a frissítési módszered</string>
-	<string name="onboarding_method_chooser_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál.\n\nAzonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget.\n\nHa OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
+	<string name="onboarding_method_chooser_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál. Azonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget. Ha OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
 	<string name="onboarding_caption">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
 
 	<!-- Automatic install strings -->

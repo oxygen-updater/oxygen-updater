@@ -150,7 +150,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="onboarding_device_chooser_title">Velg enheten din</string>
 	<string name="onboarding_device_chooser_caption">Enheten er vanligvis allerede valgt ovenfor. Hvis ikke, velg enheten ovenfor.</string>
 	<string name="onboarding_method_chooser_title">Velg din oppdateringsmetode</string>
-	<string name="onboarding_method_chooser_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger.\n\nMen den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering.\n\nHvis du har en beta-versjon av OxygenOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
+	<string name="onboarding_method_chooser_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger. Men den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering. Hvis du har en beta-versjon av OxygenOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
 	<string name="onboarding_caption">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
 
 	<!-- Automatic install strings -->

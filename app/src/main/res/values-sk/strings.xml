@@ -147,7 +147,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="onboarding_device_chooser_title">Vyberte svoje zariadenie</string>
 	<string name="onboarding_device_chooser_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
 	<string name="onboarding_method_chooser_title">Vyberte spôsob aktualizácie</string>
-	<string name="onboarding_method_chooser_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie.\n\nNie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie.\n\nAk máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
+	<string name="onboarding_method_chooser_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie. Nie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie. Ak máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
 	<string name="onboarding_caption">Želáme príjemné používanie aplikácie! Neskôr môžete svoje nastavenia kedykoľvek zmeniť.</string>
 
 	<!-- Automatic install strings -->

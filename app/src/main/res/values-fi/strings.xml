@@ -146,11 +146,7 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="onboarding_device_chooser_title">"Valitse laitteesi:"</string>
 	<string name="onboarding_device_chooser_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta."</string>
 	<string name="onboarding_method_chooser_title">"Valitse päivitystapasi"</string>
-	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot
-
-Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys.
-
-Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista."</string>
+	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys. Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista."</string>
 	<string name="onboarding_caption">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
 
 	<!-- Automatic install strings -->

@@ -149,7 +149,7 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="onboarding_device_chooser_title">Vælg din enhed</string>
 	<string name="onboarding_device_chooser_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhed ovenfor.</string>
 	<string name="onboarding_method_chooser_title">Vælg opdateringsmetode</string>
-	<string name="onboarding_method_chooser_caption">Normalt, er den trinvise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads.\n\nDog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælg, da en fuld opdatering.\n\nHvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
+	<string name="onboarding_method_chooser_caption">Normalt, er den trinvise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads. Dog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælg, da en fuld opdatering. Hvis du har en beta version af OxygenOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
 	<string name="onboarding_caption">Held og lykke med denne app! Du kan altid ændre dine indstillinger senere.</string>
 
 	<!-- Automatic install strings -->

@@ -148,7 +148,7 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="onboarding_device_chooser_title">Escolha seu dispositivo</string>
 	<string name="onboarding_device_chooser_caption">Normalmente, o seu dispositivo já está selecionado acima. Caso contrário, selecione seu dispositivo acima.</string>
 	<string name="onboarding_method_chooser_title">Escolha o seu método de atualização</string>
-	<string name="onboarding_method_chooser_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores.\n\nNo entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa.\n\nSe você tiver uma versão beta do OxygenOS, escolha (um dos) canais de atualização do Open Beta.</string>
+	<string name="onboarding_method_chooser_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores. No entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa. Se você tiver uma versão beta do OxygenOS, escolha (um dos) canais de atualização do Open Beta.</string>
 	<string name="onboarding_caption">Aprecie este aplicativo! Você sempre pode alterar suas configurações mais tarde.</string>
 
 	<!-- Automatic install strings -->

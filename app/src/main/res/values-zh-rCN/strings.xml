@@ -144,7 +144,7 @@
 	<string name="onboarding_device_chooser_title">选择您的设备：</string>
 	<string name="onboarding_device_chooser_caption">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。</string>
 	<string name="onboarding_method_chooser_title">选择您的更新方式：</string>
-	<string name="onboarding_method_chooser_caption">一般情况下，我们更加推荐增量更新，因为下载的更新包更加小巧。\n只是它与 Root 设备不兼容。 如果您的设备已经 Root，请选择全量更新。\n而如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统</string>
+	<string name="onboarding_method_chooser_caption">一般情况下，我们更加推荐增量更新，因为下载的更新包更加小巧。 只是它与 Root 设备不兼容。 如果您的设备已经 Root，请选择全量更新。 而如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统</string>
 	<string name="onboarding_caption">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
 
 	<!-- Automatic install strings -->
