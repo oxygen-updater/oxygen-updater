@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.ui.common.ItemDivider
+import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.backgroundVariant
 
@@ -34,23 +35,22 @@ fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.(() -> U
     val colorScheme = MaterialTheme.colorScheme
     // TODO(compose/sheet): move common layouts out of *Sheet
     ModalBottomSheet(
-        hide,
+        onDismissRequest = hide,
         sheetState = rememberModalBottomSheetState(true),
         containerColor = colorScheme.backgroundVariant, // match bottom nav bar
         contentColor = colorScheme.onSurface,
         windowInsets = WindowInsets.navigationBars, // draw behind status bar only, not navigation
-        content = { content(hide) }
-    )
+    ) { content(hide) }
 }
 
 @Composable
 @NonRestartableComposable
 fun SheetHeader(@StringRes titleResId: Int) = Text(
-    stringResource(titleResId),
-    Modifier.padding(start = 16.dp, end = 4.dp, bottom = 16.dp),
-    MaterialTheme.colorScheme.primary,
+    text = stringResource(titleResId),
+    color = MaterialTheme.colorScheme.primary,
     overflow = TextOverflow.Ellipsis, maxLines = 1,
-    style = MaterialTheme.typography.titleMedium
+    style = MaterialTheme.typography.titleMedium,
+    modifier = Modifier.padding(start = 16.dp, end = 4.dp, bottom = 16.dp)
 )
 
 @Composable
@@ -58,10 +58,10 @@ fun SheetHeader(@StringRes titleResId: Int) = Text(
 fun SheetCaption(@StringRes captionResId: Int) {
     ItemDivider()
     Text(
-        stringResource(captionResId),
-        Modifier.padding(16.dp),
-        MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodySmall
+        text = stringResource(captionResId),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall,
+        modifier = modifierDefaultPadding
     )
 }
 

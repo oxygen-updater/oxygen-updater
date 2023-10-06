@@ -136,7 +136,7 @@ class MainActivity : BaseActivity() {
         }
 
         // Force-show download error dialog if started from an intent with error info
-        // TODO(compose/update): download error dialog logic is simplified in UIC. Verify if the dialog meant
+        // TODO(compose/update): download error dialog logic is simplified in UpdateScreen. Verify if the dialog meant
         //  to be shown after clicking the download failed notification (i.e. on activity start) is shown
         //  immediately in the UI itself, in both cases: app in foreground and background/killed.
         //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
@@ -196,10 +196,10 @@ class MainActivity : BaseActivity() {
         // Referential equality because we're reusing static Pairs
         var snackbarText by rememberSaveableState<Pair<Int, Int>?>("snackbarText", null, true)
         AppUpdateInfo(
-            viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
-            { snackbarText?.first },
-            { snackbarText = it },
-            viewModel::unregisterAppUpdateListener,
+            info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
+            snackbarMessageId = { snackbarText?.first },
+            updateSnackbarText = { snackbarText = it },
+            unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
             requestUpdate = viewModel::requestUpdate,
             requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
         )
@@ -225,9 +225,12 @@ class MainActivity : BaseActivity() {
             val navType = NavType.from(windowWidthSize)
 
             AnimatedVisibility(navType == NavType.SideRail) {
-                MainNavigationRail(currentRoute, navigateTo = {
-                    navController.navigateWithDefaults(it)
-                }, openAboutScreen = openAboutScreen, setSubtitleResId = { subtitleResId = it })
+                MainNavigationRail(
+                    currentRoute = currentRoute,
+                    navigateTo = { navController.navigateWithDefaults(it) },
+                    openAboutScreen = openAboutScreen,
+                    setSubtitleResId = { subtitleResId = it },
+                )
             }
 
             AnimatedVisibility(navType == NavType.SideRail) {
@@ -236,14 +239,25 @@ class MainActivity : BaseActivity() {
 
             Column {
                 val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-                TopAppBar(scrollBehavior, openAboutScreen, subtitleResId, navType == NavType.BottomBar) {
+                TopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    navIconClicked = openAboutScreen,
+                    subtitleResId = subtitleResId,
+                    showIcon = navType == NavType.BottomBar,
+                ) {
                     val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
-                    MainMenu(serverMessages, subtitleResId == Screen.NewsList.labelResId, rememberCallback(newsListViewModel::markAllRead))
+                    MainMenu(
+                        serverMessages = serverMessages,
+                        showMarkAllRead = subtitleResId == Screen.NewsList.labelResId,
+                        markAllRead = rememberCallback(newsListViewModel::markAllRead),
+                    )
                 }
 
-                FlexibleAppUpdateProgress(viewModel.appUpdateStatus.collectAsStateWithLifecycle().value, {
-                    snackbarText?.first
-                }) { snackbarText = it }
+                FlexibleAppUpdateProgress(
+                    state = viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
+                    snackbarMessageId = { snackbarText?.first },
+                    updateSnackbarText = { snackbarText = it },
+                )
 
                 val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
                 ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
@@ -260,18 +274,41 @@ class MainActivity : BaseActivity() {
                 }
 
                 NavHost(
-                    navController, startScreen.route,
-                    Modifier
+                    navController = navController,
+                    startDestination = startScreen.route,
+                    modifier = Modifier
                         .weight(1f)
                         .nestedScroll(scrollBehavior.nestedScrollConnection)
                 ) {
-                    updateScreen(navType, windowWidthSize) { subtitleResId = it }
-                    newsListScreen(navType, windowSize, newsListState)
-                    deviceScreen(navType, windowWidthSize, allDevices)
-                    aboutScreen(navType, windowWidthSize)
-                    settingsScreen(navType, enabledDevices, updateMismatchStatus = {
-                        viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices)
-                    }, openAboutScreen)
+                    updateScreen(
+                        navType = navType,
+                        windowWidthSize = windowWidthSize,
+                        setSubtitleResId = { subtitleResId = it },
+                    )
+
+                    newsListScreen(
+                        navType = navType,
+                        windowSize = windowSize,
+                        state = newsListState,
+                    )
+
+                    deviceScreen(
+                        navType = navType,
+                        windowWidthSize = windowWidthSize,
+                        allDevices = allDevices,
+                    )
+
+                    aboutScreen(
+                        navType = navType,
+                        windowWidthSize = windowWidthSize,
+                    )
+
+                    settingsScreen(
+                        navType = navType,
+                        cachedEnabledDevices = enabledDevices,
+                        updateMismatchStatus = { viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices) },
+                        openAboutScreen = openAboutScreen,
+                    )
                 }
 
                 // This must be defined on the same level as NavHost, otherwise it won't work
@@ -290,26 +327,28 @@ class MainActivity : BaseActivity() {
                     var adLoaded by rememberSaveableState("adLoaded", false)
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
-                        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-                        modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier,
                         adListener = adLoadListener { adLoaded = it },
-                        view = rememberTypedCallback { bannerAdView = it }
+                        viewUpdated = rememberTypedCallback { bannerAdView = it },
+                        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
+                        modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier
                     )
                 }
 
                 AnimatedVisibility(navType == NavType.BottomBar) {
-                    MainNavigationBar(currentRoute, navigateTo = {
-                        navController.navigateWithDefaults(it)
-                    }, setSubtitleResId = { subtitleResId = it })
+                    MainNavigationBar(
+                        currentRoute = currentRoute,
+                        navigateTo = { navController.navigateWithDefaults(it) },
+                        setSubtitleResId = { subtitleResId = it },
+                    )
                 }
             }
         }
 
         // Gets placed over TopAppBar
         MainSnackbar(
-            snackbarText,
+            snackbarText = snackbarText,
             openPlayStorePage = rememberCallback(::openPlayStorePage),
-            completeAppUpdate = rememberCallback(viewModel::completeAppUpdate)
+            completeAppUpdate = rememberCallback(viewModel::completeAppUpdate),
         )
     }
 
@@ -338,28 +377,43 @@ class MainActivity : BaseActivity() {
         val outputData = workInfo?.outputData
         val progress = workInfo?.progress
         val failureType = outputData?.getInt(WorkDataDownloadFailureType, NotSet)
-        UpdateScreen(navType, windowWidthSize, state, rememberCallback {
-            settingsViewModel.updateCrashlyticsUserId()
-            viewModel.fetchServerStatus()
-            updateViewModel.refresh()
-        }, downloadStatus, failureType, if (progress == null) null else remember(progress) {
-            WorkProgress(
-                progress.getLong(WorkDataDownloadBytesDone, NotSetL),
-                progress.getLong(WorkDataDownloadTotalBytes, NotSetL),
-                progress.getInt(WorkDataDownloadProgress, NotSet),
-                progress.getString(WorkDataDownloadEta),
-            )
-        }, downloadErrorMessage != null, rememberTypedCallback(setSubtitleResId), enqueueDownload = rememberTypedCallback {
-            viewModel.setupDownloadWorkRequest(it)
-            viewModel.enqueueDownloadWork()
-        }, pauseDownload = rememberCallback(viewModel::pauseDownloadWork), cancelDownload = rememberTypedCallback {
-            viewModel.cancelDownloadWork(this@MainActivity, it)
-        }, deleteDownload = rememberTypedCallback {
-            viewModel.deleteDownloadedFile(this@MainActivity, it)
-        }, logDownloadError = rememberCallback(outputData) {
-            if (outputData == null) return@rememberCallback
-            viewModel.logDownloadError(outputData)
-        })
+        UpdateScreen(
+            navType = navType,
+            windowWidthSize = windowWidthSize,
+            state = state,
+            refresh = rememberCallback {
+                settingsViewModel.updateCrashlyticsUserId()
+                viewModel.fetchServerStatus()
+                updateViewModel.refresh()
+            },
+            _downloadStatus = downloadStatus,
+            failureType = failureType,
+            workProgress = if (progress == null) null else remember(progress) {
+                WorkProgress(
+                    bytesDone = progress.getLong(WorkDataDownloadBytesDone, NotSetL),
+                    totalBytes = progress.getLong(WorkDataDownloadTotalBytes, NotSetL),
+                    currentProgress = progress.getInt(WorkDataDownloadProgress, NotSet),
+                    downloadEta = progress.getString(WorkDataDownloadEta),
+                )
+            },
+            forceDownloadErrorDialog = downloadErrorMessage != null,
+            setSubtitleResId = rememberTypedCallback(setSubtitleResId),
+            enqueueDownload = rememberTypedCallback {
+                viewModel.setupDownloadWorkRequest(it)
+                viewModel.enqueueDownloadWork()
+            },
+            pauseDownload = rememberCallback(viewModel::pauseDownloadWork),
+            cancelDownload = rememberTypedCallback {
+                viewModel.cancelDownloadWork(this@MainActivity, it)
+            },
+            deleteDownload = rememberTypedCallback {
+                viewModel.deleteDownloadedFile(this@MainActivity, it)
+            },
+            logDownloadError = rememberCallback(outputData) {
+                if (outputData == null) return@rememberCallback
+                viewModel.logDownloadError(outputData)
+            },
+        )
     }
 
     private fun NavGraphBuilder.newsListScreen(
@@ -374,13 +428,17 @@ class MainActivity : BaseActivity() {
         }
 
         NewsListScreen(
-            navType, windowSize, state, rememberCallback {
+            navType = navType,
+            windowSize = windowSize,
+            state = state,
+            refresh = rememberCallback {
                 viewModel.fetchServerStatus()
                 newsListViewModel.refresh()
-            }, newsListViewModel.unreadCount,
-            rememberCallback(newsListViewModel::markAllRead),
-            rememberTypedCallback(newsListViewModel::toggleRead),
-            rememberTypedCallback(::startNewsItemActivity)
+            },
+            unreadCountState = newsListViewModel.unreadCount,
+            markAllRead = rememberCallback(newsListViewModel::markAllRead),
+            toggleRead = rememberTypedCallback(newsListViewModel::toggleRead),
+            openItem = rememberTypedCallback(::startNewsItemActivity),
         )
     }
 
@@ -389,17 +447,28 @@ class MainActivity : BaseActivity() {
         windowWidthSize: WindowWidthSizeClass,
         allDevices: List<Device>,
     ) = composable(DeviceRoute) {
-        DeviceScreen(navType, windowWidthSize, remember(allDevices) {
-            allDevices.find {
-                it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-            }?.name ?: defaultDeviceName()
-        }, viewModel.deviceOsSpec, viewModel.deviceMismatch)
+        DeviceScreen(
+            navType = navType,
+            windowWidthSize = windowWidthSize,
+            deviceName = remember(allDevices) {
+                allDevices.find {
+                    it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+                }?.name ?: defaultDeviceName()
+            },
+            deviceOsSpec = viewModel.deviceOsSpec,
+            deviceMismatchStatus = viewModel.deviceMismatch,
+        )
     }
 
     private fun NavGraphBuilder.aboutScreen(
         navType: NavType,
         windowWidthSize: WindowWidthSizeClass,
-    ) = composable(AboutRoute) { AboutScreen(navType, windowWidthSize) }
+    ) = composable(AboutRoute) {
+        AboutScreen(
+            navType = navType,
+            windowWidthSize = windowWidthSize,
+        )
+    }
 
     private fun NavGraphBuilder.settingsScreen(
         navType: NavType,
@@ -442,17 +511,27 @@ class MainActivity : BaseActivity() {
         })
 
         val state by settingsViewModel.state.collectAsStateWithLifecycle()
-        SettingsScreen(navType, state, settingsViewModel.initialDeviceIndex, rememberTypedCallback {
-            settingsViewModel.saveSelectedDevice(it)
-            updateMismatchStatus()
-        }, settingsViewModel.initialMethodIndex, rememberTypedCallback(state) {
-            settingsViewModel.saveSelectedMethod(it)
+        SettingsScreen(
+            navType = navType,
+            lists = state,
+            initialDeviceIndex = settingsViewModel.initialDeviceIndex,
+            deviceChanged = rememberTypedCallback {
+                settingsViewModel.saveSelectedDevice(it)
+                updateMismatchStatus()
+            },
+            initialMethodIndex = settingsViewModel.initialMethodIndex,
+            methodChanged = rememberTypedCallback(state) {
+                settingsViewModel.saveSelectedMethod(it)
 
-            if (checkPlayServices(this@MainActivity, true)) {
-                // Subscribe to notifications for the newly selected device and update method
-                NotificationTopicSubscriber.resubscribeIfNeeded(state.enabledDevices, state.methodsForDevice)
-            } else showToast(R.string.notification_no_notification_support)
-        }, adFreePrice, adFreeConfig, openAboutScreen)
+                if (checkPlayServices(this@MainActivity, true)) {
+                    // Subscribe to notifications for the newly selected device and update method
+                    NotificationTopicSubscriber.resubscribeIfNeeded(state.enabledDevices, state.methodsForDevice)
+                } else showToast(R.string.notification_no_notification_support)
+            },
+            adFreePrice = adFreePrice,
+            adFreeConfig = adFreeConfig,
+            openAboutScreen = openAboutScreen,
+        )
     }
 
     private val validatePurchaseTimer = Timer()

@@ -9,7 +9,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebSettings
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -49,6 +48,9 @@ import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.adLoadListener
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
+import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.currentLocale
@@ -81,28 +83,31 @@ fun NewsItemScreen(
                 .weight(1f)
                 .verticalScroll(rememberScrollState()) // must be after `nestedScroll`
         ) {
-            Buttons(item)
+            Buttons(item = item)
 
             var showDivider = false
-            val paddingModifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
             val bodySmall = MaterialTheme.typography.bodySmall
             val textModifier = Modifier.withPlaceholder(refreshing, bodySmall)
 
             item.subtitle?.let {
                 showDivider = true
                 IconText(
-                    paddingModifier, textModifier,
-                    icon = Icons.AutoMirrored.Rounded.Notes, text = it,
-                    style = bodySmall
+                    icon = Icons.AutoMirrored.Rounded.Notes,
+                    text = it,
+                    style = bodySmall,
+                    textModifier = textModifier,
+                    modifier = modifierDefaultPaddingStartTopEnd
                 )
             }
 
             item.getRelativeTime()?.let {
                 showDivider = true
                 IconText(
-                    paddingModifier, textModifier,
-                    icon = Icons.Rounded.Schedule, text = it,
-                    style = bodySmall
+                    icon = Icons.Rounded.Schedule,
+                    text = it,
+                    style = bodySmall,
+                    textModifier = textModifier,
+                    modifier = modifierDefaultPaddingStartTopEnd
                 )
             }
 
@@ -110,17 +115,24 @@ fun NewsItemScreen(
             val language = if (currentLocale().language == "nl") "NL" else "EN"
             val theme = if (MaterialTheme.colorScheme.light) "Light" else "Dark"
             val url = "${item.apiUrl}/$language/$theme"
-            RefreshAwareWebView(refreshing, webViewState, navigator, url, showDivider, onError, adLoaded) {
-                onLoadFinished(item)
-            }
+            RefreshAwareWebView(
+                refreshing = refreshing,
+                webViewState = webViewState,
+                navigator = navigator,
+                url = url,
+                showDivider = showDivider,
+                onError = onError,
+                adLoaded = adLoaded,
+                onLoadFinished = { onLoadFinished(item) },
+            )
         }
 
         if (showAds) BannerAd(
-            BuildConfig.AD_BANNER_NEWS_ID,
+            adUnitId = BuildConfig.AD_BANNER_NEWS_ID,
+            adListener = adLoadListener { adLoaded = it },
+            viewUpdated = bannerAdInit,
             // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-            if (adLoaded) Modifier.navigationBarsPadding() else Modifier,
-            adLoadListener { adLoaded = it },
-            bannerAdInit
+            modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
         )
     }
 }
@@ -161,9 +173,9 @@ private fun RefreshAwareWebView(
     val loading = webViewState.loadingState
     val paddingTop = if (showDivider) Modifier.padding(top = 13.dp) else Modifier
     if (refreshing || loading == LoadingState.Initializing) LinearProgressIndicator(
-        paddingTop.fillMaxWidth()
+        paddingTop then modifierMaxWidth
     ) else if (loading is LoadingState.Loading) LinearProgressIndicator(
-        loading.progress, paddingTop.fillMaxWidth()
+        loading.progress, paddingTop then modifierMaxWidth
     ) else if (loading == LoadingState.Finished) {
         val error = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Errors not for our URLs are filtered out in [WebViewClient]
@@ -175,7 +187,7 @@ private fun RefreshAwareWebView(
             if (error == null) onLoadFinished() else onError(error)
         }
 
-        if (showDivider) ItemDivider(Modifier.padding(top = 16.dp))
+        if (showDivider) ItemDivider(modifierDefaultPaddingTop)
     }
 
     val context = LocalContext.current
@@ -190,12 +202,9 @@ private fun RefreshAwareWebView(
     // Also see https://github.com/android/nowinandroid/pull/722.
     val runningInPreview = LocalInspectionMode.current
     WebView(
-        webViewState,
-        // Don't re-consume navigation bar insets
-        (if (adLoaded) Modifier else Modifier.navigationBarsPadding())
-            // news-content HTML already has an 8px margin
-            .padding(horizontal = 8.dp),
+        state = webViewState,
         navigator = navigator,
+        client = client,
         onCreated = {
             // Must be done to avoid the white background in dark themes
             it.setBackgroundColor(Color.TRANSPARENT)
@@ -206,7 +215,10 @@ private fun RefreshAwareWebView(
             @SuppressLint("SetJavaScriptEnabled")
             it.settings.javaScriptEnabled = true
             it.settings.userAgentString = userAgent
-        }, client = client
+        },
+        // Don't re-consume navigation bar insets
+        modifier = (if (adLoaded) Modifier else Modifier.navigationBarsPadding())
+            .padding(horizontal = 8.dp) // news-content HTML already has an 8px margin
     )
 }
 
@@ -268,8 +280,7 @@ private fun NewsItem.getRelativeTime() = epochMilli?.let {
 fun PreviewNewsItemScreen() = PreviewAppTheme {
     val date = LocalDateTime.now().toString()
     NewsItemScreen(
-        Modifier,
-        RefreshAwareState(
+        state = RefreshAwareState(
             false, NewsItem(
                 1,
                 title = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
@@ -288,5 +299,6 @@ fun PreviewNewsItemScreen() = PreviewAppTheme {
         bannerAdInit = {},
         onError = {},
         onLoadFinished = {},
+        modifier = Modifier,
     )
 }

@@ -194,7 +194,7 @@ class ReadOtaDbWorker(
     private inline fun CoroutineScope.insertInDb(
         rows: List<Map<String, Any?>>,
         success: Boolean,
-        action: (String) -> Unit = {},
+        action: (url: String) -> Unit = {},
     ) {
         // Perf: just once out of loop
         val now = LocalDateTime.now(Utils.ServerTimeZone).toString()

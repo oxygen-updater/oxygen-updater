@@ -84,31 +84,40 @@ class OnboardingActivity : BaseActivity() {
                             navIconClicked = {},
                             subtitleResId = R.string.onboarding,
                             showIcon = false,
-                        ) else CollapsingAppBar(scrollBehavior, image = { modifier ->
-                            AsyncImage(
-                                deviceName?.let {
-                                    val density = LocalDensity.current
-                                    remember(it, maxWidth) {
-                                        ImageRequest.Builder(context)
-                                            .data(Device.constructImageUrl(it))
-                                            .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
-                                            .build()
-                                    }
-                                },
-                                stringResource(R.string.device_information_image_description), modifier,
-                                placeholder = rememberVectorPainter(CustomIcons.Image),
-                                error = rememberVectorPainter(CustomIcons.LogoNotification),
-                                contentScale = ContentScale.Crop,
-                                colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
-                            )
-                        }, title = stringResource(R.string.app_name), subtitle = stringResource(R.string.onboarding))
+                        ) else CollapsingAppBar(
+                            scrollBehavior = scrollBehavior,
+                            image = { modifier ->
+                                AsyncImage(
+                                    model = deviceName?.let {
+                                        val density = LocalDensity.current
+                                        remember(it, maxWidth) {
+                                            ImageRequest.Builder(context)
+                                                .data(Device.constructImageUrl(it))
+                                                .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
+                                                .build()
+                                        }
+                                    },
+                                    contentDescription = stringResource(R.string.device_information_image_description),
+                                    placeholder = rememberVectorPainter(CustomIcons.Image),
+                                    error = rememberVectorPainter(CustomIcons.LogoNotification),
+                                    contentScale = ContentScale.Crop,
+                                    colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                                    modifier = modifier
+                                )
+                            },
+                            title = stringResource(R.string.app_name),
+                            subtitle = stringResource(R.string.onboarding),
+                        )
 
                         OnboardingScreen(
-                            windowSize.widthSizeClass, scrollBehavior, state, viewModel.initialDeviceIndex, rememberTypedCallback(
-                                viewModel::saveSelectedDevice
-                            ), viewModel.initialMethodIndex, rememberTypedCallback(
-                                viewModel::saveSelectedMethod
-                            ), startApp = rememberTypedCallback(enabledDevices) { contribute ->
+                            windowWidthSize = windowSize.widthSizeClass,
+                            scrollBehavior = scrollBehavior,
+                            lists = state,
+                            initialDeviceIndex = viewModel.initialDeviceIndex,
+                            deviceChanged = rememberTypedCallback(viewModel::saveSelectedDevice),
+                            initialMethodIndex = viewModel.initialMethodIndex,
+                            methodChanged = rememberTypedCallback(viewModel::saveSelectedMethod),
+                            startApp = rememberTypedCallback(enabledDevices) { contribute ->
                                 if (Utils.checkPlayServices(this@OnboardingActivity, false)) {
                                     // Subscribe to notifications for the newly selected device and update method
                                     viewModel.subscribeToNotificationTopics(enabledDevices)
@@ -140,7 +149,8 @@ class OnboardingActivity : BaseActivity() {
                                     logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
                                     context.showToast(R.string.settings_entered_incorrectly)
                                 }
-                            })
+                            },
+                        )
                     }
                 }
             }

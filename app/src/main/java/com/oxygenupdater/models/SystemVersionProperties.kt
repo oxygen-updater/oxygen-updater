@@ -249,7 +249,7 @@ object SystemVersionProperties {
     private inline fun pickFirstValid(
         keys: Array<String>,
         default: String = UNKNOWN,
-        workarounds: (String, String) -> String?,
+        workarounds: (key: String, value: String) -> String?,
     ): String {
         for ((key, value) in systemPropertyPairs(keys)) {
             if (value.isEmpty() || value == UNKNOWN) continue // invalid, skip to next iteration

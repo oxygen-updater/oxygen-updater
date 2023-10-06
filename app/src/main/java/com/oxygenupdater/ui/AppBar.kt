@@ -86,33 +86,37 @@ fun TopAppBar(
         navigationIconContentColor = if (root) colorScheme.primary else colorScheme.onSurface,
     )
 
-    TopAppBar({
-        // Title & subtitle
-        Column(verticalArrangement = Arrangement.Center) {
-            Text(
-                stringResource(R.string.app_name),
-                overflow = TextOverflow.Ellipsis, maxLines = 1,
-                style = typography.titleLarge
-            )
-            Text(
-                if (subtitleResId == 0) "v${BuildConfig.VERSION_NAME}" else stringResource(subtitleResId),
-                overflow = TextOverflow.Ellipsis, maxLines = 1,
-                style = typography.bodyMedium
-            )
-        }
-    }, navigationIcon = icon@{
-        if (!showIcon) return@icon
+    TopAppBar(
+        navigationIcon = icon@{
+            if (!showIcon) return@icon
 
-        // Nav icon
-        IconButton(navIconClicked) {
-            Icon(
-                if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
-                if (root) stringResource(R.string.about) else null,
-            )
-        }
-    }, actions = {
-        if (actions != null) actions()
-    }, colors = colors, scrollBehavior = scrollBehavior)
+            // Nav icon
+            IconButton(navIconClicked) {
+                Icon(
+                    if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
+                    if (root) stringResource(R.string.about) else null,
+                )
+            }
+        },
+        title = {
+            // Title & subtitle
+            Column(verticalArrangement = Arrangement.Center) {
+                Text(
+                    stringResource(R.string.app_name),
+                    overflow = TextOverflow.Ellipsis, maxLines = 1,
+                    style = typography.titleLarge
+                )
+                Text(
+                    if (subtitleResId == 0) "v${BuildConfig.VERSION_NAME}" else stringResource(subtitleResId),
+                    overflow = TextOverflow.Ellipsis, maxLines = 1,
+                    style = typography.bodyMedium
+                )
+            }
+        },
+        actions = { if (actions != null) actions() },
+        colors = colors,
+        scrollBehavior = scrollBehavior,
+    )
 
     // Perf: reduce recompositions by mutating only on value
     val dividerAlpha by remember {
@@ -162,14 +166,21 @@ fun CollapsingAppBar(
     }
 
     // Set up support for resizing the top app bar when vertically dragging the bar itself
-    val appBarModifier = Modifier.draggable(rememberDraggableState {
-        scrollBehavior.state.heightOffset += it
-    }, Orientation.Vertical, onDragStopped = {
-        settleAppBar(scrollBehavior.state, it, scrollBehavior.flingAnimationSpec, scrollBehavior.snapAnimationSpec)
-    })
+    val appBarModifier = Modifier.draggable(
+        state = rememberDraggableState { scrollBehavior.state.heightOffset += it },
+        orientation = Orientation.Vertical,
+        onDragStopped = {
+            settleAppBar(
+                state = scrollBehavior.state,
+                velocity = it,
+                flingAnimationSpec = scrollBehavior.flingAnimationSpec,
+                snapAnimationSpec = scrollBehavior.snapAnimationSpec,
+            )
+        },
+    )
 
     Layout({
-        BoxWithConstraints(Modifier.layoutId(LayoutIdImage)) {
+        BoxWithConstraints(layoutIdImageModifier) {
             val size = Modifier.size(maxWidth, height)
             val colorScheme = MaterialTheme.colorScheme
             val hover = colorScheme.backgroundVariant.copy(alpha = 0.75f)
@@ -187,18 +198,16 @@ fun CollapsingAppBar(
         }
 
         if (onNavIconClick != null) IconButton(
-            onNavIconClick,
-            Modifier
-                .layoutId(LayoutIdNavIcon)
+            onClick = onNavIconClick,
+            modifier = layoutIdNavIconModifier
                 .height(minHeight)
-                .padding(horizontal = 4.dp),
+                .padding(horizontal = 4.dp)
         ) {
             Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
         }
 
         Column(
-            Modifier
-                .layoutId(LayoutIdText)
+            layoutIdTextModifier
                 .padding(
                     start = if (onNavIconClick != null) {
                         // Lerp only if there's a nav icon
@@ -210,10 +219,10 @@ fun CollapsingAppBar(
                     } else 16.dp, end = 16.dp
                 )
         ) {
-            CollapsingAppBarTitle(scrollBehavior, title)
+            CollapsingAppBarTitle(scrollBehavior = scrollBehavior, title = title)
 
             if (subtitle != null) Text(
-                subtitle,
+                text = subtitle,
                 fontSize = remember {
                     derivedStateOf(structuralEqualityPolicy()) {
                         val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
@@ -221,7 +230,7 @@ fun CollapsingAppBar(
                     }
                 }.value,
                 overflow = TextOverflow.Ellipsis, maxLines = 1,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }, appBarModifier) { measurables, constraints ->
@@ -267,27 +276,37 @@ private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title
             colors = TooltipDefaults.richTooltipColors(
                 containerColor = colorScheme.inverseSurface,
                 contentColor = colorScheme.inverseOnSurface,
-            )
-        ) { Text(title) }
+            ),
+            text = { Text(title) },
+        )
     }, tooltipState, enableUserInput = showTooltip) {
-        Text(title, fontSize = remember {
-            derivedStateOf(structuralEqualityPolicy()) {
-                val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
-                lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction).sp
-            }
-        }.value, overflow = TextOverflow.Ellipsis, maxLines = remember {
-            derivedStateOf(structuralEqualityPolicy()) {
-                lerp(4, 1, scrollBehavior.state.collapsedFraction)
-            }
-        }.value, onTextLayout = {
-            showTooltip = it.hasVisualOverflow
-        }, style = MaterialTheme.typography.headlineSmall)
+        Text(
+            text = title,
+            onTextLayout = { showTooltip = it.hasVisualOverflow },
+            overflow = TextOverflow.Ellipsis,
+            maxLines = remember {
+                derivedStateOf(structuralEqualityPolicy()) {
+                    lerp(4, 1, scrollBehavior.state.collapsedFraction)
+                }
+            }.value,
+            fontSize = remember {
+                derivedStateOf(structuralEqualityPolicy()) {
+                    val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
+                    lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction).sp
+                }
+            }.value,
+            style = MaterialTheme.typography.headlineSmall,
+        )
     }
 }
 
 private const val LayoutIdImage = "image"
 private const val LayoutIdNavIcon = "navigationIcon"
 private const val LayoutIdText = "text"
+
+private val layoutIdImageModifier = Modifier.layoutId(LayoutIdImage)
+private val layoutIdNavIconModifier = Modifier.layoutId(LayoutIdNavIcon)
+private val layoutIdTextModifier = Modifier.layoutId(LayoutIdText)
 
 /** min (material3/tokens/TopAppBarSmallTokens.ContainerHeight) to max */
 private val CollapsingAppBarHeight = 64.dp to 256.dp
@@ -344,8 +363,7 @@ private suspend fun settleAppBar(
     // Snap if animation specs were provided
     if (snapAnimationSpec != null && (state.heightOffset < 0 && state.heightOffset > state.heightOffsetLimit)) {
         AnimationState(state.heightOffset).animateTo(
-            if (state.collapsedFraction < 0.5f) 0f
-            else state.heightOffsetLimit,
+            targetValue = if (state.collapsedFraction < 0.5f) 0f else state.heightOffsetLimit,
             animationSpec = snapAnimationSpec,
         ) { state.heightOffset = value }
     }

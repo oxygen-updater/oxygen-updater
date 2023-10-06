@@ -31,7 +31,15 @@ fun textShape(density: Density, fontSize: TextUnit, lineHeight: TextUnit): Shape
 
     val padding = abs(lineHeightPx - fontSizePx) / 2
     return GenericShape { size, _ ->
-        addRoundRect(RoundRect(0f, padding, size.width, size.height - padding, cornerRadius))
+        addRoundRect(
+            RoundRect(
+                left = 0f,
+                top = padding,
+                right = size.width,
+                bottom = size.height - padding,
+                cornerRadius = cornerRadius,
+            )
+        )
     }
 }
 

@@ -106,7 +106,7 @@ class RootFileService : RootService() {
 
     private class FolderObserver(
         folder: ExtendedFile,
-        private val callback: (Int) -> Unit,
+        private val callback: (event: Int) -> Unit,
     ) : FileObserver(folder, ObserverMask) {
 
         private val timer = Timer()

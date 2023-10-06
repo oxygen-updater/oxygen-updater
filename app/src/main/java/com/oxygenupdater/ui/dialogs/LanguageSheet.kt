@@ -27,6 +27,8 @@ import androidx.core.os.LocaleListCompat
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.theme.PreviewThemes
 import java.util.Locale
 
@@ -42,25 +44,28 @@ fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
 
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
+
+    // Perf: re-use common modifiers to avoid recreating the same object repeatedly
+    val iconSpacerSizeModifier = Modifier.size(40.dp) // 24 + 16
     LazyColumn {
         items(list, { it }) { tag ->
             Row(
-                Modifier
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
                     .animatedClickable {
                         AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
                         hide() // hide first; activity may recreate on change
-                    }
-                    .padding(16.dp), // must be after `clickable`
-                verticalAlignment = Alignment.CenterVertically
+                    } then modifierDefaultPadding // must be after `clickable`
             ) {
                 val primary = colorScheme.primary
                 val locale = Locale.forLanguageTag(tag)
                 val selected = locale.approxEquals(selectedLocale)
                 if (selected) Icon(
-                    Icons.Rounded.Done, stringResource(R.string.summary_on),
-                    Modifier.padding(end = 16.dp),
+                    imageVector = Icons.Rounded.Done,
+                    contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
-                ) else Spacer(Modifier.size(40.dp)) // 24 + 16
+                    modifier = Modifier.padding(end = 16.dp)
+                ) else Spacer(iconSpacerSizeModifier)
 
                 Column(Modifier.weight(1f)) {
                     // App-level localized name, which is displayed both as a title and summary
@@ -77,22 +82,23 @@ fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
                     }
 
                     Text(
-                        appLocalizedName,
+                        text = appLocalizedName,
                         color = if (selected) primary else Color.Unspecified,
-                        style = typography.titleSmall
+                        style = typography.titleSmall,
                     )
 
                     Text(
-                        "$systemLocalizedName [$tag]",
+                        text = "$systemLocalizedName [$tag]",
                         color = if (selected) primary else colorScheme.onSurfaceVariant,
-                        style = typography.bodySmall
+                        style = typography.bodySmall,
                     )
                 }
 
                 if (locale.approxEquals(systemLocale)) Icon(
-                    Icons.Rounded.AutoAwesome, stringResource(R.string.theme_auto),
-                    Modifier.padding(start = 16.dp),
-                    tint = colorScheme.secondary
+                    imageVector = Icons.Rounded.AutoAwesome,
+                    contentDescription = stringResource(R.string.theme_auto),
+                    tint = colorScheme.secondary,
+                    modifier = modifierDefaultPaddingStart
                 )
             }
         }

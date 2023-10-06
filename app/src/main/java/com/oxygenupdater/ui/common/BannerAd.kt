@@ -22,23 +22,27 @@ fun ColumnScope.BannerAd(
     adUnitId: String,
     modifier: Modifier = Modifier,
     adListener: AdListener? = null,
-    view: (AdView) -> Unit,
+    viewUpdated: (AdView) -> Unit,
 ) = if (LocalInspectionMode.current) {
     Text("AdView", Modifier.align(Alignment.CenterHorizontally))
-} else AndroidView(factory = { context ->
-    AdView(context).apply {
-        setAdUnitId(adUnitId)
-        // TODO(compose/bug): size doesn't adjust to screen changes
-        // TODO(compose/bug): FULL_WIDTH is not suitable for use with NavType.SideRail, as that takes up some of the screen's width
-        setAdSize(AdSize(AdSize.FULL_WIDTH, AdSize.AUTO_HEIGHT))
+} else AndroidView(
+    factory = { context ->
+        AdView(context).apply {
+            setAdUnitId(adUnitId)
+            // TODO(compose/bug): size doesn't adjust to screen changes
+            // TODO(compose/bug): FULL_WIDTH is not suitable for use with NavType.SideRail, as that takes up some of the screen's width
+            setAdSize(AdSize(AdSize.FULL_WIDTH, AdSize.AUTO_HEIGHT))
 
-        loadAd(OxygenUpdater.buildAdRequest())
+            loadAd(OxygenUpdater.buildAdRequest())
 
-        adListener?.let { setAdListener(it) }
-    }
-}, modifier, view)
+            adListener?.let { setAdListener(it) }
+        }
+    },
+    update = viewUpdated,
+    modifier = modifier
+)
 
-fun adLoadListener(callback: (Boolean) -> Unit) = object : AdListener() {
+fun adLoadListener(callback: (loaded: Boolean) -> Unit) = object : AdListener() {
     override fun onAdFailedToLoad(error: LoadAdError) {
         logDebug(TAG, "Banner ad failed to load: $error")
         callback(false)

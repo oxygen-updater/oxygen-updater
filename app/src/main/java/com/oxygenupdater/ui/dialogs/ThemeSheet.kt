@@ -24,6 +24,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 private val list = arrayOf(
@@ -44,36 +45,39 @@ fun ColumnScope.ThemeSheet(
 
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
+
+    // Perf: re-use common modifiers to avoid recreating the same object repeatedly
+    val iconSpacerSizeModifier = Modifier.size(40.dp) // 24 + 16
     LazyColumn(Modifier.weight(1f, false)) {
-        items(list, { it.value }) {
+        items(items = list, key = { it.value }) {
             Row(
-                Modifier
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
                     .animatedClickable {
                         PrefManager.putInt(PrefManager.ThemeId, it.value)
                         onClick(it)
                         hide()
-                    }
-                    .padding(16.dp), // must be after `clickable`
-                verticalAlignment = Alignment.CenterVertically
+                    } then modifierDefaultPadding // must be after `clickable`
             ) {
                 val primary = colorScheme.primary
                 val selected = selectedTheme == it
                 if (selected) Icon(
-                    Icons.Rounded.Done, stringResource(R.string.summary_on),
-                    Modifier.padding(end = 16.dp),
+                    imageVector = Icons.Rounded.Done,
+                    contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
-                ) else Spacer(Modifier.size(40.dp)) // 24 + 16
+                    modifier = Modifier.padding(end = 16.dp)
+                ) else Spacer(iconSpacerSizeModifier)
 
                 Column {
                     Text(
-                        stringResource(it.titleResId),
+                        text = stringResource(it.titleResId),
                         color = if (selected) primary else Color.Unspecified,
-                        style = typography.titleSmall
+                        style = typography.titleSmall,
                     )
                     Text(
-                        stringResource(it.subtitleResId),
+                        text = stringResource(it.subtitleResId),
                         color = if (selected) primary else colorScheme.onSurfaceVariant,
-                        style = typography.bodySmall
+                        style = typography.bodySmall,
                     )
                 }
             }

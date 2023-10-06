@@ -3,12 +3,9 @@ package com.oxygenupdater.ui.main
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -24,6 +21,8 @@ import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.ServerStatus.Status
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.warn
@@ -34,12 +33,11 @@ fun ServerStatusBanner(serverStatus: ServerStatus) {
     if (latestAppVersion != null && (LocalInspectionMode.current || serverStatus.shouldShowAppUpdateNotice())) {
         val context = LocalContext.current
         IconText(
-            Modifier
-                .fillMaxWidth()
-                .clickable { context.openPlayStorePage() }
-                .padding(16.dp),
             icon = CustomIcons.Info,
             text = stringResource(R.string.new_app_version, latestAppVersion),
+            modifier = modifierMaxWidth
+                .clickable { context.openPlayStorePage() }
+                .then(modifierDefaultPadding)
         )
         return ItemDivider()
     }
@@ -61,13 +59,11 @@ fun ServerStatusBanner(serverStatus: ServerStatus) {
     if (color == null) return
 
     IconText(
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
         icon = icon,
         text = stringResource(textResId),
         iconTint = color,
         style = MaterialTheme.typography.bodyMedium.copy(color = color),
+        modifier = modifierMaxWidth then modifierDefaultPadding
     )
     ItemDivider()
 }

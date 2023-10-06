@@ -253,10 +253,10 @@ private fun enqueueIfSpaceAvailable(
         else {
             // Don't have enough space to complete the download. Display a notification and an error dialog to the user.
             LocalNotifications.showDownloadFailedNotification(
-                context,
-                false,
-                R.string.download_error_storage,
-                R.string.download_notification_error_storage_full
+                context = context,
+                resumable = false,
+                message = R.string.download_error_storage,
+                notificationMessage = R.string.download_notification_error_storage_full,
             )
 
             setDownloadErrorDialogParams(DownloadErrorParams(context.getString(R.string.download_error_storage)))

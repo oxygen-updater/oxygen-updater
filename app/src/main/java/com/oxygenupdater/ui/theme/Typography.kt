@@ -18,13 +18,14 @@ fun appTypography(): Typography {
     val provider = GoogleFont.Provider(
         providerAuthority = "com.google.android.gms.fonts",
         providerPackage = "com.google.android.gms",
-        certificates = R.array.com_google_android_gms_fonts_certs
+        certificates = R.array.com_google_android_gms_fonts_certs,
     )
 
     val googleSans = try {
+        val font = GoogleFont("Google Sans")
         FontFamily(
-            Font(GoogleFont("Google Sans"), provider),
-            Font(GoogleFont("Google Sans"), provider, FontWeight.Medium)
+            Font(googleFont = font, fontProvider = provider),
+            Font(googleFont = font, fontProvider = provider, weight = FontWeight.Medium)
         )
     } catch (e: Exception) {
         FontFamily.Default

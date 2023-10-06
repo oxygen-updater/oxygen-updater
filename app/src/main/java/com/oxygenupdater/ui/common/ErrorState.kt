@@ -4,8 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.rememberScrollState
@@ -37,23 +35,24 @@ fun ErrorState(
     @StringRes textResId: Int = R.string.error_maintenance_retry,
     rich: Boolean = true,
     refresh: (() -> Unit)?,
-) = if (navType != NavType.BottomBar) Row(Modifier.fillMaxWidth()) {
+) = if (navType != NavType.BottomBar) Row(modifierMaxWidth) {
     Icon(
         imageVector = icon,
         contentDescription = stringResource(R.string.icon),
         tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.requiredSize(192.dp),
+        modifier = Modifier.requiredSize(192.dp)
     )
 
-    Column(
-        Modifier
-            .padding(16.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
+    Column(modifierDefaultPadding.verticalScroll(rememberScrollState())) {
         Text(stringResource(titleResId), style = MaterialTheme.typography.titleLarge)
 
-        if (rich) RichText(stringResource(textResId), Modifier.padding(top = 4.dp, bottom = 16.dp))
-        else Text(stringResource(textResId), Modifier.padding(top = 4.dp, bottom = 16.dp))
+        if (rich) RichText(
+            text = stringResource(textResId),
+            modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+        ) else Text(
+            text = stringResource(textResId),
+            modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+        )
 
         if (refresh != null) OutlinedIconButton(refresh, Icons.Rounded.Refresh, R.string.download_error_retry)
         ConditionalNavBarPadding(navType)
@@ -61,24 +60,31 @@ fun ErrorState(
 } else Column(
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = Modifier.fillMaxSize()
+    modifier = modifierMaxSize
 ) {
     Text(
-        stringResource(titleResId),
-        Modifier.padding(16.dp),
+        text = stringResource(titleResId),
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifierDefaultPadding
     )
 
     Icon(
         imageVector = icon,
         contentDescription = stringResource(R.string.icon),
         tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.requiredSize(150.dp),
+        modifier = Modifier.requiredSize(150.dp)
     )
 
-    if (rich) RichText(stringResource(textResId), Modifier.padding(16.dp), textAlign = TextAlign.Center)
-    else RichText(stringResource(textResId), Modifier.padding(16.dp), textAlign = TextAlign.Center)
+    if (rich) RichText(
+        text = stringResource(textResId),
+        textAlign = TextAlign.Center,
+        modifier = modifierDefaultPadding
+    ) else Text(
+        text = stringResource(textResId),
+        textAlign = TextAlign.Center,
+        modifier = modifierDefaultPadding
+    )
 
     if (refresh != null) OutlinedIconButton(refresh, Icons.Rounded.Refresh, R.string.download_error_retry)
     ConditionalNavBarPadding(navType)

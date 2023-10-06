@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -28,6 +27,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
@@ -41,54 +41,61 @@ fun ColumnScope.ContributorSheet(
     SheetHeader(R.string.contribute_title)
 
     Text(
-        stringResource(R.string.contribute_explanation),
-        Modifier
+        text = stringResource(R.string.contribute_explanation),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
-            .verticalScroll(rememberScrollState()),
-        style = MaterialTheme.typography.bodyMedium
+            .verticalScroll(rememberScrollState())
     )
 
     if (!LocalInspectionMode.current && (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted)) {
         return // don't show enrollment UI
     }
 
-    ContributorSheetEnroll(hide)
+    ContributorSheetEnroll(hide = hide)
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 private fun ContributorSheetEnroll(hide: () -> Unit) {
     var contribute by rememberSaveableState("contribute", true)
-    CheckboxText(contribute, { contribute = it }, R.string.contribute_agree, Modifier.padding(end = 16.dp))
+    CheckboxText(
+        checked = contribute,
+        onCheckedChange = { contribute = it },
+        textResId = R.string.contribute_agree,
+        modifier = Modifier.padding(end = 16.dp)
+    )
 
     Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         TextButton(
-            hide,
-            Modifier.padding(end = 8.dp),
-            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)
+            onClick = hide,
+            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(stringResource(android.R.string.cancel))
         }
 
         val context = LocalContext.current
-        OutlinedIconButton({
-            if (contribute) hasRootAccess {
-                if (it) {
-                    ContributorUtils.flushSettings(context, true)
+        OutlinedIconButton(
+            onClick = {
+                if (contribute) hasRootAccess {
+                    if (it) {
+                        ContributorUtils.flushSettings(context, true)
+                        hide()
+                    } else context.showToast(R.string.contribute_allow_storage)
+                } else {
+                    ContributorUtils.flushSettings(context, false)
                     hide()
-                } else context.showToast(R.string.contribute_allow_storage)
-            } else {
-                ContributorUtils.flushSettings(context, false)
-                hide()
-            }
-        }, Icons.Rounded.CheckCircleOutline, R.string.contribute_save)
+                }
+            },
+            icon = Icons.Rounded.CheckCircleOutline,
+            textResId = R.string.contribute_save,
+        )
     }
 }
 

@@ -22,18 +22,18 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
     var ignore by remember { mutableStateOf(false) }
     var show by remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) }
     if (show) AlertDialog(
-        {
+        action = {
             PrefManager.putBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, ignore)
             show = false
         },
-        R.string.incorrect_device_warning_title,
-        stringResource(R.string.incorrect_device_warning_message, mismatchStatus.second, mismatchStatus.third),
+        titleResId = R.string.incorrect_device_warning_title,
+        text = stringResource(R.string.incorrect_device_warning_message, mismatchStatus.second, mismatchStatus.third),
     ) {
         CheckboxText(
-            ignore, { ignore = it },
-            R.string.device_warning_checkbox_title,
-            Modifier.offset((-12).dp), // bring in line with Text
+            checked = ignore, onCheckedChange = { ignore = it },
+            textResId = R.string.device_warning_checkbox_title,
             textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
+            modifier = Modifier.offset((-12).dp) // bring in line with Text
         )
     }
 }
@@ -42,6 +42,6 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
 @Composable
 fun PreviewIncorrectDeviceDialog() = PreviewAppTheme {
     IncorrectDeviceDialog(
-        Triple(true, "OnePlus 7 Pro", "OnePlus 8T")
+        mismatchStatus = Triple(true, "OnePlus 7 Pro", "OnePlus 8T"),
     )
 }

@@ -5,7 +5,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -30,31 +30,33 @@ fun ColumnScope.NotificationPermissionSheet(hide: () -> Unit, launchPermissionRe
     SheetHeader(R.string.notification_permission_title)
 
     Text(
-        stringResource(R.string.notification_permission_text),
-        Modifier
+        text = stringResource(R.string.notification_permission_text),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
-            .verticalScroll(rememberScrollState()),
-        style = MaterialTheme.typography.bodyMedium
+            .verticalScroll(rememberScrollState())
     )
 
     Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         TextButton(
-            hide,
-            Modifier.padding(end = 8.dp),
-            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
+            onClick = hide,
+            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(stringResource(android.R.string.cancel))
         }
 
         /** Don't hide sheet here, [com.oxygenupdater.ui.main.NotificationPermission] will do it once granted */
-        OutlinedIconButton(launchPermissionRequest, Icons.Rounded.NotificationsNone, android.R.string.ok)
+        OutlinedIconButton(
+            onClick = launchPermissionRequest,
+            icon = Icons.Rounded.NotificationsNone,
+            textResId = android.R.string.ok,
+        )
     }
 }
 

@@ -38,45 +38,47 @@ import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
+import com.oxygenupdater.ui.theme.PreviewWindowSize
 
 @Composable
 fun AboutScreen(navType: NavType, windowWidthSize: WindowWidthSizeClass) = Column(
-    modifier = Modifier.verticalScroll(rememberScrollState())
+    Modifier.verticalScroll(rememberScrollState())
 ) {
     Buttons(windowWidthSize)
 
     RichText(
-        stringResource(R.string.about_description),
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+        text = stringResource(R.string.about_description),
+        modifier = modifierDefaultPaddingStartTopEnd
     )
 
     RichText(
-        stringResource(R.string.about_support),
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+        text = stringResource(R.string.about_support),
+        modifier = modifierDefaultPaddingStartTopEnd
     )
 
     Text(
-        stringResource(R.string.about_background_story_header),
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-        style = MaterialTheme.typography.titleMedium
+        text = stringResource(R.string.about_background_story_header),
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifierDefaultPaddingStartTopEnd
     )
 
     RichText(
-        stringResource(R.string.about_background_story),
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
+        text = stringResource(R.string.about_background_story),
+        modifier = modifierDefaultPaddingStartTopEnd
     )
 
     Spacer(Modifier.weight(1f))
     ItemDivider(Modifier.padding(vertical = 16.dp))
 
     Text(
-        stringResource(R.string.about_third_party_app_notice),
-        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-        MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodySmall
+        text = stringResource(R.string.about_third_party_app_notice),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     )
 
     ConditionalNavBarPadding(navType)
@@ -120,5 +122,9 @@ private value class LinkType(val value: String) {
 @PreviewThemes
 @Composable
 fun PreviewAboutScreen() = PreviewAppTheme {
-    AboutScreen(NavType.BottomBar, WindowWidthSizeClass.Compact)
+    val windowWidthSize = PreviewWindowSize.widthSizeClass
+    AboutScreen(
+        navType = NavType.from(windowWidthSize),
+        windowWidthSize = windowWidthSize,
+    )
 }

@@ -30,6 +30,7 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
@@ -39,7 +40,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     initialIndex: Int,
     @StringRes titleResId: Int, @StringRes captionResId: Int,
     keyId: String,
-    onClick: (T) -> Unit,
+    onClick: (item: T) -> Unit,
 ) {
     SheetHeader(titleResId)
 
@@ -53,39 +54,44 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     }
 
     val colorScheme = MaterialTheme.colorScheme
-    LazyColumn(Modifier.weight(1f, false), rememberLazyListState(initialFirstVisibleItemIndex)) {
-        itemsIndexed(list, { _, it -> it.id }) { index, item ->
+    LazyColumn(
+        state = rememberLazyListState(initialFirstVisibleItemIndex = initialFirstVisibleItemIndex),
+        modifier = Modifier.weight(1f, false),
+    ) {
+        itemsIndexed(items = list, key = { _, it -> it.id }) { index, item ->
             Row(
-                Modifier
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
                     .animatedClickable {
                         onClick(item)
                         hide()
                     }
-                    .padding(horizontal = 16.dp, vertical = 8.dp), // must be after `clickable`
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(horizontal = 16.dp, vertical = 8.dp) // must be after `clickable`
             ) {
                 val primary = colorScheme.primary
                 val name = item.name ?: return@itemsIndexed
                 val selected = selectedId == item.id
                 if (selected) Icon(
-                    Icons.Rounded.Done, stringResource(R.string.summary_on),
-                    Modifier.padding(end = 16.dp),
+                    imageVector = Icons.Rounded.Done,
+                    contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
+                    modifier = Modifier.padding(end = 16.dp)
                 ) else Spacer(Modifier.size(40.dp)) // 24 + 16
 
                 Text(
-                    name,
-                    Modifier
+                    text = name,
+                    color = if (selected) primary else Color.Unspecified,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 8.dp),
-                    if (selected) primary else Color.Unspecified,
-                    style = MaterialTheme.typography.titleSmall
+                        .padding(vertical = 8.dp)
                 )
 
                 if (index == initialIndex) Icon(
-                    Icons.Rounded.AutoAwesome, stringResource(R.string.theme_auto),
-                    Modifier.padding(start = 16.dp),
-                    tint = colorScheme.secondary
+                    imageVector = Icons.Rounded.AutoAwesome,
+                    contentDescription = stringResource(R.string.theme_auto),
+                    tint = colorScheme.secondary,
+                    modifier = modifierDefaultPaddingStart
                 )
             }
         }
@@ -145,5 +151,6 @@ fun PreviewMethodSheet() = PreviewModalBottomSheet {
         titleResId = R.string.onboarding_method_chooser_title,
         captionResId = R.string.onboarding_method_chooser_caption,
         keyId = PrefManager.KeyUpdateMethodId,
-    ) {}
+        onClick = {},
+    )
 }

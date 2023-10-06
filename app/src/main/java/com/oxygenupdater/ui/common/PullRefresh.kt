@@ -1,7 +1,6 @@
 package com.oxygenupdater.ui.common
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,21 +18,22 @@ import com.oxygenupdater.ui.pullrefresh.rememberPullRefreshState
 @Composable
 fun <T> PullRefresh(
     state: RefreshAwareState<T>,
-    shouldShowProgressIndicator: (T) -> Boolean,
+    shouldShowProgressIndicator: (data: T) -> Boolean,
     onRefresh: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     val refreshing = state.refreshing
-    if (refreshing && shouldShowProgressIndicator(state.data)) Box(Modifier.fillMaxSize(), Alignment.Center) {
+    if (refreshing && shouldShowProgressIndicator(state.data)) Box(modifierMaxSize, Alignment.Center) {
         CircularProgressIndicator(Modifier.size(64.dp), strokeWidth = 6.dp)
     } else rememberPullRefreshState(refreshing, onRefresh).let {
         Box(Modifier.pullRefresh(it)) {
             content()
 
             PullRefreshIndicator(
-                refreshing, it,
-                Modifier.align(Alignment.TopCenter),
+                refreshing = refreshing,
+                state = it,
                 contentColor = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.align(Alignment.TopCenter)
             )
         }
     }

@@ -34,8 +34,17 @@ class FaqActivity : SupportActionBarActivity(
             PrefManager.getBoolean(PrefManager.KeyAdFree, false)
         ).value
 
-        PullRefresh(state, { it.isEmpty() }, viewModel::refresh) {
-            FaqScreen(modifier, state, showAds, rememberTypedCallback { bannerAdView = it })
+        PullRefresh(
+            state = state,
+            shouldShowProgressIndicator = { it.isEmpty() },
+            onRefresh = viewModel::refresh,
+        ) {
+            FaqScreen(
+                state = state,
+                showAds = showAds,
+                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                modifier = modifier
+            )
         }
     }
 

@@ -23,7 +23,7 @@ fun ServerStatusDialogs(
     val titleResId: Int
     val textResId: Int
     val confirmIconAndResId: Pair<ImageVector, Int>?
-    val action: ((Boolean) -> Unit)?
+    val action: ((result: Boolean) -> Unit)?
     when (status) {
         Status.MAINTENANCE -> {
             titleResId = R.string.error_maintenance
@@ -43,8 +43,13 @@ fun ServerStatusDialogs(
     }
 
     var show by remember { mutableStateOf(true) }
-    if (show) AlertDialog({
-        action?.invoke(it)
-        show = false
-    }, titleResId, stringResource(textResId), confirmIconAndResId)
+    if (show) AlertDialog(
+        action = {
+            action?.invoke(it)
+            show = false
+        },
+        titleResId = titleResId,
+        text = stringResource(textResId),
+        confirmIconAndResId = confirmIconAndResId,
+    )
 }

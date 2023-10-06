@@ -8,5 +8,5 @@ data class DownloadErrorParams(
     val text: String,
     val type: RichTextType? = null,
     val resumable: Boolean = false,
-    val callback: ((Boolean) -> Unit)? = null,
+    val callback: ((resumable: Boolean) -> Unit)? = null,
 )

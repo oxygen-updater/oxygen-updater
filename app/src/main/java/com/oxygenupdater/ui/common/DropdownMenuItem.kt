@@ -17,8 +17,12 @@ fun DropdownMenuItem(
     icon: ImageVector,
     @StringRes textResId: Int,
     onClick: () -> Unit,
-) = DropdownMenuItem({
-    Text(stringResource(textResId), style = MaterialTheme.typography.bodyMedium)
-}, onClick, leadingIcon = {
-    Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
-})
+) = DropdownMenuItem(
+    leadingIcon = {
+        Icon(icon, stringResource(R.string.icon), tint = MaterialTheme.colorScheme.primary)
+    },
+    text = {
+        Text(stringResource(textResId), style = MaterialTheme.typography.bodyMedium)
+    },
+    onClick = onClick,
+)

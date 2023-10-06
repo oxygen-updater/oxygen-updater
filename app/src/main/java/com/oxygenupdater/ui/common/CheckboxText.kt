@@ -20,18 +20,19 @@ import androidx.compose.ui.res.stringResource
 @SuppressLint("ModifierParameter")
 fun CheckboxText(
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
+    onCheckedChange: (checked: Boolean) -> Unit,
     @StringRes textResId: Int,
-    modifier: Modifier = Modifier, textModifier: Modifier = Modifier,
+    modifier: Modifier = Modifier,
+    textModifier: Modifier = Modifier,
     textColor: Color = Color.Unspecified,
 ) = Row(modifier, verticalAlignment = Alignment.CenterVertically) {
     val interactionSource = remember { MutableInteractionSource() }
     Checkbox(checked, onCheckedChange, interactionSource = interactionSource)
 
     Text(
-        stringResource(textResId),
-        textModifier.clickable(interactionSource, null) { onCheckedChange(!checked) },
+        text = stringResource(textResId),
         color = textColor,
-        style = MaterialTheme.typography.bodySmall
+        style = MaterialTheme.typography.bodySmall,
+        modifier = textModifier.clickable(interactionSource, null) { onCheckedChange(!checked) }
     )
 }

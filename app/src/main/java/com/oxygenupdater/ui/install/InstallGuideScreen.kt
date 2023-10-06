@@ -1,15 +1,7 @@
 package com.oxygenupdater.ui.install
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.ads.AdView
 import com.oxygenupdater.BuildConfig
@@ -37,11 +28,14 @@ import com.oxygenupdater.R
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.BannerAd
+import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -64,29 +58,33 @@ fun InstallGuideScreen(
         if (showDownloadInstructions) item {
             val bodyMedium = MaterialTheme.typography.bodyMedium
             Text(
-                AnnotatedString(
+                text = AnnotatedString(
                     stringResource(R.string.install_guide_download_instructions),
                     bodyMedium.toSpanStyle(),
                     bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
                 ),
-                Modifier.padding(16.dp),
-                MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodyMedium
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = bodyMedium,
+                modifier = modifierDefaultPadding
             )
             ItemDivider()
         }
 
-        itemsIndexed(list, key = { _, it -> it.id }) { index, it ->
-            InstallGuideItem(refreshing, it, index == lastIndex, adLoaded)
+        itemsIndexed(items = list, key = { _, it -> it.id }) { index, it ->
+            InstallGuideItem(
+                refreshing = refreshing,
+                item = it,
+                last = index == lastIndex, adLoaded = adLoaded,
+            )
         }
     }
 
     if (showAds) BannerAd(
-        BuildConfig.AD_BANNER_INSTALL_ID,
+        adUnitId = BuildConfig.AD_BANNER_INSTALL_ID,
+        adListener = adLoadListener { adLoaded = it },
+        viewUpdated = bannerAdInit,
         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-        if (adLoaded) Modifier.navigationBarsPadding() else Modifier,
-        adLoadListener { adLoaded = it },
-        bannerAdInit
+        modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
     )
 }
 
@@ -100,59 +98,48 @@ private fun InstallGuideItem(
     var expanded by remember { item.expanded }
     val contentColor = MaterialTheme.colorScheme.onSurfaceVariant
 
+    val typography = MaterialTheme.typography
     Row(
-        Modifier
-            .fillMaxWidth()
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth
             .animatedClickable { expanded = !expanded }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .then(modifierDefaultPadding)
     ) {
         Icon(
-            if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
-            stringResource(R.string.icon),
-            Modifier.padding(end = 16.dp),
-            MaterialTheme.colorScheme.primary
+            imageVector = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+            contentDescription = stringResource(R.string.icon),
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(end = 16.dp)
         )
 
-        val typography = MaterialTheme.typography
         Column {
             Text(
-                item.title,
-                Modifier.withPlaceholder(refreshing, typography.titleMedium),
-                style = typography.titleMedium
+                text = item.title,
+                style = typography.titleMedium,
+                modifier = Modifier.withPlaceholder(refreshing, typography.titleMedium)
             )
 
             Text(
-                item.subtitle,
-                Modifier.withPlaceholder(refreshing, typography.bodySmall),
-                contentColor,
-                style = typography.bodySmall
+                text = item.subtitle,
+                color = contentColor,
+                style = typography.bodySmall,
+                modifier = Modifier.withPlaceholder(refreshing, typography.bodySmall)
             )
         }
     }
 
-    AnimatedVisibility(
-        expanded,
+    ExpandCollapse(
+        visible = expanded,
         // Don't re-consume navigation bar insets
-        if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier,
-        enter = remember {
-            expandVertically(
-                spring(visibilityThreshold = IntSize.VisibilityThreshold)
-            ) + fadeIn(initialAlpha = .3f)
-        },
-        exit = remember {
-            shrinkVertically(
-                spring(visibilityThreshold = IntSize.VisibilityThreshold)
-            ) + fadeOut()
-        },
+        modifier = if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier
     ) {
         RichText(
-            item.body,
-            Modifier
-                .padding(start = 20.dp, end = 16.dp, bottom = 16.dp)
-                .withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium),
+            text = item.body,
             textIndent = ListItemTextIndent,
             contentColor = contentColor,
+            modifier = Modifier
+                .padding(start = 20.dp, end = 16.dp, bottom = 16.dp)
+                .withPlaceholder(refreshing, typography.bodyMedium)
         )
     }
 
@@ -163,8 +150,7 @@ private fun InstallGuideItem(
 @Composable
 fun PreviewInstallGuideScreen() = PreviewAppTheme {
     InstallGuideScreen(
-        Modifier,
-        RefreshAwareState(
+        state = RefreshAwareState(
             false, listOf(
                 InstallGuide(
                     id = 1,
@@ -183,6 +169,7 @@ fun PreviewInstallGuideScreen() = PreviewAppTheme {
         showDownloadInstructions = true,
         showAds = true,
         bannerAdInit = {},
+        modifier = Modifier
     )
 }
 

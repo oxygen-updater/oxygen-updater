@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
@@ -78,6 +77,7 @@ import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
@@ -111,15 +111,15 @@ fun UpdateAvailable(
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
     logDownloadError: () -> Unit,
-) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(Modifier.fillMaxWidth()) {
+) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(modifierMaxWidth) {
     Column(
         Modifier
             .weight(1f)
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
-            .padding(vertical = 16.dp) // must be after `verticalScroll`
+            .then(modifierDefaultPaddingVertical) // must be after `verticalScroll`
     ) {
-        VersionAndChangelog(refreshing, updateData)
+        VersionAndChangelog(refreshing = refreshing, updateData = updateData)
 
         ConditionalNavBarPadding(navType)
     }
@@ -135,18 +135,23 @@ fun UpdateAvailable(
             .padding(bottom = 16.dp) // must be after `verticalScroll`
     ) {
         DownloadButtonContainer(
-            navType,
-            refreshing,
-            updateData.downloadSize,
-            failureType,
-            workProgress,
-            downloadStatus,
-            forceDownloadErrorDialog,
-            downloadAction,
-            logDownloadError,
+            navType = navType,
+            refreshing = refreshing,
+            downloadSize = updateData.downloadSize,
+            failureType = failureType,
+            workProgress = workProgress,
+            downloadStatus = downloadStatus,
+            forceDownloadErrorDialog = forceDownloadErrorDialog,
+            downloadAction = downloadAction,
+            logDownloadError = logDownloadError,
         )
 
-        ExtraInfo(refreshing, updateData, downloadStatus, failureType)
+        ExtraInfo(
+            refreshing = refreshing,
+            updateData = updateData,
+            downloadStatus = downloadStatus,
+            failureType = failureType,
+        )
 
         ConditionalNavBarPadding(navType)
     }
@@ -156,26 +161,31 @@ fun UpdateAvailable(
         modifier = Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())
-            .padding(vertical = 16.dp) // must be after `verticalScroll`
+            .then(modifierDefaultPaddingVertical) // must be after `verticalScroll`
     ) {
-        VersionAndChangelog(refreshing, updateData)
+        VersionAndChangelog(refreshing = refreshing, updateData = updateData)
 
         Spacer(Modifier.weight(1f))
         ItemDivider()
 
-        ExtraInfo(refreshing, updateData, downloadStatus, failureType)
+        ExtraInfo(
+            refreshing = refreshing,
+            updateData = updateData,
+            downloadStatus = downloadStatus,
+            failureType = failureType,
+        )
     }
 
     DownloadButtonContainer(
-        navType,
-        refreshing,
-        updateData.downloadSize,
-        failureType,
-        workProgress,
-        downloadStatus,
-        forceDownloadErrorDialog,
-        downloadAction,
-        logDownloadError,
+        navType = navType,
+        refreshing = refreshing,
+        downloadSize = updateData.downloadSize,
+        failureType = failureType,
+        workProgress = workProgress,
+        downloadStatus = downloadStatus,
+        forceDownloadErrorDialog = forceDownloadErrorDialog,
+        downloadAction = downloadAction,
+        logDownloadError = logDownloadError,
     )
 
     ConditionalNavBarPadding(navType)
@@ -183,17 +193,17 @@ fun UpdateAvailable(
 
 @Composable
 private fun VersionAndChangelog(refreshing: Boolean, updateData: UpdateData) {
-    SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
+    SelectionContainer(modifierDefaultPaddingHorizontal) {
         val titleLarge = MaterialTheme.typography.titleLarge
         Text(
-            UpdateDataVersionFormatter.getFormattedVersionNumber(updateData, "").takeIf {
+            text = UpdateDataVersionFormatter.getFormattedVersionNumber(updateData, "").takeIf {
                 it.isNotBlank() && it != "-" && it != "null"
             } ?: stringResource(
                 R.string.update_information_unknown_update_name,
                 defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
             ),
-            Modifier.withPlaceholder(refreshing, titleLarge),
-            style = titleLarge
+            style = titleLarge,
+            modifier = Modifier.withPlaceholder(refreshing, titleLarge)
         )
     }
 
@@ -211,35 +221,37 @@ private fun ExtraInfo(
     downloadStatus: DownloadStatus,
     failureType: Int?,
 ) {
+    val onSurfaceVariant = MaterialTheme.colorScheme.onSurfaceVariant
+    val bodySmall = MaterialTheme.typography.bodySmall
     if (updateData.systemIsUpToDate) {
         // User is already up-to-date, so remind them why they're seeing this update: they enabled advanced mode
         val updateMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
         Text(
             text = stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodySmall,
-            modifier = Modifier.padding(horizontal = 16.dp),
+            color = onSurfaceVariant,
+            style = bodySmall,
+            modifier = modifierDefaultPaddingHorizontal
         )
 
         ItemDivider()
     }
 
     // Filename & MD5
-    SelectionContainer(Modifier.padding(horizontal = 16.dp)) {
-        val bodySmall = MaterialTheme.typography.bodySmall
+    SelectionContainer(modifierDefaultPaddingHorizontal) {
+        val withPlaceholder = Modifier.withPlaceholder(refreshing, bodySmall)
         Column {
             Text(
                 text = stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = onSurfaceVariant,
                 style = bodySmall,
-                modifier = Modifier.withPlaceholder(refreshing, bodySmall)
+                modifier = withPlaceholder
             )
 
             Text(
                 text = stringResource(R.string.update_information_md5, updateData.md5sum ?: Build.UNKNOWN),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = onSurfaceVariant,
                 style = bodySmall,
-                modifier = Modifier.withPlaceholder(refreshing, bodySmall)
+                modifier = withPlaceholder
             )
         }
     }
@@ -257,7 +269,7 @@ private fun ExtraInfo(
             it != null && it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
         })
     ) {
-        DownloadLink(updateData.downloadUrl ?: "null")
+        DownloadLink(url = updateData.downloadUrl ?: "null")
     }
 }
 
@@ -271,10 +283,10 @@ private fun DownloadLink(url: String) {
     @OptIn(ExperimentalTextApi::class)
     @Suppress("NAME_SHADOWING")
     RichText(
-        text,
-        Modifier.padding(horizontal = 16.dp),
+        text = text,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        type = RichTextType.Custom
+        type = RichTextType.Custom,
+        modifier = modifierDefaultPaddingHorizontal
     ) { text, contentColor, urlColor ->
         AnnotatedString.Builder(length).apply {
             // Global
@@ -365,18 +377,18 @@ private fun DownloadButtonContainer(
     }
 
     DownloadButton(
-        navType,
-        refreshing,
-        downloadStatus,
-        downloadAction,
-        downloadButtonConfig(
-            downloadSize,
-            failureType,
-            workProgress,
-            downloadStatus,
-            downloadAction,
-            logDownloadError,
-            hasDownloadPermissions,
+        navType = navType,
+        refreshing = refreshing,
+        downloadStatus = downloadStatus,
+        downloadAction = downloadAction,
+        buttonConfig = downloadButtonConfig(
+            downloadSize = downloadSize,
+            failureType = failureType,
+            workProgress = workProgress,
+            downloadStatus = downloadStatus,
+            downloadAction = downloadAction,
+            logDownloadError = logDownloadError,
+            hasDownloadPermissions = hasDownloadPermissions,
             requestDownloadPermissions = requestDownloadPermissions,
             showAlreadyDownloadedSheet = { showAlreadyDownloadedSheet = true },
             setCanShowDownloadErrorDialog = { canShowDownloadErrorDialog = true },
@@ -398,8 +410,7 @@ private fun DownloadButton(
     val (titleResId, details, sizeOrProgressText, progress, actionButtonConfig, onDownloadClick) = buttonConfig
     val colorScheme = MaterialTheme.colorScheme
     Box(
-        Modifier
-            .fillMaxWidth()
+        modifierMaxWidth
             .alpha(if (refreshing) 0.38f else 1f)
             .background(colorScheme.backgroundVariant)
             .animatedClickable(!refreshing && onDownloadClick != null, onDownloadClick)
@@ -418,35 +429,31 @@ private fun DownloadButton(
                     ),
                     contentDescription = iconContentDescription,
                     tint = colorScheme.positive,
-                    modifier = Modifier.requiredWidth(56.dp),
+                    modifier = modifierDownloadIconWidth
                 )
             } else Icon(
                 imageVector = if (successful) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Download,
                 contentDescription = iconContentDescription,
                 tint = if (successful) colorScheme.positive else colorScheme.primary,
-                modifier = Modifier.requiredWidth(56.dp),
+                modifier = modifierDownloadIconWidth
             )
 
-            Column(
-                Modifier
-                    .weight(1f)
-                    .padding(vertical = 16.dp)
-            ) {
-                val typography = MaterialTheme.typography
+            Column(Modifier.weight(1f) then modifierDefaultPaddingVertical) {
+                val bodyMedium = MaterialTheme.typography.bodyMedium
                 // Title
-                Text(stringResource(titleResId), style = typography.bodyMedium)
+                Text(stringResource(titleResId), style = bodyMedium)
                 // Size + progress%
-                Text(sizeOrProgressText, color = colorScheme.onSurfaceVariant, style = typography.bodyMedium)
-                if (details != null) Text(details, style = typography.bodyMedium)
+                Text(sizeOrProgressText, color = colorScheme.onSurfaceVariant, style = bodyMedium)
+                if (details != null) Text(details, style = bodyMedium)
             }
 
             actionButtonConfig?.let { (forCancel, icon, tint) ->
                 val context = LocalContext.current
                 IconButton(
-                    if (forCancel) ({ downloadAction(DownloadAction.Cancel) }) else rememberCallback(context) {
+                    onClick = if (forCancel) ({ downloadAction(DownloadAction.Cancel) }) else rememberCallback(context) {
                         context.startInstallActivity(false)
                     },
-                    Modifier.requiredSize(56.dp)
+                    modifier = Modifier.requiredSize(56.dp)
                 ) {
                     Icon(icon, iconContentDescription, tint = tint)
                 }
@@ -454,13 +461,13 @@ private fun DownloadButton(
         }
 
         progress?.let {
-            if (it == NotSetF) LinearProgressIndicator(Modifier.fillMaxWidth()) else {
+            if (it == NotSetF) LinearProgressIndicator(modifierMaxWidth) else {
                 val animatedProgress by animateFloatAsState(
                     targetValue = it,
                     animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-                    label = "DownloadProgressAnimation"
+                    label = "DownloadProgressAnimation",
                 )
-                LinearProgressIndicator(animatedProgress, Modifier.fillMaxWidth())
+                LinearProgressIndicator(animatedProgress, modifierMaxWidth)
             }
         }
 
@@ -521,13 +528,18 @@ private class AllFilesPermissionState(private val context: Context) : Permission
         )
 }
 
+// Perf: re-use common modifiers to avoid recreating the same object repeatedly
+private val modifierDefaultPaddingHorizontal = Modifier.padding(horizontal = 16.dp)
+private val modifierDefaultPaddingVertical = Modifier.padding(vertical = 16.dp)
+private val modifierDownloadIconWidth = Modifier.requiredWidth(56.dp) // must be width, not size!
+
 @PreviewThemes
 @Composable
 fun PreviewUpdateAvailable() = PreviewAppTheme {
-    val windowSize = PreviewWindowSize
+    val windowWidthSize = PreviewWindowSize.widthSizeClass
     UpdateAvailable(
-        navType = NavType.from(windowSize.widthSizeClass),
-        windowWidthSize = windowSize.widthSizeClass,
+        navType = NavType.from(windowWidthSize),
+        windowWidthSize = windowWidthSize,
         refreshing = false,
         updateData = """##Personalization
 • Expands Omoji's functionality and library.

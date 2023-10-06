@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.common
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
@@ -34,8 +33,12 @@ fun IconText(
 ) = Row(modifier, verticalAlignment = Alignment.CenterVertically) {
     Icon(icon, stringResource(R.string.icon), Modifier.requiredSize(24.dp), tint = iconTint)
 
-    // Apply padding first
-    Text(text, Modifier.padding(start = 16.dp) then textModifier, style = style)
+    Text(
+        text = text,
+        style = style,
+        // Apply padding first
+        modifier = modifierDefaultPaddingStart then textModifier
+    )
 
     // Extra content if callers want to re-use the same RowScope
     if (content != null) content()
@@ -45,8 +48,8 @@ fun IconText(
 @Composable
 fun PreviewIconText() = PreviewAppTheme {
     IconText(
-        Modifier.padding(16.dp),
         icon = Icons.Rounded.Android,
         text = stringResource(R.string.app_name),
+        modifier = modifierDefaultPadding
     )
 }

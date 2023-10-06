@@ -102,26 +102,33 @@ class NewsItemActivity : SupportActionBarActivity(
     override fun scrollBehavior() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     @Composable
-    override fun TopAppBar() = CollapsingAppBar(scrollBehavior, { modifier ->
-        val context = LocalContext.current
-        val imageUrl = item?.imageUrl
-        AsyncImage(
-            imageUrl?.let {
-                val density = LocalDensity.current
-                remember(it, maxWidth) {
-                    ImageRequest.Builder(context)
-                        .data(it)
-                        .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
-                        .build()
-                }
-            },
-            stringResource(R.string.news), modifier,
-            placeholder = rememberVectorPainter(CustomIcons.Image),
-            error = rememberVectorPainter(CustomIcons.LogoNotification),
-            contentScale = ContentScale.Crop,
-            colorFilter = if (imageUrl == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null
-        )
-    }, item?.title ?: stringResource(R.string.loading), item?.authorName ?: stringResource(R.string.summary_please_wait), ::onBackPressed)
+    override fun TopAppBar() = CollapsingAppBar(
+        scrollBehavior = scrollBehavior,
+        image = { modifier ->
+            val context = LocalContext.current
+            val imageUrl = item?.imageUrl
+            AsyncImage(
+                model = imageUrl?.let {
+                    val density = LocalDensity.current
+                    remember(it, maxWidth) {
+                        ImageRequest.Builder(context)
+                            .data(it)
+                            .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
+                            .build()
+                    }
+                },
+                contentDescription = stringResource(R.string.news),
+                placeholder = rememberVectorPainter(CustomIcons.Image),
+                error = rememberVectorPainter(CustomIcons.LogoNotification),
+                contentScale = ContentScale.Crop,
+                colorFilter = if (imageUrl == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                modifier = modifier
+            )
+        },
+        title = item?.title ?: stringResource(R.string.loading),
+        subtitle = item?.authorName ?: stringResource(R.string.summary_please_wait),
+        onNavIconClick = ::onBackPressed,
+    )
 
     @Suppress("DEPRECATION")
     @Composable
@@ -143,15 +150,26 @@ class NewsItemActivity : SupportActionBarActivity(
             navigator.reload()
         }
 
-        PullRefresh(state, { it?.isFullyLoaded != true }, onRefresh) {
+        PullRefresh(
+            state = state,
+            shouldShowProgressIndicator = { it?.isFullyLoaded != true },
+            onRefresh = onRefresh,
+        ) {
             var errorTitle by remember { mutableStateOf<String?>(null) }
             errorTitle?.let { title ->
-                ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, onRefresh) }
+                ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, confirm = onRefresh) }
             }
 
-            NewsItemScreen(modifier, state, webViewState, navigator, showAds, rememberTypedCallback {
-                bannerAdView = it
-            }, { errorTitle = it }, rememberTypedCallback(viewModel::markRead))
+            NewsItemScreen(
+                state = state,
+                webViewState = webViewState,
+                navigator = navigator,
+                showAds = showAds,
+                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                onError = { errorTitle = it },
+                onLoadFinished = rememberTypedCallback(viewModel::markRead),
+                modifier = modifier
+            )
         }
     }
 

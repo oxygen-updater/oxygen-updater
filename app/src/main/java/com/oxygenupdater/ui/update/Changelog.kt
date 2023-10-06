@@ -13,6 +13,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
+import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 
@@ -28,16 +29,16 @@ fun ChangelogContainer(
     if (isDifferentVersion) {
         val bodySmall = MaterialTheme.typography.bodySmall
         Text(
-            stringResource(
+            text = stringResource(
                 R.string.update_information_different_version_changelog_notice_base,
                 UpdateDataVersionFormatter.getFormattedVersionNumber(updateData),
                 PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
             ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
-            Modifier
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = bodySmall,
+            modifier = Modifier
                 .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)
-                .withPlaceholder(refreshing, bodySmall),
-            MaterialTheme.colorScheme.onSurfaceVariant,
-            style = bodySmall
+                .withPlaceholder(refreshing, bodySmall)
         )
     }
 
@@ -58,10 +59,12 @@ fun UpdateData.Changelog(
     val modifierWithPlaceholder = modifier.withPlaceholder(refreshing, MaterialTheme.typography.bodyMedium)
 
     if (!changelog.isNullOrBlank() && !description.isNullOrBlank()) RichText(
-        description, modifierWithPlaceholder, type = RichTextType.Markdown
+        text = description,
+        type = RichTextType.Markdown,
+        modifier = modifierWithPlaceholder
     ) else Text(
-        stringResource(R.string.update_information_description_not_available),
-        if (extraTextPadding) modifierWithPlaceholder.padding(top = 16.dp) else modifierWithPlaceholder,
-        style = MaterialTheme.typography.bodyMedium
+        text = stringResource(R.string.update_information_description_not_available),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = if (extraTextPadding) modifierWithPlaceholder then modifierDefaultPaddingTop else modifierWithPlaceholder,
     )
 }

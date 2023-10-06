@@ -19,7 +19,7 @@ fun MainSnackbar(
     completeAppUpdate: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    SnackbarHost(snackbarHostState, Modifier.statusBarsPadding())
+    SnackbarHost(hostState = snackbarHostState, modifier = Modifier.statusBarsPadding())
 
     if (snackbarText == null) {
         snackbarHostState.currentSnackbarData?.dismiss()

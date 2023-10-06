@@ -1,19 +1,10 @@
 package com.oxygenupdater.ui.update
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
@@ -32,7 +23,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +30,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
@@ -49,9 +38,15 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
+import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
+import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
+import com.oxygenupdater.ui.common.modifierMaxSize
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.DeviceSoftwareInfo
@@ -84,7 +79,7 @@ fun UpToDate(
     if (windowWidthSize == WindowWidthSizeClass.Expanded) Column {
         AdvancedModeTip(showAdvancedModeTip)
 
-        Row(Modifier.fillMaxWidth()) {
+        Row(modifierMaxWidth) {
             Column(
                 Modifier
                     .width(IntrinsicSize.Max)
@@ -94,16 +89,16 @@ fun UpToDate(
                 val positive = MaterialTheme.colorScheme.positive
                 val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
                 IconText(
-                    Modifier.padding(16.dp),
-                    Modifier.withPlaceholder(refreshing, titleMedium),
                     icon = Icons.Rounded.CheckCircleOutline,
                     text = stringResource(R.string.update_information_system_is_up_to_date),
                     iconTint = positive,
-                    style = titleMedium
+                    style = titleMedium,
+                    textModifier = Modifier.withPlaceholder(refreshing, titleMedium),
+                    modifier = modifierDefaultPadding
                 )
 
                 ItemDivider()
-                DeviceSoftwareInfo(false)
+                DeviceSoftwareInfo(showHeader = false)
                 ConditionalNavBarPadding(navType)
             }
 
@@ -118,35 +113,30 @@ fun UpToDate(
                     .weight(1f)
                     .fillMaxHeight()
                     .verticalScroll(rememberScrollState())
-                    .padding(top = 16.dp) // must be after `verticalScroll`
+                    .then(modifierDefaultPaddingTop) // must be after `verticalScroll`
             ) {
                 ConditionalNavBarPadding(navType)
             }
         }
-    } else Column(
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-    ) {
+    } else Column(modifierMaxSize.verticalScroll(rememberScrollState())) {
         AdvancedModeTip(showAdvancedModeTip)
 
-        Box(Modifier.fillMaxWidth()) {
+        Box(modifierMaxWidth) {
             val positive = MaterialTheme.colorScheme.positive
             val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
             IconText(
-                Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 16.dp),
-                Modifier.withPlaceholder(refreshing, titleMedium),
                 icon = Icons.Rounded.CheckCircleOutline,
                 text = stringResource(R.string.update_information_system_is_up_to_date),
                 iconTint = positive,
-                style = titleMedium
+                style = titleMedium,
+                textModifier = Modifier.withPlaceholder(refreshing, titleMedium),
+                modifier = Modifier.align(Alignment.CenterStart) then modifierDefaultPaddingStart
             )
 
             Icon(
-                Icons.Rounded.DoneAll, stringResource(R.string.icon),
-                Modifier
+                imageVector = Icons.Rounded.DoneAll,
+                contentDescription = stringResource(R.string.icon),
+                modifier = Modifier
                     .graphicsLayer(scaleX = 2f, scaleY = 2f, alpha = .1f)
                     .align(Alignment.CenterEnd)
                     .requiredSize(64.dp)
@@ -154,10 +144,15 @@ fun UpToDate(
         }
 
         ItemDivider(Modifier.padding(top = 2.dp))
-        DeviceSoftwareInfo(false)
-        ItemDivider(Modifier.padding(top = 16.dp))
+        DeviceSoftwareInfo(showHeader = false)
+        ItemDivider(modifierDefaultPaddingTop)
 
-        ExpandableChangelog(refreshing, updateData, isDifferentVersion, showAdvancedModeTip)
+        ExpandableChangelog(
+            refreshing = refreshing,
+            updateData = updateData,
+            isDifferentVersion = isDifferentVersion,
+            showAdvancedModeTip = showAdvancedModeTip,
+        )
 
         ItemDivider()
         ConditionalNavBarPadding(navType)
@@ -172,7 +167,7 @@ private inline fun AdvancedModeTip(show: Boolean) {
     IconText(
         icon = CustomIcons.Info,
         text = stringResource(R.string.update_information_banner_advanced_mode_tip),
-        modifier = Modifier.padding(16.dp),
+        modifier = modifierDefaultPadding
     )
     ItemDivider()
 }
@@ -187,34 +182,21 @@ private fun ExpandableChangelog(
     val expandEnabled = updateData.isUpdateInformationAvailable
     var expanded by rememberSaveableState("changelogExpanded", LocalInspectionMode.current)
     IconText(
-        Modifier
-            .fillMaxWidth()
-            .alpha(if (!refreshing) 1f else 0.38f)
-            .animatedClickable(!refreshing && expandEnabled) { expanded = !expanded }
-            .padding(16.dp), // must be after `clickable`
         icon = if (!expandEnabled) Icons.Rounded.ErrorOutline else if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
         text = stringResource(
             if (!expandEnabled) R.string.update_information_no_update_data_available
             else R.string.update_information_view_update_information
         ),
-        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
+        style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary),
+        modifier = modifierMaxWidth
+            .alpha(if (!refreshing) 1f else 0.38f)
+            .animatedClickable(!refreshing && expandEnabled) { expanded = !expanded }
+            .then(modifierDefaultPadding) // must be after `clickable`
     )
 
-    if (refreshing) LinearProgressIndicator(Modifier.fillMaxWidth())
+    if (refreshing) LinearProgressIndicator(modifierMaxWidth)
 
-    AnimatedVisibility(
-        expanded,
-        enter = remember {
-            expandVertically(
-                spring(visibilityThreshold = IntSize.VisibilityThreshold)
-            ) + fadeIn(initialAlpha = .3f)
-        },
-        exit = remember {
-            shrinkVertically(
-                spring(visibilityThreshold = IntSize.VisibilityThreshold)
-            ) + fadeOut()
-        },
-    ) {
+    ExpandCollapse(visible = expanded) {
         ChangelogContainer(
             refreshing = refreshing,
             updateData = updateData,
@@ -227,10 +209,10 @@ private fun ExpandableChangelog(
 @PreviewThemes
 @Composable
 fun PreviewUpToDate() = PreviewAppTheme {
-    val windowSize = PreviewWindowSize
+    val windowWidthSize = PreviewWindowSize.widthSizeClass
     UpToDate(
-        navType = NavType.from(windowSize.widthSizeClass),
-        windowWidthSize = windowSize.widthSizeClass,
+        navType = NavType.from(windowWidthSize),
+        windowWidthSize = windowWidthSize,
         refreshing = false,
         updateData = """##Personalization
 • Expands Omoji's functionality and library

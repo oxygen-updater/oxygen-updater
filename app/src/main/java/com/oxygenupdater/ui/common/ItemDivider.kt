@@ -9,6 +9,6 @@ import com.oxygenupdater.ui.theme.backgroundVariant
 @Suppress("NOTHING_TO_INLINE")
 @Composable
 inline fun ItemDivider(modifier: Modifier = Modifier) = HorizontalDivider(
-    modifier,
-    color = MaterialTheme.colorScheme.backgroundVariant
+    color = MaterialTheme.colorScheme.backgroundVariant,
+    modifier = modifier
 )

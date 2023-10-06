@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Launch
@@ -17,44 +16,51 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
 fun AlreadyDownloadedSheet(
     hide: () -> Unit,
-    onClick: (Boolean) -> Unit,
+    onClick: (result: Boolean) -> Unit,
 ) {
     SheetHeader(R.string.delete_message_title)
 
     Text(
-        stringResource(R.string.delete_message_contents),
-        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-        style = MaterialTheme.typography.bodyMedium
+        text = stringResource(R.string.delete_message_contents),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     )
 
     Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        TextButton({
-            onClick(false)
-            hide()
-        }, Modifier.padding(end = 8.dp), colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
+        TextButton(
+            onClick = {
+                onClick(false)
+                hide()
+            },
+            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp)
+        ) {
             Text(stringResource(R.string.delete_message_delete_button))
         }
 
-        OutlinedIconButton({
-            onClick(true)
-            hide()
-        }, Icons.AutoMirrored.Rounded.Launch, R.string.install)
+        OutlinedIconButton(
+            onClick = {
+                onClick(true)
+                hide()
+            },
+            icon = Icons.AutoMirrored.Rounded.Launch,
+            textResId = R.string.install,
+        )
     }
 }
 
 @PreviewThemes
 @Composable
 fun PreviewAlreadyDownloadedSheet() = PreviewModalBottomSheet {
-    AlreadyDownloadedSheet(hide = {}) {}
+    AlreadyDownloadedSheet(hide = {}, onClick = {})
 }

@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -45,6 +43,10 @@ import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
+import com.oxygenupdater.ui.common.modifierMaxSize
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
@@ -67,11 +69,9 @@ fun OnboardingScreen(
     deviceChanged: (Device) -> Unit,
     initialMethodIndex: Int,
     methodChanged: (UpdateMethod) -> Unit,
-    startApp: (Boolean) -> Unit, // contribute, submitLogs
+    startApp: (contribute: Boolean) -> Unit,
 ) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(
-    Modifier
-        .nestedScroll(scrollBehavior.nestedScrollConnection)
-        .fillMaxWidth()
+    Modifier.nestedScroll(scrollBehavior.nestedScrollConnection) then modifierMaxWidth
 ) {
     val typography = MaterialTheme.typography
     Column(Modifier.weight(1f)) {
@@ -81,8 +81,18 @@ fun OnboardingScreen(
                 .fillMaxHeight()
                 .verticalScroll(rememberScrollState())
         ) {
-            DeviceChooser(lists.enabledDevices, initialDeviceIndex, deviceChanged)
-            MethodChooser(lists.methodsForDevice, initialMethodIndex, methodChanged)
+            DeviceChooser(
+                enabledDevices = lists.enabledDevices,
+                initialDeviceIndex = initialDeviceIndex,
+                deviceChanged = deviceChanged,
+            )
+
+            MethodChooser(
+                methodsForDevice = lists.methodsForDevice,
+                initialMethodIndex = initialMethodIndex,
+                methodChanged = methodChanged,
+            )
+
             SettingsAnalytics()
         }
 
@@ -102,35 +112,35 @@ fun OnboardingScreen(
         ) {
             val bodyMedium = typography.bodyMedium
             Text(
-                AnnotatedString(
+                text = AnnotatedString(
                     stringResource(R.string.onboarding_app_uses),
                     bodyMedium.toSpanStyle(),
                     bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
                 ),
-                Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-                style = bodyMedium
+                style = bodyMedium,
+                modifier = modifierDefaultPaddingStartTopEnd
             )
 
             Text(
-                stringResource(R.string.onboarding_caption),
-                Modifier.padding(16.dp),
-                style = bodyMedium
+                text = stringResource(R.string.onboarding_caption),
+                style = bodyMedium,
+                modifier = modifierDefaultPadding
             )
         }
 
         ItemDivider()
         Text(
-            stringResource(R.string.onboarding_disclaimer),
-            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
-            MaterialTheme.colorScheme.onSurfaceVariant,
-            style = typography.bodySmall
+            text = stringResource(R.string.onboarding_disclaimer),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = typography.bodySmall,
+            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
         )
         Spacer(Modifier.navigationBarsPadding())
     }
 } else Column(
     Modifier
         .nestedScroll(scrollBehavior.nestedScrollConnection)
-        .fillMaxSize()
+        .then(modifierMaxSize)
 ) {
     val typography = MaterialTheme.typography
 
@@ -139,34 +149,44 @@ fun OnboardingScreen(
             .weight(1f)
             .verticalScroll(rememberScrollState())
     ) {
-        DeviceChooser(lists.enabledDevices, initialDeviceIndex, deviceChanged)
-        MethodChooser(lists.methodsForDevice, initialMethodIndex, methodChanged)
+        DeviceChooser(
+            enabledDevices = lists.enabledDevices,
+            initialDeviceIndex = initialDeviceIndex,
+            deviceChanged = deviceChanged,
+        )
+
+        MethodChooser(
+            methodsForDevice = lists.methodsForDevice,
+            initialMethodIndex = initialMethodIndex,
+            methodChanged = methodChanged,
+        )
+
         SettingsAnalytics()
 
         val bodyMedium = typography.bodyMedium
         Text(
-            AnnotatedString(
+            text = AnnotatedString(
                 stringResource(R.string.onboarding_app_uses),
                 bodyMedium.toSpanStyle(),
                 bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
             ),
-            Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp),
-            style = bodyMedium
+            style = bodyMedium,
+            modifier = modifierDefaultPaddingStartTopEnd
         )
 
         Text(
-            stringResource(R.string.onboarding_caption),
-            Modifier.padding(16.dp),
-            style = bodyMedium
+            text = stringResource(R.string.onboarding_caption),
+            style = bodyMedium,
+            modifier = modifierDefaultPadding
         )
     }
 
     ItemDivider()
     Text(
-        stringResource(R.string.onboarding_disclaimer),
-        Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
-        MaterialTheme.colorScheme.onSurfaceVariant,
-        style = typography.bodySmall
+        text = stringResource(R.string.onboarding_disclaimer),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = typography.bodySmall,
+        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
     )
 
     StartApp(startApp)
@@ -189,22 +209,23 @@ private fun DeviceChooser(
     } else stringResource(R.string.summary_please_wait)
 
     SettingsItem(
+        { showSheet = true },
         icon = Icons.Rounded.PhoneAndroid,
         titleResId = R.string.settings_device,
         subtitle = subtitle,
         subtitleIsError = subtitle == notSelected,
         enabled = deviceSelectionEnabled,
-    ) {
-        showSheet = true
-    }
+    )
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
-            hide,
-            enabledDevices, initialDeviceIndex,
-            R.string.settings_device, R.string.onboarding_device_chooser_caption,
-            PrefManager.KeyDeviceId,
-            deviceChanged
+            hide = hide,
+            list = enabledDevices,
+            initialIndex = initialDeviceIndex,
+            titleResId = R.string.settings_device,
+            captionResId = R.string.onboarding_device_chooser_caption,
+            keyId = PrefManager.KeyDeviceId,
+            onClick = deviceChanged,
         )
     }
 }
@@ -225,39 +246,42 @@ private fun MethodChooser(
     } else stringResource(R.string.summary_update_method)
 
     SettingsItem(
+        { showSheet = true },
         icon = Icons.Outlined.CloudDownload,
         titleResId = R.string.settings_update_method,
         subtitle = subtitle,
         subtitleIsError = subtitle == notSelected,
         enabled = methodSelectionEnabled,
-    ) {
-        showSheet = true
-    }
+    )
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         SelectableSheet(
-            hide,
-            methodsForDevice, initialMethodIndex,
-            R.string.settings_update_method, R.string.onboarding_method_chooser_caption,
-            PrefManager.KeyUpdateMethodId,
-            methodChanged
+            hide = hide,
+            list = methodsForDevice,
+            initialIndex = initialMethodIndex,
+            titleResId = R.string.settings_update_method,
+            captionResId = R.string.onboarding_method_chooser_caption,
+            keyId = PrefManager.KeyUpdateMethodId,
+            onClick = methodChanged
         )
     }
 }
 
 @Composable
-private fun StartApp(startApp: (Boolean) -> Unit) = Row(
+private fun StartApp(startApp: (contribute: Boolean) -> Unit) = Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier.padding(end = 16.dp)
 ) {
     var contribute by rememberSaveableState("contribute", true)
     if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) {
         CheckboxText(
-            contribute, { contribute = it }, R.string.contribute_agree,
-            Modifier
+            checked = contribute,
+            onCheckedChange = { contribute = it },
+            textResId = R.string.contribute_agree,
+            textModifier = Modifier.padding(end = 16.dp),
+            modifier = Modifier
                 .weight(1f)
-                .padding(start = 4.dp, end = 16.dp),
-            Modifier.padding(end = 16.dp),
+                .padding(start = 4.dp, end = 16.dp)
         )
 
         var showSheet by rememberSaveableState("showContributorSheet", false)
@@ -268,9 +292,11 @@ private fun StartApp(startApp: (Boolean) -> Unit) = Row(
         if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it) }
     } else Spacer(Modifier.weight(1f)) // always right-align start button
 
-    OutlinedIconButton({
-        startApp(contribute)
-    }, Icons.Rounded.DoneAll, R.string.onboarding_finished_button)
+    OutlinedIconButton(
+        onClick = { startApp(contribute) },
+        icon = Icons.Rounded.DoneAll,
+        textResId = R.string.onboarding_finished_button,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -54,7 +54,7 @@ fun RichText(
     textIndent: TextIndent? = null,
     contentColor: Color = LocalContentColor.current,
     type: RichTextType = RichTextType.Html,
-    custom: ((String, Color, Color) -> AnnotatedString)? = null,
+    custom: ((text: String, contentColor: Color, urlColor: Color) -> AnnotatedString)? = null,
 ) = SelectionContainer(modifier) {
     @Suppress("NAME_SHADOWING")
     val text = text ?: ""
@@ -66,23 +66,28 @@ fun RichText(
         when (type) {
             RichTextType.Custom -> custom?.invoke(text, contentColor, urlColor) ?: AnnotatedString(text)
             RichTextType.Html -> htmlToAnnotatedString(
-                text, typography,
-                contentColor = contentColor, urlColor = urlColor,
-                textIndent,
+                html = text,
+                typography = typography,
+                contentColor = contentColor,
+                urlColor = urlColor,
+                textIndent = textIndent,
             )
 
             RichTextType.Markdown -> changelogToAnnotatedString(
-                text, typography,
-                contentColor = contentColor, urlColor = urlColor,
+                changelog = text,
+                typography = typography,
+                contentColor = contentColor,
+                urlColor = urlColor,
             )
 
             else -> TODO("invalid rich text type: $type")
         }
     }
 
-    ClickableText(annotated, style = DefaultTextStyle.run {
-        if (textAlign != null) copy(textAlign = textAlign) else this
-    }) {
+    ClickableText(
+        text = annotated,
+        style = DefaultTextStyle.run { if (textAlign != null) copy(textAlign = textAlign) else this },
+    ) {
         val range = annotated.getUrlAnnotations(it, it).firstOrNull()
         if (range != null) uriHandler.openUri(range.item.url)
     }

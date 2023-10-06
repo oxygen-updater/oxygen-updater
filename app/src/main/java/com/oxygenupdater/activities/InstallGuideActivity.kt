@@ -38,10 +38,18 @@ class InstallGuideActivity : SupportActionBarActivity(
             PrefManager.getBoolean(PrefManager.KeyAdFree, false)
         ).value
 
-        PullRefresh(state, { it.isEmpty() }, viewModel::refresh) {
-            InstallGuideScreen(modifier, state, showDownloadInstructions, showAds, rememberTypedCallback {
-                bannerAdView = it
-            })
+        PullRefresh(
+            state = state,
+            shouldShowProgressIndicator = { it.isEmpty() },
+            onRefresh = viewModel::refresh,
+        ) {
+            InstallGuideScreen(
+                state = state,
+                showDownloadInstructions = showDownloadInstructions,
+                showAds = showAds,
+                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                modifier = modifier
+            )
         }
     }
 

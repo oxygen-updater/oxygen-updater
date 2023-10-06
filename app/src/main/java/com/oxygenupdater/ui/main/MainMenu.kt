@@ -37,13 +37,13 @@ fun MainMenu(
     serverMessages: List<ServerMessage>,
     showMarkAllRead: Boolean, markAllRead: () -> Unit,
 ) {
-    AnnouncementsMenuItem(serverMessages)
+    AnnouncementsMenuItem(serverMessages = serverMessages)
 
     // Don't show menu if there are no items in it
-    // Box layout is required to make DropdownMenu position correctly (directly under icon)
     val showBecomeContributor = ContributorUtils.isAtLeastQAndPossiblyRooted
     if (!showMarkAllRead && !showBecomeContributor) return
 
+    // Box layout is required to make DropdownMenu position correctly (directly under icon)
     Box {
         // Hide other menu items behind overflow icon
         var showMenu by rememberSaveableState("showMenu", LocalInspectionMode.current)
@@ -54,13 +54,16 @@ fun MainMenu(
         val hide = rememberCallback { showMenu = false }
         DropdownMenu(showMenu, hide) {
             // Mark all articles read
-            if (showMarkAllRead) DropdownMenuItem(Icons.AutoMirrored.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
+            if (showMarkAllRead) DropdownMenuItem(
+                icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
+                textResId = R.string.news_mark_all_read,
+            ) {
                 markAllRead()
                 hide()
             }
 
             // OTA URL contribution
-            if (showBecomeContributor) ContributorMenuItem(hide)
+            if (showBecomeContributor) ContributorMenuItem(onDismiss = hide)
         }
     }
 }

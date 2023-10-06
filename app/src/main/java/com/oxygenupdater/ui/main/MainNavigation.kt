@@ -44,12 +44,12 @@ import com.oxygenupdater.icons.Settings
 @Composable
 fun MainNavigationBar(
     currentRoute: String?,
-    navigateTo: (String) -> Unit,
+    navigateTo: (route: String) -> Unit,
     setSubtitleResId: (Int) -> Unit,
 ) = NavigationBar {
     MainScreens.forEach { screen ->
         val labelResId = screen.labelResId
-        key(labelResId) {
+        key(labelResId) { // because this is in a `forEach`
             val route = screen.route
             val label = stringResource(labelResId)
             val selected = currentRoute == route
@@ -60,18 +60,22 @@ fun MainNavigationBar(
                     if (screen.useVersionName) 0 else labelResId
                 )
             }
-            NavigationBarItem(selected, { navigateTo(route) }, icon = {
-                val badge = screen.badge
-                if (badge == null) Icon(screen.icon, label) else BadgedBox({
-                    Badge {
-                        Text(badge.take(3), Modifier.semantics {
-                            contentDescription = "$badge unread articles"
-                        })
-                    }
-                }) { Icon(screen.icon, label) }
-            }, label = {
-                Text(label)
-            }, alwaysShowLabel = false)
+            NavigationBarItem(
+                selected = selected,
+                onClick = { navigateTo(route) },
+                icon = {
+                    val badge = screen.badge
+                    if (badge == null) Icon(screen.icon, label) else BadgedBox({
+                        Badge {
+                            Text(badge.take(3), Modifier.semantics {
+                                contentDescription = "$badge unread articles"
+                            })
+                        }
+                    }) { Icon(screen.icon, label) }
+                },
+                label = { Text(label) },
+                alwaysShowLabel = false,
+            )
         }
     }
 }
@@ -80,7 +84,7 @@ fun MainNavigationBar(
 @Composable
 fun MainNavigationRail(
     currentRoute: String?,
-    navigateTo: (String) -> Unit,
+    navigateTo: (route: String) -> Unit,
     openAboutScreen: () -> Unit,
     setSubtitleResId: (Int) -> Unit,
 ) = NavigationRail(header = {
@@ -105,18 +109,21 @@ fun MainNavigationRail(
                     if (screen.useVersionName) 0 else labelResId
                 )
             }
-            NavigationRailItem(selected, { navigateTo(route) }, icon = {
-                val badge = screen.badge
-                if (badge == null) Icon(screen.icon, label) else BadgedBox({
-                    Badge {
-                        Text(badge.take(3), Modifier.semantics {
-                            contentDescription = "$badge unread articles"
-                        })
-                    }
-                }) { Icon(screen.icon, label) }
-            }, label = {
-                Text(label)
-            })
+            NavigationRailItem(
+                selected = selected,
+                onClick = { navigateTo(route) },
+                icon = {
+                    val badge = screen.badge
+                    if (badge == null) Icon(screen.icon, label) else BadgedBox({
+                        Badge {
+                            Text(badge.take(3), Modifier.semantics {
+                                contentDescription = "$badge unread articles"
+                            })
+                        }
+                    }) { Icon(screen.icon, label) }
+                },
+                label = { Text(label) },
+            )
         }
     }
 }

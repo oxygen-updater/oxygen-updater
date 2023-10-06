@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.dialogs
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -23,6 +21,8 @@ import com.oxygenupdater.icons.Warning
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerMessage.ServerMessagePriority
 import com.oxygenupdater.ui.common.RichText
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.positive
 import com.oxygenupdater.ui.theme.warn
@@ -36,8 +36,11 @@ fun ServerMessagesSheet(list: List<ServerMessage>) {
 
     val colorScheme = MaterialTheme.colorScheme
     LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
-        items(list, { it.id }, contentType = { it.priority }) {
-            Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+        items(items = list, key = { it.id }, contentType = { it.priority }) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = modifierDefaultPadding
+            ) {
                 val priority = it.priority
                 val (icon, color) = remember(priority, colorScheme) {
                     when (priority) {
@@ -49,7 +52,11 @@ fun ServerMessagesSheet(list: List<ServerMessage>) {
                 }
 
                 Icon(icon, stringResource(R.string.icon), tint = color ?: LocalContentColor.current)
-                RichText(it.text, Modifier.padding(start = 16.dp), contentColor = color ?: LocalContentColor.current)
+                RichText(
+                    text = it.text,
+                    contentColor = color ?: LocalContentColor.current,
+                    modifier = modifierDefaultPaddingStart
+                )
             }
         }
     }

@@ -25,7 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val light = MaterialTheme.colorScheme.light
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { !light },
-            navigationBarStyle = navigationBarStyle
+            navigationBarStyle = navigationBarStyle,
         )
     }
 

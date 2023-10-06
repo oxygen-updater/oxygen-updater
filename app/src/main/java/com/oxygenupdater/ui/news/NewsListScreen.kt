@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
@@ -108,6 +106,10 @@ import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.PullRefresh
+import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
+import com.oxygenupdater.ui.common.modifierMaxSize
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
@@ -129,8 +131,12 @@ fun NewsListScreen(
     unreadCountState: MutableIntState,
     markAllRead: () -> Unit,
     toggleRead: (NewsItem) -> Unit,
-    openItem: (Long) -> Unit,
-) = PullRefresh(state, { it.isEmpty() }, refresh) {
+    openItem: (id: Long) -> Unit,
+) = PullRefresh(
+    state = state,
+    shouldShowProgressIndicator = { it.isEmpty() },
+    onRefresh = refresh,
+) {
     val refreshing = state.refreshing
     var onlyUnread by rememberSaveableState("onlyUnread", false)
 
@@ -145,27 +151,29 @@ fun NewsListScreen(
     Screen.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
 
     Column {
-        Banner(stringResource(
-            if (onlyUnread) R.string.news_unread_count_2 else R.string.news_unread_count_1,
-            unreadCount
-        ), onClick = {
-            onlyUnread = !onlyUnread
-        }, onMarkAllReadClick = {
-            markAllRead()
-            unreadCountState.intValue = 0
-        })
+        Banner(
+            text = stringResource(
+                if (onlyUnread) R.string.news_unread_count_2 else R.string.news_unread_count_1,
+                unreadCount,
+            ),
+            onClick = { onlyUnread = !onlyUnread },
+            onMarkAllReadClick = {
+                markAllRead()
+                unreadCountState.intValue = 0
+            },
+        )
 
         ItemDivider()
 
         if (onlyUnread && unreadCount == 0) ErrorState(
-            navType,
+            navType = navType,
             titleResId = R.string.news_empty_state_all_read_header,
             icon = CustomIcons.NewsMultiple,
             textResId = R.string.news_empty_state_all_read_text,
             rich = false,
             refresh = null,
         ) else if (list.isEmpty()) ErrorState(
-            navType,
+            navType = navType,
             titleResId = R.string.news_empty_state_none_available_header,
             icon = CustomIcons.NewsMultiple,
             textResId = R.string.news_empty_state_none_available_text,
@@ -192,14 +200,18 @@ fun NewsListScreen(
                 openItem(it.id ?: NotSetL)
             }
 
-            if (navType == NavType.BottomBar) LazyColumn(Modifier.fillMaxSize()) {
+            if (navType == NavType.BottomBar) {
                 val size = DpSize(80.dp, 80.dp)
-                items(list, { it.id ?: Random.nextLong() }) {
-                    NewsListItem(refreshing, it, toggleRead = {
-                        itemToggleRead(it)
-                    }, onClick = {
-                        itemOnClick(it)
-                    }, size = size)
+                LazyColumn(modifierMaxSize) {
+                    items(items = list, key = { it.id ?: Random.nextLong() }) {
+                        NewsListItem(
+                            refreshing = refreshing,
+                            item = it,
+                            size = size,
+                            toggleRead = { itemToggleRead(it) },
+                            onClick = { itemOnClick(it) },
+                        )
+                    }
                 }
             } else Column {
                 val size = remember(windowSize) {
@@ -219,21 +231,23 @@ fun NewsListScreen(
 
                 LazyVerticalGrid(
                     columns = GridCells.FixedSize(size.width),
-                    modifier = Modifier.windowInsetsPadding(
-                        // Leave space for 2/3-button nav bar in landscape mode
-                        WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
-                    ),
                     state = rememberLazyGridState(),
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
+                    modifier = Modifier.windowInsetsPadding(
+                        // Leave space for 2/3-button nav bar in landscape mode
+                        WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
+                    )
                 ) {
-                    items(list, { it.id ?: Random.nextLong() }) {
-                        NewsGridItem(refreshing, it, toggleRead = {
-                            itemToggleRead(it)
-                        }, onClick = {
-                            itemOnClick(it)
-                        }, size = size)
+                    items(items = list, key = { it.id ?: Random.nextLong() }) {
+                        NewsGridItem(
+                            refreshing = refreshing,
+                            item = it,
+                            size = size,
+                            toggleRead = { itemToggleRead(it) },
+                            onClick = { itemOnClick(it) },
+                        )
                     }
                 }
 
@@ -243,81 +257,87 @@ fun NewsListScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NewsListItem(
     refreshing: Boolean,
     item: NewsItem,
+    size: DpSize,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-    size: DpSize,
 ) = Column(Modifier.clickable(!refreshing, onClick = onClick)) {
     Box {
-        ListItemBadge(refreshing, item)
+        if (!refreshing && !item.readState) Badge(Modifier.offset(4.dp, 16.dp))
 
-        Row(Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)) {
+        Row(modifierDefaultPaddingStartTopEnd) {
             Column(
                 Modifier
                     .weight(1f)
                     .requiredHeight(size.height) // same as image
                     .padding(end = 8.dp)
             ) {
-                ListItemTitles(refreshing, item)
+                ListItemTitles(refreshing = refreshing, item = item)
             }
 
-            NewsImage(refreshing, item, size = size, modifier = Modifier.graphicsLayer {
-                if (refreshing) return@graphicsLayer
-                alpha = if (item.readState) 0.87f else 1f
-            })
+            NewsImage(
+                refreshing = refreshing,
+                item = item,
+                size = size,
+                modifier = Modifier.graphicsLayer {
+                    if (refreshing) return@graphicsLayer
+                    alpha = if (item.readState) 0.87f else 1f
+                }
+            )
         }
     }
 
-    // xOffset of 6.dp brings it inline with image
-    Footer(refreshing, item, toggleRead = toggleRead, startPadding = 16.dp, menuXOffset = 6.dp)
+    Footer(
+        refreshing = refreshing,
+        item = item,
+        toggleRead = toggleRead,
+        startPadding = 16.dp,
+        menuXOffset = 6.dp, // bring inline with image
+    )
 }
 
 @Composable
 private fun NewsGridItem(
     refreshing: Boolean,
     item: NewsItem,
+    size: DpSize,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-    size: DpSize,
 ) = Column {
     Box(
         Modifier
             .requiredSize(size)
             .clickable(!refreshing, onClick = onClick)
     ) {
-        NewsImage(refreshing, item, size = size)
+        NewsImage(refreshing = refreshing, item = item, size = size)
 
-        Box( // overlay
-            Modifier
-                .fillMaxSize()
+        // Overlay over image
+        Box(
+            modifierMaxSize
                 .clip(MaterialTheme.shapes.small)
                 .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.75f))
         )
 
-        GridItemBadge(refreshing, item) // must be after overlay
+        if (!refreshing && !item.readState) GridItemBadge()
 
-        GridItemTitles(refreshing, item)
+        GridItemTitles(refreshing = refreshing, item = item)
     }
 
-    // xOffset of 22.dp brings it inline with image
-    Footer(refreshing, item, toggleRead = toggleRead, startPadding = 0.dp, menuXOffset = 22.dp)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ListItemBadge(refreshing: Boolean, item: NewsItem) {
-    if (refreshing || item.readState) return
-
-    Badge(Modifier.offset(4.dp, 16.dp))
+    Footer(
+        refreshing = refreshing,
+        item = item,
+        toggleRead = toggleRead,
+        startPadding = 0.dp,
+        menuXOffset = 22.dp, // bring inline with image
+    )
 }
 
 @Composable
-private fun GridItemBadge(refreshing: Boolean, item: NewsItem) {
-    if (refreshing || item.readState) return
-
+private fun GridItemBadge() {
     val ltr = LocalLayoutDirection.current == LayoutDirection.Ltr
     val error = MaterialTheme.colorScheme.error
     Spacer(
@@ -336,11 +356,11 @@ private fun GridItemBadge(refreshing: Boolean, item: NewsItem) {
                 val path = Path()
                 path.moveTo(0f, 0f)
                 if (ltr) {
-                    path.lineTo(size.width, 0f)
-                    path.lineTo(0f, size.height)
+                    path.lineTo(this.size.width, 0f)
+                    path.lineTo(0f, this.size.height)
                 } else {
-                    path.lineTo(size.width, size.height)
-                    path.lineTo(size.width, 0f)
+                    path.lineTo(this.size.width, this.size.height)
+                    path.lineTo(this.size.width, 0f)
                 }
                 path.close()
                 onDrawBehind {
@@ -371,13 +391,13 @@ private fun ListItemTitles(refreshing: Boolean, item: NewsItem) {
             .graphicsLayer {
                 if (refreshing) return@graphicsLayer
                 alpha = if (item.readState) 0.7f else 1f
-            },
+            }
     )
 
     AutoresizeText(
         text = item.subtitle ?: "",
         fontSizeRange = FontSizeRange(12f, 14f),
-        modifier = Modifier.withPlaceholder(refreshing),
+        modifier = Modifier.withPlaceholder(refreshing)
     )
 }
 
@@ -406,8 +426,7 @@ private fun GridItemTitles(refreshing: Boolean, item: NewsItem) {
     }
 
     Spacer(
-        Modifier
-            .fillMaxSize()
+        modifierMaxSize
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .drawWithCache {
                 val width = size.width.toInt()
@@ -440,10 +459,10 @@ private fun GridItemTitles(refreshing: Boolean, item: NewsItem) {
 
 @Composable
 private fun NewsImage(
+    modifier: Modifier = Modifier,
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
-    modifier: Modifier = Modifier,
 ) {
     val defaultImage = CustomIcons.Image.run {
         rememberVectorPainter(
@@ -478,7 +497,7 @@ private fun NewsImage(
             .requiredSize(size)
             .clip(MaterialTheme.shapes.small)
             .withPlaceholder(refreshing)
-            .then(modifier),
+            .then(modifier)
     )
 }
 
@@ -493,9 +512,7 @@ private fun Footer(
 ) = Row(
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically,
-    modifier = Modifier
-        .fillMaxWidth()
-        .padding(start = startPadding)
+    modifier = modifierMaxWidth.padding(start = startPadding)
 ) {
     val bodySmall = MaterialTheme.typography.bodySmall
     val authorName = item.authorName ?: "Unknown Author"
@@ -516,10 +533,15 @@ private fun Footer(
         modifier = Modifier
             .weight(1f, false)
             .basicMarquee()
-            .withPlaceholder(refreshing, bodySmall),
+            .withPlaceholder(refreshing, bodySmall)
     )
 
-    ItemMenuOpener(refreshing, item, toggleRead = toggleRead, xOffset = menuXOffset)
+    ItemMenuOpener(
+        refreshing = refreshing,
+        item = item,
+        toggleRead = toggleRead,
+        xOffset = menuXOffset,
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -531,17 +553,25 @@ private fun Banner(
 ) {
     var showMenu by rememberSaveableState("showBannerMenu", false)
     IconText(
-        Modifier
-            .fillMaxWidth()
+        icon = CustomIcons.Info,
+        text = text,
+        modifier = modifierMaxWidth
             .combinedClickable(onLongClick = { showMenu = true }, onClick = onClick)
-            .padding(16.dp), // must be after `clickable`
-        icon = CustomIcons.Info, text = text,
+            .then(modifierDefaultPadding) // must be after `clickable`
     ) {
-        DropdownMenu(showMenu, { showMenu = false }, offset = DpOffset(24.dp, 0.dp)) {
-            DropdownMenuItem(Icons.AutoMirrored.Rounded.PlaylistAddCheck, R.string.news_mark_all_read) {
-                onMarkAllReadClick()
-                showMenu = false
-            }
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false },
+            offset = DpOffset(24.dp, 0.dp),
+        ) {
+            DropdownMenuItem(
+                icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
+                textResId = R.string.news_mark_all_read,
+                onClick = {
+                    onMarkAllReadClick()
+                    showMenu = false
+                },
+            )
         }
     }
 }
@@ -556,12 +586,15 @@ private fun ItemMenuOpener(
     var showMenu by rememberSaveableState("showItemMenu", false)
     ItemMenu(showMenu, { showMenu = false }, item, toggleRead)
 
-    // Offset by 6.dp to bring in line with image
-    IconButton({ showMenu = true }, Modifier.offset(xOffset), !refreshing) {
+    IconButton(
+        onClick = { showMenu = true },
+        enabled = !refreshing,
+        modifier = Modifier.offset(xOffset)
+    ) {
         Icon(
-            Icons.Rounded.MoreVert, stringResource(R.string.icon),
-            Modifier.requiredSize(20.dp),
-            if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant
+            imageVector = Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.icon),
+            tint = if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = itemMenuIconModifier
         )
     }
 }
@@ -575,29 +608,42 @@ private fun ItemMenu(
     onToggleReadClick: () -> Unit,
 ) = DropdownMenu(expanded, onDismiss) {
     DropdownMenuItem(
-        if (item.readState) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
-        if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
-    ) {
-        onToggleReadClick()
-        onDismiss()
-    }
+        icon = if (item.readState) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
+        textResId = if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
+        onClick = {
+            onToggleReadClick()
+            onDismiss()
+        },
+    )
 
     val context = LocalContext.current
     val customTabIntent = rememberCustomTabsIntent()
-    DropdownMenuItem(Icons.Rounded.OpenInBrowser, androidx.browser.R.string.fallback_menu_item_open_in_browser, rememberCallback(context, customTabIntent) {
-        customTabIntent.launch(context, item.webUrl)
-        onDismiss()
-    })
+    DropdownMenuItem(
+        icon = Icons.Rounded.OpenInBrowser,
+        textResId = androidx.browser.R.string.fallback_menu_item_open_in_browser,
+        onClick = rememberCallback(context, customTabIntent) {
+            customTabIntent.launch(context, item.webUrl)
+            onDismiss()
+        },
+    )
 
-    DropdownMenuItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link, rememberCallback(context) {
-        context.shareExternally(item.title ?: "", item.webUrl)
-        onDismiss()
-    })
+    DropdownMenuItem(
+        icon = Icons.Outlined.Share,
+        textResId = androidx.browser.R.string.fallback_menu_item_share_link,
+        onClick = rememberCallback(context) {
+            context.shareExternally(item.title ?: "", item.webUrl)
+            onDismiss()
+        },
+    )
 
-    DropdownMenuItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link, rememberCallback(context) {
-        context.copyToClipboard(item.webUrl)
-        onDismiss()
-    })
+    DropdownMenuItem(
+        icon = Icons.Rounded.Link,
+        textResId = androidx.browser.R.string.fallback_menu_item_copy_link,
+        onClick = rememberCallback(context) {
+            context.copyToClipboard(item.webUrl)
+            onDismiss()
+        },
+    )
 }
 
 // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
@@ -608,7 +654,7 @@ private fun ItemMenu(
 private fun AutoresizeText(
     text: String,
     fontSizeRange: FontSizeRange,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     maxLines: Int = 2,
 ) {
     val (min, max, step) = fontSizeRange
@@ -616,10 +662,7 @@ private fun AutoresizeText(
     var readyToDraw by remember { mutableStateOf(false) }
 
     Text(
-        text,
-        modifier.drawWithContent {
-            if (readyToDraw) drawContent()
-        },
+        text = text,
         fontSize = fontSizeValue.sp,
         overflow = TextOverflow.Ellipsis, maxLines = maxLines,
         onTextLayout = {
@@ -638,7 +681,10 @@ private fun AutoresizeText(
             }
         },
         color = MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodyMedium
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = modifier.drawWithContent {
+            if (readyToDraw) drawContent()
+        }
     )
 }
 
@@ -657,6 +703,9 @@ private data class FontSizeRange(
         private const val DefaultStep = 1f
     }
 }
+
+// Perf: re-use common modifiers to avoid recreating the same object repeatedly
+private val itemMenuIconModifier = Modifier.requiredSize(20.dp)
 
 @PreviewThemes
 @Composable
@@ -697,5 +746,6 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
         unreadCountState = remember { mutableIntStateOf(1) },
         markAllRead = {},
         toggleRead = {},
-    ) {}
+        openItem = {},
+    )
 }

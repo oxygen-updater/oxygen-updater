@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.dialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Autorenew
@@ -20,6 +19,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.update.DownloadErrorParams
 import com.oxygenupdater.utils.LocalNotifications
@@ -30,33 +30,43 @@ fun DownloadErrorSheet(hide: () -> Unit, params: DownloadErrorParams) {
 
     val (text, type, resumable, callback) = params
     if (type == null) Text(
-        text,
-        Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-        style = MaterialTheme.typography.bodyMedium
-    ) else RichText(text, Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp), type = type)
+        text = text,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+    ) else RichText(
+        text = text,
+        type = type,
+        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+    )
 
     Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        TextButton({
-            LocalNotifications.hideDownloadCompleteNotification()
-            hide()
-        }, Modifier.padding(end = 8.dp), colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
+        TextButton(
+            onClick = {
+                LocalNotifications.hideDownloadCompleteNotification()
+                hide()
+            },
+            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp)
+        ) {
             Text(stringResource(R.string.download_error_close))
         }
 
         if (callback == null) return@Row
         val icon = if (resumable) Icons.Rounded.Download else Icons.Rounded.Autorenew
         val resId = if (resumable) R.string.download_error_resume else R.string.download_error_retry
-        OutlinedIconButton({
-            LocalNotifications.hideDownloadCompleteNotification()
-            hide()
-            callback(resumable) // must be after `hide` so that the extra flag works correctly
-        }, icon, resId)
+        OutlinedIconButton(
+            onClick = {
+                LocalNotifications.hideDownloadCompleteNotification()
+                hide()
+                callback(resumable) // must be after `hide` so that the extra flag works correctly
+            },
+            icon = icon,
+            textResId = resId,
+        )
     }
 }
 

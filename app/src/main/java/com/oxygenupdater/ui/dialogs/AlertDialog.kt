@@ -18,29 +18,35 @@ import com.oxygenupdater.ui.common.OutlinedIconButton
 @Composable
 @NonRestartableComposable
 fun AlertDialog(
-    action: (Boolean) -> Unit,
+    action: (result: Boolean) -> Unit,
     @StringRes titleResId: Int,
     text: String,
     confirmIconAndResId: Pair<ImageVector, Int>? = null,
     content: @Composable (ColumnScope.() -> Unit)? = null,
-) = AlertDialog({
-    action(false)
-}, confirmButton = confirm@{
-    val (icon, resId) = confirmIconAndResId ?: return@confirm
-    OutlinedIconButton({
-        action(true)
-    }, icon, resId)
-}, dismissButton = {
-    TextButton({
-        action(false)
-    }, colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error)) {
-        Text(stringResource(R.string.download_error_close))
-    }
-}, title = {
-    Text(stringResource(titleResId))
-}, text = {
-    if (content != null) Column {
-        Text(text)
-        content()
-    } else Text(text)
-}, properties = NonCancellableDialog)
+) = AlertDialog(
+    onDismissRequest = { action(false) },
+    confirmButton = confirm@{
+        val (icon, resId) = confirmIconAndResId ?: return@confirm
+        OutlinedIconButton(
+            onClick = { action(true) },
+            icon = icon,
+            textResId = resId,
+        )
+    },
+    dismissButton = {
+        TextButton(
+            onClick = { action(false) },
+            colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+        ) {
+            Text(stringResource(R.string.download_error_close))
+        }
+    },
+    title = { Text(stringResource(titleResId)) },
+    text = {
+        if (content != null) Column {
+            Text(text)
+            content()
+        } else Text(text)
+    },
+    properties = NonCancellableDialog,
+)

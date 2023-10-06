@@ -23,22 +23,26 @@ fun UnsupportedDeviceOsSpecDialog(show: Boolean, hide: () -> Unit, spec: DeviceO
     if (spec == DeviceOsSpec.SupportedOxygenOs) return
 
     var ignore by remember { mutableStateOf(false) }
-    if (show) AlertDialog({
-        PrefManager.putBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, ignore)
-        hide()
-    }, R.string.unsupported_device_warning_title, stringResource(remember(spec) {
-        when (spec) {
-            DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.carrier_exclusive_device_warning_message
-            DeviceOsSpec.UnsupportedOxygenOs -> R.string.unsupported_device_warning_message
-            DeviceOsSpec.UnsupportedOs -> R.string.unsupported_os_warning_message
-            else -> R.string.unsupported_os_warning_message
-        }
-    })) {
+    if (show) AlertDialog(
+        action = {
+            PrefManager.putBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, ignore)
+            hide()
+        },
+        titleResId = R.string.unsupported_device_warning_title,
+        text = stringResource(remember(spec) {
+            when (spec) {
+                DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.carrier_exclusive_device_warning_message
+                DeviceOsSpec.UnsupportedOxygenOs -> R.string.unsupported_device_warning_message
+                DeviceOsSpec.UnsupportedOs -> R.string.unsupported_os_warning_message
+                else -> R.string.unsupported_os_warning_message
+            }
+        }),
+    ) {
         CheckboxText(
-            ignore, { ignore = it },
-            R.string.device_warning_checkbox_title,
-            Modifier.offset((-12).dp), // bring in line with Text
+            checked = ignore, onCheckedChange = { ignore = it },
+            textResId = R.string.device_warning_checkbox_title,
             textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
+            modifier = Modifier.offset((-12).dp) // bring in line with Text
         )
     }
 }
@@ -46,17 +50,29 @@ fun UnsupportedDeviceOsSpecDialog(show: Boolean, hide: () -> Unit, spec: DeviceO
 @PreviewThemes
 @Composable
 fun PreviewCarrierExclusiveDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.CarrierExclusiveOxygenOs)
+    UnsupportedDeviceOsSpecDialog(
+        show = true,
+        hide = {},
+        spec = DeviceOsSpec.CarrierExclusiveOxygenOs,
+    )
 }
 
 @PreviewThemes
 @Composable
 fun PreviewUnsupportedOxygenOsDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.UnsupportedOxygenOs)
+    UnsupportedDeviceOsSpecDialog(
+        show = true,
+        hide = {},
+        spec = DeviceOsSpec.UnsupportedOxygenOs,
+    )
 }
 
 @PreviewThemes
 @Composable
 fun PreviewUnsupportedOsDialog() = PreviewAppTheme {
-    UnsupportedDeviceOsSpecDialog(true, {}, DeviceOsSpec.UnsupportedOs)
+    UnsupportedDeviceOsSpecDialog(
+        show = true,
+        hide = {},
+        spec = DeviceOsSpec.UnsupportedOs,
+    )
 }

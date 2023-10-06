@@ -38,13 +38,17 @@ fun UpdateScreen(
     setSubtitleResId: (Int) -> Unit,
     enqueueDownload: (UpdateData) -> Unit,
     pauseDownload: () -> Unit,
-    cancelDownload: (String?) -> Unit,
-    deleteDownload: (String?) -> Boolean,
+    cancelDownload: (filename: String?) -> Unit,
+    deleteDownload: (filename: String?) -> Boolean,
     logDownloadError: () -> Unit,
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
     if (data == null) {
-        ErrorState(navType, R.string.update_information_error_title, refresh = refresh)
+        ErrorState(
+            navType = navType,
+            titleResId = R.string.update_information_error_title,
+            refresh = refresh,
+        )
         return@PullRefresh // skip the rest
     }
 
@@ -62,7 +66,12 @@ fun UpdateScreen(
 
         Screen.Update.badge = null
 
-        UpToDate(navType, windowWidthSize, refreshing, updateData)
+        UpToDate(
+            navType = navType,
+            windowWidthSize = windowWidthSize,
+            refreshing = refreshing,
+            updateData = updateData,
+        )
     } else {
         (if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
         else R.string.update_notification_channel_name).let {
@@ -79,26 +88,37 @@ fun UpdateScreen(
             onPauseOrDispose {}
         }
 
-        UpdateAvailable(navType, windowWidthSize, refreshing, updateData, downloadStatus, failureType, workProgress, forceDownloadErrorDialog, {
-            when (it) {
-                DownloadAction.Enqueue -> enqueueDownload(updateData)
+        UpdateAvailable(
+            navType = navType,
+            windowWidthSize = windowWidthSize,
+            refreshing = refreshing,
+            updateData = updateData,
+            downloadStatus = downloadStatus,
+            failureType = failureType,
+            workProgress = workProgress,
+            forceDownloadErrorDialog = forceDownloadErrorDialog,
+            downloadAction = {
+                when (it) {
+                    DownloadAction.Enqueue -> enqueueDownload(updateData)
 
-                DownloadAction.Pause -> {
-                    pauseDownload()
-                    downloadStatus = DownloadStatus.DownloadPaused
-                }
+                    DownloadAction.Pause -> {
+                        pauseDownload()
+                        downloadStatus = DownloadStatus.DownloadPaused
+                    }
 
-                DownloadAction.Cancel -> {
-                    cancelDownload(filename)
-                    downloadStatus = DownloadStatus.NotDownloading
-                }
+                    DownloadAction.Cancel -> {
+                        cancelDownload(filename)
+                        downloadStatus = DownloadStatus.NotDownloading
+                    }
 
-                DownloadAction.Delete -> {
-                    // Change status only if the file was successfully deleted
-                    if (deleteDownload(filename)) downloadStatus = DownloadStatus.NotDownloading
+                    DownloadAction.Delete -> {
+                        // Change status only if the file was successfully deleted
+                        if (deleteDownload(filename)) downloadStatus = DownloadStatus.NotDownloading
+                    }
                 }
-            }
-        }, logDownloadError)
+            },
+            logDownloadError = logDownloadError,
+        )
     }
 }
 

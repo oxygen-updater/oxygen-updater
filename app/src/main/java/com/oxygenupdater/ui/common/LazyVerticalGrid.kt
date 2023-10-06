@@ -3,7 +3,6 @@ package com.oxygenupdater.ui.common
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -25,23 +24,23 @@ fun LazyVerticalGrid(
     columnCount: Int,
     items: Array<GridItem>,
 ) = LazyVerticalGrid(
-    GridCells.Fixed(columnCount),
+    columns = GridCells.Fixed(columnCount),
+    userScrollEnabled = false,
     // 32dp total vertical padding + 24dp icon
-    Modifier.height((56 * (items.size / columnCount)).dp),
-    userScrollEnabled = false
+    modifier = Modifier.height((56 * (items.size / columnCount)).dp)
 ) {
     itemsIndexed(items) { index, it ->
         IconText(
-            Modifier
+            icon = it.icon,
+            text = stringResource(it.textResId),
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier
                 .clickable(onClick = it.onClick)
                 .borderExceptTop(
-                    MaterialTheme.colorScheme.backgroundVariant,
+                    color = MaterialTheme.colorScheme.backgroundVariant,
                     ltr = LocalLayoutDirection.current == LayoutDirection.Ltr,
                     drawEnd = (index + 1) % columnCount != 0,
-                )
-                .padding(16.dp),
-            icon = it.icon, text = stringResource(it.textResId),
-            style = MaterialTheme.typography.titleSmall
+                ) then modifierDefaultPadding // padding after everything else
         )
     }
 }

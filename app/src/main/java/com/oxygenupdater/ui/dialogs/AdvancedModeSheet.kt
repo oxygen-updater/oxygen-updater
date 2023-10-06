@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -23,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun ColumnScope.AdvancedModeSheet(onClick: (Boolean) -> Unit) {
+fun ColumnScope.AdvancedModeSheet(onClick: (result: Boolean) -> Unit) {
     SheetHeader(R.string.settings_advanced_mode)
 
     Column(
@@ -37,49 +37,51 @@ fun ColumnScope.AdvancedModeSheet(onClick: (Boolean) -> Unit) {
     ) {
         val bodyMedium = MaterialTheme.typography.bodyMedium
         Text(
-            stringResource(R.string.settings_advanced_mode_explanation),
-            style = bodyMedium
+            text = stringResource(R.string.settings_advanced_mode_explanation),
+            style = bodyMedium,
         )
 
         Text(
-            AnnotatedString(
+            text = AnnotatedString(
                 stringResource(R.string.settings_advanced_mode_uses),
                 bodyMedium.toSpanStyle(),
                 bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
             ),
-            style = bodyMedium
+            style = bodyMedium,
         )
     }
 
     val colorScheme = MaterialTheme.colorScheme
     Text(
-        stringResource(R.string.settings_advanced_mode_caption),
-        Modifier.padding(horizontal = 16.dp),
-        colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodySmall
+        text = stringResource(R.string.settings_advanced_mode_caption),
+        color = colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodySmall,
+        modifier = Modifier.padding(horizontal = 16.dp)
     )
 
     Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifierMaxWidth.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp)
     ) {
-        TextButton({
-            onClick(false)
-        }, Modifier.padding(end = 8.dp), colors = textButtonColors(contentColor = colorScheme.error)) {
+        TextButton(
+            onClick = { onClick(false) },
+            colors = textButtonColors(contentColor = colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp),
+        ) {
             Text(stringResource(android.R.string.cancel))
         }
 
-        OutlinedIconButton({
-            onClick(true)
-        }, Icons.Rounded.CheckCircleOutline, R.string.enable)
+        OutlinedIconButton(
+            onClick = { onClick(true) },
+            icon = Icons.Rounded.CheckCircleOutline,
+            textResId = R.string.enable,
+        )
     }
 }
 
 @PreviewThemes
 @Composable
 fun PreviewAdvancedModeSheet() = PreviewModalBottomSheet {
-    AdvancedModeSheet {}
+    AdvancedModeSheet(onClick = {})
 }

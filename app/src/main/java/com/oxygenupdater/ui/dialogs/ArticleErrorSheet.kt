@@ -3,7 +3,6 @@ package com.oxygenupdater.ui.dialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.modifierMaxWidth
 
 @Composable
 fun ColumnScope.ArticleErrorSheet(
@@ -31,41 +31,45 @@ fun ColumnScope.ArticleErrorSheet(
 ) {
     val colorScheme = MaterialTheme.colorScheme
     Text(
-        title,
-        Modifier.padding(start = 16.dp, end = 8.dp),
+        text = title,
         color = colorScheme.primary,
         overflow = TextOverflow.Ellipsis, maxLines = 1,
-        style = MaterialTheme.typography.titleMedium
+        style = MaterialTheme.typography.titleMedium,
+        modifier = Modifier.padding(start = 16.dp, end = 8.dp)
     )
 
     Text(
-        stringResource(R.string.news_load_network_error),
-        Modifier
+        text = stringResource(R.string.news_load_network_error),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
-            .verticalScroll(rememberScrollState()),
-        style = MaterialTheme.typography.bodyMedium
+            .verticalScroll(rememberScrollState())
     )
 
     Row(
-        Modifier
-            .navigationBarsPadding()
-            .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .navigationBarsPadding()
+            .then(modifierMaxWidth)
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         TextButton(
-            hide,
-            Modifier.padding(end = 8.dp),
-            colors = textButtonColors(contentColor = colorScheme.error)
+            onClick = hide,
+            colors = textButtonColors(contentColor = colorScheme.error),
+            modifier = Modifier.padding(end = 8.dp)
         ) {
             Text(stringResource(R.string.download_error_close))
         }
 
-        OutlinedIconButton({
-            confirm()
-            hide()
-        }, Icons.Rounded.Autorenew, R.string.download_error_retry)
+        OutlinedIconButton(
+            onClick = {
+                confirm()
+                hide()
+            },
+            icon = Icons.Rounded.Autorenew,
+            textResId = R.string.download_error_retry,
+        )
     }
 }
