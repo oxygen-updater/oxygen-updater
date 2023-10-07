@@ -1,6 +1,8 @@
 package com.oxygenupdater.ui.main
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -73,7 +75,7 @@ fun MainNavigationBar(
                         }
                     }) { Icon(screen.icon, label) }
                 },
-                label = { Text(label) },
+                label = { NavigationLabel(label = label) },
                 alwaysShowLabel = false,
             )
         }
@@ -122,11 +124,20 @@ fun MainNavigationRail(
                         }
                     }) { Icon(screen.icon, label) }
                 },
-                label = { Text(label) },
+                label = { NavigationLabel(label = label) },
             )
         }
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+@Suppress("NOTHING_TO_INLINE")
+@Composable
+private inline fun NavigationLabel(label: String) = Text(
+    text = label,
+    maxLines = 1,
+    modifier = Modifier.basicMarquee()
+)
 
 val MainScreens = arrayOf(
     Screen.Update,

@@ -27,6 +27,10 @@ fun IconText(
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
     icon: ImageVector, text: String,
+
+    /** Useful if [textModifier] has [androidx.compose.foundation.basicMarquee] applied */
+    maxLines: Int = Int.MAX_VALUE,
+
     iconTint: Color = MaterialTheme.colorScheme.primary,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     content: @Composable (RowScope.() -> Unit)? = null,
@@ -35,6 +39,7 @@ fun IconText(
 
     Text(
         text = text,
+        maxLines = maxLines,
         style = style,
         // Apply padding first
         modifier = modifierDefaultPaddingStart then textModifier

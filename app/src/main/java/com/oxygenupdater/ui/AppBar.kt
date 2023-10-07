@@ -8,7 +8,9 @@ import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.animation.core.animateTo
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -69,7 +71,7 @@ import com.oxygenupdater.ui.theme.backgroundVariant
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
@@ -104,12 +106,13 @@ fun TopAppBar(
                 Text(
                     stringResource(R.string.app_name),
                     overflow = TextOverflow.Ellipsis, maxLines = 1,
-                    style = typography.titleLarge
+                    style = typography.titleLarge,
                 )
                 Text(
                     if (subtitleResId == 0) "v${BuildConfig.VERSION_NAME}" else stringResource(subtitleResId),
-                    overflow = TextOverflow.Ellipsis, maxLines = 1,
-                    style = typography.bodyMedium
+                    maxLines = 1,
+                    style = typography.bodyMedium,
+                    modifier = Modifier.basicMarquee()
                 )
             }
         },

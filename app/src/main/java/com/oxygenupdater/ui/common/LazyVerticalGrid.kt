@@ -1,6 +1,8 @@
 package com.oxygenupdater.ui.common
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.ui.theme.backgroundVariant
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
 fun LazyVerticalGrid(
@@ -34,6 +37,8 @@ fun LazyVerticalGrid(
             icon = it.icon,
             text = stringResource(it.textResId),
             style = MaterialTheme.typography.titleSmall,
+            maxLines = 1, // force all grid items to be of the same 1-line height
+            textModifier = Modifier.basicMarquee(),
             modifier = Modifier
                 .clickable(onClick = it.onClick)
                 .borderExceptTop(

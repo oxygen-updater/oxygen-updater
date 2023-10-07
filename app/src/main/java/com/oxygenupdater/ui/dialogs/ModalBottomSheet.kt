@@ -1,6 +1,8 @@
 package com.oxygenupdater.ui.dialogs
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBars
@@ -17,7 +19,6 @@ import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.modifierDefaultPadding
@@ -43,14 +44,17 @@ fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.(() -> U
     ) { content(hide) }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
 fun SheetHeader(@StringRes titleResId: Int) = Text(
     text = stringResource(titleResId),
     color = MaterialTheme.colorScheme.primary,
-    overflow = TextOverflow.Ellipsis, maxLines = 1,
+    maxLines = 1,
     style = MaterialTheme.typography.titleMedium,
-    modifier = Modifier.padding(start = 16.dp, end = 4.dp, bottom = 16.dp)
+    modifier = Modifier
+        .basicMarquee()
+        .padding(start = 16.dp, end = 4.dp, bottom = 16.dp)
 )
 
 @Composable
