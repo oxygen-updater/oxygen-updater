@@ -97,6 +97,9 @@ class MainViewModel(
     private val appUpdateStatusFlow = MutableStateFlow<InstallState?>(null)
     val appUpdateStatus = appUpdateStatusFlow.asStateFlow()
 
+    var deviceOsSpec: DeviceOsSpec? = null
+    var deviceMismatch by mutableStateOf<Triple<Boolean, String, String>?>(null)
+
     /** Ensure init is placed after all `*Flow` declarations */
     init {
         fetchAllDevices()
@@ -112,9 +115,6 @@ class MainViewModel(
     private val flexibleAppUpdateListener: (InstallState) -> Unit = {
         appUpdateStatusFlow.tryEmit(it)
     }
-
-    var deviceOsSpec: DeviceOsSpec? = null
-    var deviceMismatch by mutableStateOf<Triple<Boolean, String, String>?>(null)
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
