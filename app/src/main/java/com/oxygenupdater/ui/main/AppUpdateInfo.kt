@@ -2,13 +2,13 @@ package com.oxygenupdater.ui.main
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.IntentSender
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.InstallStatus
@@ -62,16 +62,18 @@ fun AppUpdateInfo(
             }
         }
 
-        try {
-            val availability = info.updateAvailability()
-            if (availability == UpdateAvailability.UPDATE_AVAILABLE) {
+        val availability = info.updateAvailability()
+        if (availability == UpdateAvailability.UPDATE_AVAILABLE) {
+            // Must be called inside an effect to avoid IllegalStateException: Launcher has not been initialized
+            LaunchedEffect(launcher, info, requestUpdate) {
                 requestUpdate(launcher, info)
-            } else if (availability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+            }
+        } else if (availability == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+            // Must be called inside an effect to avoid IllegalStateException: Launcher has not been initialized
+            LaunchedEffect(launcher, info, requestImmediateUpdate) {
                 // If an IMMEDIATE update is in the stalled state, we should resume it
                 requestImmediateUpdate(launcher, info)
             }
-        } catch (e: IntentSender.SendIntentException) {
-            // no-op
         }
     }
 }
