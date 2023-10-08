@@ -2,7 +2,9 @@ package com.oxygenupdater.icons
 
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 
 val CustomIcons.Warning: ImageVector
     get() {
@@ -47,3 +49,7 @@ val CustomIcons.Warning: ImageVector
     }
 
 private var _warning: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview() = PreviewIcon(CustomIcons.Warning)

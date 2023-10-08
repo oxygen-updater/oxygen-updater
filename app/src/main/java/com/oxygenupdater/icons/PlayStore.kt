@@ -2,12 +2,14 @@ package com.oxygenupdater.icons
 
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.material.icons.materialPath
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 
 val CustomIcons.PlayStore: ImageVector
     get() {
-        if (_playstore != null) return _playstore!!
-        _playstore = materialIcon("PlayStore") {
+        if (_playStore != null) return _playStore!!
+        _playStore = materialIcon("PlayStore") {
             materialPath {
                 moveToRelative(12.954f, 11.616f)
                 lineToRelative(2.957f, -2.957f)
@@ -39,7 +41,11 @@ val CustomIcons.PlayStore: ImageVector
                 close()
             }
         }
-        return _playstore!!
+        return _playStore!!
     }
 
-private var _playstore: ImageVector? = null
+private var _playStore: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview() = PreviewIcon(CustomIcons.PlayStore)

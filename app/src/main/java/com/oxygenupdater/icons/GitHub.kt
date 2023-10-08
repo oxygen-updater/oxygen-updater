@@ -1,8 +1,10 @@
 package com.oxygenupdater.icons
 
 import androidx.compose.material.icons.materialPath
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 val CustomIcons.GitHub: ImageVector
@@ -43,3 +45,7 @@ val CustomIcons.GitHub: ImageVector
     }
 
 private var _github: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview() = PreviewIcon(CustomIcons.GitHub)

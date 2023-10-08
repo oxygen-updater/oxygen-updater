@@ -1,7 +1,9 @@
 package com.oxygenupdater.icons
 
 import androidx.compose.material.icons.materialPath
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 val CustomIcons.Discord: ImageVector
@@ -63,3 +65,7 @@ val CustomIcons.Discord: ImageVector
     }
 
 private var _discord: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview() = PreviewIcon(CustomIcons.Discord)
