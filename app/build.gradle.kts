@@ -273,6 +273,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.coil.compose)
+
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.placeholder.material3)
@@ -298,8 +300,6 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
     implementation(libs.moshi)
     ksp(libs.moshi.kotlin.codegen)
-
-    implementation(libs.coil.compose)
 
     implementation(libs.libsu.core)
     implementation(libs.libsu.nio)

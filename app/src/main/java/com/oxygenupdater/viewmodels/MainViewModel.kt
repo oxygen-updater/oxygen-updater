@@ -65,7 +65,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.File
-import java.time.LocalDate
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -264,20 +263,7 @@ class MainViewModel(
      */
     private fun maybeCheckForAppUpdate() = appUpdateManager.appUpdateInfo.addOnSuccessListener {
         when (it.updateAvailability()) {
-            DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> appUpdateInfoFlow.tryEmit(it)
-            UPDATE_AVAILABLE -> {
-                val lastCheckedDate = PrefManager.getString(
-                    PrefManager.KeyLastAppUpdateCheckDate,
-                    LocalDate.MIN.toString()
-                )
-
-                // Check for app updates at most once every 2 days
-                val today = LocalDate.now()
-                if (LocalDate.parse(lastCheckedDate).plusDays(DaysForAppUpdateCheck) <= today) {
-                    PrefManager.putString(PrefManager.KeyLastAppUpdateCheckDate, today.toString())
-                    appUpdateInfoFlow.tryEmit(it)
-                }
-            }
+            DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS, UPDATE_AVAILABLE -> appUpdateInfoFlow.tryEmit(it)
             // Reset ignore count
             else -> PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
         }
@@ -364,7 +350,6 @@ class MainViewModel(
     companion object {
         private const val TAG = "MainViewModel"
 
-        private const val DaysForAppUpdateCheck = 2L
         private const val MaxFlexibleUpdateStaleDays = 14
         private const val MaxFlexibleUpdateIgnoreCount = 7
     }

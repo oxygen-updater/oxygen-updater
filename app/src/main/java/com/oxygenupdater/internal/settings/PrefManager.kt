@@ -192,7 +192,6 @@ object PrefManager {
 
     const val KeyIsEuBuild = "isEuBuild"
 
-    const val KeyLastAppUpdateCheckDate = "lastAppUpdateCheckDate"
     const val KeyFlexibleAppUpdateIgnoreCount = "flexibleAppUpdateIgnoreCount"
 
     // Notifications properties

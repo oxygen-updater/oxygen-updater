@@ -34,6 +34,9 @@ accompanist = "0.33.2-alpha" # keep in sync with Compose version
 # https://developer.android.com/jetpack/androidx/releases/activity
 activity-compose = "1.8.0"
 
+# https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
+coil-compose = "2.4.0"
+
 # https://developer.android.com/jetpack/androidx/releases/annotation
 annotation = "1.7.0"
 
@@ -42,9 +45,6 @@ billing = "5.2.1"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
 browser = "1.6.0"
-
-# https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
-coil-compose = "2.4.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
 core = "1.12.0"
@@ -138,10 +138,10 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+
 billing = { module = "com.android.billingclient:billing", version.ref = "billing" }
 billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
-
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
