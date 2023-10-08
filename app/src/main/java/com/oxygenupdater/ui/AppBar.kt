@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.lerp
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
@@ -289,13 +290,13 @@ private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title
             overflow = TextOverflow.Ellipsis,
             maxLines = remember {
                 derivedStateOf(structuralEqualityPolicy()) {
-                    lerp(4, 1, scrollBehavior.state.collapsedFraction)
+                    lerp(4, 1, scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f))
                 }
             }.value,
             fontSize = remember {
                 derivedStateOf(structuralEqualityPolicy()) {
                     val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
-                    lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction).sp
+                    lerp(maxTitleSize, minTitleSize, scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)).sp
                 }
             }.value,
             style = MaterialTheme.typography.headlineSmall,
@@ -324,14 +325,6 @@ private val CollapsingAppBarTitleSize = 22f to 24f
 private val CollapsingAppBarSubtitleSize = 14f to 16f
 
 private val accelerateInterpolator = AccelerateInterpolator(3f)
-
-/**
- * Monotonic but imprecise linear interpolation between `startValue` and `endValue` by `fraction`
- *
- * @see <a href="https://en.wikipedia.org/wiki/Linear_interpolation#Programming_language_support">Linear interpolation — Wikipedia</a>
- */
-private fun lerp(startValue: Float, endValue: Float, fraction: Float) = startValue + fraction * (endValue - startValue)
-private fun lerp(startValue: Int, endValue: Int, fraction: Float) = startValue + (fraction * (endValue - startValue)).roundToInt()
 
 @OptIn(ExperimentalMaterial3Api::class)
 private suspend fun settleAppBar(

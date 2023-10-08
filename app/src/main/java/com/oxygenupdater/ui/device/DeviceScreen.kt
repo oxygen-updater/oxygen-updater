@@ -236,11 +236,11 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
         val defaultImage = painterResource(R.drawable.oneplus7pro)
         AsyncImage(
             model = deviceName.let {
-                val size = LocalDensity.current.run { size.roundToPx() }
-                remember(it, size) {
+                val sizePx = LocalDensity.current.run { size.roundToPx() }
+                remember(it, sizePx) {
                     ImageRequest.Builder(context)
                         .data(Device.constructImageUrl(it))
-                        .size(size)
+                        .size(sizePx)
                         .build()
                 }
             },
