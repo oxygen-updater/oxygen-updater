@@ -390,9 +390,18 @@ class DownloadWorker(
 
         // Move operation: rename `tempFile` to `zipFile`
         if (!tempFile.renameTo(zipFile)) {
-            // If the file couldn't be renamed, copy it.
-            // An [IOException] will be thrown if this fails as well
-            tempFile.copyTo(zipFile)
+            /** Rename failed; try copying. An [IOException] will be thrown if this fails as well. */
+            try {
+                tempFile.copyTo(zipFile)
+            } catch (e: NoSuchFileException) {
+                /**
+                 * [NoSuchFileException] => tempFile doesn't exist. If `zipFile` exists, then
+                 * the previous [File.renameTo] command succeeded despite returning false.
+                 *
+                 * Otherwise wrap in [IOException] and rethrow so that worker can fail.
+                 */
+                if (!zipFile.exists()) throw IOException(e)
+            }
         }
 
         // Delete `tempFile`, if it still exists after the rename operation
