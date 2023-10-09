@@ -55,9 +55,8 @@ object Logger {
     fun logBillingError(tag: String, message: String) {
         crashlytics.setCustomKey(CrashlyticsTagExceptionSeverity, LogLevel.ERROR.name)
 
-        val exception = GooglePlayBillingException(message)
         Log.e(tag, message)
-        logException(exception)
+        logException(GooglePlayBillingException(message))
     }
 
     /** Log a recoverable exception at error level */

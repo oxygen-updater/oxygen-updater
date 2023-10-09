@@ -11,9 +11,11 @@ import com.oxygenupdater.internal.BooleanJsonAdapter
 import com.oxygenupdater.internal.CsvListJsonAdapter
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.utils.Logger.logWarning
 import com.squareup.moshi.Moshi
+import kotlinx.coroutines.CancellationException
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -127,6 +129,9 @@ suspend inline fun <reified R> performServerRequest(block: () -> Response<R>): R
                 logTag,
                 "Network error while performing request", e
             )
+
+            // Don't log cancellations to crashlytics, we don't care
+            e is CancellationException -> logInfo(logTag, e.message ?: "CancellationException")
 
             else -> logError(logTag, "Error performing request", e)
         }
