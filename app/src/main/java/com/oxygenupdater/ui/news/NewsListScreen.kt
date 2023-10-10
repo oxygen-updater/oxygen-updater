@@ -24,7 +24,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -122,6 +124,7 @@ import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsListScreen(
     navType: NavType,
@@ -257,15 +260,19 @@ fun NewsListScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-private fun NewsListItem(
+private fun LazyItemScope.NewsListItem(
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-) = Column(Modifier.clickable(!refreshing, onClick = onClick)) {
+) = Column(
+    Modifier
+        .animateItemPlacement()
+        .clickable(!refreshing, onClick = onClick)
+) {
     Box {
         if (!refreshing && !item.readState) Badge(Modifier.offset(4.dp, 16.dp))
 
@@ -300,14 +307,15 @@ private fun NewsListItem(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun NewsGridItem(
+private fun LazyGridItemScope.NewsGridItem(
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-) = Column {
+) = Column(Modifier.animateItemPlacement()) {
     Box(
         Modifier
             .requiredSize(size)
