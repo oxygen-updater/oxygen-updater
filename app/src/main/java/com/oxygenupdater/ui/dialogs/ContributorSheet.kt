@@ -20,7 +20,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -49,7 +48,7 @@ fun ColumnScope.ContributorSheet(
             .verticalScroll(rememberScrollState())
     )
 
-    if (!LocalInspectionMode.current && (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted)) {
+    if (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted) {
         return // don't show enrollment UI
     }
 

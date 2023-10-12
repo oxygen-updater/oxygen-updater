@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -180,7 +179,7 @@ private fun ExpandableChangelog(
     showAdvancedModeTip: Boolean,
 ) {
     val expandEnabled = updateData.isUpdateInformationAvailable
-    var expanded by rememberSaveableState("changelogExpanded", LocalInspectionMode.current)
+    var expanded by rememberSaveableState("changelogExpanded", false)
     IconText(
         icon = if (!expandEnabled) Icons.Rounded.ErrorOutline else if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
         text = stringResource(

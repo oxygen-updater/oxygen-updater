@@ -42,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -317,11 +316,11 @@ private fun DeviceHardwareInfo(navType: NavType) {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
-    val bytes = if (LocalInspectionMode.current) 1L else remember { getRamBytes(context) }
-    if (bytes != 0L) Item(
+    val bytes = remember(context) { Formatter.formatShortFileSize(context, getRamBytes(context)) }
+    if (bytes.isNotEmpty()) Item(
         icon = Icons.Rounded.Memory,
         titleResId = R.string.device_information_amount_of_memory,
-        text = Formatter.formatShortFileSize(context, bytes),
+        text = bytes,
     )
 
     Item(

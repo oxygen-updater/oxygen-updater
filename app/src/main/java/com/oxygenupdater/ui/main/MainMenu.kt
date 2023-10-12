@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
@@ -14,7 +15,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -46,7 +46,7 @@ fun MainMenu(
     // Box layout is required to make DropdownMenu position correctly (directly under icon)
     Box {
         // Hide other menu items behind overflow icon
-        var showMenu by rememberSaveableState("showMenu", LocalInspectionMode.current)
+        var showMenu by rememberSaveableState("showMenu", false)
         IconButton({ showMenu = true }, Modifier.requiredWidth(40.dp)) {
             Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
         }
@@ -103,32 +103,34 @@ private fun ContributorMenuItem(onDismiss: () -> Unit) {
 @PreviewThemes
 @Composable
 fun PreviewMainMenu() = PreviewAppTheme {
-    val message = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
-    MainMenu(
-        serverMessages = listOf(
-            ServerMessage(
-                1L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessage.ServerMessagePriority.LOW,
+    Row {
+        val message = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
+        MainMenu(
+            serverMessages = listOf(
+                ServerMessage(
+                    1L,
+                    text = message,
+                    deviceId = null,
+                    updateMethodId = null,
+                    priority = ServerMessage.ServerMessagePriority.LOW,
+                ),
+                ServerMessage(
+                    2L,
+                    text = message,
+                    deviceId = null,
+                    updateMethodId = null,
+                    priority = ServerMessage.ServerMessagePriority.MEDIUM,
+                ),
+                ServerMessage(
+                    3L,
+                    text = message,
+                    deviceId = null,
+                    updateMethodId = null,
+                    priority = ServerMessage.ServerMessagePriority.HIGH,
+                ),
             ),
-            ServerMessage(
-                2L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessage.ServerMessagePriority.MEDIUM,
-            ),
-            ServerMessage(
-                3L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessage.ServerMessagePriority.HIGH,
-            ),
-        ),
-        showMarkAllRead = true,
-        markAllRead = {},
-    )
+            showMarkAllRead = true,
+            markAllRead = {},
+        )
+    }
 }

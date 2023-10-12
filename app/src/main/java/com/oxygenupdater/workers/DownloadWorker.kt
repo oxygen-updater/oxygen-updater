@@ -69,17 +69,9 @@ class DownloadWorker(
     private lateinit var zipFile: File
     private lateinit var notification: Notification
 
-    private val downloadApi: DownloadApi
-    private val workManager: WorkManager
-    private val notificationManager: NotificationManagerCompat
-
-    init {
-        val koin = getKoin()
-
-        downloadApi = koin.inject<DownloadApi>().value
-        workManager = koin.inject<WorkManager>().value
-        notificationManager = koin.inject<NotificationManagerCompat>().value
-    }
+    private val downloadApi by getKoin().inject<DownloadApi>()
+    private val workManager by getKoin().inject<WorkManager>()
+    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important

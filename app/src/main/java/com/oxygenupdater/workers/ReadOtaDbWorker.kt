@@ -51,17 +51,9 @@ class ReadOtaDbWorker(
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
-    private val database: LocalAppDb
-    private val analytics: FirebaseAnalytics
-    private val serverRepository: ServerRepository
-
-    init {
-        val koin = getKoin()
-
-        database = koin.inject<LocalAppDb>().value
-        analytics = koin.inject<FirebaseAnalytics>().value
-        serverRepository = koin.inject<ServerRepository>().value
-    }
+    private val database by getKoin().inject<LocalAppDb>()
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val serverRepository by getKoin().inject<ServerRepository>()
 
     /** Used to ensure only unique URL rows are considered in [toMap] */
     private lateinit var urls: ArraySet<String>

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -30,7 +29,7 @@ import com.oxygenupdater.ui.theme.warn
 @Composable
 fun ServerStatusBanner(serverStatus: ServerStatus) {
     val latestAppVersion = serverStatus.latestAppVersion
-    if (latestAppVersion != null && (LocalInspectionMode.current || serverStatus.shouldShowAppUpdateNotice())) {
+    if (latestAppVersion != null && serverStatus.shouldShowAppUpdateNotice()) {
         val context = LocalContext.current
         IconText(
             icon = CustomIcons.Info,

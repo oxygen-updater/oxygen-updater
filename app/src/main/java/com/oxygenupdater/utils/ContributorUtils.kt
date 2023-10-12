@@ -38,15 +38,8 @@ object ContributorUtils {
 
     private const val TAG = "ContributorUtils"
 
-    private val analytics: FirebaseAnalytics
-    private val workManager: WorkManager
-
-    init {
-        val koin = getKoin()
-
-        analytics = koin.inject<FirebaseAnalytics>().value
-        workManager = koin.inject<WorkManager>().value
-    }
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val workManager by getKoin().inject<WorkManager>()
 
     val isAtLeastQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q // same as RootFileService
     val isAtLeastQAndPossiblyRooted

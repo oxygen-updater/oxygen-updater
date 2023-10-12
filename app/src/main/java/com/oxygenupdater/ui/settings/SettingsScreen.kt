@@ -196,7 +196,7 @@ fun SettingsScreen(
 @Composable
 private fun BecomeContributor() {
     var showSheet by rememberSaveableState("showContributorSheet", false)
-    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) SettingsItem(
+    if (ContributorUtils.isAtLeastQAndPossiblyRooted) SettingsItem(
         onClick = { showSheet = true },
         icon = Icons.Outlined.GroupAdd,
         titleResId = R.string.contribute,

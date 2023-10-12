@@ -28,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -273,7 +272,7 @@ private fun StartApp(startApp: (contribute: Boolean) -> Unit) = Row(
     modifier = Modifier.padding(end = 16.dp)
 ) {
     var contribute by rememberSaveableState("contribute", true)
-    if (LocalInspectionMode.current || ContributorUtils.isAtLeastQAndPossiblyRooted) {
+    if (ContributorUtils.isAtLeastQAndPossiblyRooted) {
         CheckboxText(
             checked = contribute,
             onCheckedChange = { contribute = it },
@@ -281,7 +280,7 @@ private fun StartApp(startApp: (contribute: Boolean) -> Unit) = Row(
             textModifier = Modifier.padding(end = 16.dp),
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 4.dp, end = 16.dp)
+                .padding(start = 4.dp)
         )
 
         var showSheet by rememberSaveableState("showContributorSheet", false)
