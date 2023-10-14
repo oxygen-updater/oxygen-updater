@@ -77,7 +77,7 @@ class MainViewModel(
     private val appUpdateManager: AppUpdateManager,
 ) : ViewModel() {
 
-    private val deviceFlow = MutableStateFlow<List<Device>>(listOf())
+    private val deviceFlow = MutableStateFlow<List<Device>?>(null)
     val deviceState = deviceFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -99,11 +99,12 @@ class MainViewModel(
     var deviceOsSpec: DeviceOsSpec? = null
     var deviceMismatch by mutableStateOf<Triple<Boolean, String, String>?>(null)
 
+    var shouldShowOnboarding by mutableStateOf(!PrefManager.getBoolean(PrefManager.KeySetupDone, false))
+
     /** Ensure init is placed after all `*Flow` declarations */
     init {
         fetchAllDevices()
         fetchServerStatus()
-        fetchServerMessages()
         maybeCheckForAppUpdate()
     }
 
@@ -166,7 +167,7 @@ class MainViewModel(
         deviceFlow.emit(response)
     }
 
-    private fun fetchServerMessages() = viewModelScope.launch(Dispatchers.IO) {
+    fun fetchServerMessages() = viewModelScope.launch(Dispatchers.IO) {
         serverMessagesFlow.emit(serverRepository.fetchServerMessages()?.filterNot {
             it.text.isNullOrBlank() // filter out empty text just in case
         } ?: return@launch)
@@ -176,8 +177,12 @@ class MainViewModel(
         serverStatusFlow.emit(serverRepository.fetchServerStatus())
     }
 
-    fun resubscribeToNotificationTopicsIfNeeded(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
-        if (enabledDevices.isEmpty()) return@launch
+    /**
+     * TODO(main): don't call this if it's the first launch, i.e. user has just completed onboarding.
+     *  Onboarding already calls [com.oxygenupdater.ui.settings.SettingsViewModel.subscribeToNotificationTopics].
+     */
+    fun resubscribeToNotificationTopicsIfNeeded(enabledDevices: List<Device>?) = viewModelScope.launch(Dispatchers.IO) {
+        if (enabledDevices.isNullOrEmpty()) return@launch
 
         NotificationTopicSubscriber.resubscribeIfNeeded(
             enabledDevices,

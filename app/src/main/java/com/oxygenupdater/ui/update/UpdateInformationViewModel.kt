@@ -30,6 +30,12 @@ class UpdateInformationViewModel(private val serverRepository: ServerRepository)
         previousDeviceId = deviceId ?: PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
         previousMethodId = methodId ?: PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
 
+        /**
+         * Skip server request if required parameters are invalid. This can happen during onboarding, because that's
+         * a part of [com.oxygenupdater.activities.MainActivity] and [ViewModel]s are created globally (not scoped).
+         */
+        if (previousDeviceId == NotSetL || previousMethodId == NotSetL) return@launch
+
         refreshingFlow.value = true
         serverRepository.fetchUpdateData(previousDeviceId, previousMethodId)
         refreshingFlow.value = false

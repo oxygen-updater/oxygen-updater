@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -14,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
@@ -24,7 +26,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -34,6 +44,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.size.Size
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import com.google.android.gms.ads.AdView
@@ -45,7 +58,9 @@ import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startNewsItemActivity
-import com.oxygenupdater.extensions.startOnboardingActivity
+import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.Image
+import com.oxygenupdater.icons.LogoNotification
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager
@@ -53,6 +68,7 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.CollapsingAppBar
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.about.AboutScreen
@@ -85,6 +101,7 @@ import com.oxygenupdater.ui.main.SettingsRoute
 import com.oxygenupdater.ui.main.UpdateRoute
 import com.oxygenupdater.ui.news.NewsListScreen
 import com.oxygenupdater.ui.news.NewsListViewModel
+import com.oxygenupdater.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.settings.adFreeConfig
@@ -129,10 +146,12 @@ class MainActivity : BaseActivity() {
     init {
         val intent = intent
 
-        startPage = try {
-            intent?.getIntExtra(IntentStartPage, PageUpdate) ?: PageUpdate
-        } catch (ignored: IndexOutOfBoundsException) {
-            PageUpdate
+        // Action will be set if opened from a shortcut
+        startPage = when (intent?.action) {
+            ActionPageUpdate -> PageUpdate
+            ActionPageNews -> PageNews
+            ActionPageDevice -> PageDevice
+            else -> PageUpdate
         }
 
         // Force-show download error dialog if started from an intent with error info
@@ -162,16 +181,129 @@ class MainActivity : BaseActivity() {
     @Volatile
     private var currentRoute: String? = null
 
+    /**
+     * Passthrough from [MainViewModel] to avoid sending a request again, but only after server request for
+     * all devices completes ([MainViewModel] sends it on init, which would be `null` initially).
+     *
+     * This additional check is required only during onboarding to avoid unnecessary requests being sent.
+     * We don't want to send a server request for enabled devices simultaneously, because that can be derived
+     * from all devices anyway. Additionally, unnecessary changes in device lists will cause a repeated request
+     * for update methods to also be sent.
+     */
+    @Suppress("NOTHING_TO_INLINE")
+    @Composable
+    private inline fun PassthroughEnabledDevicesToSettingsViewModel(enabledDevices: List<Device>?) {
+        if (enabledDevices == null) return
+        LaunchedEffect(enabledDevices) {
+            settingsViewModel.fetchEnabledDevices(enabledDevices)
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    private fun OnboardingContent(windowSize: WindowSizeClass) = Column {
+        val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
+        val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
+        PassthroughEnabledDevicesToSettingsViewModel(enabledDevices)
+
+        val deviceName = settingsViewModel.deviceName ?: remember(enabledDevices) {
+            enabledDevices?.find {
+                it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+            }?.name
+        }
+
+        val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+        // Use normal app bar if height isn't enough (e.g. landscape phones)
+        if (windowSize.heightSizeClass == WindowHeightSizeClass.Compact) TopAppBar(
+            scrollBehavior = scrollBehavior,
+            navIconClicked = {},
+            subtitleResId = R.string.onboarding,
+            showIcon = false,
+        ) else CollapsingAppBar(
+            scrollBehavior = scrollBehavior,
+            image = { modifier ->
+                val context = LocalContext.current
+                AsyncImage(
+                    model = deviceName?.let {
+                        val density = LocalDensity.current
+                        remember(it, maxWidth) {
+                            ImageRequest.Builder(context)
+                                .data(Device.constructImageUrl(it))
+                                .size(density.run { Size(maxWidth.roundToPx(), 256.dp.roundToPx()) })
+                                .build()
+                        }
+                    },
+                    contentDescription = stringResource(R.string.device_information_image_description),
+                    placeholder = rememberVectorPainter(CustomIcons.Image),
+                    error = rememberVectorPainter(CustomIcons.LogoNotification),
+                    contentScale = ContentScale.Crop,
+                    colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
+                    modifier = modifier
+                )
+            },
+            title = stringResource(R.string.app_name),
+            subtitle = stringResource(R.string.onboarding),
+        )
+
+        val state by settingsViewModel.state.collectAsStateWithLifecycle()
+        OnboardingScreen(
+            windowWidthSize = windowSize.widthSizeClass,
+            scrollBehavior = scrollBehavior,
+            lists = state,
+            initialDeviceIndex = settingsViewModel.initialDeviceIndex,
+            deviceChanged = rememberTypedCallback(settingsViewModel::saveSelectedDevice),
+            initialMethodIndex = settingsViewModel.initialMethodIndex,
+            methodChanged = rememberTypedCallback(settingsViewModel::saveSelectedMethod),
+            startApp = rememberTypedCallback(enabledDevices) { contribute ->
+                if (checkPlayServices(this@MainActivity, false)) {
+                    // Subscribe to notifications for the newly selected device and update method
+                    settingsViewModel.subscribeToNotificationTopics(enabledDevices)
+                } else showToast(R.string.notification_no_notification_support)
+
+                if (PrefManager.checkIfSetupScreenIsFilledIn()) {
+                    PrefManager.putBoolean(PrefManager.KeySetupDone, true)
+                    (application as OxygenUpdater?)?.setupCrashReporting(
+                        PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
+                    )
+
+                    // If user enables OTA contribution, check if device is rooted and ask for root permission
+                    if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
+                        showToast(R.string.contribute_allow_storage)
+                        hasRootAccess {
+                            PrefManager.putBoolean(PrefManager.KeyContribute, true)
+                            viewModel.shouldShowOnboarding = false
+                        }
+                    } else {
+                        // Skip shell creation and thus don't show root permission prompt
+                        PrefManager.putBoolean(PrefManager.KeyContribute, false)
+                        viewModel.shouldShowOnboarding = false
+                    }
+                } else {
+                    val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
+                    val updateMethodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+                    logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
+                    showToast(R.string.settings_entered_incorrectly)
+                    viewModel.shouldShowOnboarding = true
+                }
+            },
+        )
+    }
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun Content(windowSize: WindowSizeClass) {
+        LaunchedEffect(Unit) { // run only on init
+            viewModel.fetchServerMessages()
+        }
+
         val showDeviceBadge = viewModel.deviceOsSpec.let {
             it != null && it != DeviceOsSpec.SupportedOxygenOs
         } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 
         val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
-        val enabledDevices = remember(allDevices) { allDevices.filter { it.enabled } }
+        val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
         LaunchedEffect(enabledDevices) {
             // Resubscribe to notification topics, if needed.
             // We're doing it here, instead of [SplashActivity], because it requires the app to be setup first
@@ -362,9 +494,9 @@ class MainActivity : BaseActivity() {
         setSubtitleResId: (Int) -> Unit,
     ) = composable(UpdateRoute) {
         if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
-            startOnboardingActivity(startPage)
-            return@composable finish()
-        }
+            viewModel.shouldShowOnboarding = true
+            return@composable
+        } else viewModel.shouldShowOnboarding = false
 
         LaunchedEffect(Unit) { // runs once every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()
@@ -445,13 +577,13 @@ class MainActivity : BaseActivity() {
     private fun NavGraphBuilder.deviceScreen(
         navType: NavType,
         windowWidthSize: WindowWidthSizeClass,
-        allDevices: List<Device>,
+        allDevices: List<Device>?,
     ) = composable(DeviceRoute) {
         DeviceScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
             deviceName = remember(allDevices) {
-                allDevices.find {
+                allDevices?.find {
                     it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
                 }?.name ?: defaultDeviceName()
             },
@@ -472,14 +604,11 @@ class MainActivity : BaseActivity() {
 
     private fun NavGraphBuilder.settingsScreen(
         navType: NavType,
-        cachedEnabledDevices: List<Device>,
+        cachedEnabledDevices: List<Device>?,
         updateMismatchStatus: () -> Unit,
         openAboutScreen: () -> Unit,
     ) = composable(SettingsRoute) {
-        LaunchedEffect(cachedEnabledDevices) {
-            // Passthrough from MainViewModel to avoid sending a request again
-            settingsViewModel.fetchEnabledDevices(cachedEnabledDevices)
-        }
+        PassthroughEnabledDevicesToSettingsViewModel(cachedEnabledDevices)
 
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
@@ -569,7 +698,10 @@ class MainActivity : BaseActivity() {
     }
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+        super.onCreate(savedInstanceState)
+
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
 
@@ -583,10 +715,18 @@ class MainActivity : BaseActivity() {
             AppTheme {
                 EdgeToEdge()
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
-
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
-                Surface { Content(windowSize) }
+                Surface {
+                    Crossfade(
+                        targetState = viewModel.shouldShowOnboarding,
+                        label = "OnboardingMainCrossfade",
+                    ) {
+                        if (it) OnboardingContent(windowSize) else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
+                            Content(windowSize)
+                        }
+                    }
+                }
             }
         }
 
@@ -628,6 +768,10 @@ class MainActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+
+        private const val ActionPageUpdate = "com.oxygenupdater.action.page_update"
+        private const val ActionPageNews = "com.oxygenupdater.action.page_news"
+        private const val ActionPageDevice = "com.oxygenupdater.action.page_device"
 
         const val PageUpdate = 0
         const val PageNews = 1

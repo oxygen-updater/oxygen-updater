@@ -11,18 +11,9 @@ import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.activities.MainActivity.Companion.PageSettings
 import com.oxygenupdater.activities.MainActivity.Companion.PageUpdate
 import com.oxygenupdater.activities.NewsItemActivity
-import com.oxygenupdater.activities.OnboardingActivity
 
 inline fun <reified T : Activity> Context.startActivity() = startActivity(
     Intent(this, T::class.java)
-)
-
-inline fun Activity.startOnboardingActivity(
-    @IntRange(PageUpdate.toLong(), PageSettings.toLong()) startPage: Int,
-) = startActivity(
-    Intent(this, OnboardingActivity::class.java).putExtra(
-        MainActivity.IntentStartPage, startPage
-    )
 )
 
 inline fun Activity.startMainActivity(

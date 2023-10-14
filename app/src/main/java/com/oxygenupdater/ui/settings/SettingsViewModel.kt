@@ -145,8 +145,8 @@ class SettingsViewModel(
         crashlytics.setUserId("Device: $device, Update Method: $method")
     }
 
-    fun subscribeToNotificationTopics(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
-        if (enabledDevices.isEmpty()) return@launch
+    fun subscribeToNotificationTopics(enabledDevices: List<Device>?) = viewModelScope.launch(Dispatchers.IO) {
+        if (enabledDevices.isNullOrEmpty()) return@launch
 
         NotificationTopicSubscriber.resubscribe(
             enabledDevices,

@@ -10,7 +10,7 @@
 		android:shortcutShortLabel="@string/update_information_header">
 		<intent
 			android:action="com.oxygenupdater.action.page_update"
-			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetClass="com.oxygenupdater.activities.MainActivity"
 			android:targetPackage="com.arjanvlek.oxygenupdater" />
 		<categories android:name="android.shortcut.conversation" />
 	</shortcut>
@@ -23,7 +23,7 @@
 		android:shortcutShortLabel="@string/news">
 		<intent
 			android:action="com.oxygenupdater.action.page_news"
-			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetClass="com.oxygenupdater.activities.MainActivity"
 			android:targetPackage="com.arjanvlek.oxygenupdater" />
 		<categories android:name="android.shortcut.conversation" />
 	</shortcut>
@@ -36,7 +36,7 @@
 		android:shortcutShortLabel="@string/device_information_header">
 		<intent
 			android:action="com.oxygenupdater.action.page_device"
-			android:targetClass="com.oxygenupdater.activities.SplashActivity"
+			android:targetClass="com.oxygenupdater.activities.MainActivity"
 			android:targetPackage="com.arjanvlek.oxygenupdater" />
 		<categories android:name="android.shortcut.conversation" />
 	</shortcut>
