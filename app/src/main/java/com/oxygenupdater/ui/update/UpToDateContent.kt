@@ -165,7 +165,10 @@ private inline fun AdvancedModeTip(show: Boolean) {
 
     IconText(
         icon = CustomIcons.Info,
-        text = stringResource(R.string.update_information_banner_advanced_mode_tip),
+        text = stringResource(
+            R.string.update_information_banner_advanced_mode_tip,
+            PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>",
+        ),
         modifier = modifierDefaultPadding
     )
     ItemDivider()
