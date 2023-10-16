@@ -36,6 +36,9 @@ object SystemVersionProperties {
     /** Required for workaround #3 */
     private const val OnePlus3 = "OnePlus3"
 
+    /** Required for workaround #6 */
+    private const val OnePlusPad = "OPD2203"
+
     /** Required for workaround #5 */
     private val OnePlus7Series = arrayOf("OnePlus7", "OnePlus7Pro")
 
@@ -141,18 +144,23 @@ object SystemVersionProperties {
                 if (value.contains(OxygenOsPrefix)) value.replace(OxygenOsPrefix, "") else value
             }
 
+            val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (oxygenDeviceName == OnePlusPad) {
+                    // Skip EUEX because that's already supported as OPD2203EEA
+                    if (pipeline != "EUEX") oxygenDeviceName += pipeline
+                } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
+                    // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
+                    // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
+                    // model number is used for both regions. Not sure if future builds would also be affected.
+                    if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                }
+            }
+
             val euBooleanStr = pickFirstValid(BuildEuLookupKeys) { _, value -> value }
             PrefManager.putBoolean(
-                PrefManager.KeyIsEuBuild, if (euBooleanStr == UNKNOWN) {
-                    val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName))) {
-                        // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
-                        // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
-                        // model number is used for both regions. Not sure if future builds would also be affected.
-                        if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
-                    }
-                    pipeline.startsWith("EU")
-                } else euBooleanStr.toBoolean()
+                PrefManager.KeyIsEuBuild,
+                if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
             )
 
             oxygenOSOTAVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
@@ -213,11 +221,16 @@ object SystemVersionProperties {
                 PrefManager.putBoolean(
                     PrefManager.KeyIsEuBuild, if (euBooleanStr == UNKNOWN) {
                         val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName))) {
-                            // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
-                            // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
-                            // model number is used for both regions. Not sure if future builds would also be affected.
-                            if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                            if (oxygenDeviceName == OnePlusPad) {
+                                // Skip EUEX because that's already supported as OPD2203EEA
+                                if (pipeline != "EUEX") oxygenDeviceName += pipeline
+                            } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
+                                // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
+                                // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
+                                // model number is used for both regions. Not sure if future builds would also be affected.
+                                if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                            }
                         }
                         pipeline.startsWith("EU")
                     } else euBooleanStr.toBoolean()
