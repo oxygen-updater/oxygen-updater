@@ -127,6 +127,8 @@ Detta kan vara användbart om du vill:"</string>
 	<string name="settings_advanced_mode_caption">"Avancerat läge kan behövas endast i ovanstående situationer. Du bör inte aktivera det om du inte vet vad du gör."</string>
 	<string name="settings_update_method">"Uppdateringsmetod"</string>
 	<string name="settings_upload_logs">Dela användningsdata och loggar</string>
+	<string name="settings_ad_privacy">GDPR samtycke för annonser</string>
+	<string name="settings_ad_privacy_subtitle">"För användare i EES/Storbritannien"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

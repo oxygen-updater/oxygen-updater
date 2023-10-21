@@ -133,6 +133,8 @@
 
 	<string name="settings_update_method">שיטת עדכון</string>
 	<string name="settings_upload_logs">שתף נתוני שימוש</string>
+	<string name="settings_ad_privacy">הסכמה למודעות GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"עבור משתמשי EEA/בריטניה"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">שאלות ותשובות</string>

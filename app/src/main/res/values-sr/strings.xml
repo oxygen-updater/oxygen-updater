@@ -136,6 +136,8 @@
 
 	<string name="settings_update_method">Методе ажурирања</string>
 	<string name="settings_upload_logs">Подели податке коришћења и записе</string>
+	<string name="settings_ad_privacy">ГДПР сагласност за оглашавање</string>
+	<string name="settings_ad_privacy_subtitle">"За кориснике ЕЕА/УК"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

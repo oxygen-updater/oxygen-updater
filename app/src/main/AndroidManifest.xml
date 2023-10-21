@@ -192,6 +192,11 @@
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="${advertisingAppId}" />
 
+		<!-- Delay app measurement until MobileAds.initialize() is called. -->
+		<meta-data
+			android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+			android:value="true" />
+
 		<!-- https://developers.google.com/admob/android/optimize-initialization -->
 		<meta-data
 			android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"

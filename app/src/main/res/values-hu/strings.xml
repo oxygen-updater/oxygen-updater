@@ -135,6 +135,8 @@ Ez hasznos lehet, ha szeretné:"</string>
 
 	<string name="settings_update_method">Frissítési módszer</string>
 	<string name="settings_upload_logs">Használati adatok és a naplók megosztása</string>
+	<string name="settings_ad_privacy">GDPR hirdetési hozzájárulás</string>
+	<string name="settings_ad_privacy_subtitle">"EGT/UK felhasználói számára"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">GYIK</string>

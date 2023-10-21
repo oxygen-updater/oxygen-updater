@@ -291,6 +291,7 @@ dependencies {
     implementation(libs.google.play.app.update)
     implementation(libs.google.play.services.base)
     implementation(libs.google.play.services.ads)
+    implementation(libs.google.ump)
 
     implementation(libs.koin.android)
 

@@ -132,6 +132,8 @@
 
 	<string name="settings_update_method">Метод на ажурирање</string>
 	<string name="settings_upload_logs">Споделете податоци за користење и дневници</string>
+	<string name="settings_ad_privacy">Согласност за реклама за GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"За корисници на ЕЕА/Велика Британија"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">ЧПП</string>

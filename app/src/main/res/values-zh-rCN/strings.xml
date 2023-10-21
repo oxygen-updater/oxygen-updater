@@ -130,6 +130,8 @@
 	<string name="settings_advanced_mode_caption">"只有在上述情况下才需要高级模式。除非你知道自己在做什么，否则不应该启用它。"</string>
 	<string name="settings_update_method">更新方式</string>
 	<string name="settings_upload_logs">分享使用数据与日志</string>
+	<string name="settings_ad_privacy">GDPR 广告同意书</string>
+	<string name="settings_ad_privacy_subtitle">"针对欧洲经济区/英国用户"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">常见问题</string>

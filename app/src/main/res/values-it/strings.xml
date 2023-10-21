@@ -125,6 +125,8 @@ Questo può essere utile se si desidera:"</string>
 	<string name="settings_advanced_mode_caption">"La modalità avanzata può essere necessaria solo nelle situazioni sopra descritte. Non è consigliabile attivarla se non si sa cosa si sta facendo."</string>
 	<string name="settings_update_method">"Metodo d'aggiornamento"</string>
 	<string name="settings_upload_logs">Condividi uso e logs.</string>
+	<string name="settings_ad_privacy">Consenso agli annunci GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Per gli utenti nel SEE/UK"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

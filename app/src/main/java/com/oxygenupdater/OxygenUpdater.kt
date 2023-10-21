@@ -25,6 +25,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import java.util.concurrent.atomic.AtomicBoolean
 
 class OxygenUpdater : Application() {
 
@@ -71,7 +72,6 @@ class OxygenUpdater : Application() {
 
         setupCrashReporting()
         setupNetworkCallback()
-        setupMobileAds()
 
         // Support functions for Android 8.0 "Oreo" and up.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationUtils(this).run {
@@ -108,7 +108,10 @@ class OxygenUpdater : Application() {
         }
     }
 
-    private fun setupMobileAds() {
+    private val mobileAdsInitDone = AtomicBoolean(false)
+    fun setupMobileAds() {
+        if (mobileAdsInitDone.get()) return else mobileAdsInitDone.set(true)
+
         val requestConfiguration = MobileAds.getRequestConfiguration().toBuilder()
         // If it's a debug build, add current device's ID to the list of test device IDs for ads
         if (BuildConfig.DEBUG) requestConfiguration.setTestDeviceIds(buildList(2) {

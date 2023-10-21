@@ -118,6 +118,8 @@
 	<string name="settings_advanced_mode_caption">"Расширенный режим может понадобиться только в перечисленных выше ситуациях. Не следует включать его, если вы не знаете, что делаете."</string>
 	<string name="settings_update_method">"Вариант обновления"</string>
 	<string name="settings_upload_logs">Делитесь данными об использовании и журналами</string>
+	<string name="settings_ad_privacy">Согласие на размещение рекламы в соответствии с GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Для пользователей в странах ЕЭЗ/Великобритании"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

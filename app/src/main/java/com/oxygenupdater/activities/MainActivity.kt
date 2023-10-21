@@ -1,5 +1,6 @@
 package com.oxygenupdater.activities
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
@@ -50,6 +51,10 @@ import coil.size.Size
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import com.google.android.gms.ads.AdView
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.ConsentInformation.PrivacyOptionsRequirementStatus
+import com.google.android.ump.ConsentRequestParameters
+import com.google.android.ump.UserMessagingPlatform
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
@@ -114,6 +119,7 @@ import com.oxygenupdater.ui.update.WorkProgress
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.Logger.logUmpConsentFormError
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
@@ -263,7 +269,7 @@ class MainActivity : BaseActivity() {
 
                 if (PrefManager.checkIfSetupScreenIsFilledIn()) {
                     PrefManager.putBoolean(PrefManager.KeySetupDone, true)
-                    (application as OxygenUpdater?)?.setupCrashReporting(
+                    (application as? OxygenUpdater)?.setupCrashReporting(
                         PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
                     )
 
@@ -659,6 +665,12 @@ class MainActivity : BaseActivity() {
             },
             adFreePrice = adFreePrice,
             adFreeConfig = adFreeConfig,
+            isPrivacyOptionsRequired = consentInformation.privacyOptionsRequirementStatus == PrivacyOptionsRequirementStatus.REQUIRED,
+            showPrivacyOptionsForm = rememberCallback {
+                UserMessagingPlatform.showPrivacyOptionsForm(this@MainActivity) { error ->
+                    logUmpConsentFormError(TAG, error)
+                }
+            },
             openAboutScreen = openAboutScreen,
         )
     }
@@ -701,6 +713,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        setupUmp()
 
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
@@ -736,6 +749,27 @@ class MainActivity : BaseActivity() {
 
             ContributorUtils.startDbCheckingProcess(this)
         }
+    }
+
+    private lateinit var consentInformation: ConsentInformation
+    private fun setupUmp() {
+        @SuppressLint("HardwareIds")
+        val params = ConsentRequestParameters.Builder()
+            .setTagForUnderAgeOfConsent(false)
+            .build()
+
+        consentInformation = UserMessagingPlatform.getConsentInformation(this)
+        consentInformation.requestConsentInfoUpdate(this, params, {
+            UserMessagingPlatform.loadAndShowConsentFormIfRequired(this@MainActivity) { error ->
+                logUmpConsentFormError(TAG, error)
+
+                if (consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
+            }
+        }, { error -> logUmpConsentFormError(TAG, error) })
+
+        // Check if SDK can be initialized in parallel while checking for new consent info.
+        // Consent obtained in the previous session can be used to request ads.
+        if (consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
     }
 
     override fun onResume() = super.onResume().also {

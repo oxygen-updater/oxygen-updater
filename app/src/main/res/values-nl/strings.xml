@@ -131,6 +131,8 @@ Dit kan handig zijn als je:"</string>
 
 	<string name="settings_update_method">Update-methode</string>
 	<string name="settings_upload_logs">Deel gebruiksgegevens en logs</string>
+	<string name="settings_ad_privacy">GDPR-advertentie toestemming</string>
+	<string name="settings_ad_privacy_subtitle">"Voor gebruikers in EEA/UK"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">Veelgestelde vragen</string>

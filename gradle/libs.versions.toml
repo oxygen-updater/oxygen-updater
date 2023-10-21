@@ -85,6 +85,8 @@ play-app-update = "2.1.0"
 play-services-base = "18.2.0"
 # https://developers.google.com/admob/android/rel-notes
 play-services-ads = "22.4.0"
+# https://developers.google.com/admob/android/privacy/release-notes
+ump = "2.1.0"
 
 # https://developer.android.com/jetpack/androidx/releases/preference
 preference = "1.2.1"
@@ -151,6 +153,7 @@ firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx"
 google-play-app-update = { module = "com.google.android.play:app-update", version.ref = "play-app-update" }
 google-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
 google-play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "play-services-base" }
+google-ump = { module = "com.google.android.ump:user-messaging-platform", version.ref = "ump" }
 
 junit = { module = "junit:junit", version.ref = "junit" }
 

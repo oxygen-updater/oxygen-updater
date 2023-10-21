@@ -140,6 +140,8 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 
 	<string name="settings_update_method">วิธีการอัพเดท</string>
 	<string name="settings_upload_logs">แบ่งปันข้อมูลการใช้และล็อก</string>
+	<string name="settings_ad_privacy">ความยินยอมโฆษณา GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"สำหรับผู้ใช้ EEA/สหราชอาณาจักร"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

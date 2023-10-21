@@ -134,6 +134,8 @@
 
 	<string name="settings_update_method">アップデート方法</string>
 	<string name="settings_upload_logs">利用データとログを共有</string>
+	<string name="settings_ad_privacy">GDPR広告の同意</string>
+	<string name="settings_ad_privacy_subtitle">"EEA/UKのユーザー"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

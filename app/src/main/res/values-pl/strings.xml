@@ -145,6 +145,8 @@ Może to być przydatne, jeśli chcesz:"</string>
 
 	<string name="settings_update_method">Metoda aktualizacji</string>
 	<string name="settings_upload_logs">Udostępnij dane użytkowania oraz logi</string>
+	<string name="settings_ad_privacy">Zgoda na reklamy RODO</string>
+	<string name="settings_ad_privacy_subtitle">"Dla użytkowników w EOG/Wielkiej Brytanii"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

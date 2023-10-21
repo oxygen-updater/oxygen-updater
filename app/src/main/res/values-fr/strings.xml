@@ -131,6 +131,8 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 	<string name="settings_advanced_mode_caption">"Le mode avancé peut s'avérer nécessaire uniquement dans les situations ci-dessus. Vous ne devez l'activer que si vous savez ce que vous faites."</string>
 	<string name="settings_update_method">"Méthode de mise à jour"</string>
 	<string name="settings_upload_logs">Envoyer les données d\'utilisation et de crash au développeur</string>
+	<string name="settings_ad_privacy">Consentement à la publicité GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Pour les utilisateurs de l'EEE/du Royaume-Uni"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"Foire aux Questions"</string>

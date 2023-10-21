@@ -1,6 +1,7 @@
 package com.oxygenupdater.utils
 
 import android.util.Log
+import com.google.android.ump.FormError
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.crashlytics.ktx.setCustomKeys
 import com.oxygenupdater.BuildConfig
@@ -37,6 +38,11 @@ object Logger {
 
     fun logInfo(tag: String, message: String, cause: Throwable?) {
         if (BuildConfig.DEBUG) Log.i(tag, message, cause)
+    }
+
+    fun logUmpConsentFormError(tag: String, error: FormError?) {
+        if (error == null) return
+        logWarning(tag, "UMP consent failed: ${error.errorCode} ${error.message}")
     }
 
     /** Log a recoverable exception at warning level */

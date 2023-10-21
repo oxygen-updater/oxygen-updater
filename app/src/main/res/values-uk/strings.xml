@@ -134,6 +134,8 @@
 
 	<string name="settings_update_method">Спосіб оновлення</string>
 	<string name="settings_upload_logs">Ділитися даними про використання та журналом помилок</string>
+	<string name="settings_ad_privacy">Згода на рекламу GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Для користувачів з ЄЕЗ/Великобританії"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">ЧаПи</string>

@@ -128,6 +128,8 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="settings_advanced_mode_caption">"Edistynyttä tilaa saatetaan tarvita vain edellä mainituissa tilanteissa. Sitä ei kannata ottaa käyttöön, ellet tiedä, mitä olet tekemässä."</string>
 	<string name="settings_update_method">"Päivitystapa"</string>
 	<string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
+	<string name="settings_ad_privacy">GDPR-mainonnan suostumus</string>
+	<string name="settings_ad_privacy_subtitle">"ETA:n/UK:n käyttäjille"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"UKK"</string>

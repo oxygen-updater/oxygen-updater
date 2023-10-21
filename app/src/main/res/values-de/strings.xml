@@ -127,6 +127,8 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 	<string name="settings_update_method">"Aktualisierungsmethode"</string>
 
 	<string name="settings_upload_logs">Teile Nutzungsdaten und Protokolle</string>
+	<string name="settings_ad_privacy">GDPR-Zustimmung zur Werbung</string>
+	<string name="settings_ad_privacy_subtitle">"Für Nutzer in EEA/UK"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

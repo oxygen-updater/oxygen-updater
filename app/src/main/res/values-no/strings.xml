@@ -136,6 +136,8 @@ Dette kan være nyttig hvis du vil:"</string>
 
 	<string name="settings_update_method">Oppdateringsmetode</string>
 	<string name="settings_upload_logs">Del bruksdata og logger</string>
+	<string name="settings_ad_privacy">GDPR-samtykke til annonsering</string>
+	<string name="settings_ad_privacy_subtitle">"For brukere i EØS/Storbritannia"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

@@ -141,6 +141,8 @@ Esto puede ser útil si quieres:"</string>
 
 	<string name="settings_update_method">Método de actualización</string>
 	<string name="settings_upload_logs">Comparte con nosotros datos de uso y registros</string>
+	<string name="settings_ad_privacy">Consentimiento de publicidad GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Para usuarios del EEE/Reino Unido"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

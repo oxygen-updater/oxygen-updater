@@ -27,6 +27,7 @@ import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Paid
 import androidx.compose.material.icons.outlined.Palette
 import androidx.compose.material.icons.outlined.Policy
+import androidx.compose.material.icons.rounded.AdsClick
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.NotificationsNone
@@ -105,6 +106,8 @@ fun SettingsScreen(
     methodChanged: (UpdateMethod) -> Unit,
     adFreePrice: String?,
     adFreeConfig: Triple<Boolean, Int, (() -> Unit)?>?,
+    isPrivacyOptionsRequired: Boolean,
+    showPrivacyOptionsForm: () -> Unit,
     openAboutScreen: () -> Unit,
 ) = Column(Modifier.verticalScroll(rememberScrollState())) {
     //region Support us
@@ -158,6 +161,10 @@ fun SettingsScreen(
     Header(R.string.preference_header_advanced)
     AdvancedMode()
     SettingsAnalytics()
+    PrivacyOptionsItem(
+        isPrivacyOptionsRequired = isPrivacyOptionsRequired,
+        showPrivacyOptionsForm = showPrivacyOptionsForm,
+    )
     //endregion
 
     //region About
@@ -429,6 +436,22 @@ fun SettingsAnalytics() {
 }
 
 @Composable
+fun PrivacyOptionsItem(
+    isPrivacyOptionsRequired: Boolean,
+    showPrivacyOptionsForm: () -> Unit,
+) {
+    if (!isPrivacyOptionsRequired) return
+    if (PrefManager.getBoolean(PrefManager.KeyAdFree, false)) return
+
+    SettingsItem(
+        onClick = showPrivacyOptionsForm,
+        icon = Icons.Rounded.AdsClick,
+        titleResId = R.string.settings_ad_privacy,
+        subtitle = null,
+    )
+}
+
+@Composable
 fun SettingsSwitchItem(
     checked: Boolean,
     onCheckedChange: (checked: Boolean) -> Unit,
@@ -566,6 +589,8 @@ fun PreviewSettingsScreen() = PreviewAppTheme {
         methodChanged = {},
         adFreePrice = null,
         adFreeConfig = previousAdFreeConfig,
+        isPrivacyOptionsRequired = true,
+        showPrivacyOptionsForm = {},
         openAboutScreen = {},
     )
 }

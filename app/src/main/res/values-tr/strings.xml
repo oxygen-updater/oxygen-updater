@@ -139,6 +139,8 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<string name="settings_update_method">Güncelleme metodu</string>
 	<string name="settings_upload_logs">Data kullanım verilerini paylaş.</string>
+	<string name="settings_ad_privacy">GDPR reklam izni</string>
+	<string name="settings_ad_privacy_subtitle">"AEA/İngiltere'deki kullanıcılar için"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">SSS</string>
