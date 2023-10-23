@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -280,13 +279,8 @@ value class RichTextType(val value: Int) {
     }
 
     companion object {
-        @Stable
         val Custom = RichTextType(0)
-
-        @Stable
         val Html = RichTextType(1)
-
-        @Stable
         val Markdown = RichTextType(2)
     }
 }

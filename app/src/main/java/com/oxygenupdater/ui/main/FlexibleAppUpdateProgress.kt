@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.main
 
+import androidx.collection.IntIntPair
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
@@ -13,7 +14,7 @@ import com.oxygenupdater.ui.common.modifierMaxWidth
 fun FlexibleAppUpdateProgress(
     state: InstallState?,
     snackbarMessageId: () -> Int?, // deferred read
-    updateSnackbarText: (Pair<Int, Int>?) -> Unit,
+    updateSnackbarText: (IntIntPair?) -> Unit,
 ) {
     val status = state?.installStatus() ?: return
     if (status == InstallStatus.DOWNLOADED) {

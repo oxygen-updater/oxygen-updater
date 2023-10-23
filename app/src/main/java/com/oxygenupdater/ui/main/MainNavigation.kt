@@ -147,7 +147,6 @@ val MainScreens = arrayOf(
     Screen.Settings,
 )
 
-@Suppress("ConvertObjectToDataObject")
 @Immutable
 sealed class Screen(
     val route: String,
@@ -173,6 +172,8 @@ sealed class Screen(
 
     @Stable
     object Settings : Screen(SettingsRoute, CustomIcons.Settings, R.string.settings)
+
+    override fun toString() = "Screen.$route"
 }
 
 const val UpdateRoute = "update"

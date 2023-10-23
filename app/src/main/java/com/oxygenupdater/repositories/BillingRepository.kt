@@ -7,7 +7,6 @@ import android.os.Looper
 import android.os.SystemClock
 import androidx.annotation.UiThread
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -844,22 +843,11 @@ class BillingRepository(
         }
 
         companion object {
-            @Stable
             val Unknown = SkuState(0)
-
-            @Stable
             val NotPurchased = SkuState(1)
-
-            @Stable
             val PurchaseInitiated = SkuState(2)
-
-            @Stable
             val Pending = SkuState(3)
-
-            @Stable
             val Purchased = SkuState(4)
-
-            @Stable
             val PurchasedAndAcknowledged = SkuState(5)
         }
     }

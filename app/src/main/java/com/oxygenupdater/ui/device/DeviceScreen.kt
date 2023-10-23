@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.device
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Build
@@ -53,11 +54,7 @@ import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Incremental
-import com.oxygenupdater.internal.DeviceInformationData
-import com.oxygenupdater.internal.DeviceInformationData.cpuFrequency
-import com.oxygenupdater.internal.DeviceInformationData.deviceManufacturer
-import com.oxygenupdater.internal.DeviceInformationData.deviceName
-import com.oxygenupdater.internal.DeviceInformationData.serialNumber
+import com.oxygenupdater.internal.CpuFrequency
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
@@ -80,7 +77,7 @@ import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import java.text.NumberFormat
 import kotlin.math.roundToLong
 
-fun defaultDeviceName() = "$deviceManufacturer $deviceName"
+fun defaultDeviceName() = "${Build.MANUFACTURER} ${Build.DEVICE}"
 
 @Composable
 fun DeviceScreen(
@@ -177,7 +174,7 @@ private fun DeviceNameWithSpec(
     Text(deviceName, style = MaterialTheme.typography.titleLarge)
     SelectionContainer(modifier) {
         Text(
-            text = DeviceInformationData.model,
+            text = Build.MODEL,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -268,7 +265,7 @@ fun DeviceSoftwareInfo(showHeader: Boolean = true) {
     Item(
         icon = Icons.Rounded.Android,
         titleResId = R.string.device_information_os_version,
-        text = DeviceInformationData.osVersion,
+        text = Build.VERSION.RELEASE,
     )
 
     SystemVersionProperties.oxygenOSVersion.takeIf { it != UNKNOWN }?.let {
@@ -290,7 +287,7 @@ fun DeviceSoftwareInfo(showHeader: Boolean = true) {
     Item(
         icon = CustomIcons.Incremental,
         titleResId = R.string.device_information_incremental_os_version,
-        text = DeviceInformationData.incrementalOsVersion,
+        text = Build.VERSION.INCREMENTAL,
     )
 
     SystemVersionProperties.securityPatchDate.takeIf { it != UNKNOWN }?.let {
@@ -326,15 +323,30 @@ private fun DeviceHardwareInfo(navType: NavType) {
     Item(
         icon = Icons.Rounded.DeveloperBoard,
         titleResId = R.string.device_information_system_on_a_chip,
-        text = DeviceInformationData.soc,
+        text = Build.BOARD.let { board ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val socManufacturer = Build.SOC_MANUFACTURER
+                val socModel = Build.SOC_MODEL
+                val validManufacturer = socManufacturer != UNKNOWN
+                val validModel = socModel != UNKNOWN
+
+                if (validManufacturer && validModel) {
+                    "$socManufacturer $socModel ($board)"
+                } else if (validManufacturer) {
+                    "$socManufacturer ($board)"
+                } else if (validModel) {
+                    "$socModel ($board)"
+                } else board
+            } else board
+        },
     )
 
-    if (cpuFrequency != null) {
+    if (CpuFrequency != null) {
         val locale = currentLocale()
         // Format according to locale (decimal vs comma)
         val formatted = remember(locale) {
             try {
-                NumberFormat.getInstance(locale).format(cpuFrequency)
+                NumberFormat.getInstance(locale).format(CpuFrequency)
             } catch (e: IllegalArgumentException) {
                 null
             }
@@ -346,12 +358,16 @@ private fun DeviceHardwareInfo(navType: NavType) {
         )
     }
 
-    // Serial number (Android 7.1.2 and lower only)
-    if (serialNumber != null) Item(
-        icon = Icons.Rounded.PermDeviceInformation,
-        titleResId = R.string.device_information_serial_number,
-        text = serialNumber,
-    )
+    @Suppress("DEPRECATION")
+    @SuppressLint("HardwareIds")
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        // Not shown on Android 8/O & above because it requires too many permissions
+        Item(
+            icon = Icons.Rounded.PermDeviceInformation,
+            titleResId = R.string.device_information_serial_number,
+            text = Build.SERIAL,
+        )
+    }
 
     Spacer(modifierDefaultPaddingTop)
     ConditionalNavBarPadding(navType)

@@ -1,6 +1,5 @@
 package com.oxygenupdater.ui.common
 
-import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -17,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 
 /** Vertically centered [Checkbox] with [Text]. Tapping text toggles checkbox state. */
 @Composable
-@SuppressLint("ModifierParameter")
 fun CheckboxText(
     checked: Boolean,
     onCheckedChange: (checked: Boolean) -> Unit,

@@ -1,5 +1,6 @@
 package com.oxygenupdater.models
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Immutable
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.internal.CsvList
@@ -20,13 +21,15 @@ data class Device(
 ) : SelectableModel {
 
     companion object {
-        private val ImageUrlPrefix = buildString(37) {
+        @VisibleForTesting
+        val ImageUrlPrefix = buildString(37) {
             append("https://")
             if (BuildConfig.DEBUG) append("test.")
             append("oxygenupdater.com/img/device/")
         }
 
-        private const val ImageUrlSuffix = "-min.png?v=1"
+        @VisibleForTesting
+        const val ImageUrlSuffix = "-min.png?v=1"
 
         fun constructImageUrl(deviceName: String) = ImageUrlPrefix +
                 deviceName.split("(", limit = 2)[0].trim().replace(' ', '-').lowercase() +

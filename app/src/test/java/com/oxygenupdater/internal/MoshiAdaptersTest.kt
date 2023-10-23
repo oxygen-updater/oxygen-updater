@@ -12,8 +12,10 @@ class MoshiAdaptersTest {
     fun `check if BooleanJsonAdapter's fromJson works`() = BooleanJsonAdapter().run {
         assertFalse(fromJson(null))
         assertFalse(fromJson(""))
+
         assertFalse(fromJson("0"))
         assertFalse(fromJson("false"))
+
         assertTrue(fromJson("1"))
         assertTrue(fromJson("true"))
     }
@@ -28,6 +30,7 @@ class MoshiAdaptersTest {
     fun `check if CsvListJsonAdapter's fromJson works`() = CsvListJsonAdapter().run {
         assertContentEquals(fromJson(null), listOf())
         assertContentEquals(fromJson(""), listOf(""))
+
         assertContentEquals(fromJson("1"), listOf("1"))
         assertContentEquals(fromJson("1,2"), listOf("1", "2"))
         assertContentEquals(fromJson("1, 2, 3"), listOf("1", "2", "3"))
@@ -35,8 +38,9 @@ class MoshiAdaptersTest {
 
     @Test
     fun `check if CsvListJsonAdapter's toJson works`() = CsvListJsonAdapter().run {
-        assertEquals(toJson(listOf()), "")
-        assertEquals(toJson(listOf("1")), "1")
-        assertEquals(toJson(listOf("1", "2")), "1,2")
+        assertEquals("", toJson(listOf()))
+
+        assertEquals("1", toJson(listOf("1")))
+        assertEquals("1,2", toJson(listOf("1", "2")))
     }
 }

@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.collection.IntIntPair
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
@@ -332,7 +333,7 @@ class MainActivity : BaseActivity() {
         }
 
         // Referential equality because we're reusing static Pairs
-        var snackbarText by rememberSaveableState<Pair<Int, Int>?>("snackbarText", null, true)
+        var snackbarText by rememberSaveableState<IntIntPair?>("snackbarText", null, true)
         AppUpdateInfo(
             info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             snackbarMessageId = { snackbarText?.first },

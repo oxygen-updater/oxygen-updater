@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.main
 
+import androidx.collection.IntIntPair
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -14,7 +15,7 @@ import com.oxygenupdater.R
 
 @Composable
 fun MainSnackbar(
-    snackbarText: Pair<Int, Int>?,
+    snackbarText: IntIntPair?,
     openPlayStorePage: () -> Unit,
     completeAppUpdate: () -> Unit,
 ) {
@@ -42,14 +43,14 @@ fun MainSnackbar(
     }
 }
 
-val NoConnectionSnackbarData = Pair(
+val NoConnectionSnackbarData = IntIntPair(
     R.string.error_app_requires_network_connection, android.R.string.ok
 )
 
-val AppUpdateDownloadedSnackbarData = Pair(
+val AppUpdateDownloadedSnackbarData = IntIntPair(
     R.string.new_app_version_inapp_downloaded, R.string.error_reload
 )
 
-val AppUpdateFailedSnackbarData = Pair(
+val AppUpdateFailedSnackbarData = IntIntPair(
     R.string.new_app_version_inapp_failed, R.string.error_google_play_button_text
 )

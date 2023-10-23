@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.collection.IntIntPair
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -19,7 +20,7 @@ import com.oxygenupdater.internal.settings.PrefManager
 fun AppUpdateInfo(
     info: AppUpdateInfo?,
     snackbarMessageId: () -> Int?, // deferred read
-    updateSnackbarText: (Pair<Int, Int>?) -> Unit,
+    updateSnackbarText: (IntIntPair?) -> Unit,
     unregisterAppUpdateListener: () -> Unit,
     requestUpdate: RequestAppUpdateCallback,
     requestImmediateUpdate: RequestAppUpdateCallback,
