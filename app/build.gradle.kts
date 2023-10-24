@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.gms.services)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.room)
     id("kotlin-parcelize")
 }
 
@@ -223,14 +224,20 @@ kotlin {
         freeCompilerArgs.addAll(
             "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeMetrics",
             "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeMetrics",
+            // Strong skipping mode from 1.5.4 onwards: https://r.android.com/c/2671135
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true",
         )
     }
 }
 
 ksp {
     // Add Room-specific arguments: https://developer.android.com/jetpack/androidx/releases/room#compiler-options
-    arg("room.schemaLocation", "$projectDir/schemas")
     arg("room.incremental", "true")
+    arg("room.generateKotlin", "true")
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
@@ -251,7 +258,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.common.java8)
     implementation(libs.androidx.lifecycle.livedata)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(libs.androidx.room.ktx)
@@ -281,9 +288,9 @@ dependencies {
     implementation(libs.accompanist.webview)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.crashlytics.ktx)
-    implementation(libs.firebase.messaging.ktx)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
 
     implementation(libs.billing)
     implementation(libs.billing.ktx)

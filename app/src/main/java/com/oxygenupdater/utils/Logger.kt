@@ -3,7 +3,7 @@ package com.oxygenupdater.utils
 import android.util.Log
 import com.google.android.ump.FormError
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.ktx.setCustomKeys
+import com.google.firebase.crashlytics.setCustomKeys
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.utils.ExceptionUtils.isNetworkError

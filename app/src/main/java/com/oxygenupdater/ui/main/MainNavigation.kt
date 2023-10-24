@@ -12,7 +12,6 @@ import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -42,7 +41,6 @@ import com.oxygenupdater.icons.LogoNotification
 import com.oxygenupdater.icons.News
 import com.oxygenupdater.icons.Settings
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavigationBar(
     currentRoute: String?,
@@ -82,7 +80,6 @@ fun MainNavigationBar(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainNavigationRail(
     currentRoute: String?,

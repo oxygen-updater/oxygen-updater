@@ -4,9 +4,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.analytics
+import com.google.firebase.crashlytics.crashlytics
 import com.oxygenupdater.database.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository

@@ -467,7 +467,10 @@ private fun DownloadButton(
                     animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
                     label = "DownloadProgressAnimation",
                 )
-                LinearProgressIndicator(animatedProgress, modifierMaxWidth)
+                LinearProgressIndicator(
+                    progress = { animatedProgress },
+                    modifier = modifierMaxWidth
+                )
             }
         }
 

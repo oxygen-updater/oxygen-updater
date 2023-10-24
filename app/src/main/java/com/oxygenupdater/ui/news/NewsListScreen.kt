@@ -42,7 +42,6 @@ import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material3.Badge
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -124,7 +123,6 @@ import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsListScreen(
     navType: NavType,
@@ -260,7 +258,7 @@ fun NewsListScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.NewsListItem(
     refreshing: Boolean,

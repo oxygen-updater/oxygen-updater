@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.1.2"
+agp = "8.1.3"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "2.9.9"
@@ -10,22 +10,22 @@ crashlytics-plugin = "2.9.9"
 google-services-plugin = "4.3.15"
 
 # https://github.com/google/ksp/releases
-ksp = "1.9.10-1.0.13"
+ksp = "1.9.20-1.0.14"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "1.9.10"
+kotlin = "1.9.20"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.6.0-alpha07" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.0-alpha09"
+compose = "1.6.0-alpha08" # keep in sync with Kotlin & accompanist version
+compose-m3 = "1.2.0-alpha10"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
-compose-compiler = "1.5.3"
+compose-compiler = "1.5.4"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
@@ -35,13 +35,13 @@ accompanist = "0.33.2-alpha" # keep in sync with Compose version
 activity-compose = "1.8.0"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
-coil-compose = "2.4.0"
+coil-compose = "2.5.0"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
 annotation = "1.7.0"
 
 # https://developer.android.com/google/play/billing/release-notes
-billing = "5.2.1"
+billing = "6.0.1"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
 browser = "1.6.0"
@@ -51,10 +51,10 @@ core = "1.12.0"
 core-splashscreen = "1.0.1"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
-desugar = "2.0.3"
+desugar = "2.0.4"
 
 # https://firebase.google.com/support/release-notes/android
-firebase-bom = "32.3.1"
+firebase-bom = "32.5.0"
 
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
@@ -66,25 +66,25 @@ koin = "3.5.0"
 libsu = "5.2.1"
 
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-lifecycle = "2.7.0-alpha02"
+lifecycle = "2.7.0-beta01"
 
 # https://github.com/square/moshi/blob/master/CHANGELOG.md
 moshi = "1.15.0"
 
-# https://developer.android.com/jetpack/androidx/releases/navigation#versions
-navigation-compose = "2.7.4"
+# https://developer.android.com/jetpack/androidx/releases/navigation
+navigation-compose = "2.7.5"
 
 # https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 # https://square.github.io/okhttp/changelog/
-okhttp = "4.11.0"
+okhttp = "4.12.0"
 
 # https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
 play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
 play-services-base = "18.2.0"
 # https://developers.google.com/admob/android/rel-notes
-play-services-ads = "22.4.0"
+play-services-ads = "22.5.0"
 # https://developers.google.com/admob/android/privacy/release-notes
 ump = "2.1.0"
 
@@ -96,10 +96,10 @@ preference = "1.2.1"
 retrofit = "2.9.0"
 
 # https://developer.android.com/jetpack/androidx/releases/room
-room = "2.5.2"
+room = "2.6.0"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.9.0-beta01"
+work-runtime = "2.9.0-rc01"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
@@ -120,7 +120,7 @@ androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", versi
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
-androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
 
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -146,9 +146,9 @@ billing = { module = "com.android.billingclient:billing", version.ref = "billing
 billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "billing" }
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
-firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx" }
-firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 
 google-play-app-update = { module = "com.google.android.play:app-update", version.ref = "play-app-update" }
 google-play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "play-services-ads" }
@@ -181,5 +181,6 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 gms-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+room = { id = "androidx.room", version.ref = "room" }
 
 [bundles]

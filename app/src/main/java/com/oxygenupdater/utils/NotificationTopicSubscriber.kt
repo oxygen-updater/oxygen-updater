@@ -1,7 +1,7 @@
 package com.oxygenupdater.utils
 
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
+import com.google.firebase.Firebase
+import com.google.firebase.messaging.messaging
 import com.oxygenupdater.BuildConfig.NOTIFICATIONS_PREFIX
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.PrefManager

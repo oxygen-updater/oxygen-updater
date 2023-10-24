@@ -33,6 +33,9 @@ fun FlexibleAppUpdateProgress(
             progress, ProgressIndicatorDefaults.ProgressAnimationSpec,
             label = "FlexibleUpdateProgressAnimation"
         )
-        LinearProgressIndicator(animatedProgress, modifierMaxWidth)
+        LinearProgressIndicator(
+            progress = { animatedProgress },
+            modifier = modifierMaxWidth
+        )
     }
 }

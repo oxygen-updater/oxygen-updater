@@ -546,6 +546,11 @@ class BillingRepository(
                 "[onProductDetailsResponse] SERVICE_UNAVAILABLE: $debugMessage"
             )
 
+            BillingResponseCode.NETWORK_ERROR -> logBillingError(
+                TAG,
+                "[onProductDetailsResponse] NETWORK_ERROR: $debugMessage"
+            )
+
             BillingResponseCode.BILLING_UNAVAILABLE -> logBillingError(
                 TAG,
                 "[onProductDetailsResponse] BILLING_UNAVAILABLE: $debugMessage"
