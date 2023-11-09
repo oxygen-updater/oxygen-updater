@@ -120,6 +120,6 @@ interface ServerApi {
     suspend fun logDownloadError(@Body body: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 
     @POST("verify-purchase")
-    @Headers("$HeaderReadTimeout:120")
+    @Headers("$HeaderReadTimeout:99")
     suspend fun verifyPurchase(@Body purchaseData: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 }

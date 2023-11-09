@@ -103,7 +103,7 @@ class OxygenUpdater : Application() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 registerDefaultNetworkCallback(networkCallback)
             } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
-        } catch (e: SecurityException) {
+        } catch (e: Exception) {
             logError(TAG, "Couldn't setup network callback", e)
         }
     }
