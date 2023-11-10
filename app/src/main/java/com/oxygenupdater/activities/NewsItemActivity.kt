@@ -42,8 +42,6 @@ import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.ui.CollapsingAppBar
 import com.oxygenupdater.ui.common.PullRefresh
-import com.oxygenupdater.ui.common.rememberCallback
-import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.news.NewsItemScreen
@@ -144,7 +142,7 @@ class NewsItemActivity : SupportActionBarActivity(
         val state by viewModel.state.collectAsStateWithLifecycle()
         val webViewState = rememberSaveableWebViewState()
         val navigator = rememberWebViewNavigator()
-        val onRefresh = rememberCallback(showAds, navigator) {
+        val onRefresh = {
             if (showAds) {
                 shouldDelayAdStart = true
                 setupInterstitialAd()
@@ -168,9 +166,9 @@ class NewsItemActivity : SupportActionBarActivity(
                 webViewState = webViewState,
                 navigator = navigator,
                 showAds = showAds,
-                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                bannerAdInit = { bannerAdView = it },
                 onError = { errorTitle = it },
-                onLoadFinished = rememberTypedCallback(viewModel::markRead),
+                onLoadFinished = viewModel::markRead,
                 modifier = modifier
             )
         }

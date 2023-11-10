@@ -111,7 +111,6 @@ import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxSize
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.main.NavType
@@ -627,7 +626,7 @@ private fun ItemMenu(
     DropdownMenuItem(
         icon = Icons.Rounded.OpenInBrowser,
         textResId = androidx.browser.R.string.fallback_menu_item_open_in_browser,
-        onClick = rememberCallback(context, customTabIntent) {
+        onClick = {
             customTabIntent.launch(context, item.webUrl)
             onDismiss()
         },
@@ -636,7 +635,7 @@ private fun ItemMenu(
     DropdownMenuItem(
         icon = Icons.Outlined.Share,
         textResId = androidx.browser.R.string.fallback_menu_item_share_link,
-        onClick = rememberCallback(context) {
+        onClick = {
             context.shareExternally(item.title ?: "", item.webUrl)
             onDismiss()
         },
@@ -645,7 +644,7 @@ private fun ItemMenu(
     DropdownMenuItem(
         icon = Icons.Rounded.Link,
         textResId = androidx.browser.R.string.fallback_menu_item_copy_link,
-        onClick = rememberCallback(context) {
+        onClick = {
             context.copyToClipboard(item.webUrl)
             onDismiss()
         },

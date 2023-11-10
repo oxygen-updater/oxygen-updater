@@ -80,9 +80,7 @@ import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.about.AboutScreen
 import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.adLoadListener
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
-import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.device.DeviceScreen
 import com.oxygenupdater.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.ui.device.UnsupportedDeviceOsSpecDialog
@@ -259,10 +257,10 @@ class MainActivity : BaseActivity() {
             scrollBehavior = scrollBehavior,
             lists = state,
             initialDeviceIndex = settingsViewModel.initialDeviceIndex,
-            deviceChanged = rememberTypedCallback(settingsViewModel::saveSelectedDevice),
+            deviceChanged = settingsViewModel::saveSelectedDevice,
             initialMethodIndex = settingsViewModel.initialMethodIndex,
-            methodChanged = rememberTypedCallback(settingsViewModel::saveSelectedMethod),
-            startApp = rememberTypedCallback(enabledDevices) { contribute ->
+            methodChanged = settingsViewModel::saveSelectedMethod,
+            startApp = { contribute ->
                 if (checkPlayServices(this@MainActivity, false)) {
                     // Subscribe to notifications for the newly selected device and update method
                     settingsViewModel.subscribeToNotificationTopics(enabledDevices)
@@ -358,7 +356,7 @@ class MainActivity : BaseActivity() {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             currentRoute = navBackStackEntry?.destination?.route
 
-            val openAboutScreen = rememberCallback(navController) { navController.navigateWithDefaults(AboutRoute) }
+            val openAboutScreen = { navController.navigateWithDefaults(AboutRoute) }
 
             val windowWidthSize = windowSize.widthSizeClass
             val navType = NavType.from(windowWidthSize)
@@ -388,7 +386,7 @@ class MainActivity : BaseActivity() {
                     MainMenu(
                         serverMessages = serverMessages,
                         showMarkAllRead = subtitleResId == Screen.NewsList.labelResId,
-                        markAllRead = rememberCallback(newsListViewModel::markAllRead),
+                        markAllRead = newsListViewModel::markAllRead,
                     )
                 }
 
@@ -467,7 +465,7 @@ class MainActivity : BaseActivity() {
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
                         adListener = adLoadListener { adLoaded = it },
-                        viewUpdated = rememberTypedCallback { bannerAdView = it },
+                        viewUpdated = { bannerAdView = it },
                         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
                         modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier
                     )
@@ -486,8 +484,8 @@ class MainActivity : BaseActivity() {
         // Gets placed over TopAppBar
         MainSnackbar(
             snackbarText = snackbarText,
-            openPlayStorePage = rememberCallback(::openPlayStorePage),
-            completeAppUpdate = rememberCallback(viewModel::completeAppUpdate),
+            openPlayStorePage = ::openPlayStorePage,
+            completeAppUpdate = viewModel::completeAppUpdate,
         )
     }
 
@@ -520,7 +518,7 @@ class MainActivity : BaseActivity() {
             navType = navType,
             windowWidthSize = windowWidthSize,
             state = state,
-            refresh = rememberCallback {
+            refresh = {
                 settingsViewModel.updateCrashlyticsUserId()
                 viewModel.fetchServerStatus()
                 updateViewModel.refresh()
@@ -536,22 +534,15 @@ class MainActivity : BaseActivity() {
                 )
             },
             forceDownloadErrorDialog = downloadErrorMessage != null,
-            setSubtitleResId = rememberTypedCallback(setSubtitleResId),
-            enqueueDownload = rememberTypedCallback {
+            setSubtitleResId = setSubtitleResId,
+            enqueueDownload = {
                 viewModel.setupDownloadWorkRequest(it)
                 viewModel.enqueueDownloadWork()
             },
-            pauseDownload = rememberCallback(viewModel::pauseDownloadWork),
-            cancelDownload = rememberTypedCallback {
-                viewModel.cancelDownloadWork(this@MainActivity, it)
-            },
-            deleteDownload = rememberTypedCallback {
-                viewModel.deleteDownloadedFile(this@MainActivity, it)
-            },
-            logDownloadError = rememberCallback(outputData) {
-                if (outputData == null) return@rememberCallback
-                viewModel.logDownloadError(outputData)
-            },
+            pauseDownload = viewModel::pauseDownloadWork,
+            cancelDownload = { viewModel.cancelDownloadWork(this@MainActivity, it) },
+            deleteDownload = { viewModel.deleteDownloadedFile(this@MainActivity, it) },
+            logDownloadError = { if (outputData != null) viewModel.logDownloadError(outputData) },
         )
     }
 
@@ -570,14 +561,14 @@ class MainActivity : BaseActivity() {
             navType = navType,
             windowSize = windowSize,
             state = state,
-            refresh = rememberCallback {
+            refresh = {
                 viewModel.fetchServerStatus()
                 newsListViewModel.refresh()
             },
             unreadCountState = newsListViewModel.unreadCount,
-            markAllRead = rememberCallback(newsListViewModel::markAllRead),
-            toggleRead = rememberTypedCallback(newsListViewModel::toggleRead),
-            openItem = rememberTypedCallback(::startNewsItemActivity),
+            markAllRead = newsListViewModel::markAllRead,
+            toggleRead = newsListViewModel::toggleRead,
+            openItem = ::startNewsItemActivity,
         )
     }
 
@@ -620,11 +611,11 @@ class MainActivity : BaseActivity() {
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
 
-        val adFreeConfig = adFreeConfig(adFreeState, rememberTypedCallback {
-            billingViewModel.makePurchase(this@MainActivity, it)
-        }, rememberCallback {
-            showToast(R.string.purchase_error_pending_payment)
-        })
+        val adFreeConfig = adFreeConfig(
+            state = adFreeState,
+            makePurchase = { billingViewModel.makePurchase(this@MainActivity, it) },
+            markPending = { showToast(R.string.purchase_error_pending_payment) },
+        )
 
         // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
         // in an IllegalArgumentException (can't reuse the same observer with different lifecycles)
@@ -651,12 +642,12 @@ class MainActivity : BaseActivity() {
             navType = navType,
             lists = state,
             initialDeviceIndex = settingsViewModel.initialDeviceIndex,
-            deviceChanged = rememberTypedCallback {
+            deviceChanged = {
                 settingsViewModel.saveSelectedDevice(it)
                 updateMismatchStatus()
             },
             initialMethodIndex = settingsViewModel.initialMethodIndex,
-            methodChanged = rememberTypedCallback(state) {
+            methodChanged = {
                 settingsViewModel.saveSelectedMethod(it)
 
                 if (checkPlayServices(this@MainActivity, true)) {
@@ -667,7 +658,7 @@ class MainActivity : BaseActivity() {
             adFreePrice = adFreePrice,
             adFreeConfig = adFreeConfig,
             isPrivacyOptionsRequired = consentInformation.privacyOptionsRequirementStatus == PrivacyOptionsRequirementStatus.REQUIRED,
-            showPrivacyOptionsForm = rememberCallback {
+            showPrivacyOptionsForm = {
                 UserMessagingPlatform.showPrivacyOptionsForm(this@MainActivity) { error ->
                     logUmpConsentFormError(TAG, error)
                 }

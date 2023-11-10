@@ -78,7 +78,6 @@ import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.defaultDeviceName
@@ -324,7 +323,7 @@ private fun DownloadButtonContainer(
     )
 
     // Deferred read
-    val hasDownloadPermissions = rememberCallback(downloadPermissionState) {
+    val hasDownloadPermissions = {
         if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermissionState) {
             downloadPermissionState.status.isGranted
         } else if (downloadPermissionState is MultiplePermissionsState) downloadPermissionState.allPermissionsGranted else {
@@ -336,7 +335,7 @@ private fun DownloadButtonContainer(
         }
     }
 
-    val requestDownloadPermissions = rememberCallback(downloadPermissionState) {
+    val requestDownloadPermissions = {
         if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermissionState) {
             downloadPermissionState.launchPermissionRequest()
         } else if (downloadPermissionState is MultiplePermissionsState) {
@@ -450,8 +449,9 @@ private fun DownloadButton(
             actionButtonConfig?.let { (forCancel, icon, tint) ->
                 val context = LocalContext.current
                 IconButton(
-                    onClick = if (forCancel) ({ downloadAction(DownloadAction.Cancel) }) else rememberCallback(context) {
-                        context.startInstallActivity(false)
+                    onClick = {
+                        if (forCancel) downloadAction(DownloadAction.Cancel)
+                        else context.startInstallActivity(false)
                     },
                     modifier = Modifier.requiredSize(56.dp)
                 ) {

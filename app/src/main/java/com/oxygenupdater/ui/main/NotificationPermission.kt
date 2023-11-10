@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.NotificationPermissionSheet
@@ -37,12 +36,11 @@ fun NotificationPermission() {
     }
 
     val status = state.status
-    val launchPermissionRequest = rememberCallback(state, state::launchPermissionRequest)
-    LaunchedEffect(status, launchPermissionRequest) {
+    LaunchedEffect(status) {
         when (status) {
             is PermissionStatus.Denied -> if (status.shouldShowRationale) showSheet = true else {
                 // Must be called inside an effect to avoid IllegalStateException: ActivityResultLauncher cannot be null
-                launchPermissionRequest()
+                state.launchPermissionRequest()
             }
 
             PermissionStatus.Granted -> showSheet = false
@@ -52,7 +50,7 @@ fun NotificationPermission() {
     // TODO: consider adding logic to avoid showing this sheet if the user has clicked "Cancel" too many times
     if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
         NotificationPermissionSheet(hide) {
-            launchPermissionRequest()
+            state.launchPermissionRequest()
             invokeTime = System.currentTimeMillis()
         }
     }

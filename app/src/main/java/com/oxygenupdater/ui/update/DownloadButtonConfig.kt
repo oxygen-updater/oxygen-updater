@@ -23,7 +23,6 @@ import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.common.RichTextType
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadCompleted
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadPaused
@@ -63,10 +62,13 @@ fun downloadButtonConfig(
 ): DownloadButtonConfig {
     val context = LocalContext.current
 
-    val enqueueIfSpaceAvailable = rememberCallback(context, downloadSize) {
+    val enqueueIfSpaceAvailable = {
         enqueueIfSpaceAvailable(
-            context, downloadSize,
-            setCanShowDownloadErrorDialog, setDownloadErrorDialogParams, setManageStorageDialogData
+            context = context,
+            downloadSize = downloadSize,
+            setCanShowDownloadErrorDialog = setCanShowDownloadErrorDialog,
+            setDownloadErrorDialogParams = setDownloadErrorDialogParams,
+            setManageStorageDialogData = setManageStorageDialogData,
         ) { downloadAction(DownloadAction.Enqueue) }
     }
 

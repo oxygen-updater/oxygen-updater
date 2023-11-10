@@ -68,6 +68,7 @@ android {
     packaging.resources.excludes += setOf(
         "{NOTICE,LICENSE}*",
         "META-INF/{AL2.0,LGPL2.1}",
+        // Note: excluding these files may cause debugging tools to stop working, e.g. LayoutInspector
         "META-INF/*.version", // AndroidX version files
         "/*.properties",
         "META-INF/*.properties",

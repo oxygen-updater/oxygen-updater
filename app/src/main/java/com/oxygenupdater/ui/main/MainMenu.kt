@@ -23,7 +23,6 @@ import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.ui.common.DropdownMenuItem
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
@@ -51,19 +50,18 @@ fun MainMenu(
             Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
         }
 
-        val hide = rememberCallback { showMenu = false }
-        DropdownMenu(showMenu, hide) {
+        DropdownMenu(showMenu, { showMenu = false }) {
             // Mark all articles read
             if (showMarkAllRead) DropdownMenuItem(
                 icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
                 textResId = R.string.news_mark_all_read,
             ) {
                 markAllRead()
-                hide()
+                showMenu = false
             }
 
             // OTA URL contribution
-            if (showBecomeContributor) ContributorMenuItem(onDismiss = hide)
+            if (showBecomeContributor) ContributorMenuItem { showMenu = false }
         }
     }
 }

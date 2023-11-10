@@ -75,7 +75,6 @@ import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberCallback
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.dialogs.AdvancedModeSheet
@@ -173,17 +172,15 @@ fun SettingsScreen(
     val context = LocalContext.current
     val customTabIntent = rememberCustomTabsIntent()
     SettingsItem(
-        onClick = rememberCallback(context) {
-            // Use Chrome Custom Tabs to open the privacy policy link
-            customTabIntent.launch(context, "https://oxygenupdater.com/privacy/")
-        },
+        // Use Chrome Custom Tabs to open the privacy policy link
+        onClick = { customTabIntent.launch(context, "https://oxygenupdater.com/privacy/") },
         icon = Icons.Outlined.Policy,
         titleResId = R.string.label_privacy_policy,
         subtitle = stringResource(R.string.summary_privacy_policy),
     )
 
     SettingsItem(
-        onClick = rememberCallback(context, context::openPlayStorePage),
+        onClick = context::openPlayStorePage,
         icon = Icons.Rounded.StarOutline,
         titleResId = R.string.label_rate_app,
         subtitle = stringResource(R.string.summary_rate_app),
@@ -373,7 +370,7 @@ private fun Language() {
         // Delegate to system API on Android 13+
         val context = LocalContext.current
         SettingsItem(
-            onClick = rememberCallback(context, context::openAppLocalePage),
+            onClick = context::openAppLocalePage,
             icon = Icons.Outlined.Language,
             titleResId = R.string.label_language,
             subtitle = language,

@@ -8,7 +8,6 @@ import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.PullRefresh
-import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.faq.FaqScreen
 import com.oxygenupdater.ui.faq.FaqViewModel
 import com.oxygenupdater.viewmodels.BillingViewModel
@@ -42,7 +41,7 @@ class FaqActivity : SupportActionBarActivity(
             FaqScreen(
                 state = state,
                 showAds = showAds,
-                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                bannerAdInit = { bannerAdView = it },
                 modifier = modifier
             )
         }

@@ -8,7 +8,6 @@ import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.PullRefresh
-import com.oxygenupdater.ui.common.rememberTypedCallback
 import com.oxygenupdater.ui.install.InstallGuideScreen
 import com.oxygenupdater.ui.install.InstallGuideViewModel
 import com.oxygenupdater.viewmodels.BillingViewModel
@@ -47,7 +46,7 @@ class InstallGuideActivity : SupportActionBarActivity(
                 state = state,
                 showDownloadInstructions = showDownloadInstructions,
                 showAds = showAds,
-                bannerAdInit = rememberTypedCallback { bannerAdView = it },
+                bannerAdInit = { bannerAdView = it },
                 modifier = modifier
             )
         }
