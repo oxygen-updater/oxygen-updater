@@ -1,5 +1,6 @@
 package com.oxygenupdater.activities
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -21,12 +22,17 @@ class InstallGuideActivity : SupportActionBarActivity(
     private val viewModel by viewModel<InstallGuideViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
 
-    private val showDownloadInstructions = intent.let {
-        it == null || it.getBooleanExtra(IntentShowDownloadInstructions, false)
-    }
+    private var showDownloadInstructions = false
 
     @Volatile
     private var bannerAdView: AdView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        /** Set this first because we need its value before `super` lays out [Content] */
+        showDownloadInstructions = intent?.getBooleanExtra(IntentShowDownloadInstructions, false) == true
+
+        super.onCreate(savedInstanceState)
+    }
 
     @Composable
     override fun Content(modifier: Modifier) {
