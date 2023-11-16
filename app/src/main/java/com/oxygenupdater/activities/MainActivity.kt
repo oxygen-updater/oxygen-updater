@@ -1,6 +1,7 @@
 package com.oxygenupdater.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
@@ -145,31 +146,8 @@ class MainActivity : BaseActivity() {
     private val settingsViewModel by viewModel<SettingsViewModel>()
     private val billingViewModel by viewModel<BillingViewModel>()
 
-    private val startPage: Int
-    private val downloadErrorMessage: String?
-
-    init {
-        val intent = intent
-
-        // Action will be set if opened from a shortcut
-        startPage = when (intent?.action) {
-            ActionPageUpdate -> PageUpdate
-            ActionPageNews -> PageNews
-            ActionPageDevice -> PageDevice
-            else -> PageUpdate
-        }
-
-        // Force-show download error dialog if started from an intent with error info
-        // TODO(compose/update): download error dialog logic is simplified in UpdateScreen. Verify if the dialog meant
-        //  to be shown after clicking the download failed notification (i.e. on activity start) is shown
-        //  immediately in the UI itself, in both cases: app in foreground and background/killed.
-        //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
-        downloadErrorMessage = try {
-            intent?.getStringExtra(KeyDownloadErrorMessage)
-        } catch (ignored: IndexOutOfBoundsException) {
-            null
-        }
-    }
+    private var startPage = PageUpdate
+    private var downloadErrorMessage: String? = null
 
     private val navOptions = NavOptions.Builder()
         // Pop up to the start destination to avoid polluting back stack
@@ -714,6 +692,9 @@ class MainActivity : BaseActivity() {
 
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
+        // Must be before calling setContent, because it uses intent-values
+        handleIntent(intent)
+
         setContent {
             val windowSize = calculateWindowSizeClass(this)
 
@@ -740,6 +721,27 @@ class MainActivity : BaseActivity() {
             if (!it) return@hasRootAccess ContributorUtils.stopDbCheckingProcess(this)
 
             ContributorUtils.startDbCheckingProcess(this)
+        }
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        // Action will be set if opened from a shortcut
+        startPage = when (intent?.action) {
+            ActionPageUpdate -> PageUpdate
+            ActionPageNews -> PageNews
+            ActionPageDevice -> PageDevice
+            else -> PageUpdate
+        }
+
+        // Force-show download error dialog if started from an intent with error info
+        // TODO(compose/update): download error dialog logic is simplified in UpdateScreen. Verify if the dialog meant
+        //  to be shown after clicking the download failed notification (i.e. on activity start) is shown
+        //  immediately in the UI itself, in both cases: app in foreground and background/killed.
+        //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
+        downloadErrorMessage = try {
+            intent?.getStringExtra(KeyDownloadErrorMessage)
+        } catch (ignored: IndexOutOfBoundsException) {
+            null
         }
     }
 
