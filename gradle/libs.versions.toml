@@ -1,13 +1,13 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.1.3"
+agp = "8.1.4"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "2.9.9"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-google-services-plugin = "4.3.15"
+google-services-plugin = "4.4.0"
 
 # https://github.com/google/ksp/releases
 ksp = "1.9.20-1.0.14"
@@ -21,8 +21,8 @@ kotlin = "1.9.20"
 kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.6.0-alpha08" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.0-alpha10"
+compose = "1.6.0-beta01" # keep in sync with Kotlin & accompanist version
+compose-m3 = "1.2.0-alpha11"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-compiler = "1.5.4"
@@ -32,7 +32,7 @@ compose-compiler = "1.5.4"
 accompanist = "0.33.2-alpha" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.8.0"
+activity-compose = "1.8.1"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
 coil-compose = "2.5.0"
@@ -41,10 +41,10 @@ coil-compose = "2.5.0"
 annotation = "1.7.0"
 
 # https://developer.android.com/google/play/billing/release-notes
-billing = "6.0.1"
+billing = "6.1.0"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
-browser = "1.6.0"
+browser = "1.7.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
 core = "1.12.0"
@@ -66,7 +66,7 @@ koin = "3.5.0"
 libsu = "5.2.1"
 
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-lifecycle = "2.7.0-beta01"
+lifecycle = "2.7.0-rc01"
 
 # https://github.com/square/moshi/blob/master/CHANGELOG.md
 moshi = "1.15.0"
