@@ -147,13 +147,9 @@ class MainViewModel(
                 State.FAILED, State.CANCELLED -> DownloadStatus.VerificationFailed
             }
             WorkInfoWithStatus(it, status)
-        } else return@combine WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
+        } else WorkInfoWithStatus(null, lastDownloadStatus ?: DownloadStatus.NotDownloading)
 
-        val status = infoAndStatus.downloadStatus
-        // Post value only if it's changed, or if status is DOWNLOADING (because we need to update views for progress)
-        if (status != lastDownloadStatus || status == DownloadStatus.Downloading) infoAndStatus.also {
-            lastDownloadStatus = status
-        } else WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
+        infoAndStatus.also { lastDownloadStatus = it.downloadStatus }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

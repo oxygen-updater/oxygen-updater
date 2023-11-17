@@ -23,6 +23,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -481,9 +482,14 @@ class MainActivity : BaseActivity() {
             return@composable
         } else viewModel.shouldShowOnboarding = false
 
-        LaunchedEffect(Unit) { // runs once every time this screen is visited
+        DisposableEffect(Unit) {
+            // Run this every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()
             updateViewModel.refreshIfNeeded()
+
+            // Prune finished work when leaving this composable, e.g. when
+            // switching to another screen or opening a new activity
+            onDispose(viewModel::maybePruneWork)
         }
 
         val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable
