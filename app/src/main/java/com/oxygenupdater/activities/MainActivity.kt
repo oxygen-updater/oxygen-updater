@@ -477,11 +477,6 @@ class MainActivity : BaseActivity() {
         windowWidthSize: WindowWidthSizeClass,
         setSubtitleResId: (Int) -> Unit,
     ) = composable(UpdateRoute) {
-        if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
-            viewModel.shouldShowOnboarding = true
-            return@composable
-        } else viewModel.shouldShowOnboarding = false
-
         DisposableEffect(Unit) {
             // Run this every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()
@@ -689,7 +684,6 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setupUmp()
 
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
@@ -714,6 +708,16 @@ class MainActivity : BaseActivity() {
                         label = "OnboardingMainCrossfade",
                     ) {
                         if (it) OnboardingContent(windowSize) else {
+                            if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
+                                viewModel.shouldShowOnboarding = true
+                                return@Crossfade
+                            } else viewModel.shouldShowOnboarding = false
+
+                            DisposableEffect(Unit) {
+                                setupUmp()
+                                onDispose {}
+                            }
+
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
                             Content(windowSize)
                         }
