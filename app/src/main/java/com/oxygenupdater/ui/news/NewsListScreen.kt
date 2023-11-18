@@ -24,7 +24,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -122,6 +121,7 @@ import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsListScreen(
     navType: NavType,
@@ -257,19 +257,14 @@ fun NewsListScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LazyItemScope.NewsListItem(
+private fun NewsListItem(
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
     toggleRead: () -> Unit,
     onClick: () -> Unit,
-) = Column(
-    Modifier
-        .animateItemPlacement()
-        .clickable(!refreshing, onClick = onClick)
-) {
+) = Column(Modifier.clickable(!refreshing, onClick = onClick)) {
     Box {
         if (!refreshing && !item.readState) Badge(Modifier.offset(4.dp, 16.dp))
 
