@@ -276,7 +276,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="incorrect_device_warning_title">Selected device mismatch</string>
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
-	<string name="device_warning_checkbox_title">Ikke vis denne advarselen igjen</string>
+	<string name="do_not_show_again_checkbox">Ikke vis igjen</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Kjøpet ditt er i tilstanden \"betaling venter\". Når betalingen er fullført, vil du få alle fordelene du har rett til.</string>

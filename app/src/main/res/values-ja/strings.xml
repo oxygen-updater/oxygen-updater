@@ -271,7 +271,7 @@
 	<string name="incorrect_device_warning_title">選択されたデバイスとの不一致</string>
 	<string name="incorrect_device_warning_message">\"%2$s\" の代わりに、間違ったデバイスを選択したようです: \"%1$s\"。正しいデバイスのアップデートと通知を受け取るためにアプリ内の設定から選択を変更してください。</string>
 
-	<string name="device_warning_checkbox_title">警告を二度と表示しない</string>
+	<string name="do_not_show_again_checkbox">二度と見せない</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">購入は \"支払い保留中\" になっています。支払いが完了すると特典が付与されます。</string>

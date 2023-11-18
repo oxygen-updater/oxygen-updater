@@ -272,7 +272,7 @@ Andere Geräte, inklusive OnePlus Geräten mit Custom ROMs, werden nicht unterst
 	<string name="incorrect_device_warning_title">Falsches Gerät ausgewählt</string>
 	<string name="incorrect_device_warning_message">Es sieht so aus als ob Sie das falsche Gerät ausgewählt haben: \"%1$s\", anstatt von \"%2$s\". Ändere deine Auswahl in den App Einstellungen um sicherzustellen, dass du Updates und Benachrichtigungen für das richtige Gerät erhälst.</string>
 
-	<string name="device_warning_checkbox_title">"Zeige mir diesen Warnhinweis nicht mehr an"</string>
+	<string name="do_not_show_again_checkbox">"Nicht mehr anzeigen"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ihr Kauf befindet sich im Status "Zahlung ausstehend". Sobald die Zahlung abgeschlossen ist, erhalten Sie alle Leistungen, auf die Sie Anspruch haben.</string>

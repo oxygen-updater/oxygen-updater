@@ -260,7 +260,7 @@
 	<string name="incorrect_device_warning_title">Несоответствие выбранного устройства</string>
 	<string name="incorrect_device_warning_message">Похоже, вы выбрали не то устройство: \"%1$s\" вместо \"%2$s\". Измените свой выбор в настройках приложения, чтобы получать обновления и уведомления для правильного устройства.</string>
 
-	<string name="device_warning_checkbox_title">"Не показывать это предупреждение снова"</string>
+	<string name="do_not_show_again_checkbox">"Не показывать снова"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ваша покупка находится в состоянии «ожидание оплаты». Как только оплата будет завершена, вам будут предоставлены все льготы, на которые вы имеете право.</string>

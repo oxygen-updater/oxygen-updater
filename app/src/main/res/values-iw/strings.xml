@@ -268,7 +268,7 @@
 	<string name="incorrect_device_warning_title">אי התאמה בין המכשירים שנבחרו</string>
 	<string name="incorrect_device_warning_message">נראה כי בחרת את המכשיר הלא נכון: \"%1$s\", במקום \"%2$s\". שנה את בחירתך בהגדרות האפליקציה כדי לוודא שהינך מקבל עדכונים והתראות המיועדים עבור המכשיר שלך.</string>
 
-	<string name="device_warning_checkbox_title">אל תציג אזהרה זו שוב</string>
+	<string name="do_not_show_again_checkbox">אל תראה שוב</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">הרכישה שלך נמצאת במצב \"תשלום בהמתנה\". לאחר השלמת התשלום, תקבל את כל ההטבות שאתה זכאי להן.</string>

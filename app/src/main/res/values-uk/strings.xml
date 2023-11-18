@@ -271,7 +271,7 @@
 	<string name="incorrect_device_warning_title">Вибраний пристрій не співпадає</string>
 	<string name="incorrect_device_warning_message">Схоже ви вибрали невірний пристрій: \"%1$s\", замість \"%2$s\". Щоб отримувати нові оновлення та сповіщення саме для вашого пристрою, виберіть його в налаштуваннях застосунку.</string>
 
-	<string name="device_warning_checkbox_title">Не показувати це попередження знову</string>
+	<string name="do_not_show_again_checkbox">"Більше не з'являйся"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Ваша покупка знаходиться в статусі \"очікування платежу\". Після надходження платежу, вам будуть доступні всі переваги платної версії.</string>

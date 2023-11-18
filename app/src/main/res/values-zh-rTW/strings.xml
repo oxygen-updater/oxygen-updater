@@ -268,7 +268,7 @@
 	<string name="incorrect_device_warning_title">所選裝置不符合</string>
 	<string name="incorrect_device_warning_message">您似乎把自己的裝置選成「%1$s」了，而不是正確的「%2$s」。請更改您在應用程式設定中的選項，以確保您可以收到正確的更新及推送通知。</string>
 
-	<string name="device_warning_checkbox_title">不再顯示此警告</string>
+	<string name="do_not_show_again_checkbox">不再顯示</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">您的購買正處於「正在等待付款」狀態。一旦付款完成，您將獲得所有付款後的權益。</string>

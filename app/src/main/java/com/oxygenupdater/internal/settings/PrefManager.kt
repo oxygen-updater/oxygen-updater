@@ -173,6 +173,7 @@ object PrefManager {
     const val KeySqlToRoomMigrationDone = "sql_to_room_migration_done"
     const val KeyIgnoreUnsupportedDeviceWarnings = "ignore_unsupported_device_warnings"
     const val KeyIgnoreIncorrectDeviceWarnings = "ignore_incorrect_device_warnings"
+    const val KeyIgnoreNotificationPermissionSheet = "ignore_notification_permission_sheet"
     const val KeyDownloadBytesDone = "download_bytes_done"
 
     /**

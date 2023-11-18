@@ -279,7 +279,7 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="incorrect_device_warning_title">Valgt enhed stemmer ikke overens</string>
 	<string name="incorrect_device_warning_message">Det ser ud som om du har valgt forkert enhed: \"%1$s\", vælg \"%2$s\". Ændre dit valg i app\'en indstillinger for at sikre at du modtager de rette opdateringer.</string>
 
-	<string name="device_warning_checkbox_title">Vis ikke denne advarsel igen</string>
+	<string name="do_not_show_again_checkbox">Vis ikke igen</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->

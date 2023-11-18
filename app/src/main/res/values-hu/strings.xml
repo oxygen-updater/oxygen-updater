@@ -271,7 +271,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="incorrect_device_warning_title">A kiválasztott eszköz nem egyezik</string>
 	<string name="incorrect_device_warning_message">Úgy tűnik, hogy rossz eszközt választottál: \"%2$s\" helyett \"%1$s\"-t. Módosítsd a választást az alkalmazás beállításaiban, hogy biztosan a megfelelő eszközhöz kapj frissítéseket és értesítéseket.</string>
 
-	<string name="device_warning_checkbox_title">Ne jelenítse meg újra ezt a figyelmeztetést</string>
+	<string name="do_not_show_again_checkbox">Ne mutasd meg újra</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">A vásárlás \"fizetés függőben\" állapotban van. A fizetés befejezése után minden olyan juttatást megkapsz, amelyre jogosult vagy.</string>

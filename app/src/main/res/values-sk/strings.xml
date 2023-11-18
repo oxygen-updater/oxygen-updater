@@ -269,7 +269,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="incorrect_device_warning_title">Nezhoda s vybraným zariadením</string>
 	<string name="incorrect_device_warning_message">Zdá sa, že ste vybrali nesprávne zariadenie: \"%1$s\", namiesto \"%2$s\". Zmeňte svoj výber v nastaveniach aplikácie, aby ste dostávali aktualizácie a upozornenia pre správne zariadenie.</string>
 
-	<string name="device_warning_checkbox_title">Toto varovanie už nezobrazovať</string>
+	<string name="do_not_show_again_checkbox">Nezobrazujte sa znova</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Váš nákup je v stave \"platba čaká na vybavenie\". Po dokončení platby vám budú poskytnuté všetky výhody, na ktoré máte nárok.</string>

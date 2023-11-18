@@ -268,7 +268,7 @@
 	<string name="incorrect_device_warning_title">Разлика во селектиран уред</string>
 	<string name="incorrect_device_warning_message">Изгледа дека сте го избрале погрешниот уред: \"%1$s\", наместо \"%2$s\". Изменете го вашиот избор во поставките на апликацијата за да се осигурате дека ќе ги добиете ажурирањата и нотификациите за соодветниот уред.</string>
 
-	<string name="device_warning_checkbox_title">Не го прикажувај ова предупредување повеќе</string>
+	<string name="do_not_show_again_checkbox">Не прикажувај повторно</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Вашето купување е на статус \"исчекување на исплата\". Кога плаќањето ќе бите завршено, ќе ви бидат дадени сите бенефити кои ви следуваат.</string>

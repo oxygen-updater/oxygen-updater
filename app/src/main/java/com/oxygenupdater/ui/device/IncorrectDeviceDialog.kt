@@ -31,7 +31,7 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
     ) {
         CheckboxText(
             checked = ignore, onCheckedChange = { ignore = it },
-            textResId = R.string.device_warning_checkbox_title,
+            textResId = R.string.do_not_show_again_checkbox,
             textColor = AlertDialogDefaults.textContentColor.copy(alpha = 0.87f),
             modifier = Modifier.offset((-12).dp) // bring in line with Text
         )

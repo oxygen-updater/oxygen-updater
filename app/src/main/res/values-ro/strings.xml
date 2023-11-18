@@ -269,7 +269,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="incorrect_device_warning_message">Se pare că ați selectat dispozitivul greșit: \"%1$s\", în loc de \"%2$s\". Modificați selecția din setările aplicației pentru a vă asigura că primiți actualizări și notificări pentru dispozitivul corect.
 	</string>
 
-	<string name="device_warning_checkbox_title">Nu mai arăta acest avertisment</string>
+	<string name="do_not_show_again_checkbox">Nu mai apare din nou</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Achiziția se află în stadiul de \"procesare a plății\". Odată ce plata este efectuată, veți avea parte de toate beneficiile oferite dumneavoastră.</string>

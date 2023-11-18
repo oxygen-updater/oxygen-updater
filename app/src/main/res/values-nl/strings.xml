@@ -271,7 +271,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="incorrect_device_warning_title">Geselecteerde toestel komt niet overeen</string>
 	<string name="incorrect_device_warning_message">Het lijkt erop dat je een verkeerd toestel hebt geselecteerd: \"%1$s\", in plaats van \"%2$s\". Verander het geselecteerde toestel in de instellingen van de app, zodat je zeker weet dat je updates en notificaties ontvangt voor het correcte toestel.</string>
 
-	<string name="device_warning_checkbox_title">Toon deze waarschuwing niet meer</string>
+	<string name="do_not_show_again_checkbox">Niet meer laten zien</string>
 
 	<!-- Purchase strings -->
 	<string name="purchase_error_pending_payment">Je aankoop bevindt zich in de \"betaling in behandeling\" status. Zodra de betaling voltooid is, zul je alle voordelen krijgen waar je recht op hebt.</string>

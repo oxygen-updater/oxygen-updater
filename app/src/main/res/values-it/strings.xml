@@ -266,7 +266,7 @@ Altri dispositivi della OnePlus su custom ROM, non sono supportati."</string>
 	<string name="incorrect_device_warning_title">Dispositivo selezionato errato</string>
 	<string name="incorrect_device_warning_message">Sembra che tu abbia selezionato il dispositivo sbagliato: \"%1$s\", invece di \"%2$s\". Modifica la selezione nelle impostazioni dell\'app per assicurarti di ricevere aggiornamenti e notifiche per il dispositivo corretto.</string>
 
-	<string name="device_warning_checkbox_title">"Non mostrare più"</string>
+	<string name="do_not_show_again_checkbox">"Non mostrare più"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Il tuo acquisto è nello stato \"pagamento in sospeso\". Una volta completato il pagamento, ti verranno concessi tutti i vantaggi a cui hai diritto.</string>

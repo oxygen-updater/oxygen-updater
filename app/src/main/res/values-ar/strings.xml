@@ -270,7 +270,7 @@ If you\'d like to know more, feel free to contact us either via <a href="mailto:
 	<string name="incorrect_device_warning_title">Selected device mismatch</string>
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
-	<string name="device_warning_checkbox_title">لا تظهر هذا التحذير مرة أخرى</string>
+	<string name="do_not_show_again_checkbox">لا تظهر مرة أخرى</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->

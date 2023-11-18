@@ -278,7 +278,7 @@ Les autres appareils, incluant les appareils OnePlus fonctionnant sous des roms 
 	<string name="incorrect_device_warning_title">Appareil incorrect sélectionné</string>
 	<string name="incorrect_device_warning_message">Il semblerait que vous ayez sélectionné le mauvais appareil : \"%1$s\" au lieu de \"%2$s\". Changez votre sélection dans les réglages de l\'application afin de pouvoir continuer à recevoir des mises à jour et notifications pour le bon appareil.</string>
 
-	<string name="device_warning_checkbox_title">"Ne plus montrer ce message"</string>
+	<string name="do_not_show_again_checkbox">"Ne plus montrer"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Votre achat est en attente de confirmation par le Play Store. Vous aurez accès à tous les avantages auxquels vous avez droit une fois que le paiement sera complété.</string>

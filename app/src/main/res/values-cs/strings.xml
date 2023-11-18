@@ -271,7 +271,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="incorrect_device_warning_title">Nesoulad zvoleného zařízení</string>
 	<string name="incorrect_device_warning_message">Vypadá to, že jste vybrali nesprávné zařízení: \"%1$s\" místo \"%2$s\". Změňte výběr v nastavení aplikace, abyste zajistili příjem aktualizací a oznámení pro správné zařízení.</string>
 
-	<string name="device_warning_checkbox_title">Znovu nezobrazovat toto upozornění</string>
+	<string name="do_not_show_again_checkbox">Znovu se neukázat</string>
 
 	<!-- Nákupní řetězce -->
 	<string name="purchase_error_pending_payment">Váš nákup je ve stavu \"čekání na platbu\". Po dokončení platby vám budou poskytnuty všechny výhody, na které máte nárok.</string>

@@ -276,7 +276,7 @@
 	<string name="incorrect_device_warning_title">Selected device mismatch</string>
 	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
 
-	<string name="device_warning_checkbox_title">Не приказуј ово упозорење опет</string>
+	<string name="do_not_show_again_checkbox">Не приказуј поново</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->

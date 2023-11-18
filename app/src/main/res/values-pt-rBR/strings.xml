@@ -270,7 +270,7 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="incorrect_device_warning_title">Dispositivo selecionado incompatível</string>
 	<string name="incorrect_device_warning_message">Parece que você selecionou o dispositivo errado:\"%1$s\", ao invés de \"%2$s\". Altere sua seleção nas configurações do aplicativo para garantir o recebimento de atualizações e notificações para o dispositivo correto.</string>
 
-	<string name="device_warning_checkbox_title">Não mostre este aviso novamente</string>
+	<string name="do_not_show_again_checkbox">Não mostrar novamente</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Sua compra está no estado de \"pagamento pendente\". Assim que o pagamento for concluído, você receberá todos os benefícios a que tem direito.</string>
