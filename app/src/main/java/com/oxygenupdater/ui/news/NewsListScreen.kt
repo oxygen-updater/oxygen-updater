@@ -121,7 +121,6 @@ import java.time.LocalDateTime
 import kotlin.math.abs
 import kotlin.random.Random
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsListScreen(
     navType: NavType,

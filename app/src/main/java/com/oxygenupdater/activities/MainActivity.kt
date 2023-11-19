@@ -1,6 +1,5 @@
 package com.oxygenupdater.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -54,6 +53,8 @@ import coil.size.Size
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import com.google.android.gms.ads.AdView
+import com.google.android.ump.ConsentDebugSettings
+import com.google.android.ump.ConsentDebugSettings.DebugGeography
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentInformation.PrivacyOptionsRequirementStatus
 import com.google.android.ump.ConsentRequestParameters
@@ -149,6 +150,7 @@ class MainActivity : BaseActivity() {
 
     private var startPage = PageUpdate
     private var downloadErrorMessage: String? = null
+    private lateinit var consentInformation: ConsentInformation
 
     private val navOptions = NavOptions.Builder()
         // Pop up to the start destination to avoid polluting back stack
@@ -684,6 +686,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        consentInformation = UserMessagingPlatform.getConsentInformation(this)
 
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
@@ -755,21 +758,29 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private lateinit var consentInformation: ConsentInformation
     private fun setupUmp() {
-        @SuppressLint("HardwareIds")
         val params = ConsentRequestParameters.Builder()
-            .setTagForUnderAgeOfConsent(false)
-            .build()
+        if (BuildConfig.DEBUG) params.setConsentDebugSettings(
+            ConsentDebugSettings.Builder(this)
+                .setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA)
+                .setForceTesting(true)
+                .build()
+        )
 
-        consentInformation = UserMessagingPlatform.getConsentInformation(this)
-        consentInformation.requestConsentInfoUpdate(this, params, {
+        if (!::consentInformation.isInitialized) {
+            consentInformation = UserMessagingPlatform.getConsentInformation(this)
+        }
+
+        consentInformation.requestConsentInfoUpdate(this, params.build(), {
             UserMessagingPlatform.loadAndShowConsentFormIfRequired(this@MainActivity) { error ->
                 logUmpConsentFormError(TAG, error)
 
-                if (consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
+                if (error != null || consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
             }
-        }, { error -> logUmpConsentFormError(TAG, error) })
+        }, { error ->
+            logUmpConsentFormError(TAG, error)
+            (application as? OxygenUpdater)?.setupMobileAds()
+        })
 
         // Check if SDK can be initialized in parallel while checking for new consent info.
         // Consent obtained in the previous session can be used to request ads.

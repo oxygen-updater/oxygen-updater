@@ -444,7 +444,7 @@ fun PrivacyOptionsItem(
         onClick = showPrivacyOptionsForm,
         icon = Icons.Rounded.AdsClick,
         titleResId = R.string.settings_ad_privacy,
-        subtitle = null,
+        subtitle = stringResource(R.string.settings_ad_privacy_subtitle),
     )
 }
 
