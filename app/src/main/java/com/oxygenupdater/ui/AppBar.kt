@@ -192,11 +192,7 @@ fun CollapsingAppBar(
             val hover = colorScheme.backgroundVariant.copy(alpha = 0.75f)
             val surface = colorScheme.surface
             // Lerp from 75% opacity hover to 100% opacity surface
-            val background by remember(hover, surface) {
-                derivedStateOf(structuralEqualityPolicy()) {
-                    lerp(hover, surface, collapsedFraction)
-                }
-            }
+            val background = lerp(hover, surface, collapsedFraction)
 
             image(size)
             Box(size.background(background))
@@ -217,27 +213,21 @@ fun CollapsingAppBar(
                 .padding(
                     start = if (onNavIconClick != null) {
                         // Lerp only if there's a nav icon
-                        remember {
-                            derivedStateOf(structuralEqualityPolicy()) {
-                                lerp(20f, 56f, collapsedFraction).dp
-                            }
-                        }.value
+                        lerp(20f, 56f, collapsedFraction).dp
                     } else 16.dp, end = 16.dp
                 )
         ) {
             CollapsingAppBarTitle(scrollBehavior = scrollBehavior, title = title)
 
-            if (subtitle != null) Text(
-                text = subtitle,
-                fontSize = remember {
-                    derivedStateOf(structuralEqualityPolicy()) {
-                        val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
-                        lerp(maxSubtitleSize, minSubtitleSize, collapsedFraction).sp
-                    }
-                }.value,
-                overflow = TextOverflow.Ellipsis, maxLines = 1,
-                style = MaterialTheme.typography.bodyLarge,
-            )
+            if (subtitle != null) {
+                val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
+                Text(
+                    text = subtitle,
+                    fontSize = lerp(maxSubtitleSize, minSubtitleSize, collapsedFraction).sp,
+                    overflow = TextOverflow.Ellipsis, maxLines = 1,
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+            }
         }
     }, appBarModifier) { measurables, constraints ->
         var imagePlaceable: Placeable? = null
@@ -276,6 +266,7 @@ private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title
     val tooltipState = rememberTooltipState(isPersistent = true)
     BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
 
+    val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
     // Sometimes it goes out of boundary, don't know why. Force within [0,1].
     val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
     TooltipBox(TooltipDefaults.rememberRichTooltipPositionProvider(), {
@@ -292,17 +283,8 @@ private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title
             text = title,
             onTextLayout = { showTooltip = it.hasVisualOverflow },
             overflow = TextOverflow.Ellipsis,
-            maxLines = remember {
-                derivedStateOf(structuralEqualityPolicy()) {
-                    lerp(4, 1, collapsedFraction)
-                }
-            }.value,
-            fontSize = remember {
-                derivedStateOf(structuralEqualityPolicy()) {
-                    val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
-                    lerp(maxTitleSize, minTitleSize, collapsedFraction).sp
-                }
-            }.value,
+            maxLines = lerp(4, 1, collapsedFraction),
+            fontSize = lerp(maxTitleSize, minTitleSize, collapsedFraction).sp,
             style = MaterialTheme.typography.headlineSmall,
         )
     }
