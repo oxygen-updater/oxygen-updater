@@ -26,6 +26,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -311,8 +312,11 @@ class MainActivity : BaseActivity() {
             IncorrectDeviceDialog(it)
         }
 
-        // Referential equality because we're reusing static Pairs
-        var snackbarText by rememberSaveableState<IntIntPair?>("snackbarText", null, true)
+        var snackbarText by remember {
+            // Referential equality because we're reusing static Pairs
+            mutableStateOf<IntIntPair?>(null, referentialEqualityPolicy())
+        }
+
         AppUpdateInfo(
             info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             snackbarMessageId = { snackbarText?.first },
