@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
-	<string name="device_chooser_error_title">Nem sikerült beolvasni a támogatott eszközök listáját</string>
-
+<resources>
 	<!-- Update information strings-->
 	<string name="enable">Engedélyezés</string>
 	<string name="update_information_description_not_available">A frissítés által nyújtott új funkciókról nincs hivatalos információ. Az ilyen frissítés rendszerint hibajavításokat, teljesítményjavításokat és / vagy kritikus biztonsági frissítéseket biztosít az eszközödhöz.</string>
@@ -13,11 +11,10 @@
 	<string name="update_information_banner_server">Koppints ide a fontos értesítések megtekintéséhez</string>
 	<string name="update_information_banner_advanced_mode_tip">A(z) \"%1$s\" frissítési módot választottad. Engedélyezd a haladó módot ha erre a frissítési módra szeretnél váltani.</string>
 	<string name="update_information_header_advanced_mode_hint">A Haladó mód engedélyezve van</string>
-	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára.\n\nA haladó módot a beállításokban kapcsolhatod ki.</string>
-	<string name="update_information_different_version_changelog_notice">A legfrissebb frissítés módosítási naplóját nézi a \"%1$s\" frissítési sávon. Ha telepíteni szeretnéd ezt a frissítést, előbb be kell kapcsolnod a haladó módot (a beállításokban).\n\nHa azonban inkább az aktuálisan telepített verzió módosítási naplóját szeretnéd látni, akkor vissza kell váltanod a helyes frissítési módszerre.</string>
-	<string name="update_information_last_checked_on">Utoljára ellenőrizve: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Mivel engedélyezted a haladó módot, letöltheted a legújabb ZIP fájlt a(z) \"%1$s\" számára. A haladó módot a beállításokban kapcsolhatod ki.</string>
+	<string name="update_information_different_version_changelog_notice_base">Megjegyzés: ez a változásjegyzék a legújabb elérhető verzióra (%1$s) vonatkozik a \"%2$s\" frissítési módszerrel</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ha ezt a frissítést kívánja telepíteni, engedélyeznie kell a \"Haladó mód\" opciót a beállításokban.</string>
 	<string name="update_information_no_update_data_available">Nem állnak rendelkezésre frissítési információk</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">A rendszer naprakész</string>
 	<string name="update_information_unknown_update_name">Névtelen frissítés a következőhöz: %1$s</string>
 	<string name="update_information_view_update_information">frissítési információk megtekintése</string>
@@ -44,7 +41,7 @@
 	<string name="download_complete_notification">Érintsd meg a telepítés elindításához</string>
 
 	<string name="download_error">letöltési Hiba</string>
-	<string name="download_error_close">BEZÁRÁS</string>
+	<string name="download_error_close">Bezárás</string>
 	<string name="download_error_corrupt">A letöltött frissítés fájl sérült! Próbáld meg újra letölteni.</string>
 	<string name="download_error_server">Szerverhiba történt a frissítés letöltése közben. Próbáld újra letölteni a frissítést.</string>
 	<string name="download_error_internal">Sajnos technikai hiba történt a frissítés letöltése közben. Próbáld meg újra letölteni. Ha ez továbbra is fennáll, kérjük, fordulj segítségért az alkalmazás fejlesztőjéhez.</string>
@@ -53,8 +50,8 @@
 Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">A fájl letöltésre került, de nem sikerült áthelyezni a megfelelő könyvtárba. Nyiss meg egy fájlkezelőt, keresd meg a \"%1$s\" helyet, és kézzel helyezd át a fájlt a belső tárolóhely legfelső könyvtárába.</string>
 
-	<string name="download_error_retry">ÚJRA</string>
-	<string name="download_error_resume">FOLYTATÁS</string>
+	<string name="download_error_retry">Újra</string>
+	<string name="download_error_resume">Folytatás</string>
 	<string name="download_error_storage">Nincs elegendő tárhely a készüléken a frissítés letöltéséhez. Távolíts el néhány fájlt, és próbáld meg újra letölteni.</string>
 
 	<string name="download_failed">Sikertelen letöltés</string>
@@ -92,9 +89,7 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 	<string name="summary_please_wait">Kérlek várj…</string>
 	<string name="summary_update_method">Először válassz ki egy eszközt</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva: \"%1$s\"</string>
-	<string name="summary_theme">Téma beállítása</string>
-	<string name="summary_language">Állítsa be a nyelvet</string>
+	<string name="summary_important_notifications_disabled">Néhány fontos értesítés le van tiltva:</string>
 	<string name="summary_privacy_policy">Megtekintés interneten</string>
 	<string name="summary_rate_app">Hagyj 5 csillagos értékelést</string>
 
@@ -125,78 +120,46 @@ Ha többet szeretnél tudni, vedd fel velünk a kapcsolatot <a href="mailto:supp
 
 	<string name="settings_device">Eszköz</string>
 	<string name="settings_entered_incorrectly">Hiba a beállítások mentésekor. Kérjük, menj vissza, és válaszd ki újra eszközöd / frissítési módszered.</string>
-	<string name="settings_explanation_incremental_full_update">Az inkrementális frissítés bármilyen verzióból telepíthető (kivéve, ha nyitott bootloadered van; ilyenkor mindig a teljes frissítést kell frissítési módszerként választanod).\n\nAz OxygenOS bétafrissítése mindig telepíthető, és akkor is, ha stabil verzión vagy. A stabilról béta módra váltáshoz engedélyezned kell a haladó módot a beállításokban. A béta esetén a teljes és az inkrementális frissítési módszerek ugyanúgy működnek, mint a stabil verziók esetében.</string>
 
 	<string name="settings_push_from_server">Tájékoztató és figyelmeztető üzenetek</string>
 
 	<string name="settings_saving">A beállításokat még mindig mentimentődnek. Ha ez túl sokáig tart: Ellenőrizd a hálózati kapcsolatot, lépj ki az alkalmazásból, és indítsd újra.</string>
 
 	<string name="settings_advanced_mode">Haladó mód</string>
-	<string name="settings_advanced_mode_explanation">A haladó mód hides elrejti az \"A rendszer naprakész\" üzenetet, és lehetővé teszi az összes frissítés letöltését és telepítését, akkor is, hogy ha ezek nem lennének kompatibilisek az eszközöddel.\n\nEz hasznos lehet ha:\n&#8226; Normál verzióról béta verzióra frissítesz\n&#8226; Béta verzióról stabil verzióra frissítesz vissza (ne felejtsd el készülékd gyári állapotát visszaállítani)\n&#8226; Jelenlegi rendszerverzió újratelepítése.</string>
+	<string name="settings_advanced_mode_explanation">"Normális esetben az alkalmazás az aktuális operációs rendszer verziója alapján mutatja a frissítéseket. A speciális módban mindig a legújabb elérhető frissítés jelenik meg, függetlenül az eszköz/verzió kompatibilitástól.
+
+Ez hasznos lehet, ha szeretné:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Újra letölteni a legújabb verziót, még akkor is, ha már rajta van.
+&#8226; Másik frissítési sávra váltani"</string>
+	<string name="settings_advanced_mode_caption">"A speciális módra csak a fenti helyzetekben lehet szükség. Nem szabad engedélyeznie, hacsak nem tudja, mit csinál."</string>
 
 	<string name="settings_update_method">Frissítési módszer</string>
 	<string name="settings_upload_logs">Használati adatok és a naplók megosztása</string>
+	<string name="settings_ad_privacy">GDPR hirdetési hozzájárulás</string>
+	<string name="settings_ad_privacy_subtitle">"EGT/UK felhasználói számára"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">GYIK</string>
 	<string name="faq_menu_item">GYIK</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Üdvözölünk</string>
+	<string name="onboarding">Beállítás</string>
 	<string name="onboarding_finished_button">Alkalmazás elindítása</string>
 
-	<string name="onboarding_page_1_title">Üdvözlünk az Oxygen Updater-ben!</string>
-	<string name="onboarding_page_1_text">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n\n&#8226; Rootolt eszközök egyszerű frissítését\n\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban\n\nHúzd balra a folytatáshoz.</string>
-	<string name="onboarding_page_1_caption">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is.\n\nAz alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
-	<string name="onboarding_page_2_title">Válaszd ki a készüléked</string>
-	<string name="onboarding_page_2_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
-	<string name="onboarding_page_3_title">Válaszd ki a frissítési módszered</string>
-	<string name="onboarding_page_3_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál.\n\nAzonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget.\n\nHa OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
-	<string name="onboarding_page_4_title">Készen állsz!</string>
-	<string name="onboarding_page_4_text">Reméljük élvezni fogod az alkalmazás használatát!\n\nA beállításokat később bármikor megváltoztathatod. Ehhez: érintd meg a három pontot a jobb felső sarokban, majd érintsd meg a \"Beállítások\" gombot.</string>
+	<string name="onboarding_app_uses">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OnePlus-szal és az OxygenOS-szel kapcsolatban</string>
+	<string name="onboarding_disclaimer">Ez nem egy hivatalos OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
+	<string name="onboarding_device_chooser_title">Válaszd ki a készüléked</string>
+	<string name="onboarding_device_chooser_caption">A készüléked általában már feljebb ki van választva. Ha nem, válaszd ki a készüléket feljebb.</string>
+	<string name="onboarding_method_chooser_title">Válaszd ki a frissítési módszered</string>
+	<string name="onboarding_method_chooser_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál. Azonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget. Ha OxygenOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
+	<string name="onboarding_caption">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Telepítés</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Telepítsd a frissítést a telepítési útmutatóban bemutatott utasítások szerint.</string>
 	<string name="install_guide">Telepítési útmutató</string>
-	<string name="install_guide_subtitle">Telepítési útmutató - %2$d -ből %1$d</string>
-	<string name="install_guide_tip">&#8226; Javasoljuk, hogy írj le minden lépést, mivel a frissítés telepítésekor ki kell majd kapcsolnod az eszközt.</string>
-
-	<string name="install_guide_page_1_title">Töltsd le a frissítést</string>
-	<string name="install_guide_page_1_text">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
-
-	<string name="install_guide_page_2_title">Felkészülés a telepítésre</string>
-	<string name="install_guide_page_2_text">"Megjegyzés: A frissítés telepítésére a készülék szabványos rendszerfrissítések részének speciális oldaláról kerül sor. Ha valamilyen oknál fogva megjelenik egy rendszerfrissítés a szakasz megnyitásakor, akkor dönthet az első frissítés telepítéséről is. Ezután nyissa meg újra az Oxygen Updater készüléket, hogy megnézze, teljesen naprakész-e.
-
-Instrukciók:
-&#8226; Zárd be az Oxygen Updater-t a középső gomb megnyomásával.
-
-&#8226; Nyisd meg a Beállítások alkalmazást. Ennek az alkalmazástárban kell lennie.
-
-&#8226; Görgess lefelé, amíg meg nem jelenik a Rendszerfrissítések. Érintsd meg."</string>
-
-	<string name="install_guide_page_3_title">Telepítsd a frissítést</string>
-	<string name="install_guide_page_3_text">"Most, hogy a Rendszerfrissítések alkalmazásban vagy, ideje telepíteni a frissítést.
-
-&#8226; A Rendszerfrissítések részben érintse meg a fogaskerék ikont a jobb felső sarokban
-
-&#8226; Most válaszd ki a \"Helyi frissítés\" lehetőséget. Megjelenik egy fájlkiválasztási képernyő.
-
-&#8226; Ezen a képernyőn érintsd meg az Oxygen Updater használatával letöltött frissítési fájlt. A nevének \"%1$sOxygen\" -nel kell kezdődnie.
-
-&#8226; Érintsd meg a \"Frissítés most\" elemet. A telepítésnek automatikusan el kell indulnia."</string>
-
-	<string name="install_guide_page_4_title">Várj, amíg a telepítés befejeződik</string>
-	<string name="install_guide_page_4_text">"&#8226; A telefon most telepíti a frissítést, és megjelenik egy folyamatjelző sáv. Várj, amíg a telepítés befejeződik. A telepítés néhány perctől 15 percig is eltarthat.
-
-&#8226; Ezután a telefon újraindul a frissítés befejezéséhez."</string>
-
-	<string name="install_guide_page_5_title">Kész. Élvezd az új OxygenOS verziót!</string>
-	<string name="install_guide_page_5_text">&#8226; Miután az eszköz optimalizálta alkalmazásokat, a frissítés sikeresen telepítve lett.\nEnnek ellenőrzéséhez ellenőrizze a rendszer jelenlegi verzióját a következők szerint:\n\n&#8226; Lépj a Beállítások menübe, érintsd meg az \"A telefonról\" gombot, és ellenőrizd az OxygenOS verziót.\n\n&#8226; Ha tetszik ez az alkalmazás, adj neki 5 csillagot a Google Playen!</string>
-
-	<string name="install_guide_close_button">Telepítési útmutató bezárása</string>
+	<string name="install_guide_download_instructions">&#8226; A frissítés letöltésének megkezdéséhez nyomd meg a Letöltés gombot.\n&#8226; A letöltési folyamat az alkalmazásban jelenik meg, és értesítésként az értesítési sávban.\n&#8226; Amikor a letöltés befejeződött, egy értesítést fogsz látni, amelynek szövege: \"Letöltés kész\" lesz.\nHa letöltési hiba történt, nyisd meg az alkalmazást, és próbáld meg újra letölteni a frissítést. Ha ez nem működik, ellenőrizd, hogy működőképes-e a kapcsolat. Ellenkező esetben vedd fel a kapcsolatot az alkalmazás fejlesztőjével. Ezt megteheted a Google Play Áruház \"Saját alkalmazások\" szekciójában.</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">A készüléked támogatott</string>
@@ -213,7 +176,7 @@ Instrukciók:
 	<string name="device_information_image_description">Eszköz kép</string>
 	<string name="device_information_incremental_os_version">Inkrementális OS verzió</string>
 	<string name="device_information_os_version">Android verzió</string>
-	<string name="device_information_oxygen_os_version">OxygenOS verzió</string>
+	<string name="device_information_oxygen_os_version">OS verzió</string>
 	<string name="device_information_oxygen_os_ota_version">OTA verzió</string>
 	<string name="device_information_patch_level_version">Biztonsági javítás dátuma</string>
 	<string name="device_information_serial_number">Sorozatszám</string>
@@ -232,6 +195,8 @@ Instrukciók:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Maradjon értesítve"</string>
+	<string name="notification_permission_text">"Engedélyezze, hogy az alkalmazás értesítse Önt az OTA-frissítésekről, hírekről, a folyamatban lévő letöltés állapotáról és egyéb fontos dolgokról. A beállításokat később az alkalmazás beállításaiban finomhangolhatja."</string>
 	<string name="notification_new_device_text">A %1$s már támogatott. Nyisd meg az alkalmazást ahhoz hogy kiválaszd ezt az eszközt.</string>
 	<string name="notification_no_notification_support">Telepítsd vagy frissítsd a Google Play szolgáltatásokat a push értesítések engedélyezéséhez.</string>
 	<string name="notification_version">%1$s már elérhető a %2$s számára!</string>
@@ -257,23 +222,9 @@ Instrukciók:
 	<string name="general_notification_channel_description">Általános értesítések, amelyek nem illenek más kategóriákba</string>
 	<string name="url_submitted_notification_channel_description">Értesítést kap, ha sikeresen elküldte OTA URL-jét a csapatunknak.\nAz alkalmazás beállításaiban lemondhat az URL-ek automatikus elküldéséről.</string>
 
-	<!-- Help strings -->
-	<string name="help">Súgó</string>
-	<string name="help_updating_your_device_title">Az eszközöd frissítése</string>
-	<string name="help_updating_your_device_text">Az alkalmazás megnyitásakor megnézheted, hogy elérhető-e rendszerfrissítés. Ha elérhető frissítés, telepítheted azt.\n\nA telepítés megkezdéséhez érintsd meg a \"Letöltés\" gombot (a frissítés leírása alatt) a letöltés megkezdéséhez. Amikor a letöltés befejeződött, megjelenik a telepítési képernyő. Ha elhagytad az alkalmazást, vagy a képernyő nem jelenik meg, koppints a \"Telepítés\" gombra, amely a \"Letöltés\" gomb mellett látható.\n\nA telepítő először ellenőrzi, hogy rootolt-e az eszközöd. Ha rootolt eszközöd van, add meg a root engedélyt, amikor a rendszer kéri, és válaszd ki a frissítés telepítésének módját. Ellenkező esetben kövesd a Kézi telepítés utasításait.\n\nAutomatikus telepítés:\nCsak a telepítési lehetőségeket kell kiválasztanod. Az alapértelmezett beállítások ajánlottak, azzal a különbséggel, hogy meg kell adni a root csomagot, amelyet (újra) telepíteni kell. Válaszd ki a root csomagot (zip fájl) a kék mappa gombbal, és érintsd meg a \"Telepítés indítása\" gombot a telepítés megkezdéséhez.\n\nKézi telepítés:\nLátsz egy telepítési útmutatót a képernyőn. Írd le az utasításokat, és hajtsd végre azokat a frissítés telepítéséhez szükséges módon.</string>
-	<string name="help_reading_news_title">A legújabb hírek elolvasása</string>
-	<string name="help_reading_news_text">A hírek a Frissítés képernyőtől balra jelennek meg. A legújabb elemek a tetején jelennek meg. Csak érints meg egy elemet az elolvasáshoz.\nNyomj a vissza nyílra vagy nyomd meg a vissza gombot, hogy visszatérj a hírek képernyőjére.</string>
-	<string name="help_device_information_title">Eszközinformációk megtekintése</string>
-	<string name="help_device_information_text">A készülék néhány specifikációját a Frissítés képernyőtől jobbra található képernyő segítségével tekintheted meg. Ez hasznos lehet egy támogatási kérelem benyújtásakor, amely során esetleg kérhetik a készüléked egyes műszaki adatait.</string>
-	<string name="help_change_settings_title">Beállítások módosítása</string>
-	<string name="help_change_settings_text">A beállításokat módosíthatod a jobb felső sarokban lévő három pont megérintésével, majd a Beállítások megérintésével.\nA következő beállításokat módosíthatod:\n\n• Eszköz és frissítési módszer\n• Push értesítések\n• Alkalmazáson belüli értesítések\n• Adatvédelmi beállítások (naplófeltöltés).\n\nA kapcsolókkal kapcsolhatod ki és be az értesítési / adatvédelmi beállításokat. Válasssz egy eszközt és / vagy frissítési módszert a kapcsolók felett látható legördülő menük segítségével. A legördülő menük nem láthatók? Ellenőrizd az internetkapcsolatod, és nyisd meg újra a Beállítások képernyőt.</string>
-
 	<!-- News strings -->
 	<string name="news">Hírek</string>
-	<string name="news_date_published">Utolsó frissítés: %1$s</string>
-	<string name="news_empty">Ennek a cikknek nincs tartalma.</string>
-	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"ÚJRA\" gombot a cikk megnyitásához.</string>
-	<string name="news_load_id_error"><![CDATA[Nem sikerült megnyitni a cikket érvénytelen URL-ről: %1$s. Ellenőrizd az URL-t, vagy jelentsd nekünk ezt <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
+	<string name="news_load_network_error">A cikk megnyitása nem sikerült. Ellenőrizze a kapcsolatot, és nyomja meg az \"Újra\" gombot a cikk megnyitásához.</string>
 	<string name="news_unread_count_1">%1$d olvasatlan híred van. Érints meg a megtekintésükhöz.</string>
 	<string name="news_unread_count_2">%1$d olvasatlan híred van. Érints meg az összes megtekintéséhez.</string>
 	<string name="news_mark_read">Jelöld olvasottként</string>
@@ -299,12 +250,10 @@ Instrukciók:
 	<string name="error_app_outdated">Jajj ne!</string>
 	<string name="error_app_outdated_message">Az alkalmazás e verziója elavult. Ideje frissíteni! Érintsd meg az alábbi \"Google Play\" lehetőséget. A Google Playen belül érintsd meg a \"Frissítés\" elemet.</string>
 	<string name="error_app_requires_network_connection">Nincs kapcsolat</string>
-	<string name="error_app_requires_network_connection_message">Nem sikerült kapcsolódni a szerverhez. Kérjük, ellenőrizd, hogy működőképes-e a kapcsolat. Az alkalmazás bezárul.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Nincs kapcsolat.</string>
 	<string name="error_maintenance">Szerver karbantartás</string>
 	<string name="error_maintenance_message">Kérlek várj. A szerver hamarosan elérhető lesz.</string>
-	<string name="error_maintenance_retry">Lehetséges, hogy a szerver nem működik karbantartás miatt. Próbáld újra egy idő után, vagy jelentsd nekünk <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Lehetséges, hogy a szerver nem működik karbantartás miatt. Próbáld újra egy idő után, vagy jelentsd nekünk <a href="mailto:support@oxygenupdater.com">emailen</a> vagy a <a href="https://discord.gg/5TXdhKJ">Discord szerverünkön</a>.]]></string>
 	<string name="error_reload">Újratöltés</string>
 
 	<string name="error_unable_to_rate_app">Nem tudod értékelni az alkalmazást, mert a Google Play Áruház hiányzik az eszközödről.</string>
@@ -322,14 +271,13 @@ Instrukciók:
 	<string name="incorrect_device_warning_title">A kiválasztott eszköz nem egyezik</string>
 	<string name="incorrect_device_warning_message">Úgy tűnik, hogy rossz eszközt választottál: \"%2$s\" helyett \"%1$s\"-t. Módosítsd a választást az alkalmazás beállításaiban, hogy biztosan a megfelelő eszközhöz kapj frissítéseket és értesítéseket.</string>
 
-	<string name="device_warning_checkbox_title">Ne jelenítse meg újra ezt a figyelmeztetést</string>
+	<string name="do_not_show_again_checkbox">Ne mutasd meg újra</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">A vásárlás \"fizetés függőben\" állapotban van. A fizetés befejezése után minden olyan juttatást megkapsz, amelyre jogosult vagy.</string>
 	<string name="purchase_error_after_payment">A hirdetésmentes verzió megvásárlása sikertelen, mert belső hiba történt. Kérjük, próbáld újra néhány perc múlva. Ha már fizettél, vedd fel a kapcsolatot a Google Play ügyfélszolgálatával.</string>
 
 	<!-- Other strings-->
-	<string name="error">Hiba</string>
 	<string name="icon">Ikon</string>
 	<string name="loading">Betöltés…</string>
 	<string name="processing">Feldolgozás…</string>

@@ -27,13 +27,12 @@ import com.oxygenupdater.enums.NotificationType.GENERAL_NOTIFICATION
 import com.oxygenupdater.enums.NotificationType.NEWS
 import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
 import com.oxygenupdater.enums.NotificationType.NEW_VERSION
-import com.oxygenupdater.extensions.attachWithLocale
 import com.oxygenupdater.extensions.setBigTextStyle
-import com.oxygenupdater.models.AppLocale
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DEVICE_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GENERAL_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NEWS_NOTIFICATION_CHANNEL_ID
-import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UPDATE_NOTIFICATION_CHANNEL_ID
+import com.oxygenupdater.ui.currentLocale
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DeviceNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GeneralNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NewsNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UpdateNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.Utils
 import org.koin.java.KoinJavaComponent.getKoin
@@ -46,11 +45,9 @@ import kotlin.random.Random
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class DisplayDelayedNotificationWorker(
-    context: Context,
+    private val context: Context,
     parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
-
-    private val context = context.attachWithLocale(false)
 
     private val messageContents = parameters.inputData.keyValueMap
         .entries
@@ -82,19 +79,22 @@ class DisplayDelayedNotificationWorker(
                 messageContents[NotificationElement.DEVICE_NAME.name],
                 messageContents[NotificationElement.NEW_VERSION_NUMBER.name]
             )
+
             GENERAL_NOTIFICATION -> getGeneralNotificationBuilder(
-                if (AppLocale.get() == AppLocale.NL) {
+                if (currentLocale.language.lowercase() == "nl") {
                     messageContents[NotificationElement.DUTCH_MESSAGE.name]
                 } else {
                     messageContents[NotificationElement.ENGLISH_MESSAGE.name]
                 }
             )
+
             NEWS -> {
                 // If this is a "bump" notification, show it only to people who haven't yet read the article
                 // A "bump" is defined as re-sending the notification so that people who haven't yet read the article can read it
                 // However, only app versions from v4.1.0 onwards properly support this,
                 // even though a broken implementation was added in v4.0.0 (Kotlin rebuild).
                 // So use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
+                @Suppress("DEPRECATION")
                 if (messageContents[NotificationElement.NEWS_ITEM_IS_BUMP.name]?.toBoolean() == true
                     && newsItemDao.getById(
                         messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
@@ -104,7 +104,7 @@ class DisplayDelayedNotificationWorker(
                 }
 
                 getNewsArticleNotificationBuilder(
-                    if (AppLocale.get() == AppLocale.NL) {
+                    if (currentLocale.language.lowercase() == "nl") {
                         messageContents[NotificationElement.DUTCH_MESSAGE.name]
                     } else {
                         messageContents[NotificationElement.ENGLISH_MESSAGE.name]
@@ -197,11 +197,11 @@ class DisplayDelayedNotificationWorker(
     private fun getNotificationId(
         type: NotificationType,
     ) = when (type) {
-        NEWS -> NotificationIds.REMOTE_NEWS
-        NEW_VERSION -> NotificationIds.REMOTE_NEW_UPDATE
-        NEW_DEVICE -> NotificationIds.REMOTE_NEW_DEVICE
-        GENERAL_NOTIFICATION -> NotificationIds.REMOTE_GENERAL
-        else -> NotificationIds.REMOTE_UNKNOWN
+        NEWS -> NotificationIds.RemoteNews
+        NEW_VERSION -> NotificationIds.RemoteNewUpdate
+        NEW_DEVICE -> NotificationIds.RemoteNewDevice
+        GENERAL_NOTIFICATION -> NotificationIds.RemoteGeneral
+        else -> NotificationIds.RemoteUnknown
     } + when (type) {
         NEWS -> messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toInt() ?: 0
         NEW_DEVICE, GENERAL_NOTIFICATION -> random.nextInt(1, 100000)
@@ -211,10 +211,10 @@ class DisplayDelayedNotificationWorker(
     private fun getNotificationGroupId(
         type: NotificationType,
     ) = when (type) {
-        NEW_DEVICE -> NotificationIds.REMOTE_NEW_DEVICE_GROUP
-        NEWS -> NotificationIds.REMOTE_NEWS_GROUP
-        GENERAL_NOTIFICATION -> NotificationIds.REMOTE_GENERAL_GROUP
-        else -> NotificationIds.REMOTE_UNKNOWN_GROUP
+        NEW_DEVICE -> NotificationIds.RemoteNewDeviceGroup
+        NEWS -> NotificationIds.RemoteNewsGroup
+        GENERAL_NOTIFICATION -> NotificationIds.RemoteGeneralGroup
+        else -> NotificationIds.RemoteUnknownGroup
     }
 
     /**
@@ -225,16 +225,16 @@ class DisplayDelayedNotificationWorker(
     private fun getNotificationGroupKey(
         type: NotificationType,
     ) = when (type) {
-        NEW_VERSION -> UPDATE_NOTIFICATION_CHANNEL_ID
-        NEWS -> NEWS_NOTIFICATION_CHANNEL_ID
-        NEW_DEVICE -> DEVICE_NOTIFICATION_CHANNEL_ID
-        GENERAL_NOTIFICATION -> GENERAL_NOTIFICATION_CHANNEL_ID
+        NEW_VERSION -> UpdateNotifChannelId
+        NEWS -> NewsNotifChannelId
+        NEW_DEVICE -> DeviceNotifChannelId
+        GENERAL_NOTIFICATION -> GeneralNotifChannelId
     }
 
     private fun getNewVersionNotificationBuilder(
         deviceName: String?,
         versionNumber: String?,
-    ) = NotificationCompat.Builder(context, UPDATE_NOTIFICATION_CHANNEL_ID)
+    ) = NotificationCompat.Builder(context, UpdateNotifChannelId)
         .setPriority(PRIORITY_HIGH)
         .setContentTitle(context.getString(R.string.update_notification_channel_name))
         .setBigTextStyle(
@@ -247,14 +247,14 @@ class DisplayDelayedNotificationWorker(
 
     private fun getNewsArticleNotificationBuilder(
         message: String?,
-    ) = NotificationCompat.Builder(context, NEWS_NOTIFICATION_CHANNEL_ID)
+    ) = NotificationCompat.Builder(context, NewsNotifChannelId)
         .setPriority(PRIORITY_HIGH)
         .setContentTitle(context.getString(R.string.news_notification_channel_name))
         .setBigTextStyle(message)
 
     private fun getNewDeviceNotificationBuilder(
         newDeviceName: String?,
-    ) = NotificationCompat.Builder(context, DEVICE_NOTIFICATION_CHANNEL_ID)
+    ) = NotificationCompat.Builder(context, DeviceNotifChannelId)
         .setPriority(PRIORITY_DEFAULT)
         .setContentTitle(context.getString(R.string.device_notification_channel_name))
         .setBigTextStyle(
@@ -266,7 +266,7 @@ class DisplayDelayedNotificationWorker(
 
     private fun getGeneralNotificationBuilder(
         message: String?,
-    ) = NotificationCompat.Builder(context, GENERAL_NOTIFICATION_CHANNEL_ID)
+    ) = NotificationCompat.Builder(context, GeneralNotifChannelId)
         .setPriority(PRIORITY_DEFAULT)
         .setContentTitle(context.getString(R.string.general_notification_channel_name))
         .setBigTextStyle(message)
@@ -280,10 +280,10 @@ class DisplayDelayedNotificationWorker(
         if (notificationType == NEWS) {
             Intent(context, NewsItemActivity::class.java)
                 .putExtra(
-                    NewsItemActivity.INTENT_NEWS_ITEM_ID,
+                    NewsItemActivity.IntentNewsItemId,
                     messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
                 )
-                .putExtra(NewsItemActivity.INTENT_DELAY_AD_START, true)
+                .putExtra(NewsItemActivity.IntentDelayAdStart, true)
         } else {
             Intent(context, MainActivity::class.java)
         },

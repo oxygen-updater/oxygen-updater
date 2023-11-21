@@ -1,6 +1,5 @@
 package com.oxygenupdater.utils
 
-import com.oxygenupdater.internal.KotlinCallback
 import com.topjohnwu.superuser.Shell
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -16,7 +15,7 @@ private var rootAccess = false
  *
  * @param callback `true` if device is rooted and user granted root permission, `false` otherwise
  */
-fun hasRootAccess(callback: KotlinCallback<Boolean>) = if (checkedOnce.get()) {
+fun hasRootAccess(callback: (result: Boolean) -> Unit) = if (checkedOnce.get()) {
     callback.invoke(rootAccess)
 } else Shell.isAppGrantedRoot()?.let {
     checkedOnce.set(true)

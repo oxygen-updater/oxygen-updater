@@ -5,20 +5,19 @@ import android.os.Build
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.exceptions.OxygenUpdaterException
-import com.oxygenupdater.internal.objectMapper
+import com.oxygenupdater.apis.DownloadApi
+import com.oxygenupdater.apis.ServerApi
+import com.oxygenupdater.internal.BooleanJsonAdapter
+import com.oxygenupdater.internal.CsvListJsonAdapter
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logVerbose
-import com.oxygenupdater.utils.Logger.logWarning
+import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.HttpException
-import retrofit2.Response
+import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
-import java.io.IOException
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,148 +25,78 @@ import java.util.concurrent.TimeUnit
  */
 
 private const val TAG = "OxygenUpdaterNetwork"
-private const val USER_AGENT_TAG = "User-Agent"
-private const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
-private const val CACHE_SIZE = 10L * 1024 * 1024 // 10 MB
-private const val API_BASE_URL = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
+private const val UserAgentTag = "User-Agent"
+private const val DefaultCacheSize = 10L * 1024 * 1024 // 10 MB
 
-const val HEADER_READ_TIMEOUT = "X-Read-Timeout"
+const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
+const val ApiBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 
-fun createNetworkClient(cache: Cache) = retrofitClient(httpClient(cache))
-fun createDownloadClient() = retrofitClientForDownload(httpClientForDownload())
+/** Allows per-request read timeout override via application interceptor */
+const val HeaderReadTimeout = "X-Read-Timeout"
+
+fun createServerApi(context: Context) = Retrofit.Builder()
+    .baseUrl(ApiBaseUrl)
+    .client(httpClient(createOkHttpCache(context)))
+    .addConverterFactory(
+        MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(BooleanJsonAdapter()) // coerce strings/numbers to boolean
+                .add(CsvListJsonAdapter())
+                .build()
+        )
+    ).build().create<ServerApi>()
+
+fun createDownloadApi() = Retrofit.Builder()
+    .baseUrl(ApiBaseUrl).apply {
+        if (BuildConfig.DEBUG) client(
+            // Use a network interceptor to log all requests, even intermediary ones like redirects.
+            OkHttpClient.Builder().addNetworkInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC)).build()
+        )
+    }.build().create<DownloadApi>()
 
 /**
  * Create a [Cache] for [OkHttpClient].
  *
  * Limit cache size to stay under quota if device is Oreo and above.
- * Otherwise, default to [CACHE_SIZE]
+ * Otherwise, default to [DefaultCacheSize]
  */
-fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-    context.getSystemService<StorageManager>()!!.run {
+private fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    context.getSystemService<StorageManager>()?.run {
         try {
-            getCacheQuotaBytes(getUuidForPath(context.cacheDir)).let {
-                if (it != 0L) it
-                else CACHE_SIZE
-            }
-        } catch (e: IOException) {
-            CACHE_SIZE
+            val quota = getCacheQuotaBytes(getUuidForPath(context.cacheDir))
+            if (quota > 0L) quota else DefaultCacheSize
+        } catch (e: Exception) {
+            DefaultCacheSize
         }
-    }
+    } ?: DefaultCacheSize
 } else {
-    CACHE_SIZE
-}.let { cacheSize ->
-    Cache(context.cacheDir, cacheSize)
+    DefaultCacheSize
+}.let {
+    Cache(context.cacheDir, it)
 }
 
 private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)
+
+    // Use a network interceptor to log all requests, even intermediary ones like redirects.
+    // Note that this won't be invoked for cached responses as they short-circuit the network.
+    if (BuildConfig.DEBUG) addNetworkInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
+
+    // Use an application interceptor to add a custom user agent
     addInterceptor { chain ->
         val request = chain.request()
-
-        logDebug(TAG, "Method: ${request.method}, URL: ${request.url}")
-
-        val builder = request.newBuilder()
-            .addHeader(USER_AGENT_TAG, APP_USER_AGENT)
-
-        val readTimeout = request.header(HEADER_READ_TIMEOUT)?.toInt()?.let {
-            builder.removeHeader(HEADER_READ_TIMEOUT)
-            it
+        val builder = request.newBuilder().header(UserAgentTag, AppUserAgent)
+        val readTimeout = request.header(HeaderReadTimeout)?.let {
+            builder.removeHeader(HeaderReadTimeout)
+            it.toIntOrNull()
         }
 
         chain.run {
-            if (readTimeout != null) {
-                logDebug(TAG, "readTimeout = ${readTimeout}s")
-
-                withReadTimeout(readTimeout, TimeUnit.SECONDS)
-            } else {
-                logDebug(TAG, "readTimeout = ${chain.readTimeoutMillis() / 1000}s")
-            }
+            if (readTimeout != null) withReadTimeout(readTimeout, TimeUnit.SECONDS).also {
+                logDebug(TAG, "custom readTimeout = ${readTimeout}s")
+            } else logDebug(TAG, "default readTimeout = ${chain.readTimeoutMillis() / 1000}s")
 
             proceed(builder.build())
         }
     }
-
-    if (BuildConfig.DEBUG) {
-        addInterceptor(HttpLoggingInterceptor().apply {
-            setLevel(HttpLoggingInterceptor.Level.BASIC)
-        })
-    }
 }.build()
-
-private fun httpClientForDownload() = OkHttpClient.Builder().apply {
-    if (BuildConfig.DEBUG) {
-        addInterceptor(HttpLoggingInterceptor().apply {
-            setLevel(HttpLoggingInterceptor.Level.BASIC)
-        })
-    }
-}.build()
-
-private fun retrofitClient(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(API_BASE_URL)
-    .client(httpClient)
-    .addConverterFactory(JacksonConverterFactory.create(objectMapper))
-    .build()
-
-private fun retrofitClientForDownload(httpClient: OkHttpClient) = Retrofit.Builder()
-    .baseUrl(API_BASE_URL)
-    .client(httpClient)
-    .build()
-
-suspend inline fun <reified R> performServerRequest(
-    crossinline block: suspend () -> Response<R>
-): R? {
-    val logTag = "OxygenUpdaterNetwork"
-
-    var retryCount = 0
-    while (retryCount < 5) {
-        try {
-            val response = block()
-
-            return if (response.isSuccessful) {
-                response.body().apply {
-                    logVerbose(logTag, "Response: $this")
-                }
-            } else {
-                val json = convertErrorBody(response)
-                logWarning(
-                    logTag, "Response: $json",
-                    OxygenUpdaterException("API Response Error: $json")
-                )
-                null
-            }
-        } catch (e: Exception) {
-            when {
-                e is HttpException -> logWarning(
-                    logTag,
-                    "HttpException: [code: ${e.code()}, errorBody: ${convertErrorBody(e)}]"
-                )
-                ExceptionUtils.isNetworkError(e) -> logWarning(
-                    logTag,
-                    "Network error while performing request", e
-                )
-                else -> logError(
-                    logTag,
-                    "Error performing request", e
-                )
-            }
-
-            if (retryCount++ < 5) {
-                logDebug(logTag, "Retrying the request ($retryCount/5)")
-            }
-        }
-    }
-
-    return null
-}
-
-fun <T> convertErrorBody(response: Response<T>) = try {
-    response.errorBody()?.string()
-} catch (exception: Exception) {
-    null
-}
-
-fun convertErrorBody(e: HttpException) = try {
-    e.response()?.errorBody()?.string()
-} catch (exception: Exception) {
-    null
-}

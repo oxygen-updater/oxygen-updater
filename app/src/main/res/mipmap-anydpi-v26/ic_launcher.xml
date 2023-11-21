@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
 	<background android:drawable="@color/oneplus_red_600" />
-	<foreground>
-		<inset
-			android:drawable="@drawable/ic_launcher_foreground"
-			android:inset="16.7%" />
-	</foreground>
+	<foreground android:drawable="@drawable/ic_launcher_monochrome" />
+
+	<!-- Only Android 13 onwards (API 33) -->
+	<monochrome android:drawable="@drawable/ic_launcher_monochrome" />
 </adaptive-icon>

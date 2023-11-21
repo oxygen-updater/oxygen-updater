@@ -1,16 +1,17 @@
 package com.oxygenupdater.apis
 
-import androidx.collection.ArrayMap
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
-import com.oxygenupdater.models.InstallGuidePage
+import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.models.UpdateMethod
-import com.oxygenupdater.utils.HEADER_READ_TIMEOUT
+import com.oxygenupdater.ui.currentLanguage
+import com.oxygenupdater.ui.currentLocale
+import com.oxygenupdater.utils.HeaderReadTimeout
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,12 +28,17 @@ import retrofit2.http.Query
 interface ServerApi {
 
     @GET("flattenedFaq")
-    suspend fun fetchFaq(): Response<List<InAppFaq>>
+    suspend fun fetchFaq(
+        @Query("language") language: String = currentLanguage,
+    ): Response<List<InAppFaq>>
+
+    @GET("installGuide")
+    suspend fun fetchInstallGuide(
+        @Query("language") language: String = currentLanguage,
+    ): Response<List<InstallGuide>>
 
     @GET("devices/{filter}")
-    suspend fun fetchDevices(
-        @Path("filter") filter: String
-    ): Response<List<Device>>
+    suspend fun fetchDevices(@Path("filter") filter: String): Response<List<Device>>
 
     @GET("updateData/{deviceId}/{updateMethodId}/{incrementalSystemVersion}")
     suspend fun fetchUpdateData(
@@ -43,13 +49,13 @@ interface ServerApi {
         @Query("osType") osType: String,
         @Query("fingerprint") fingerprint: String,
         @Query("isEuBuild") isEuBuild: Boolean,
-        @Query("appVersion") appVersion: String
+        @Query("appVersion") appVersion: String,
     ): Response<UpdateData>
 
     @GET("mostRecentUpdateData/{deviceId}/{updateMethodId}")
     suspend fun fetchMostRecentUpdateData(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
     ): Response<UpdateData>
 
     @GET("serverStatus")
@@ -58,43 +64,40 @@ interface ServerApi {
     @GET("serverMessages/{deviceId}/{updateMethodId}")
     suspend fun fetchServerMessages(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
+        @Query("language") language: String = currentLanguage,
     ): Response<List<ServerMessage>>
+
+    @GET("updateMethods/{deviceId}")
+    suspend fun fetchUpdateMethodsForDevice(
+        @Path("deviceId") deviceId: Long,
+        @Query("language") language: String = currentLanguage,
+    ): Response<List<UpdateMethod>>
+
+    @GET("allUpdateMethods")
+    suspend fun fetchAllUpdateMethods(
+        @Query("language") language: String = currentLanguage,
+    ): Response<List<UpdateMethod>>
 
     @GET("news/{deviceId}/{updateMethodId}")
     suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long
+        @Path("updateMethodId") updateMethodId: Long,
+        @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
     ): Response<List<NewsItem>>
 
     @GET("news-item/{newsItemId}")
     suspend fun fetchNewsItem(
-        @Path("newsItemId") newsItemId: Long
+        @Path("newsItemId") newsItemId: Long,
+        @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
     ): Response<NewsItem>
 
     @POST("news-read")
-    suspend fun markNewsItemRead(
-        @Body newsItemId: Map<String, Long>
-    ): Response<ServerPostResult>
-
-    @GET("updateMethods/{deviceId}")
-    suspend fun fetchUpdateMethodsForDevice(
-        @Path("deviceId") deviceId: Long
-    ): Response<List<UpdateMethod>>
-
-    @GET("allUpdateMethods")
-    suspend fun fetchAllUpdateMethods(): Response<List<UpdateMethod>>
-
-    @GET("installGuide/{deviceId}/{updateMethodId}/{pageNumber}")
-    suspend fun fetchInstallGuidePage(
-        @Path("deviceId") deviceId: Long,
-        @Path("updateMethodId") updateMethodId: Long,
-        @Path("pageNumber") pageNumber: Int
-    ): Response<InstallGuidePage>
+    suspend fun markNewsItemRead(@Body newsItemId: Map<String, Long>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
-     * * `rows: List<ArrayMap<String, Any?>>`,
+     * * `rows: List<Map<String, Any?>>`,
      * * `otaVersion: String`,
      * * `isEuBuild: Boolean`,
      * * `appVersion: String`,
@@ -102,9 +105,7 @@ interface ServerApi {
      * * `actualDeviceName: String`,
      */
     @POST("submit-update-url")
-    suspend fun submitOtaDbRows(
-        @Body body: ArrayMap<String, Any>
-    ): Response<ServerPostResult>
+    suspend fun submitOtaDbRows(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
@@ -116,13 +117,9 @@ interface ServerApi {
      * * `deviceName: String`
      */
     @POST("log-download-error")
-    suspend fun logDownloadError(
-        @Body body: HashMap<String, Any?>
-    ): Response<ServerPostResult>
+    suspend fun logDownloadError(@Body body: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 
     @POST("verify-purchase")
-    @Headers("$HEADER_READ_TIMEOUT:120")
-    suspend fun verifyPurchase(
-        @Body purchaseData: HashMap<String, Any?>
-    ): Response<ServerPostResult>
+    @Headers("$HeaderReadTimeout:99")
+    suspend fun verifyPurchase(@Body purchaseData: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
 }

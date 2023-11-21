@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="device_chooser_error_title">Nepodarilo sa načítať zoznam podporovaných zariadení</string>
-
 	<!-- Update information strings-->
 	<string name="enable">Prijať</string>
 	<string name="update_information_description_not_available">Nie sú žiadne oficiálne informácie o nových funkciách, ktoré táto aktualizácia poskytuje. Aktualizácia zvyčajne poskytuje opravy chýb, vylepšenia výkonu a/alebo dôležité bezpečnostné aktualizácie vášho zariadenia.</string>
@@ -13,11 +11,10 @@
 	<string name="update_information_banner_server">Klepnutím tu zobrazíte dôležité oznámenia</string>
 	<string name="update_information_banner_advanced_mode_tip">Vybrali ste \"%1$s\" aktualizačný kanál. Ak plánujete prejsť na tento kanál aktualizácií, povoľte pokročilý režim.</string>
 	<string name="update_information_header_advanced_mode_hint">Pokročilý režim je povolený</string>
-	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\".\n\nPokročilý režim môžete vypnúť v nastaveniach.</string>
-	<string name="update_information_different_version_changelog_notice">Prezeráte si zoznam zmien najnovšej aktualizácie v kanále aktualizácií \"%1$s\". Ak chcete nainštalovať túto aktualizáciu, musíte najskôr povoliť pokročilý režim (v nastaveniach).\n\nAk chcete však namiesto toho zobraziť zoznam zmien aktuálne nainštalovanej verzie, budete musieť prepnúť späť na správnu metódu aktualizácie.</string>
-	<string name="update_information_last_checked_on">Naposledy kontrolované: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">Pretože ste povolili pokročilý režim, môžete si stiahnuť najnovšiu verziu ZIP pre \"%1$s\". Pokročilý režim môžete vypnúť v nastaveniach.</string>
+	<string name="update_information_different_version_changelog_notice_base">Poznámka: tento zoznam zmien sa týka najnovšej dostupnej verzie (%1$s) v metóde aktualizácie \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Ak máte v úmysle nainštalovať túto aktualizáciu, musíte v nastaveniach povoliť \"Pokročilý režim\".</string>
 	<string name="update_information_no_update_data_available">Nie sú k dispozícii žiadne informácie o aktualizácii</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">Váš systém je aktuálny</string>
 	<string name="update_information_unknown_update_name">Nepomenovaná aktualizácia pre %1$s</string>
 	<string name="update_information_view_update_information">Zobraziť informácie o aktualizácii</string>
@@ -44,7 +41,7 @@
 	<string name="download_complete_notification">Klepnutím spustíte inštaláciu</string>
 
 	<string name="download_error">Chyba pri sťahovaní</string>
-	<string name="download_error_close">ZAVRIEŤ</string>
+	<string name="download_error_close">Zavrieť</string>
 	<string name="download_error_corrupt">Stiahnutý aktualizačný súbor je poškodený! Skúste ho stiahnuť znova.</string>
 	<string name="download_error_server">Počas sťahovania aktualizácie sa vyskytla chyba servera. Skúste aktualizáciu stiahnuť znova.</string>
 	<string name="download_error_internal">Počas sťahovania aktualizácie sa, bohužiaľ, vyskytla technická chyba. Skúste ju stiahnuť znova. Ak sa to bude opakovať, obráťte sa so žiadosťou o pomoc na vývojára tejto aplikácie.</string>
@@ -52,8 +49,8 @@
 Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Súbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
 
-	<string name="download_error_retry">SKÚSIŤ ZNOVA</string>
-	<string name="download_error_resume">POKRAČOVAŤ</string>
+	<string name="download_error_retry">Skúsiť znova</string>
+	<string name="download_error_resume">Pokračovať</string>
 	<string name="download_error_storage">Vo vašom zariadení nie je k dispozícii dostatok úložného priestoru na stiahnutie aktualizácie. Odstráňte niektoré súbory a skúste aktualizáciu znovu stiahnuť.</string>
 
 	<string name="download_failed">Sťahovanie zlyhalo</string>
@@ -90,9 +87,7 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 	<string name="summary_please_wait">Prosím čakajte…</string>
 	<string name="summary_update_method">Najskôr vyberte zariadenie</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Niektoré dôležité oznámenia sú vypnuté: \"%1$s\"</string>
-	<string name="summary_theme">Nastaviť tému</string>
-	<string name="summary_language">Nastaviť jazyk</string>
+	<string name="summary_important_notifications_disabled">Niektoré dôležité oznámenia sú vypnuté:</string>
 	<string name="summary_privacy_policy">Zobraziť online</string>
 	<string name="summary_rate_app">Ohodnoťte nás 5 hviezdičkami</string>
 
@@ -123,78 +118,46 @@ Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredn
 
 	<string name="settings_device">Zariadenie</string>
 	<string name="settings_entered_incorrectly">Pri ukladaní nastavení sa vyskytla chyba. Vráťte sa späť a znova vyberte zariadenie/spôsob aktualizácie.</string>
-	<string name="settings_explanation_incremental_full_update">Inkrementálnu aktualizáciu je možné nainštalovať z ktorejkoľvek verzie (okrem prípadov, keď máte odomknutý bootloader; ako spôsob aktualizácie by ste si mali vždy zvoliť úplnú aktualizáciu).\n\nBeta aktualizáciu systému OxygenOS je možné nainštalovať vždy, aj keď ste na stabilnej verzii. Ak chcete prejsť zo stabilnej verzie na beta, musíte v nastaveniach povoliť pokročilý režim. V prípade beta verzií fungujú metódy úplnej a inkrementálnej aktualizácie rovnakým spôsobom ako v prípade stabilných verzií.</string>
 
 	<string name="settings_push_from_server">Informačné a varovné správy</string>
 
 	<string name="settings_saving">Vaše nastavenia sa stále ukladajú. Ak to trvá príliš dlho: Skontrolujte sieťové pripojenie, ukončite aplikáciu a spustite ju znova.</string>
 
 	<string name="settings_advanced_mode">Pokročilý režim</string>
-	<string name="settings_advanced_mode_explanation">Pokročilý režim skryje správu \"Váš systém je aktuálny\", ktorá vám umožní stiahnuť a nainštalovať všetky aktualizácie, aj keď nemusia byť kompatibilné s vaším zariadením.\n\nTTo môže byť užitočné, keď:\n&#8226; Aktualizujete z bežnej verzie na beta verziu\n&#8226; Vraciate sa z beta verzie na bežnú verziu (nezabudnite na obnovenie továrenských nastavení zariadenia)\n&#8226; Preinštalovávate aktuálnu verziu systému.</string>
+	<string name="settings_advanced_mode_explanation">"Aplikácia zvyčajne zobrazuje aktualizácie na základe aktuálnej verzie operačného systému. V rozšírenom režime sa vždy zobrazí najnovšia dostupná aktualizácia bez ohľadu na kompatibilitu zariadenia/verzie.
+
+To môže byť užitočné, ak chcete:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Opätovne stiahnuť najnovšiu verziu, aj keď ju už používate
+&#8226; Prepnúť na inú aktualizačnú stopu"</string>
+	<string name="settings_advanced_mode_caption">"Rozšírený režim môže byť potrebný len vo vyššie uvedených situáciách. Nemali by ste ho zapínať, ak neviete, čo robíte."</string>
 
 	<string name="settings_update_method">Spôsob aktualizácie</string>
 	<string name="settings_upload_logs">Zdieľajte údaje o používaní a logy</string>
+	<string name="settings_ad_privacy">Súhlas s reklamou podľa GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Pre používateľov v EHP/UK"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
 
 	<!-- First-time onboarding strings -->
-	<string name="onboarding">Vitajte</string>
+	<string name="onboarding">Nastavenie</string>
 	<string name="onboarding_finished_button">Spustiť aplikáciu</string>
 
-	<string name="onboarding_page_1_title">Vitajte v Oxygen Updater!</string>
-	<string name="onboarding_page_1_text">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n\n&#8226; Ľahko aktualizujte rootované zariadenie\n\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS\n\nPokračujte prejdením doľava.</string>
-	<string name="onboarding_page_1_caption">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie.\n\nPoužívaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
-	<string name="onboarding_page_2_title">Vyberte svoje zariadenie</string>
-	<string name="onboarding_page_2_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
-	<string name="onboarding_page_3_title">Vyberte spôsob aktualizácie</string>
-	<string name="onboarding_page_3_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie.\n\nNie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie.\n\nAk máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
-	<string name="onboarding_page_4_title">Ste pripravení začať!</string>
-	<string name="onboarding_page_4_text">Želáme príjemné používanie aplikácie!\n\nNeskôr môžete svoje nastavenia kedykoľvek zmeniť. Urobíte to takto: Klepnite na tri bodky v pravom hornom rohu a klepnite na \"Nastavenia\".</string>
+	<string name="onboarding_app_uses">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n&#8226; Ľahko aktualizujte rootované zariadenie\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n&#8226; Prečítajte si najnovšie správy o OnePlus a OxygenOS</string>
+	<string name="onboarding_disclaimer">Toto nie je oficiálna aplikácia OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie. Používaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
+	<string name="onboarding_device_chooser_title">Vyberte svoje zariadenie</string>
+	<string name="onboarding_device_chooser_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
+	<string name="onboarding_method_chooser_title">Vyberte spôsob aktualizácie</string>
+	<string name="onboarding_method_chooser_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie. Nie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie. Ak máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
+	<string name="onboarding_caption">Želáme príjemné používanie aplikácie! Neskôr môžete svoje nastavenia kedykoľvek zmeniť.</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Inštalovať</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">Nainštalujte aktualizáciu podľa pokynov v sprievodcovi inštaláciou.</string>
 	<string name="install_guide">Sprievodca inštaláciou</string>
-	<string name="install_guide_subtitle">Sprievodca inštaláciou - %1$d z %2$d</string>
-	<string name="install_guide_tip">&#8226; Odporúča sa zapísať si všetky kroky, pretože počas inštalácie aktualizácie budete musieť zariadenie vypnúť.</string>
-
-	<string name="install_guide_page_1_title">Stiahnuť aktualizáciu</string>
-	<string name="install_guide_page_1_text">&#8226; Stlačením tlačidla Stiahnuť spustíte sťahovanie aktualizácie.\n\n&#8226; Priebeh sťahovania sa zobrazí v aplikácii a ako upozornenie na obrazovke s upozorneniami.\n\n&#8226; Po dokončení sťahovania sa zobrazí upozornenie s textom \"Sťahovanie dokončené\".\nAk sa vyskytla chyba pri sťahovaní, otvorte aplikáciu a skúste znova stiahnuť aktualizáciu. Ak to nefunguje, skontrolujte funkčnosť vášho pripojenia. V opačnom prípade kontaktujte vývojára aplikácie. Môžete to urobiť tak, že v obchode Google Play navštívite sekciu \"Moje aplikácie\".</string>
-
-	<string name="install_guide_page_2_title">Príprava na inštaláciu</string>
-	<string name="install_guide_page_2_text">"Poznámka: Inštalácia aktualizácie sa uskutočňuje na špeciálnej stránke štandardnej časti Aktualizácie systému vášho zariadenia. Ak sa pri otvorení tejto časti z nejakého dôvodu objaví aktualizácia systému, môžete sa tiež najskôr rozhodnúť nainštalovať túto aktualizáciu. Potom znova otvorte Oxygen Updater a zistite, či máte nainštalovanú najnovšiu verziu.
-
-Inštrukcie:
-&#8226; Zatvorte Oxygen Updater stlačením tlačidla Domov.
-
-&#8226; Otvorte nastavenia. Mali by sa nachádzať v zásuvke aplikácií.
-
-&#8226; Posúvajte sa dole, kým neuvidíte aktualizácie systému. Klepnite na ne."</string>
-
-	<string name="install_guide_page_3_title">Inštalácia aktualizácie</string>
-	<string name="install_guide_page_3_text">"Teraz, keď ste v aktualizáciach systému, je čas nainštalovať aktualizáciu.
-
-&#8226; V sekcii aktualizácie systému klepnite na ikonu ozubeného kolieska vpravo hore
-
-&#8226; Vyberte \"Lokálna aktualizácia\". Mala by sa zobraziť obrazovka na výber súboru.
-
-&#8226; Na tejto obrazovke klepnite na aktualizačný súbor, ktorý ste si stiahli pomocou Oxygen Updater. Jeho názov by mal začínať \"%1$sOxygen\".
-
-&#8226; Klepnite na \"Aktualizovať teraz\". Inštalácia by sa mala spustiť automaticky."</string>
-
-	<string name="install_guide_page_4_title">Počkajte, kým sa inštalácia nedokončí</string>
-	<string name="install_guide_page_4_text">"&#8226; Telefón teraz nainštaluje aktualizáciu a zobrazí priebeh inštalácie. Počkajte, kým sa inštalácia nedokončí. Môže to trvať od niekoľkých do 15 minút.
-
-&#8226; Následne sa telefón reštartuje, aby sa aktualizácia dokončila."</string>
-
-	<string name="install_guide_page_5_title">Hotovo. Užite si novú verziu OxygenOS!</string>
-	<string name="install_guide_page_5_text">&#8226; Po dokončení optimalizácie aplikácií v telefóne sa aktualizácia úspešne nainštalovala.\nAk to chcete overiť, môžete skontrolovať aktuálnu verziu vášho systému nasledovne:\n\n&#8226; Prejdite do Nastavení, klepnite na \"Informácie o telefóne\", a skontrolujte verziu OxygenOS.\n\n&#8226; Ak sa vám táto aplikácia páči, ohodnoťte ju 5 hviezdičkami v  Google Play!</string>
-
-	<string name="install_guide_close_button">Zavrieť Sprievodcu inštaláciou</string>
+	<string name="install_guide_download_instructions">&#8226; Stlačením tlačidla Stiahnuť spustíte sťahovanie aktualizácie.\n&#8226; Priebeh sťahovania sa zobrazí v aplikácii a ako upozornenie na obrazovke s upozorneniami.\n&#8226; Po dokončení sťahovania sa zobrazí upozornenie s textom \"Sťahovanie dokončené\". Ak sa vyskytla chyba pri sťahovaní, otvorte aplikáciu a skúste znova stiahnuť aktualizáciu. Ak to nefunguje, skontrolujte funkčnosť vášho pripojenia. V opačnom prípade kontaktujte vývojára aplikácie. Môžete to urobiť tak, že v obchode Google Play navštívite sekciu \"Moje aplikácie\".</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Vaše zariadenie je podporované</string>
@@ -211,7 +174,7 @@ Inštrukcie:
 	<string name="device_information_image_description">Snímka zariadenia</string>
 	<string name="device_information_incremental_os_version">Inkrementálna verzia OS</string>
 	<string name="device_information_os_version">Verzia Androidu</string>
-	<string name="device_information_oxygen_os_version">Verzia OxygenOS</string>
+	<string name="device_information_oxygen_os_version">Verzia OS</string>
 	<string name="device_information_oxygen_os_ota_version">Verzia OTA</string>
 	<string name="device_information_patch_level_version">Dátum bezpečnostnej opravy</string>
 	<string name="device_information_serial_number">Sériové číslo</string>
@@ -230,6 +193,8 @@ Inštrukcie:
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Zostaňte informovaní"</string>
+	<string name="notification_permission_text">"Povoľte aplikácii, aby vás upozorňovala na aktualizácie OTA, novinky, stav prebiehajúceho sťahovania a ďalšie dôležité veci. Svoje nastavenia môžete neskôr doladiť v nastaveniach aplikácie."</string>
 	<string name="notification_new_device_text">%1$s je teraz podporovaný. Otvorte aplikáciu a vyberte toto zariadenie.</string>
 	<string name="notification_no_notification_support">Nainštalujte alebo aktualizujte Google Play services a povoľte push notifikácie.</string>
 	<string name="notification_version">%1$s je k dispozícii pre %2$s!</string>
@@ -255,23 +220,9 @@ Inštrukcie:
 	<string name="general_notification_channel_description">Všeobecné oznámenia, ktoré sa nehodia do iných kategórií</string>
 	<string name="url_submitted_notification_channel_description">Dostávajte upozornenia, keď nášmu tímu úspešne odošlete adresy URL OTA.\nAutomatické odosielanie adries URL môžete odmietnuť v nastaveniach aplikácie.</string>
 
-	<!-- Help strings -->
-	<string name="help">Pomoc</string>
-	<string name="help_updating_your_device_title">Aktualizácia vášho zariadenia</string>
-	<string name="help_updating_your_device_text">Po otvorení aplikácie uvidíte, či je k dispozícii aktualizácia systému. Ak je k dispozícii aktualizácia, môžete si ju nainštalovať.\n\nInštaláciu spustíte klepnutím na tlačidlo \"Stiahnuť\" (pod popisom aktualizácie), pre spustenie sťahovania. Po dokončení sťahovania sa zobrazí inštalačná obrazovka. Ak ste aplikáciu opustili alebo sa obrazovka nezobrazila, klepnite na tlačidlo \"Inštalovať\", ktoré sa zobrazí vedľa tlačidla \"Stiahnuť\".\n\nInštalačná obrazovka najskôr skontroluje, či máte rootované zariadenie. Ak máte rootované zariadenie, na požiadanie udeľte povolenie root a vyberte, ako chcete aktualizáciu nainštalovať. V opačnom prípade postupujte podľa pokynov pre manuálnu inštaláciu.\n\nAutomatická inštalácia:\nBudete si musieť zvoliť možnosti inštalácie. Predvolené nastavenia sa odporúčajú, až na to, že musíte určiť root balík, ktorý je potrebné (znovu) nainštalovať. Vyberte root balík (súbor zip) pomocou modrého tlačidla priečinka a klepnutím na \"Začať inštaláciu\" spustíte inštaláciu.\n\nRučná inštalácia:\nNa obrazovke sa zobrazí sprievodca inštaláciou. Zapíšte si pokyny a podľa pokynov ich nainštalujte.</string>
-	<string name="help_reading_news_title">Čítanie najnovších správ</string>
-	<string name="help_reading_news_text">Správy sa zobrazujú naľavo od obrazovky Aktualizácia. Najnovšie položky sa zobrazujú navrchu. Stačí si ťuknúť na položku a prečítať si ju.\nKlepnutím na šípku späť alebo stlačením klávesu Späť sa vrátite na obrazovku so správami.</string>
-	<string name="help_device_information_title">Prezeranie informácií o vašom zariadení</string>
-	<string name="help_device_information_text">Niektoré technické parametre svojho prístroja môžete zobraziť pomocou obrazovky napravo od obrazovky Aktualizácia. To sa hodí pri podávaní žiadosti o podporu, počas ktorej sa od vás môžu vyžadovať niektoré zo špecifikácií vášho zariadenia.</string>
-	<string name="help_change_settings_title">Zmena nastavení</string>
-	<string name="help_change_settings_text">Svoje nastavenia môžete zmeniť klepnutím na tri bodky vpravo hore a klepnutím na Nastavenia.\nMôžete zmeniť nasledujúce nastavenia:\n\n• Zariadenie a spôsob aktualizácie\n• Push notifikácie\n• Notifikácie v aplikácii\n• Nastavenia súkromia (nahrávanie logov).\n\nPomocou prepínačov zapnite a vypnite nastavenia upozornení a súkromia. Vyberte zariadenie alebo spôsob aktualizácie pomocou rozbaľovacích ponúk zobrazených nad prepínačmi. Rozbaľovacie ponuky nie sú viditeľné? Skontrolujte svoje internetové pripojenie a znova otvorte Nastavenia.</string>
-
 	<!-- News strings -->
 	<string name="news">Novinky</string>
-	<string name="news_date_published">Posledná aktualizácia: %1$s</string>
-	<string name="news_empty">Tento článok nemá žiadny obsah.</string>
-	<string name="news_load_network_error">Článok sa nepodarilo otvoriť. Skontrolujte svoje pripojenie a stlačením tlačidla \"SKÚSIŤ ZNOVA\" otvorte článok</string>
-	<string name="news_load_id_error"><![CDATA[Nepodarilo sa otvoriť článok z neplatnej adresy URL: %1$s. Skontrolujte adresu URL alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
+	<string name="news_load_network_error">Článok sa nepodarilo otvoriť. Skontrolujte svoje pripojenie a stlačením tlačidla \"Skúsiť znova\" otvorte článok</string>
 	<string name="news_unread_count_1">Máte %1$d neprečítaných správ. Klepnutím tu ich zobrazíte.</string>
 	<string name="news_unread_count_2">Máte %1$d neprečítaných správ. Klepnutím zobrazíte všetky články.</string>
 	<string name="news_mark_read">Označiť ako prečítané</string>
@@ -297,12 +248,10 @@ Inštrukcie:
 	<string name="error_app_outdated">Oh nie!</string>
 	<string name="error_app_outdated_message">Táto verzia aplikácie je zastaraná. Je čas to aktualizovať! Klepnite nižšie na \"Google Play\". V službe Google Play klepnite na \"Aktualizovať\".</string>
 	<string name="error_app_requires_network_connection">Žiadne pripojenie</string>
-	<string name="error_app_requires_network_connection_message">Nepodarilo sa pripojiť k serveru. Uistite sa, že máte funkčné pripojenie. Aplikácia sa teraz zatvorí.</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">Žiadne pripojenie.</string>
 	<string name="error_maintenance">Údržba serverov</string>
 	<string name="error_maintenance_message">Prosím čakajte. Server bude čoskoro k dispozícii.</string>
-	<string name="error_maintenance_retry">Server môže byť kvôli údržbe mimo prevádzky. Skúste to znova po nejakom čase alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Server môže byť kvôli údržbe mimo prevádzky. Skúste to znova po nejakom čase alebo nám to nahláste prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
 	<string name="error_reload">Znova načítať</string>
 
 	<string name="error_unable_to_rate_app">Aplikáciu nemôžete hodnotiť, pretože vo vašom zariadení chýba Obchod Google Play.</string>
@@ -320,14 +269,13 @@ Inštrukcie:
 	<string name="incorrect_device_warning_title">Nezhoda s vybraným zariadením</string>
 	<string name="incorrect_device_warning_message">Zdá sa, že ste vybrali nesprávne zariadenie: \"%1$s\", namiesto \"%2$s\". Zmeňte svoj výber v nastaveniach aplikácie, aby ste dostávali aktualizácie a upozornenia pre správne zariadenie.</string>
 
-	<string name="device_warning_checkbox_title">Toto varovanie už nezobrazovať</string>
+	<string name="do_not_show_again_checkbox">Nezobrazujte sa znova</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Váš nákup je v stave \"platba čaká na vybavenie\". Po dokončení platby vám budú poskytnuté všetky výhody, na ktoré máte nárok.</string>
 	<string name="purchase_error_after_payment">Nákup verzie bez reklám zlyhal, pretože sa vyskytla interná chyba. Prosím skúste znovu o pár minút. Ak ste už zaplatili, požiadajte o pomoc podporu Google Play.</string>
 
 	<!-- Other strings-->
-	<string name="error">Error</string>
 	<string name="icon">Ikona</string>
 	<string name="loading">Načítavam…</string>
 	<string name="processing">Spracovávam…</string>

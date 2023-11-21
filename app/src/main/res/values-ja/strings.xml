@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
-	<string name="device_chooser_error_title">サポートされているデバイスの取得ができませんでした</string>
-
+<resources>
 	<!-- Update information strings-->
 	<string name="enable">有効にする</string>
 	<string name="update_information_description_not_available">このアップデートが提供する新機能について公式情報はありません。通常、このようなアップデートはデバイスのバグフィックス、パフォーマンス向上、重大なセキュリティアップデートを提供します。</string>
@@ -13,11 +11,10 @@
 	<string name="update_information_banner_server">ここをタップして重要なお知らせを見る</string>
 	<string name="update_information_banner_advanced_mode_tip">\"%1$s\" アップデートトラックを選択しました。このアップデートトラックに切り替える場合は拡張モードを有効化してください。</string>
 	<string name="update_information_header_advanced_mode_hint">拡張モードが有効</string>
-	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。\n\n設定から拡張モードをオフにすることができます。</string>
-	<string name="update_information_different_version_changelog_notice">あなたは \"%1$s\" アップグレードトラックの最新版の更新履歴を見ています。このアップデートをインストールしたい場合は、始めに拡張モードをオンにする (設定で) 必要があります。\n\n現在インストールされているバージョンの更新履歴を見たい場合は、正しいアップデート方法に切り替える必要があります。</string>
-	<string name="update_information_last_checked_on">最終チェック日時: %1$s</string>
+	<string name="update_information_header_advanced_mode_helper">拡張モードが選択され、\"%1$s\" の最新の ZIP をダウンロードすることができます。 設定から拡張モードをオフにすることができます。</string>
+	<string name="update_information_different_version_changelog_notice_base">注意: この変更履歴は、\"%2$s\"アップデート方法で利用可能な最新バージョン(%1$s)のものです</string>
+	<string name="update_information_different_version_changelog_notice_advanced">。このアップデートをインストールする場合は、設定で\"拡張モード\"を有効にしてください。</string>
 	<string name="update_information_no_update_data_available">アップデート情報が存在しません</string>
-	<string name="update_information_oxygen_os_version">OxygenOS %1$s</string>
 	<string name="update_information_system_is_up_to_date">あなたのシステムは最新です</string>
 	<string name="update_information_unknown_update_name">%1$s 向けの名前のないアップデート</string>
 	<string name="update_information_view_update_information">アップデート情報を表示</string>
@@ -91,9 +88,7 @@
 	<string name="summary_please_wait">お待ち下さい…</string>
 	<string name="summary_update_method">まずデバイスを選択して下さい</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。\"%1$s\"</string>
-	<string name="summary_theme">テーマの設定</string>
-	<string name="summary_language">言語を設定する</string>
+	<string name="summary_important_notifications_disabled">一部の重要な通知が無効になっています。:</string>
 	<string name="summary_privacy_policy">オンラインで表示</string>
 	<string name="summary_rate_app">レビューに 5 つ星を残す</string>
 
@@ -124,80 +119,46 @@
 
 	<string name="settings_device">デバイス</string>
 	<string name="settings_entered_incorrectly">設定の保存に失敗しました。デバイス / 更新方法を再選択して下さい。</string>
-	<string name="settings_explanation_incremental_full_update">増分アップデートはどのバージョンからでもインストール可能です（ブートローダーをアンロックしていない場合; アンロック済みの場合はフルアップデートをアップデート方法から選択する必要があります）。\n\nOxygenOS のベータアップデートは安定バージョンを使用している場合でも常にインストールできます。安定版からベータ版に切り替えるには、設定で詳細モードを有効にする必要があります。ベータ版では、フル・増分アップデートは安定版と同じように機能します。</string>
 
 	<string name="settings_push_from_server">通知と警告メッセージ</string>
 
 	<string name="settings_saving">設定を保存中です。長時間この状態が続く場合、ネットワーク接続を確認し、アプリをいったん終了し再起動して下さい。</string>
 
 	<string name="settings_advanced_mode">拡張モード</string>
-	<string name="settings_advanced_mode_explanation">拡張モードでは \"お使いのシステムは最新です\"というメッセージが非表示となり、デバイスと互換性がない場合でも全てのアップデートをダウンロードしインストール可能となります。\n\n以下の場合に役立ちます:\n&#8226; 通常版からベータ版へのアップデート\n&#8226; ベータ版から通常版への復帰(デバイスの工場出荷時設定へのリセットをお忘れずに)\n&#8226; 現在のシステムバージョンの再インストール 。</string>
+	<string name="settings_advanced_mode_explanation">"通常、アプリは現在のOSバージョンに基づいてアップデートを表示します。アドバンスモードでは、デバイス/バージョンの互換性に関係なく、利用可能な最新のアップデートが常に表示されます。
+
+これは次のような場合に便利です："</string>
+	<string name="settings_advanced_mode_uses">"&#8226; すでに最新バージョンであっても再ダウンロードしたい場合
+&#8226; 別のアップデートトラックに切り替える"</string>
+	<string name="settings_advanced_mode_caption">"アドバンスモードが必要になるのは、上記のような場合のみです。自分が何をしているのか分かっていない限り、有効にすべきではありません。"</string>
 
 	<string name="settings_update_method">アップデート方法</string>
 	<string name="settings_upload_logs">利用データとログを共有</string>
+	<string name="settings_ad_privacy">GDPR広告の同意</string>
+	<string name="settings_ad_privacy_subtitle">"EEA/UKのユーザー"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>
 	<string name="faq_menu_item">FAQ</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">ようこそ</string>
+	<string name="onboarding">セットアップ</string>
 	<string name="onboarding_finished_button">アプリの開始</string>
 
-	<string name="onboarding_page_1_title">Oxygen Updater にようこそ!</string>
-	<string name="onboarding_page_1_text">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n\n&#8226; ルート化済デバイスを簡単に更新\n\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む\n\n続行するには左にスワイプします。</string>
-	<string name="onboarding_page_1_caption">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。\n\nこのアプリを使用すると、上記の利用規約に同意したことになります。</string>
-	<string name="onboarding_page_2_title">あなたのデバイスを選択</string>
-	<string name="onboarding_page_2_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
-	<string name="onboarding_page_3_title">アップデート方法を選択</string>
-	<string name="onboarding_page_3_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。\n\nただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。\n\nOxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
-	<string name="onboarding_page_4_title">準備が出来ました!</string>
-	<string name="onboarding_page_4_text">アプリの使用をお楽しみください！\n\n後からいつでも設定を変更できます。そのためには、右上隅の3つのドットをタップし、\"設定\"をタップします。</string>
+	<string name="onboarding_app_uses">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OnePlus と OxygenOS に関する最新ニュースを読む</string>
+	<string name="onboarding_disclaimer">これは OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。 このアプリを使用すると、上記の利用規約に同意したことになります。</string>
+	<string name="onboarding_device_chooser_title">あなたのデバイスを選択</string>
+	<string name="onboarding_device_chooser_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
+	<string name="onboarding_method_chooser_title">アップデート方法を選択</string>
+	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。 ただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。 OxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
+	<string name="onboarding_caption">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">インストール</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">インストールガイドに示されている指示に従い、アップデートをインストールします。</string>
 	<string name="install_guide">インストールガイド</string>
-	<string name="install_guide_subtitle">インストールガイド - %1$d of %2$d</string>
-	<string name="install_guide_tip">&#8226; 更新プログラムのインストール中にデバイスの電源を切る必要があるため、すべての手順を書き留めておくことをお勧めします。</string>
-
-	<string name="install_guide_page_1_title">アップデートのダウンロード</string>
-	<string name="install_guide_page_1_text">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Play ストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
-
-	<string name="install_guide_page_2_title">イントールの準備</string>
-	<string name="install_guide_page_2_text">"注: アップデートのインストールはデバイスの標準の システム アップデート から行われます。何らかの理由で、それを開いた時にシステムアップデートが表示された場合は、始めにそれをインストールすることもできます。その後、Oxygen Updater を開き直して完全に最新の状態になっているか確認します。
-
-手順:
-&#8226; ホームボタンを押して Oxygen Updater を閉じます。
-
-&#8226; 設定アプリを開きます。ドロワーにあるはずです。
-
-&#8226; システム アップデート が表示されるまでスクロールし、それをタップします。"
-</string>
-
-	<string name="install_guide_page_3_title">アップデートのインストール</string>
-	<string name="install_guide_page_3_text">"システム アップデート アプリに入ったので、アップデートをインストールします。
-
-&#8226; システム アップデート で、右上にある歯車のアイコンをタップします
-
-&#8226; ここで、"ローカルアップグレード" を選択します。ファイルを開くダイアログが表示されるはずです。
-
-&#8226; この画面で、Oxygen Updater を使用してダウンロードしたアップデートファイルをタップします。\"%1$sOxygen\" から始まる名前になっています。
-
-&#8226; "今すぐアップグレード" をタップします。自動的にインストールが始まります。"
-</string>
-
-	<string name="install_guide_page_4_title">アップデートが完了するまで待つ</string>
-	<string name="install_guide_page_4_text">"&#8226; アップデートのインストールが開始され、プログレスバーが表示されます。インストールが完了するまで待ってください。インストールには数分から 15 分程度掛かります。
-
-&#8226; その後、アップデートを完了するために電話が再起動されます。"</string>
-
-	<string name="install_guide_page_5_title">完了。新しい OxygenOS バージョンを使用して下さい!</string>
-	<string name="install_guide_page_5_text">&#8226; デバイスのアプリ最適化が完了で、アップデートのインストールは成功です。\nインストールの成功を確認するには、以下の方法でシステムの現在バージョンをチェックして下さい。\n\n&#8226; 設定に移動し\"端末情報\"をタップしOxygenOS バージョンを確認します。\n\n&#8226; このアプリが気に入ったら、Google Play で ５ つ星をつけて下さい!</string>
-
-	<string name="install_guide_close_button">インストールガイドを閉じる</string>
+	<string name="install_guide_download_instructions">&#8226; ダウンロードボタンを押して、更新プログラムのダウンロードを開始します。\n&#8226; ダウンロードの進行状況がアプリに表示され、通知画面に通知として表示されます。\n&#8226; ダウンロードが完了すると、\"ダウンロード完了\"というテキストの通知が表示されます。\nダウンロードエラーが発生した場合は、アプリを開き、更新プログラムのダウンロードを再試行してください。機能しない場合は、接続が機能していることを確認してください。それ以外の場合は、Google Play ストアの\"マイアプリ\"セクションにアクセスし、アプリの開発者に連絡してください。</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
@@ -215,7 +176,7 @@
 	<string name="device_information_image_description">デバイスイメージ</string>
 	<string name="device_information_incremental_os_version">インクリメンタル OS バージョン</string>
 	<string name="device_information_os_version">Android バージョン</string>
-	<string name="device_information_oxygen_os_version">OxygenOS バージョン</string>
+	<string name="device_information_oxygen_os_version">OS バージョン</string>
 	<string name="device_information_oxygen_os_ota_version">OTA バージョン</string>
 	<string name="device_information_patch_level_version">セキュリティパッチ日時</string>
 	<string name="device_information_serial_number">シリアル番号</string>
@@ -227,13 +188,15 @@
 	<string name="about_description">このアプリは直接 OnePlus のサーバーから正式なアップデートをダウンロードし、インストールを許可する前にダウンロードされた ZIP の整合性を確認することができます。そうすることで、このアプリはロールアウトをスキップし、アップデートを即座にインストールすることができます。OS の不具合に遭遇した場合、OnePlus に直接報告してください: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>。私たちの <a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>に参加し、最新のアップデートについて話してみませんか。また、提案やフィードバックは <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> にお気軽にどうぞ。</string>
 	<string name="about_support">私たちを支援したい場合は、広告の除去を購入もしくは <a href="https://patreon.com/oxygenupdater">Patreon のページ</a>を確認してください。</string>
 	<string name="about_background_story_header">経緯</string>
-	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanogen OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/article/81/">こちら</a>をご覧ください。\n\n 2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
+	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanogen OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/article/81/">こちら</a>をご覧ください。\n\n2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
 	<string name="about_third_party_app_notice">注意、これは OnePlus 公式のアプリケーションではありません。\nOnePlus、OnePlus ロゴ、および OxygenOS は OnePlus の登録商標です。\nAndroid、Google、Google Play、および Google Play ロゴは Google Inc. の登録商標です。\nこのアプリは OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
 	<string name="about_website_button_text">ウェブサイト</string>
 	<string name="about_email_button_text">メール</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"通知を受け取る"</string>
+	<string name="notification_permission_text">"OTAアップデート、ニュース、進行中のダウンロード状況、その他重要なことをアプリが通知するようにしてください。設定はアプリの設定で変更できます。"</string>
 	<string name="notification_new_device_text">%1$s がサポートされました。 アプリを開き、このデバイスを選択。</string>
 	<string name="notification_no_notification_support">Google Play サービスをインストール/アップデートしプッシュ通知を有効化する</string>
 	<string name="notification_version">%2$s 向けの %1$s が利用可能です!</string>
@@ -259,23 +222,9 @@
 	<string name="general_notification_channel_description">どのカテゴリにも属さない一般的な通知</string>
 	<string name="url_submitted_notification_channel_description">OTA URLの提出が完了したら、通知を受け取ることができます。\nアプリの設定で、URLの自動送信を停止することができます。</string>
 
-	<!-- Help strings -->
-	<string name="help">ヘルプ</string>
-	<string name="help_updating_your_device_title">デバイスのアップデート</string>
-	<string name="help_updating_your_device_text">アプリを開くと、システムアップデートが利用可能かどうかがわかります。更新プログラムが利用可能な場合は、それをインストールできます。\n\nインストールを開始するには、（更新プログラムの説明の下にある）\"ダウンロード\"ボタンをタップしてダウンロードを開始します。ダウンロードが完了すると、インストール画面が表示されます。アプリを離れた場合、または画面がポップアップしなかった場合は、\"ダウンロード\"ボタンの横に表示される\"インストール\"ボタンをタップします。\n\nインストール画面では、root化済デバイスであるか最初に確認されます。ルート化済デバイスで場合は、確認画面でルート権限を付与し、アップデートのインストール方法を選択します。非ルート化済みデバイスの場合は、手動インストールの手順に従ってください。\n\n自動インストール：\nインストールオプションを選択するだけです。デフォルトの設定が推奨されますが、（再）インストールする必要があるルートパッケージを指定する必要があります。青いフォルダボタンを使用してルートパッケージ（zip ファイル）を選択し、\"インストールを開始\"をタップしてインストールを開始します。\n\n手動インストール：\n画面にインストールガイドが表示されます。指示を書き留め、記載されているとおりに実行して更新プログラムをインストールします。</string>
-	<string name="help_reading_news_title">最新ニュースの購読</string>
-	<string name="help_reading_news_text">ニュースはアップデートスクリーンの左側に表示されます。最新アイテムは最上部に表示されます。項目をタップして読むだけです。\n←矢印をタップするか、戻るキーを押してニュース項目画面に戻ります。</string>
-	<string name="help_device_information_title">デバイス情報の表示</string>
-	<string name="help_device_information_text">更新画面の右側の画面を使用して、デバイスの仕様の一部を表示できます。 これは、デバイスの仕様の一部を尋ねられる可能性のあるサポートリクエストを行うときに役立ちます。</string>
-	<string name="help_change_settings_title">設定の変更</string>
-	<string name="help_change_settings_text">設定を変更するには、右上の 3 つドットをタップし、\"設定\"をタップします。\n次の設定を変更できます。\ n\n•デバイスと更新方法\n•プッシュ通知\n•アプリ通知\n•プライバシー設定（ログのアップロード）。\n\nスイッチを使用して、通知/プライバシー設定をオンまたはオフにします。 スイッチの上に表示されるドロップダウンメニューを使用して、デバイスおよび/または更新方法を選択します。 ドロップダウンメニューは表示されませんか？ インターネット接続を確認し、設定画面を再度開きます。</string>
-
 	<!-- News strings -->
 	<string name="news">ニュース</string>
-	<string name="news_date_published">最終更新日: %1$s</string>
-	<string name="news_empty">この記事には内容がありません。</string>
 	<string name="news_load_network_error">記事を開けませんでした。 接続を確認し、\'再試行\'ボタンを押して記事を開きます。</string>
-	<string name="news_load_id_error"><![CDATA[無効な URL から記事を開くのに失敗しました: %1$s。URL を確認するか<a href="mailto:support@oxygenupdater.com">メール</a>または<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>からご報告ください。]]></string>
 	<string name="news_unread_count_1">%1$d 件未読のニュース記事。ここをタップして表示。</string>
 	<string name="news_unread_count_2">%1$d 件未読のニュース記事。ここをタップしてすべての記事を表示。</string>
 	<string name="news_mark_read">既読にする</string>
@@ -301,12 +250,10 @@
 	<string name="error_app_outdated">Oh no!</string>
 	<string name="error_app_outdated_message">このバージョンのアプリは古くなっています。 更新する時が来ました！ 下の\"Google Play\" をタップし、 Google Play 内で、\"更新\"をタップします。</string>
 	<string name="error_app_requires_network_connection">接続なし</string>
-	<string name="error_app_requires_network_connection_message">サーバへの接続に失敗しました。ネットワーク接続が正常であるか確認して下さい。アプリケーションを閉じます。</string>
 	<string name="error_google_play_button_text">Google Play</string>
-	<string name="error_no_internet_connection">接続なし</string>
 	<string name="error_maintenance">サーバメンテナンス</string>
 	<string name="error_maintenance_message">お待ちください。 サーバーはまもなく利用可能になります。</string>
-	<string name="error_maintenance_retry">サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。</string>
+	<string name="error_maintenance_retry"><![CDATA[サーバーはメンテナンスのためダウンしている可能性があります。時間をおいてもう一度やり直すか、<a href="mailto:support@oxygenupdater.com">メール</a>や<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で報告してください。]]></string>
 	<string name="error_reload">再読込</string>
 
 	<string name="error_unable_to_rate_app">Google Play ストアがデバイスにないため、アプリを評価できません。</string>
@@ -324,14 +271,13 @@
 	<string name="incorrect_device_warning_title">選択されたデバイスとの不一致</string>
 	<string name="incorrect_device_warning_message">\"%2$s\" の代わりに、間違ったデバイスを選択したようです: \"%1$s\"。正しいデバイスのアップデートと通知を受け取るためにアプリ内の設定から選択を変更してください。</string>
 
-	<string name="device_warning_checkbox_title">警告を二度と表示しない</string>
+	<string name="do_not_show_again_checkbox">二度と見せない</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">購入は \"支払い保留中\" になっています。支払いが完了すると特典が付与されます。</string>
 	<string name="purchase_error_after_payment">内部エラーが発生したため、広告なしバージョンの購入に失敗しました。 数分後にもう一度お試しください。 既に支払いを済ませている場合は、Google Play サポートにお問い合わせください。</string>
 
 	<!-- Other strings-->
-	<string name="error">エラー</string>
 	<string name="icon">アイコン</string>
 	<string name="loading">読み込中…</string>
 	<string name="processing">処理中…</string>

@@ -6,51 +6,28 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.oxygenupdater.OxygenUpdater.Companion.isNetworkAvailable
-import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
-import com.oxygenupdater.models.DeviceOsSpec.CARRIER_EXCLUSIVE_OXYGEN_OS
-import com.oxygenupdater.models.DeviceOsSpec.SUPPORTED_OXYGEN_OS
-import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OS
-import com.oxygenupdater.models.DeviceOsSpec.UNSUPPORTED_OXYGEN_OS
+import com.oxygenupdater.models.DeviceOsSpec.Companion.CarrierExclusiveOxygenOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.SupportedOxygenOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOxygenOs
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.ui.device.defaultDeviceName
 import com.oxygenupdater.utils.Logger.logVerbose
 import java.time.ZoneId
-import kotlin.system.exitProcess
 
-@Suppress("unused")
 object Utils {
 
-    val SERVER_TIME_ZONE: ZoneId = ZoneId.of("Europe/Amsterdam")
+    val ServerTimeZone: ZoneId = ZoneId.of("Europe/Amsterdam")
 
     private const val TAG = "Utils"
-    private const val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
-
-    /**
-     * Originally part of [com.google.android.gms.common.util.NumberUtils], removed in later versions
-     *
-     * @param string the string to test
-     *
-     * @return true if string is a number, false otherwise
-     */
-    fun isNumeric(string: String) = try {
-        string.toLong()
-        true
-    } catch (e: NumberFormatException) {
-        false
-    }
+    private const val PlayServicesResolutionRequest = 9000
 
     fun dpToPx(context: Context, @Dimension(unit = Dimension.DP) dp: Float) = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,
         dp,
-        context.resources.displayMetrics
-    )
-
-    fun spToPx(context: Context, @Dimension(unit = Dimension.SP) sp: Float) = TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP,
-        sp,
         context.resources.displayMetrics
     )
 
@@ -60,38 +37,27 @@ object Utils {
      * @return Returns if the Google Play Services are installed.
      */
     fun checkPlayServices(activity: Activity, showErrorIfMissing: Boolean): Boolean {
-        logVerbose(TAG, "Executing Google Play Services check...")
+        logVerbose(TAG, "Executing Google Play Services check…")
 
         val googleApiAvailability = GoogleApiAvailability.getInstance()
         val resultCode = googleApiAvailability.isGooglePlayServicesAvailable(activity)
 
         return if (resultCode != ConnectionResult.SUCCESS && showErrorIfMissing) {
-            if (googleApiAvailability.isUserResolvableError(resultCode)) {
-                googleApiAvailability.getErrorDialog(
-                    activity,
-                    resultCode,
-                    PLAY_SERVICES_RESOLUTION_REQUEST
-                )?.show()
-            } else {
-                exitProcess(0)
-            }
+            if (googleApiAvailability.isUserResolvableError(resultCode)) googleApiAvailability.getErrorDialog(
+                activity, resultCode, PlayServicesResolutionRequest
+            )?.show()
 
             logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
             false
         } else {
             val result = resultCode == ConnectionResult.SUCCESS
 
-            if (result) {
-                logVerbose(TAG, "Google Play Services are available.")
-            } else {
-                logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
-            }
+            if (result) logVerbose(TAG, "Google Play Services are available.")
+            else logVerbose(TAG, "Google Play Services are *NOT* available! Ads and notifications are not supported!")
 
             result
         }
     }
-
-    fun checkNetworkConnection() = isNetworkAvailable.value == true
 
     fun checkDeviceOsSpec(devices: List<Device>?): DeviceOsSpec {
         // <brand>/<product>/<device>:<version.release>/<id>/<version.incremental>:<type>/<tags>
@@ -104,45 +70,35 @@ object Utils {
                 && fingerprintParts[5].lowercase().contains("release-keys")
 
         if (devices.isNullOrEmpty()) {
-            // To prevent incorrect results on empty server response. This still checks if official ROM is used and if an OxygenOS version is found on the device.
-            return if (firmwareIsSupported) {
-                SUPPORTED_OXYGEN_OS
-            } else {
-                UNSUPPORTED_OS
-            }
+            // To prevent incorrect results on empty server response.
+            // This still checks if official ROM is used and if an OxygenOS version is found on the device.
+            return if (firmwareIsSupported) SupportedOxygenOs else UnsupportedOxygenOs
         }
 
         return if (firmwareIsSupported) {
-            // user's device is definitely running OxygenOS, now onto other checks...
+            // User's device is definitely running OxygenOS, now onto other checks…
             devices.forEach {
-                // find the user's device in the list of devices retrieved from the server
+                // Find the user's device in the list of devices retrieved from the server
                 if ((fingerprintParts.size > 2 && it.productNames.contains(fingerprintParts[1]))
                     || it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-                ) {
-                    return if (it.enabled) {
-                        // device found, and is enabled, which means it is supported
-                        SUPPORTED_OXYGEN_OS
-                    } else {
-                        // device found, but is disabled, which means it's a carrier-exclusive
-                        // because only carrier-exclusive devices are disabled in the database
-                        CARRIER_EXCLUSIVE_OXYGEN_OS
-                    }
+                ) return if (it.enabled) SupportedOxygenOs else {
+                    // Device found, but is disabled, which means it's carrier-exclusive
+                    // (only carrier-exclusive devices are disabled in the database)
+                    CarrierExclusiveOxygenOs
                 }
             }
 
-            // device not found among the server-provided list
-            // hence, must be a newly-released OnePlus device that we're yet to add support for
-            UNSUPPORTED_OXYGEN_OS
+            // Device not found among the server-provided list; assume it's a newly-released OnePlus device that we're yet to add support for
+            UnsupportedOxygenOs
         } else {
-            // device isn't running OxygenOS at all
-            // note: the device may very well be a OnePlus device, but in this case it's running a custom ROM, which we don't support duh
-            UNSUPPORTED_OS
+            // Device isn't running OxygenOS at all. Note that it may still be a OnePlus device running a custom ROM.
+            UnsupportedOs
         }
     }
 
-    fun checkDeviceMismatch(context: Context, devices: List<Device>?): Triple<Boolean, String, String> {
-        val unknown = context.getString(R.string.device_information_unknown)
-        val savedDeviceName = PrefManager.getString(PrefManager.PROPERTY_DEVICE, unknown) ?: unknown
+    fun checkDeviceMismatch(devices: List<Device>?): Triple<Boolean, String, String> {
+        val default = defaultDeviceName()
+        val savedDeviceName = PrefManager.getString(PrefManager.KeyDevice, default) ?: default
 
         val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
@@ -192,9 +148,9 @@ object Utils {
             }
         } ?: false
 
-        val actualDeviceName = matchedDevice?.name ?: unknown
+        val actualDeviceName = matchedDevice?.name ?: default
 
         // Don't show mismatch dialog if we don't know what the actual device is
-        return Triple(if (actualDeviceName == unknown) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
+        return Triple(if (actualDeviceName == default) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
     }
 }

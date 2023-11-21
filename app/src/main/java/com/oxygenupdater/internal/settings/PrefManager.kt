@@ -1,13 +1,20 @@
 package com.oxygenupdater.internal.settings
 
 import android.content.SharedPreferences
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.content.edit
-import com.oxygenupdater.utils.Logger
+import com.oxygenupdater.internal.NotSet
+import com.oxygenupdater.internal.NotSetF
+import com.oxygenupdater.internal.NotSetL
+import com.oxygenupdater.ui.Theme
+import com.oxygenupdater.utils.Logger.logError
 import org.koin.java.KoinJavaComponent.getKoin
 
 object PrefManager {
 
-    val sharedPreferences by getKoin().inject<SharedPreferences>()
+    private val sharedPreferences by getKoin().inject<SharedPreferences>()
 
     /** @see [SharedPreferences.getString] */
     fun getString(key: String, defValue: String?) = sharedPreferences.getString(key, defValue)
@@ -26,6 +33,10 @@ object PrefManager {
 
     /** @see [SharedPreferences.Editor.putInt] */
     fun putInt(key: String, value: Int) = sharedPreferences.edit { putInt(key, value) }
+
+    fun incrementInt(key: String) = sharedPreferences.edit {
+        putInt(key, getInt(key, 0) + 1)
+    }
 
     /** @see [SharedPreferences.getLong] */
     fun getLong(key: String, defValue: Long) = sharedPreferences.getLong(key, defValue)
@@ -49,16 +60,16 @@ object PrefManager {
     fun <T> getPreference(
         key: String?,
         typecastValue: T,
-        defaultValue: T
+        defaultValue: T,
     ) = sharedPreferences.run {
         if (key == null) return@run defaultValue
         when (typecastValue) {
-            null, is String -> PrefManager.getString(key, null)
-            is Int -> PrefManager.getInt(key, -1)
-            is Long -> PrefManager.getLong(key, -1L)
-            is Float -> PrefManager.getFloat(key, -1f)
-            is Boolean -> PrefManager.getBoolean(key, false)
-            is Collection<*> -> PrefManager.getStringSet(key, null)
+            null, is String -> getString(key, null)
+            is Int -> getInt(key, NotSet)
+            is Long -> getLong(key, NotSetL)
+            is Float -> getFloat(key, NotSetF)
+            is Boolean -> getBoolean(key, false)
+            is Collection<*> -> getStringSet(key, null)
             else -> if (contains(key)) all[key] else defaultValue
         } as T
     }
@@ -70,7 +81,7 @@ object PrefManager {
     @Suppress("UNCHECKED_CAST")
     fun <T> getPreference(
         key: String?,
-        defaultValue: T
+        defaultValue: T,
     ) = sharedPreferences.run {
         if (contains(key)) all[key] as T else defaultValue
     }
@@ -99,7 +110,7 @@ object PrefManager {
             }
         }
     } catch (e: Exception) {
-        Logger.logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
+        logError(TAG, "Failed to save preference with key $key and value $value. Defaulting to String value! ${e.message}", e)
 
         // If this doesn't work, try to use String instead.
         sharedPreferences.edit {
@@ -128,8 +139,8 @@ object PrefManager {
      *
      * @return if the user has chosen a device and an update method.
      */
-    fun checkIfSetupScreenIsFilledIn() = getLong(PROPERTY_DEVICE_ID, -1L) != -1L
-            && getLong(PROPERTY_UPDATE_METHOD_ID, -1L) != -1L
+    fun checkIfSetupScreenIsFilledIn() = getLong(KeyDeviceId, NotSetL) != NotSetL
+            && getLong(KeyUpdateMethodId, NotSetL) != NotSetL
 
     /**
      * Checks if a user has completed the initial setup screen. This means the user has filled it in
@@ -138,21 +149,7 @@ object PrefManager {
      * @return if the user has completed the setup screen.
      */
     fun checkIfSetupScreenHasBeenCompleted() = checkIfSetupScreenIsFilledIn()
-            && getBoolean(PROPERTY_SETUP_DONE, false)
-
-    /**
-     * Checks if the update information has been saved before so it can be viewed without a network
-     * connection
-     *
-     * @return true or false.
-     */
-    fun checkIfOfflineUpdateDataIsAvailable() = try {
-        contains(PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE)
-                && contains(PROPERTY_OFFLINE_UPDATE_NAME)
-                && contains(PROPERTY_OFFLINE_FILE_NAME)
-    } catch (ignored: Exception) {
-        false
-    }
+            && getBoolean(KeySetupDone, false)
 
     private const val TAG = "SettingsManager"
 
@@ -161,48 +158,28 @@ object PrefManager {
      *
      * @see [com.oxygenupdater.BuildConfig.VERSION_CODE]
      */
-    const val PROPERTY_VERSION_CODE = "version_code"
+    const val KeyVersionCode = "version_code"
 
     // Settings properties
-    const val PROPERTY_DEVICE = "device"
-    const val PROPERTY_DEVICE_ID = "device_id"
-    const val PROPERTY_UPDATE_METHOD = "update_method"
-    const val PROPERTY_UPDATE_METHOD_ID = "update_method_id"
-    const val PROPERTY_UPDATE_CHECKED_DATE = "update_checked_date"
+    const val KeyDevice = "device"
+    const val KeyDeviceId = "device_id"
+    const val KeyUpdateMethod = "update_method"
+    const val KeyUpdateMethodId = "update_method_id"
 
-    @Deprecated(
-        message = "Used between v1.0.0 and v2.4.5 only",
-        replaceWith = ReplaceWith(
-            "SettingsManager.PROPERTY_ADVANCED_MODE",
-            imports = arrayOf("com.oxygenupdater.internal.settings.SettingsManager")
-        ),
-        level = DeprecationLevel.WARNING
-    )
-    const val PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE = "show_if_system_is_up_to_date"
+    const val ThemeId = "theme_id"
 
-    const val PROPERTY_LANGUAGE_ID = "language_id"
-    const val PROPERTY_ADVANCED_MODE = "advanced_mode"
-    const val PROPERTY_SETUP_DONE = "setup_done"
-    const val PROPERTY_SQL_TO_ROOM_MIGRATION_DONE = "sql_to_room_migration_done"
-    const val PROPERTY_IGNORE_UNSUPPORTED_DEVICE_WARNINGS = "ignore_unsupported_device_warnings"
-    const val PROPERTY_IGNORE_INCORRECT_DEVICE_WARNINGS = "ignore_incorrect_device_warnings"
-    const val PROPERTY_DOWNLOAD_BYTES_DONE = "download_bytes_done"
+    const val KeyAdvancedMode = "advanced_mode"
+    const val KeySetupDone = "setup_done"
+    const val KeySqlToRoomMigrationDone = "sql_to_room_migration_done"
+    const val KeyIgnoreUnsupportedDeviceWarnings = "ignore_unsupported_device_warnings"
+    const val KeyIgnoreIncorrectDeviceWarnings = "ignore_incorrect_device_warnings"
+    const val KeyIgnoreNotificationPermissionSheet = "ignore_notification_permission_sheet"
+    const val KeyDownloadBytesDone = "download_bytes_done"
 
     /**
      * Value cannot be changed - is from older version where it was called 'upload_logs'
      */
-    const val PROPERTY_SHARE_ANALYTICS_AND_LOGS = "upload_logs"
-
-    @Deprecated(
-        message = """
-            No longer used in v5.2.0+, because we configure frequency capping in
-            the AdMob dashboard itself. It was more reliable, and it didn't make
-            sense to duplicate such functionality in the app, when the AdMob lib
-            already has support for it built-in.
-        """,
-        level = DeprecationLevel.WARNING
-    )
-    const val PROPERTY_LAST_NEWS_AD_SHOWN = "lastNewsAdShown"
+    const val KeyShareAnalyticsAndLogs = "upload_logs"
 
     /**
      * Note: contribution was a feature in app v2.7.0 - v5.8.3. v5.9.0 removed it, as it wasn't useful anymore.
@@ -211,30 +188,21 @@ object PrefManager {
      *
      * It was brought back in app v5.11.0, because we failed to realize that URLs were saved in a SQLite database.
      */
-    const val PROPERTY_CONTRIBUTE = "contribute"
-    const val PROPERTY_CONTRIBUTION_COUNT = "contribution_count"
+    const val KeyContribute = "contribute"
+    const val KeyContributionCount = "contribution_count"
 
-    const val PROPERTY_IS_EU_BUILD = "isEuBuild"
+    const val KeyIsEuBuild = "isEuBuild"
 
-    const val PROPERTY_LAST_APP_UPDATE_CHECKED_DATE = "lastAppUpdateCheckDate"
-    const val PROPERTY_FLEXIBLE_APP_UPDATE_IGNORE_COUNT = "flexibleAppUpdateIgnoreCount"
-
-    // Offline cache properties
-    const val PROPERTY_OFFLINE_ID = "offlineId"
-    const val PROPERTY_OFFLINE_UPDATE_NAME = "offlineUpdateName"
-    const val PROPERTY_OFFLINE_UPDATE_DOWNLOAD_SIZE = "offlineUpdateDownloadSize"
-    const val PROPERTY_OFFLINE_UPDATE_DESCRIPTION = "offlineUpdateDescription"
-    const val PROPERTY_OFFLINE_FILE_NAME = "offlineFileName"
-    const val PROPERTY_OFFLINE_DOWNLOAD_URL = "offlineDownloadUrl"
-    const val PROPERTY_OFFLINE_UPDATE_INFORMATION_AVAILABLE = "offlineUpdateInformationAvailable"
-    const val PROPERTY_OFFLINE_IS_UP_TO_DATE = "offlineIsUpToDate"
+    const val KeyFlexibleAppUpdateIgnoreCount = "flexibleAppUpdateIgnoreCount"
 
     // Notifications properties
-    const val PROPERTY_FIREBASE_TOKEN = "firebase_token"
-    const val PROPERTY_NOTIFICATION_TOPIC = "notification_topic"
-    const val PROPERTY_NOTIFICATION_DELAY_IN_SECONDS = "notification_delay_in_seconds"
+    const val KeyFirebaseToken = "firebase_token"
+    const val KeyNotificationTopic = "notification_topic"
+    const val KeyNotificationDelayInSeconds = "notification_delay_in_seconds"
 
     // IAB properties
-    const val PROPERTY_AD_FREE = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj"
+    const val KeyAdFree = "34ejrtgalsJKDf;awljker;2k3jrpwosKjdfpio24uj3tp3oiwfjdscPOKj"
 
+    var theme by mutableStateOf(Theme.from(getInt(ThemeId, Theme.System.value)))
+        internal set
 }

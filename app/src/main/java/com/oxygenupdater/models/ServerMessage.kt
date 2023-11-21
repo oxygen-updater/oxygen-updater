@@ -1,34 +1,28 @@
 package com.oxygenupdater.models
 
-import android.content.Context
-import androidx.core.content.ContextCompat
-import com.oxygenupdater.R
+import android.os.Parcelable
+import androidx.compose.runtime.Immutable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+@Immutable
+@JsonClass(generateAdapter = true)
 data class ServerMessage(
-    var id: Long = 0,
-    var englishMessage: String? = null,
-    var dutchMessage: String? = null,
-    var deviceId: Long? = null,
-    var updateMethodId: Long? = null,
-    var priority: ServerMessagePriority? = null
-) : Banner {
+    val id: Long = 0,
+    val text: String? = null,
 
-    override fun getBannerText(context: Context) = if (AppLocale.get() == AppLocale.NL) dutchMessage else englishMessage
+    @Json(name = "device_id")
+    val deviceId: Long? = null,
 
-    override fun getColor(context: Context) = when (priority) {
-        ServerMessagePriority.LOW -> ContextCompat.getColor(context, R.color.colorPositive)
-        ServerMessagePriority.MEDIUM -> ContextCompat.getColor(context, R.color.colorWarn)
-        ServerMessagePriority.HIGH -> ContextCompat.getColor(context, R.color.colorError)
-        else -> ContextCompat.getColor(context, R.color.foreground)
-    }
+    @Json(name = "update_method_id")
+    val updateMethodId: Long? = null,
 
-    override fun getDrawableRes(context: Context) = when (priority) {
-        ServerMessagePriority.LOW -> R.drawable.info
-        ServerMessagePriority.MEDIUM -> R.drawable.warning
-        ServerMessagePriority.HIGH -> R.drawable.error
-        else -> R.drawable.info
-    }
+    val priority: ServerMessagePriority? = null,
+) : Parcelable {
 
+    @JsonClass(generateAdapter = false) // https://github.com/square/moshi#enums
     enum class ServerMessagePriority {
         LOW,
         MEDIUM,

@@ -4,24 +4,22 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
+import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.collection.ArraySet
-import androidx.core.os.bundleOf
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.database.LocalAppDb
-import com.oxygenupdater.exceptions.NetworkException
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTION_COUNT
+import com.oxygenupdater.internal.settings.PrefManager.KeyContributionCount
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.services.RootFileService.Companion.FILENAME
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.Utils
@@ -50,20 +48,12 @@ import java.time.LocalDateTime
 @RequiresApi(Build.VERSION_CODES.Q) // same as RootFileService
 class ReadOtaDbWorker(
     context: Context,
-    parameters: WorkerParameters
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
-    private val database: LocalAppDb
-    private val analytics: FirebaseAnalytics
-    private val serverRepository: ServerRepository
-
-    init {
-        val koin = getKoin()
-
-        database = koin.inject<LocalAppDb>().value
-        analytics = koin.inject<FirebaseAnalytics>().value
-        serverRepository = koin.inject<ServerRepository>().value
-    }
+    private val database by getKoin().inject<LocalAppDb>()
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val serverRepository by getKoin().inject<ServerRepository>()
 
     /** Used to ensure only unique URL rows are considered in [toMap] */
     private lateinit var urls: ArraySet<String>
@@ -97,7 +87,7 @@ class ReadOtaDbWorker(
         val size = otaDbCopies.size
         urls = ArraySet(size)
         val validSubmittedFilenames = ArraySet<String>(size)
-        val rows = ArrayList<ArrayMap<String, Any?>>(size) // Cursor.toMap ensures unique (based on URL) entries
+        val rows = ArrayList<Map<String, Any?>>(size) // Cursor.toMap ensures unique (based on URL) entries
         otaDbCopies.forEach { file ->
             val filename = file.name
             if (!file.canRead()) return@forEach logDebug(TAG, "Can't read copied $filename")
@@ -136,13 +126,13 @@ class ReadOtaDbWorker(
             val errorMessage = result.errorMessage
             // If file is already in our database or if file is an invalid temporary file (server decides when this is the case),
             // mark this file as submitted but don't inform the user about it.
-            if (errorMessage != null && (errorMessage == URL_ALREADY_IN_DATABASE || errorMessage == URL_INVALID)) {
+            if (errorMessage != null && (errorMessage == UrlAlreadyInDatabase || errorMessage == UrlInvalid)) {
                 logInfo(TAG, "Ignoring submitted URLs, already in database or not relevant")
                 otaDbCopies.forEach { it.delete() }
                 insertInDb(rows, false)
             } else {
                 // Server error, try again later
-                logError(TAG, NetworkException("Error submitting URLs: ${result.errorMessage}"))
+                logWarning(TAG, "Error submitting URLs: ${result.errorMessage}")
                 failed = true
             }
         } else {
@@ -154,15 +144,12 @@ class ReadOtaDbWorker(
         }
 
         val count = validSubmittedFilenames.size
-        if (count != 0) LocalNotifications.showContributionSuccessfulNotification(
-            context,
-            validSubmittedFilenames
-        )
+        if (count != 0) LocalNotifications.showContributionSuccessfulNotification(context, validSubmittedFilenames)
 
         // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
         PrefManager.putInt(
-            PROPERTY_CONTRIBUTION_COUNT,
-            PrefManager.getInt(PROPERTY_CONTRIBUTION_COUNT, 0) + count
+            KeyContributionCount,
+            PrefManager.getInt(KeyContributionCount, 0) + count
         )
 
         if (failed) Result.failure() else Result.success()
@@ -171,7 +158,7 @@ class ReadOtaDbWorker(
     @Suppress("NOTHING_TO_INLINE")
     private inline fun Cursor.toMap() = columnCount.let { columnCount ->
         // Memory efficient, albeit slower compared to HashMap
-        // Note: SimpleArrayMap can't be used; Jackson can't serialize it
+        // Note: we can't use SimpleArrayMap as it doesn't implement Map, thus can't be serialized by Moshi
         val map = ArrayMap<String, Any?>(columnCount)
         for (index in 0 until columnCount) when (getType(index)) {
             Cursor.FIELD_TYPE_NULL -> map[getColumnName(index)] = null
@@ -197,12 +184,12 @@ class ReadOtaDbWorker(
      * @return array of [SubmittedUpdateFile]s
      */
     private inline fun CoroutineScope.insertInDb(
-        rows: List<ArrayMap<String, Any?>>,
+        rows: List<Map<String, Any?>>,
         success: Boolean,
-        action: (String) -> Unit = {}
+        action: (url: String) -> Unit = {},
     ) {
         // Perf: just once out of loop
-        val now = LocalDateTime.now(Utils.SERVER_TIME_ZONE).toString()
+        val now = LocalDateTime.now(Utils.ServerTimeZone).toString()
         val mapped = rows.map {
             // By this point, any row in this list is guaranteed to have either `active_url` or `url`,
             // because those without either of these fields are discarded in the `Cursor.toMap` extension.
@@ -213,7 +200,7 @@ class ReadOtaDbWorker(
             @Suppress("DeferredResultUnused") async {
                 analytics.logEvent(
                     if (success) "CONTRIBUTION_SUCCESSFUL" else "CONTRIBUTION_NOT_NEEDED",
-                    bundleOf("CONTRIBUTION_URL" to url)
+                    Bundle(1).apply { putString("CONTRIBUTION_URL", url) }
                 )
             }
 
@@ -221,7 +208,7 @@ class ReadOtaDbWorker(
             // URLs. App v2.7.0 - v5.8.3 had this old filename contribution feature, which was removed in v5.9.0.
             // v5.11.0 brought it back with adjustments for URLs instead, and behind a root access check.
             // Note: we're taking the lazy approach and saving the entire URL in the `name` field, to avoid
-            // bumping DB version and adding column-name-change upgrade logic. Why? Because `ALTER...RENAME`
+            // bumping DB version and adding column-name-change upgrade logic. Why? Because `ALTER…RENAME`
             // is supported only in SQLite v3.25.0+, and versions vary per device/Android release:
             // https://stackoverflow.com/a/4377116. On older SQLite versions, table recreation was the only
             // way, plus we'd still have to worry about recreating indices etc.
@@ -235,7 +222,7 @@ class ReadOtaDbWorker(
     companion object {
         private const val TAG = "ReadOtaDbWorker"
 
-        private const val URL_ALREADY_IN_DATABASE = "E_URL_ALREADY_IN_DB"
-        private const val URL_INVALID = "E_URL_INVALID"
+        private const val UrlAlreadyInDatabase = "E_URL_ALREADY_IN_DB"
+        private const val UrlInvalid = "E_URL_INVALID"
     }
 }

@@ -1,5 +1,4 @@
-<manifest
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Networking permissions for fetching update data -->
@@ -19,6 +18,7 @@
 		android:minSdkVersion="30"
 		tools:ignore="ScopedStorage" />
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+	<uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
 	<!-- Push notification permissions -->
 	<uses-permission android:name="android.permission.VIBRATE" />
@@ -36,15 +36,7 @@
 		android:requestLegacyExternalStorage="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.OxygenUpdater.DayNight"
-		android:usesCleartextTraffic="true"
-		tools:ignore="LockedOrientationActivity"
 		tools:targetApi="s">
-
-		<!-- Cleartext traffic is required to fix download errors after targeting API 28 because the Download URLs of OnePlus are not HTTPS.  -->
-		<!-- Fix Google Ads crashing when app targets API 28 or up as per https://developers.google.com/maps/documentation/android-sdk/config#specify_requirement_for_apache_http_legacy_library -->
-		<uses-library
-			android:name="org.apache.http.legacy"
-			android:required="false" />
 
 		<meta-data
 			android:name="asset_statements"
@@ -56,10 +48,12 @@
 
 		<!-- All screens -->
 		<activity
-			android:name=".activities.SplashActivity"
+			android:name=".activities.MainActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:exported="true"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.Splash.DayNight">
+			android:launchMode="singleTask"
+			android:resizeableActivity="true"
+			android:theme="@style/Theme.OxygenUpdater.Splash">
 
 			<tools:validation testUrl="https://${hostName}/inapp" />
 
@@ -88,46 +82,29 @@
 				android:resource="${shortcutXml}" />
 		</activity>
 
-		<!-- All screens -->
 		<activity
-			android:name=".activities.MainActivity"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.Main" />
-
-		<activity
-			android:name=".activities.InstallActivity"
+			android:name=".activities.InstallGuideActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:label="@string/install_guide"
 			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen" />
-
-		<activity
-			android:name=".activities.OnboardingActivity"
-			android:label="@string/onboarding"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen" />
-
-		<activity
-			android:name=".activities.HelpActivity"
-			android:label="@string/help"
-			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait" />
+			android:resizeableActivity="true"
+			android:theme="@style/Theme.OxygenUpdater.DayNight" />
 
 		<activity
 			android:name=".activities.FaqActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:label="@string/faq"
 			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait" />
+			android:resizeableActivity="true" />
 
 		<activity
 			android:name=".activities.NewsItemActivity"
+			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
 			android:exported="true"
 			android:label="@string/news"
 			android:parentActivityName=".activities.MainActivity"
-			android:screenOrientation="portrait"
-			android:theme="@style/Theme.OxygenUpdater.DayNight.FullScreen">
+			android:resizeableActivity="true"
+			android:theme="@style/Theme.OxygenUpdater.DayNight">
 
 			<intent-filter
 				android:autoVerify="true"
@@ -172,12 +149,6 @@
 			</intent-filter>
 		</activity>
 
-		<!-- Advertisements -->
-		<activity
-			android:name="com.google.android.gms.ads.AdActivity"
-			android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-			android:theme="@android:style/Theme.Translucent" />
-
 		<!-- Push notifications services and receiver, Package updated receiver -->
 		<service
 			android:name=".services.FirebaseMessagingService"
@@ -186,6 +157,22 @@
 				<action android:name="com.google.firebase.MESSAGING_EVENT" />
 			</intent-filter>
 		</service>
+
+		<!-- https://developer.android.com/guide/topics/resources/app-languages#android12-impl -->
+		<service
+			android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+			android:enabled="true"
+			android:exported="false">
+			<meta-data
+				android:name="autoStoreLocales"
+				android:value="true" />
+		</service>
+
+		<!-- For DownloadWorker: https://developer.android.com/guide/background/persistent/how-to/long-running#declare-foreground-service-types-manifest -->
+		<service
+			android:name="androidx.work.impl.foreground.SystemForegroundService"
+			android:foregroundServiceType="dataSync"
+			tools:node="merge" />
 
 		<!-- Receiver to auto start RootFileService at device startup or app update -->
 		<receiver
@@ -204,6 +191,19 @@
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="${advertisingAppId}" />
+
+		<!-- Delay app measurement until MobileAds.initialize() is called. -->
+		<meta-data
+			android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+			android:value="true" />
+
+		<!-- https://developers.google.com/admob/android/optimize-initialization -->
+		<meta-data
+			android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
+			android:value="true" />
+		<meta-data
+			android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
+			android:value="true" />
 
 		<!-- Opt out of WebView usage statistics collection -->
 		<meta-data

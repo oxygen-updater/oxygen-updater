@@ -1,66 +1,48 @@
 package com.oxygenupdater.models
 
-import android.content.Context
-import androidx.core.content.ContextCompat
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
+import androidx.compose.runtime.Immutable
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.R
-import com.oxygenupdater.utils.Utils
+import com.oxygenupdater.internal.ForceBoolean
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Immutable
+@JsonClass(generateAdapter = true)
 data class ServerStatus(
-    var status: Status? = null,
-    var latestAppVersion: String? = null,
-    var automaticInstallationEnabled: Boolean = false,
-    var pushNotificationDelaySeconds: Int = 0
-) : Banner {
+    val status: Status? = null,
 
-    @JsonProperty("push_notification_delay_seconds")
-    fun setPushNotificationDelaySeconds(pushNotificationDelaySeconds: String?) {
-        if (pushNotificationDelaySeconds != null && Utils.isNumeric(pushNotificationDelaySeconds)) {
-            this.pushNotificationDelaySeconds = pushNotificationDelaySeconds.toInt()
+    @Json(name = "latest_app_version")
+    val latestAppVersion: String? = null,
+
+    @Json(name = "automatic_installation_enabled")
+    @ForceBoolean val automaticInstallationEnabled: Boolean = false,
+
+    @Json(name = "push_notification_delay_seconds")
+    val pushNotificationDelaySeconds: Int = 0,
+) {
+
+    /**
+     * @param currentVersionName parameter exists only to help with testing
+     *
+     * @return `true` if [current app version][currentVersionName] is older than server-provided [latestAppVersion]
+     */
+    fun shouldShowAppUpdateNotice(
+        currentVersionName: String = BuildConfig.VERSION_NAME,
+    ) = if (latestAppVersion == currentVersionName) false else try {
+        val currentSemverInts = currentVersionName.toSemverInts()
+        val latestSemverInts = latestAppVersion!!.toSemverInts()
+        repeat(3) { // limit to 3; our versions are strictly `major.minor.patch`
+            val result = currentSemverInts.getOrElse(it) { 0 } compareTo latestSemverInts.getOrElse(it) { 0 }
+            // We're running through major -> minor -> patch, so if we have
+            // anything that's not equal, we already have our final result.
+            if (result != 0) return result <= 0 // current <= latest
         }
-    }
-
-    override fun getBannerText(context: Context) = when (status) {
-        Status.WARNING -> context.getString(R.string.server_status_warning)
-        Status.ERROR -> context.getString(R.string.server_status_error)
-        Status.MAINTENANCE -> ""
-        Status.OUTDATED -> ""
-        Status.UNREACHABLE -> context.getString(R.string.server_status_unreachable)
-        else -> ""
-    }
-
-    override fun getColor(context: Context) = when (status) {
-        Status.WARNING -> ContextCompat.getColor(context, R.color.colorWarn)
-        Status.ERROR -> ContextCompat.getColor(context, R.color.colorPrimary)
-        Status.MAINTENANCE -> 0
-        Status.OUTDATED -> 0
-        Status.UNREACHABLE -> ContextCompat.getColor(context, R.color.colorPrimary)
-        else -> 0
-    }
-
-    override fun getDrawableRes(context: Context) = when (status) {
-        Status.WARNING -> R.drawable.warning
-        Status.ERROR -> R.drawable.error
-        Status.MAINTENANCE -> 0
-        Status.OUTDATED -> 0
-        Status.UNREACHABLE -> R.drawable.info
-        else -> 0
-    }
-
-    fun checkIfAppIsUpToDate() = try {
-        val appVersionNumeric = BuildConfig.VERSION_NAME.replace(".", "")
-            // handle custom buildConfigs
-            .split("-")[0]
-            .toInt()
-        val appVersionFromResultNumeric = latestAppVersion!!.replace(".", "").toInt()
-        appVersionFromResultNumeric <= appVersionNumeric
+        false // current == latest
     } catch (e: Exception) {
-        true
+        false
     }
 
+    @JsonClass(generateAdapter = false) // https://github.com/square/moshi#enums
     enum class Status {
         NORMAL,
         WARNING,
@@ -74,5 +56,12 @@ data class ServerStatus(
 
         val isNonRecoverableError
             get() = !isUserRecoverableError && !equals(NORMAL)
+    }
+
+    companion object {
+        @Suppress("NOTHING_TO_INLINE")
+        private inline fun String.toSemverInts() =
+            split("-")[0] // handle custom builds (e.g. debug, benchmark, etc)
+                .split(".").map { it.toInt() } // map each component to int
     }
 }

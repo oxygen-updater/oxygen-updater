@@ -7,11 +7,11 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.internal.KotlinCallback
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,28 +21,22 @@ import kotlinx.coroutines.withContext
  */
 class BillingViewModel(
     private val billingRepository: BillingRepository,
-    private val serverRepository: ServerRepository
+    private val serverRepository: ServerRepository,
 ) : ViewModel() {
 
     val lifecycleObserver: LifecycleObserver = billingRepository
 
-    val adFreePrice = billingRepository.adFreePrice.asLiveData()
-    val adFreeState = billingRepository.adFreeState.asLiveData()
-    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree.asLiveData()
+    val adFreePrice = billingRepository.adFreePrice
+    val adFreeState = billingRepository.adFreeState
+    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree
     val newPurchase = billingRepository.newPurchase.asLiveData()
 
-    // Clients need to observe this LiveData so that internal logic is guaranteed to run
-    val pendingPurchase by lazy(LazyThreadSafetyMode.NONE) {
-        billingRepository.pendingPurchase.mapNotNull {
-            logPendingAdFreePurchase(it)
-        }.asLiveData()
-    }
-
-    // Clients need to observe this LiveData so that internal logic is guaranteed to run
-    val purchaseStateChange by lazy(LazyThreadSafetyMode.NONE) {
-        billingRepository.purchaseStateChange.mapNotNull {
-            logPendingAdFreePurchase(it)
-        }.asLiveData()
+    init {
+        // These flows need to be collected (terminal operation) so that we can log them to the server
+        viewModelScope.launch(Dispatchers.IO) {
+            billingRepository.pendingPurchase.mapNotNull { logPendingAdFreePurchase(it) }.collect()
+            billingRepository.purchaseStateChange.mapNotNull { logPendingAdFreePurchase(it) }.collect()
+        }
     }
 
     /**
@@ -52,14 +46,14 @@ class BillingViewModel(
      */
     fun makePurchase(
         activity: Activity,
-        type: PurchaseType
+        type: PurchaseType,
     ) = billingRepository.makePurchase(activity, type.sku)
 
     fun verifyPurchase(
         purchase: Purchase,
         amount: String?,
         purchaseType: PurchaseType,
-        callback: KotlinCallback<ServerPostResult?>
+        callback: (ServerPostResult?) -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.verifyPurchase(purchase, amount, purchaseType).let {
             withContext(Dispatchers.Main) {

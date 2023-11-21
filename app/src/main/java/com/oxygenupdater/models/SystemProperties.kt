@@ -1,20 +1,20 @@
 package com.oxygenupdater.models
 
 import android.os.Build.UNKNOWN
-import java.util.concurrent.atomic.AtomicBoolean
 
-val useSystemProperties = AtomicBoolean(true)
+@Volatile
+var useSystemProperties = true
 
 @Suppress("NOTHING_TO_INLINE")
 @Throws(UnsupportedOperationException::class)
 private inline fun invokeGet(key: String) = with(ClassAndMethod) {
-    if (!useSystemProperties.get()) throw UnsupportedOperationException("`useSystemProperties` is false")
+    if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
 
     try {
         val value = second?.invoke(first, key) as? String
         if (value.isNullOrEmpty()) UNKNOWN else value // ensure we never return null/empty
     } catch (e: Exception) {
-        useSystemProperties.set(false)
+        useSystemProperties = false
         throw UnsupportedOperationException("`useSystemProperties` is false")
     }
 }
@@ -42,6 +42,6 @@ private val ClassAndMethod = try {
     val clazz = Class.forName("android.os.SystemProperties")
     clazz to clazz.getMethod("get", String::class.java)
 } catch (e: Exception) {
-    useSystemProperties.set(false)
+    useSystemProperties = false
     null to null
 }

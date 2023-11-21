@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -20,11 +20,11 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_CONTRIBUTE
+import com.oxygenupdater.internal.settings.PrefManager.KeyContribute
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.workers.ReadOtaDbWorker
-import com.oxygenupdater.workers.WORK_UNIQUE_READ_OTA_DB
+import com.oxygenupdater.workers.WorkUniqueReadOtaDb
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ipc.RootService
 import org.koin.java.KoinJavaComponent.getKoin
@@ -38,15 +38,8 @@ object ContributorUtils {
 
     private const val TAG = "ContributorUtils"
 
-    private val analytics: FirebaseAnalytics
-    private val workManager: WorkManager
-
-    init {
-        val koin = getKoin()
-
-        analytics = koin.inject<FirebaseAnalytics>().value
-        workManager = koin.inject<WorkManager>().value
-    }
+    private val analytics by getKoin().inject<FirebaseAnalytics>()
+    private val workManager by getKoin().inject<WorkManager>()
 
     val isAtLeastQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q // same as RootFileService
     val isAtLeastQAndPossiblyRooted
@@ -54,16 +47,16 @@ object ContributorUtils {
 
     @RequiresApi(Build.VERSION_CODES.Q)
     fun flushSettings(context: Context, isContributing: Boolean) {
-        val isFirstTime = !PrefManager.contains(PROPERTY_CONTRIBUTE)
-        val wasContributing = PrefManager.getBoolean(PROPERTY_CONTRIBUTE, false)
+        val isFirstTime = !PrefManager.contains(KeyContribute)
+        val wasContributing = PrefManager.getBoolean(KeyContribute, false)
 
         if (isFirstTime || wasContributing != isContributing) {
-            PrefManager.putBoolean(PROPERTY_CONTRIBUTE, isContributing)
+            PrefManager.putBoolean(KeyContribute, isContributing)
 
-            val analyticsEventData = bundleOf(
-                "CONTRIBUTOR_DEVICE" to PrefManager.getString(PrefManager.PROPERTY_DEVICE, "<<UNKNOWN>>"),
-                "CONTRIBUTOR_UPDATEMETHOD" to PrefManager.getString(PrefManager.PROPERTY_UPDATE_METHOD, "<<UNKNOWN>>")
-            )
+            val analyticsEventData = Bundle(2).apply {
+                putString("CONTRIBUTOR_DEVICE", PrefManager.getString(PrefManager.KeyDevice, "<<UNKNOWN>>"))
+                putString("CONTRIBUTOR_UPDATEMETHOD", PrefManager.getString(PrefManager.KeyUpdateMethod, "<<UNKNOWN>>"))
+            }
 
             if (isContributing) {
                 analytics.logEvent("CONTRIBUTOR_SIGNUP", analyticsEventData)
@@ -76,14 +69,14 @@ object ContributorUtils {
     }
 
     fun startDbCheckingProcess(context: Context) {
-        if (!isAtLeastQ || !PrefManager.getBoolean(PROPERTY_CONTRIBUTE, false)) return
+        if (!isAtLeastQ || !PrefManager.getBoolean(KeyContribute, false)) return
 
         startRootService(context)
 
         // Give time for RootFileService to copy ota.db (`setInitialDelay` doesn't work)
         Handler(Looper.getMainLooper()).postDelayed({
             workManager.enqueueUniquePeriodicWork(
-                WORK_UNIQUE_READ_OTA_DB,
+                WorkUniqueReadOtaDb,
                 ExistingPeriodicWorkPolicy.UPDATE,
                 PeriodicWorkRequestBuilder<ReadOtaDbWorker>(MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)
                     .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
@@ -95,7 +88,7 @@ object ContributorUtils {
 
     fun stopDbCheckingProcess(context: Context) {
         if (isAtLeastQ) RootService.stop(rootServiceIntent(context))
-        workManager.cancelUniqueWork(WORK_UNIQUE_READ_OTA_DB)
+        workManager.cancelUniqueWork(WorkUniqueReadOtaDb)
     }
 
     /** Does nothing if app doesn't have root access */

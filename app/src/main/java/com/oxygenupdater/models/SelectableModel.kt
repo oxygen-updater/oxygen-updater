@@ -1,10 +1,7 @@
 package com.oxygenupdater.models
 
-import com.oxygenupdater.adapters.ChooserOnboardingAdapter
-import com.oxygenupdater.fragments.ChooserOnboardingFragment
-
 /**
- * Mainly used in [ChooserOnboardingFragment] and [ChooserOnboardingAdapter]. Used to
+ * Used in [com.oxygenupdater.ui.onboarding.OnboardingScreen]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */

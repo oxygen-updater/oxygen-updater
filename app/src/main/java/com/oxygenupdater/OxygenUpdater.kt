@@ -1,36 +1,31 @@
 package com.oxygenupdater
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.getSystemService
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.oxygenupdater.extensions.attachWithLocale
+import com.oxygenupdater.database.SqliteMigrations
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.DatabaseMigrations
 import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.MD5
 import com.oxygenupdater.utils.NotificationUtils
-import com.oxygenupdater.utils.ThemeUtils
 import com.topjohnwu.superuser.Shell
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import java.util.concurrent.atomic.AtomicBoolean
 
 class OxygenUpdater : Application() {
 
@@ -63,88 +58,76 @@ class OxygenUpdater : Application() {
                 false
             }
 
-            _isNetworkAvailable.postValue(networkAvailability)
+            _isNetworkAvailable.tryEmit(networkAvailability)
         }
 
         override fun onAvailable(network: Network) {
-            _isNetworkAvailable.postValue(true)
+            _isNetworkAvailable.tryEmit(true)
         }
     }
 
-    override fun attachBaseContext(
-        base: Context
-    ) = super.attachBaseContext(base.attachWithLocale())
-
     override fun onCreate() {
         setupKoin()
-        AppCompatDelegate.setDefaultNightMode(ThemeUtils.translateThemeToNightMode(this))
         super.onCreate()
 
         setupCrashReporting()
         setupNetworkCallback()
-        setupMobileAds()
 
-        val notificationUtils by inject<NotificationUtils>()
         // Support functions for Android 8.0 "Oreo" and up.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationUtils.deleteOldNotificationChannels()
-            notificationUtils.createNewNotificationGroupsAndChannels()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationUtils(this).run {
+            deleteOldNotificationChannels()
+            createNewNotificationGroupsAndChannels()
         }
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
-        PrefManager.putInt(PrefManager.PROPERTY_VERSION_CODE, BuildConfig.VERSION_CODE)
-        DatabaseMigrations.deleteLocalBillingDatabase(this)
-        migrateOldSettings()
+        PrefManager.putInt(PrefManager.KeyVersionCode, BuildConfig.VERSION_CODE)
+        SqliteMigrations.deleteLocalBillingDatabase(this)
     }
 
-    private fun setupKoin() {
-        startKoin {
-            // use AndroidLogger as Koin Logger - default Level.INFO
-            androidLogger(Level.ERROR)
-            // use the Android context given there
-            androidContext(this@OxygenUpdater)
-            // module list
-            modules(allModules)
+    private fun setupKoin() = startKoin {
+        // use AndroidLogger as Koin Logger - default Level.INFO
+        androidLogger(Level.ERROR)
+        // use the Android context given there
+        androidContext(this@OxygenUpdater)
+        // module list
+        modules(allModules)
+    }
+
+    private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {
+        // Posting initial value is required, as [networkCallback]'s
+        // methods get called only when network connectivity changes
+        @Suppress("DEPRECATION")
+        _isNetworkAvailable.tryEmit(activeNetworkInfo?.isConnectedOrConnecting == true)
+
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerDefaultNetworkCallback(networkCallback)
+            } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
+        } catch (e: Exception) {
+            logError(TAG, "Couldn't setup network callback", e)
         }
     }
 
-    private fun setupNetworkCallback() {
-        getSystemService<ConnectivityManager>()?.apply {
-            // Posting initial value is required, as [networkCallback]'s
-            // methods get called only when network connectivity changes
-            @Suppress("DEPRECATION")
-            _isNetworkAvailable.postValue(activeNetworkInfo?.isConnectedOrConnecting == true)
+    private val mobileAdsInitDone = AtomicBoolean(false)
+    fun setupMobileAds() {
+        if (mobileAdsInitDone.get()) return else mobileAdsInitDone.set(true)
 
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    registerDefaultNetworkCallback(networkCallback)
-                } else {
-                    registerNetworkCallback(
-                        NetworkRequest.Builder().build(),
-                        networkCallback
-                    )
-                }
-            } catch (e: SecurityException) {
-                logError(TAG, "Couldn't setup network callback", e)
-            }
-        }
-    }
-
-    private fun setupMobileAds() {
+        val requestConfiguration = MobileAds.getRequestConfiguration().toBuilder()
         // If it's a debug build, add current device's ID to the list of test device IDs for ads
-        if (BuildConfig.DEBUG) {
-            @SuppressLint("HardwareIds")
-            val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-            val deviceId = MD5.calculateMD5(androidId).uppercase()
-            ADS_TEST_DEVICES.add(deviceId)
-        }
+        if (BuildConfig.DEBUG) requestConfiguration.setTestDeviceIds(buildList(2) {
+            add(AdRequest.DEVICE_ID_EMULATOR)
+            try {
+                @SuppressLint("HardwareIds")
+                val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+                val deviceId = MD5.calculateMD5(androidId).uppercase()
+                add(deviceId)
+            } catch (_: Exception) {
+                // no-op
+            }
+        })
 
-        val requestConfiguration = RequestConfiguration.Builder()
-            .setTestDeviceIds(ADS_TEST_DEVICES)
-            .build()
-
-        MobileAds.initialize(this) {}
-        MobileAds.setRequestConfiguration(requestConfiguration)
+        MobileAds.initialize(this)
+        MobileAds.setRequestConfiguration(requestConfiguration.build())
 
         // By default video ads run at device volume, which could be annoying
         // to some users. We're reducing ad volume to be 10% of device volume.
@@ -165,9 +148,9 @@ class OxygenUpdater : Application() {
      */
     fun setupCrashReporting(
         shouldShareLogs: Boolean = PrefManager.getBoolean(
-            PrefManager.PROPERTY_SHARE_ANALYTICS_AND_LOGS,
+            PrefManager.KeyShareAnalyticsAndLogs,
             true
-        )
+        ),
     ) {
         val analytics by inject<FirebaseAnalytics>()
         val crashlytics by inject<FirebaseCrashlytics>()
@@ -178,54 +161,22 @@ class OxygenUpdater : Application() {
         crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
     }
 
-    /**
-     * Migrate settings from old versions of the app, if any
-     */
-    @Suppress("DEPRECATION")
-    private fun migrateOldSettings() {
-        // App version 2.4.6: Migrated old setting Show if system is up to date (default: ON) to Advanced mode (default: OFF).
-        if (PrefManager.contains(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)) {
-            PrefManager.putBoolean(
-                PrefManager.PROPERTY_ADVANCED_MODE,
-                !PrefManager.getBoolean(
-                    PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE,
-                    true
-                )
-            )
-            PrefManager.remove(PrefManager.PROPERTY_SHOW_IF_SYSTEM_IS_UP_TO_DATE)
-        }
-
-        // App version 5.2.0+: no longer used. We now configure capping in the AdMob dashboard itself.
-        if (PrefManager.contains(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)) {
-            PrefManager.remove(PrefManager.PROPERTY_LAST_NEWS_AD_SHOWN)
-        }
-    }
-
     @Suppress("unused")
     companion object {
         private const val TAG = "OxygenUpdater"
 
-        @Suppress("ObjectPropertyName")
-        private val _isNetworkAvailable = MutableLiveData<Boolean>()
-        val isNetworkAvailable: LiveData<Boolean>
-            get() = _isNetworkAvailable
+        private val _isNetworkAvailable = MutableStateFlow(true)
+        val isNetworkAvailable = _isNetworkAvailable.asStateFlow()
 
         // Test devices for ads.
-        private val ADS_TEST_DEVICES = mutableListOf(
+        private val AdsTestDevices = mutableListOf(
             AdRequest.DEVICE_ID_EMULATOR
         )
 
-        // Permissions constants
-        const val PERMISSION_REQUEST_CODE = 200
-        const val DOWNLOAD_FILE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        const val VERIFY_FILE_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
-
-        const val NUMBER_OF_INSTALL_GUIDE_PAGES = 5
-        const val APP_USER_AGENT = "Oxygen_updater_" + BuildConfig.VERSION_NAME
-        const val UNABLE_TO_FIND_A_MORE_RECENT_BUILD = "unable to find a more recent build"
-        const val NETWORK_CONNECTION_ERROR = "NETWORK_CONNECTION_ERROR"
-        const val SERVER_MAINTENANCE_ERROR = "SERVER_MAINTENANCE_ERROR"
-        const val APP_OUTDATED_ERROR = "APP_OUTDATED_ERROR"
+        const val UnableToFindAMoreRecentBuild = "unable to find a more recent build"
+        const val NetworkConnectionError = "NETWORK_CONNECTION_ERROR"
+        const val ServerMaintenanceError = "SERVER_MAINTENANCE_ERROR"
+        const val AppOutdatedError = "APP_OUTDATED_ERROR"
 
         fun buildAdRequest(): AdRequest = AdRequest.Builder().build()
     }

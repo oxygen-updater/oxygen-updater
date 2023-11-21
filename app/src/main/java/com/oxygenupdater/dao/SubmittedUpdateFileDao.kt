@@ -12,7 +12,7 @@ import com.oxygenupdater.models.SubmittedUpdateFile
 @Dao
 interface SubmittedUpdateFileDao {
 
-    @Query("SELECT EXISTS(SELECT 1 FROM submitted_update_file WHERE name = :url LIMIT 1)")
+    @Query("SELECT EXISTS(SELECT 1 FROM `submitted_update_file` WHERE `name` = :url LIMIT 1)")
     fun isUrlAlreadySubmitted(url: String?): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

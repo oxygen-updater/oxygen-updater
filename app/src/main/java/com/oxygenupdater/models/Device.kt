@@ -1,57 +1,38 @@
 package com.oxygenupdater.models
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
+import androidx.annotation.VisibleForTesting
+import androidx.compose.runtime.Immutable
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.internal.CsvList
+import com.oxygenupdater.internal.ForceBoolean
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@Immutable // required because we have a List field (productNames)
+@JsonClass(generateAdapter = true)
 data class Device(
     override val id: Long,
-    var enabled: Boolean,
     override val name: String?,
 
-    @JsonIgnore
-    private val productName: String
+    @Json(name = "product_names")
+    @CsvList val productNames: List<String>,
+
+    @ForceBoolean val enabled: Boolean,
 ) : SelectableModel {
 
-    init {
-        setProductName(productName)
-    }
-
-    lateinit var productNames: List<String>
-
-    /**
-     * Treat device as enabled by default, for backwards compatibility
-     *
-     * @param id          the device ID
-     * @param name        the device name
-     * @param productName the device name (ro.product.name)
-     */
-    constructor(id: Long, name: String?, productName: String) : this(id, true, name, productName)
-
-    @JsonProperty("product_names")
-    fun setProductName(productName: String) {
-        productNames = getProductNames(productName)
-    }
-
-    private fun getProductNames(productNameTemplate: String): List<String> {
-        return productNameTemplate.trim { it <= ' ' }.split(",")
-            // Remove spaces after comma separation.
-            .map { productName -> productName.trim { it <= ' ' } }
-    }
-
     companion object {
-        private val IMAGE_URL_PREFIX = buildString(42) {
+        @VisibleForTesting
+        val ImageUrlPrefix = buildString(37) {
             append("https://")
-            if (BuildConfig.BUILD_TYPE != "release") {
-                append("test.")
-            }
+            if (BuildConfig.DEBUG) append("test.")
             append("oxygenupdater.com/img/device/")
         }
 
-        private const val IMAGE_URL_SUFFIX = "-min.png?v=1"
+        @VisibleForTesting
+        const val ImageUrlSuffix = "-min.png?v=1"
 
-        fun constructImageUrl(deviceName: String) = IMAGE_URL_PREFIX +
+        fun constructImageUrl(deviceName: String) = ImageUrlPrefix +
                 deviceName.split("(", limit = 2)[0].trim().replace(' ', '-').lowercase() +
-                IMAGE_URL_SUFFIX
+                ImageUrlSuffix
     }
 }

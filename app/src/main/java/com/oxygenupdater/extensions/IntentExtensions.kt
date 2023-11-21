@@ -14,10 +14,7 @@ fun Intent.withAppReferrer(context: Context) = "android-app://${context.packageN
         Uri.parse(it)
     ).apply {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            putExtra(
-                Intent.EXTRA_REFERRER_NAME,
-                it
-            )
+            putExtra(Intent.EXTRA_REFERRER_NAME, it)
         }
     }
 }

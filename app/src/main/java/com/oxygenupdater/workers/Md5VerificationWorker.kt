@@ -3,11 +3,9 @@ package com.oxygenupdater.workers
 import android.content.Context
 import android.os.Environment
 import androidx.work.CoroutineWorker
+import androidx.work.Data
 import androidx.work.WorkerParameters
-import androidx.work.workDataOf
-import com.oxygenupdater.enums.Md5VerificationFailure
-import com.oxygenupdater.exceptions.UpdateVerificationException
-import com.oxygenupdater.extensions.attachWithLocale
+import com.oxygenupdater.ui.update.Md5VerificationFailure
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Logger.logDebug
 import com.oxygenupdater.utils.Logger.logError
@@ -31,14 +29,18 @@ import java.security.NoSuchAlgorithmException
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 class Md5VerificationWorker(
-    context: Context,
-    parameters: WorkerParameters
+    private val context: Context,
+    parameters: WorkerParameters,
 ) : CoroutineWorker(context, parameters) {
 
-    private val context = context.attachWithLocale(false)
+    private val filename: String?
+    private val md5: String?
 
-    private val filenameToMd5 = parameters.inputData.let {
-        it.getString("filename") to it.getString("mD5Sum")
+    init {
+        val inputData = parameters.inputData
+
+        filename = inputData.getString(FILENAME)
+        md5 = inputData.getString(MD5)
     }
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -48,47 +50,39 @@ class Md5VerificationWorker(
     }
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {
-        if (filenameToMd5.first == null || filenameToMd5.second == null) {
-            logError(TAG, UpdateVerificationException("updateData = null"))
-            Result.failure(
-                workDataOf(
-                    WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE to Md5VerificationFailure.NULL_UPDATE_DATA.name
-                )
-            )
+        if (filename == null || md5 == null) {
+            logWarning(TAG, "Required parameters are null: $filename, $md5")
+            Result.failure(Data.Builder().apply {
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullUpdateData.value)
+            }.build())
         } else {
-            logDebug(TAG, "Verifying " + filenameToMd5.first)
+            logDebug(TAG, "Verifying $filename")
 
-            if (filenameToMd5.second.isNullOrEmpty()) {
-                logError(TAG, UpdateVerificationException("updateData.mD5Sum = null/empty"))
-                Result.failure(
-                    workDataOf(
-                        WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE to Md5VerificationFailure.NULL_OR_EMPTY_PROVIDED_CHECKSUM.name
-                    )
-                )
+            if (md5.isEmpty()) {
+                logWarning(TAG, "MD5 is empty")
+                Result.failure(Data.Builder().apply {
+                    putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullOrEmptyProvidedChecksum.value)
+                }.build())
             } else {
                 val calculatedDigest = calculateMd5()
                 if (calculatedDigest == null) {
-                    logError(TAG, UpdateVerificationException("calculatedDigest = null"))
-                    Result.failure(
-                        workDataOf(
-                            WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE to Md5VerificationFailure.NULL_CALCULATED_CHECKSUM.name
-                        )
-                    )
+                    logWarning(TAG, "calculatedDigest = null")
+                    Result.failure(Data.Builder().apply {
+                        putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullCalculatedChecksum.value)
+                    }.build())
                 } else {
                     logVerbose(TAG, "Calculated digest: $calculatedDigest")
-                    logVerbose(TAG, "Provided digest: ${filenameToMd5.second}")
+                    logVerbose(TAG, "Provided digest: $md5")
 
-                    if (calculatedDigest.equals(filenameToMd5.second, ignoreCase = true)) {
+                    if (calculatedDigest.equals(md5, ignoreCase = true)) {
                         LocalNotifications.showDownloadCompleteNotification(context)
                         Result.success()
                     } else {
                         LocalNotifications.showVerificationFailedNotification(context)
-                        logError(TAG, UpdateVerificationException("updateData.mD5Sum != calculatedDigest"))
-                        Result.failure(
-                            workDataOf(
-                                WORK_DATA_MD5_VERIFICATION_FAILURE_TYPE to Md5VerificationFailure.CHECKSUMS_NOT_EQUAL.name
-                            )
-                        )
+                        logWarning(TAG, "md5 != calculatedDigest")
+                        Result.failure(Data.Builder().apply {
+                            putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.ChecksumsNotEqual.value)
+                        }.build())
                     }
                 }
             }
@@ -103,8 +97,7 @@ class Md5VerificationWorker(
             return@withContext null
         }
 
-        @Suppress("DEPRECATION")
-        val zipFile = File(Environment.getExternalStoragePublicDirectory(DIRECTORY_ROOT).absolutePath, filenameToMd5.first!!)
+        val zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, filename!!)
 
         var retryCount = 0
         while (!zipFile.exists()) {
@@ -155,5 +148,7 @@ class Md5VerificationWorker(
 
     companion object {
         private const val TAG = "Md5VerificationWorker"
+        const val FILENAME = "filename"
+        const val MD5 = "md5"
     }
 }

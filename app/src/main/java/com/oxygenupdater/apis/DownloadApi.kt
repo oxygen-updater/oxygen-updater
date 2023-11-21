@@ -18,6 +18,6 @@ interface DownloadApi {
     @GET
     suspend fun downloadZip(
         @Url url: String,
-        @Header("Range") rangeHeader: String? = null
+        @Header("Range") rangeHeader: String? = null,
     ): Response<ResponseBody>
 }

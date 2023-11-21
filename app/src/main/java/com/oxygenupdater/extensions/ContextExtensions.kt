@@ -1,23 +1,32 @@
 package com.oxygenupdater.extensions
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.text.format.Formatter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.content.getSystemService
+import androidx.core.net.toUri
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.Logger
+import com.oxygenupdater.ui.theme.light
 import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.ThemeUtils
+import com.oxygenupdater.utils.Logger.logWarning
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.
@@ -43,152 +52,127 @@ import com.oxygenupdater.utils.ThemeUtils
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 fun Context.formatFileSize(
-    sizeBytes: Long
+    sizeBytes: Long,
 ): String = Formatter.formatFileSize(
     this,
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        (sizeBytes / 1.048576).toLong()
-    } else {
-        sizeBytes
-    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
 )
 
+fun Context.showToast(@StringRes resId: Int) = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+fun Context.showToast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+
+fun Context.shareExternally(title: String, text: String) {
+    val prefix = "${getString(R.string.app_name)}: $title"
+    val intent = Intent(Intent.ACTION_SEND)
+        // Rich text preview: should work only on API 29+
+        .putExtra(Intent.EXTRA_TITLE, title)
+        // Main share content: will work on all API levels
+        .putExtra(
+            Intent.EXTRA_TEXT,
+            "$prefix\n\n$text"
+        ).setType("text/plain")
+
+    startActivity(Intent.createChooser(intent, null))
+}
+
+@SuppressLint("PrivateResource")
+fun Context.copyToClipboard(text: String) = getSystemService<ClipboardManager>()?.setPrimaryClip(
+    ClipData.newPlainText(getString(R.string.app_name), text)
+)?.let {
+    showToast(androidx.browser.R.string.copy_toast_msg)
+}
+
 fun Context.openPlayStorePage() {
-    val appPackageName = packageName
+    val packageName = packageName
 
     try {
         // Try opening Play Store
         startActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=$appPackageName")
-            ).withAppReferrer(this)
+            Intent(Intent.ACTION_VIEW, "market://details?id=$packageName".toUri()).withAppReferrer(this)
         )
     } catch (e: ActivityNotFoundException) {
         try {
             // Try opening browser
             startActivity(
                 Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$packageName".toUri()
                 ).withAppReferrer(this)
             )
         } catch (e1: ActivityNotFoundException) {
             // Give up and cry
-            Toast.makeText(
-                this,
-                getString(R.string.error_unable_to_rate_app),
-                Toast.LENGTH_LONG
-            ).show()
-            Logger.logWarning("AboutActivity", "App rating without google play store support", e1)
+            showToast(R.string.error_unable_to_rate_app)
+            logWarning("ContextExtensions", "Can't open Play Store app page", e1)
         }
     }
 }
 
 fun Context.openEmail() {
-    val oxygenOsVersion = SystemVersionProperties.oxygenOSVersion
-    val oxygenOsOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
-    val osType = SystemVersionProperties.osType
-    val actualDeviceName = SystemVersionProperties.oxygenDeviceName
-    val appVersion = BuildConfig.VERSION_NAME
-    val chosenDeviceName = PrefManager.getString(
-        PrefManager.PROPERTY_DEVICE,
-        "<UNKNOWN>"
-    )
-    val chosenUpdateMethod = PrefManager.getString(
-        PrefManager.PROPERTY_UPDATE_METHOD,
-        "<UNKNOWN>"
-    )
-    val advancedModeEnabled = PrefManager.getBoolean(
-        PrefManager.PROPERTY_ADVANCED_MODE,
-        false
-    )
+    val chosenDevice = PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>")
+    val chosenMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>")
+    val advancedMode = PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false)
+    val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
+        if (it.isNotEmpty()) " ($it)" else ""
+    }
 
-    startActivity(
-        Intent.createChooser(
-            Intent(Intent.ACTION_SENDTO)
-                .setData(Uri.parse("mailto:"))
-                .putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.email_address)))
-                // Parts of this should probably be localized but it may pose a
-                // problem for us while reading emails
-                .putExtra(
-                    Intent.EXTRA_TEXT,
-                    """
-                        --------------------
-                        • Actual device: $actualDeviceName
-                        • Chosen device: $chosenDeviceName
-                        • Update method: $chosenUpdateMethod
-                        • OS version: $oxygenOsVersion ($osType)
-                        • OTA version: $oxygenOsOtaVersion
-                        • Advanced mode: $advancedModeEnabled
-                        • App version: $appVersion
-                        --------------------
-                        
-                        <write your query here>
-                    """.trimIndent()
-                ),
-            getString(R.string.about_email_button_text)
-        )
-    )
-}
+    // Don't localize any part of this, it'll be an annoyance for us while reading emails
+    val emailBody = """
+--------------------
+• Device: $chosenDevice (${SystemVersionProperties.oxygenDeviceName})
+• Method: $chosenMethod
+• OS version: $osVersionWithType
+• OTA version: ${SystemVersionProperties.oxygenOSOTAVersion}
+• Advanced mode: $advancedMode
+• App version: ${BuildConfig.VERSION_NAME}
+--------------------
 
-fun Context.openDiscord() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.discord_url))
-    ).withAppReferrer(this)
-)
+<write your query here>"""
 
-fun Context.openGitHub() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.github_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openPatreon() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.patreon_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openWebsite() = startActivity(
-    Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(getString(R.string.website_url))
-    ).withAppReferrer(this)
-)
-
-fun Context.openAppDetailsPage() {
-    val action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
     try {
-        startActivity(Intent(action, Uri.parse("package:$packageName")))
-    } catch (e: Exception) {
-        logError("ContextExtensions", "openAppDetailsPage failed", e)
+        startActivity(
+            Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
+                .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
+                .putExtra(Intent.EXTRA_TEXT, emailBody)
+        )
+    } catch (e: ActivityNotFoundException) {
+        // TODO(translate)
+        showToast("You don't appear to have an email client installed on your phone")
     }
 }
 
-fun Context.openInCustomTab(url: String) = customTabIntent().launchUrl(
-    this,
-    Uri.parse(url)
-)
+fun Context.openAppDetailsPage() = try {
+    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:$packageName".toUri()))
+} catch (e: Exception) {
+    logError("ContextExtensions", "openAppDetailsPage failed", e)
+}
 
-private fun Context.customTabIntent() = CustomTabsIntent.Builder()
-    .setShowTitle(true)
-    .setUrlBarHidingEnabled(true)
-    .setDefaultColorSchemeParams(
-        CustomTabColorSchemeParams.Builder()
-            .setToolbarColor(ContextCompat.getColor(this, R.color.background))
-            .setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
-            .build()
-    )
-    .setColorScheme(
-        if (ThemeUtils.isNightModeActive(this)) {
-            CustomTabsIntent.COLOR_SCHEME_DARK
-        } else {
-            CustomTabsIntent.COLOR_SCHEME_LIGHT
-        }
-    ).build().apply {
-        intent.withAppReferrer(this@customTabIntent)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+fun Context.openAppLocalePage() = try {
+    startActivity(Intent(Settings.ACTION_APP_LOCALE_SETTINGS, "package:$packageName".toUri()))
+} catch (e: Exception) {
+    logError("ContextExtensions", "openAppLocalePage failed", e)
+}
+
+fun CustomTabsIntent.launch(context: Context, url: String) = apply {
+    intent.withAppReferrer(context)
+}.launchUrl(context, url.toUri())
+
+@Composable
+fun rememberCustomTabsIntent(): CustomTabsIntent {
+    val colorScheme = MaterialTheme.colorScheme
+    val surface = colorScheme.surface
+    val light = colorScheme.light
+    return remember(surface, light) {
+        CustomTabsIntent.Builder()
+            .setShowTitle(true)
+            .setUrlBarHidingEnabled(true)
+            .setDefaultColorSchemeParams(surface.toArgb().let {
+                CustomTabColorSchemeParams.Builder()
+                    .setToolbarColor(it)
+                    .setNavigationBarColor(it)
+                    .build()
+            }).setColorScheme(
+                if (light) CustomTabsIntent.COLOR_SCHEME_DARK
+                else CustomTabsIntent.COLOR_SCHEME_LIGHT
+            ).build()
     }
+}

@@ -1,41 +1,28 @@
 package com.oxygenupdater.models
 
-import com.oxygenupdater.models.AppLocale.FR
-import com.oxygenupdater.models.AppLocale.NL
+import android.os.Parcelable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
+import com.oxygenupdater.internal.ForceBoolean
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
+@Stable
+@JsonClass(generateAdapter = true)
 data class InAppFaq(
     val id: Long,
 
-    val englishTitle: String?,
-    val dutchTitle: String?,
-    val frenchTitle: String?,
+    val title: String?,
+    val body: String?,
+    @ForceBoolean val important: Boolean = false,
 
-    val englishBody: String?,
-    val dutchBody: String?,
-    val frenchBody: String?,
+    /** Either `category` or `item` */
+    val type: String,
+) : Parcelable {
 
-    val important: Boolean = false,
-
-    /**
-     * Either `category` or `item`
-     */
-    val type: String
-) {
-
-    val title = when (AppLocale.get()) {
-        FR -> frenchTitle
-        NL -> dutchTitle
-        else -> englishTitle
-    }
-
-    val body = when (AppLocale.get()) {
-        NL -> dutchBody
-        FR -> frenchBody
-        else -> englishBody
-    }
-
-    /**
-     * To preserver expand/collapse state in [androidx.recyclerview.widget.RecyclerView]
-     */
-    var expanded = false
+    /** To preserve expand/collapse state in LazyColumn */
+    @IgnoredOnParcel
+    val expanded = mutableStateOf(false)
 }

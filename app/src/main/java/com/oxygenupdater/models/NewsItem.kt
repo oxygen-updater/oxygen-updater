@@ -1,76 +1,85 @@
 package com.oxygenupdater.models
 
+import android.os.Parcelable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.models.AppLocale.NL
-import java.io.Serializable
+import com.oxygenupdater.utils.ApiBaseUrl
+import com.oxygenupdater.utils.Utils
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import java.time.LocalDateTime
 
+@Parcelize
+@Stable
 @Entity(tableName = "news_item")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonClass(generateAdapter = true)
 data class NewsItem(
     @PrimaryKey
     val id: Long?,
 
-    @ColumnInfo(name = "dutch_title")
-    val dutchTitle: String?,
+    val title: String?,
+    val subtitle: String?,
+    val text: String?,
 
-    @ColumnInfo(name = "english_title")
-    val englishTitle: String?,
-
-    @ColumnInfo(name = "dutch_subtitle")
-    val dutchSubtitle: String?,
-
-    @ColumnInfo(name = "english_subtitle")
-    val englishSubtitle: String?,
-
-    @ColumnInfo(name = "image_url")
+    @ColumnInfo("image_url")
+    @Json(name = "image_url")
     val imageUrl: String?,
 
-    @ColumnInfo(name = "dutch_text")
-    val dutchText: String?,
-
-    @ColumnInfo(name = "english_text")
-    val englishText: String?,
-
-    @ColumnInfo(name = "date_published")
+    @ColumnInfo("date_published")
+    @Json(name = "date_published")
     val datePublished: String?,
 
-    @ColumnInfo(name = "date_last_edited")
+    @ColumnInfo("date_last_edited")
+    @Json(name = "date_last_edited")
     val dateLastEdited: String?,
 
-    @ColumnInfo(name = "author_name")
+    @ColumnInfo("author_name")
+    @Json(name = "author_name")
     val authorName: String?,
 
     @ColumnInfo(defaultValue = "0")
-    @JsonIgnore
-    var read: Boolean = false
-) : Serializable {
+    @Transient
+    @Deprecated(
+        "Don't read boolean column directly, use MutableState instead",
+        ReplaceWith("readState"),
+    )
+    val read: Boolean = false,
+) : Parcelable {
 
-    @Ignore
-    val title = if (AppLocale.get() == NL) dutchTitle else englishTitle
+    @Suppress("DEPRECATION")
+    @IgnoredOnParcel
+    @get:Ignore
+    var readState by mutableStateOf(read)
+        internal set
 
+    @IgnoredOnParcel
     @Ignore
-    val subtitle = if (AppLocale.get() == NL) dutchSubtitle else englishSubtitle
+    @JvmField
+    val apiUrl = "${ApiBaseUrl}news-content/$id"
 
+    @IgnoredOnParcel
     @Ignore
-    val text = if (AppLocale.get() == NL) dutchText else englishText
-
-    @Ignore
-    val apiUrl = "${BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE}news-content/$id/" +
-            (if (AppLocale.get() == NL) "NL" else "EN") + "/"
-
-    @Ignore
+    @JvmField
     val webUrl = "${BuildConfig.SERVER_DOMAIN}article/$id/"
 
-    val isFullyLoaded: Boolean
-        get() = id != null && dutchTitle != null && englishTitle != null && dutchText != null && englishText != null
-
-    companion object {
-        private const val serialVersionUID = 6270363342908901533L
+    @IgnoredOnParcel
+    @Ignore
+    @JvmField
+    val epochMilli = (dateLastEdited ?: datePublished)?.let {
+        LocalDateTime.parse(it.replace(" ", "T"))
+            .atZone(Utils.ServerTimeZone)
+            .toInstant().toEpochMilli()
     }
+
+    val isFullyLoaded: Boolean
+        get() = id != null && title != null && text != null
 }

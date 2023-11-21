@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<!-- TODO(compose/perf): remove unused -->
 	<color name="background">@color/white</color>
-	<color name="backgroundVariant">@color/grey_100</color>
 	<color name="colorPrimary">@color/oneplus_red_600</color>
-	<color name="colorSecondary">@color/colorPrimary</color>
-	<color name="colorError">@color/red_500</color>
-	<color name="colorWarn">@color/orange_500</color>
 	<color name="colorPositive">@color/green_500</color>
 	<color name="foreground">#212121</color>
-	<!--<color name="appBarBackground">@color/colorPrimary</color>-->
 	<color name="splashBackgroundColor">@color/colorPrimary</color>
-	<color name="scrollbar">#1f000000</color> <!-- 12% black -->
 
-	<color name="red_400">#ef5350</color>
-	<color name="red_500">#f44336</color>
-
-	<color name="black">#000000</color>
 	<color name="white">#ffffff</color>
 
 	<!-- Google Material Design colours -->
-	<color name="amber_500">#ffc107</color>
 	<color name="green_300">#81c784</color>
 	<color name="green_500">#4caf50</color>
 	<color name="grey_100">#f5f5f5</color>
-	<color name="orange_300">#ffb74d</color>
-	<color name="orange_500">#ff9800</color>
 
 	<!-- Calculated palette from https://material.io/design/color/the-color-system.html#tools-for-picking-colors -->
 	<color name="oneplus_red_600">#f50514</color>

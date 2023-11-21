@@ -1,11 +1,12 @@
 package com.oxygenupdater.repositories
 
 import android.app.Activity
-import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import androidx.annotation.UiThread
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -28,12 +29,11 @@ import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.enums.PurchaseType
-import com.oxygenupdater.exceptions.GooglePlayBillingException
 import com.oxygenupdater.internal.billing.Security
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.PROPERTY_AD_FREE
+import com.oxygenupdater.internal.settings.PrefManager.KeyAdFree
+import com.oxygenupdater.utils.Logger.logBillingError
 import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.Logger.logInfo
 import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.utils.Logger.logWarning
@@ -51,7 +51,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.collections.set
 import kotlin.math.min
-
 
 /**
  * The BillingRepository implements all billing functionality for our test application.
@@ -92,13 +91,13 @@ import kotlin.math.min
  * @see <a href="https://github.com/android/play-billing-samples/blob/3f75352320c232fc6a14526b67fef07a49cc6d17/TrivialDriveKotlin/app/src/main/java/com/sample/android/trivialdrivesample/billing/BillingRepository.kt">android/play-billing-samples@3f75352:BillingRepository.kt</a>
  */
 class BillingRepository(
-    application: Application
+    context: Context,
 ) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
-    private val billingClient = BillingClient.newBuilder(application)
+    private val billingClient = BillingClient.newBuilder(context)
         .enablePendingPurchases()
         .setListener(this)
         .build()
@@ -106,12 +105,12 @@ class BillingRepository(
     /**
      * How long before the data source tries to reconnect to Google Play
      */
-    private var reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
+    private var reconnectMilliseconds = ReconnectTimerStartMs
 
     /**
      * When was the last successful ProductDetailsResponse?
      */
-    private var productDetailsResponseTime = -PRODUCT_DETAILS_REQUERY_TIME
+    private var productDetailsResponseTime = -ProductDetailsRequeryTimeMs
 
     // Maps that are mostly maintained so they can be transformed into observables
     private val skuStateMap = mutableMapOf<String, MutableStateFlow<SkuState>>()
@@ -122,33 +121,30 @@ class BillingRepository(
      * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [price][ProductDetails.OneTimePurchaseOfferDetails.getFormattedPrice]
      */
     val adFreePrice
-        get() = getSkuPrice(SKU_INAPP_AD_FREE).distinctUntilChanged()
+        get() = getSkuPrice(SkuInappAdFree).distinctUntilChanged()
 
     /**
      * Flow of the [ad-free][PurchaseType.AD_FREE] SKU's [SkuState]
      */
     val adFreeState
-        get() = getSkuState(SKU_INAPP_AD_FREE).distinctUntilChanged()
+        get() = getSkuState(SkuInappAdFree).distinctUntilChanged()
 
     /**
      * Returns whether or not the user has purchased ad-free. It does this by returning
-     * a Flow that returns true if the SKU is in the [PURCHASED][SkuState.PURCHASED] state and
+     * a Flow that returns true if the SKU is in the [SkuState.Purchased] state and
      * the [Purchase] has been acknowledged.
      */
     val hasPurchasedAdFree
         get() = adFreeState.map {
             logDebug(TAG, "[adFreeState] $it")
 
-            if (it == SkuState.UNKNOWN) {
-                // Purchases haven't been processed yet, so fallback to SharedPreferences
-                PrefManager.getBoolean(PROPERTY_AD_FREE, false)
-            } else {
-                it == SkuState.PURCHASED_AND_ACKNOWLEDGED
-            }
+            // Fallback to SharedPreferences if purchases haven't been processed yet
+            if (it == SkuState.Unknown) PrefManager.getBoolean(KeyAdFree, false)
+            else it == SkuState.PurchasedAndAcknowledged
         }.distinctUntilChanged().onEach {
             logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            PrefManager.putBoolean(PROPERTY_AD_FREE, it)
+            PrefManager.putBoolean(KeyAdFree, it)
         }
 
     /**
@@ -184,7 +180,7 @@ class BillingRepository(
         logDebug(TAG, "[newPurchaseFlow] $responseCode: ${purchase?.products}")
 
         when (responseCode) {
-            BillingResponseCode.OK -> PrefManager.putBoolean(PROPERTY_AD_FREE, purchase != null)
+            BillingResponseCode.OK -> PrefManager.putBoolean(KeyAdFree, purchase != null)
             BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // This is tricky to deal with. Even pending purchases show up as "items already owned",
                 // so we can't grant entitlement i.e. set [PROPERTY_AD_FREE] to `true`.
@@ -192,12 +188,16 @@ class BillingRepository(
                 // This case will be handled by observing the pending purchases LiveData.
                 // Entitlement is being granted by observing to the in-app SKU details list LiveData anyway.
             }
-            else -> PrefManager.putBoolean(PROPERTY_AD_FREE, false)
+
+            else -> {
+                PrefManager.putBoolean(KeyAdFree, false)
+                setProductState(SkuInappAdFree, SkuState.NotPurchased)
+            }
         }
 
         purchase?.products?.forEach {
             when (it) {
-                SKU_SUBS_AD_FREE_MONTHLY, SKU_SUBS_AD_FREE_YEARLY -> {
+                SkuSubsAdFreeMonthly, SkuSubsAdFreeYearly -> {
                     // Make sure that subscriptions upgrades/downgrades
                     // are reflected correctly in the UI
                     refreshPurchases()
@@ -207,7 +207,7 @@ class BillingRepository(
     }
 
     private val _consumedPurchaseSkus = MutableSharedFlow<List<String>>()
-    val consumedPurchaseSkus = _consumedPurchaseSkus.distinctUntilChanged().onEach {
+    private val consumedPurchaseSkus = _consumedPurchaseSkus.distinctUntilChanged().onEach {
         logDebug(TAG, "[consumedPurchaseSkusFlow] $it")
         // Take action (e.g. update models) on each consumed purchase
     }
@@ -228,8 +228,8 @@ class BillingRepository(
         // Initialize flows for all known SKUs, so that state & details can be
         // observed in ViewModels. This repository exposes mappings that are
         // more useful for the rest of the application (via ViewModels).
-        addSkuFlows(INAPP_SKUS)
-        addSkuFlows(SUBS_SKUS)
+        addSkuFlows(InappSkus)
+        addSkuFlows(SubsSkus)
 
         billingClient.startConnection(this)
     }
@@ -240,13 +240,13 @@ class BillingRepository(
      * @param skuList a List<String> of SKUs representing purchases and subscriptions
      */
     private fun addSkuFlows(skuList: List<String>) = skuList.forEach { sku ->
-        val skuState = MutableStateFlow(SkuState.UNKNOWN)
+        val skuState = MutableStateFlow(SkuState.Unknown)
         val details = MutableStateFlow<ProductDetails?>(null)
 
         // Flow is considered "active" if there's at least one subscriber.
         // `distinctUntilChanged`: ensure we only react to true<->false changes.
         details.subscriptionCount.map { it > 0 }.distinctUntilChanged().onEach { active ->
-            if (active && (SystemClock.elapsedRealtime() - productDetailsResponseTime > PRODUCT_DETAILS_REQUERY_TIME)) {
+            if (active && (SystemClock.elapsedRealtime() - productDetailsResponseTime > ProductDetailsRequeryTimeMs)) {
                 logVerbose(TAG, "[addSkuFlows] stale SKUs; requerying")
                 productDetailsResponseTime = SystemClock.elapsedRealtime()
                 queryProductDetails()
@@ -263,10 +263,8 @@ class BillingRepository(
     override fun onResume(owner: LifecycleOwner) {
         logDebug(TAG, "[onResume]")
         // Avoids an extra purchase refresh after we finish a billing flow
-        if (!_billingFlowInProcess.value && billingClient.isReady) {
-            ioScope.launch {
-                refreshPurchases()
-            }
+        if (!_billingFlowInProcess.value && billingClient.isReady) ioScope.launch {
+            refreshPurchases()
         }
     }
 
@@ -278,8 +276,9 @@ class BillingRepository(
                 queryProductDetails()
                 refreshPurchases()
             }.also {
-                reconnectMilliseconds = RECONNECT_TIMER_START_MILLISECONDS
+                reconnectMilliseconds = ReconnectTimerStartMs
             }
+
             else -> reconnectWithExponentialBackoff()
         }
     }
@@ -291,14 +290,14 @@ class BillingRepository(
 
     /**
      * Reconnect to [BillingClient] with exponential backoff, with a max of
-     * [RECONNECT_TIMER_MAX_TIME_MILLISECONDS]
+     * [ReconnectTimerMaxTimeMs]
      */
     private fun reconnectWithExponentialBackoff() = handler.postDelayed(
         { billingClient.startConnection(this) }, reconnectMilliseconds
     ).let {
         reconnectMilliseconds = min(
             reconnectMilliseconds * 2,
-            RECONNECT_TIMER_MAX_TIME_MILLISECONDS
+            ReconnectTimerMaxTimeMs
         )
     }
 
@@ -318,18 +317,22 @@ class BillingRepository(
                 TAG,
                 "[onPurchasesUpdated] mull purchase list returned from OK response"
             )
+
             BillingResponseCode.USER_CANCELED -> logDebug(
                 TAG,
                 "[onPurchasesUpdated] USER_CANCELED"
             )
+
             BillingResponseCode.ITEM_ALREADY_OWNED -> logDebug(
                 TAG,
                 "[onPurchasesUpdated] ITEM_ALREADY_OWNED"
             )
-            BillingResponseCode.DEVELOPER_ERROR -> logError(
+
+            BillingResponseCode.DEVELOPER_ERROR -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onPurchasesUpdated] DEVELOPER_ERROR")
+                "[onPurchasesUpdated] DEVELOPER_ERROR"
             )
+
             else -> logDebug(TAG, "[onPurchasesUpdated] ${result.responseCode}: ${result.debugMessage}")
         }
 
@@ -340,11 +343,11 @@ class BillingRepository(
         }
     }
 
-    fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.UNKNOWN).also {
+    private fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.Unknown).also {
         logWarning(TAG, "[getSkuState] unknown SKU: $sku")
     }
 
-    fun getSkuPrice(sku: String) = productDetailsMap[sku]?.map {
+    private fun getSkuPrice(sku: String) = productDetailsMap[sku]?.map {
         // TODO: adjust for subscriptions when needed
         it?.oneTimePurchaseOfferDetails?.formattedPrice
     } ?: flowOf(null).also {
@@ -356,7 +359,7 @@ class BillingRepository(
      *
      * Note that the billing client only returns active purchases.
      */
-    suspend fun refreshPurchases() = withContext(Dispatchers.IO) {
+    private suspend fun refreshPurchases() = withContext(Dispatchers.IO) {
         logDebug(TAG, "[refreshPurchases] start")
 
         var purchasesResult = billingClient.queryPurchasesAsync(
@@ -368,10 +371,8 @@ class BillingRepository(
         var responseCode = billingResult.responseCode
         var debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
-            processPurchaseList(purchasesResult.purchasesList, INAPP_SKUS)
-        } else {
-            logError(TAG, GooglePlayBillingException("[refreshPurchases] INAPP $responseCode: $debugMessage"))
-        }
+            processPurchaseList(purchasesResult.purchasesList, InappSkus)
+        } else logBillingError(TAG, "[refreshPurchases] INAPP $responseCode: $debugMessage")
 
         purchasesResult = billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
@@ -382,10 +383,8 @@ class BillingRepository(
         responseCode = billingResult.responseCode
         debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
-            processPurchaseList(purchasesResult.purchasesList, SUBS_SKUS)
-        } else {
-            logError(TAG, GooglePlayBillingException("[refreshPurchases] SUBS $responseCode: $debugMessage"))
-        }
+            processPurchaseList(purchasesResult.purchasesList, SubsSkus)
+        } else logBillingError(TAG, "[refreshPurchases] SUBS $responseCode: $debugMessage")
 
         logDebug(TAG, "[refreshPurchases] finish")
     }
@@ -394,8 +393,8 @@ class BillingRepository(
      * Automatic support for upgrading/downgrading subscription
      */
     fun makePurchase(activity: Activity, sku: String) = when (sku) {
-        SKU_SUBS_AD_FREE_MONTHLY -> SKU_SUBS_AD_FREE_YEARLY
-        SKU_SUBS_AD_FREE_YEARLY -> SKU_SUBS_AD_FREE_MONTHLY
+        SkuSubsAdFreeMonthly -> SkuSubsAdFreeYearly
+        SkuSubsAdFreeYearly -> SkuSubsAdFreeMonthly
         else -> null
     }?.let { oldSku ->
         launchBillingFlow(activity, sku, arrayOf(oldSku))
@@ -413,11 +412,17 @@ class BillingRepository(
      * @return true if launch is successful
      */
     @UiThread
-    fun launchBillingFlow(
-        activity: Activity,
-        sku: String,
-        upgradeSkus: Array<String>? = null
-    ) = productDetailsMap[sku]?.value?.let { details ->
+    fun launchBillingFlow(activity: Activity, sku: String, upgradeSkus: Array<String>? = null) {
+        /**
+         * Mark initiated so that [com.oxygenupdater.ui.settings.SettingsScreen]
+         * disables the button and sets text to "Please wait…".
+         */
+        setProductState(sku, SkuState.PurchaseInitiated)
+
+        val details = productDetailsMap[sku]?.value ?: return logBillingError(
+            TAG, "[launchBillingFlow] unknown SKU: $sku"
+        )
+
         val builder = BillingFlowParams.newBuilder()
         builder.setProductDetailsParamsList(
             listOf(
@@ -426,42 +431,38 @@ class BillingRepository(
                     .build()
             )
         )
+
         mainScope.launch {
             if (upgradeSkus != null) {
                 val heldSubscriptions = getPurchases(ProductType.SUBS, upgradeSkus)
                 when (heldSubscriptions.size) {
-                    0 -> {
-                        // no-op
-                    }
-                    1 -> {
-                        builder.setSubscriptionUpdateParams(
-                            BillingFlowParams.SubscriptionUpdateParams.newBuilder()
-                                .setOldPurchaseToken(heldSubscriptions[0].purchaseToken)
-                                .build()
-                        )
-                    }
-                    else -> logError(
+                    0 -> {} // no-op
+
+                    1 -> builder.setSubscriptionUpdateParams(
+                        BillingFlowParams.SubscriptionUpdateParams.newBuilder()
+                            .setOldPurchaseToken(heldSubscriptions[0].purchaseToken)
+                            .build()
+                    )
+
+                    else -> logBillingError(
                         TAG,
-                        GooglePlayBillingException("[launchBillingFlow] can't upgrade: ${heldSubscriptions.size} subscriptions subscribed to")
+                        "[launchBillingFlow] can't upgrade: ${heldSubscriptions.size} subscriptions subscribed to"
                     )
                 }
             }
             val result = billingClient.launchBillingFlow(activity, builder.build())
-            if (result.responseCode == BillingResponseCode.OK) {
-                _billingFlowInProcess.emit(true)
-            } else {
-                logError(TAG, GooglePlayBillingException("[launchBillingFlow] ${result.debugMessage}"))
-            }
+            if (result.responseCode == BillingResponseCode.OK) _billingFlowInProcess.emit(true)
+            else logBillingError(TAG, "[launchBillingFlow] ${result.debugMessage}")
         }
-    } ?: logError(TAG, GooglePlayBillingException("[launchBillingFlow] unknown SKU: $sku"))
+    }
 
     /**
      * Consumes an in-app purchase. Interested listeners can watch the [consumedPurchaseSkus] LiveEvent.
      * To make things easy, you can send in a list of SKUs that are auto-consumed by the
      * [BillingRepository].
      */
-    suspend fun consumeInAppPurchase(
-        sku: String
+    private suspend fun consumeInAppPurchase(
+        sku: String,
     ) = withContext(Dispatchers.IO) {
         billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
@@ -471,19 +472,14 @@ class BillingRepository(
             val billingResult = result.billingResult
             val purchasesList = result.purchasesList
             val responseCode = billingResult.responseCode
-            if (responseCode == BillingResponseCode.OK) {
-                purchasesList.forEach { purchase ->
-                    // For right now any bundle of SKUs must all be consumable
-                    purchase.products.find { it == sku }?.also {
-                        consumePurchase(purchase)
-                        return@let
-                    }
+            if (responseCode == BillingResponseCode.OK) purchasesList.forEach { purchase ->
+                // For right now any bundle of SKUs must all be consumable
+                purchase.products.find { it == sku }?.also {
+                    return@let consumePurchase(purchase)
                 }
-            } else {
-                logError(TAG, GooglePlayBillingException("[consumeInAppPurchase] $responseCode: ${billingResult.debugMessage}"))
-            }
+            } else logBillingError(TAG, "[consumeInAppPurchase] $responseCode: ${billingResult.debugMessage}")
 
-            logError(TAG, GooglePlayBillingException("[consumeInAppPurchase] unknown SKU: $sku"))
+            logBillingError(TAG, "[consumeInAppPurchase] unknown SKU: $sku")
         }
     }
 
@@ -503,8 +499,9 @@ class BillingRepository(
      *
      * @see <a href="https://developer.android.com/google/play/billing/test">Test Google Play Billing Library integration</a>
      */
-    fun debugConsumeAdFree() = CoroutineScope(Dispatchers.IO).launch {
-        consumeInAppPurchase(SKU_INAPP_AD_FREE)
+    @Deprecated("Only for local testing: should not be part of checked-in code or an APK release", level = DeprecationLevel.ERROR)
+    fun debugConsumeAdFree() = ioScope.launch {
+        consumeInAppPurchase(SkuInappAdFree)
     }
 
     /**
@@ -515,7 +512,7 @@ class BillingRepository(
      */
     private fun onProductDetailsResponse(
         result: BillingResult,
-        detailsList: List<ProductDetails>?
+        detailsList: List<ProductDetails>?,
     ) {
         val responseCode = result.responseCode
         val debugMessage = result.debugMessage
@@ -524,68 +521,77 @@ class BillingRepository(
             BillingResponseCode.OK -> {
                 logInfo(TAG, "[onProductDetailsResponse] $responseCode: $debugMessage")
                 if (detailsList.isNullOrEmpty()) {
-                    logError(TAG, GooglePlayBillingException("[onProductDetailsResponse] null/empty List<ProductDetails>"))
-                } else {
-                    detailsList.forEach {
-                        val id = it.productId
-                        productDetailsMap[it.productId]?.tryEmit(it) ?: logError(
-                            TAG,
-                            GooglePlayBillingException("[onProductDetailsResponse] unknown product: $id")
-                        )
-                    }
+                    logBillingError(TAG, "[onProductDetailsResponse] null/empty List<ProductDetails>")
+                } else detailsList.forEach {
+                    val id = it.productId
+                    productDetailsMap[it.productId]?.tryEmit(it) ?: logBillingError(
+                        TAG,
+                        "[onProductDetailsResponse] unknown product: $id"
+                    )
                 }
             }
+
             BillingResponseCode.USER_CANCELED -> logInfo(
                 TAG,
                 "[onProductDetailsResponse] USER_CANCELED: $debugMessage"
             )
-            BillingResponseCode.SERVICE_DISCONNECTED -> logError(
+
+            BillingResponseCode.SERVICE_DISCONNECTED -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] SERVICE_DISCONNECTED: $debugMessage")
+                "[onProductDetailsResponse] SERVICE_DISCONNECTED: $debugMessage"
             )
-            BillingResponseCode.SERVICE_UNAVAILABLE -> logError(
+
+            BillingResponseCode.SERVICE_UNAVAILABLE -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] SERVICE_UNAVAILABLE: $debugMessage")
+                "[onProductDetailsResponse] SERVICE_UNAVAILABLE: $debugMessage"
             )
-            BillingResponseCode.BILLING_UNAVAILABLE -> logError(
+
+            BillingResponseCode.NETWORK_ERROR -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] BILLING_UNAVAILABLE: $debugMessage")
+                "[onProductDetailsResponse] NETWORK_ERROR: $debugMessage"
             )
-            BillingResponseCode.ITEM_UNAVAILABLE -> logError(
+
+            BillingResponseCode.BILLING_UNAVAILABLE -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] ITEM_UNAVAILABLE: $debugMessage")
+                "[onProductDetailsResponse] BILLING_UNAVAILABLE: $debugMessage"
             )
-            BillingResponseCode.DEVELOPER_ERROR -> logError(
+
+            BillingResponseCode.ITEM_UNAVAILABLE -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] DEVELOPER_ERROR: $debugMessage")
+                "[onProductDetailsResponse] ITEM_UNAVAILABLE: $debugMessage"
             )
-            BillingResponseCode.ERROR -> logError(
+
+            BillingResponseCode.DEVELOPER_ERROR -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] ERROR: $debugMessage")
+                "[onProductDetailsResponse] DEVELOPER_ERROR: $debugMessage"
             )
-            BillingResponseCode.FEATURE_NOT_SUPPORTED -> logError(
+
+            BillingResponseCode.ERROR -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] FEATURE_NOT_SUPPORTED: $debugMessage")
+                "[onProductDetailsResponse] ERROR: $debugMessage"
             )
-            BillingResponseCode.ITEM_ALREADY_OWNED -> logError(
+
+            BillingResponseCode.FEATURE_NOT_SUPPORTED -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] ITEM_ALREADY_OWNED: $debugMessage")
+                "[onProductDetailsResponse] FEATURE_NOT_SUPPORTED: $debugMessage"
             )
-            BillingResponseCode.ITEM_NOT_OWNED -> logError(
+
+            BillingResponseCode.ITEM_ALREADY_OWNED -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] ITEM_NOT_OWNED: $debugMessage")
+                "[onProductDetailsResponse] ITEM_ALREADY_OWNED: $debugMessage"
             )
-            else -> logError(
+
+            BillingResponseCode.ITEM_NOT_OWNED -> logBillingError(
                 TAG,
-                GooglePlayBillingException("[onProductDetailsResponse] $responseCode: $debugMessage")
+                "[onProductDetailsResponse] ITEM_NOT_OWNED: $debugMessage"
             )
+
+            else -> logBillingError(TAG, "[onProductDetailsResponse] $responseCode: $debugMessage")
         }
 
         productDetailsResponseTime = if (responseCode == BillingResponseCode.OK) {
             SystemClock.elapsedRealtime()
-        } else {
-            -PRODUCT_DETAILS_REQUERY_TIME
-        }
+        } else -ProductDetailsRequeryTimeMs
     }
 
     /**
@@ -594,15 +600,15 @@ class BillingRepository(
      * required to make a purchase.
      */
     private suspend fun queryProductDetails() = withContext(Dispatchers.IO) {
-        if (INAPP_SKUS.isNotEmpty() || SUBS_SKUS.isNotEmpty()) {
+        if (InappSkus.isNotEmpty() || SubsSkus.isNotEmpty()) {
             val products = buildList {
-                addAll(INAPP_SKUS.map {
+                addAll(InappSkus.map {
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(it)
                         .setProductType(ProductType.INAPP)
                         .build()
                 })
-                addAll(SUBS_SKUS.map {
+                addAll(SubsSkus.map {
                     QueryProductDetailsParams.Product.newBuilder()
                         .setProductId(it)
                         .setProductType(ProductType.SUBS)
@@ -631,7 +637,7 @@ class BillingRepository(
      */
     private suspend fun getPurchases(
         productType: String,
-        products: Array<String>?
+        products: Array<String>?,
     ) = withContext(Dispatchers.IO) {
         buildList {
             val purchasesResult = billingClient.queryPurchasesAsync(
@@ -641,17 +647,13 @@ class BillingRepository(
             )
             val billingResult = purchasesResult.billingResult
             val responseCode = billingResult.responseCode
-            if (responseCode == BillingResponseCode.OK) {
-                purchasesResult.purchasesList.forEach { purchase ->
-                    products?.forEach { sku ->
-                        purchase.products.find { it == sku }?.also {
-                            add(purchase)
-                        }
+            if (responseCode == BillingResponseCode.OK) purchasesResult.purchasesList.forEach { purchase ->
+                products?.forEach { sku ->
+                    purchase.products.find { it == sku }?.also {
+                        add(purchase)
                     }
                 }
-            } else {
-                logError(TAG, GooglePlayBillingException("[getPurchases] $responseCode: ${billingResult.debugMessage}"))
-            }
+            } else logBillingError(TAG, "[getPurchases] $responseCode: ${billingResult.debugMessage}")
         }
     }
 
@@ -662,39 +664,32 @@ class BillingRepository(
      * @param purchase an up-to-date object to set the state for the SKU
      */
     private fun setSkuStateFromPurchase(purchase: Purchase) = purchase.products.forEach {
-        val skuStateFlow = skuStateMap[it] ?: logError(
+        val skuStateFlow = skuStateMap[it] ?: logBillingError(
             TAG,
-            GooglePlayBillingException("[setSkuStateFromPurchase] unknown SKU: $it")
+            "[setSkuStateFromPurchase] unknown SKU: $it"
         ).let { return@forEach }
 
         val state = purchase.purchaseState
         if ((state == PurchaseState.PURCHASED || state == PurchaseState.PENDING) && !isSignatureValid(purchase)) {
-            logError(TAG, GooglePlayBillingException("[setSkuStateFromPurchase] invalid signature"))
+            logBillingError(TAG, "[setSkuStateFromPurchase] invalid signature")
             // Don't set SkuState if signature validation fails
             return@forEach
         }
 
         val oldState = skuStateFlow.value
         when (state) {
-            PurchaseState.PENDING -> SkuState.PENDING
-            PurchaseState.UNSPECIFIED_STATE -> SkuState.NOT_PURCHASED
+            PurchaseState.PENDING -> SkuState.Pending
+            PurchaseState.UNSPECIFIED_STATE -> SkuState.NotPurchased
             PurchaseState.PURCHASED -> if (purchase.isAcknowledged) {
-                SkuState.PURCHASED_AND_ACKNOWLEDGED
-            } else {
-                SkuState.PURCHASED
-            }
+                SkuState.PurchasedAndAcknowledged
+            } else SkuState.Purchased
+
             else -> null
         }?.let { newState ->
-            if (newState == SkuState.PENDING) {
-                _pendingPurchase.tryEmit(purchase)
-            } else if (newState != oldState) {
-                _purchaseStateChange.tryEmit(purchase)
-            }
+            if (newState == SkuState.Pending) _pendingPurchase.tryEmit(purchase)
+            else if (newState != oldState) _purchaseStateChange.tryEmit(purchase)
             skuStateFlow.tryEmit(newState)
-        } ?: logError(
-            TAG,
-            GooglePlayBillingException("[setSkuStateFromPurchase] unknown purchase state: $state")
-        )
+        } ?: logBillingError(TAG, "[setSkuStateFromPurchase] unknown purchase state: $state")
     }
 
     /**
@@ -706,11 +701,8 @@ class BillingRepository(
      */
     private fun setProductState(
         sku: String,
-        newState: SkuState
-    ) = skuStateMap[sku]?.tryEmit(newState) ?: logError(
-        TAG,
-        GooglePlayBillingException("[setSkuState] unknown SKU: $sku")
-    )
+        newState: SkuState,
+    ) = skuStateMap[sku]?.tryEmit(newState) ?: logBillingError(TAG, "[setSkuState] unknown SKU: $sku")
 
     /**
      * Goes through each purchase and makes sure that the purchase state is processed and the state
@@ -731,22 +723,22 @@ class BillingRepository(
      * that they paid for something that the app is not giving to them.
      *
      * If a [skusToUpdate] list is passed-into this method, any purchases not in the list of
-     * purchases will have their state set to [SkuState.NOT_PURCHASED].
+     * purchases will have their state set to [SkuState.NotPurchased].
      *
      * @param purchases the List of purchases to process.
      * @param skusToUpdate a list of skus that we want to update the state from --- this allows us
-     * to set the state of non-returned SKUs to [SkuState.NOT_PURCHASED].
+     * to set the state of non-returned SKUs to [SkuState.NotPurchased].
      */
     private fun processPurchaseList(
         purchases: List<Purchase>?,
-        skusToUpdate: List<String>?
+        skusToUpdate: List<String>?,
     ) {
         val updatedSkus = HashSet<String>()
         purchases?.forEach { purchase ->
             purchase.products.forEach { sku ->
                 skuStateMap[sku]?.let {
                     updatedSkus.add(sku)
-                } ?: logError(TAG, GooglePlayBillingException("[processPurchaseList] unknown SKU: $sku"))
+                } ?: logBillingError(TAG, "[processPurchaseList] unknown SKU: $sku")
             }
 
             // Make sure the SkuState is set
@@ -758,13 +750,12 @@ class BillingRepository(
                 var isConsumable = false
                 ioScope.launch {
                     for (sku in purchase.products) {
-                        if (CONSUMABLE_SKUS.contains(sku)) {
-                            isConsumable = true
-                        } else if (isConsumable) {
+                        if (ConsumableSkus.contains(sku)) isConsumable = true
+                        else if (isConsumable) {
                             isConsumable = false
-                            logError(
+                            logBillingError(
                                 TAG,
-                                GooglePlayBillingException("[processPurchaseList] purchase can't contain both consumables & non-consumables: ${purchase.products}")
+                                "[processPurchaseList] purchase can't contain both consumables & non-consumables: ${purchase.products}"
                             )
                             break
                         }
@@ -786,12 +777,10 @@ class BillingRepository(
                         if (result.responseCode == BillingResponseCode.OK) {
                             // Purchase acknowledged
                             purchase.products.forEach {
-                                setProductState(it, SkuState.PURCHASED_AND_ACKNOWLEDGED)
+                                setProductState(it, SkuState.PurchasedAndAcknowledged)
                             }
                             _newPurchase.tryEmit(Pair(BillingResponseCode.OK, purchase))
-                        } else {
-                            logError(TAG, GooglePlayBillingException("[processPurchaseList] error acknowledging: ${purchase.products}"))
-                        }
+                        } else logBillingError(TAG, "[processPurchaseList] error acknowledging: ${purchase.products}")
                     }
                 }
             }
@@ -800,11 +789,8 @@ class BillingRepository(
         // Clear purchase state of anything that didn't come with this purchase list if this is
         // part of a refresh.
         skusToUpdate?.forEach {
-            if (productDetailsMap[it]?.value == null) {
-                setProductState(it, SkuState.UNKNOWN)
-            } else if (!updatedSkus.contains(it)) {
-                setProductState(it, SkuState.NOT_PURCHASED)
-            }
+            if (productDetailsMap[it]?.value == null) setProductState(it, SkuState.Unknown)
+            else if (!updatedSkus.contains(it)) setProductState(it, SkuState.NotPurchased)
         }
     }
 
@@ -815,10 +801,7 @@ class BillingRepository(
      */
     private suspend fun consumePurchase(purchase: Purchase) = withContext(Dispatchers.IO) {
         // weak check to make sure we're not already consuming the sku
-        if (purchaseConsumptionInProcess.contains(purchase)) {
-            // already consuming
-            return@withContext
-        }
+        if (purchaseConsumptionInProcess.contains(purchase)) return@withContext
 
         purchaseConsumptionInProcess.add(purchase)
         val consumePurchaseResult = billingClient.consumePurchase(
@@ -833,11 +816,9 @@ class BillingRepository(
             _consumedPurchaseSkus.emit(purchase.products)
             // Since we've consumed the purchase
             purchase.products.forEach {
-                setProductState(it, SkuState.NOT_PURCHASED)
+                setProductState(it, SkuState.NotPurchased)
             }
-        } else {
-            logError(TAG, GooglePlayBillingException("[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}"))
-        }
+        } else logBillingError(TAG, "[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}")
     }
 
     /**
@@ -852,12 +833,28 @@ class BillingRepository(
         purchase.signature
     )
 
-    enum class SkuState {
-        UNKNOWN,
-        NOT_PURCHASED,
-        PENDING,
-        PURCHASED,
-        PURCHASED_AND_ACKNOWLEDGED
+    @Immutable
+    @JvmInline
+    value class SkuState(val value: Int) {
+
+        override fun toString() = "SkuState." + when (this) {
+            Unknown -> "Unknown"
+            NotPurchased -> "NotPurchased"
+            PurchaseInitiated -> "PurchaseInitiated"
+            Pending -> "Pending"
+            Purchased -> "Purchased"
+            PurchasedAndAcknowledged -> "PurchasedAndAcknowledged"
+            else -> "Unknown"
+        }
+
+        companion object {
+            val Unknown = SkuState(0)
+            val NotPurchased = SkuState(1)
+            val PurchaseInitiated = SkuState(2)
+            val Pending = SkuState(3)
+            val Purchased = SkuState(4)
+            val PurchasedAndAcknowledged = SkuState(5)
+        }
     }
 
     companion object {
@@ -866,28 +863,28 @@ class BillingRepository(
         /**
          * 1 second
          */
-        private const val RECONNECT_TIMER_START_MILLISECONDS = 1000L
+        private const val ReconnectTimerStartMs = 1000L
 
         /**
          * 15 minutes
          */
-        private const val RECONNECT_TIMER_MAX_TIME_MILLISECONDS = 1000L * 60L * 15L
+        private const val ReconnectTimerMaxTimeMs = 1000L * 60L * 15L
 
         /**
          * 4 hours
          */
-        private const val PRODUCT_DETAILS_REQUERY_TIME = 1000L * 60L/* * 60L * 4L*/
+        private const val ProductDetailsRequeryTimeMs = 1000L * 60L/* * 60L * 4L*/
 
-        val SKU_INAPP_AD_FREE = PurchaseType.AD_FREE.sku
-        private val SKU_SUBS_AD_FREE_MONTHLY = PurchaseType.AD_FREE_MONTHLY.sku
-        private val SKU_SUBS_AD_FREE_YEARLY = PurchaseType.AD_FREE_YEARLY.sku
+        val SkuInappAdFree = PurchaseType.AD_FREE.sku
+        private val SkuSubsAdFreeMonthly = PurchaseType.AD_FREE_MONTHLY.sku
+        private val SkuSubsAdFreeYearly = PurchaseType.AD_FREE_YEARLY.sku
 
         // Ideally SKUs should be fetched from the server, so that the app
         // doesn't need to be updated every time we add a new product.
         // However, we don't add products at all, so it's fine for now.
-        private val INAPP_SKUS = listOf(SKU_INAPP_AD_FREE)
-        private val SUBS_SKUS = listOf<String>()
-        private val CONSUMABLE_SKUS = listOf<String>()
+        private val InappSkus = listOf(SkuInappAdFree)
+        private val SubsSkus = listOf<String>()
+        private val ConsumableSkus = listOf<String>()
 
         private val handler = Handler(Looper.getMainLooper())
     }

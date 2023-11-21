@@ -4,7 +4,7 @@ import com.android.billingclient.api.BillingClient.ProductType
 
 enum class PurchaseType(
     @ProductType val type: String,
-    val sku: String
+    val sku: String,
 ) {
     AD_FREE(ProductType.INAPP, "oxygen_updater_ad_free"),
 

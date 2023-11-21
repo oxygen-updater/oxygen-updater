@@ -4,45 +4,32 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
-import com.oxygenupdater.apis.DownloadApi
-import com.oxygenupdater.apis.ServerApi
+import com.google.firebase.Firebase
+import com.google.firebase.analytics.analytics
+import com.google.firebase.crashlytics.crashlytics
+import com.oxygenupdater.database.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.utils.DatabaseBuilders.buildLocalAppDatabase
-import com.oxygenupdater.utils.NotificationUtils
-import com.oxygenupdater.utils.createDownloadClient
-import com.oxygenupdater.utils.createNetworkClient
-import com.oxygenupdater.utils.createOkHttpCache
+import com.oxygenupdater.ui.faq.FaqViewModel
+import com.oxygenupdater.ui.install.InstallGuideViewModel
+import com.oxygenupdater.ui.news.NewsItemViewModel
+import com.oxygenupdater.ui.news.NewsListViewModel
+import com.oxygenupdater.ui.settings.SettingsViewModel
+import com.oxygenupdater.ui.update.UpdateInformationViewModel
+import com.oxygenupdater.utils.createDownloadApi
+import com.oxygenupdater.utils.createServerApi
 import com.oxygenupdater.viewmodels.BillingViewModel
-import com.oxygenupdater.viewmodels.FaqViewModel
-import com.oxygenupdater.viewmodels.InstallViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
-import com.oxygenupdater.viewmodels.NewsViewModel
-import com.oxygenupdater.viewmodels.OnboardingViewModel
-import com.oxygenupdater.viewmodels.SettingsViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.StringQualifier
 import org.koin.dsl.module
-import retrofit2.Retrofit
-
-private const val QUALIFIER_SERVER = "SERVER"
-private const val QUALIFIER_DOWNLOAD = "DOWNLOAD"
 
 private val retrofitModule = module {
-    single(StringQualifier(QUALIFIER_SERVER)) { createNetworkClient(createOkHttpCache(androidContext())) }
-    single(StringQualifier(QUALIFIER_DOWNLOAD)) { createDownloadClient() }
+    single { createServerApi(androidContext()) }
+    single { createDownloadApi() }
 }
 
-private val networkModule = module {
-    single { get<Retrofit>(StringQualifier(QUALIFIER_SERVER)).create(ServerApi::class.java) }
-    single { get<Retrofit>(StringQualifier(QUALIFIER_DOWNLOAD)).create(DownloadApi::class.java) }
-}
-
-private val preferencesModule = module {
+val preferencesModule = module {
     single { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
 }
 
@@ -53,11 +40,12 @@ private val repositoryModule = module {
 
 private val viewModelModule = module {
     viewModel { BillingViewModel(get(), get()) }
-    viewModel { OnboardingViewModel(get(), get()) }
-    viewModel { MainViewModel(get()) }
-    viewModel { InstallViewModel(get()) }
-    viewModel { NewsViewModel(get()) }
-    viewModel { SettingsViewModel(get()) }
+    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { UpdateInformationViewModel(get()) }
+    viewModel { InstallGuideViewModel(get()) }
+    viewModel { NewsListViewModel(get()) }
+    viewModel { NewsItemViewModel(get()) }
+    viewModel { SettingsViewModel(get(), get()) }
     viewModel { FaqViewModel(get()) }
 }
 
@@ -67,7 +55,6 @@ private val databaseModule = module {
 
 private val notificationModule = module {
     single { NotificationManagerCompat.from(androidContext()) }
-    single { NotificationUtils(androidContext()) }
 }
 
 private val miscellaneousSingletonModule = module {
@@ -79,7 +66,6 @@ private val miscellaneousSingletonModule = module {
 
 val allModules = listOf(
     retrofitModule,
-    networkModule,
     preferencesModule,
     repositoryModule,
     viewModelModule,

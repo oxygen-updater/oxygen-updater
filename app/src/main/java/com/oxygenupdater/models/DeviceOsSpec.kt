@@ -1,26 +1,38 @@
 package com.oxygenupdater.models
 
+import androidx.compose.runtime.Immutable
+
 /**
  * Used primarily in [com.oxygenupdater.utils.Utils.checkDeviceOsSpec]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-@Suppress("unused")
-enum class DeviceOsSpec {
-    // for devices that are supported by the app
-    SUPPORTED_OXYGEN_OS,
+@Immutable
+@JvmInline
+value class DeviceOsSpec(val value: Int) {
 
-    // for carrier-exclusive devices like OnePlus 7T Pro 5G McLaren (T-Mobile)
-    // these devices aren't supported by the app either, due to the "Local Upgrade" option being missing
-    CARRIER_EXCLUSIVE_OXYGEN_OS,
+    override fun toString() = "DeviceOsSpec." + when (this) {
+        SupportedOxygenOs -> "SupportedOxygenOs"
+        CarrierExclusiveOxygenOs -> "CarrierExclusiveOxygenOs"
+        UnsupportedOxygenOs -> "UnsupportedOxygenOs"
+        UnsupportedOs -> "UnsupportedOs"
+        else -> "Invalid"
+    }
 
-    // for new devices that haven't been added to the app yet
-    UNSUPPORTED_OXYGEN_OS,
+    companion object {
+        /** For devices that are supported by the app */
+        val SupportedOxygenOs = DeviceOsSpec(0)
 
-    // for devices that aren't running OxygenOS
-    // this may include OnePlus devices with a custom ROM installed
-    UNSUPPORTED_OS;
+        /**
+         * For carrier-exclusive devices like OnePlus 7T Pro 5G McLaren (T-Mobile).
+         * These devices aren't supported by the app either, due to the "Local Upgrade" option being missing.
+         */
+        val CarrierExclusiveOxygenOs = DeviceOsSpec(1)
 
-    val isDeviceOsSpecSupported: Boolean
-        get() = this == SUPPORTED_OXYGEN_OS
+        /** For new devices that haven't been added to the app yet */
+        val UnsupportedOxygenOs = DeviceOsSpec(2)
+
+        /** For devices that aren't running OxygenOS. This may include OnePlus devices with a custom ROM installed. */
+        val UnsupportedOs = DeviceOsSpec(3)
+    }
 }

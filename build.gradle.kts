@@ -1,28 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath(BuildPlugins.ANDROID_GRADLE_PLUGIN)
-        classpath(BuildPlugins.GOOGLE_SERVICES_PLUGIN)
-        classpath(BuildPlugins.FIREBASE_GRADLE_PLUGIN)
-        classpath(BuildPlugins.KOTLIN_GRADLE_PLUGIN)
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle.kts files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.gms.services) apply false
+    alias(libs.plugins.devtools.ksp) apply false
+    alias(libs.plugins.kotlin.android) apply false
 }
 
 tasks.register("clean").configure {
     delete("build")
+}
+
+// https://docs.gradle.org/current/userguide/performance.html#execute_tests_in_parallel
+tasks.withType<Test>().configureEach {
+    maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+}
+
+// https://docs.gradle.org/current/userguide/performance.html#run_the_compiler_as_a_separate_process
+tasks.withType<JavaCompile>().configureEach {
+    options.isFork = true
 }

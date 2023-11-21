@@ -20,7 +20,7 @@ class DeviceBootOrAppUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action != Intent.ACTION_BOOT_COMPLETED && action != Intent.ACTION_MY_PACKAGE_REPLACED) return
-        if (!ContributorUtils.isAtLeastQ || !PrefManager.getBoolean(PrefManager.PROPERTY_CONTRIBUTE, false)) return
+        if (!ContributorUtils.isAtLeastQ || !PrefManager.getBoolean(PrefManager.KeyContribute, false)) return
 
         Handler(Looper.getMainLooper()).postDelayed({
             hasRootAccess {

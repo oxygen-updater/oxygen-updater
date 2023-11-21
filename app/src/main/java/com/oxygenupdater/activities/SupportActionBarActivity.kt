@@ -1,31 +1,29 @@
 package com.oxygenupdater.activities
 
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
-import androidx.activity.addCallback
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.setContent
 import androidx.annotation.IntRange
-import androidx.annotation.LayoutRes
-import androidx.core.content.ContextCompat
-import androidx.core.view.doOnPreDraw
-import com.google.android.material.transition.platform.MaterialArcMotion
-import com.google.android.material.transition.platform.MaterialContainerTransform
-import com.google.android.material.transition.platform.MaterialContainerTransformSharedElementCallback
-import com.oxygenupdater.R
-import com.oxygenupdater.extensions.enableEdgeToEdgeUiSupport
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.oxygenupdater.extensions.startMainActivity
+import com.oxygenupdater.ui.TopAppBar
+import com.oxygenupdater.ui.theme.AppTheme
 
 /**
  * Sets support action bar and enables home up button on the toolbar.
- * Additionally, it sets up:
- * * shared element transitions (see [MaterialContainerTransform])
- * * a full screen activity if its theme is [R.style.Theme_OxygenUpdater_DayNight_FullScreen]
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
+@OptIn(ExperimentalMaterial3Api::class)
 abstract class SupportActionBarActivity(
-    @LayoutRes contentLayoutId: Int,
-
     /**
      * Used in the `onBackPressed` callback, only if this is the task root and
      * we need to reroute to [MainActivity].
@@ -33,100 +31,47 @@ abstract class SupportActionBarActivity(
      * Certain activities (e.g. install, news) can take advantage of this to
      * tie back to the correct tab, if opened from a notification for example.
      */
-    @IntRange(
-        from = MainActivity.PAGE_UPDATE.toLong(),
-        to = MainActivity.PAGE_SETTINGS.toLong()
+    @IntRange(MainActivity.PageUpdate.toLong(), MainActivity.PageSettings.toLong())
+    private val startPage: Int,
+
+    @StringRes private val subtitleResId: Int,
+) : BaseActivity() {
+
+    protected lateinit var scrollBehavior: TopAppBarScrollBehavior
+
+    @Composable
+    protected open fun scrollBehavior() = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    @Composable
+    protected open fun TopAppBar() = TopAppBar(
+        scrollBehavior = scrollBehavior,
+        navIconClicked = ::onBackPressed,
+        subtitleResId = subtitleResId,
+        root = false,
     )
-    private val startPage: Int
-) : BaseActivity(contentLayoutId) {
 
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) = super.onCreate(savedInstanceState).also {
-        setupTransitions()
-        setupToolbar()
+    @Composable
+    protected abstract fun Content(modifier: Modifier)
 
-        // allow activity to draw itself full screen
-        enableEdgeToEdgeUiSupport()
+    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
+        setContent {
+            scrollBehavior = scrollBehavior()
 
-        // Add a lifecycle-aware callback that handles hierarchy properly
-        // This is the preferred way to handle a custom back pressed behaviour
-        // Callbacks are called in reverse order, meaning the last callback added
-        // will be called. This is the preferred way to handle a custom back pressed
-        // behaviour. Previously, `onBackPressed` was overridden instead.
-        // See https://developer.android.com/guide/navigation/navigation-custom-back#activity_onbackpressed
-        onBackPressedDispatcher.addCallback(this) {
-            if (isTaskRoot) {
-                // If this is the only activity left in the stack, call [MainActivity].
-                startMainActivity(startPage)
-            } else {
-                // Otherwise call [finishAfterTransition].
-                finishAfterTransition()
+            AppTheme {
+                EdgeToEdge()
+                // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
+                Surface {
+                    Column {
+                        TopAppBar()
+                        Content(Modifier.nestedScroll(scrollBehavior.nestedScrollConnection))
+                    }
+                }
+            }
+
+            BackHandler {
+                /** If this is the only activity left in the stack, launch [MainActivity] */
+                if (isTaskRoot) startMainActivity(startPage) else finishAfterTransition()
             }
         }
-    }
-
-    /**
-     * Respond to the action bar's Up/Home button.
-     * Delegate to [onBackPressed] if [android.R.id.home] is clicked, otherwise call `super`.
-     */
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> onBackPressed().let { true }
-        else -> super.onOptionsItemSelected(item)
-    }
-
-    private fun setupTransitions() {
-        // Postpone the transition until the window's decor view has finished its layout.
-        postponeEnterTransition()
-        window.decorView.doOnPreDraw { startPostponedEnterTransition() }
-
-        // Setup shared element transitions
-        findViewById<View>(android.R.id.content).transitionName = intent?.getStringExtra(INTENT_TRANSITION_NAME)
-        setEnterSharedElementCallback(MaterialContainerTransformSharedElementCallback())
-        window.apply {
-            sharedElementEnterTransition = buildContainerTransform(DURATION_ENTER)
-            sharedElementReturnTransition = buildContainerTransform(DURATION_RETURN)
-        }
-    }
-
-    private fun buildContainerTransform(
-        duration: Long
-    ) = MaterialContainerTransform().apply {
-        setDuration(duration)
-        addTarget(android.R.id.content)
-        pathMotion = MaterialArcMotion()
-        fadeMode = MaterialContainerTransform.FADE_MODE_THROUGH
-        containerColor = ContextCompat.getColor(
-            this@SupportActionBarActivity,
-            R.color.background
-        )
-    }
-
-    private fun setupToolbar() {
-        // We must use `findViewById` because
-        // neither ViewBinding nor Kotlin View Extensions will correctly resolve an individual activity's toolbar
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
-
-    fun setNavBarColorToBackground() {
-        window.navigationBarColor = ContextCompat.getColor(
-            this,
-            R.color.background
-        )
-    }
-
-    fun setNavBarColorToBackgroundVariant() {
-        window.navigationBarColor = ContextCompat.getColor(
-            this,
-            R.color.backgroundVariant
-        )
-    }
-
-    companion object {
-        private const val DURATION_ENTER = 300L
-        private const val DURATION_RETURN = 275L
-
-        const val INTENT_TRANSITION_NAME = "TRANSITION_NAME"
     }
 }

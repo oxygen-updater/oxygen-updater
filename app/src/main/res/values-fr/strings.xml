@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/install_guide_page_*_*">
-
-	<string name="device_chooser_error_title">Impossible de récupérer la liste des appareils supportés</string>
-
+<resources>
 	<!-- Update information strings -->
 	<string name="enable">Activer</string>
-	<string name="update_information_file_name">"Nom du fichier : %1$s"</string>
+	<string name="update_information_file_name">"Nom du fichier: %1$s"</string>
 	<string name="update_information_md5">MD5: %1$s</string>
 	<string name="update_information_download_link">Étant donné qu\'une errreur de téléchargement s\'est produite et que le téléchargement doit être recommencé, vous pouvez utiliser ce lien pour télécharger le fichier de mise à jour. Vous devrez cependant le déplacer du dossier "Téléchargements" à la racine du stockage interne de votre appareil. Ce lien est le même lien que l\'application utilise et provient des serveurs FOTA de OnePlus:\n%1$s</string>
 	<string name="update_information_header">"Mise à jour"</string>
@@ -13,13 +10,12 @@
 	<string name="update_information_banner_server">Appuyez ici afin de voir des informations importantes</string>
 	<string name="update_information_banner_advanced_mode_tip">Vous avez sélectionné la méthode de mise à jour \"%1$s\". Activez le mode avancé si vous souhaitez passer à cette méthode de mise à jour.</string>
 	<string name="update_information_header_advanced_mode_hint">Le mode avancé est activé</string>
-	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier fichier d\'installation (.zip) pour la méthode de mise à jour \"%1$s\".\n\nVous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
-	<string name="update_information_different_version_changelog_notice">Vous regardez un journal de modifications conçu pour la dernière mise à jour disponible dans la méthode de mise à jour \"%1$s\". Si vous souhaitez installer cette mise à jour, vous devez d\'abord activer le mode avancé dans les réglages de l\'application.\n\nSi vous souhaitez voir le journal de modifications pour la version actuelle de votre appareil, vous devez resélectionner la précédente méthode de mise à jour.</string>
-	<string name="update_information_last_checked_on">"Dernière vérification : %1$s"</string>
+	<string name="update_information_header_advanced_mode_helper">Étant donné que vous avez activé le mode avancé, vous pouvez télécharger le dernier fichier d\'installation (.zip) pour la méthode de mise à jour \"%1$s\". Vous pouvez désactiver le mode avancé depuis les réglages de l\'application.</string>
+	<string name="update_information_different_version_changelog_notice_base">Remarque : ce journal des modifications concerne la dernière version disponible (%1$s) dans la méthode de mise à jour \"%2$s\"</string>
+	<string name="update_information_different_version_changelog_notice_advanced">. Si vous avez l\'intention d\'installer cette mise à jour, vous devez activer le mode avancé dans les paramètres.</string>
 	<string name="update_information_no_update_data_available">"Aucune information de mise à jour n'est disponible."</string>
-	<string name="update_information_oxygen_os_version">"OxygenOS %1$s"</string>
 	<string name="update_information_system_is_up_to_date">"Votre système est à jour"</string>
-	<string name="update_information_unknown_update_name">"Mise à jour non nommée pour : %1$s"</string>
+	<string name="update_information_unknown_update_name">"Mise à jour non nommée pour: %1$s"</string>
 	<string name="update_information_view_update_information">"Voir les informations de mise à jour"</string>
 
 	<!-- Server status warning strings -->
@@ -30,7 +26,7 @@
 	<!-- New app version message strings -->
 	<string name="new_app_version">Une mise à jour de l\'application (%1$s) est disponible.\nAppuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
 	<string name="new_app_version_inapp_downloaded">La mise à jour de l\'application a été téléchargée</string>
-	<string name="new_app_version_inapp_failed">La mise à jour de l\'\application n\'a pas pu être installée. Appuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
+	<string name="new_app_version_inapp_failed">La mise à jour de l\'application n\'a pas pu être installée. Appuyez ici pour ouvrir le Play Store et mettre à jour l\'application.</string>
 
 	<!-- Downloader strings -->
 	<!-- TODO: translate this string below -->
@@ -45,9 +41,9 @@
 	<string name="download_error">"Erreur de téléchargement"</string>
 	<string name="download_error_close">"Fermer"</string>
 	<string name="download_error_corrupt">"Le fichier de mise à jour est endommagé ! Veuillez essayer de le télécharger à nouveau."</string>
-	    
+
 	<string name="download_error_server">Une erreur serveur s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger.</string>
-	    
+
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger. Si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
 	<string name="download_error_unsuccessful_response"><![CDATA[Il semble que le lien de téléchargement soit invalide. L\'erreur provient soit de notre part lorsque nous avons ajouté les données de mise à jour, soit le fichier a été supprimé des serveurs de OnePlus. Une notification nous a été envoyée, nous vérifierons cela dès que possible.
 
@@ -58,10 +54,10 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="download_error_storage">"Espace de stockage insuffisant sur votre appareil pour télécharger la mise à jour. Veuillez libérer de l'espace et réessayer."</string>
 	<string name="download_failed">"Le téléchargement a échoué"</string>
 	<string name="download_pending">"Le téléchargement va bientôt commencer…"</string>
-	    
-	    
+
+
 	<string name="download_notification_error_server">Erreur serveur pendant le téléchargement. Veuillez le relancer.</string>
-	    
+
 	<string name="download_notification_error_internal">Erreur critique pendant le téléchargement. Veuillez le redémarrer ou contacter le développeur.</string>
 	<string name="download_notification_error_storage_full">"Espace de stockage insuffisant."</string>
 	<string name="download_notification_error_corrupt">"La vérification du fichier a échoué. Veuillez vérifier votre connexion et réessayer."</string>
@@ -73,7 +69,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="download_progress_text_one_minute_remaining">"Environ une minute restante"</string>
 	<string name="download_progress_text_seconds_remaining">"Quelques secondes restantes"</string>
 	<string name="download_progress_text_unknown_time_remaining">"Estimation du temps restant en cours…"</string>
-	<string name="download_progress_text_verifying">"100 %, Vérification du fichier en cours…"</string>
+	<string name="download_progress_text_verifying">"100%, Vérification du fichier en cours…"</string>
 	<string name="download_progress_text_paused">En pause</string>
 
 	<string name="download_verifying">"Vérification…"</string>
@@ -93,9 +89,7 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="summary_please_wait">Veuillez patienter…</string>
 	<string name="summary_update_method">Veuillez sélectionner un appareil</string>
 	<!-- TODO: check the following translation -->
-	<string name="summary_important_notifications_disabled">Certaines notifications importantes sont désactivées: \"%1$s\"</string>
-	<string name="summary_theme">Choisissez un thème</string>
-	<string name="summary_language">Définir la langue</string>
+	<string name="summary_important_notifications_disabled">Certaines notifications importantes sont désactivées:</string>
 	<string name="summary_privacy_policy">Voir en ligne</string>
 	<string name="summary_rate_app">Donner 5 étoiles</string>
 
@@ -114,10 +108,10 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 	<string name="theme_dark_subtitle">Thème avec un fond noir et couleur d\'accentuation rouge. Utilisez ce thème si vous souhaitez économiser de la batterie, plus précisément sur les appareils avec un écran AMOLED.</string>
 	<string name="theme_system_subtitle">Utilise le thème système (vous pouvez le modifier dans les paramètres d\'affichage ou les options de développement). Dépend de l\'appareil.</string>
 	<string name="theme_auto_subtitle">Bascule entre les thèmes lumineux et sombres en fonction de l\'heure afin d\'empêcher la fatigue des yeux pendant la nuit</string>
-	<string name="theme_additional_note">Note : si le thème choisi est « Automatique » et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie.</string>
+	<string name="theme_additional_note">Note: si le thème choisi est « Automatique » et l\'économiseur de batterie activé, le thème sombre sera automatiquement utilisé quelle que soit l\'heure afin d\'économiser de la batterie.</string>
 
 	<string name="settings">"Paramètres"</string>
-	<string name="settings_buy_button_buy">"%1$s"</string>
+	<string name="settings_buy_button_buy">"Achat (%1$s)"</string>
 	<string name="settings_buy_button_bought">"Acheté"</string>
 	<string name="settings_buy_button_not_possible">"Indisponible"</string>
 	<string name="settings_buy_ad_free_label">"Acheter la version sans publicité"</string>
@@ -126,110 +120,52 @@ Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href=
 
 	<string name="settings_device">"Appareil"</string>
 	<string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre appareil et méthode de mise à jour."</string>
-	<string name="settings_explanation_incremental_full_update">"Une mise à jour incrémentale peut être installée depuis n'importe quelle version (sauf si votre bootloader est déverouillé, auquel cas vous devriez toujours choisir la mise à jour entière en tant que méthode de mise à jour).\n\nLes versions bêta d'OxygenOS peuvent toujours être installées, même si vous exécutez actuellement une version stable. Pour passer de la version stable à la version bêta, vous devez activer le mode avancé dans les réglages. Les méthodes de mises à jour incrémentale et entières marchent de la même manière pour les versions bêta et stables."</string>
 	<string name="settings_push_from_server">"Un message critique est disponible"</string>
 	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à Internet, quittez l'application et réessayez."</string>
 	<string name="settings_advanced_mode">"Mode avancé"</string>
-	<string name="settings_advanced_mode_explanation">"Le mode avancé cache le message « Votre système est à jour », vous permettant ainsi de télécharger et installer des mises à jour quand bien même elles pourraient ne pas être compatibles avec votre appareil.
+	<string name="settings_advanced_mode_explanation">"Normalement, l'application affiche les mises à jour en fonction de la version actuelle de votre système d'exploitation. Avec le mode avancé, la dernière mise à jour disponible sera toujours affichée, quelle que soit la compatibilité appareil/version.
 
-Cela peut être utile quand vous :
-— Installez une version bêta depuis une version stable
-— Choisissez de revenir sur une version stable depuis une version bêta (n'oubliez pas de réinitialiser votre appareil)
-— Réinstallez la version actuelle du système"</string>
+Cela peut s'avérer utile si vous souhaitez:"</string>
+	<string name="settings_advanced_mode_uses">"&#8226; Retélécharger la dernière version, même si vous êtes déjà dessus
+&#8226; Passer à une autre piste de mise à jour"</string>
+	<string name="settings_advanced_mode_caption">"Le mode avancé peut s'avérer nécessaire uniquement dans les situations ci-dessus. Vous ne devez l'activer que si vous savez ce que vous faites."</string>
 	<string name="settings_update_method">"Méthode de mise à jour"</string>
 	<string name="settings_upload_logs">Envoyer les données d\'utilisation et de crash au développeur</string>
+	<string name="settings_ad_privacy">Consentement à la publicité GDPR</string>
+	<string name="settings_ad_privacy_subtitle">"Pour les utilisateurs de l'EEE/du Royaume-Uni"</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"Foire aux Questions"</string>
 	<string name="faq_menu_item">"FAQ"</string>
 
 	<!-- First-time setup strings -->
-	<string name="onboarding">"Bienvenue"</string>
+	<string name="onboarding">"Setup"</string>
 	<string name="onboarding_finished_button">"Démarrer l'application"</string>
-	<string name="onboarding_page_1_title">"Bienvenue dans Oxygen Updater !"</string>
-	<string name="onboarding_page_1_text">"Cette application vous permettra :
+	<string name="onboarding_app_uses">"Cette application vous permettra:
 
-— D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS
-— De mettre à jour aisément un appareil rooté
-— De voir les nouveautés du système d'exploitation que vous utilisez
-— Lire les dernières informations à propos de OnePlus et OxygenOS
-
-Balayez vers la droite pour continuer."</string>
-	<string name="onboarding_page_1_caption">"Cette application n'est pas une application officielle de OnePlus. Son usage est à vos propres risques. Ni OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celles causées par l'usage de cette application.
-
-En utilisant cette application vous acceptez les termes et conditions énoncées précédemment.
-
-Balayez vers la droite pour continuer."</string>
-	<string name="onboarding_page_2_title">"Choisissez votre appareil :"</string>
-	<string name="onboarding_page_2_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus.
-
-Balayez vers la droite pour continuer."</string>
-	<string name="onboarding_page_3_title">"Choisissez votre méthode de mise à jour."</string>
-	<string name="onboarding_page_3_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit.
-
-Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète.
-
-Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes.
-
-Balayez vers la droite pour continuer."</string>
-	<string name="onboarding_page_4_title">"Tout est prêt !"</string>
-	<string name="onboarding_page_4_text">"Profitez de cette application !
-
-Vous pourrez changer vos réglages plus tard si vous le souhaitez. Pour cela, cliquez sur les trois petits points dans le coin supérieur droit de l'écran et appuyez sur « Réglages »."</string>
+&#8226; D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS
+&#8226; De mettre à jour aisément un appareil rooté
+&#8226; De voir les nouveautés du système d'exploitation que vous utilisez
+&#8226; Lire les dernières informations à propos de OnePlus et OxygenOS"</string>
+	<string name="onboarding_disclaimer">"Cette application n'est pas une application officielle de OnePlus. Son usage est à vos propres risques. Ni OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celles causées par l'usage de cette application. En utilisant cette application vous acceptez les termes et conditions énoncées précédemment."</string>
+	<string name="onboarding_device_chooser_title">"Choisissez votre appareil:"</string>
+	<string name="onboarding_device_chooser_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus."</string>
+	<string name="onboarding_method_chooser_title">"Choisissez votre méthode de mise à jour."</string>
+	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit. Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète. Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
+	<string name="onboarding_caption">"Profitez de cette application ! Vous pourrez changer vos réglages plus tard si vous le souhaitez."</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">"Installation"</string>
 
 	<!-- Install guide strings -->
-	<string name="install_guide_no_root">"Installez la mise à jour en suivant les instructions du guide d'installation."</string>
 	<string name="install_guide">"Guide d'installation"</string>
-	<string name="install_guide_subtitle">"Guide d'installation — %1$d de %2$d"</string>
-	<string name="install_guide_tip">"Il est recommandé d'écrire sur papier les étapes suivantes, étant donné que vous devrez éteindre votre appareil pendant l'installation de la mise à jour."</string>
-	<string name="install_guide_page_1_title">"Téléchargez la mise à jour"</string>
-	<string name="install_guide_page_1_text">"Appuyez sur le bouton « Téléchargement » pour commencer à télécharger la mise à jour.
-
-— La progression du téléchargement va s'afficher dans l'application et dans votre barre de notifications.
-
-— Quand le téléchargement sera fini, vous verrez une notification avec le texte « Téléchargement fini ».
+	<string name="install_guide_download_instructions">"&#8226; Appuyez sur le bouton « Téléchargement » pour commencer à télécharger la mise à jour.
+&#8226; La progression du téléchargement va s'afficher dans l'application et dans votre barre de notifications.
+&#8226; Quand le téléchargement sera fini, vous verrez une notification avec le texte « Téléchargement fini ».
 Si une erreur de téléchargement s'est produite, ouvrez l'application et réessayez de télécharger l'application. Si cela ne fonctionne pas, vérifiez que votre connexion Internet fonctionne. Autrement, contactez le développeur de l'application.
 Vous pouvez faire cela en visitant la section « Mes applications » dans le Play Store."</string>
 
-	<string name="install_guide_page_2_title">Préparation de l\'installation</string>
-	<string name="install_guide_page_2_text">"Note: L'installation de la mise à jour s'effectue à partir d'une page spéciale dans la section « Mises à jour du système » de votre appareil.  Si, pour quelque raison que ce soit, une mise à jour système apparaît lors de l'ouverture de cette section, vous pouvez également choisir d'installer cette mise à jour en premier. Ensuite, ouvrez à nouveau Oxygen Updater pour vérifier que votre appareil est bien à jour.
-
-Instructions:
-&#8226; Fermez Oxygen Updater en appuyant sur le bouton d'accueil.
-
-&#8226; Ouvrez l'application « Paramètres ». Elle devrait être localisée dans le tiroir d'applications.
-
-&#8226; Faites défiler vers le bas jusqu'à la section « Système ». Appuyez dessus et sélectionnez « Mise à jour du système »."</string>
-
-	<string name="install_guide_page_3_title">Installation de la mise à jour</string>
-	<string name="install_guide_page_3_text">"Maintenant que vous êtes dans l'application de mise à jour du système, vous pouvez installer la mise à jour.
-
-&#8226; Appuyez sur la roue dentée en haut à droite.
-
-&#8226; Maintenant, sélectionnez \"Mise à niveau locale\". Un écran de sélection de fichier devrait apparaître.
-
-&#8226; Dans cet écran, appuyez sur le fichier de mise à jour que vous avez téléchargé à l'aide d'Oxygen Updater. Son nom devrait commencer par \"%1$sOxygen\".
-
-&#8226; Appuyez sur \"Installer maintenant\". L'installation devrait alors démarrer automatiquement."</string>
-
-	<string name="install_guide_page_4_title">Patientez jusqu\'à la fin de l\'installation</string>
-	<string name="install_guide_page_4_text">"&#8226; Votre appareil va maintenant installer la mise à jour et afficher une barre de progression. Veuillez patienter jusqu'à la fin de l'installation, qui peut prendre jusqu'à quinze minutes.
-
-&#8226; Après cela, votre appareil va redémarrer."</string>
-
-	<string name="install_guide_page_5_title">"Fait. Profitez de la nouvelle version d'OxygenOS !"</string>
-	<string name="install_guide_page_5_text">"Une fois que votre appareil a fini d'optimiser les applications, la mise à jour s'est correctement installée.
-Afin de le vérifier, vous pouvez effectuer la manipulation suivante :
-
-— Allez dans « Réglages », «  À propos du téléphone » et regardez la version d'OxygenOS.
-
-— Si vous aimez l'application, donnez-lui 5 étoiles sur le Play Store !"</string>
-	<string name="install_guide_close_button">"Fermer le guide d'installation"</string>
-
-	<!-- Device information strings -->
+	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Votre appareil est supporté</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Votre appareil n\'est pas supporté car vendu exclusivement par un opérateur</string>
 	<string name="device_information_unsupported_oxygen_os">Nous ne supportons pas actuellement votre appareil.</string>
@@ -238,22 +174,22 @@ Afin de le vérifier, vous pouvez effectuer la manipulation suivante :
 	<string name="device_information_hardware_header">Matériel</string>
 	<string name="device_information_software_header">Logiciel</string>
 
-	<string name="device_information_amount_of_memory">"Mémoire vive :"</string>
-	<string name="device_information_cpu_frequency">"Fréquence du processeur :"</string>
+	<string name="device_information_amount_of_memory">"Mémoire vive:"</string>
+	<string name="device_information_cpu_frequency">"Fréquence du processeur:"</string>
 	<string name="device_information_header">"Appareil"</string>
 	<string name="device_information_image_description">"Image de l'appareil"</string>
-	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS :"</string>
-	<string name="device_information_os_version">"Version d'Android :"</string>
-	<string name="device_information_oxygen_os_version">"Version d'OxygenOS :"</string>
-	<string name="device_information_oxygen_os_ota_version">"Version OTA :"</string>
-	<string name="device_information_patch_level_version">"Niveau du correctif de sécurité :"</string>
-	<string name="device_information_serial_number">"Numéro de série :"</string>
-	<string name="device_information_system_on_a_chip">"Processeur mobile (SoC) :"</string>
+	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS:"</string>
+	<string name="device_information_os_version">"Version d'Android:"</string>
+	<string name="device_information_oxygen_os_version">"Version d'OS:"</string>
+	<string name="device_information_oxygen_os_ota_version">"Version OTA:"</string>
+	<string name="device_information_patch_level_version">"Niveau du correctif de sécurité:"</string>
+	<string name="device_information_serial_number">"Numéro de série:"</string>
+	<string name="device_information_system_on_a_chip">"Processeur mobile (SoC):"</string>
 	<string name="device_information_unknown">"Inconnu"</string>
 
 	<!-- About screen strings -->
 	<string name="about">"À propos"</string>
-	<string name="about_description">Cette application télécharge les mises à jour officielles directement depuis les serveurs de OnePlus et vérifie l\'intégrité des fichiers ZIPs téléchargés avant de vous permettre de les installer. Ce faisant, vous n\'aurez pas à attendre le déploiement progressif afin d\'installer les mises à jour officielles dès que possible. Si vous rencontrez des erreurs dans le système d\'exploitation, veuillez les signalez directement à OnePlus : <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Vous souhaiterez peut être joindre notre <a href="https://discord.gg/5TXdhKJ">serveur Discord</a> afin de pouvoir échanger avec les autres utilisateurs de l\'application à propos des dernières mises à jour. Autrement n\'hésitez pas à nous envoyer un email à <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> si vous avez des suggestions ou des commentaires.</string>
+	<string name="about_description">Cette application télécharge les mises à jour officielles directement depuis les serveurs de OnePlus et vérifie l\'intégrité des fichiers ZIPs téléchargés avant de vous permettre de les installer. Ce faisant, vous n\'aurez pas à attendre le déploiement progressif afin d\'installer les mises à jour officielles dès que possible. Si vous rencontrez des erreurs dans le système d\'exploitation, veuillez les signalez directement à OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Vous souhaiterez peut être joindre notre <a href="https://discord.gg/5TXdhKJ">serveur Discord</a> afin de pouvoir échanger avec les autres utilisateurs de l\'application à propos des dernières mises à jour. Autrement n\'hésitez pas à nous envoyer un email à <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> si vous avez des suggestions ou des commentaires.</string>
 	<string name="about_support">Si vous souhaitez nous supporter, vous pouvez acheter la version sans publicités (à partir des réglages de l\'application) ou vous rendre sur notre <a href="https://patreon.com/oxygenupdater">page Patreon</a>.</string>
 	<string name="about_background_story_header">Histoire</string>
 	<string name="about_background_story">Cette application a été initialement développée par Arjan Vlek à la suite d\'une autre de ses applications appelée <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (qui fournit des fonctionnalités similaires pour les utilisateurs de Cyanogen OS).\n\nAprès 4 ans, en Juillet 2019, Arjan a décidé de se retirer des deux projets et a transféré les applications à une équipe de développeurs venant chacun de différents pays. Ils ont pris la responsabilité de continuer à rendre à la communauté le service d\'obtenir les mises à jour réalisées par OnePlus plus rapidement.\nVous pouvez trouver plus d\'informations à propos de l\'annonce <a href="https://oxygenupdater.com/article/81/">ici</a>.\n\nLe 14 Août 2019 a marqué la première publication d\'une nouvelle version de l\'application par la nouvelle équipe, qui a introduit de nouvelles fonctionnalités (thème sombre et redesign).\n\nPour plus d\'information à propos de l\'équipe, consultez <a href="https://oxygenupdater.com/team/">le site</a>.</string>
@@ -263,6 +199,8 @@ Afin de le vérifier, vous pouvez effectuer la manipulation suivante :
 	<string name="about_email_button_text">Email</string>
 
 	<!-- LocalNotifications strings -->
+	<string name="notification_permission_title">"Restez informé"</string>
+	<string name="notification_permission_text">"Autorisez l'application à vous informer des mises à jour OTA, des nouvelles, de l'état des téléchargements en cours et d'autres choses importantes. Vous pouvez affiner vos préférences ultérieurement dans les paramètres de l'application."</string>
 	<string name="notification_new_device_text">"Le %1$s est maintenant disponible. Ouvrez l'application pour choisir cet appareil."</string>
 	<string name="notification_no_notification_support">"Installez ou mettez à jour les services Google Play pour activer les notifications push."</string>
 	<string name="notification_version">"%1$s est maintenant disponible pour le %2$s !"</string>
@@ -281,52 +219,18 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="device_notification_channel_name">"Nouvel appareil supporté"</string>
 	<string name="general_notification_channel_name">Générales</string>
 	<string name="url_submitted_notification_channel_name">Transmission de l\'URL de l\'OTA</string>
-	<string name="download_status_notification_channel_description">Notifications qui reflètent le statut d\'un téléchargement : en pause, actif, complété, ou échoué</string>
+	<string name="download_status_notification_channel_description">Notifications qui reflètent le statut d\'un téléchargement: en pause, actif, complété, ou échoué</string>
 	<string name="verification_status_notification_channel_description">Notifications qui reflètent le statut de la vérification du fichier de mise à jour: en cours, complété, or échoué.\nLa somme de contrôle MD5 est utilisée pour s\'assurer que le fichier de mise à jour n\'a pas été modifié et est valide.</string>
 	<string name="installation_status_notification_channel_description">Soyez notifié afin de savoir si une mise à jour a été correctement installée ou pas</string>
 	<string name="update_notification_channel_description">Soyez notifié lorsqu\'une nouvelle mise à jour est disponible pour votre appareil &amp; méthode de mise à jour sélectionnée</string>
 	<string name="news_notification_channel_description">Soyez notifié lorsque nous publions un nouvel article</string>
 	<string name="device_notification_channel_description">Soyez notifié lorsque l\'application supporte un nouvel appareil</string>
 	<string name="general_notification_channel_description">Notifications générales ne rentrant pas dans le cadre des autres catégories</string>
-	<string name="url_submitted_notification_channel_description">Recevez une notification lorsque vous avez soumis avec succès des URL d\'OTA à notre équipe.\n
-Vous pouvez choisir de ne pas soumettre automatiquement les URL dans les paramètres de l\'application.</string>
-
-	<!-- Help strings -->
-	<string name="help">"Aide"</string>
-	<string name="help_updating_your_device_title">"Mettre à jour votre appareil"</string>
-	<string name="help_updating_your_device_text">"Quand vous ouvrez l'application vous pouvez voir si une mise à jour système est disponible et l'installer.
-
-Pour commencer l'installation, appuyez sur le bouton « Télécharger » (en dessous de la description de la mise à jour). Quand le téléchargement sera fini l'écran d'installation s'affichera. Si vous avez quitté l'application pendant le téléchargement ou que l'écran ne s'est pas affiché veuillez appuyer sur le bouton « Installer » qui sera présent à côté du bouton « Télécharger ».
-
-Le processus d'installation va d'abord vérifier si votre appareil est rooté. Si c'est le cas veuillez autorisez l'accès root quand il sera demandé et choisissez comment vous voulez installer la mise à jour. Autrement veuillez suivre les instructions pour l'installation manuelle.
-
-Installation automatique :
-Vous n'avez qu'à choisir vos paramètres d'installation. Les réglages par défaut sont recommandés à l'exception de la sélection du package root qui devra être (ré)installé. Sélectionnez un package root (possédant l'extension .zip) en cliquant sur l'icône bleue puis cliquez sur « Démarrer l'installation » afin de démarrer l'installation.
-
-Installation manuelle :
-Un guide d'installation va s'afficher sur votre écran. Ecrivez sur papier les instructions et suivez-les afin d'installer la mise à jour."</string>
-	<string name="help_reading_news_title">"Lire les derniers articles"</string>
-	<string name="help_reading_news_text">"Les articles sont affichés à gauche du panneau d'information des mises à jour. Les plus récents apparaissent en haut. Appuyez sur l'un d'entre eux pour le lire. Appuyez sur la flèche arrière ou sur le bouton Retour pour revenir à la liste des articles."</string>
-	<string name="help_device_information_title">"Voir des informations à propos de votre appareil"</string>
-	<string name="help_device_information_text">"Vous pouvez voir certaines spécifications de votre appareil en utilisant l'écran à droite des informations de mise à jour. Cela peut s'avérer utile lorsque vous faites une requête auprès du support ; durant laquelle pourront vous être demandées certaines spécifications de votre appareil."</string>
-	<string name="help_change_settings_title">"Changement des réglages"</string>
-	<string name="help_change_settings_text">"Vous pouvez changer vos réglages en appuyant sur les trois petits points en haut à droite de l'écran puis en sélectionnant Réglages.
-Vous pouvez changer les réglages suivants :
-
-• Appareil et méthode de mise à jour
-• Notifications push
-• Notifications dans l'application
-• Réglages relatifs à la vie privée (upload des fichiers log)
-
-Utilisez les switchs pour changer les réglages.
-Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les menus déroulants. S'ils ne sont pas visibles vérifiez votre connexion Internet et rouvrez l'écran des réglages."</string>
+	<string name="url_submitted_notification_channel_description">Recevez une notification lorsque vous avez soumis avec succès des URL d\'OTA à notre équipe.\nVous pouvez choisir de ne pas soumettre automatiquement les URL dans les paramètres de l\'application.</string>
 
 	<!-- News strings -->
 	<string name="news">"Articles"</string>
-	<string name="news_date_published">"Dernière mise à jour : %1$s"</string>
-	<string name="news_empty">"Cet article n'a pas de contenu."</string>
 	<string name="news_load_network_error">"Échec de l'ouverture de l'article. Vérifiez votre connexion et appuyez sur le bouton « Réessayer » pour ouvrir l'article."</string>
-	<string name="news_load_id_error"><![CDATA[Échec de l\'ouverture de l\'article à partir d\'une URL invalide: %1$s. Vérifiez l\'URL ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="news_unread_count_1">Vous avez %1$d articles non lus. Appuyez ici pour les voir.</string>
 	<string name="news_unread_count_2">Vous avez %1$d articles non lus. Appuyez ici pour voir tous les articles.</string>
 	<string name="news_mark_read">Marquer comme lu</string>
@@ -352,11 +256,9 @@ Sélectionnez un appareil et/ou une méthode de mise à jour en utilisant les me
 	<string name="error_app_outdated">"Oh non !"</string>
 	<string name="error_app_outdated_message">"Cette version de l'application est obsolète. Il est temps de la mettre à jour ! Cliquez sur le bouton « Play Store » en dessous, puis sélectionnez « Mettre à jour »."</string>
 	<string name="error_app_requires_network_connection">"Pas de connexion"</string>
-	<string name="error_app_requires_network_connection_message">"Erreur de connexion au serveur. Veuillez vous assurer que votre connexion Internet fonctionne. L'application va maintenant se fermer."</string>
-	<string name="error_no_internet_connection">"Pas de connexion."</string>
 	<string name="error_maintenance">"Maintenance du serveur"</string>
 	<string name="error_maintenance_message">"Veuillez patienter. Le serveur sera disponible bientôt."</string>
-	<string name="error_maintenance_retry">Le serveur est probablement en cours de maintenance. Veuillez réessayez dans quelques instants ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par  <a href="https://discord.gg/5TXdhKJ">Discord</a>.</string>
+	<string name="error_maintenance_retry"><![CDATA[Le serveur est probablement en cours de maintenance. Veuillez réessayez dans quelques instants ou signalez-le nous par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="error_reload">"Recharger"</string>
 	<string name="error_unable_to_rate_app">"Vous ne pouvez pas évaluer cette application car le Play Store n'est pas installé sur votre appareil."</string>
 
@@ -376,14 +278,13 @@ Les autres appareils, incluant les appareils OnePlus fonctionnant sous des roms 
 	<string name="incorrect_device_warning_title">Appareil incorrect sélectionné</string>
 	<string name="incorrect_device_warning_message">Il semblerait que vous ayez sélectionné le mauvais appareil : \"%1$s\" au lieu de \"%2$s\". Changez votre sélection dans les réglages de l\'application afin de pouvoir continuer à recevoir des mises à jour et notifications pour le bon appareil.</string>
 
-	<string name="device_warning_checkbox_title">"Ne plus montrer ce message"</string>
+	<string name="do_not_show_again_checkbox">"Ne plus montrer"</string>
 
 	<!-- Purchasing strings -->
 	<string name="purchase_error_pending_payment">Votre achat est en attente de confirmation par le Play Store. Vous aurez accès à tous les avantages auxquels vous avez droit une fois que le paiement sera complété.</string>
 	<string name="purchase_error_after_payment">"L'achat de la version sans publicités a échoué en raison d'une erreur interne. Veuillez réessayer dans quelques minutes. Si vous avez déjà payé, veuillez contacter le support du Play Store."</string>
 
 	<!-- Other strings -->
-	<string name="error">Erreur</string>
 	<string name="icon">"Icône"</string>
 	<string name="loading">"Chargement…"</string>
 	<string name="processing">"Achat en cours…"</string>

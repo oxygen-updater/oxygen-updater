@@ -5,22 +5,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.FileObserver
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.internal.KotlinCallback
 import com.topjohnwu.superuser.ShellUtils
 import com.topjohnwu.superuser.ipc.RootService
 import com.topjohnwu.superuser.nio.ExtendedFile
 import com.topjohnwu.superuser.nio.FileSystemManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import java.util.Timer
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.concurrent.schedule
 
 /** Creates file system service in the root process */
 @RequiresApi(Build.VERSION_CODES.Q) // for FileObserver
@@ -108,10 +106,10 @@ class RootFileService : RootService() {
 
     private class FolderObserver(
         folder: ExtendedFile,
-        private val callback: KotlinCallback<Int>
-    ) : FileObserver(folder, OBSERVER_MASK) {
+        private val callback: (event: Int) -> Unit,
+    ) : FileObserver(folder, ObserverMask) {
 
-        private var lastRunnable: Runnable? = null
+        private val timer = Timer()
 
         override fun onEvent(event: Int, path: String?) {
             // Sometimes event is an unknown Int
@@ -121,11 +119,9 @@ class RootFileService : RootService() {
 
             log("FolderObserver: $event")
 
+            timer.cancel() // ensure only the latest task goes through
             // Debounce by 1s to act on a settled state
-            lastRunnable?.let { handler.removeCallbacks(it) }
-            handler.postDelayed(Runnable { callback(event) }.also {
-                lastRunnable = it
-            }, 1000)
+            timer.schedule(1000) { callback(event) }
         }
     }
 
@@ -136,9 +132,7 @@ class RootFileService : RootService() {
         private const val FOLDER = "/data/data/com.oplus.ota/databases"
         const val FILENAME = "ota.db"
 
-        private const val OBSERVER_MASK = FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF
-
-        private val handler = Handler(Looper.getMainLooper())
+        private const val ObserverMask = FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF
 
         /**
          *  [Log] must be used directly, because [com.oxygenupdater.utils.Logger]
@@ -150,5 +144,4 @@ class RootFileService : RootService() {
 
         val bound = AtomicBoolean(false)
     }
-
 }

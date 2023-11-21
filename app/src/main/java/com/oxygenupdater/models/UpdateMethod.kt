@@ -1,22 +1,22 @@
 package com.oxygenupdater.models
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import androidx.compose.runtime.Immutable
+import com.oxygenupdater.internal.ForceBoolean
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@Immutable
+@JsonClass(generateAdapter = true)
 data class UpdateMethod(
     override val id: Long,
-    val englishName: String?,
-    val dutchName: String?,
-    var recommended: Boolean = false,
-    val recommendedForRootedDevice: Boolean = false,
-    val recommendedForNonRootedDevice: Boolean = false,
-    val supportsRootedDevice: Boolean = false
-) : SelectableModel {
+    override val name: String?,
 
-    override val name = if (AppLocale.get() == AppLocale.NL) dutchName else englishName
+    @Json(name = "recommended_for_rooted_device")
+    @ForceBoolean val recommendedForRootedDevice: Boolean = false,
 
-    @JsonProperty("recommended")
-    fun setRecommended(recommended: String?): UpdateMethod {
-        this.recommended = recommended != null && recommended == "1"
-        return this
-    }
-}
+    @Json(name = "recommended_for_non_rooted_device")
+    @ForceBoolean val recommendedForNonRootedDevice: Boolean = false,
+
+    @Json(name = "supports_rooted_device")
+    @ForceBoolean val supportsRootedDevice: Boolean = false,
+) : SelectableModel

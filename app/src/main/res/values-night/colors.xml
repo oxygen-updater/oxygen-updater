@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="background">@color/design_dark_default_color_background</color>
-	<color name="backgroundVariant">#1d1d1d</color>
+	<color name="background">#121212</color>
 	<color name="colorPrimary">@color/oneplus_red_400</color>
-	<color name="colorError">@color/red_400</color>
-	<color name="colorWarn">@color/orange_300</color>
 	<color name="colorPositive">@color/green_300</color>
 	<color name="foreground">@color/white</color>
-	<!-- Calculated by overlaying 8% primary colour (#f50514 with 8% opacity) over default dark background (#121212) -->
-	<!--<color name="appBarBackground">#241113</color>-->
-	<!--<color name="appBarBackground">@color/backgroundVariant</color>-->
 	<color name="splashBackgroundColor">@color/background</color>
-	<color name="scrollbar">#1fffffff</color> <!-- 12% white -->
 </resources>

@@ -1,11 +1,13 @@
 import java.util.Properties
 
 plugins {
-    id(BuildPlugins.ANDROID_APPLICATION)
-    id(BuildPlugins.GOOGLE_SERVICES)
-    id(BuildPlugins.FIREBASE_CRASHLYTICS)
-    kotlin("android")
-    kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.gms.services)
+    alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.room)
+    id("kotlin-parcelize")
 }
 
 fun loadProperties(
@@ -34,31 +36,20 @@ fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{",
 android {
     namespace = "com.oxygenupdater"
 
-    compileSdk = AndroidSdk.COMPILE
-    buildToolsVersion = AndroidSdk.BUILD_TOOLS
+    // https://developer.android.com/studio/releases/build-tools
+    buildToolsVersion = "34.0.0"
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
 
-        minSdk = AndroidSdk.MIN
-        targetSdk = AndroidSdk.TARGET
+        minSdk = 21
+        targetSdk = 34
 
-        versionCode = 100
-        versionName = "5.11.3"
+        versionCode = 111
+        versionName = "6.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                // Add Room-specific arguments
-                // https://developer.android.com/jetpack/androidx/releases/room#compiler-options
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas",
-                    "room.incremental" to "true",
-                    "room.expandProjection" to "true"
-                )
-            }
-        }
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -66,27 +57,22 @@ android {
         )
     }
 
-    bundle {
-        language {
-            // Because the app has an in-app language switch feature, we need
-            // to disable splitting configuration APKs for language resources.
-            // This ensures that the app won't crash if the user selects a
-            // language that isn't in their device language list.
-            // This'll obviously increase APK size significantly.
-            enableSplit = false
-        }
-    }
+    // Because the app has an in-app language switch feature, we need
+    // to disable splitting configuration APKs for language resources.
+    // This ensures that the app won't crash if the user selects a
+    // language that isn't in their device language list.
+    // This'll obviously increase APK size significantly.
+    @Suppress("UnstableApiUsage")
+    bundle.language.enableSplit = false
 
-    packaging {
-        resources.excludes.addAll(
-            arrayOf(
-                "META-INF/NOTICE.txt",
-                "META-INF/LICENSE.txt",
-                "META-INF/LICENSE",
-                "META-INF/NOTICE",
-            )
-        )
-    }
+    packaging.resources.excludes += setOf(
+        "{NOTICE,LICENSE}*",
+        "META-INF/{AL2.0,LGPL2.1}",
+        // Note: excluding these files may cause debugging tools to stop working, e.g. LayoutInspector
+        "META-INF/*.version", // AndroidX version files
+        "/*.properties",
+        "META-INF/*.properties",
+    )
 
     signingConfigs {
         val keystore = loadProperties(
@@ -110,7 +96,7 @@ android {
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         getByName("release") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
             buildConfigField(
                 "String[]",
@@ -144,7 +130,7 @@ android {
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
         getByName("debug") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.7/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField(
                 "String[]",
@@ -162,145 +148,174 @@ android {
             isShrinkResources = true
             isDebuggable = true
 
-            // Should be this: https://github.com/firebase/firebase-android-sdk/issues/2665#issuecomment-849897741,
-            // but that doesn't work for some reason.
-            withGroovyBuilder {
-                "firebaseCrashlytics" {
-                    "mappingFileUploadEnabled"(false)
-                }
+            // Disable mapping.txt upload for non-release builds
+            configure<com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension> {
+                mappingFileUploadEnabled = false
             }
         }
 
         val languages = fileTree("src/main/res") {
             include("values-*/strings.xml")
-        }.files.map { file: File ->
-            file.parentFile.name.replace(
-                "values-",
-                ""
-            )
-        }.joinToString { str ->
-            "\"$str\""
-        }
+        }.files.map {
+            it.parentFile.name.removePrefix("values-").replace("-r", "-")
+        }.joinToString { "\"$it\"" }
 
-        val billing = loadProperties(
-            "billing",
-            Pair("base64PublicKey", "")
-        )
+        val billing = loadProperties("billing", Pair("base64PublicKey", ""))
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
             it.buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
             it.buildConfigField("String", "AD_BANNER_NEWS_ID", "\"ca-app-pub-1816831161514116/5072283884\"")
+            it.buildConfigField("String", "AD_BANNER_INSTALL_ID", "\"ca-app-pub-1816831161514116/8933025813\"")
+            it.buildConfigField("String", "AD_BANNER_FAQ_ID", "\"ca-app-pub-1816831161514116/1987794774\"")
             it.buildConfigField("String", "AD_INTERSTITIAL_NEWS_ID", "\"ca-app-pub-1816831161514116/2367225965\"")
             it.buildConfigField("String", "BASE64_PUBLIC_KEY", "\"${billing["base64PublicKey"]}\"")
             it.buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
-            if (it.name != "release") {
-                it.versionNameSuffix = "-${it.name}"
-                it.applicationIdSuffix = ".${it.name}"
-                it.resValue("string", "app_name", "Oxygen Updater (${it.name})")
+            val buildName = it.name
+            if (buildName != "release") {
+                it.versionNameSuffix = "-$buildName"
+                it.applicationIdSuffix = ".$buildName"
+                it.resValue("string", "app_name", "Oxygen Updater ($buildName)")
             } else {
                 it.resValue("string", "app_name", "Oxygen Updater")
             }
 
             it.addManifestPlaceholders(
                 mapOf(
-                    "hostName" to "${if (it.name != "release") "test." else ""}oxygenupdater.com",
+                    "hostName" to "${if (buildName != "release") "test." else ""}oxygenupdater.com",
                     "advertisingAppId" to "ca-app-pub-1816831161514116~4275332954",
-                    "shortcutXml" to "@xml/shortcuts_${it.name.lowercase()}",
+                    "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
                 )
             )
         }
     }
 
+    val javaVersion = JavaVersion.VERSION_17 // keep in sync with `jvmToolchain` below
+    kotlinOptions.jvmTarget = javaVersion.toString()
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
+    composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
+
+    // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
+    @Suppress("UnstableApiUsage")
+    androidResources.generateLocaleConfig = true
 
     testBuildType = "debug"
 }
 
-buildscript {
-    repositories {
-        mavenCentral()
+// Required to workaround https://issuetracker.google.com/issues/260059413
+kotlin {
+    jvmToolchain(17) // keep in sync with `javaVersion` above
+    compilerOptions {
+        // Disable the annoying "Parameter specified as non-null is null" exceptions
+        freeCompilerArgs.add("-Xno-param-assertions")
+        // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
+        // Requires a fresh build to show all outputs
+        val composeMetrics = project.layout.buildDirectory.dir("composeMetrics").get().asFile.path
+        freeCompilerArgs.addAll(
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeMetrics",
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeMetrics",
+            // Strong skipping mode from 1.5.4 onwards: https://r.android.com/c/2671135
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true",
+        )
     }
 }
 
-repositories {
-    mavenCentral()
-    maven("https://jitpack.io") // for com.github.topjohnwu.libsu
+ksp {
+    // Add Room-specific arguments: https://developer.android.com/jetpack/androidx/releases/room#compiler-options
+    arg("room.incremental", "true")
+    arg("room.generateKotlin", "true")
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    coreLibraryDesugaring(Libraries.ANDROID_TOOLS_DESUGAR)
+    coreLibraryDesugaring(libs.android.desugar)
 
-    implementation(Libraries.KOTLIN_COROUTINES_CORE)
-    implementation(Libraries.KOTLIN_COROUTINES_ANDROID)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation(AndroidXLibraries.ANNOTATION)
-    implementation(AndroidXLibraries.APP_COMPAT)
-    implementation(AndroidXLibraries.BROWSER)
-    implementation(AndroidXLibraries.CONSTRAINT_LAYOUT)
-    implementation(AndroidXLibraries.SWIPE_REFRESH_LAYOUT)
-    implementation(AndroidXLibraries.RECYCLER_VIEW)
-    implementation(AndroidXLibraries.ROOM_KTX)
-    implementation(AndroidXLibraries.ROOM_RUNTIME)
-    kapt(AndroidXLibraries.ROOM_COMPILER)
+    implementation(libs.androidx.annotation)
+    implementation(libs.androidx.browser)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.work.runtime)
 
-    implementation(AndroidXLibraries.KTX_CORE)
-    implementation(AndroidXLibraries.KTX_FRAGMENT)
-    implementation(AndroidXLibraries.KTX_LIFECYCLE_LIVEDATA)
-    implementation(AndroidXLibraries.KTX_LIFECYCLE_VIEWMODEL)
-    implementation(AndroidXLibraries.KTX_PREFERENCE)
-    implementation(AndroidXLibraries.KTX_WORK)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
 
-    implementation(Libraries.MATERIAL)
+    implementation(libs.androidx.lifecycle.common.java8)
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
-    implementation(platform(Libraries.FIREBASE_BOM))
-    implementation(Libraries.FIREBASE_ANALYTICS_KTX)
-    implementation(Libraries.FIREBASE_CRASHLYTICS_KTX)
-    implementation(Libraries.FIREBASE_MESSAGING_KTX)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
 
-    implementation(Libraries.GOOGLE_PLAY_BILLING)
-    implementation(Libraries.GOOGLE_PLAY_BILLING_KTX)
-    implementation(Libraries.PLAY_CORE_IN_APP_UPDATES)
-    implementation(Libraries.PLAY_SERVICES_BASE)
-    implementation(Libraries.PLAY_SERVICES_ADS)
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.animation.graphics)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material3.window.size)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.runtime.livedata)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.text.google.fonts)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
-    implementation(Libraries.KOIN)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
 
-    implementation(Libraries.OKHTTP_LOGGING_INTERCEPTOR)
-    implementation(Libraries.RETROFIT)
-    implementation(Libraries.RETROFIT_CONVERTER_JACKSON)
+    implementation(libs.coil.compose)
 
-    implementation(Libraries.JACKSON_KOTLIN_MODULE)
+    implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.permissions)
+    implementation(libs.accompanist.placeholder.material3)
+    implementation(libs.accompanist.webview)
 
-    implementation(Libraries.COIL)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
 
-    implementation(Libraries.FACEBOOK_SHIMMER)
+    implementation(libs.billing)
+    implementation(libs.billing.ktx)
 
-    implementation(Libraries.LIBSU_CORE)
-    implementation(Libraries.LIBSU_NIO)
-    implementation(Libraries.LIBSU_SERVICE)
+    implementation(libs.google.play.app.update)
+    implementation(libs.google.play.services.base)
+    implementation(libs.google.play.services.ads)
+    implementation(libs.google.ump)
 
-    testImplementation(TestLibraries.JUNIT4)
-    testImplementation(TestLibraries.KOTLIN_TEST_JUNIT)
-    testImplementation(TestLibraries.KOIN_TEST)
+    implementation(libs.koin.android)
 
-    androidTestImplementation(TestLibraries.ESPRESSO_CORE)
-    androidTestImplementation(TestLibraries.JUNIT_EXT)
-    androidTestImplementation(TestLibraries.RULES)
-    androidTestImplementation(TestLibraries.RUNNER)
+    implementation(libs.okhttp.logging.interceptor)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
+
+    implementation(libs.libsu.core)
+    implementation(libs.libsu.nio)
+    implementation(libs.libsu.service)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.androidx.annotation)
 }
