@@ -59,6 +59,7 @@ fun Context.formatFileSize(
 )
 
 fun Context.showToast(@StringRes resId: Int) = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+fun Context.showToast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 
 fun Context.shareExternally(title: String, text: String) {
     val prefix = "${getString(R.string.app_name)}: $title"
@@ -126,11 +127,16 @@ fun Context.openEmail() {
 
 <write your query here>"""
 
-    startActivity(
-        Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
-            .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
-            .putExtra(Intent.EXTRA_TEXT, emailBody)
-    )
+    try {
+        startActivity(
+            Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
+                .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
+                .putExtra(Intent.EXTRA_TEXT, emailBody)
+        )
+    } catch (e: ActivityNotFoundException) {
+        // TODO(translate)
+        showToast("You don't appear to have an email client installed on your phone")
+    }
 }
 
 fun Context.openAppDetailsPage() = try {
