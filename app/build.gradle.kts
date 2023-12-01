@@ -204,6 +204,8 @@ android {
     buildFeatures {
         viewBinding = true
         compose = true
+        // AGP 8+ doesn't generate BuildConfig by default
+        buildConfig = true
     }
 
     // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig

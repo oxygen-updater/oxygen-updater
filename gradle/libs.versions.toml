@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.1.4"
+agp = "8.2.0"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "2.9.9"
@@ -21,11 +21,11 @@ kotlin = "1.9.20"
 kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.6.0-beta01" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.0-alpha11"
+compose = "1.6.0-beta02" # keep in sync with Kotlin & accompanist version
+compose-m3 = "1.2.0-alpha12"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
-compose-compiler = "1.5.4"
+compose-compiler = "1.5.5"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
@@ -54,7 +54,7 @@ core-splashscreen = "1.0.1"
 desugar = "2.0.4"
 
 # https://firebase.google.com/support/release-notes/android
-firebase-bom = "32.5.0"
+firebase-bom = "32.6.0"
 
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
@@ -96,10 +96,10 @@ preference = "1.2.1"
 retrofit = "2.9.0"
 
 # https://developer.android.com/jetpack/androidx/releases/room
-room = "2.6.0"
+room = "2.6.1"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.9.0-rc01"
+work-runtime = "2.9.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
