@@ -2,19 +2,26 @@ package com.oxygenupdater.ui.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.utils.logWarning
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewModel() {
+@HiltViewModel
+class NewsItemViewModel @Inject constructor(
+    private val serverRepository: ServerRepository,
+    private val crashlytics: FirebaseCrashlytics,
+) : ViewModel() {
 
     private val refreshingFlow = MutableStateFlow(true)
     private val flow = MutableStateFlow(NewsItemActivity.item)
@@ -37,7 +44,7 @@ class NewsItemViewModel(private val serverRepository: ServerRepository) : ViewMo
         serverRepository.toggleNewsItemReadLocally(item, true)
 
         val result = serverRepository.markNewsItemRead(item.id!!) ?: return@launch
-        if (!result.success) logWarning(
+        if (!result.success) crashlytics.logWarning(
             TAG,
             "Failed to mark article as read on the server: ${result.errorMessage}"
         )

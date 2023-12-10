@@ -7,6 +7,7 @@ import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.main.Screen
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,8 +15,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
-class NewsListViewModel(private val serverRepository: ServerRepository) : ViewModel() {
+@HiltViewModel
+class NewsListViewModel @Inject constructor(
+    private val serverRepository: ServerRepository,
+) : ViewModel() {
 
     private val refreshingFlow = MutableStateFlow(true)
     private val flow = MutableStateFlow(try {

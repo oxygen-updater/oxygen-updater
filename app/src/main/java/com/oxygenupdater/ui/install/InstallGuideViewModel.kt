@@ -5,14 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class InstallGuideViewModel(
+@HiltViewModel
+class InstallGuideViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
 ) : ViewModel() {
 

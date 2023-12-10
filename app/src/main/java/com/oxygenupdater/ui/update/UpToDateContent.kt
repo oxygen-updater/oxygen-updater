@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Info
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
@@ -51,6 +51,7 @@ import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.DeviceSoftwareInfo
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
+import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.ui.theme.backgroundVariant
@@ -62,9 +63,10 @@ fun UpToDate(
     windowWidthSize: WindowWidthSizeClass,
     refreshing: Boolean,
     updateData: UpdateData,
+    getPrefStr: (key: String, default: String) -> String,
 ) {
     val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
-    val method = PrefManager.getString(PrefManager.KeyUpdateMethod, "") ?: ""
+    val method = getPrefStr(KeyUpdateMethod, "")
 
     val incomingOtaVersion = updateData.otaVersionNumber
     val isDifferentVersion = incomingOtaVersion != currentOtaVersion
@@ -76,7 +78,7 @@ fun UpToDate(
             && (updateData.downloadSize >= FullZipLikelyMinSize || method.endsWith("(full)") || method.endsWith("(volledig)"))
 
     if (windowWidthSize == WindowWidthSizeClass.Expanded) Column {
-        AdvancedModeTip(showAdvancedModeTip)
+        AdvancedModeTip(showAdvancedModeTip, getPrefStr)
 
         Row(modifierMaxWidth) {
             Column(
@@ -108,6 +110,7 @@ fun UpToDate(
                 updateData = updateData,
                 isDifferentVersion = isDifferentVersion,
                 showAdvancedModeTip = showAdvancedModeTip,
+                getPrefStr = getPrefStr,
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
@@ -118,7 +121,7 @@ fun UpToDate(
             }
         }
     } else Column(modifierMaxSize.verticalScroll(rememberScrollState())) {
-        AdvancedModeTip(showAdvancedModeTip)
+        AdvancedModeTip(showAdvancedModeTip, getPrefStr)
 
         Box(modifierMaxWidth) {
             val positive = MaterialTheme.colorScheme.positive
@@ -151,6 +154,7 @@ fun UpToDate(
             updateData = updateData,
             isDifferentVersion = isDifferentVersion,
             showAdvancedModeTip = showAdvancedModeTip,
+            getPrefStr = getPrefStr,
         )
 
         ItemDivider()
@@ -160,14 +164,17 @@ fun UpToDate(
 
 @Suppress("NOTHING_TO_INLINE")
 @Composable
-private inline fun AdvancedModeTip(show: Boolean) {
+private inline fun AdvancedModeTip(
+    show: Boolean,
+    getPrefStr: (key: String, default: String) -> String,
+) {
     if (!show) return
 
     IconText(
         icon = CustomIcons.Info,
         text = stringResource(
             R.string.update_information_banner_advanced_mode_tip,
-            PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>",
+            getPrefStr(KeyUpdateMethod, "<UNKNOWN>"),
         ),
         modifier = modifierDefaultPadding
     )
@@ -180,6 +187,7 @@ private fun ExpandableChangelog(
     updateData: UpdateData,
     isDifferentVersion: Boolean,
     showAdvancedModeTip: Boolean,
+    getPrefStr: (key: String, default: String) -> String,
 ) {
     val expandEnabled = updateData.isUpdateInformationAvailable
     var expanded by rememberSaveableState("changelogExpanded", false)
@@ -204,6 +212,7 @@ private fun ExpandableChangelog(
             updateData = updateData,
             isDifferentVersion = isDifferentVersion,
             showAdvancedModeTip = showAdvancedModeTip,
+            getPrefStr = getPrefStr,
         )
     }
 }
@@ -246,6 +255,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
                 systemIsUpToDate = true,
             )
         },
+        getPrefStr = PreviewGetPrefStr,
     )
 }
 

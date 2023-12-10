@@ -2,6 +2,7 @@ package com.oxygenupdater.repositories
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
@@ -27,16 +28,20 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.consumePurchase
 import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchasesAsync
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.enums.PurchaseType
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
 import com.oxygenupdater.internal.billing.Security
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.KeyAdFree
+import com.oxygenupdater.internal.settings.KeyAdFree
 import com.oxygenupdater.utils.logBillingError
 import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logVerbose
 import com.oxygenupdater.utils.logWarning
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -49,6 +54,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.security.InvalidKeyException
+import java.security.NoSuchAlgorithmException
+import java.security.SignatureException
+import java.security.spec.InvalidKeySpecException
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.collections.set
 import kotlin.math.min
 
@@ -90,8 +101,11 @@ import kotlin.math.min
  *
  * @see <a href="https://github.com/android/play-billing-samples/blob/3f75352320c232fc6a14526b67fef07a49cc6d17/TrivialDriveKotlin/app/src/main/java/com/sample/android/trivialdrivesample/billing/BillingRepository.kt">android/play-billing-samples@3f75352:BillingRepository.kt</a>
  */
-class BillingRepository(
-    context: Context,
+@Singleton
+class BillingRepository @Inject constructor(
+    @ApplicationContext context: Context,
+    private val sharedPreferences: SharedPreferences,
+    private val crashlytics: FirebaseCrashlytics,
 ) : DefaultLifecycleObserver, PurchasesUpdatedListener, BillingClientStateListener {
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
@@ -129,23 +143,21 @@ class BillingRepository(
     val adFreeState
         get() = getSkuState(SkuInappAdFree).distinctUntilChanged()
 
-    /**
-     * Returns whether or not the user has purchased ad-free. It does this by returning
-     * a Flow that returns true if the SKU is in the [SkuState.Purchased] state and
-     * the [Purchase] has been acknowledged.
-     */
-    val hasPurchasedAdFree
+    val shouldShowAds
         get() = adFreeState.map {
             logDebug(TAG, "[adFreeState] $it")
 
-            // Fallback to SharedPreferences if purchases haven't been processed yet
-            if (it == SkuState.Unknown) PrefManager.getBoolean(KeyAdFree, false)
-            else it == SkuState.PurchasedAndAcknowledged
-        }.distinctUntilChanged().onEach {
-            logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $it")
+            val hasPurchasedAdFree = if (it == SkuState.Unknown) {
+                // Fallback to SharedPreferences if purchases haven't been processed yet
+                sharedPreferences[KeyAdFree, false]
+            } else it == SkuState.PurchasedAndAcknowledged
+
+            logDebug(TAG, "[hasPurchasedAdFree] saving to SharedPreferences: $hasPurchasedAdFree")
             // Save, because we can guarantee that the device is online and that the purchase check has succeeded
-            PrefManager.putBoolean(KeyAdFree, it)
-        }
+            sharedPreferences[KeyAdFree] = hasPurchasedAdFree
+
+            !hasPurchasedAdFree // show ads only if user has not purchased ad-free
+        }.distinctUntilChanged()
 
     /**
      * A Flow that reports on purchases that are in the [PurchaseState.PENDING]
@@ -180,7 +192,7 @@ class BillingRepository(
         logDebug(TAG, "[newPurchaseFlow] $responseCode: ${purchase?.products}")
 
         when (responseCode) {
-            BillingResponseCode.OK -> PrefManager.putBoolean(KeyAdFree, purchase != null)
+            BillingResponseCode.OK -> sharedPreferences[KeyAdFree] = purchase != null
             BillingResponseCode.ITEM_ALREADY_OWNED -> {
                 // This is tricky to deal with. Even pending purchases show up as "items already owned",
                 // so we can't grant entitlement i.e. set [PROPERTY_AD_FREE] to `true`.
@@ -190,7 +202,7 @@ class BillingRepository(
             }
 
             else -> {
-                PrefManager.putBoolean(KeyAdFree, false)
+                sharedPreferences[KeyAdFree] = false
                 setProductState(SkuInappAdFree, SkuState.NotPurchased)
             }
         }
@@ -328,7 +340,7 @@ class BillingRepository(
                 "[onPurchasesUpdated] ITEM_ALREADY_OWNED"
             )
 
-            BillingResponseCode.DEVELOPER_ERROR -> logBillingError(
+            BillingResponseCode.DEVELOPER_ERROR -> crashlytics.logBillingError(
                 TAG,
                 "[onPurchasesUpdated] DEVELOPER_ERROR"
             )
@@ -344,14 +356,14 @@ class BillingRepository(
     }
 
     private fun getSkuState(sku: String) = skuStateMap[sku] ?: flowOf(SkuState.Unknown).also {
-        logWarning(TAG, "[getSkuState] unknown SKU: $sku")
+        crashlytics.logWarning(TAG, "[getSkuState] unknown SKU: $sku")
     }
 
     private fun getSkuPrice(sku: String) = productDetailsMap[sku]?.map {
         // TODO: adjust for subscriptions when needed
         it?.oneTimePurchaseOfferDetails?.formattedPrice
     } ?: flowOf(null).also {
-        logWarning(TAG, "[getSkuPrice] unknown SKU: $sku")
+        crashlytics.logWarning(TAG, "[getSkuPrice] unknown SKU: $sku")
     }
 
     /**
@@ -372,7 +384,7 @@ class BillingRepository(
         var debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
             processPurchaseList(purchasesResult.purchasesList, InappSkus)
-        } else logBillingError(TAG, "[refreshPurchases] INAPP $responseCode: $debugMessage")
+        } else crashlytics.logBillingError(TAG, "[refreshPurchases] INAPP $responseCode: $debugMessage")
 
         purchasesResult = billingClient.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
@@ -384,7 +396,7 @@ class BillingRepository(
         debugMessage = billingResult.debugMessage
         if (responseCode == BillingResponseCode.OK) {
             processPurchaseList(purchasesResult.purchasesList, SubsSkus)
-        } else logBillingError(TAG, "[refreshPurchases] SUBS $responseCode: $debugMessage")
+        } else crashlytics.logBillingError(TAG, "[refreshPurchases] SUBS $responseCode: $debugMessage")
 
         logDebug(TAG, "[refreshPurchases] finish")
     }
@@ -419,7 +431,7 @@ class BillingRepository(
          */
         setProductState(sku, SkuState.PurchaseInitiated)
 
-        val details = productDetailsMap[sku]?.value ?: return logBillingError(
+        val details = productDetailsMap[sku]?.value ?: return crashlytics.logBillingError(
             TAG, "[launchBillingFlow] unknown SKU: $sku"
         )
 
@@ -444,7 +456,7 @@ class BillingRepository(
                             .build()
                     )
 
-                    else -> logBillingError(
+                    else -> crashlytics.logBillingError(
                         TAG,
                         "[launchBillingFlow] can't upgrade: ${heldSubscriptions.size} subscriptions subscribed to"
                     )
@@ -452,7 +464,7 @@ class BillingRepository(
             }
             val result = billingClient.launchBillingFlow(activity, builder.build())
             if (result.responseCode == BillingResponseCode.OK) _billingFlowInProcess.emit(true)
-            else logBillingError(TAG, "[launchBillingFlow] ${result.debugMessage}")
+            else crashlytics.logBillingError(TAG, "[launchBillingFlow] ${result.debugMessage}")
         }
     }
 
@@ -477,9 +489,9 @@ class BillingRepository(
                 purchase.products.find { it == sku }?.also {
                     return@let consumePurchase(purchase)
                 }
-            } else logBillingError(TAG, "[consumeInAppPurchase] $responseCode: ${billingResult.debugMessage}")
+            } else crashlytics.logBillingError(TAG, "[consumeInAppPurchase] $responseCode: ${billingResult.debugMessage}")
 
-            logBillingError(TAG, "[consumeInAppPurchase] unknown SKU: $sku")
+            crashlytics.logBillingError(TAG, "[consumeInAppPurchase] unknown SKU: $sku")
         }
     }
 
@@ -521,10 +533,10 @@ class BillingRepository(
             BillingResponseCode.OK -> {
                 logInfo(TAG, "[onProductDetailsResponse] $responseCode: $debugMessage")
                 if (detailsList.isNullOrEmpty()) {
-                    logBillingError(TAG, "[onProductDetailsResponse] null/empty List<ProductDetails>")
+                    crashlytics.logBillingError(TAG, "[onProductDetailsResponse] null/empty List<ProductDetails>")
                 } else detailsList.forEach {
                     val id = it.productId
-                    productDetailsMap[it.productId]?.tryEmit(it) ?: logBillingError(
+                    productDetailsMap[it.productId]?.tryEmit(it) ?: crashlytics.logBillingError(
                         TAG,
                         "[onProductDetailsResponse] unknown product: $id"
                     )
@@ -536,57 +548,57 @@ class BillingRepository(
                 "[onProductDetailsResponse] USER_CANCELED: $debugMessage"
             )
 
-            BillingResponseCode.SERVICE_DISCONNECTED -> logBillingError(
+            BillingResponseCode.SERVICE_DISCONNECTED -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] SERVICE_DISCONNECTED: $debugMessage"
             )
 
-            BillingResponseCode.SERVICE_UNAVAILABLE -> logBillingError(
+            BillingResponseCode.SERVICE_UNAVAILABLE -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] SERVICE_UNAVAILABLE: $debugMessage"
             )
 
-            BillingResponseCode.NETWORK_ERROR -> logBillingError(
+            BillingResponseCode.NETWORK_ERROR -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] NETWORK_ERROR: $debugMessage"
             )
 
-            BillingResponseCode.BILLING_UNAVAILABLE -> logBillingError(
+            BillingResponseCode.BILLING_UNAVAILABLE -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] BILLING_UNAVAILABLE: $debugMessage"
             )
 
-            BillingResponseCode.ITEM_UNAVAILABLE -> logBillingError(
+            BillingResponseCode.ITEM_UNAVAILABLE -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] ITEM_UNAVAILABLE: $debugMessage"
             )
 
-            BillingResponseCode.DEVELOPER_ERROR -> logBillingError(
+            BillingResponseCode.DEVELOPER_ERROR -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] DEVELOPER_ERROR: $debugMessage"
             )
 
-            BillingResponseCode.ERROR -> logBillingError(
+            BillingResponseCode.ERROR -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] ERROR: $debugMessage"
             )
 
-            BillingResponseCode.FEATURE_NOT_SUPPORTED -> logBillingError(
+            BillingResponseCode.FEATURE_NOT_SUPPORTED -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] FEATURE_NOT_SUPPORTED: $debugMessage"
             )
 
-            BillingResponseCode.ITEM_ALREADY_OWNED -> logBillingError(
+            BillingResponseCode.ITEM_ALREADY_OWNED -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] ITEM_ALREADY_OWNED: $debugMessage"
             )
 
-            BillingResponseCode.ITEM_NOT_OWNED -> logBillingError(
+            BillingResponseCode.ITEM_NOT_OWNED -> crashlytics.logBillingError(
                 TAG,
                 "[onProductDetailsResponse] ITEM_NOT_OWNED: $debugMessage"
             )
 
-            else -> logBillingError(TAG, "[onProductDetailsResponse] $responseCode: $debugMessage")
+            else -> crashlytics.logBillingError(TAG, "[onProductDetailsResponse] $responseCode: $debugMessage")
         }
 
         productDetailsResponseTime = if (responseCode == BillingResponseCode.OK) {
@@ -653,7 +665,7 @@ class BillingRepository(
                         add(purchase)
                     }
                 }
-            } else logBillingError(TAG, "[getPurchases] $responseCode: ${billingResult.debugMessage}")
+            } else crashlytics.logBillingError(TAG, "[getPurchases] $responseCode: ${billingResult.debugMessage}")
         }
     }
 
@@ -664,14 +676,14 @@ class BillingRepository(
      * @param purchase an up-to-date object to set the state for the SKU
      */
     private fun setSkuStateFromPurchase(purchase: Purchase) = purchase.products.forEach {
-        val skuStateFlow = skuStateMap[it] ?: logBillingError(
+        val skuStateFlow = skuStateMap[it] ?: crashlytics.logBillingError(
             TAG,
             "[setSkuStateFromPurchase] unknown SKU: $it"
         ).let { return@forEach }
 
         val state = purchase.purchaseState
         if ((state == PurchaseState.PURCHASED || state == PurchaseState.PENDING) && !isSignatureValid(purchase)) {
-            logBillingError(TAG, "[setSkuStateFromPurchase] invalid signature")
+            crashlytics.logBillingError(TAG, "[setSkuStateFromPurchase] invalid signature")
             // Don't set SkuState if signature validation fails
             return@forEach
         }
@@ -689,7 +701,7 @@ class BillingRepository(
             if (newState == SkuState.Pending) _pendingPurchase.tryEmit(purchase)
             else if (newState != oldState) _purchaseStateChange.tryEmit(purchase)
             skuStateFlow.tryEmit(newState)
-        } ?: logBillingError(TAG, "[setSkuStateFromPurchase] unknown purchase state: $state")
+        } ?: crashlytics.logBillingError(TAG, "[setSkuStateFromPurchase] unknown purchase state: $state")
     }
 
     /**
@@ -702,7 +714,7 @@ class BillingRepository(
     private fun setProductState(
         sku: String,
         newState: SkuState,
-    ) = skuStateMap[sku]?.tryEmit(newState) ?: logBillingError(TAG, "[setSkuState] unknown SKU: $sku")
+    ) = skuStateMap[sku]?.tryEmit(newState) ?: crashlytics.logBillingError(TAG, "[setSkuState] unknown SKU: $sku")
 
     /**
      * Goes through each purchase and makes sure that the purchase state is processed and the state
@@ -738,7 +750,7 @@ class BillingRepository(
             purchase.products.forEach { sku ->
                 skuStateMap[sku]?.let {
                     updatedSkus.add(sku)
-                } ?: logBillingError(TAG, "[processPurchaseList] unknown SKU: $sku")
+                } ?: crashlytics.logBillingError(TAG, "[processPurchaseList] unknown SKU: $sku")
             }
 
             // Make sure the SkuState is set
@@ -753,7 +765,7 @@ class BillingRepository(
                         if (ConsumableSkus.contains(sku)) isConsumable = true
                         else if (isConsumable) {
                             isConsumable = false
-                            logBillingError(
+                            crashlytics.logBillingError(
                                 TAG,
                                 "[processPurchaseList] purchase can't contain both consumables & non-consumables: ${purchase.products}"
                             )
@@ -780,7 +792,7 @@ class BillingRepository(
                                 setProductState(it, SkuState.PurchasedAndAcknowledged)
                             }
                             _newPurchase.tryEmit(Pair(BillingResponseCode.OK, purchase))
-                        } else logBillingError(TAG, "[processPurchaseList] error acknowledging: ${purchase.products}")
+                        } else crashlytics.logBillingError(TAG, "[processPurchaseList] error acknowledging: ${purchase.products}")
                     }
                 }
             }
@@ -818,20 +830,46 @@ class BillingRepository(
             purchase.products.forEach {
                 setProductState(it, SkuState.NotPurchased)
             }
-        } else logBillingError(TAG, "[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}")
+        } else crashlytics.logBillingError(TAG, "[consumePurchase] ${consumePurchaseResult.billingResult.debugMessage}")
     }
 
     /**
+     * Verifies that the data was signed with the given signature.
      * Ideally your implementation will comprise a secure server, rendering this check
      * unnecessary.
-     *
-     * @see [Security]
      */
-    private fun isSignatureValid(purchase: Purchase) = Security.verifyPurchase(
-        BuildConfig.BASE64_PUBLIC_KEY,
-        purchase.originalJson,
-        purchase.signature
-    )
+    private fun isSignatureValid(purchase: Purchase): Boolean {
+        val base64PublicKey = BuildConfig.BASE64_PUBLIC_KEY
+        val signedData = purchase.originalJson
+        val signature = purchase.signature
+        if (signedData.isBlank() || base64PublicKey.isBlank() || signature.isBlank()) {
+            crashlytics.logBillingError(TAG, "Purchase verification failed: missing data")
+            return BuildConfig.DEBUG // Line modified (https://stackoverflow.com/q/14600664). Was: return false.
+        } else try {
+            return Security.verify(
+                publicKey = try {
+                    Security.generatePublicKey(base64PublicKey)
+                } catch (e: InvalidKeySpecException) {
+                    crashlytics.logBillingError(TAG, "Invalid key specification")
+                    throw IllegalArgumentException(e)
+                },
+                signedData = signedData,
+                signature = signature,
+            ).also {
+                if (!it) crashlytics.logBillingError(TAG, "Signature verification failed")
+            }
+        } catch (e: NoSuchAlgorithmException) {
+            crashlytics.logError(TAG, "No Base64 algorithm loaded", e)
+        } catch (e: InvalidKeyException) {
+            crashlytics.logError(TAG, "Invalid key", e)
+        } catch (e: SignatureException) {
+            crashlytics.logError(TAG, "Invalid key signature type", e)
+        } catch (e: IllegalArgumentException) {
+            crashlytics.logError(TAG, "Base64 decoding failed", e)
+        }
+
+        return false
+    }
 
     @Immutable
     @JvmInline

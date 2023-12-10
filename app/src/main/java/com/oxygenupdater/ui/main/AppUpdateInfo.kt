@@ -14,13 +14,14 @@ import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.install.model.ActivityResult.RESULT_IN_APP_UPDATE_FAILED
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.oxygenupdater.internal.settings.PrefManager
 
 @Composable
 fun AppUpdateInfo(
     info: AppUpdateInfo?,
     snackbarMessageId: () -> Int?, // deferred read
     updateSnackbarText: (IntIntPair?) -> Unit,
+    resetAppUpdateIgnoreCount: () -> Unit,
+    incrementAppUpdateIgnoreCount: () -> Unit,
     unregisterAppUpdateListener: () -> Unit,
     requestUpdate: RequestAppUpdateCallback,
     requestImmediateUpdate: RequestAppUpdateCallback,
@@ -48,14 +49,14 @@ fun AppUpdateInfo(
             val code = it.resultCode
             if (code == RESULT_OK) {
                 // Reset ignore count
-                PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
+                resetAppUpdateIgnoreCount()
                 if (snackbarMessageId() == AppUpdateFailedSnackbarData.first) {
                     // Dismiss only this snackbar
                     updateSnackbarText(null)
                 }
             } else if (code == RESULT_CANCELED) {
                 // Increment ignore count and show app update banner
-                PrefManager.incrementInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount)
+                incrementAppUpdateIgnoreCount()
                 updateSnackbarText(AppUpdateFailedSnackbarData)
             } else if (code == RESULT_IN_APP_UPDATE_FAILED) {
                 // Show app update banner

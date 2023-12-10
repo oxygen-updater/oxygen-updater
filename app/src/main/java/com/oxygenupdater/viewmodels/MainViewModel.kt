@@ -1,7 +1,10 @@
 package com.oxygenupdater.viewmodels
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.IntentSender
+import android.content.SharedPreferences
 import android.os.Environment
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
@@ -9,6 +12,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.BackoffPolicy
@@ -29,17 +33,36 @@ import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.activities.MainActivity
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.incrementInt
+import com.oxygenupdater.extensions.remove
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.NotSet
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.NotSetL
+import com.oxygenupdater.internal.settings.KeyAdvancedMode
+import com.oxygenupdater.internal.settings.KeyDevice
+import com.oxygenupdater.internal.settings.KeyDeviceId
+import com.oxygenupdater.internal.settings.KeyDownloadBytesDone
+import com.oxygenupdater.internal.settings.KeyFlexibleAppUpdateIgnoreCount
+import com.oxygenupdater.internal.settings.KeyIgnoreIncorrectDeviceWarnings
+import com.oxygenupdater.internal.settings.KeyIgnoreNotificationPermissionSheet
+import com.oxygenupdater.internal.settings.KeyIgnoreUnsupportedDeviceWarnings
+import com.oxygenupdater.internal.settings.KeySetupDone
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
+import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
+import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
+import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.update.DownloadStatus
 import com.oxygenupdater.ui.update.WorkInfoWithStatus
 import com.oxygenupdater.utils.Utils
@@ -56,6 +79,7 @@ import com.oxygenupdater.workers.WorkDataDownloadFailureExtraVersion
 import com.oxygenupdater.workers.WorkDataDownloadFailureType
 import com.oxygenupdater.workers.WorkUniqueDownload
 import com.oxygenupdater.workers.WorkUniqueMd5Verification
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -66,21 +90,22 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    private val appUpdateManager: AppUpdateManager,
     private val serverRepository: ServerRepository,
     private val workManager: WorkManager,
-    private val appUpdateManager: AppUpdateManager,
+    private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
-    private val deviceFlow = MutableStateFlow<List<Device>?>(null)
-    val deviceState = deviceFlow.stateIn(
+    private val allDevicesFlow = MutableStateFlow<List<Device>?>(null)
+    val allDevicesState = allDevicesFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = deviceFlow.value
+        initialValue = allDevicesFlow.value
     )
 
     private val serverMessagesFlow = MutableStateFlow<List<ServerMessage>>(listOf())
@@ -97,23 +122,58 @@ class MainViewModel(
 
     var deviceOsSpec: DeviceOsSpec? = null
     var deviceMismatch by mutableStateOf<Triple<Boolean, String, String>?>(null)
+        private set
 
-    var shouldShowOnboarding by mutableStateOf(!PrefManager.getBoolean(PrefManager.KeySetupDone, false))
+    var shouldShowOnboarding by mutableStateOf(!sharedPreferences[KeySetupDone, false])
 
-    /** Ensure init is placed after all `*Flow` declarations */
+    /**
+     * Not a getter because we only use this for an initial value
+     */
+    val advancedMode = sharedPreferences[KeyAdvancedMode, false]
+
+    val canShowNotifPermissionSheet = !sharedPreferences[KeyIgnoreNotificationPermissionSheet, false]
+
+    val shouldShowUnsupportedDeviceDialog
+        get() = !sharedPreferences[KeyIgnoreUnsupportedDeviceWarnings, false]
+
+    val shouldShowIncorrectDeviceDialog
+        get() = !sharedPreferences[KeyIgnoreIncorrectDeviceWarnings, false]
+
+    val deviceId
+        get() = sharedPreferences[KeyDeviceId, NotSetL]
+
+    val updateMethodId
+        get() = sharedPreferences[KeyUpdateMethodId, NotSetL]
+
+    /** Checks if [deviceId] & [updateMethodId] are set (i.e. not [NotSetL]) */
+    val isDeviceAndMethodSet
+        get() = deviceId != NotSetL && updateMethodId != NotSetL
+
+    /**
+     * Checks if user has completed the onboarding process, meaning they've
+     * selected a device & method, and also pressed the "Start app" button.
+     */
+    val isOnboardingComplete
+        get() = sharedPreferences[KeySetupDone, false] && isDeviceAndMethodSet
+
+    /** Ensure `init` is placed after all declarations that may be used in contained functions */
     init {
         fetchAllDevices()
         fetchServerStatus()
-        maybeCheckForAppUpdate()
+
+        appUpdateManager.appUpdateInfo.addOnSuccessListener {
+            when (it.updateAvailability()) {
+                DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS, UPDATE_AVAILABLE -> appUpdateInfoFlow.tryEmit(it)
+                else -> resetAppUpdateIgnoreCount()
+            }
+        }
     }
 
     private lateinit var downloadWorkRequest: OneTimeWorkRequest
 
     private var appUpdateType = AppUpdateType.FLEXIBLE
 
-    private val flexibleAppUpdateListener: (InstallState) -> Unit = {
-        appUpdateStatusFlow.tryEmit(it)
-    }
+    private val flexibleAppUpdateListener: (InstallState) -> Unit = { appUpdateStatusFlow.tryEmit(it) }
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
@@ -155,11 +215,21 @@ class MainViewModel(
         initialValue = WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
     )
 
+    fun updateDeviceMismatch(
+        allDevices: List<Device>? = allDevicesFlow.value,
+    ) = Utils.checkDeviceMismatch(
+        devices = allDevices,
+        savedDeviceId = sharedPreferences[KeyDeviceId, NotSetL],
+    ).let {
+        val savedDeviceName = sharedPreferences[KeyDevice, DefaultDeviceName]
+        deviceMismatch = Triple(it.first, savedDeviceName, it.second ?: DefaultDeviceName)
+    }
+
     private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.IO) {
         val response = serverRepository.fetchDevices(DeviceRequestFilter.All) ?: listOf()
         deviceOsSpec = Utils.checkDeviceOsSpec(response)
-        deviceMismatch = Utils.checkDeviceMismatch(response)
-        deviceFlow.emit(response)
+        updateDeviceMismatch(response)
+        allDevicesFlow.emit(response)
     }
 
     fun fetchServerMessages() = viewModelScope.launch(Dispatchers.IO) {
@@ -177,21 +247,21 @@ class MainViewModel(
      */
     fun deleteDownloadedFile(context: Context, filename: String?): Boolean {
         if (filename == null) {
-            logWarning(TAG, "Can't delete downloaded file: filename null")
+            crashlytics.logWarning(TAG, "Can't delete downloaded file: filename null")
             return false
         }
 
         logDebug(TAG, "Deleting any associated tracker preferences for downloaded file")
-        PrefManager.remove(PrefManager.KeyDownloadBytesDone)
+        sharedPreferences.remove(KeyDownloadBytesDone)
         logDebug(TAG, "Deleting downloaded update file $filename")
 
         File(context.getExternalFilesDir(null), filename).run {
-            if (exists() && !delete()) logWarning(TAG, "Can't delete temporary file $filename")
+            if (exists() && !delete()) crashlytics.logWarning(TAG, "Can't delete temporary file $filename")
         }
 
         return File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, filename).run {
             if (exists() && !delete()) {
-                logWarning(TAG, "Can't delete downloaded file $filename")
+                crashlytics.logWarning(TAG, "Can't delete downloaded file $filename")
                 false
             } else true
         }
@@ -248,17 +318,6 @@ class MainViewModel(
     }.let {}
 
     /**
-     * Checks that the platform will allow the specified type of update
-     */
-    private fun maybeCheckForAppUpdate() = appUpdateManager.appUpdateInfo.addOnSuccessListener {
-        when (it.updateAvailability()) {
-            DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS, UPDATE_AVAILABLE -> appUpdateInfoFlow.tryEmit(it)
-            // Reset ignore count
-            else -> PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
-        }
-    }
-
-    /**
      * Checks that the platform will allow the specified type of update.
      * Note: Value is posted to [appUpdateInfoFlow] only if an immediate update was stalled.
      * This is because the method is called in [MainActivity.onResume],
@@ -279,8 +338,7 @@ class MainViewModel(
         launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
         info: AppUpdateInfo,
     ) {
-        // Reset ignore count
-        PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
+        resetAppUpdateIgnoreCount()
 
         // If an in-app update is already running, resume the update.
         appUpdateManager.startUpdateFlowForResult(info, launcher, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE))
@@ -308,16 +366,14 @@ class MainViewModel(
         //  (the library doesn't yet have an annotation interface for priority constants)
         appUpdateType = if (info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val stalenessDays = info.clientVersionStalenessDays() ?: 0
-            val ignoreCount = PrefManager.getInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
+            val ignoreCount = sharedPreferences[KeyFlexibleAppUpdateIgnoreCount, 0]
 
             // Force update if user has ignored a flexible update 7 times, or if it's been 14 days since the update arrived
             if (stalenessDays >= MaxFlexibleUpdateStaleDays || ignoreCount >= MaxFlexibleUpdateIgnoreCount) {
                 AppUpdateType.IMMEDIATE
             } else AppUpdateType.FLEXIBLE
         } else {
-            // Reset ignore count
-            PrefManager.putInt(PrefManager.KeyFlexibleAppUpdateIgnoreCount, 0)
-
+            resetAppUpdateIgnoreCount()
             AppUpdateType.IMMEDIATE
         }
 
@@ -330,10 +386,49 @@ class MainViewModel(
 
     fun completeAppUpdate() = appUpdateManager.completeUpdate()
 
-    fun unregisterAppUpdateListener() = appUpdateManager.unregisterListener(flexibleAppUpdateListener)
+    fun resetAppUpdateIgnoreCount() = sharedPreferences.set(KeyFlexibleAppUpdateIgnoreCount, 0)
+    fun incrementAppUpdateIgnoreCount() = sharedPreferences.incrementInt(KeyFlexibleAppUpdateIgnoreCount)
 
+    fun unregisterAppUpdateListener() = appUpdateManager.unregisterListener(flexibleAppUpdateListener)
     override fun onCleared() = super.onCleared().also {
         unregisterAppUpdateListener()
+    }
+
+    fun getPref(key: String, default: String) = sharedPreferences[key, default]
+    fun getPref(key: String, default: Boolean) = sharedPreferences[key, default]
+    fun persist(key: String, value: Boolean) = sharedPreferences.set(key, value)
+
+    fun openEmail(context: Context) {
+        val chosenDevice = sharedPreferences[KeyDevice, "<UNKNOWN>"]
+        val chosenMethod = sharedPreferences[KeyUpdateMethod, "<UNKNOWN>"]
+        val advancedMode = sharedPreferences[KeyAdvancedMode, false]
+        val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
+            if (it.isNotEmpty()) " ($it)" else ""
+        }
+
+        // Don't localize any part of this, it'll be an annoyance for us while reading emails
+        val emailBody = """
+--------------------
+• Device: $chosenDevice (${SystemVersionProperties.oxygenDeviceName})
+• Method: $chosenMethod
+• OS version: $osVersionWithType
+• OTA version: ${SystemVersionProperties.oxygenOSOTAVersion}
+• Advanced mode: $advancedMode
+• App version: ${BuildConfig.VERSION_NAME}
+--------------------
+
+<write your query here>"""
+
+        try {
+            context.startActivity(
+                Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
+                    .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
+                    .putExtra(Intent.EXTRA_TEXT, emailBody)
+            )
+        } catch (e: ActivityNotFoundException) {
+            // TODO(translate)
+            context.showToast("You don't appear to have an email client installed on your phone")
+        }
     }
 
     companion object {

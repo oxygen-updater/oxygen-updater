@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorState
@@ -35,19 +35,23 @@ fun UpdateScreen(
     failureType: Int?,
     workProgress: WorkProgress?,
     forceDownloadErrorDialog: Boolean,
+    getPrefStr: (key: String, default: String) -> String,
+    getPrefBool: (key: String, default: Boolean) -> Boolean,
     setSubtitleResId: (Int) -> Unit,
     enqueueDownload: (UpdateData) -> Unit,
     pauseDownload: () -> Unit,
     cancelDownload: (filename: String?) -> Unit,
     deleteDownload: (filename: String?) -> Boolean,
     logDownloadError: () -> Unit,
+    hideDownloadCompleteNotification: () -> Unit,
+    showDownloadFailedNotification: () -> Unit,
 ) = PullRefresh(state, { it == null }, refresh) {
     val (refreshing, data) = state
     if (data == null) {
         ErrorState(
             navType = navType,
             titleResId = R.string.update_information_error_title,
-            refresh = refresh,
+            onRefreshClick = refresh,
         )
         return@PullRefresh // skip the rest
     }
@@ -57,7 +61,7 @@ fun UpdateScreen(
     val filename = updateData.filename
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
-        || (updateData.systemIsUpToDate && !PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false))
+        || (updateData.systemIsUpToDate && !getPrefBool(KeyAdvancedMode, false))
     ) {
         (if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
         else R.string.update_information_no_update_data_available).let {
@@ -71,6 +75,7 @@ fun UpdateScreen(
             windowWidthSize = windowWidthSize,
             refreshing = refreshing,
             updateData = updateData,
+            getPrefStr = getPrefStr,
         )
     } else {
         (if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
@@ -97,6 +102,7 @@ fun UpdateScreen(
             failureType = failureType,
             workProgress = workProgress,
             forceDownloadErrorDialog = forceDownloadErrorDialog,
+            getPrefStr = getPrefStr,
             downloadAction = {
                 when (it) {
                     DownloadAction.Enqueue -> enqueueDownload(updateData)
@@ -118,6 +124,8 @@ fun UpdateScreen(
                 }
             },
             logDownloadError = logDownloadError,
+            hideDownloadCompleteNotification = hideDownloadCompleteNotification,
+            showDownloadFailedNotification = showDownloadFailedNotification,
         )
     }
 }

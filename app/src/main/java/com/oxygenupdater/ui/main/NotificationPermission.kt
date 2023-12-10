@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.NotificationPermissionSheet
@@ -22,7 +21,10 @@ import com.oxygenupdater.ui.dialogs.NotificationPermissionSheet
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun NotificationPermission() {
+fun NotificationPermission(
+    canShow: Boolean,
+    hide: (Boolean) -> Unit,
+) {
     val context = LocalContext.current
     var invokeTime = 0L
     var showSheet by rememberSaveableState("showNotificationPermissionSheet", false)
@@ -49,11 +51,16 @@ fun NotificationPermission() {
     }
 
     // Respect user's explicit choice to not show the sheet again
-    val canShow = !PrefManager.getBoolean(PrefManager.KeyIgnoreNotificationPermissionSheet, false)
-    if (canShow && showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
-        NotificationPermissionSheet(hide) {
-            state.launchPermissionRequest()
-            invokeTime = System.currentTimeMillis()
-        }
+    if (canShow && showSheet) ModalBottomSheet({ showSheet = false }) {
+        NotificationPermissionSheet(
+            hide = {
+                hide(it)
+                showSheet = false
+            },
+            launchPermissionRequest = {
+                state.launchPermissionRequest()
+                invokeTime = System.currentTimeMillis()
+            },
+        )
     }
 }

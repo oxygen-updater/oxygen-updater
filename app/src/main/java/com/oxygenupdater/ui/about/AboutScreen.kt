@@ -25,7 +25,6 @@ import androidx.core.net.toUri
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.FaqActivity
 import com.oxygenupdater.extensions.copyToClipboard
-import com.oxygenupdater.extensions.openEmail
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.startActivity
 import com.oxygenupdater.extensions.startInstallActivity
@@ -47,10 +46,12 @@ import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
 
 @Composable
-fun AboutScreen(navType: NavType, windowWidthSize: WindowWidthSizeClass) = Column(
-    Modifier.verticalScroll(rememberScrollState())
-) {
-    Buttons(windowWidthSize)
+fun AboutScreen(
+    navType: NavType,
+    windowWidthSize: WindowWidthSizeClass,
+    openEmail: () -> Unit,
+) = Column(Modifier.verticalScroll(rememberScrollState())) {
+    Buttons(windowWidthSize = windowWidthSize, openEmail = openEmail)
 
     RichText(
         text = stringResource(R.string.about_description),
@@ -87,7 +88,10 @@ fun AboutScreen(navType: NavType, windowWidthSize: WindowWidthSizeClass) = Colum
 }
 
 @Composable
-private fun Buttons(windowWidthSize: WindowWidthSizeClass) = with(LocalContext.current) {
+private fun Buttons(
+    windowWidthSize: WindowWidthSizeClass,
+    openEmail: () -> Unit,
+) = with(LocalContext.current) {
     LazyVerticalGrid(
         // We have 8 total items, so group evenly by 4 if we have enough space; otherwise 2
         columnCount = if (windowWidthSize == WindowWidthSizeClass.Expanded) 4 else 2,
@@ -95,7 +99,7 @@ private fun Buttons(windowWidthSize: WindowWidthSizeClass) = with(LocalContext.c
             GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) },
             GridItem(CustomIcons.Faq, R.string.faq_menu_item) { startActivity<FaqActivity>() },
             GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord) },
-            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, ::openEmail),
+            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, openEmail),
             GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub) },
             GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website) },
             GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon) },
@@ -113,7 +117,6 @@ private fun Context.openLink(link: LinkType) {
         copyToClipboard(url)
     }
 }
-
 
 @JvmInline
 private value class LinkType(val value: String) {
@@ -135,5 +138,6 @@ fun PreviewAboutScreen() = PreviewAppTheme {
     AboutScreen(
         navType = NavType.from(windowWidthSize),
         windowWidthSize = windowWidthSize,
+        openEmail = {},
     )
 }

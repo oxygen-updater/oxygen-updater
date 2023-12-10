@@ -35,7 +35,7 @@ import com.oxygenupdater.utils.hasRootAccess
 @Composable
 fun ColumnScope.ContributorSheet(
     hide: () -> Unit,
-    showEnrollment: Boolean = false,
+    confirm: ((Boolean) -> Unit)? = null,
 ) {
     SheetHeader(R.string.contribute_title)
 
@@ -48,16 +48,21 @@ fun ColumnScope.ContributorSheet(
             .verticalScroll(rememberScrollState())
     )
 
-    if (!showEnrollment || !ContributorUtils.isAtLeastQAndPossiblyRooted) {
-        return // don't show enrollment UI
+    /**
+     * Show enrollment UI only if [confirm] was passed in, and if
+     * device is rooted with the OS being >= Android 10/Q.
+     */
+    if (confirm != null && ContributorUtils.isAtLeastQAndPossiblyRooted) {
+        ContributorSheetEnroll(hide = hide, confirm = confirm)
     }
-
-    ContributorSheetEnroll(hide = hide)
 }
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-private fun ContributorSheetEnroll(hide: () -> Unit) {
+private fun ContributorSheetEnroll(
+    hide: () -> Unit,
+    confirm: (Boolean) -> Unit,
+) {
     var contribute by rememberSaveableState("contribute", true)
     CheckboxText(
         checked = contribute,
@@ -84,11 +89,11 @@ private fun ContributorSheetEnroll(hide: () -> Unit) {
             onClick = {
                 if (contribute) hasRootAccess {
                     if (it) {
-                        ContributorUtils.flushSettings(context, true)
+                        confirm(true)
                         hide()
                     } else context.showToast(R.string.contribute_allow_storage)
                 } else {
-                    ContributorUtils.flushSettings(context, false)
+                    confirm(false)
                     hide()
                 }
             },
@@ -101,5 +106,5 @@ private fun ContributorSheetEnroll(hide: () -> Unit) {
 @PreviewThemes
 @Composable
 fun PreviewContributorSheet() = PreviewModalBottomSheet {
-    ContributorSheet(hide = {}, showEnrollment = true)
+    ContributorSheet(hide = {}, confirm = {})
 }

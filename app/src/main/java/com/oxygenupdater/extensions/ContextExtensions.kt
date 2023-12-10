@@ -20,13 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.theme.light
-import com.oxygenupdater.utils.logError
-import com.oxygenupdater.utils.logWarning
+import com.oxygenupdater.utils.logInfo
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.
@@ -97,7 +93,7 @@ fun Context.openPlayStorePage() {
             // Try opening browser
             startActivity(intent)
         } catch (e1: ActivityNotFoundException) {
-            logWarning("ContextExtensions", "Can't open Play Store app page", e1)
+            logInfo("ContextExtensions", "Can't open Play Store app page", e1)
             showToast(R.string.error_unable_to_rate_app, Toast.LENGTH_SHORT)
             // Fallback: copy to clipboard instead
             copyToClipboard(url)
@@ -105,45 +101,11 @@ fun Context.openPlayStorePage() {
     }
 }
 
-fun Context.openEmail() {
-    val chosenDevice = PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>")
-    val chosenMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>")
-    val advancedMode = PrefManager.getBoolean(PrefManager.KeyAdvancedMode, false)
-    val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
-        if (it.isNotEmpty()) " ($it)" else ""
-    }
-
-    // Don't localize any part of this, it'll be an annoyance for us while reading emails
-    val emailBody = """
---------------------
-• Device: $chosenDevice (${SystemVersionProperties.oxygenDeviceName})
-• Method: $chosenMethod
-• OS version: $osVersionWithType
-• OTA version: ${SystemVersionProperties.oxygenOSOTAVersion}
-• Advanced mode: $advancedMode
-• App version: ${BuildConfig.VERSION_NAME}
---------------------
-
-<write your query here>"""
-
-    try {
-        startActivity(
-            Intent(Intent.ACTION_SENDTO, "mailto:".toUri())
-                .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
-                .putExtra(Intent.EXTRA_TEXT, emailBody)
-        )
-    } catch (e: ActivityNotFoundException) {
-        // TODO(translate)
-        showToast("You don't appear to have an email client installed on your phone")
-    }
-}
-
 @Suppress("NOTHING_TO_INLINE")
-inline fun Context.openAppDetailsPage() = try {
-    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageNameUri))
-} catch (e: Exception) {
-    logError("ContextExtensions", "openAppDetailsPage failed", e)
-}
+@Throws(ActivityNotFoundException::class)
+inline fun Context.openAppDetailsPage() = startActivity(
+    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageNameUri)
+)
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Suppress("NOTHING_TO_INLINE")

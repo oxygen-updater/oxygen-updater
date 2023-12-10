@@ -2,9 +2,6 @@ package com.oxygenupdater.ui.update
 
 import androidx.compose.runtime.Immutable
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 @Immutable
 @JvmInline
 value class DownloadStatus(val value: Int) {

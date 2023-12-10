@@ -2,6 +2,7 @@ package com.oxygenupdater.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
@@ -31,6 +32,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
@@ -38,7 +40,6 @@ import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.LogoNotification
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.ui.CollapsingAppBar
 import com.oxygenupdater.ui.common.PullRefresh
@@ -49,25 +50,33 @@ import com.oxygenupdater.ui.news.NewsItemViewModel
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logWarning
 import com.oxygenupdater.viewmodels.BillingViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Timer
+import javax.inject.Inject
 import kotlin.concurrent.schedule
 
 @OptIn(ExperimentalMaterial3Api::class)
+@AndroidEntryPoint
 class NewsItemActivity : SupportActionBarActivity(
     MainActivity.PageNews,
     R.string.news
 ) {
 
-    private val viewModel by viewModel<NewsItemViewModel>()
-    private val billingViewModel by viewModel<BillingViewModel>()
+    private val viewModel: NewsItemViewModel by viewModels()
+    private val billingViewModel: BillingViewModel by viewModels()
 
     private var shouldDelayAdStart = false
     private var newsItemId = NotSetL
 
+    @Inject
+    lateinit var crashlytics: FirebaseCrashlytics
+
     private val fullScreenAdContentCallback = if (BuildConfig.DEBUG) object : FullScreenContentCallback() {
         override fun onAdDismissedFullScreenContent() = logDebug(TAG, "Interstitial ad was dismissed")
-        override fun onAdFailedToShowFullScreenContent(error: AdError) = logWarning(TAG, "Interstitial ad failed to show: $error")
+        override fun onAdFailedToShowFullScreenContent(error: AdError) = crashlytics.logWarning(
+            TAG, "Interstitial ad failed to show: $error"
+        )
+
         override fun onAdShowedFullScreenContent() = logDebug(TAG, "Interstitial ad was shown")
     } else null
 
@@ -77,7 +86,10 @@ class NewsItemActivity : SupportActionBarActivity(
     private val timer = Timer()
 
     private val interstitialAdLoadCallback = object : InterstitialAdLoadCallback() {
-        override fun onAdFailedToLoad(error: LoadAdError) = logWarning(TAG, "Interstitial ad failed to load: $error")
+        override fun onAdFailedToLoad(error: LoadAdError) = crashlytics.logWarning(
+            TAG, "Interstitial ad failed to load: $error"
+        )
+
         override fun onAdLoaded(ad: InterstitialAd) {
             logDebug(TAG, "Interstitial ad loaded")
             if (isFinishing) return
@@ -132,10 +144,7 @@ class NewsItemActivity : SupportActionBarActivity(
     @Suppress("DEPRECATION")
     @Composable
     override fun Content(modifier: Modifier) {
-        // Ads should be shown if user hasn't bought the ad-free unlock
-        val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            PrefManager.getBoolean(PrefManager.KeyAdFree, false)
-        ).value
+        val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
 
         LaunchedEffect(showAds) { if (showAds) setupInterstitialAd() }
 
@@ -166,7 +175,7 @@ class NewsItemActivity : SupportActionBarActivity(
                 webViewState = webViewState,
                 navigator = navigator,
                 showAds = showAds,
-                bannerAdInit = { bannerAdView = it },
+                onBannerAdInit = { bannerAdView = it },
                 onError = { errorTitle = it },
                 onLoadFinished = viewModel::markRead,
                 modifier = modifier
@@ -177,6 +186,7 @@ class NewsItemActivity : SupportActionBarActivity(
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
         if (!handleIntent(intent)) return onBackPressed()
 
+        lifecycle.addObserver(billingViewModel.lifecycleObserver)
         viewModel.refreshItem(newsItemId)
     }
 
@@ -264,7 +274,6 @@ class NewsItemActivity : SupportActionBarActivity(
         )
 
         var item by mutableStateOf<NewsItem?>(null)
-            internal set
 
         const val IntentNewsItemId = "NEWS_ITEM_ID"
         const val IntentDelayAdStart = "DELAY_AD_START"

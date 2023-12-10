@@ -127,15 +127,15 @@ fun NewsListScreen(
     navType: NavType,
     windowSize: WindowSizeClass,
     state: RefreshAwareState<List<NewsItem>>,
-    refresh: () -> Unit,
+    onRefresh: () -> Unit,
     unreadCountState: MutableIntState,
-    markAllRead: () -> Unit,
-    toggleRead: (NewsItem) -> Unit,
+    onMarkAllReadClick: () -> Unit,
+    onToggleReadClick: (NewsItem) -> Unit,
     openItem: (id: Long) -> Unit,
 ) = PullRefresh(
     state = state,
     shouldShowProgressIndicator = { it.isEmpty() },
-    onRefresh = refresh,
+    onRefresh = onRefresh,
 ) {
     val refreshing = state.refreshing
     var onlyUnread by rememberSaveableState("onlyUnread", false)
@@ -158,7 +158,7 @@ fun NewsListScreen(
             ),
             onClick = { onlyUnread = !onlyUnread },
             onMarkAllReadClick = {
-                markAllRead()
+                onMarkAllReadClick()
                 unreadCountState.intValue = 0
             },
         )
@@ -171,24 +171,24 @@ fun NewsListScreen(
             icon = CustomIcons.NewsMultiple,
             textResId = R.string.news_empty_state_all_read_text,
             rich = false,
-            refresh = null,
+            onRefreshClick = null,
         ) else if (list.isEmpty()) ErrorState(
             navType = navType,
             titleResId = R.string.news_empty_state_none_available_header,
             icon = CustomIcons.NewsMultiple,
             textResId = R.string.news_empty_state_none_available_text,
             rich = false,
-            refresh = refresh,
+            onRefreshClick = onRefresh,
         ) else {
-            val itemToggleRead: (NewsItem) -> Unit = {
-                toggleRead(it)
+            val onItemToggleRead: (NewsItem) -> Unit = {
+                onToggleReadClick(it)
                 if (it.readState) unreadCountState.intValue++ else {
                     // Coerce to at least 0, just in case there's an inconsistency
                     if (unreadCountState.intValue > 0) unreadCountState.intValue--
                 }
                 it.readState = !it.readState
             }
-            val itemOnClick: (NewsItem) -> Unit = {
+            val onItemClick: (NewsItem) -> Unit = {
                 // Decrease unread count because we're making it read
                 if (!it.readState) {
                     // Coerce to at least 0, just in case there's an inconsistency
@@ -208,8 +208,8 @@ fun NewsListScreen(
                             refreshing = refreshing,
                             item = it,
                             size = size,
-                            toggleRead = { itemToggleRead(it) },
-                            onClick = { itemOnClick(it) },
+                            onToggleReadClick = { onItemToggleRead(it) },
+                            onClick = { onItemClick(it) },
                         )
                     }
                 }
@@ -245,8 +245,8 @@ fun NewsListScreen(
                             refreshing = refreshing,
                             item = it,
                             size = size,
-                            toggleRead = { itemToggleRead(it) },
-                            onClick = { itemOnClick(it) },
+                            onToggleReadClick = { onItemToggleRead(it) },
+                            onClick = { onItemClick(it) },
                         )
                     }
                 }
@@ -263,7 +263,7 @@ private fun LazyItemScope.NewsListItem(
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
-    toggleRead: () -> Unit,
+    onToggleReadClick: () -> Unit,
     onClick: () -> Unit,
 ) = Column(
     Modifier
@@ -298,7 +298,7 @@ private fun LazyItemScope.NewsListItem(
     Footer(
         refreshing = refreshing,
         item = item,
-        toggleRead = toggleRead,
+        onToggleReadClick = onToggleReadClick,
         startPadding = 16.dp,
         menuXOffset = 6.dp, // bring inline with image
     )
@@ -310,7 +310,7 @@ private fun LazyGridItemScope.NewsGridItem(
     refreshing: Boolean,
     item: NewsItem,
     size: DpSize,
-    toggleRead: () -> Unit,
+    onToggleReadClick: () -> Unit,
     onClick: () -> Unit,
 ) = Column(Modifier.animateItemPlacement()) {
     Box(
@@ -335,7 +335,7 @@ private fun LazyGridItemScope.NewsGridItem(
     Footer(
         refreshing = refreshing,
         item = item,
-        toggleRead = toggleRead,
+        onToggleReadClick = onToggleReadClick,
         startPadding = 0.dp,
         menuXOffset = 22.dp, // bring inline with image
     )
@@ -511,7 +511,7 @@ private fun NewsImage(
 private fun Footer(
     refreshing: Boolean,
     item: NewsItem,
-    toggleRead: () -> Unit,
+    onToggleReadClick: () -> Unit,
     startPadding: Dp,
     menuXOffset: Dp,
 ) = Row(
@@ -544,7 +544,7 @@ private fun Footer(
     ItemMenuOpener(
         refreshing = refreshing,
         item = item,
-        toggleRead = toggleRead,
+        onToggleReadClick = onToggleReadClick,
         xOffset = menuXOffset,
     )
 }
@@ -585,11 +585,11 @@ private fun Banner(
 private fun ItemMenuOpener(
     refreshing: Boolean,
     item: NewsItem,
-    toggleRead: () -> Unit,
+    onToggleReadClick: () -> Unit,
     xOffset: Dp,
 ) = Box {
     var showMenu by rememberSaveableState("showItemMenu", false)
-    ItemMenu(showMenu, { showMenu = false }, item, toggleRead)
+    ItemMenu(showMenu, { showMenu = false }, item, onToggleReadClick)
 
     IconButton(
         onClick = { showMenu = true },
@@ -747,10 +747,10 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
                 ),
             )
         ),
-        refresh = {},
+        onRefresh = {},
         unreadCountState = remember { mutableIntStateOf(1) },
-        markAllRead = {},
-        toggleRead = {},
+        onMarkAllReadClick = {},
+        onToggleReadClick = {},
         openItem = {},
     )
 }

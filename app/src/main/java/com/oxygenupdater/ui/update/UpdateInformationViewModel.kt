@@ -1,18 +1,27 @@
 package com.oxygenupdater.ui.update
 
+import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.oxygenupdater.extensions.get
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyDeviceId
+import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UpdateInformationViewModel(private val serverRepository: ServerRepository) : ViewModel() {
+@HiltViewModel
+class UpdateInformationViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    private val serverRepository: ServerRepository,
+) : ViewModel() {
 
     private var previousDeviceId = NotSetL
     private var previousMethodId = NotSetL
@@ -27,8 +36,8 @@ class UpdateInformationViewModel(private val serverRepository: ServerRepository)
     }
 
     fun refresh(deviceId: Long? = null, methodId: Long? = null) = viewModelScope.launch(Dispatchers.IO) {
-        previousDeviceId = deviceId ?: PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
-        previousMethodId = methodId ?: PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+        previousDeviceId = deviceId ?: sharedPreferences[KeyDeviceId, NotSetL]
+        previousMethodId = methodId ?: sharedPreferences[KeyUpdateMethodId, NotSetL]
 
         /**
          * Skip server request if required parameters are invalid. This can happen during onboarding, because that's
@@ -46,8 +55,8 @@ class UpdateInformationViewModel(private val serverRepository: ServerRepository)
      * This can happen if user changed settings and then came back to this screen.
      */
     fun refreshIfNeeded() {
-        val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
-        val methodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+        val deviceId = sharedPreferences[KeyDeviceId, NotSetL]
+        val methodId = sharedPreferences[KeyUpdateMethodId, NotSetL]
         if (previousDeviceId != deviceId || previousMethodId != methodId) refresh(deviceId, methodId)
     }
 }

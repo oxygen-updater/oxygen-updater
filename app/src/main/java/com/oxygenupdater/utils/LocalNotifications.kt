@@ -26,13 +26,8 @@ import com.oxygenupdater.ui.update.KeyDownloadErrorResumable
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VerificationStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup.OtaUrlSubmittedNotifChannelId
-import org.koin.java.KoinJavaComponent.getKoin
 
 object LocalNotifications {
-
-    private const val TAG = "LocalNotifications"
-
-    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
     /**
      * Contribute: shows a notification that a update file has been submitted successfully.
@@ -69,7 +64,7 @@ object LocalNotifications {
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        with(notificationManager) {
+        with(NotificationManagerCompat.from(context)) {
             tryNotify(NotificationIds.LocalContribution, notification)
         }
     }
@@ -101,7 +96,7 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        with(notificationManager) {
+        with(NotificationManagerCompat.from(context)) {
             cancel(NotificationIds.LocalMd5Verification)
             tryNotify(NotificationIds.LocalDownload, notification)
         }
@@ -124,9 +119,7 @@ object LocalNotifications {
             context,
             0,
             intent,
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) {
-                FLAG_MUTABLE
-            } else 0
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
         )
 
         val notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
@@ -142,7 +135,7 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        with(notificationManager) {
+        with(NotificationManagerCompat.from(context)) {
             cancel(NotificationIds.LocalMd5Verification)
             tryNotify(NotificationIds.LocalDownload, notification)
         }
@@ -163,7 +156,7 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        with(notificationManager) {
+        with(NotificationManagerCompat.from(context)) {
             cancel(NotificationIds.LocalDownload)
             tryNotify(NotificationIds.LocalMd5Verification, notification)
         }
@@ -184,13 +177,13 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        with(notificationManager) {
+        with(NotificationManagerCompat.from(context)) {
             cancel(NotificationIds.LocalDownload)
             tryNotify(NotificationIds.LocalMd5Verification, notification)
         }
     }
 
-    fun hideDownloadCompleteNotification() = with(notificationManager) {
+    fun hideDownloadCompleteNotification(context: Context) = with(NotificationManagerCompat.from(context)) {
         cancel(NotificationIds.LocalDownload)
         cancel(NotificationIds.LocalMd5Verification)
     }
@@ -203,6 +196,5 @@ object LocalNotifications {
         notify(id, notification)
     } catch (e: SecurityException) {
         // ignore; user didn't grant notification permission
-        logError(TAG, "Can't display notification", e)
     }
 }

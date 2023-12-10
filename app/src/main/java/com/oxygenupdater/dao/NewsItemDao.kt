@@ -9,9 +9,6 @@ import androidx.room.Transaction
 import androidx.room.Update
 import com.oxygenupdater.models.NewsItem
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 @Dao
 interface NewsItemDao {
 

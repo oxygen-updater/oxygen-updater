@@ -1,14 +1,22 @@
 package com.oxygenupdater.repositories
 
+import android.content.SharedPreferences
 import androidx.collection.ArrayMap
 import com.android.billingclient.api.Purchase
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.database.LocalAppDb
+import com.oxygenupdater.dao.NewsItemDao
+import com.oxygenupdater.dao.UpdateDataDao
 import com.oxygenupdater.enums.PurchaseType
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyDevice
+import com.oxygenupdater.internal.settings.KeyDeviceId
+import com.oxygenupdater.internal.settings.KeyNotificationDelayInSeconds
+import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
@@ -18,22 +26,17 @@ import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logVerbose
 import kotlinx.coroutines.CancellationException
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
-class ServerRepository(
+@Singleton
+class ServerRepository @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
     private val serverApi: ServerApi,
-    localAppDb: LocalAppDb,
+    private val updateDataDao: UpdateDataDao,
+    private val newsItemDao: NewsItemDao,
+    private val crashlytics: FirebaseCrashlytics,
 ) {
-
-    private val newsItemDao by lazy(LazyThreadSafetyMode.NONE) {
-        localAppDb.newsItemDao()
-    }
-
-    private val updateDataDao by lazy(LazyThreadSafetyMode.NONE) {
-        localAppDb.updateDataDao()
-    }
 
     suspend fun fetchFaq() = performServerRequest { serverApi.fetchFaq() }
 
@@ -54,7 +57,7 @@ class ServerRepository(
             SystemVersionProperties.oxygenOSVersion,
             SystemVersionProperties.osType,
             SystemVersionProperties.fingerprint,
-            PrefManager.getBoolean(PrefManager.KeyIsEuBuild, false),
+            SystemVersionProperties.isEuBuild,
             BuildConfig.VERSION_NAME
         )
     }.let {
@@ -67,10 +70,7 @@ class ServerRepository(
 
     suspend fun fetchServerStatus() = performServerRequest { serverApi.fetchServerStatus() }.let { status ->
         val automaticInstallationEnabled = false
-        val pushNotificationsDelaySeconds = PrefManager.getInt(
-            PrefManager.KeyNotificationDelayInSeconds,
-            10
-        )
+        val pushNotificationsDelaySeconds = sharedPreferences[KeyNotificationDelayInSeconds, 10]
 
         val response = if (status == null && OxygenUpdater.isNetworkAvailable.value) ServerStatus(
             ServerStatus.Status.UNREACHABLE,
@@ -84,18 +84,15 @@ class ServerRepository(
             pushNotificationsDelaySeconds
         )
 
-        PrefManager.putInt(
-            PrefManager.KeyNotificationDelayInSeconds,
-            response.pushNotificationDelaySeconds
-        )
+        sharedPreferences[KeyNotificationDelayInSeconds] = response.pushNotificationDelaySeconds
 
         response
     }
 
     suspend fun fetchServerMessages() = performServerRequest {
         serverApi.fetchServerMessages(
-            PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL),
-            PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+            sharedPreferences[KeyDeviceId, NotSetL],
+            sharedPreferences[KeyUpdateMethodId, NotSetL]
         )
     }
 
@@ -107,8 +104,8 @@ class ServerRepository(
 
     suspend fun fetchNews() = performServerRequest {
         serverApi.fetchNews(
-            PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL),
-            PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+            sharedPreferences[KeyDeviceId, NotSetL],
+            sharedPreferences[KeyUpdateMethodId, NotSetL],
         )
     }.let {
         if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)
@@ -148,9 +145,9 @@ class ServerRepository(
                 put("rows", rows)
                 put("fingerprint", SystemVersionProperties.fingerprint)
                 put("currentOtaVersion", SystemVersionProperties.oxygenOSOTAVersion)
-                put("isEuBuild", PrefManager.getBoolean(PrefManager.KeyIsEuBuild, false))
+                put("isEuBuild", SystemVersionProperties.isEuBuild)
                 put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>") ?: "<UNKNOWN>")
+                put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
                 put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
             }
         )
@@ -173,7 +170,7 @@ class ServerRepository(
                 put("httpCode", httpCode)
                 put("httpMessage", httpMessage)
                 put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>"))
+                put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
                 put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
             }
         )
@@ -212,7 +209,7 @@ class ServerRepository(
     } catch (e: Exception) {
         // Don't log cancellations to crashlytics, we don't care
         if (e is CancellationException) logInfo(TAG, e.message ?: "CancellationException")
-        else logError(TAG, "Error performing request", e)
+        else crashlytics.logError(TAG, "Error performing request", e)
         null
     }
 

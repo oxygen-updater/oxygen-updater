@@ -59,7 +59,6 @@ data class NewsItem(
     @IgnoredOnParcel
     @get:Ignore
     var readState by mutableStateOf(read)
-        internal set
 
     @IgnoredOnParcel
     @Ignore

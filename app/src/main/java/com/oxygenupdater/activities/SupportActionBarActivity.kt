@@ -3,6 +3,7 @@ package com.oxygenupdater.activities
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.IntRange
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.oxygenupdater.extensions.startMainActivity
 import com.oxygenupdater.ui.TopAppBar
+import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.theme.AppTheme
 
 /**
@@ -37,6 +39,8 @@ abstract class SupportActionBarActivity(
     @StringRes private val subtitleResId: Int,
 ) : BaseActivity() {
 
+    private val settingsViewModel: SettingsViewModel by viewModels()
+
     protected lateinit var scrollBehavior: TopAppBarScrollBehavior
 
     @Composable
@@ -45,7 +49,7 @@ abstract class SupportActionBarActivity(
     @Composable
     protected open fun TopAppBar() = TopAppBar(
         scrollBehavior = scrollBehavior,
-        navIconClicked = ::onBackPressed,
+        onNavIconClick = ::onBackPressed,
         subtitleResId = subtitleResId,
         root = false,
     )
@@ -57,7 +61,7 @@ abstract class SupportActionBarActivity(
         setContent {
             scrollBehavior = scrollBehavior()
 
-            AppTheme {
+            AppTheme(settingsViewModel.theme) {
                 EdgeToEdge()
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
                 Surface {

@@ -22,7 +22,6 @@ import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.update.DownloadErrorParams
-import com.oxygenupdater.utils.LocalNotifications
 
 @Composable
 fun DownloadErrorSheet(hide: () -> Unit, params: DownloadErrorParams) {
@@ -45,10 +44,7 @@ fun DownloadErrorSheet(hide: () -> Unit, params: DownloadErrorParams) {
         modifier = modifierMaxWidth.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp)
     ) {
         TextButton(
-            onClick = {
-                LocalNotifications.hideDownloadCompleteNotification()
-                hide()
-            },
+            onClick = hide,
             colors = textButtonColors(contentColor = MaterialTheme.colorScheme.error),
             modifier = Modifier.padding(end = 8.dp)
         ) {
@@ -60,7 +56,6 @@ fun DownloadErrorSheet(hide: () -> Unit, params: DownloadErrorParams) {
         val resId = if (resumable) R.string.download_error_resume else R.string.download_error_retry
         OutlinedIconButton(
             onClick = {
-                LocalNotifications.hideDownloadCompleteNotification()
                 hide()
                 callback(resumable) // must be after `hide` so that the extra flag works correctly
             },

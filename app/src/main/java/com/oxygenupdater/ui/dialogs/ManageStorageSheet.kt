@@ -27,7 +27,6 @@ import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.update.DownloadAction
 import com.oxygenupdater.utils.logInfo
-import com.oxygenupdater.utils.logWarning
 import java.util.UUID
 
 /**
@@ -76,7 +75,7 @@ fun ManageStorageSheet(
                     logInfo(TAG, "User didn't free-up space")
                 }
 
-                else -> logWarning(TAG, "Unhandled resultCode: ${it.resultCode}")
+                else -> logInfo(TAG, "Unhandled resultCode: ${it.resultCode}")
             }
         }
         OutlinedIconButton(

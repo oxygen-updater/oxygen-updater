@@ -1,16 +1,12 @@
 package com.oxygenupdater.internal.billing
 
 import android.util.Base64
-import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.utils.logBillingError
-import com.oxygenupdater.utils.logError
 import java.security.InvalidKeyException
 import java.security.KeyFactory
 import java.security.NoSuchAlgorithmException
 import java.security.PublicKey
 import java.security.Signature
 import java.security.SignatureException
-import java.security.spec.InvalidKeySpecException
 import java.security.spec.X509EncodedKeySpec
 
 /**
@@ -22,48 +18,24 @@ import java.security.spec.X509EncodedKeySpec
  */
 object Security {
 
-    private const val TAG = "IABUtil/Security"
     private const val KeyFactoryAlgorithm = "RSA"
     private const val SignatureAlgorithm = "SHA1withRSA"
-
-    /**
-     * Verifies that the data was signed with the given signature
-     *
-     * @param base64PublicKey the base64-encoded public key to use for verifying.
-     * @param signedData the signed JSON string (signed, not encrypted)
-     * @param signature the signature for the data, signed with the private key
-     */
-    fun verifyPurchase(
-        base64PublicKey: String?,
-        signedData: String?,
-        signature: String?,
-    ) = if (signedData.isNullOrBlank()
-        || base64PublicKey.isNullOrBlank()
-        || signature.isNullOrBlank()
-    ) {
-        logBillingError(TAG, "Purchase verification failed: missing data")
-        BuildConfig.DEBUG // Line modified (https://stackoverflow.com/q/14600664). Was: return false.
-    } else {
-        verify(generatePublicKey(base64PublicKey), signedData, signature)
-    }
 
     /**
      * Generates a PublicKey instance from a string containing the Base64-encoded public key.
      *
      * @param encodedPublicKey Base64-encoded public key
      *
-     * @throws IllegalArgumentException if encodedPublicKey is invalid
-     * @throws NoSuchAlgorithmException if encoding algorithm is not supported or key specification is invalid
+     * @throws NoSuchAlgorithmException if [KeyFactoryAlgorithm] is not supported
+     * @throws IllegalArgumentException if [encodedPublicKey] is invalid
      */
-    @Throws(IllegalArgumentException::class, NoSuchAlgorithmException::class)
-    fun generatePublicKey(encodedPublicKey: String?): PublicKey = try {
-        KeyFactory.getInstance(KeyFactoryAlgorithm).generatePublic(
-            X509EncodedKeySpec(Base64.decode(encodedPublicKey, Base64.DEFAULT))
-        )
-    } catch (e: InvalidKeySpecException) {
-        logBillingError(TAG, "Invalid key specification")
-        throw IllegalArgumentException(e)
-    }
+    @Throws(
+        NoSuchAlgorithmException::class,
+        IllegalArgumentException::class,
+    )
+    fun generatePublicKey(encodedPublicKey: String): PublicKey = KeyFactory.getInstance(KeyFactoryAlgorithm).generatePublic(
+        X509EncodedKeySpec(Base64.decode(encodedPublicKey, Base64.DEFAULT))
+    )
 
     /**
      * Verifies that the signature from the server matches the computed signature on the data.
@@ -73,40 +45,26 @@ object Security {
      * @param signedData signed data from server
      * @param signature  server signature
      *
+     * @throws NoSuchAlgorithmException if [SignatureAlgorithm] is not supported
+     * @throws InvalidKeyException if [publicKey] is invalid
+     * @throws SignatureException if [signedData] or [signature] is invalid
+     * @throws IllegalArgumentException if [signature] is invalid
+     *
      * @return true if the data and signature match
      */
+    @Throws(
+        NoSuchAlgorithmException::class,
+        InvalidKeyException::class,
+        SignatureException::class,
+        IllegalArgumentException::class,
+    )
     fun verify(
-        publicKey: PublicKey?,
+        publicKey: PublicKey,
         signedData: String,
-        signature: String?,
-    ): Boolean {
-        val signatureBytes = try {
-            Base64.decode(signature, Base64.DEFAULT)
-        } catch (e: IllegalArgumentException) {
-            logError(TAG, "Base64 decoding failed", e)
-            return false
-        }
-
-        try {
-            Signature.getInstance(SignatureAlgorithm).run {
-                initVerify(publicKey)
-                update(signedData.toByteArray())
-
-                if (!verify(signatureBytes)) {
-                    logBillingError(TAG, "Signature verification failed")
-                    return false
-                }
-            }
-
-            return true
-        } catch (e: NoSuchAlgorithmException) {
-            logError(TAG, "No Base64 algorithm loaded", e)
-        } catch (e: InvalidKeyException) {
-            logError(TAG, "Invalid key", e)
-        } catch (e: SignatureException) {
-            logError(TAG, "Invalid key signature type", e)
-        }
-
-        return false
+        signature: String,
+    ) = with(Signature.getInstance(SignatureAlgorithm)) {
+        initVerify(publicKey)
+        update(signedData.toByteArray())
+        verify(Base64.decode(signature, Base64.DEFAULT))
     }
 }

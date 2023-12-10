@@ -1,13 +1,10 @@
 package com.oxygenupdater.database
 
 import android.content.Context
+import android.util.Log
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.oxygenupdater.database.DatabaseBuilders.AppDb
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.KeySqlToRoomMigrationDone
+import com.oxygenupdater.internal.DatabaseModule.AppDb
 import com.oxygenupdater.utils.logDebug
-import com.oxygenupdater.utils.logWarning
-import org.koin.java.KoinJavaComponent.getKoin
 
 /**
  * Migrations for all app databases/tables.
@@ -53,41 +50,24 @@ object SqliteMigrations {
      * 1. Copies all existing data over (if old databases exist)
      * 2. Deletes old databases since they won't be used after this migration completes
      */
-    fun prepopulateFromSqlite(db: SupportSQLiteDatabase) = db.run {
-        val migrationDone = PrefManager.getBoolean(
-            KeySqlToRoomMigrationDone,
-            false
+    fun prepopulateFromSqlite(context: Context, db: SupportSQLiteDatabase) {
+        logDebug(TAG, "Starting migrations for SQLite to Room")
+
+        db.migrateFromOldDb(
+            context = context,
+            oldDbName = SubmittedUpdateFilesOldDb,
+            oldTableName = NewsItemTable,
+            newTableName = SubmittedUpdateFileTable,
+            columnSqlStr = "`id`, `name`, `date_submitted`",
         )
 
-        // Make sure migration is run only once. This is necessary because this
-        // function is called from the `onOpen` callback instead of `onCreate`.
-        if (!migrationDone) {
-            logDebug(TAG, "Starting migrations for SQLite to Room")
-            val context by getKoin().inject<Context>()
-
-            migrateFromOldDb(
-                context,
-                SubmittedUpdateFilesOldDb,
-                NewsItemTable,
-                SubmittedUpdateFileTable,
-                "`id`, `name`, `date_submitted`"
-            )
-
-            migrateFromOldDb(
-                context,
-                NewsItemsOldDb,
-                NewsItemTable,
-                NewsItemTable,
-                "`id`, `dutch_title`, `english_title`, `dutch_subtitle`, `english_subtitle`, `image_url`, `dutch_text`, `english_text`, `date_published`, `date_last_edited`, `author_name`, `read`"
-            )
-
-            PrefManager.putBoolean(
-                KeySqlToRoomMigrationDone,
-                true
-            )
-        } else {
-            logDebug(TAG, "SQLite to Room migration has already been done")
-        }
+        db.migrateFromOldDb(
+            context = context,
+            oldDbName = NewsItemsOldDb,
+            oldTableName = NewsItemTable,
+            newTableName = NewsItemTable,
+            columnSqlStr = "`id`, `dutch_title`, `english_title`, `dutch_subtitle`, `english_subtitle`, `image_url`, `dutch_text`, `english_text`, `date_published`, `date_last_edited`, `author_name`, `read`",
+        )
     }
 
     private fun SupportSQLiteDatabase.migrateFromOldDb(
@@ -96,31 +76,27 @@ object SqliteMigrations {
         oldTableName: String,
         newTableName: String,
         columnSqlStr: String,
-    ) = context.getDatabasePath(oldDbName).run {
+    ) {
         val migrationLogStr = "`$oldDbName`.`$oldTableName` to `$AppDb`.`$newTableName`"
+        val databasePath = context.getDatabasePath(oldDbName)
+        if (!databasePath.exists()) return logDebug(TAG, "Migration from $migrationLogStr not required since old database doesn't exist")
 
-        if (exists()) {
+        try {
             logDebug(TAG, "Migrating $migrationLogStr")
+            execSQL("ATTACH DATABASE '$databasePath' AS `$oldDbName`")
+            logDebug(TAG, "Attached old database: $oldDbName")
 
-            val oldDbPath = toString()
-            try {
-                execSQL("ATTACH DATABASE '$oldDbPath' as `$oldDbName`")
-                logDebug(TAG, "Attached old database: $oldDbName")
+            // Column names & order are explicitly mentioned to avoid mistakes.
+            execSQL("INSERT INTO `$newTableName` ($columnSqlStr) SELECT $columnSqlStr FROM `$oldDbName`.`$oldTableName`")
+            logDebug(TAG, "Finished copying data")
 
-                // Column names & order are explicitly mentioned to avoid mistakes.
-                execSQL("INSERT INTO `$newTableName` ($columnSqlStr) SELECT $columnSqlStr FROM `$oldDbName`.`$oldTableName`")
-                logDebug(TAG, "Finished copying data")
-
-                execSQL("DETACH `$oldDbName`")
-                logDebug(TAG, "Detached old database: $oldDbName")
-            } catch (e: Exception) {
-                logWarning(TAG, "Error: ${e.message}")
-            } finally {
-                val deleted = context.deleteDatabase(oldDbName)
-                logDebug(TAG, "[cleanup] `$oldDbName` deleted: $deleted")
-            }
-        } else {
-            logDebug(TAG, "Migration from $migrationLogStr not required since old database doesn't exist")
+            execSQL("DETACH `$oldDbName`")
+            logDebug(TAG, "Detached old database: $oldDbName")
+        } catch (e: Exception) {
+            Log.w(TAG, "DB migration failed", e)
+        } finally {
+            val deleted = context.deleteDatabase(oldDbName)
+            logDebug(TAG, "[cleanup] `$oldDbName` deleted: $deleted")
         }
     }
 }

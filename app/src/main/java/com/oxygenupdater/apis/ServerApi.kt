@@ -20,11 +20,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-/**
- * Used to communicate with the Oxygen Updater backend
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
+/** Used to communicate with the Oxygen Updater backend */
 interface ServerApi {
 
     @GET("flattenedFaq")

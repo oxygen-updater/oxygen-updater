@@ -41,7 +41,7 @@ fun FaqScreen(
     modifier: Modifier,
     state: RefreshAwareState<List<InAppFaq>>,
     showAds: Boolean,
-    bannerAdInit: (AdView) -> Unit,
+    onBannerAdInit: (AdView) -> Unit,
 ) = Column(modifier) {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
@@ -86,7 +86,7 @@ fun FaqScreen(
         adUnitId = BuildConfig.AD_BANNER_FAQ_ID,
         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
         adListener = adLoadListener { adLoaded = it },
-        viewUpdated = bannerAdInit,
+        onViewUpdate = onBannerAdInit,
         modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
     )
 }
@@ -145,7 +145,7 @@ fun PreviewFaqScreen() = PreviewAppTheme {
             )
         ),
         showAds = true,
-        bannerAdInit = {},
+        onBannerAdInit = {},
         modifier = Modifier
     )
 }

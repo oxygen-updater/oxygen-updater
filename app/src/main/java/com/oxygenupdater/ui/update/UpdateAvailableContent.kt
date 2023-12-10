@@ -9,6 +9,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.Environment
 import android.provider.Settings
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
@@ -70,7 +71,8 @@ import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyDevice
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.ItemDivider
@@ -80,13 +82,14 @@ import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
-import com.oxygenupdater.ui.device.defaultDeviceName
+import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.dialogs.AlreadyDownloadedSheet
 import com.oxygenupdater.ui.dialogs.DownloadErrorSheet
 import com.oxygenupdater.ui.dialogs.ManageStorageSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
+import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.ui.theme.backgroundVariant
@@ -95,7 +98,6 @@ import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.NotDownloading
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
-import com.oxygenupdater.utils.logError
 import java.util.UUID
 
 @Composable
@@ -108,8 +110,11 @@ fun UpdateAvailable(
     failureType: Int?,
     workProgress: WorkProgress?,
     forceDownloadErrorDialog: Boolean,
+    getPrefStr: (key: String, default: String) -> String,
     downloadAction: (DownloadAction) -> Unit,
     logDownloadError: () -> Unit,
+    hideDownloadCompleteNotification: () -> Unit,
+    showDownloadFailedNotification: () -> Unit,
 ) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(modifierMaxWidth) {
     Column(
         Modifier
@@ -118,7 +123,11 @@ fun UpdateAvailable(
             .verticalScroll(rememberScrollState())
             .then(modifierDefaultPaddingVertical) // must be after `verticalScroll`
     ) {
-        VersionAndChangelog(refreshing = refreshing, updateData = updateData)
+        VersionAndChangelog(
+            refreshing = refreshing,
+            updateData = updateData,
+            getPrefStr = getPrefStr,
+        )
 
         ConditionalNavBarPadding(navType)
     }
@@ -143,6 +152,8 @@ fun UpdateAvailable(
             forceDownloadErrorDialog = forceDownloadErrorDialog,
             downloadAction = downloadAction,
             logDownloadError = logDownloadError,
+            hideDownloadCompleteNotification = hideDownloadCompleteNotification,
+            showDownloadFailedNotification = showDownloadFailedNotification,
         )
 
         ExtraInfo(
@@ -150,6 +161,7 @@ fun UpdateAvailable(
             updateData = updateData,
             downloadStatus = downloadStatus,
             failureType = failureType,
+            getPrefStr = getPrefStr,
         )
 
         ConditionalNavBarPadding(navType)
@@ -162,7 +174,11 @@ fun UpdateAvailable(
             .verticalScroll(rememberScrollState())
             .then(modifierDefaultPaddingVertical) // must be after `verticalScroll`
     ) {
-        VersionAndChangelog(refreshing = refreshing, updateData = updateData)
+        VersionAndChangelog(
+            refreshing = refreshing,
+            updateData = updateData,
+            getPrefStr = getPrefStr,
+        )
 
         Spacer(Modifier.weight(1f))
         ItemDivider()
@@ -172,6 +188,7 @@ fun UpdateAvailable(
             updateData = updateData,
             downloadStatus = downloadStatus,
             failureType = failureType,
+            getPrefStr = getPrefStr,
         )
     }
 
@@ -185,13 +202,19 @@ fun UpdateAvailable(
         forceDownloadErrorDialog = forceDownloadErrorDialog,
         downloadAction = downloadAction,
         logDownloadError = logDownloadError,
+        hideDownloadCompleteNotification = hideDownloadCompleteNotification,
+        showDownloadFailedNotification = showDownloadFailedNotification,
     )
 
     ConditionalNavBarPadding(navType)
 }
 
 @Composable
-private fun VersionAndChangelog(refreshing: Boolean, updateData: UpdateData) {
+private fun VersionAndChangelog(
+    refreshing: Boolean,
+    updateData: UpdateData,
+    getPrefStr: (key: String, default: String) -> String,
+) {
     SelectionContainer(modifierDefaultPaddingHorizontal) {
         val titleLarge = MaterialTheme.typography.titleLarge
         Text(
@@ -199,7 +222,7 @@ private fun VersionAndChangelog(refreshing: Boolean, updateData: UpdateData) {
                 it.isNotBlank() && it != "-" && it != "null"
             } ?: stringResource(
                 R.string.update_information_unknown_update_name,
-                defaultDeviceName().let { PrefManager.getString(PrefManager.KeyDevice, it) ?: it }
+                getPrefStr(KeyDevice, DefaultDeviceName)
             ),
             style = titleLarge,
             modifier = Modifier.withPlaceholder(refreshing, titleLarge)
@@ -219,12 +242,13 @@ private fun ExtraInfo(
     updateData: UpdateData,
     downloadStatus: DownloadStatus,
     failureType: Int?,
+    getPrefStr: (key: String, default: String) -> String,
 ) {
     val onSurfaceVariant = MaterialTheme.colorScheme.onSurfaceVariant
     val bodySmall = MaterialTheme.typography.bodySmall
     if (updateData.systemIsUpToDate) {
         // User is already up-to-date, so remind them why they're seeing this update: they enabled advanced mode
-        val updateMethod = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
+        val updateMethod = getPrefStr(KeyUpdateMethod, "<UNKNOWN>")
         Text(
             text = stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
             color = onSurfaceVariant,
@@ -313,6 +337,8 @@ private fun DownloadButtonContainer(
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
     logDownloadError: () -> Unit,
+    hideDownloadCompleteNotification: () -> Unit,
+    showDownloadFailedNotification: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -362,7 +388,12 @@ private fun DownloadButtonContainer(
         ModalBottomSheet({
             canShowDownloadErrorDialog = false
             downloadErrorDialogParams = null
-        }) { hide -> DownloadErrorSheet(hide, it) }
+        }) { hide ->
+            DownloadErrorSheet({
+                hideDownloadCompleteNotification()
+                hide()
+            }, it)
+        }
     }
 
     var manageStorageDialogData by remember { mutableStateOf<Pair<UUID, Long>?>(null) }
@@ -390,6 +421,7 @@ private fun DownloadButtonContainer(
             hasDownloadPermissions = hasDownloadPermissions,
             requestDownloadPermissions = requestDownloadPermissions,
             showAlreadyDownloadedSheet = { showAlreadyDownloadedSheet = true },
+            showDownloadFailedNotification = showDownloadFailedNotification,
             setCanShowDownloadErrorDialog = { canShowDownloadErrorDialog = true },
             setDownloadErrorDialogParams = { downloadErrorDialogParams = it },
             setManageStorageDialogData = { manageStorageDialogData = it },
@@ -522,7 +554,7 @@ private class AllFilesPermissionState(private val context: Context) : Permission
         // Show a toast asking users what to do
         context.showToast(R.string.grant_all_files_access)
     } catch (e: ActivityNotFoundException) {
-        logError(TAG, "Couldn't open MANAGE_ALL_FILES_ACCESS settings screen", e)
+        Log.e(TAG, "Couldn't open MANAGE_ALL_FILES_ACCESS settings screen", e).let {}
     }
 
     private val permissionStatus
@@ -578,8 +610,12 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
         failureType = null,
         workProgress = null,
         forceDownloadErrorDialog = false,
+        getPrefStr = PreviewGetPrefStr,
         downloadAction = {},
-    ) {}
+        logDownloadError = {},
+        hideDownloadCompleteNotification = {},
+        showDownloadFailedNotification = {},
+    )
 }
 
-private const val TAG = "UpdateInformationContent"
+private const val TAG = "UpdateAvailableContent"

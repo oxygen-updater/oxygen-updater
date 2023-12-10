@@ -1,25 +1,31 @@
 package com.oxygenupdater.viewmodels
 
 import android.app.Activity
+import android.content.SharedPreferences
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.billingclient.api.Purchase
 import com.oxygenupdater.enums.PurchaseType
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.internal.settings.KeyAdFree
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
-class BillingViewModel(
+@HiltViewModel
+class BillingViewModel @Inject constructor(
+    sharedPreferences: SharedPreferences,
     private val billingRepository: BillingRepository,
     private val serverRepository: ServerRepository,
 ) : ViewModel() {
@@ -28,8 +34,13 @@ class BillingViewModel(
 
     val adFreePrice = billingRepository.adFreePrice
     val adFreeState = billingRepository.adFreeState
-    val hasPurchasedAdFree = billingRepository.hasPurchasedAdFree
     val newPurchase = billingRepository.newPurchase.asLiveData()
+
+    val shouldShowAds = billingRepository.shouldShowAds.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = !sharedPreferences[KeyAdFree, false],
+    )
 
     init {
         // These flows need to be collected (terminal operation) so that we can log them to the server

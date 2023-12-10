@@ -8,8 +8,6 @@ import com.oxygenupdater.R
  *
  * v5.7.2 onwards, OnePlus-specific themes aren't translated into app themes.
  * See https://github.com/oxygen-updater/oxygen-updater/issues/189#issuecomment-1101082561.
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Immutable
 @JvmInline
@@ -29,6 +27,14 @@ value class Theme(val value: Int) {
             Dark -> R.string.theme_dark_subtitle
             Auto -> R.string.theme_auto_subtitle
             else -> R.string.theme_system_subtitle
+        }
+
+    val dark
+        get() = when (this) {
+            Light -> false
+            Dark -> true
+            /** Caller needs to distinguish between [Auto] and [System] */
+            else -> null
         }
 
     override fun toString() = "Theme." + when (this) {

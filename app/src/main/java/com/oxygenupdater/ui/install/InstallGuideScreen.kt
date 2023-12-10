@@ -47,7 +47,7 @@ fun InstallGuideScreen(
     state: RefreshAwareState<List<InstallGuide>>,
     showDownloadInstructions: Boolean,
     showAds: Boolean,
-    bannerAdInit: (AdView) -> Unit,
+    onBannerAdInit: (AdView) -> Unit,
 ) = Column(modifier) {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
@@ -82,7 +82,7 @@ fun InstallGuideScreen(
     if (showAds) BannerAd(
         adUnitId = BuildConfig.AD_BANNER_INSTALL_ID,
         adListener = adLoadListener { adLoaded = it },
-        viewUpdated = bannerAdInit,
+        onViewUpdate = onBannerAdInit,
         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
         modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
     )
@@ -168,7 +168,7 @@ fun PreviewInstallGuideScreen() = PreviewAppTheme {
         ),
         showDownloadInstructions = true,
         showAds = true,
-        bannerAdInit = {},
+        onBannerAdInit = {},
         modifier = Modifier
     )
 }

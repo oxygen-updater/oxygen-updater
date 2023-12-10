@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.collection.IntIntPair
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
@@ -60,7 +61,7 @@ import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentInformation.PrivacyOptionsRequirementStatus
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
@@ -73,7 +74,12 @@ import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.LogoNotification
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyAdvancedMode
+import com.oxygenupdater.internal.settings.KeyContribute
+import com.oxygenupdater.internal.settings.KeyIgnoreIncorrectDeviceWarnings
+import com.oxygenupdater.internal.settings.KeyIgnoreNotificationPermissionSheet
+import com.oxygenupdater.internal.settings.KeyIgnoreUnsupportedDeviceWarnings
+import com.oxygenupdater.internal.settings.KeySetupDone
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.NewsItem
@@ -85,10 +91,10 @@ import com.oxygenupdater.ui.about.AboutScreen
 import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.device.DeviceScreen
 import com.oxygenupdater.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.ui.device.UnsupportedDeviceOsSpecDialog
-import com.oxygenupdater.ui.device.defaultDeviceName
 import com.oxygenupdater.ui.main.AboutRoute
 import com.oxygenupdater.ui.main.AppUpdateInfo
 import com.oxygenupdater.ui.main.DeviceRoute
@@ -120,7 +126,7 @@ import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
 import com.oxygenupdater.ui.update.WorkProgress
 import com.oxygenupdater.utils.ContributorUtils
-import com.oxygenupdater.utils.Utils
+import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.utils.hasRootAccess
 import com.oxygenupdater.utils.logBillingError
@@ -134,19 +140,26 @@ import com.oxygenupdater.workers.WorkDataDownloadEta
 import com.oxygenupdater.workers.WorkDataDownloadFailureType
 import com.oxygenupdater.workers.WorkDataDownloadProgress
 import com.oxygenupdater.workers.WorkDataDownloadTotalBytes
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
+import javax.inject.Inject
 import kotlin.concurrent.schedule
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    private val viewModel by viewModel<MainViewModel>()
-    private val updateViewModel by viewModel<UpdateInformationViewModel>()
-    private val newsListViewModel by viewModel<NewsListViewModel>()
-    private val settingsViewModel by viewModel<SettingsViewModel>()
-    private val billingViewModel by viewModel<BillingViewModel>()
+    private val viewModel: MainViewModel by viewModels()
+    private val updateViewModel: UpdateInformationViewModel by viewModels()
+    private val newsListViewModel: NewsListViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
+    private val billingViewModel: BillingViewModel by viewModels()
+
+    @Inject
+    lateinit var contributorUtils: ContributorUtils
+
+    @Inject
+    lateinit var crashlytics: FirebaseCrashlytics
 
     private var startPage = PageUpdate
     private var downloadErrorMessage: String? = null
@@ -188,12 +201,12 @@ class MainActivity : BaseActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun OnboardingContent(windowSize: WindowSizeClass) = Column {
-        val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
-        val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
-        PassthroughEnabledDevicesToSettingsViewModel(enabledDevices)
+        val allDevices by viewModel.allDevicesState.collectAsStateWithLifecycle()
+        val cachedEnabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
+        PassthroughEnabledDevicesToSettingsViewModel(cachedEnabledDevices)
 
-        val deviceName = settingsViewModel.deviceName ?: remember(enabledDevices) {
-            enabledDevices?.find {
+        val deviceName = settingsViewModel.deviceName ?: remember(cachedEnabledDevices) {
+            cachedEnabledDevices?.find {
                 it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
             }?.name
         }
@@ -203,7 +216,7 @@ class MainActivity : BaseActivity() {
         // Use normal app bar if height isn't enough (e.g. landscape phones)
         if (windowSize.heightSizeClass == WindowHeightSizeClass.Compact) TopAppBar(
             scrollBehavior = scrollBehavior,
-            navIconClicked = {},
+            onNavIconClick = {},
             subtitleResId = R.string.onboarding,
             showIcon = false,
         ) else CollapsingAppBar(
@@ -232,40 +245,39 @@ class MainActivity : BaseActivity() {
             subtitle = stringResource(R.string.onboarding),
         )
 
-        val state by settingsViewModel.state.collectAsStateWithLifecycle()
+        val deviceConfig by settingsViewModel.deviceConfigState.collectAsStateWithLifecycle()
+        val methodConfig by settingsViewModel.methodConfigState.collectAsStateWithLifecycle()
         OnboardingScreen(
             windowWidthSize = windowSize.widthSizeClass,
             scrollBehavior = scrollBehavior,
-            lists = state,
-            initialDeviceIndex = settingsViewModel.initialDeviceIndex,
-            deviceChanged = settingsViewModel::saveSelectedDevice,
-            initialMethodIndex = settingsViewModel.initialMethodIndex,
-            methodChanged = settingsViewModel::saveSelectedMethod,
-            startApp = { contribute ->
+            deviceConfig = deviceConfig,
+            onDeviceSelect = settingsViewModel::saveSelectedDevice,
+            methodConfig = methodConfig,
+            onMethodSelect = settingsViewModel::saveSelectedMethod,
+            getPrefStr = viewModel::getPref,
+            getPrefBool = viewModel::getPref,
+            persistBool = viewModel::persist,
+            onStartAppClick = { contribute ->
                 settingsViewModel.resubscribeToFcmTopic()
 
-                if (PrefManager.checkIfSetupScreenIsFilledIn()) {
-                    PrefManager.putBoolean(PrefManager.KeySetupDone, true)
-                    (application as? OxygenUpdater)?.setupCrashReporting(
-                        PrefManager.getBoolean(PrefManager.KeyShareAnalyticsAndLogs, true)
-                    )
+                if (viewModel.isDeviceAndMethodSet) {
+                    viewModel.persist(KeySetupDone, true)
+                    (application as? OxygenUpdater)?.setupCrashReporting()
 
                     // If user enables OTA contribution, check if device is rooted and ask for root permission
                     if (ContributorUtils.isAtLeastQAndPossiblyRooted && contribute) {
                         showToast(R.string.contribute_allow_storage)
                         hasRootAccess {
-                            PrefManager.putBoolean(PrefManager.KeyContribute, true)
+                            viewModel.persist(KeyContribute, true)
                             viewModel.shouldShowOnboarding = false
                         }
                     } else {
                         // Skip shell creation and thus don't show root permission prompt
-                        PrefManager.putBoolean(PrefManager.KeyContribute, false)
+                        viewModel.persist(KeyContribute, false)
                         viewModel.shouldShowOnboarding = false
                     }
                 } else {
-                    val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
-                    val updateMethodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
-                    logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
+                    crashlytics.logWarning(TAG, "Required preferences not valid: ${viewModel.deviceId}, ${viewModel.updateMethodId}")
                     showToast(R.string.settings_entered_incorrectly)
                     viewModel.shouldShowOnboarding = true
                 }
@@ -285,19 +297,30 @@ class MainActivity : BaseActivity() {
         } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 
-        val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
+        val allDevices by viewModel.allDevicesState.collectAsStateWithLifecycle()
         val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
 
         viewModel.deviceOsSpec?.let {
-            var show by remember {
-                mutableStateOf(!PrefManager.getBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, false))
-            }
-            UnsupportedDeviceOsSpecDialog(show, { show = false }, it)
+            /**
+             * We're maintaining `show` outside of [UnsupportedDeviceOsSpecDialog]
+             * to allow re-opening after hiding it the first time.
+             */
+            var show by remember { mutableStateOf(viewModel.shouldShowUnsupportedDeviceDialog) }
+            UnsupportedDeviceOsSpecDialog(
+                show = show,
+                hide = { ignore ->
+                    viewModel.persist(KeyIgnoreUnsupportedDeviceWarnings, ignore)
+                    show = false
+                },
+                spec = it,
+            )
         }
 
-        val showIncorrectDeviceDialog = !PrefManager.getBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, false)
-        if (showIncorrectDeviceDialog) viewModel.deviceMismatch?.let {
-            IncorrectDeviceDialog(it)
+        if (viewModel.shouldShowIncorrectDeviceDialog) viewModel.deviceMismatch?.let { mismatchStatus ->
+            IncorrectDeviceDialog(
+                hide = { viewModel.persist(KeyIgnoreIncorrectDeviceWarnings, it) },
+                mismatchStatus = mismatchStatus,
+            )
         }
 
         var snackbarText by remember {
@@ -309,6 +332,8 @@ class MainActivity : BaseActivity() {
             info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
             snackbarMessageId = { snackbarText?.first },
             updateSnackbarText = { snackbarText = it },
+            resetAppUpdateIgnoreCount = viewModel::resetAppUpdateIgnoreCount,
+            incrementAppUpdateIgnoreCount = viewModel::incrementAppUpdateIgnoreCount,
             unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
             requestUpdate = viewModel::requestUpdate,
             requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
@@ -351,7 +376,7 @@ class MainActivity : BaseActivity() {
                 val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
                 TopAppBar(
                     scrollBehavior = scrollBehavior,
-                    navIconClicked = openAboutScreen,
+                    onNavIconClick = openAboutScreen,
                     subtitleResId = subtitleResId,
                     showIcon = navType == NavType.BottomBar,
                 ) {
@@ -359,7 +384,10 @@ class MainActivity : BaseActivity() {
                     MainMenu(
                         serverMessages = serverMessages,
                         showMarkAllRead = subtitleResId == Screen.NewsList.labelResId,
-                        markAllRead = newsListViewModel::markAllRead,
+                        onMarkAllReadClick = newsListViewModel::markAllRead,
+                        onContributorEnrollmentChange = {
+                            contributorUtils.flushSettings(this@MainActivity, it)
+                        },
                     )
                 }
 
@@ -416,7 +444,7 @@ class MainActivity : BaseActivity() {
                     settingsScreen(
                         navType = navType,
                         cachedEnabledDevices = enabledDevices,
-                        updateMismatchStatus = { viewModel.deviceMismatch = Utils.checkDeviceMismatch(allDevices) },
+                        updateMismatchStatus = viewModel::updateDeviceMismatch,
                         openAboutScreen = openAboutScreen,
                     )
                 }
@@ -429,16 +457,12 @@ class MainActivity : BaseActivity() {
                     }
                 }
 
-                // Ads should be shown if user hasn't bought the ad-free unlock
-                val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-                    PrefManager.getBoolean(PrefManager.KeyAdFree, false)
-                ).value
-                if (showAds) {
+                if (billingViewModel.shouldShowAds.collectAsStateWithLifecycle().value) {
                     var adLoaded by rememberSaveableState("adLoaded", false)
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
                         adListener = adLoadListener { adLoaded = it },
-                        viewUpdated = { bannerAdView = it },
+                        onViewUpdate = { bannerAdView = it },
                         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
                         modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier
                     )
@@ -507,6 +531,8 @@ class MainActivity : BaseActivity() {
                 )
             },
             forceDownloadErrorDialog = downloadErrorMessage != null,
+            getPrefStr = viewModel::getPref,
+            getPrefBool = viewModel::getPref,
             setSubtitleResId = setSubtitleResId,
             enqueueDownload = {
                 viewModel.setupDownloadWorkRequest(it)
@@ -516,6 +542,17 @@ class MainActivity : BaseActivity() {
             cancelDownload = { viewModel.cancelDownloadWork(this@MainActivity, it) },
             deleteDownload = { viewModel.deleteDownloadedFile(this@MainActivity, it) },
             logDownloadError = { if (outputData != null) viewModel.logDownloadError(outputData) },
+            hideDownloadCompleteNotification = {
+                LocalNotifications.hideDownloadCompleteNotification(this@MainActivity)
+            },
+            showDownloadFailedNotification = {
+                LocalNotifications.showDownloadFailedNotification(
+                    context = this@MainActivity,
+                    resumable = false,
+                    message = R.string.download_error_storage,
+                    notificationMessage = R.string.download_notification_error_storage_full,
+                )
+            },
         )
     }
 
@@ -534,13 +571,13 @@ class MainActivity : BaseActivity() {
             navType = navType,
             windowSize = windowSize,
             state = state,
-            refresh = {
+            onRefresh = {
                 viewModel.fetchServerStatus()
                 newsListViewModel.refresh()
             },
             unreadCountState = newsListViewModel.unreadCount,
-            markAllRead = newsListViewModel::markAllRead,
-            toggleRead = newsListViewModel::toggleRead,
+            onMarkAllReadClick = newsListViewModel::markAllRead,
+            onToggleReadClick = newsListViewModel::toggleRead,
             openItem = ::startNewsItemActivity,
         )
     }
@@ -556,7 +593,7 @@ class MainActivity : BaseActivity() {
             deviceName = remember(allDevices) {
                 allDevices?.find {
                     it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-                }?.name ?: defaultDeviceName()
+                }?.name ?: DefaultDeviceName
             },
             deviceOsSpec = viewModel.deviceOsSpec,
             deviceMismatchStatus = viewModel.deviceMismatch,
@@ -570,6 +607,7 @@ class MainActivity : BaseActivity() {
         AboutScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
+            openEmail = { viewModel.openEmail(this@MainActivity) }
         )
     }
 
@@ -586,6 +624,9 @@ class MainActivity : BaseActivity() {
 
         val adFreeConfig = adFreeConfig(
             state = adFreeState,
+            logBillingError = {
+                crashlytics.logBillingError("AdFreeConfig", "SKU '${PurchaseType.AD_FREE.sku}' is not available")
+            },
             makePurchase = { billingViewModel.makePurchase(this@MainActivity, it) },
             markPending = { showToast(R.string.purchase_error_pending_payment) },
         )
@@ -603,24 +644,32 @@ class MainActivity : BaseActivity() {
                     BillingClient.BillingResponseCode.USER_CANCELED -> logDebug(TAG, "Purchase of ad-free version was cancelled by the user")
 
                     else -> {
-                        logBillingError(TAG, "Purchase of the ad-free version failed due to an unknown error during the purchase flow: $responseCode")
+                        crashlytics.logBillingError(
+                            TAG,
+                            "Purchase of the ad-free version failed due to an unknown error during the purchase flow: $responseCode"
+                        )
                         showToast(R.string.purchase_error_after_payment)
                     }
                 }
             }
         })
 
-        val state by settingsViewModel.state.collectAsStateWithLifecycle()
+        val deviceConfig by settingsViewModel.deviceConfigState.collectAsStateWithLifecycle()
+        val methodConfig by settingsViewModel.methodConfigState.collectAsStateWithLifecycle()
         SettingsScreen(
             navType = navType,
-            lists = state,
-            initialDeviceIndex = settingsViewModel.initialDeviceIndex,
-            deviceChanged = {
+            adFreePrice = adFreePrice,
+            adFreeConfig = adFreeConfig,
+            onContributorEnrollmentChange = {
+                contributorUtils.flushSettings(this@MainActivity, it)
+            },
+            deviceConfig = deviceConfig,
+            onDeviceSelect = {
                 settingsViewModel.saveSelectedDevice(it)
                 updateMismatchStatus()
             },
-            initialMethodIndex = settingsViewModel.initialMethodIndex,
-            methodChanged = {
+            methodConfig = methodConfig,
+            onMethodSelect = {
                 settingsViewModel.saveSelectedMethod(it)
                 settingsViewModel.resubscribeToFcmTopic()
 
@@ -628,15 +677,19 @@ class MainActivity : BaseActivity() {
                     showToast(R.string.notification_no_notification_support)
                 }
             },
-            adFreePrice = adFreePrice,
-            adFreeConfig = adFreeConfig,
+            onThemeSelect = settingsViewModel::updateTheme,
+            advancedMode = viewModel.advancedMode,
+            onAdvancedModeChange = { viewModel.persist(KeyAdvancedMode, it) },
             isPrivacyOptionsRequired = consentInformation.privacyOptionsRequirementStatus == PrivacyOptionsRequirementStatus.REQUIRED,
             showPrivacyOptionsForm = {
                 UserMessagingPlatform.showPrivacyOptionsForm(this@MainActivity) { error ->
-                    if (error != null) logUmpConsentFormError(TAG, error)
+                    if (error != null) crashlytics.logUmpConsentFormError(TAG, error)
                 }
             },
             openAboutScreen = openAboutScreen,
+            getPrefStr = viewModel::getPref,
+            getPrefBool = viewModel::getPref,
+            persistBool = viewModel::persist,
         )
     }
 
@@ -667,7 +720,7 @@ class MainActivity : BaseActivity() {
                 validateAdFreePurchase(purchase, amount, purchaseType)
             }
 
-            !it.success -> logBillingError(
+            !it.success -> crashlytics.logBillingError(
                 TAG,
                 "[validateAdFreePurchase] couldn't purchase ad-free: (${it.errorMessage})"
             )
@@ -680,10 +733,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         consentInformation = UserMessagingPlatform.getConsentInformation(this)
 
-        val analytics by inject<FirebaseAnalytics>()
-        analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
-
-        if (PrefManager.checkIfSetupScreenIsFilledIn()) settingsViewModel.resubscribeToFcmTopic()
+        if (viewModel.isDeviceAndMethodSet) settingsViewModel.resubscribeToFcmTopic()
         if (!checkPlayServices(this, false)) {
             showToast(R.string.notification_no_notification_support)
         }
@@ -696,7 +746,7 @@ class MainActivity : BaseActivity() {
         setContent {
             val windowSize = calculateWindowSizeClass(this)
 
-            AppTheme {
+            AppTheme(settingsViewModel.theme) {
                 EdgeToEdge()
 
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
@@ -704,19 +754,23 @@ class MainActivity : BaseActivity() {
                     Crossfade(
                         targetState = viewModel.shouldShowOnboarding,
                         label = "OnboardingMainCrossfade",
-                    ) {
-                        if (it) OnboardingContent(windowSize) else {
-                            if (!PrefManager.checkIfSetupScreenHasBeenCompleted()) {
+                    ) { shouldShowOnboarding ->
+                        if (shouldShowOnboarding) OnboardingContent(windowSize) else {
+                            if (viewModel.isOnboardingComplete) viewModel.shouldShowOnboarding = false else {
                                 viewModel.shouldShowOnboarding = true
-                                return@Crossfade
-                            } else viewModel.shouldShowOnboarding = false
+                                return@Crossfade // we shouldn't be here; exit
+                            }
 
                             DisposableEffect(Unit) {
                                 setupUmp()
                                 onDispose {}
                             }
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission()
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission(
+                                canShow = viewModel.canShowNotifPermissionSheet,
+                                hide = { viewModel.persist(KeyIgnoreNotificationPermissionSheet, it) }
+                            )
+
                             Content(windowSize)
                         }
                     }
@@ -724,12 +778,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        // TODO(root): move this to the proper place
-        hasRootAccess {
-            if (!it) return@hasRootAccess ContributorUtils.stopDbCheckingProcess(this)
-
-            ContributorUtils.startDbCheckingProcess(this)
-        }
+        contributorUtils.startOrStop(this)
     }
 
     private fun handleIntent(intent: Intent?) {
@@ -768,12 +817,12 @@ class MainActivity : BaseActivity() {
 
         consentInformation.requestConsentInfoUpdate(this, params.build(), {
             UserMessagingPlatform.loadAndShowConsentFormIfRequired(this@MainActivity) { error ->
-                if (error != null) logUmpConsentFormError(TAG, error)
+                if (error != null) crashlytics.logUmpConsentFormError(TAG, error)
 
                 if (error != null || consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
             }
         }, { error ->
-            logUmpConsentFormError(TAG, error)
+            crashlytics.logUmpConsentFormError(TAG, error)
             (application as? OxygenUpdater)?.setupMobileAds()
         })
 
@@ -798,14 +847,14 @@ class MainActivity : BaseActivity() {
     }
 
     /** Checks if we should stop the user from navigating away from [Screen.Settings], if required prefs aren't saved */
-    private fun NavController.shouldStopNavigateAwayFromSettings() = currentDestination?.route == SettingsRoute && !PrefManager.checkIfSetupScreenHasBeenCompleted()
+    private fun NavController.shouldStopNavigateAwayFromSettings() = currentDestination?.route == SettingsRoute && !viewModel.isDeviceAndMethodSet
 
     private fun showSettingsWarning() {
-        val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
-        val updateMethodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+        val deviceId = viewModel.deviceId
+        val updateMethodId = viewModel.updateMethodId
 
         if (deviceId == NotSetL || updateMethodId == NotSetL) {
-            logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
+            crashlytics.logWarning(TAG, "Required preferences not valid: $deviceId, $updateMethodId")
             showToast(R.string.settings_entered_incorrectly)
         } else showToast(R.string.settings_saving)
     }

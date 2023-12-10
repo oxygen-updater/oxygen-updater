@@ -153,7 +153,6 @@ sealed class Screen(
 ) {
     /** Shown only if not null (max 3 characters) */
     var badge by mutableStateOf<String?>(null)
-        internal set
 
     @Stable
     object Update : Screen(UpdateRoute, Icons.Rounded.SystemUpdateAlt, R.string.update_information_header)

@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import coil.imageLoader
@@ -20,7 +21,7 @@ import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.activities.NewsItemActivity
-import com.oxygenupdater.database.LocalAppDb
+import com.oxygenupdater.dao.NewsItemDao
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.enums.NotificationType.GENERAL_NOTIFICATION
@@ -35,7 +36,8 @@ import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NewsN
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.UpdateNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.Utils
-import org.koin.java.KoinJavaComponent.getKoin
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlin.random.Random
 
 /**
@@ -44,25 +46,17 @@ import kotlin.random.Random
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class DisplayDelayedNotificationWorker(
-    private val context: Context,
-    parameters: WorkerParameters,
+@HiltWorker
+class DisplayDelayedNotificationWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted parameters: WorkerParameters,
+    private val newsItemDao: NewsItemDao,
+    private val notificationManager: NotificationManagerCompat,
 ) : CoroutineWorker(context, parameters) {
 
     private val messageContents = parameters.inputData.keyValueMap
         .entries
         .associate { it.key to it.value.toString() }
-
-    private val localAppDb by getKoin().inject<LocalAppDb>()
-    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
-
-    private val random by lazy(LazyThreadSafetyMode.NONE) {
-        Random.Default
-    }
-
-    private val newsItemDao by lazy(LazyThreadSafetyMode.NONE) {
-        localAppDb.newsItemDao()
-    }
 
     override suspend fun doWork(): Result {
         if (messageContents.isEmpty()) {
@@ -204,7 +198,7 @@ class DisplayDelayedNotificationWorker(
         else -> NotificationIds.RemoteUnknown
     } + when (type) {
         NEWS -> messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toInt() ?: 0
-        NEW_DEVICE, GENERAL_NOTIFICATION -> random.nextInt(1, 100000)
+        NEW_DEVICE, GENERAL_NOTIFICATION -> Random.nextInt(1, 100000)
         else -> 0
     }
 

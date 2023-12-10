@@ -1,6 +1,7 @@
 package com.oxygenupdater.workers
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
@@ -8,12 +9,15 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.collection.ArrayMap
 import androidx.collection.ArraySet
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.oxygenupdater.database.LocalAppDb
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.KeyContributionCount
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.dao.SubmittedUpdateFileDao
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.internal.settings.KeyContributionCount
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.services.RootFileService
@@ -23,11 +27,12 @@ import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logWarning
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.getKoin
 import java.io.File
 import java.time.LocalDateTime
 
@@ -46,21 +51,19 @@ import java.time.LocalDateTime
  * - because `ActivityManagerService.getRecordForAppLOSP()` can't find the process record for daemon [RootFileService]
  */
 @RequiresApi(Build.VERSION_CODES.Q) // same as RootFileService
-class ReadOtaDbWorker(
-    context: Context,
-    parameters: WorkerParameters,
+@HiltWorker
+class ReadOtaDbWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted parameters: WorkerParameters,
+    private val sharedPreferences: SharedPreferences,
+    private val submittedUpdateFilesDao: SubmittedUpdateFileDao,
+    private val serverRepository: ServerRepository,
+    private val analytics: FirebaseAnalytics,
+    private val crashlytics: FirebaseCrashlytics,
 ) : CoroutineWorker(context, parameters) {
-
-    private val database by getKoin().inject<LocalAppDb>()
-    private val analytics by getKoin().inject<FirebaseAnalytics>()
-    private val serverRepository by getKoin().inject<ServerRepository>()
 
     /** Used to ensure only unique URL rows are considered in [toMap] */
     private lateinit var urls: ArraySet<String>
-
-    private val submittedUpdateFilesDao by lazy(LazyThreadSafetyMode.NONE) {
-        database.submittedUpdateFileDao()
-    }
 
     override suspend fun doWork() = withContext(Dispatchers.IO) {
         logDebug(TAG, "doWork")
@@ -120,7 +123,7 @@ class ReadOtaDbWorker(
         var failed = false
         val result = serverRepository.submitOtaDbRows(rows)
         if (result == null) {
-            logWarning(TAG, "Error submitting URLs: no network connection or empty response")
+            crashlytics.logWarning(TAG, "Error submitting URLs: no network connection or empty response")
             failed = true
         } else if (!result.success) {
             val errorMessage = result.errorMessage
@@ -132,7 +135,7 @@ class ReadOtaDbWorker(
                 insertInDb(rows, false)
             } else {
                 // Server error, try again later
-                logWarning(TAG, "Error submitting URLs: ${result.errorMessage}")
+                crashlytics.logWarning(TAG, "Error submitting URLs: ${result.errorMessage}")
                 failed = true
             }
         } else {
@@ -147,10 +150,7 @@ class ReadOtaDbWorker(
         if (count != 0) LocalNotifications.showContributionSuccessfulNotification(context, validSubmittedFilenames)
 
         // Increase number of submitted updates. Not currently shown in the UI, but may come in handy later.
-        PrefManager.putInt(
-            KeyContributionCount,
-            PrefManager.getInt(KeyContributionCount, 0) + count
-        )
+        sharedPreferences[KeyContributionCount] = sharedPreferences[KeyContributionCount, 0] + count
 
         if (failed) Result.failure() else Result.success()
     }

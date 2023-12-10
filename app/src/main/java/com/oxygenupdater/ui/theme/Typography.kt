@@ -11,9 +11,6 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.sp
 import com.oxygenupdater.R
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 fun appTypography(): Typography {
     val provider = GoogleFont.Provider(
         providerAuthority = "com.google.android.gms.fonts",

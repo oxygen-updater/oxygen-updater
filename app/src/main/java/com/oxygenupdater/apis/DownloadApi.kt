@@ -7,11 +7,7 @@ import retrofit2.http.Header
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
-/**
- * Used for downloading update ZIPs from OnePlus OTA servers
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
+/** Used for downloading update ZIPs from OnePlus OTA servers */
 interface DownloadApi {
 
     @Streaming

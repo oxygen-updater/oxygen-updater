@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -19,62 +20,58 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.KeyContribute
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.internal.settings.KeyContribute
+import com.oxygenupdater.internal.settings.KeyDevice
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.workers.ReadOtaDbWorker
 import com.oxygenupdater.workers.WorkUniqueReadOtaDb
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.ipc.RootService
-import org.koin.java.KoinJavaComponent.getKoin
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- * @author [Arjan Vlek](https://github.com/arjanvlek)
- */
-object ContributorUtils {
+@Singleton
+class ContributorUtils @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
+    private val firebaseAnalytics: FirebaseAnalytics,
+) {
 
-    private const val TAG = "ContributorUtils"
-
-    private val analytics by getKoin().inject<FirebaseAnalytics>()
-    private val workManager by getKoin().inject<WorkManager>()
-
-    val isAtLeastQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q // same as RootFileService
-    val isAtLeastQAndPossiblyRooted
-        get() = isAtLeastQ && Shell.isAppGrantedRoot() != false
-
-    @RequiresApi(Build.VERSION_CODES.Q)
     fun flushSettings(context: Context, isContributing: Boolean) {
-        val isFirstTime = !PrefManager.contains(KeyContribute)
-        val wasContributing = PrefManager.getBoolean(KeyContribute, false)
+        val isFirstTime = KeyContribute !in sharedPreferences
+        val wasContributing = sharedPreferences[KeyContribute, false]
 
-        if (isFirstTime || wasContributing != isContributing) {
-            PrefManager.putBoolean(KeyContribute, isContributing)
+        if (!isFirstTime && wasContributing == isContributing) return
 
-            val analyticsEventData = Bundle(2).apply {
-                putString("CONTRIBUTOR_DEVICE", PrefManager.getString(PrefManager.KeyDevice, "<<UNKNOWN>>"))
-                putString("CONTRIBUTOR_UPDATEMETHOD", PrefManager.getString(PrefManager.KeyUpdateMethod, "<<UNKNOWN>>"))
-            }
+        sharedPreferences[KeyContribute] = isContributing
 
-            if (isContributing) {
-                analytics.logEvent("CONTRIBUTOR_SIGNUP", analyticsEventData)
-                startDbCheckingProcess(context)
-            } else {
-                analytics.logEvent("CONTRIBUTOR_SIGNOFF", analyticsEventData)
-                stopDbCheckingProcess(context)
-            }
+        val analyticsEventData = Bundle(2).apply {
+            putString("CONTRIBUTOR_DEVICE", sharedPreferences[KeyDevice, "<<UNKNOWN>>"])
+            putString("CONTRIBUTOR_UPDATEMETHOD", sharedPreferences[KeyUpdateMethod, "<<UNKNOWN>>"])
+        }
+
+        if (isContributing) start(context).also {
+            firebaseAnalytics.logEvent("CONTRIBUTOR_SIGNUP", analyticsEventData)
+        } else stop(context).also {
+            firebaseAnalytics.logEvent("CONTRIBUTOR_SIGNOFF", analyticsEventData)
         }
     }
 
-    fun startDbCheckingProcess(context: Context) {
-        if (!isAtLeastQ || !PrefManager.getBoolean(KeyContribute, false)) return
+    fun startOrStop(context: Context) = hasRootAccess {
+        if (it) start(context) else stop(context)
+    }
+
+    private fun start(context: Context) {
+        if (!isAtLeastQ || !sharedPreferences[KeyContribute, false]) return
 
         startRootService(context)
 
         // Give time for RootFileService to copy ota.db (`setInitialDelay` doesn't work)
         Handler(Looper.getMainLooper()).postDelayed({
-            workManager.enqueueUniquePeriodicWork(
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WorkUniqueReadOtaDb,
                 ExistingPeriodicWorkPolicy.UPDATE,
                 PeriodicWorkRequestBuilder<ReadOtaDbWorker>(MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)
@@ -85,9 +82,9 @@ object ContributorUtils {
         }, 5000) // 5s
     }
 
-    fun stopDbCheckingProcess(context: Context) {
+    private fun stop(context: Context) {
         if (isAtLeastQ) RootService.stop(rootServiceIntent(context))
-        workManager.cancelUniqueWork(WorkUniqueReadOtaDb)
+        WorkManager.getInstance(context).cancelUniqueWork(WorkUniqueReadOtaDb)
     }
 
     /** Does nothing if app doesn't have root access */
@@ -111,5 +108,13 @@ object ContributorUtils {
         override fun onServiceDisconnected(name: ComponentName?) = logVerbose(TAG, "onServiceDisconnected")
         override fun onBindingDied(name: ComponentName?) = logVerbose(TAG, "onBindingDied")
         override fun onNullBinding(name: ComponentName?) = logVerbose(TAG, "onNullBinding")
+    }
+
+    companion object {
+        private const val TAG = "ContributorUtils"
+
+        val isAtLeastQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q // same as RootFileService
+        val isAtLeastQAndPossiblyRooted
+            get() = isAtLeastQ && Shell.isAppGrantedRoot() != false
     }
 }

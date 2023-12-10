@@ -14,9 +14,6 @@ import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.models.UpdateData
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 @RewriteQueriesToDropUnusedColumns
 @Database(
     version = 2,

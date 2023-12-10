@@ -4,8 +4,6 @@ import androidx.compose.runtime.Immutable
 
 /**
  * Used primarily in [com.oxygenupdater.utils.Utils.checkDeviceOsSpec]
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 @Immutable
 @JvmInline

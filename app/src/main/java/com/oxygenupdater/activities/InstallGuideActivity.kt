@@ -1,26 +1,27 @@
 package com.oxygenupdater.activities
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.install.InstallGuideScreen
 import com.oxygenupdater.ui.install.InstallGuideViewModel
 import com.oxygenupdater.viewmodels.BillingViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InstallGuideActivity : SupportActionBarActivity(
     MainActivity.PageUpdate,
     R.string.install_guide,
 ) {
 
-    private val viewModel by viewModel<InstallGuideViewModel>()
-    private val billingViewModel by viewModel<BillingViewModel>()
+    private val viewModel: InstallGuideViewModel by viewModels()
+    private val billingViewModel: BillingViewModel by viewModels()
 
     private var showDownloadInstructions = false
 
@@ -37,11 +38,7 @@ class InstallGuideActivity : SupportActionBarActivity(
     @Composable
     override fun Content(modifier: Modifier) {
         val state by viewModel.state.collectAsStateWithLifecycle()
-
-        // Ads should be shown if user hasn't bought the ad-free unlock
-        val showAds = !billingViewModel.hasPurchasedAdFree.collectAsStateWithLifecycle(
-            PrefManager.getBoolean(PrefManager.KeyAdFree, false)
-        ).value
+        val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
 
         PullRefresh(
             state = state,
@@ -52,7 +49,7 @@ class InstallGuideActivity : SupportActionBarActivity(
                 state = state,
                 showDownloadInstructions = showDownloadInstructions,
                 showAds = showAds,
-                bannerAdInit = { bannerAdView = it },
+                onBannerAdInit = { bannerAdView = it },
                 modifier = modifier
             )
         }

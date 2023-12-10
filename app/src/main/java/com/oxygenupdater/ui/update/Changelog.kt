@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
@@ -24,6 +24,7 @@ fun ChangelogContainer(
     updateData: UpdateData,
     isDifferentVersion: Boolean,
     showAdvancedModeTip: Boolean,
+    getPrefStr: (key: String, default: String) -> String,
     content: (@Composable () -> Unit)? = null,
 ) = Column(modifier) {
     if (isDifferentVersion) {
@@ -32,7 +33,7 @@ fun ChangelogContainer(
             text = stringResource(
                 R.string.update_information_different_version_changelog_notice_base,
                 UpdateDataVersionFormatter.getFormattedVersionNumber(updateData),
-                PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>") ?: "<UNKNOWN>"
+                getPrefStr(KeyUpdateMethod, "<UNKNOWN>"),
             ) + if (showAdvancedModeTip) stringResource(R.string.update_information_different_version_changelog_notice_advanced) else "",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = bodySmall,

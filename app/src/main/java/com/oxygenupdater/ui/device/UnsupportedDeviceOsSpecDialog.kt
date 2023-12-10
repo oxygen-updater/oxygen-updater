@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.dialogs.AlertDialog
@@ -19,15 +18,16 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun UnsupportedDeviceOsSpecDialog(show: Boolean, hide: () -> Unit, spec: DeviceOsSpec) {
+fun UnsupportedDeviceOsSpecDialog(
+    show: Boolean,
+    hide: (Boolean) -> Unit,
+    spec: DeviceOsSpec,
+) {
     if (spec == DeviceOsSpec.SupportedOxygenOs) return
 
     var ignore by remember { mutableStateOf(false) }
     if (show) AlertDialog(
-        action = {
-            PrefManager.putBoolean(PrefManager.KeyIgnoreUnsupportedDeviceWarnings, ignore)
-            hide()
-        },
+        action = { hide(ignore) },
         titleResId = R.string.unsupported_device_warning_title,
         text = stringResource(remember(spec) {
             when (spec) {

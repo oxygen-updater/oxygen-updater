@@ -31,7 +31,6 @@ import com.oxygenupdater.ui.update.DownloadStatus.Companion.Downloading
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationCompleted
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.Verifying
-import com.oxygenupdater.utils.LocalNotifications
 import java.io.IOException
 import java.util.UUID
 
@@ -56,6 +55,7 @@ fun downloadButtonConfig(
     hasDownloadPermissions: () -> Boolean,
     requestDownloadPermissions: () -> Unit,
     showAlreadyDownloadedSheet: () -> Unit,
+    showDownloadFailedNotification: () -> Unit,
     setCanShowDownloadErrorDialog: () -> Unit,
     setDownloadErrorDialogParams: (DownloadErrorParams) -> Unit,
     setManageStorageDialogData: (Pair<UUID, Long>) -> Unit,
@@ -66,6 +66,7 @@ fun downloadButtonConfig(
         enqueueIfSpaceAvailable(
             context = context,
             downloadSize = downloadSize,
+            showDownloadFailedNotification = showDownloadFailedNotification,
             setCanShowDownloadErrorDialog = setCanShowDownloadErrorDialog,
             setDownloadErrorDialogParams = setDownloadErrorDialogParams,
             setManageStorageDialogData = setManageStorageDialogData,
@@ -220,6 +221,7 @@ fun downloadButtonConfig(
 private fun enqueueIfSpaceAvailable(
     context: Context,
     downloadSize: Long,
+    showDownloadFailedNotification: () -> Unit,
     setCanShowDownloadErrorDialog: () -> Unit,
     setDownloadErrorDialogParams: (DownloadErrorParams) -> Unit,
     setManageStorageDialogData: (Pair<UUID, Long>) -> Unit,
@@ -251,16 +253,9 @@ private fun enqueueIfSpaceAvailable(
 
         // Check if there is enough free storage space before downloading
         val usableBytes = externalFilesDir.usableSpace - SafeMargin
-        if (downloadSize <= usableBytes) enqueue()
-        else {
+        if (downloadSize <= usableBytes) enqueue() else {
             // Don't have enough space to complete the download. Display a notification and an error dialog to the user.
-            LocalNotifications.showDownloadFailedNotification(
-                context = context,
-                resumable = false,
-                message = R.string.download_error_storage,
-                notificationMessage = R.string.download_notification_error_storage_full,
-            )
-
+            showDownloadFailedNotification()
             setDownloadErrorDialogParams(DownloadErrorParams(context.getString(R.string.download_error_storage)))
         }
     }

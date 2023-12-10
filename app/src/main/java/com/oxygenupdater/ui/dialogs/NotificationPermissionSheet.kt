@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.modifierMaxWidth
@@ -34,7 +33,10 @@ import com.oxygenupdater.ui.theme.PreviewThemes
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
-fun ColumnScope.NotificationPermissionSheet(hide: () -> Unit, launchPermissionRequest: () -> Unit) {
+fun ColumnScope.NotificationPermissionSheet(
+    hide: (Boolean) -> Unit,
+    launchPermissionRequest: () -> Unit,
+) {
     SheetHeader(R.string.notification_permission_title)
 
     Text(
@@ -60,10 +62,7 @@ fun ColumnScope.NotificationPermissionSheet(hide: () -> Unit, launchPermissionRe
         modifier = modifierMaxWidth.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         TextButton(
-            onClick = {
-                PrefManager.putBoolean(PrefManager.KeyIgnoreNotificationPermissionSheet, ignore)
-                hide()
-            },
+            onClick = { hide(ignore) },
             colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
             modifier = Modifier.padding(end = 8.dp)
         ) {

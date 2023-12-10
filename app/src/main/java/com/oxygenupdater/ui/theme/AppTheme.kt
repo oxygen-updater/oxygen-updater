@@ -11,51 +11,34 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.structuralEqualityPolicy
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.preferencesModule
 import com.oxygenupdater.ui.Theme
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 import java.util.Calendar
 
+val LocalTheme = staticCompositionLocalOf { Theme.System }
+
 /**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
+ * @param theme is forwarded to the static composition [LocalTheme]
  */
 @Composable
-fun AppTheme(content: @Composable () -> Unit) {
+fun AppTheme(
+    theme: Theme,
+    content: @Composable () -> Unit,
+) {
     val context = LocalContext.current
-
-    val theme by remember { derivedStateOf(structuralEqualityPolicy()) { PrefManager.theme } }
-    val dark = remember(theme) {
-        when (theme) {
-            Theme.Light -> false
-            Theme.Dark -> true
-            else -> null
-        }
-    }.let {
-        if (it != null) return@let it
-
-        if (theme == Theme.System) isSystemInDarkTheme() else {
-            // Avoid a potentially expensive call
-            remember {
-                Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
-                    if (hour in 19..23 || hour in 0..6) true
-                    else context.getSystemService<PowerManager>()?.isPowerSaveMode == true
-                }
-            }
+    val dark = theme.dark ?: if (theme == Theme.System) isSystemInDarkTheme() else remember {
+        // Avoid a potentially expensive call
+        Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
+            if (hour in 19..23 || hour in 0..6) true
+            else context.getSystemService<PowerManager>()?.isPowerSaveMode == true
         }
     }
 
@@ -63,30 +46,23 @@ fun AppTheme(content: @Composable () -> Unit) {
         if (dark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else if (dark) DarkColorScheme else LightColorScheme
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = remember { appTypography() },
-        content = content,
-    )
+    CompositionLocalProvider(LocalTheme providesDefault theme) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = remember { appTypography() },
+            content = content,
+        )
+    }
 }
 
-/**
- * TODO(compose): this function only serves to initialize Koin with [PrefManager],
- * so that we can use state variables like [PrefManager.theme].
- */
+/** Only for Compose [Preview] use. It wraps around [AppTheme] with suitable default values. */
 @Composable
 fun PreviewAppTheme(content: @Composable () -> Unit) {
-    if (GlobalContext.getOrNull() == null) {
-        val context = LocalContext.current
-        startKoin {
-            androidLogger(Level.ERROR)
-            androidContext(context)
-            modules(preferencesModule)
-        }
-    }
-
-    AppTheme(content = { Surface(content = content) })
+    AppTheme(theme = Theme.System, content = { Surface(content = content) })
 }
+
+val PreviewGetPrefStr: (key: String, default: String) -> String = { _, default -> default }
+val PreviewGetPrefBool: (key: String, default: Boolean) -> Boolean = { _, default -> default }
 
 val PreviewWindowSize
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)

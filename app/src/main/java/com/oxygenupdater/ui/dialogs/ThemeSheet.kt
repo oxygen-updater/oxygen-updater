@@ -14,17 +14,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.theme.LocalTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 private val list = arrayOf(
@@ -35,14 +34,10 @@ private val list = arrayOf(
 )
 
 @Composable
-fun ColumnScope.ThemeSheet(
-    hide: () -> Unit,
-    onClick: (Theme) -> Unit,
-) {
+fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
     SheetHeader(R.string.label_theme)
 
-    val selectedTheme = remember { PrefManager.theme }
-
+    val selectedTheme = LocalTheme.current
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
 
@@ -52,12 +47,7 @@ fun ColumnScope.ThemeSheet(
         items(items = list, key = { it.value }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .animatedClickable {
-                        PrefManager.putInt(PrefManager.ThemeId, it.value)
-                        onClick(it)
-                        hide()
-                    } then modifierDefaultPadding // must be after `clickable`
+                modifier = Modifier.animatedClickable { onClick(it) } then modifierDefaultPadding
             ) {
                 val primary = colorScheme.primary
                 val selected = selectedTheme == it
@@ -90,5 +80,5 @@ fun ColumnScope.ThemeSheet(
 @PreviewThemes
 @Composable
 fun PreviewThemeSheet() = PreviewModalBottomSheet {
-    ThemeSheet(hide = {}) {}
+    ThemeSheet {}
 }

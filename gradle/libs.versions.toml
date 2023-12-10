@@ -56,11 +56,13 @@ desugar = "2.0.4"
 # https://firebase.google.com/support/release-notes/android
 firebase-bom = "32.6.0"
 
+# https://github.com/google/dagger/releases
+dagger = "2.48.1"
+# https://developer.android.com/jetpack/androidx/releases/hilt
+hilt = "1.1.0"
+
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
-
-# https://github.com/InsertKoinIO/koin/releases
-koin = "3.5.0"
 
 # https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
 libsu = "5.2.1"
@@ -117,6 +119,12 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
 
+dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
+dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt" }
+androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt" }
+
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
@@ -157,9 +165,6 @@ google-ump = { module = "com.google.android.ump:user-messaging-platform", versio
 
 junit = { module = "junit:junit", version.ref = "junit" }
 
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
-
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
@@ -182,5 +187,6 @@ gms-services = { id = "com.google.gms.google-services", version.ref = "google-se
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 
 [bundles]

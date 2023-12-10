@@ -6,9 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.oxygenupdater.models.SubmittedUpdateFile
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 @Dao
 interface SubmittedUpdateFileDao {
 

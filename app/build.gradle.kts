@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.gms.services)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
     alias(libs.plugins.room)
     id("kotlin-parcelize")
 }
@@ -239,6 +240,11 @@ ksp {
     arg("room.generateKotlin", "true")
 }
 
+hilt {
+    // https://dagger.dev/hilt/gradle-setup#aggregating-task
+    enableAggregatingTask = true
+}
+
 room {
     schemaDirectory("$projectDir/schemas")
 }
@@ -258,6 +264,12 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.dagger.hilt.android)
+    ksp(libs.dagger.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     implementation(libs.androidx.lifecycle.common.java8)
     implementation(libs.androidx.lifecycle.livedata)
@@ -303,8 +315,6 @@ dependencies {
     implementation(libs.google.play.services.ads)
     implementation(libs.google.ump)
 
-    implementation(libs.koin.android)
-
     implementation(libs.okhttp.logging.interceptor)
 
     implementation(libs.retrofit)
@@ -318,6 +328,5 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test.junit)
-    testImplementation(libs.koin.test)
     testImplementation(libs.androidx.annotation)
 }

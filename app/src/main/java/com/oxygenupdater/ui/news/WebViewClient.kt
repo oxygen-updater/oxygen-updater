@@ -46,7 +46,6 @@ class WebViewClient(private val context: Context) : AccompanistWebViewClient() {
             // Fallback: copy to clipboard instead
             context.copyToClipboard(uri.toString())
         }
-
         true
     } ?: super.shouldOverrideUrlLoading(view, request)
 
@@ -65,7 +64,6 @@ class WebViewClient(private val context: Context) : AccompanistWebViewClient() {
             // Fallback: copy to clipboard instead
             context.copyToClipboard(url)
         }
-
         true
     } ?: super.shouldOverrideUrlLoading(view, url)
 

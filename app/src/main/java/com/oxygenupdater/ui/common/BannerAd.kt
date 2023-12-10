@@ -22,7 +22,7 @@ fun ColumnScope.BannerAd(
     adUnitId: String,
     modifier: Modifier = Modifier,
     adListener: AdListener? = null,
-    viewUpdated: (AdView) -> Unit,
+    onViewUpdate: (AdView) -> Unit,
 ) = if (LocalInspectionMode.current) {
     Text("AdView", Modifier.align(Alignment.CenterHorizontally))
 } else AndroidView(
@@ -38,7 +38,7 @@ fun ColumnScope.BannerAd(
             adListener?.let { setAdListener(it) }
         }
     },
-    update = viewUpdated,
+    update = onViewUpdate,
     modifier = modifier
 )
 

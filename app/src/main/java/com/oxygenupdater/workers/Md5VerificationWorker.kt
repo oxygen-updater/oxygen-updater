@@ -2,15 +2,19 @@ package com.oxygenupdater.workers
 
 import android.content.Context
 import android.os.Environment
+import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.WorkerParameters
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.ui.update.Md5VerificationFailure
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logVerbose
 import com.oxygenupdater.utils.logWarning
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -28,9 +32,11 @@ import java.security.NoSuchAlgorithmException
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class Md5VerificationWorker(
-    private val context: Context,
-    parameters: WorkerParameters,
+@HiltWorker
+class Md5VerificationWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted parameters: WorkerParameters,
+    private val crashlytics: FirebaseCrashlytics,
 ) : CoroutineWorker(context, parameters) {
 
     private val filename: String?
@@ -51,7 +57,7 @@ class Md5VerificationWorker(
 
     private suspend fun verify(): Result = withContext(Dispatchers.IO) {
         if (filename == null || md5 == null) {
-            logWarning(TAG, "Required parameters are null: $filename, $md5")
+            crashlytics.logWarning(TAG, "Required parameters are null: $filename, $md5")
             Result.failure(Data.Builder().apply {
                 putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullUpdateData.value)
             }.build())
@@ -59,14 +65,14 @@ class Md5VerificationWorker(
             logDebug(TAG, "Verifying $filename")
 
             if (md5.isEmpty()) {
-                logWarning(TAG, "MD5 is empty")
+                crashlytics.logWarning(TAG, "MD5 is empty")
                 Result.failure(Data.Builder().apply {
                     putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullOrEmptyProvidedChecksum.value)
                 }.build())
             } else {
                 val calculatedDigest = calculateMd5()
                 if (calculatedDigest == null) {
-                    logWarning(TAG, "calculatedDigest = null")
+                    crashlytics.logWarning(TAG, "calculatedDigest = null")
                     Result.failure(Data.Builder().apply {
                         putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullCalculatedChecksum.value)
                     }.build())
@@ -79,7 +85,7 @@ class Md5VerificationWorker(
                         Result.success()
                     } else {
                         LocalNotifications.showVerificationFailedNotification(context)
-                        logWarning(TAG, "md5 != calculatedDigest")
+                        crashlytics.logWarning(TAG, "md5 != calculatedDigest")
                         Result.failure(Data.Builder().apply {
                             putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.ChecksumsNotEqual.value)
                         }.build())
@@ -93,7 +99,7 @@ class Md5VerificationWorker(
         val digest = try {
             MessageDigest.getInstance("MD5")
         } catch (e: NoSuchAlgorithmException) {
-            logError(TAG, "Exception while getting digest", e)
+            crashlytics.logError(TAG, "Exception while getting digest", e)
             return@withContext null
         }
 
@@ -102,7 +108,7 @@ class Md5VerificationWorker(
         var retryCount = 0
         while (!zipFile.exists()) {
             if (retryCount >= 5) {
-                logError(
+                crashlytics.logError(
                     TAG,
                     "File doesn't exist, even after retrying every 2 seconds upto 5 times",
                     FileNotFoundException("File doesn't exist, even after retrying every 2 seconds upto 5 times")
@@ -111,7 +117,9 @@ class Md5VerificationWorker(
                 return@withContext null
             }
 
-            logWarning(TAG, "File doesn't exist yet, retrying after 2 seconds (${4 - retryCount} retries left)")
+            crashlytics.logWarning(
+                TAG, "File doesn't exist yet, retrying after 2 seconds (${4 - retryCount} retries left)"
+            )
 
             retryCount++
 
@@ -121,7 +129,9 @@ class Md5VerificationWorker(
             try {
                 delay(2000)
             } catch (e: CancellationException) {
-                logError(TAG, "Error while trying to re-verify file after 2 seconds (${4 - retryCount} retries left)", e)
+                crashlytics.logError(
+                    TAG, "Error while trying to re-verify file after 2 seconds (${4 - retryCount} retries left)", e
+                )
             }
         }
 

@@ -76,7 +76,7 @@ import kotlin.math.roundToInt
 @Composable
 fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    navIconClicked: () -> Unit,
+    onNavIconClick: () -> Unit,
     @StringRes subtitleResId: Int,
     showIcon: Boolean = true,
     root: Boolean = true,
@@ -94,7 +94,7 @@ fun TopAppBar(
             if (!showIcon) return@icon
 
             // Nav icon
-            IconButton(navIconClicked) {
+            IconButton(onNavIconClick) {
                 Icon(
                     if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
                     if (root) stringResource(R.string.about) else null,

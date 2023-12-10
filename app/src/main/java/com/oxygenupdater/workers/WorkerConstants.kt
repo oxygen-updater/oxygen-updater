@@ -2,8 +2,6 @@ package com.oxygenupdater.workers
 
 /**
  * This file contains constants that are common to all workers defined in this package
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 
 const val WorkUniqueDownload = "WorkUniqueDownload"

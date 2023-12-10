@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.UpdateMethod
+import com.oxygenupdater.ui.SettingsListConfig
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -36,19 +36,16 @@ import com.oxygenupdater.ui.theme.PreviewThemes
 @Composable
 fun <T : SelectableModel> ColumnScope.SelectableSheet(
     hide: () -> Unit,
-    list: List<T>,
-    initialIndex: Int,
-    @StringRes titleResId: Int, @StringRes captionResId: Int,
-    keyId: String,
+    config: SettingsListConfig<T>,
+    @StringRes titleResId: Int,
+    @StringRes captionResId: Int,
     onClick: (item: T) -> Unit,
 ) {
     SheetHeader(titleResId)
 
+    val (list, initialIndex, selectedId) = config
     if (list.isEmpty()) return
 
-    val selectedId = remember(list, initialIndex) {
-        PrefManager.getLong(keyId, list.getOrNull(initialIndex)?.id ?: NotSetL)
-    }
     val initialFirstVisibleItemIndex = if (selectedId == NotSetL) 0 else remember(list, selectedId) {
         list.indexOfFirst { it.id == selectedId }.let { if (it == NotSet) 0 else it }
     }
@@ -105,25 +102,28 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
 fun PreviewDeviceSheet() = PreviewModalBottomSheet {
     SelectableSheet(
         hide = {},
-        list = listOf(
-            Device(
-                id = 1,
-                name = "OnePlus 7 Pro",
-                productNames = listOf("OnePlus7Pro"),
-                enabled = true,
+        config = SettingsListConfig(
+            list = listOf(
+                Device(
+                    id = 1,
+                    name = "OnePlus 7 Pro",
+                    productNames = listOf("OnePlus7Pro"),
+                    enabled = true,
+                ),
+                Device(
+                    id = 2,
+                    name = "OnePlus 8T",
+                    productNames = listOf("OnePlus8T"),
+                    enabled = true,
+                ),
             ),
-            Device(
-                id = 2,
-                name = "OnePlus 8T",
-                productNames = listOf("OnePlus8T"),
-                enabled = true,
-            ),
+            initialIndex = 1,
+            selectedId = NotSetL,
         ),
-        initialIndex = 1,
         titleResId = R.string.onboarding_device_chooser_title,
         captionResId = R.string.onboarding_device_chooser_caption,
-        keyId = PrefManager.KeyDeviceId,
-    ) {}
+        onClick = {},
+    )
 }
 
 @PreviewThemes
@@ -131,26 +131,28 @@ fun PreviewDeviceSheet() = PreviewModalBottomSheet {
 fun PreviewMethodSheet() = PreviewModalBottomSheet {
     SelectableSheet(
         hide = {},
-        list = listOf(
-            UpdateMethod(
-                id = 1,
-                name = "Stable (full)",
-                recommendedForRootedDevice = true,
-                recommendedForNonRootedDevice = false,
-                supportsRootedDevice = true,
+        config = SettingsListConfig(
+            list = listOf(
+                UpdateMethod(
+                    id = 1,
+                    name = "Stable (full)",
+                    recommendedForRootedDevice = true,
+                    recommendedForNonRootedDevice = false,
+                    supportsRootedDevice = true,
+                ),
+                UpdateMethod(
+                    id = 2,
+                    name = "Stable (incremental)",
+                    recommendedForRootedDevice = false,
+                    recommendedForNonRootedDevice = true,
+                    supportsRootedDevice = false,
+                )
             ),
-            UpdateMethod(
-                id = 2,
-                name = "Stable (incremental)",
-                recommendedForRootedDevice = false,
-                recommendedForNonRootedDevice = true,
-                supportsRootedDevice = false,
-            )
+            initialIndex = 1,
+            selectedId = NotSetL,
         ),
-        initialIndex = 1,
         titleResId = R.string.onboarding_method_chooser_title,
         captionResId = R.string.onboarding_method_chooser_caption,
-        keyId = PrefManager.KeyUpdateMethodId,
         onClick = {},
     )
 }

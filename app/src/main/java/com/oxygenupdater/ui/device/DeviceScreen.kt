@@ -73,11 +73,11 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
-import com.oxygenupdater.utils.logWarning
+import com.oxygenupdater.utils.logInfo
 import java.text.NumberFormat
 import kotlin.math.roundToLong
 
-fun defaultDeviceName() = "${Build.MANUFACTURER} ${Build.DEVICE}"
+val DefaultDeviceName = "${Build.MANUFACTURER} ${Build.DEVICE}"
 
 @Composable
 fun DeviceScreen(
@@ -413,14 +413,14 @@ private fun getRamBytes(context: Context) = try {
     // It uses IEC units pre-Oreo.
     approxRam * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) 1_000_000_000L else 1_073_741_824
 } catch (e: Exception) {
-    logWarning("DeviceHardwareInfo", "Memory information is unavailable due to error", e)
+    logInfo("DeviceScreen", "Memory information is unavailable due to error", e)
     0L
 }
 
 @PreviewThemes
 @Composable
 fun PreviewDeviceScreen() = PreviewAppTheme {
-    val name = defaultDeviceName()
+    val name = DefaultDeviceName
     val windowWidthSize = PreviewWindowSize.widthSizeClass
     DeviceScreen(
         navType = NavType.from(windowWidthSize),

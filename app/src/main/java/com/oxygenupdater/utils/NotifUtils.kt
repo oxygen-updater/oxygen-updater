@@ -14,48 +14,46 @@ import com.oxygenupdater.R
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup
 import com.oxygenupdater.utils.NotificationChannels.MiscellaneousGroup
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup
-import org.koin.java.KoinJavaComponent.getKoin
 
-private val notificationManager by getKoin().inject<NotificationManagerCompat>()
+object NotifUtils {
 
-class NotificationUtils(private val context: Context) {
-
-    private val isDisabled
-        get() = !notificationManager.areNotificationsEnabled()
-
-    private fun isDisabled(channelId: String) = notificationManager.run {
-        !areNotificationsEnabled() || getNotificationChannel(channelId)?.run {
+    private fun NotificationManagerCompat.isDisabled(
+        channelId: String,
+    ) = !areNotificationsEnabled() || getNotificationChannel(channelId)?.run {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             importance == NotificationManager.IMPORTANCE_NONE ||
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getNotificationChannelGroup(group)?.isBlocked == true)
-        } ?: false
+        } else false
+    } ?: false
+
+    fun toNotifStatus(context: Context) = with(NotificationManagerCompat.from(context)) {
+        if (areNotificationsEnabled()) NotifStatus(
+            listOf(
+                isDisabled(PushNotificationsGroup.UpdateNotifChannelId),
+                isDisabled(PushNotificationsGroup.NewsNotifChannelId),
+                isDisabled(DownloadAndInstallationGroup.DownloadStatusNotifChannelId),
+            )
+        ) else NotifStatus()
     }
 
-    fun toNotifStatus() = if (isDisabled) NotifStatus() else NotifStatus(
-        listOf(
-            isDisabled(PushNotificationsGroup.UpdateNotifChannelId),
-            isDisabled(PushNotificationsGroup.NewsNotifChannelId),
-            isDisabled(DownloadAndInstallationGroup.DownloadStatusNotifChannelId)
-        )
-    )
-
     /**
-     * Deletes all old notification channels
+     * First deletes old channels, then creates current groups & their corresponding channels.
      */
-    @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.O)
-    fun deleteOldNotificationChannels() {
-        notificationManager.deleteNotificationChannel(NotificationChannels.OldPushNotifChannelId)
-        notificationManager.deleteNotificationChannel(NotificationChannels.OldProgressNotifChannelId)
+    fun refreshNotificationChannels(context: Context) = with(NotificationManagerCompat.from(context)) {
+        deleteOldNotificationChannels()
+        createAllNotificationGroups(context)
+        createAllNotificationChannels(context)
+    }
+
+    /** Deletes all old notification channels */
+    @Suppress("DEPRECATION", "NOTHING_TO_INLINE")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private inline fun NotificationManagerCompat.deleteOldNotificationChannels() {
+        deleteNotificationChannel(NotificationChannels.OldPushNotifChannelId)
+        deleteNotificationChannel(NotificationChannels.OldProgressNotifChannelId)
         // No longer used in v5.9.0+
-        notificationManager.deleteNotificationChannel(MiscellaneousGroup.OtaFilenameSubmittedNotifChannelId)
-    }
-
-    /**
-     * Creates all notification channel groups, as well as their channels
-     */
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun createNewNotificationGroupsAndChannels() = createAllNotificationGroups().also {
-        createAllNotificationChannels()
+        deleteNotificationChannel(MiscellaneousGroup.OtaFilenameSubmittedNotifChannelId)
     }
 
     /**
@@ -63,8 +61,9 @@ class NotificationUtils(private val context: Context) {
      *
      * @see NotificationChannels
      */
+    @Suppress("NOTHING_TO_INLINE")
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createAllNotificationGroups() = notificationManager.createNotificationChannelGroups(
+    private inline fun NotificationManagerCompat.createAllNotificationGroups(context: Context) = createNotificationChannelGroups(
         listOf(
             NotificationChannelGroup(
                 DownloadAndInstallationGroup.ID,
@@ -96,83 +95,82 @@ class NotificationUtils(private val context: Context) {
      * @see PushNotificationsGroup
      * @see MiscellaneousGroup
      */
+    @Suppress("NOTHING_TO_INLINE")
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createAllNotificationChannels() {
-        notificationManager.createNotificationChannels(
-            listOf(
-                //// BEGIN: DownloadAndInstallationGroup
-                createNotificationChannel(
-                    DownloadAndInstallationGroup.DownloadStatusNotifChannelId,
-                    DownloadAndInstallationGroup.ID,
-                    context.getString(R.string.download_status_notification_channel_name),
-                    context.getString(R.string.download_status_notification_channel_description),
-                    NotificationManager.IMPORTANCE_LOW,
-                    lightsEnabled = false
-                ),
-                createNotificationChannel(
-                    DownloadAndInstallationGroup.VerificationStatusNotifChannelId,
-                    DownloadAndInstallationGroup.ID,
-                    context.getString(R.string.verification_status_notification_channel_name),
-                    context.getString(R.string.verification_status_notification_channel_description),
-                    NotificationManager.IMPORTANCE_LOW,
-                    lightsEnabled = false
-                ),
-                createNotificationChannel(
-                    DownloadAndInstallationGroup.InstallationStatusNotifChannelId,
-                    DownloadAndInstallationGroup.ID,
-                    context.getString(R.string.installation_status_notification_channel_name),
-                    context.getString(R.string.installation_status_notification_channel_description),
-                    NotificationManager.IMPORTANCE_LOW,
-                    lightsEnabled = false
-                ),
-                //// END: DownloadAndInstallationGroup
+    private inline fun NotificationManagerCompat.createAllNotificationChannels(context: Context) = createNotificationChannels(
+        listOf(
+            //// BEGIN: DownloadAndInstallationGroup
+            createNotificationChannel(
+                DownloadAndInstallationGroup.DownloadStatusNotifChannelId,
+                DownloadAndInstallationGroup.ID,
+                context.getString(R.string.download_status_notification_channel_name),
+                context.getString(R.string.download_status_notification_channel_description),
+                NotificationManager.IMPORTANCE_LOW,
+                lightsEnabled = false
+            ),
+            createNotificationChannel(
+                DownloadAndInstallationGroup.VerificationStatusNotifChannelId,
+                DownloadAndInstallationGroup.ID,
+                context.getString(R.string.verification_status_notification_channel_name),
+                context.getString(R.string.verification_status_notification_channel_description),
+                NotificationManager.IMPORTANCE_LOW,
+                lightsEnabled = false
+            ),
+            createNotificationChannel(
+                DownloadAndInstallationGroup.InstallationStatusNotifChannelId,
+                DownloadAndInstallationGroup.ID,
+                context.getString(R.string.installation_status_notification_channel_name),
+                context.getString(R.string.installation_status_notification_channel_description),
+                NotificationManager.IMPORTANCE_LOW,
+                lightsEnabled = false
+            ),
+            //// END: DownloadAndInstallationGroup
 
-                //// BEGIN: PushNotificationsGroup
-                createNotificationChannel(
-                    PushNotificationsGroup.UpdateNotifChannelId,
-                    PushNotificationsGroup.ID,
-                    context.getString(R.string.update_notification_channel_name),
-                    context.getString(R.string.update_notification_channel_description),
-                    NotificationManager.IMPORTANCE_HIGH,
-                    vibrationEnabled = true
-                ),
-                createNotificationChannel(
-                    PushNotificationsGroup.NewsNotifChannelId,
-                    PushNotificationsGroup.ID,
-                    context.getString(R.string.news_notification_channel_name),
-                    context.getString(R.string.news_notification_channel_description),
-                    NotificationManager.IMPORTANCE_HIGH,
-                    vibrationEnabled = true
-                ),
-                createNotificationChannel(
-                    PushNotificationsGroup.DeviceNotifChannelId,
-                    PushNotificationsGroup.ID,
-                    context.getString(R.string.device_notification_channel_name),
-                    context.getString(R.string.device_notification_channel_description),
-                    NotificationManager.IMPORTANCE_DEFAULT
-                ),
-                createNotificationChannel(
-                    PushNotificationsGroup.GeneralNotifChannelId,
-                    PushNotificationsGroup.ID,
-                    context.getString(R.string.general_notification_channel_name),
-                    context.getString(R.string.general_notification_channel_description),
-                    NotificationManager.IMPORTANCE_DEFAULT,
-                    vibrationEnabled = true
-                ),
-                //// END: PushNotificationsGroup
+            //// BEGIN: PushNotificationsGroup
+            createNotificationChannel(
+                PushNotificationsGroup.UpdateNotifChannelId,
+                PushNotificationsGroup.ID,
+                context.getString(R.string.update_notification_channel_name),
+                context.getString(R.string.update_notification_channel_description),
+                NotificationManager.IMPORTANCE_HIGH,
+                vibrationEnabled = true
+            ),
+            createNotificationChannel(
+                PushNotificationsGroup.NewsNotifChannelId,
+                PushNotificationsGroup.ID,
+                context.getString(R.string.news_notification_channel_name),
+                context.getString(R.string.news_notification_channel_description),
+                NotificationManager.IMPORTANCE_HIGH,
+                vibrationEnabled = true
+            ),
+            createNotificationChannel(
+                PushNotificationsGroup.DeviceNotifChannelId,
+                PushNotificationsGroup.ID,
+                context.getString(R.string.device_notification_channel_name),
+                context.getString(R.string.device_notification_channel_description),
+                NotificationManager.IMPORTANCE_DEFAULT
+            ),
+            createNotificationChannel(
+                PushNotificationsGroup.GeneralNotifChannelId,
+                PushNotificationsGroup.ID,
+                context.getString(R.string.general_notification_channel_name),
+                context.getString(R.string.general_notification_channel_description),
+                NotificationManager.IMPORTANCE_DEFAULT,
+                vibrationEnabled = true
+            ),
+            //// END: PushNotificationsGroup
 
-                //// BEGIN: MiscellaneousGroup
-                createNotificationChannel(
-                    MiscellaneousGroup.OtaUrlSubmittedNotifChannelId,
-                    MiscellaneousGroup.ID,
-                    context.getString(R.string.url_submitted_notification_channel_name),
-                    context.getString(R.string.url_submitted_notification_channel_description),
-                    NotificationManager.IMPORTANCE_LOW
-                ),
-                //// END: MiscellaneousGroup
-            )
+            //// BEGIN: MiscellaneousGroup
+            createNotificationChannel(
+                MiscellaneousGroup.OtaUrlSubmittedNotifChannelId,
+                MiscellaneousGroup.ID,
+                context.getString(R.string.url_submitted_notification_channel_name),
+                context.getString(R.string.url_submitted_notification_channel_description),
+                NotificationManager.IMPORTANCE_LOW
+            ),
+            //// END: MiscellaneousGroup
         )
-    }
+    )
 
     /**
      * Utility function to configure and create a notification channel.
@@ -189,18 +187,12 @@ class NotificationUtils(private val context: Context) {
         importance: Int,
         lightsEnabled: Boolean = true,
         vibrationEnabled: Boolean = false,
-    ) = NotificationChannel(
-        channelId,
-        channelName,
-        importance
-    ).apply {
+    ) = NotificationChannel(channelId, channelName, importance).apply {
         group = groupId
         description = channelDescription
 
         // Force-disable sound for LOW & MIN importance notifications
-        if (importance < NotificationManager.IMPORTANCE_DEFAULT) {
-            setSound(null, null)
-        }
+        if (importance < NotificationManager.IMPORTANCE_DEFAULT) setSound(null, null)
 
         // Sets the notification light color for notifications posted to this
         // channel, if the device supports this feature.
@@ -221,8 +213,6 @@ data class NotifStatus(@Size(3) val disabled: List<Boolean>? = null)
  * * Foreground: Multiples of 100
  *
  * Intermediate values (e.g. 11, 102, 1005, etc) can be used to further differentiate between the same category
- *
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
 object NotificationIds {
     private const val localIdMultiplier = 10

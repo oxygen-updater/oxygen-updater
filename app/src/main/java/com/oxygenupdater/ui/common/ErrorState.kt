@@ -34,7 +34,7 @@ fun ErrorState(
     icon: ImageVector = Icons.Rounded.ErrorOutline,
     @StringRes textResId: Int = R.string.error_maintenance_retry,
     rich: Boolean = true,
-    refresh: (() -> Unit)?,
+    onRefreshClick: (() -> Unit)?,
 ) = if (navType != NavType.BottomBar) Row(modifierMaxWidth) {
     Icon(
         imageVector = icon,
@@ -54,7 +54,7 @@ fun ErrorState(
             modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
         )
 
-        if (refresh != null) OutlinedIconButton(refresh, Icons.Rounded.Refresh, R.string.download_error_retry)
+        if (onRefreshClick != null) OutlinedIconButton(onRefreshClick, Icons.Rounded.Refresh, R.string.download_error_retry)
         ConditionalNavBarPadding(navType)
     }
 } else Column(
@@ -86,7 +86,7 @@ fun ErrorState(
         modifier = modifierDefaultPadding
     )
 
-    if (refresh != null) OutlinedIconButton(refresh, Icons.Rounded.Refresh, R.string.download_error_retry)
+    if (onRefreshClick != null) OutlinedIconButton(onRefreshClick, Icons.Rounded.Refresh, R.string.download_error_retry)
     ConditionalNavBarPadding(navType)
 }
 
@@ -96,6 +96,6 @@ fun PreviewErrorState() = PreviewAppTheme {
     ErrorState(
         navType = NavType.from(PreviewWindowSize.widthSizeClass),
         titleResId = R.string.error_maintenance,
-        refresh = {},
+        onRefreshClick = {},
     )
 }

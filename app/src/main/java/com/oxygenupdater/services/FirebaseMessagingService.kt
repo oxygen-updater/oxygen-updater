@@ -1,31 +1,48 @@
 package com.oxygenupdater.services
 
+import android.content.SharedPreferences
 import androidx.work.BackoffPolicy
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.internal.settings.KeyFirebaseToken
+import com.oxygenupdater.internal.settings.KeyNotificationDelayInSeconds
 import com.oxygenupdater.utils.FcmUtils
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.workers.DisplayDelayedNotificationWorker
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class FirebaseMessagingService : FirebaseMessagingService() {
 
-    private val workManager by inject<WorkManager>()
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
+
+    @Inject
+    lateinit var workManager: WorkManager
+
+    @Inject
+    lateinit var fcmUtils: FcmUtils
+
+    @Inject
+    lateinit var crashlytics: FirebaseCrashlytics
 
     override fun onNewToken(token: String) {
         logDebug(TAG, "Received new Firebase token: $token")
-        PrefManager.putString(PrefManager.KeyFirebaseToken, token)
-        FcmUtils.resubscribe()
+        sharedPreferences[KeyFirebaseToken] = token
+        fcmUtils.resubscribe()
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) = try {
@@ -47,7 +64,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         }.let {
             if (!it) return@let // new version notifications should be shown immediately
 
-            val serverSpecifiedDelay = PrefManager.getInt(PrefManager.KeyNotificationDelayInSeconds, 10)
+            val serverSpecifiedDelay = sharedPreferences[KeyNotificationDelayInSeconds, 10]
             val delay = Random.nextLong(1, serverSpecifiedDelay.coerceAtLeast(2).toLong())
             logDebug(TAG, "Displaying push notification in $delay second(s)")
             oneTimeWorkRequest.setInitialDelay(delay, TimeUnit.SECONDS)
@@ -55,7 +72,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
         workManager.enqueue(oneTimeWorkRequest.build()).let {}
     } catch (e: Exception) {
-        logError(TAG, "Error dispatching push notification", e)
+        crashlytics.logError(TAG, "Error dispatching push notification", e)
     }
 
     companion object {

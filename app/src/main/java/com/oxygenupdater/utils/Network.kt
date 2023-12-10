@@ -19,9 +19,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 
 private const val TAG = "OxygenUpdaterNetwork"
 private const val UserAgentTag = "User-Agent"

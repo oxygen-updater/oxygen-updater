@@ -32,7 +32,9 @@ import com.oxygenupdater.utils.ContributorUtils
 @Composable
 fun MainMenu(
     serverMessages: List<ServerMessage>,
-    showMarkAllRead: Boolean, markAllRead: () -> Unit,
+    showMarkAllRead: Boolean,
+    onMarkAllReadClick: () -> Unit,
+    onContributorEnrollmentChange: (Boolean) -> Unit,
 ) {
     AnnouncementsMenuItem(serverMessages = serverMessages)
 
@@ -54,12 +56,15 @@ fun MainMenu(
                 icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
                 textResId = R.string.news_mark_all_read,
             ) {
-                markAllRead()
+                onMarkAllReadClick()
                 showMenu = false
             }
 
             // OTA URL contribution
-            if (showBecomeContributor) ContributorMenuItem { showMenu = false }
+            if (showBecomeContributor) ContributorMenuItem(
+                onDismiss = { showMenu = false },
+                onContributorEnrollmentChange = onContributorEnrollmentChange,
+            )
         }
     }
 }
@@ -78,7 +83,10 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
 }
 
 @Composable
-private fun ContributorMenuItem(onDismiss: () -> Unit) {
+private fun ContributorMenuItem(
+    onDismiss: () -> Unit,
+    onContributorEnrollmentChange: (Boolean) -> Unit,
+) {
     var showSheet by rememberSaveableState("showContributorSheet", false)
 
     DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
@@ -86,7 +94,12 @@ private fun ContributorMenuItem(onDismiss: () -> Unit) {
         onDismiss()
     }
 
-    if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it, true) }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) {
+        ContributorSheet(
+            hide = it,
+            confirm = onContributorEnrollmentChange,
+        )
+    }
 }
 
 @PreviewThemes
@@ -119,7 +132,8 @@ fun PreviewMainMenu() = PreviewAppTheme {
                 ),
             ),
             showMarkAllRead = true,
-            markAllRead = {},
+            onMarkAllReadClick = {},
+            onContributorEnrollmentChange = {},
         )
     }
 }

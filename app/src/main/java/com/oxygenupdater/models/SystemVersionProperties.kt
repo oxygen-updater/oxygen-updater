@@ -2,10 +2,9 @@ package com.oxygenupdater.models
 
 import android.os.Build
 import android.os.Build.UNKNOWN
+import android.util.Log
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.logError
-import com.oxygenupdater.utils.logVerbose
+import com.oxygenupdater.utils.logInfo
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
@@ -47,7 +46,9 @@ object SystemVersionProperties {
 
     /**
      * This isn't a workaround, but was introduced in the first Open Beta for 7T-series.
-     * These keys will be checked on all devices, for better future-proofing, and saved to shared prefs.
+     * These keys will be checked on all devices, for better future-proofing.
+     *
+     * Note: this value used to be saved to shared prefs prior to v6 stable, but now it's in [isEuBuild].
      */
     private val BuildEuLookupKeys = arrayOf("ro.build.eu", "ro.vendor.build.eu")
 
@@ -91,12 +92,15 @@ object SystemVersionProperties {
      */
     val osType: String
 
+    val isEuBuild: Boolean
+
     init {
         // Default to something sensible or set to Build.UNKNOWN
         var oxygenDeviceName = Build.PRODUCT
         var oxygenOSVersion = Build.DISPLAY
         var oxygenOSOTAVersion = UNKNOWN
         var osType = UNKNOWN
+        var isEuBuild = false
         var securityPatchDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Build.VERSION.SECURITY_PATCH
         } else UNKNOWN // read later on
@@ -158,10 +162,7 @@ object SystemVersionProperties {
             }
 
             val euBooleanStr = pickFirstValid(BuildEuLookupKeys) { _, value -> value }
-            PrefManager.putBoolean(
-                PrefManager.KeyIsEuBuild,
-                if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
-            )
+            isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
             oxygenOSOTAVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
 
@@ -175,10 +176,8 @@ object SystemVersionProperties {
                 securityPatchDate = systemProperty(SecurityPatchLookupKey)
             }
         } catch (e: Exception) {
-            logError(TAG, e.localizedMessage ?: "$e", e)
-
             try {
-                logVerbose(TAG, "Fast path via `android.os.SystemProperties` failed; falling back to slower getprop output parse")
+                logInfo(TAG, "Fast path via `android.os.SystemProperties` failed; falling back to slower getprop output parse", e)
 
                 val getBuildPropProcess = Runtime.getRuntime().exec("getprop")
 
@@ -217,24 +216,21 @@ object SystemVersionProperties {
                     BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion
                 )
 
+                val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    if (oxygenDeviceName == OnePlusPad) {
+                        // Skip EUEX because that's already supported as OPD2203EEA
+                        if (pipeline != "EUEX") oxygenDeviceName += pipeline
+                    } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
+                        // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
+                        // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
+                        // model number is used for both regions. Not sure if future builds would also be affected.
+                        if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                    }
+                }
+
                 val euBooleanStr = readBuildPropItem(BuildEuLookupKeys, properties)
-                PrefManager.putBoolean(
-                    PrefManager.KeyIsEuBuild, if (euBooleanStr == UNKNOWN) {
-                        val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            if (oxygenDeviceName == OnePlusPad) {
-                                // Skip EUEX because that's already supported as OPD2203EEA
-                                if (pipeline != "EUEX") oxygenDeviceName += pipeline
-                            } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
-                                // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
-                                // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
-                                // model number is used for both regions. Not sure if future builds would also be affected.
-                                if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
-                            }
-                        }
-                        pipeline.startsWith("EU")
-                    } else euBooleanStr.toBoolean()
-                )
+                isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
                 oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties)
 
@@ -248,7 +244,7 @@ object SystemVersionProperties {
                     securityPatchDate = readBuildPropItem(SecurityPatchLookupKey, properties)
                 }
             } catch (e: Exception) {
-                logError(TAG, e.localizedMessage ?: "$e", e)
+                Log.e(TAG, e.localizedMessage ?: "$e", e)
             }
         }
 
@@ -257,6 +253,7 @@ object SystemVersionProperties {
         this.oxygenOSOTAVersion = oxygenOSOTAVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
+        this.isEuBuild = isEuBuild
     }
 
     private inline fun pickFirstValid(

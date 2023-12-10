@@ -9,9 +9,6 @@ import androidx.room.Update
 import com.oxygenupdater.models.UpdateData
 import kotlinx.coroutines.flow.Flow
 
-/**
- * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
- */
 @Dao
 interface UpdateDataDao {
 

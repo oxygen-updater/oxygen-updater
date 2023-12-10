@@ -2,32 +2,61 @@ package com.oxygenupdater
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import androidx.core.content.getSystemService
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.database.SqliteMigrations
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.MD5
-import com.oxygenupdater.utils.NotificationUtils
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.internal.settings.KeyShareAnalyticsAndLogs
+import com.oxygenupdater.internal.settings.KeyVersionCode
+import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.utils.NotifUtils
+import com.oxygenupdater.utils.calculateMD5
 import com.oxygenupdater.utils.logError
 import com.topjohnwu.superuser.Shell
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.koin.android.ext.android.inject
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import java.security.NoSuchAlgorithmException
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
 
-class OxygenUpdater : Application() {
+@HiltAndroidApp
+class OxygenUpdater : Application(), Configuration.Provider {
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    /**
+     * Must be a getter (i.e. `get()` instead of a normal `val`) to avoid:
+     * ```UninitializedPropertyAccessException: lateinit property workerFactory has not been initialized```
+     */
+    override val workManagerConfiguration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .setMinimumLoggingLevel(if (BuildConfig.DEBUG) Log.DEBUG else Log.ERROR)
+            .build()
+
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
+
+    @Inject
+    lateinit var crashlytics: FirebaseCrashlytics
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     init {
         // Set settings before the main shell can be created
@@ -67,45 +96,32 @@ class OxygenUpdater : Application() {
     }
 
     override fun onCreate() {
-        setupKoin()
         super.onCreate()
 
         setupCrashReporting()
         setupNetworkCallback()
 
-        // Support functions for Android 8.0 "Oreo" and up.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotificationUtils(this).run {
-            deleteOldNotificationChannels()
-            createNewNotificationGroupsAndChannels()
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotifUtils.refreshNotificationChannels(this)
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
-        PrefManager.putInt(PrefManager.KeyVersionCode, BuildConfig.VERSION_CODE)
+        sharedPreferences[KeyVersionCode] = BuildConfig.VERSION_CODE
         SqliteMigrations.deleteLocalBillingDatabase(this)
     }
 
-    private fun setupKoin() = startKoin {
-        // use AndroidLogger as Koin Logger - default Level.INFO
-        androidLogger(Level.ERROR)
-        // use the Android context given there
-        androidContext(this@OxygenUpdater)
-        // module list
-        modules(allModules)
-    }
+    /**
+     * Syncs analytics and crashlytics collection to user's preference.
+     *
+     * @see [FirebaseAnalytics.setAnalyticsCollectionEnabled]
+     * @see [FirebaseCrashlytics.setCrashlyticsCollectionEnabled]
+     */
+    fun setupCrashReporting() {
+        analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
 
-    private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {
-        // Posting initial value is required, as [networkCallback]'s
-        // methods get called only when network connectivity changes
-        @Suppress("DEPRECATION")
-        _isNetworkAvailable.tryEmit(activeNetworkInfo?.isConnectedOrConnecting == true)
-
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                registerDefaultNetworkCallback(networkCallback)
-            } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
-        } catch (e: Exception) {
-            logError(TAG, "Couldn't setup network callback", e)
-        }
+        val shouldShareLogs = sharedPreferences[KeyShareAnalyticsAndLogs, true]
+        // Sync analytics collection to user's preference
+        analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
+        // Sync crashlytics collection to user's preference, but only if we're on a release build
+        crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
     }
 
     private val mobileAdsInitDone = AtomicBoolean(false)
@@ -119,7 +135,12 @@ class OxygenUpdater : Application() {
             try {
                 @SuppressLint("HardwareIds")
                 val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-                val deviceId = MD5.calculateMD5(androidId).uppercase()
+                val deviceId = try {
+                    calculateMD5(androidId).uppercase()
+                } catch (e: NoSuchAlgorithmException) {
+                    crashlytics.logError(TAG, e.message ?: "MD5 algorithm not found", e)
+                    ""
+                }
                 add(deviceId)
             } catch (_: Exception) {
                 // no-op
@@ -137,28 +158,19 @@ class OxygenUpdater : Application() {
         MobileAds.setAppVolume(0.1f)
     }
 
-    /**
-     * Syncs analytics and crashlytics collection to user's preference.
-     *
-     * @param shouldShareLogs user's preference for log sharing. Note that if
-     * it's set to false, it does not take effect until the next app launch.
-     *
-     * @see [FirebaseAnalytics.setAnalyticsCollectionEnabled]
-     * @see [FirebaseCrashlytics.setCrashlyticsCollectionEnabled]
-     */
-    fun setupCrashReporting(
-        shouldShareLogs: Boolean = PrefManager.getBoolean(
-            PrefManager.KeyShareAnalyticsAndLogs,
-            true
-        ),
-    ) {
-        val analytics by inject<FirebaseAnalytics>()
-        val crashlytics by inject<FirebaseCrashlytics>()
+    private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {
+        // Posting initial value is required, as [networkCallback]'s
+        // methods get called only when network connectivity changes
+        @Suppress("DEPRECATION")
+        _isNetworkAvailable.tryEmit(activeNetworkInfo?.isConnectedOrConnecting == true)
 
-        // Sync analytics collection to user's preference
-        analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
-        // Sync crashlytics collection to user's preference, but only if we're on a release build
-        crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                registerDefaultNetworkCallback(networkCallback)
+            } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
+        } catch (e: SecurityException) {
+            crashlytics.logError(TAG, "Couldn't setup network callback", e)
+        }
     }
 
     @Suppress("unused")

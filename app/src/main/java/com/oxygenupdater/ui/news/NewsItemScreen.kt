@@ -68,7 +68,7 @@ fun NewsItemScreen(
     webViewState: WebViewState,
     navigator: WebViewNavigator,
     showAds: Boolean,
-    bannerAdInit: (AdView) -> Unit,
+    onBannerAdInit: (AdView) -> Unit,
     onError: (String) -> Unit,
     onLoadFinished: (NewsItem) -> Unit,
 ) {
@@ -130,7 +130,7 @@ fun NewsItemScreen(
         if (showAds) BannerAd(
             adUnitId = BuildConfig.AD_BANNER_NEWS_ID,
             adListener = adLoadListener { adLoaded = it },
-            viewUpdated = bannerAdInit,
+            onViewUpdate = onBannerAdInit,
             // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
             modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
         )
@@ -296,7 +296,7 @@ fun PreviewNewsItemScreen() = PreviewAppTheme {
         webViewState = rememberSaveableWebViewState(),
         navigator = rememberWebViewNavigator(),
         showAds = true,
-        bannerAdInit = {},
+        onBannerAdInit = {},
         onError = {},
         onLoadFinished = {},
         modifier = Modifier,

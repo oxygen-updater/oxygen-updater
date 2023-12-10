@@ -10,21 +10,12 @@ package com.oxygenupdater.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 
-internal object MD5 {
+fun calculateMD5(data: String): String {
+    // Create MD5 Hash
+    val digest = MessageDigest.getInstance("MD5")
+    val messageDigest = digest.digest(data.toByteArray())
 
-    private const val TAG = "MD5"
-
-    fun calculateMD5(deviceId: String) = try {
-        // Create MD5 Hash
-        val digest = MessageDigest.getInstance("MD5")
-        val messageDigest = digest.digest(deviceId.toByteArray())
-
-        // Create Hex String
-        String.format("%032x", BigInteger(1, messageDigest))
-    } catch (e: NoSuchAlgorithmException) {
-        logError(TAG, e.message ?: "MD5 algorithm not found", e)
-        ""
-    }
+    // Create Hex String
+    return String.format("%032x", BigInteger(1, messageDigest))
 }

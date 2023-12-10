@@ -6,7 +6,6 @@ import android.util.TypedValue
 import androidx.annotation.Dimension
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceOsSpec.Companion.CarrierExclusiveOxygenOs
@@ -14,7 +13,6 @@ import com.oxygenupdater.models.DeviceOsSpec.Companion.SupportedOxygenOs
 import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOs
 import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOxygenOs
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.ui.device.defaultDeviceName
 import java.time.ZoneId
 
 object Utils {
@@ -95,61 +93,51 @@ object Utils {
         }
     }
 
-    fun checkDeviceMismatch(devices: List<Device>?): Triple<Boolean, String, String> {
-        val default = defaultDeviceName()
-        val savedDeviceName = PrefManager.getString(PrefManager.KeyDevice, default) ?: default
-
+    /**
+     * @return [Pair] where the first value denotes if the chosen device is incorrect,
+     * and the second is the actual device name (`null` if we no match was found).
+     */
+    fun checkDeviceMismatch(devices: List<Device>?, savedDeviceId: Long): Pair<Boolean, String?> {
         val productName = SystemVersionProperties.oxygenDeviceName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
             Pair(this[0], if (size > 1) this[1] else null)
         }
 
-        val isStableTrack = SystemVersionProperties.osType.equals(
-            "stable",
-            true
-        )
-
         var chosenDevice: Device? = null
         var matchedDevice: Device? = null
         devices?.forEach {
-            if (it.name == savedDeviceName) {
-                chosenDevice = it
-            }
-
-            // Filter out disabled devices, because that's handled
-            // by [checkDeviceOsSpec] already.
-            if (it.enabled && it.productNames.contains(productName)) {
-                matchedDevice = it
-            }
-
             // Break out if we found what we're looking for
-            if (chosenDevice != null && matchedDevice != null) {
-                return@forEach
-            }
+            if (chosenDevice != null && matchedDevice != null) return@forEach
+
+            if (it.id == savedDeviceId) chosenDevice = it
+
+            /** Filter out disabled devices; [checkDeviceOsSpec] handles those already. */
+            if (it.enabled && it.productNames.contains(productName)) matchedDevice = it
         }
 
-        // If the currently installed OS track is "Stable", `productName` should match exactly.
-        // Otherwise we should check `deviceCode` and `regionCode` individually, because other
-        // tracks (Alpha, Beta, Developer Preview, etc.) may not have any regional builds.
-        // In such cases, `regionCode` defaults to global (i.e. `null` instead of EEA/IND).
-        // So we must check if `deviceCode` and `regionCode` match (or if `regionCode` is `null`)
-        // Otherwise we assume the user is responsible enough to choose the correct device
-        // according to their region.
-        val isChosenDeviceIncorrect = chosenDevice?.productNames?.all {
-            if (isStableTrack) {
-                productName != it
-            } else {
-                it.split("_", limit = 2).run {
-                    val chosenDeviceCode = this[0]
-                    val chosenRegionCode = if (size > 1) this[1] else null
-                    deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
-                }
+        val isStableTrack = SystemVersionProperties.osType.equals("stable", true)
+        val actualDeviceName = matchedDevice?.name
+        val isChosenDeviceIncorrect = if (actualDeviceName == null) {
+            false // don't mark as incorrect if we don't know what the actual device is
+        } else chosenDevice?.productNames?.all {
+            /**
+             * If the currently installed OS track is "Stable", `productName` should match exactly.
+             * Otherwise we should check `deviceCode` and `regionCode` individually, because other
+             * tracks (Alpha, Beta, Developer Preview, etc.) may not have any regional builds.
+             * In such cases, `regionCode` defaults to global (i.e. `null` instead of EEA/IND).
+             * So we must check if `deviceCode` and `regionCode` match (or if `regionCode` is `null`)
+             * Otherwise we assume the user is responsible enough to choose the correct device
+             * according to their region.
+             *
+             * Note that this is required only for legacy reasons, before the Oppo merger.
+             */
+            if (isStableTrack) productName != it else it.split("_", limit = 2).run {
+                val chosenDeviceCode = this[0]
+                val chosenRegionCode = if (size > 1) this[1] else null
+                deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
             }
         } ?: false
 
-        val actualDeviceName = matchedDevice?.name ?: default
-
-        // Don't show mismatch dialog if we don't know what the actual device is
-        return Triple(if (actualDeviceName == default) false else isChosenDeviceIncorrect, savedDeviceName, actualDeviceName)
+        return isChosenDeviceIncorrect to actualDeviceName
     }
 }

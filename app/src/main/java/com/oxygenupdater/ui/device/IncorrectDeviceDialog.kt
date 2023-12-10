@@ -11,19 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.dialogs.AlertDialog
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
+fun IncorrectDeviceDialog(
+    hide: (Boolean) -> Unit,
+    mismatchStatus: Triple<Boolean, String, String>,
+) {
     var ignore by remember { mutableStateOf(false) }
     var show by remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) }
     if (show) AlertDialog(
         action = {
-            PrefManager.putBoolean(PrefManager.KeyIgnoreIncorrectDeviceWarnings, ignore)
+            hide(ignore)
             show = false
         },
         titleResId = R.string.incorrect_device_warning_title,
@@ -42,6 +44,7 @@ fun IncorrectDeviceDialog(mismatchStatus: Triple<Boolean, String, String>) {
 @Composable
 fun PreviewIncorrectDeviceDialog() = PreviewAppTheme {
     IncorrectDeviceDialog(
+        hide = {},
         mismatchStatus = Triple(true, "OnePlus 7 Pro", "OnePlus 8T"),
     )
 }

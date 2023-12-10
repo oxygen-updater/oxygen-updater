@@ -1,44 +1,77 @@
 package com.oxygenupdater.ui.settings
 
+import android.content.SharedPreferences
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.remove
+import com.oxygenupdater.extensions.set
+import com.oxygenupdater.extensions.setIdAndName
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
+import com.oxygenupdater.internal.settings.KeyDevice
+import com.oxygenupdater.internal.settings.KeyDeviceId
+import com.oxygenupdater.internal.settings.KeyThemeId
+import com.oxygenupdater.internal.settings.KeyUpdateMethod
+import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
+import com.oxygenupdater.models.SelectableModel
 import com.oxygenupdater.models.SystemVersionProperties.oxygenDeviceName
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
-import com.oxygenupdater.ui.SettingsListWrapper
+import com.oxygenupdater.ui.SettingsListConfig
+import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.utils.FcmUtils
+import com.oxygenupdater.utils.logDebug
 import com.topjohnwu.superuser.Shell
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingsViewModel(
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    private val sharedPreferences: SharedPreferences,
     private val serverRepository: ServerRepository,
+    private val fcmUtils: FcmUtils,
     private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
-    var initialDeviceIndex = NotSet
-    var initialMethodIndex = NotSet
+    private var initialDeviceIndex = NotSet
+    private var initialMethodIndex = NotSet
+
     var deviceName: String? = null
+        private set
 
-    private val enabledDevicesFlow = MutableStateFlow<List<Device>>(listOf())
-    private val methodsForDeviceFlow = MutableStateFlow<List<UpdateMethod>>(listOf())
+    var theme by mutableStateOf(Theme.from(sharedPreferences[KeyThemeId, Theme.System.value]))
+        private set
 
-    val state = enabledDevicesFlow.combine(methodsForDeviceFlow) { devices, methods ->
-        SettingsListWrapper(devices, methods)
-    }.stateIn(
+    fun updateTheme(theme: Theme) {
+        sharedPreferences[KeyThemeId] = theme.value
+        this.theme = theme
+    }
+
+    private val deviceConfigFlow = MutableStateFlow(SettingsListConfig(listOf<Device>(), 0, NotSetL))
+    private val methodConfigFlow = MutableStateFlow(SettingsListConfig(listOf<UpdateMethod>(), 0, NotSetL))
+
+    val deviceConfigState = deviceConfigFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = SettingsListWrapper(enabledDevicesFlow.value, methodsForDeviceFlow.value)
+        initialValue = deviceConfigFlow.value
+    )
+
+    val methodConfigState = methodConfigFlow.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = methodConfigFlow.value
     )
 
     fun fetchEnabledDevices(cached: List<Device>? = null) = viewModelScope.launch(Dispatchers.IO) {
@@ -47,7 +80,6 @@ class SettingsViewModel(
         } else cached
 
         setup(enabledDevices)
-        enabledDevicesFlow.emit(enabledDevices)
     }
 
     private fun setup(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
@@ -55,9 +87,10 @@ class SettingsViewModel(
         initialDeviceIndex = NotSet
         deviceName = null
 
-        val deviceId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
+        val deviceId = sharedPreferences[KeyDeviceId, NotSetL]
         for ((index, device) in enabledDevices.withIndex()) {
-            if (selectedDeviceIndex != NotSet && initialDeviceIndex != NotSet && deviceName != null) break // take first match only
+            // Take first match only
+            if (selectedDeviceIndex != NotSet && initialDeviceIndex != NotSet && deviceName != null) break
 
             var matched: Boolean? = null  // save computation for future use
             if (deviceName == null) { // take first match only
@@ -73,15 +106,23 @@ class SettingsViewModel(
         val size = enabledDevices.size
         if (selectedDeviceIndex == NotSet) selectedDeviceIndex = if (size == 1) 0 else initialDeviceIndex
 
+        deviceConfigFlow.emitIfChanged(
+            list = enabledDevices,
+            initialIndex = initialDeviceIndex,
+            selectedId = if (selectedDeviceIndex == NotSet) deviceId else {
+                enabledDevices.getOrNull(selectedDeviceIndex)?.id ?: NotSetL
+            },
+        )
+
         if (selectedDeviceIndex != NotSet && selectedDeviceIndex < size) {
-            // Persist only if there's no device saved yet. This call also fetches methods for device.
-            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId == NotSetL)
+            // This call also fetches methods for device
+            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId, deviceId == NotSetL)
         }
     }
 
     private fun fetchMethodsForDevice(deviceId: Long) = viewModelScope.launch(Dispatchers.IO) {
         val methods = serverRepository.fetchUpdateMethodsForDevice(deviceId) ?: listOf()
-        val methodId = PrefManager.getLong(PrefManager.KeyUpdateMethodId, NotSetL)
+        val methodId = sharedPreferences[KeyUpdateMethodId, NotSetL]
         var selectedMethodIndex = if (methodId == NotSetL) NotSet else methods.indexOfFirst {
             it.id == methodId
         }
@@ -95,57 +136,96 @@ class SettingsViewModel(
         val size = methods.size
         if (selectedMethodIndex == NotSet) selectedMethodIndex = if (size == 1) 0 else initialMethodIndex
 
+        methodConfigFlow.emitIfChanged(
+            list = methods,
+            initialIndex = initialMethodIndex,
+            selectedId = if (selectedMethodIndex == NotSet) methodId else {
+                methods.getOrNull(selectedMethodIndex)?.id ?: NotSetL
+            },
+        )
+
         if (selectedMethodIndex != NotSet && selectedMethodIndex < size) {
-            // Persist only if there's no method saved yet
             saveSelectedMethod(methods[selectedMethodIndex], methodId == NotSetL)
         }
-
-        methodsForDeviceFlow.emit(methods)
     }
 
     /**
-     * Saves device ID & name in [android.content.SharedPreferences].
-     * Additionally, refreshes [methodsForDeviceFlow] via [fetchMethodsForDevice].
+     * Saves device ID & name in [SharedPreferences].
+     * Additionally, refreshes [methodConfigFlow] via [fetchMethodsForDevice].
      */
-    fun saveSelectedDevice(device: Device, persist: Boolean = true) {
+    fun saveSelectedDevice(
+        device: Device,
+        oldId: Long = sharedPreferences[KeyDeviceId, NotSetL],
+        persist: Boolean = true,
+    ) {
         val id = device.id
 
         // Clear methods if device changed
-        val oldId = PrefManager.getLong(PrefManager.KeyDeviceId, NotSetL)
         if (oldId != NotSetL && oldId != id) {
-            methodsForDeviceFlow.value = listOf()
-            PrefManager.remove(PrefManager.KeyUpdateMethodId)
-            PrefManager.remove(PrefManager.KeyUpdateMethod)
+            logDebug(TAG, "Device changed ($oldId -> $id); clearing saved method")
+            methodConfigFlow.tryEmit(SettingsListConfig(listOf(), initialMethodIndex, NotSetL))
+            sharedPreferences.remove(KeyUpdateMethodId, KeyUpdateMethod)
         }
 
         if (persist) {
-            PrefManager.putLong(PrefManager.KeyDeviceId, id)
-            PrefManager.putString(PrefManager.KeyDevice, device.name)
+            logDebug(TAG, "Persisting device #$id: ${device.name}")
+            // Persist only if there's no device saved yet (most likely first-launch)
+            sharedPreferences.setIdAndName(KeyDevice, id, device.name)
+
+            deviceConfigFlow.emitIfChanged(
+                initialIndex = initialDeviceIndex,
+                selectedId = id,
+            )
         }
 
         fetchMethodsForDevice(id)
     }
 
     /**
-     * Saves method ID & name in [android.content.SharedPreferences].
-     * Additionally, updates [FirebaseCrashlytics]' user identifier.
+     * Saves method ID & name in [SharedPreferences].
+     * Additionally, updates [FirebaseCrashlytics] user identifier.
      */
-    fun saveSelectedMethod(method: UpdateMethod, persist: Boolean = true) {
+    fun saveSelectedMethod(
+        method: UpdateMethod,
+        persist: Boolean = true,
+    ) {
+        val id = method.id
+
         if (persist) {
-            PrefManager.putLong(PrefManager.KeyUpdateMethodId, method.id)
-            PrefManager.putString(PrefManager.KeyUpdateMethod, method.name)
+            logDebug(TAG, "Persisting method #$id: ${method.name}")
+            // Persist only if there's no method saved yet (most likely first-launch)
+            sharedPreferences.setIdAndName(KeyUpdateMethod, id, method.name)
+
+            methodConfigFlow.emitIfChanged(
+                initialIndex = initialMethodIndex,
+                selectedId = id,
+            )
         }
 
         updateCrashlyticsUserId()
     }
 
     fun updateCrashlyticsUserId() {
-        val device = PrefManager.getString(PrefManager.KeyDevice, "<UNKNOWN>")
-        val method = PrefManager.getString(PrefManager.KeyUpdateMethod, "<UNKNOWN>")
+        val device = sharedPreferences[KeyDevice, "<UNKNOWN>"]
+        val method = sharedPreferences[KeyUpdateMethod, "<UNKNOWN>"]
         crashlytics.setUserId("Device: $device, Update Method: $method")
     }
 
     fun resubscribeToFcmTopic() = viewModelScope.launch(Dispatchers.IO) {
-        FcmUtils.resubscribe()
+        fcmUtils.resubscribe()
+    }
+
+    private fun <T : SelectableModel> MutableStateFlow<SettingsListConfig<T>>.emitIfChanged(
+        list: List<T> = value.list,
+        initialIndex: Int,
+        selectedId: Long,
+    ) {
+        if (list == value.list && initialIndex == value.initialIndex && selectedId == value.selectedId) return
+
+        tryEmit(SettingsListConfig(list, initialIndex, selectedId))
+    }
+
+    companion object {
+        private const val TAG = "SettingsViewModel"
     }
 }

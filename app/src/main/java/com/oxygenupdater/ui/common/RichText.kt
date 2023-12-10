@@ -99,7 +99,6 @@ fun RichText(
             // Fallback: copy to clipboard instead
             context.copyToClipboard(url)
         }
-
     }
 }
 

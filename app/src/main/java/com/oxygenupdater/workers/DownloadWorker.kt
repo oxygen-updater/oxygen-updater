@@ -3,6 +3,7 @@ package com.oxygenupdater.workers
 import android.app.Notification
 import android.app.Notification.CATEGORY_PROGRESS
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
@@ -11,8 +12,8 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.hilt.work.HiltWorker
 import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
 import androidx.work.Data
@@ -22,16 +23,20 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.R
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.extensions.formatFileSize
+import com.oxygenupdater.extensions.get
+import com.oxygenupdater.extensions.remove
+import com.oxygenupdater.extensions.set
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.internal.settings.PrefManager.KeyDownloadBytesDone
+import com.oxygenupdater.internal.settings.KeyDownloadBytesDone
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.update.DownloadFailure
+import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
@@ -41,9 +46,10 @@ import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logWarning
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent.getKoin
 import java.io.File
 import java.io.IOException
 import java.io.RandomAccessFile
@@ -55,9 +61,14 @@ import kotlin.math.abs
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class DownloadWorker(
-    private val context: Context,
-    parameters: WorkerParameters,
+@HiltWorker
+class DownloadWorker @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @Assisted parameters: WorkerParameters,
+    private val sharedPreferences: SharedPreferences,
+    private val downloadApi: DownloadApi,
+    private val workManager: WorkManager,
+    private val crashlytics: FirebaseCrashlytics,
 ) : CoroutineWorker(context, parameters) {
 
     private var isFirstPublish = true
@@ -68,10 +79,6 @@ class DownloadWorker(
     private lateinit var tempFile: File
     private lateinit var zipFile: File
     private lateinit var notification: Notification
-
-    private val downloadApi by getKoin().inject<DownloadApi>()
-    private val workManager by getKoin().inject<WorkManager>()
-    private val notificationManager by getKoin().inject<NotificationManagerCompat>()
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         // Mark the Worker as important
@@ -158,10 +165,7 @@ class DownloadWorker(
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        notificationManager.apply {
-            cancel(NotificationIds.LocalDownload)
-            cancel(NotificationIds.LocalMd5Verification)
-        }
+        LocalNotifications.hideDownloadCompleteNotification(context)
 
         return notification
     }
@@ -176,7 +180,7 @@ class DownloadWorker(
     private suspend fun trySetForeground(notification: Notification) = try {
         setForeground(foregroundInfo(notification))
     } catch (e: Exception) {
-        logError(TAG, "setForeground failed", e)
+        crashlytics.logError(TAG, "setForeground failed", e)
     }
 
     /** Must be overridden because we use [WorkRequest.Builder.setExpedited] */
@@ -193,17 +197,17 @@ class DownloadWorker(
         tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
         zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, updateData.filename!!)
 
-        var startingByte = PrefManager.getLong(KeyDownloadBytesDone, NotSetL)
+        var startingByte = sharedPreferences[KeyDownloadBytesDone, NotSetL]
         var rangeHeader = if (startingByte != NotSetL) "bytes=$startingByte-" else null
 
         if (startingByte != NotSetL) {
             logDebug(TAG, "Looks like a resume operation. Adding $rangeHeader to the request")
 
-            if (tempFile.length() > startingByte) logWarning(
+            if (tempFile.length() > startingByte) crashlytics.logWarning(
                 TAG,
                 "Partially downloaded ZIP size differs from skipped bytes (${tempFile.length()} vs $startingByte)."
             ) else if (tempFile.length() < startingByte) {
-                logWarning(
+                crashlytics.logWarning(
                     TAG,
                     "Partially downloaded ZIP size (${tempFile.length()}) is lesser than skipped bytes ($startingByte). Resetting state."
                 )
@@ -241,10 +245,12 @@ class DownloadWorker(
                 var bytesRead = startingByte.coerceAtLeast(0L)
                 val contentLength = bytesRead + body.contentLength()
 
-                if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) logWarning(
-                    TAG,
-                    "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
-                )
+                if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) {
+                    crashlytics.logWarning(
+                        TAG,
+                        "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
+                    )
+                }
 
                 if (startingByte != NotSetL) {
                     logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
@@ -263,7 +269,7 @@ class DownloadWorker(
                         logDebug(TAG, "Ignoring exception since worker is in stopped state: ${e.message}")
                         Result.success()
                     } else {
-                        logError(TAG, "Exception while reading from byteStream", e)
+                        crashlytics.logError(TAG, "Exception while reading from byteStream", e)
 
                         val retryCount = runAttemptCount + 1
 
@@ -304,11 +310,13 @@ class DownloadWorker(
 
                             else -> {
                                 // Delete any associated tracker preferences to allow retrying this work with a fresh state
-                                PrefManager.remove(KeyDownloadBytesDone)
+                                sharedPreferences.remove(KeyDownloadBytesDone)
 
                                 // Try deleting the file to allow retrying this work with a fresh state
                                 // Even if it doesn't get deleted, we can overwrite data to the same file
-                                if (!tempFile.delete()) logWarning(TAG, "Could not delete the partially downloaded ZIP")
+                                if (!tempFile.delete()) crashlytics.logWarning(
+                                    TAG, "Could not delete the partially downloaded ZIP"
+                                )
 
                                 Result.failure(Data.Builder().apply {
                                     putInt(WorkDataDownloadFailureType, DownloadFailure.Unknown.value)
@@ -319,7 +327,7 @@ class DownloadWorker(
                 }
 
                 logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
-                PrefManager.remove(KeyDownloadBytesDone)
+                sharedPreferences.remove(KeyDownloadBytesDone)
 
                 setProgress(Data.Builder().apply {
                     putLong(WorkDataDownloadBytesDone, contentLength)
@@ -332,7 +340,7 @@ class DownloadWorker(
                 try {
                     moveTempFileToCorrectLocation()
                 } catch (e: IOException) {
-                    logError(TAG, "Could not rename file", e)
+                    crashlytics.logError(TAG, "Could not rename file", e)
 
                     return@withContext Result.failure(Data.Builder().apply {
                         putInt(WorkDataDownloadFailureType, DownloadFailure.CouldNotMoveTempFile.value)
@@ -414,9 +422,9 @@ class DownloadWorker(
         val currentTimestamp = System.currentTimeMillis()
         if (isFirstPublish || currentTimestamp - previousProgressTimestamp > MinMsBetweenProgressPublish) {
             val progress = (bytesDone * 100 / totalBytes).toInt()
-            val previousBytesDone = PrefManager.getLong(KeyDownloadBytesDone, NotSetL)
+            val previousBytesDone = sharedPreferences[KeyDownloadBytesDone, NotSetL]
 
-            PrefManager.putLong(KeyDownloadBytesDone, bytesDone)
+            sharedPreferences[KeyDownloadBytesDone] = bytesDone
 
             val downloadEta = calculateDownloadEta(
                 currentTimestamp,

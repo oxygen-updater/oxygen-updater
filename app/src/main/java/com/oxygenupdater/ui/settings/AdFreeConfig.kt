@@ -6,17 +6,17 @@ import androidx.compose.runtime.remember
 import com.oxygenupdater.R
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.repositories.BillingRepository.SkuState
-import com.oxygenupdater.utils.logBillingError
 
 @Composable
 inline fun adFreeConfig(
     state: SkuState?,
+    crossinline logBillingError: @DisallowComposableCalls () -> Unit,
     crossinline makePurchase: @DisallowComposableCalls (PurchaseType) -> Unit,
     crossinline markPending: @DisallowComposableCalls () -> Unit,
 ) = remember(state) {
     when (state) {
         SkuState.Unknown -> {
-            logBillingError("AdFreeConfig", "SKU '${PurchaseType.AD_FREE.sku}' is not available")
+            logBillingError()
             Triple(false, R.string.settings_buy_button_not_possible, null)
         }
 
