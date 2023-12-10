@@ -11,7 +11,6 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.Announcement
 import com.oxygenupdater.icons.CustomIcons
-import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.ui.common.DropdownMenuItem
 import com.oxygenupdater.ui.common.rememberSaveableState
@@ -82,13 +80,6 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
 @Composable
 private fun ContributorMenuItem(onDismiss: () -> Unit) {
     var showSheet by rememberSaveableState("showContributorSheet", false)
-
-    LaunchedEffect(Unit) { // run only on init
-        // Offer contribution to users from app versions below v2.4.0 and v5.10.1
-        if (ContributorUtils.isAtLeastQAndPossiblyRooted && !PrefManager.contains(PrefManager.KeyContribute)) {
-            showSheet = true
-        }
-    }
 
     DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
         showSheet = true
