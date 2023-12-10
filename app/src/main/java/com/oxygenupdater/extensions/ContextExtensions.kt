@@ -147,11 +147,10 @@ inline fun Context.openAppDetailsPage() = try {
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Suppress("NOTHING_TO_INLINE")
-inline fun Context.openAppLocalePage() = try {
-    startActivity(Intent(Settings.ACTION_APP_LOCALE_SETTINGS, packageNameUri))
-} catch (e: Exception) {
-    logError("ContextExtensions", "openAppLocalePage failed", e)
-}
+@Throws(ActivityNotFoundException::class)
+inline fun Context.openAppLocalePage() = startActivity(
+    Intent(Settings.ACTION_APP_LOCALE_SETTINGS, packageNameUri)
+)
 
 inline val Context.packageNameUri
     get() = "package:$packageName".toUri()

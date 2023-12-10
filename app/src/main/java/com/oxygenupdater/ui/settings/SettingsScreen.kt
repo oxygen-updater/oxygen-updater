@@ -88,6 +88,7 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.utils.ContributorUtils
+import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotificationUtils
 
@@ -366,27 +367,26 @@ private fun Language() {
         }
     }
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        // Delegate to system API on Android 13+
-        val context = LocalContext.current
-        SettingsItem(
-            onClick = context::openAppLocalePage,
-            icon = Icons.Outlined.Language,
-            titleResId = R.string.label_language,
-            subtitle = language,
-        )
-    } else {
-        // Otherwise use our own sheet
-        var showSheet by rememberSaveableState("showLanguageSheet", false)
-        SettingsItem(
-            onClick = { showSheet = true },
-            icon = Icons.Outlined.Language,
-            titleResId = R.string.label_language,
-            subtitle = language,
-        )
+    var showSheet by rememberSaveableState("showLanguageSheet", false)
+    val context = LocalContext.current
+    SettingsItem(
+        onClick = {
+            // Use our own sheet below Android 13
+            showSheet = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) true else try {
+                // Otherwise delegate to system API on Android 13+ if possible
+                context.openAppLocalePage()
+                false
+            } catch (e: Exception) {
+                logError("SettingsScreen", "openAppLocalePage failed", e)
+                true // fallback just in case
+            }
+        },
+        icon = Icons.Outlined.Language,
+        titleResId = R.string.label_language,
+        subtitle = language,
+    )
 
-        if (showSheet) ModalBottomSheet({ showSheet = false }) { LanguageSheet(it, selectedLocale) }
-    }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { LanguageSheet(it, selectedLocale) }
 }
 
 @Composable
