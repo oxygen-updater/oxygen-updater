@@ -204,8 +204,10 @@ class MainViewModel(
         }
 
         return File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, filename).run {
-            if (exists() && !delete()) logWarning(TAG, "Can't delete downloaded file $filename").let { false }
-            true
+            if (exists() && !delete()) {
+                logWarning(TAG, "Can't delete downloaded file $filename")
+                false
+            } else true
         }
     }
 
