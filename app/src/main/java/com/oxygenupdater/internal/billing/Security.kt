@@ -2,8 +2,8 @@ package com.oxygenupdater.internal.billing
 
 import android.util.Base64
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.utils.Logger.logBillingError
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.logBillingError
+import com.oxygenupdater.utils.logError
 import java.security.InvalidKeyException
 import java.security.KeyFactory
 import java.security.NoSuchAlgorithmException

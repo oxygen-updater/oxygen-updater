@@ -9,7 +9,6 @@ import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
 import com.oxygenupdater.internal.BooleanJsonAdapter
 import com.oxygenupdater.internal.CsvListJsonAdapter
-import com.oxygenupdater.utils.Logger.logDebug
 import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.OkHttpClient

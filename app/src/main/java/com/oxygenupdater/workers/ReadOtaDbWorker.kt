@@ -19,10 +19,10 @@ import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.services.RootFileService
 import com.oxygenupdater.services.RootFileService.Companion.FILENAME
 import com.oxygenupdater.utils.LocalNotifications
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.Utils
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

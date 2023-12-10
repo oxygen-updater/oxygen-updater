@@ -13,16 +13,16 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Logger.logVerbose
+import com.oxygenupdater.utils.logError
+import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logVerbose
 import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 
 /**
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
-class ServerRepository constructor(
+class ServerRepository(
     private val serverApi: ServerApi,
     localAppDb: LocalAppDb,
 ) {

@@ -10,8 +10,8 @@ import com.google.firebase.messaging.RemoteMessage
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logError
 import com.oxygenupdater.workers.DisplayDelayedNotificationWorker
 import org.koin.android.ext.android.inject
 import java.util.concurrent.TimeUnit

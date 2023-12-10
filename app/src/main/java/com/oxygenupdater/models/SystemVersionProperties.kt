@@ -4,8 +4,8 @@ import android.os.Build
 import android.os.Build.UNKNOWN
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.internal.settings.PrefManager
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logVerbose
+import com.oxygenupdater.utils.logError
+import com.oxygenupdater.utils.logVerbose
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader

@@ -25,8 +25,8 @@ import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.theme.light
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logError
+import com.oxygenupdater.utils.logWarning
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.

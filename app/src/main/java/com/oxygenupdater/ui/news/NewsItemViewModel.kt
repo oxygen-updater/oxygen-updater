@@ -6,7 +6,7 @@ import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

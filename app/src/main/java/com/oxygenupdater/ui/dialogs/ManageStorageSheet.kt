@@ -26,8 +26,8 @@ import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.update.DownloadAction
-import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logWarning
 import java.util.UUID
 
 /**

@@ -22,7 +22,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.KeyContribute
 import com.oxygenupdater.services.RootFileService
-import com.oxygenupdater.utils.Logger.logVerbose
 import com.oxygenupdater.workers.ReadOtaDbWorker
 import com.oxygenupdater.workers.WorkUniqueReadOtaDb
 import com.topjohnwu.superuser.Shell

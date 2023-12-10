@@ -72,8 +72,8 @@ import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
-import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
+import com.oxygenupdater.utils.logWarning
 import java.text.NumberFormat
 import kotlin.math.roundToLong
 

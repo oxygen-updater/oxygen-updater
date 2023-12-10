@@ -94,8 +94,8 @@ import com.oxygenupdater.ui.theme.positive
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.NotDownloading
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
-import com.oxygenupdater.utils.Logger.logError
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
+import com.oxygenupdater.utils.logError
 import java.util.UUID
 
 @Composable

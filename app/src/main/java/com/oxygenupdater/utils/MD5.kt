@@ -8,7 +8,6 @@
  */
 package com.oxygenupdater.utils
 
-import com.oxygenupdater.utils.Logger.logError
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException

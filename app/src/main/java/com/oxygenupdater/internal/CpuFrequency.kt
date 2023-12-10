@@ -1,6 +1,6 @@
 package com.oxygenupdater.internal
 
-import com.oxygenupdater.utils.Logger.logVerbose
+import com.oxygenupdater.utils.logVerbose
 import java.io.File
 import java.math.BigDecimal
 import java.math.RoundingMode

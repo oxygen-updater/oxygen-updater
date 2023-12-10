@@ -35,7 +35,7 @@ value class DownloadFailure(val value: Int) {
         /**
          * If a network-related exception occurs while downloading/writing the file
          *
-         * @see com.oxygenupdater.utils.ExceptionUtils.isNetworkError
+         * @see com.oxygenupdater.utils.isNetworkError
          */
         val ServerError = DownloadFailure(2)
 

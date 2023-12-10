@@ -20,8 +20,8 @@ import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.Screen
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logInfo
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.workers.DirectoryRoot
 import java.io.File
 

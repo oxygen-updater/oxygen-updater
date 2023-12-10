@@ -42,10 +42,10 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.update.DownloadStatus
 import com.oxygenupdater.ui.update.WorkInfoWithStatus
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logWarning
 import com.oxygenupdater.workers.DirectoryRoot
 import com.oxygenupdater.workers.DownloadWorker
 import com.oxygenupdater.workers.WorkDataDownloadFailureExtraFilename

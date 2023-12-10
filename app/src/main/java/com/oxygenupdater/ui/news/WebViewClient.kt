@@ -12,7 +12,7 @@ import androidx.core.net.toUri
 import com.google.accompanist.web.AccompanistWebViewClient
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.utils.ApiBaseUrl
-import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.logDebug
 
 /**
  * Needed for handling page load finish events.

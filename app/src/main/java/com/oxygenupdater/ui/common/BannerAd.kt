@@ -12,7 +12,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.oxygenupdater.OxygenUpdater
-import com.oxygenupdater.utils.Logger.logDebug
+import com.oxygenupdater.utils.logDebug
 
 /**
  * @param adListener act on ad callbacks, usually via [adLoadListener]

@@ -120,14 +120,14 @@ import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
 import com.oxygenupdater.ui.update.WorkProgress
 import com.oxygenupdater.utils.ContributorUtils
-import com.oxygenupdater.utils.Logger.logBillingError
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logUmpConsentFormError
-import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.utils.hasRootAccess
+import com.oxygenupdater.utils.logBillingError
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logUmpConsentFormError
+import com.oxygenupdater.utils.logWarning
 import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.workers.WorkDataDownloadBytesDone
@@ -645,7 +645,7 @@ class MainActivity : BaseActivity() {
             isPrivacyOptionsRequired = consentInformation.privacyOptionsRequirementStatus == PrivacyOptionsRequirementStatus.REQUIRED,
             showPrivacyOptionsForm = {
                 UserMessagingPlatform.showPrivacyOptionsForm(this@MainActivity) { error ->
-                    logUmpConsentFormError(TAG, error)
+                    if (error != null) logUmpConsentFormError(TAG, error)
                 }
             },
             openAboutScreen = openAboutScreen,
@@ -777,7 +777,7 @@ class MainActivity : BaseActivity() {
 
         consentInformation.requestConsentInfoUpdate(this, params.build(), {
             UserMessagingPlatform.loadAndShowConsentFormIfRequired(this@MainActivity) { error ->
-                logUmpConsentFormError(TAG, error)
+                if (error != null) logUmpConsentFormError(TAG, error)
 
                 if (error != null || consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
             }

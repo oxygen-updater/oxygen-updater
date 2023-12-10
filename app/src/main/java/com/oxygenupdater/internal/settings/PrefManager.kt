@@ -9,7 +9,7 @@ import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.Theme
-import com.oxygenupdater.utils.Logger.logError
+import com.oxygenupdater.utils.logError
 import org.koin.java.KoinJavaComponent.getKoin
 
 object PrefManager {

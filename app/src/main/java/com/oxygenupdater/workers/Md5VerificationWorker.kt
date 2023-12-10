@@ -7,10 +7,10 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import com.oxygenupdater.ui.update.Md5VerificationFailure
 import com.oxygenupdater.utils.LocalNotifications
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logVerbose
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logError
+import com.oxygenupdater.utils.logVerbose
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

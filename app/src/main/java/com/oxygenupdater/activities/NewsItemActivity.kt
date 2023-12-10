@@ -46,8 +46,8 @@ import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.news.NewsItemScreen
 import com.oxygenupdater.ui.news.NewsItemViewModel
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logWarning
 import com.oxygenupdater.viewmodels.BillingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer

@@ -5,8 +5,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.oxygenupdater.database.DatabaseBuilders.AppDb
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.KeySqlToRoomMigrationDone
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logWarning
 import org.koin.java.KoinJavaComponent.getKoin
 
 /**

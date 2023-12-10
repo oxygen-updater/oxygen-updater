@@ -10,8 +10,6 @@ import com.oxygenupdater.internal.settings.PrefManager.KeyNotificationTopic
 import com.oxygenupdater.internal.settings.PrefManager.KeyUpdateMethodId
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logWarning
 
 object NotificationTopicSubscriber {
 

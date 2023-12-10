@@ -32,11 +32,11 @@ import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.internal.billing.Security
 import com.oxygenupdater.internal.settings.PrefManager
 import com.oxygenupdater.internal.settings.PrefManager.KeyAdFree
-import com.oxygenupdater.utils.Logger.logBillingError
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Logger.logVerbose
-import com.oxygenupdater.utils.Logger.logWarning
+import com.oxygenupdater.utils.logBillingError
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logVerbose
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -32,15 +32,15 @@ import com.oxygenupdater.internal.settings.PrefManager.KeyDownloadBytesDone
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.update.DownloadFailure
-import com.oxygenupdater.utils.ExceptionUtils
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
-import com.oxygenupdater.utils.Logger.logDebug
-import com.oxygenupdater.utils.Logger.logError
-import com.oxygenupdater.utils.Logger.logInfo
-import com.oxygenupdater.utils.Logger.logWarning
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
+import com.oxygenupdater.utils.isNetworkError
+import com.oxygenupdater.utils.logDebug
+import com.oxygenupdater.utils.logError
+import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.getKoin
@@ -268,7 +268,7 @@ class DownloadWorker(
                         val retryCount = runAttemptCount + 1
 
                         when {
-                            ExceptionUtils.isNetworkError(e) -> {
+                            isNetworkError(e) -> {
                                 if (retryCount <= 5) {
                                     logDebug(TAG, "Network error encountered. Retrying ($retryCount/5)")
                                     Result.retry()

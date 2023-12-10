@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import com.oxygenupdater.R
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.repositories.BillingRepository.SkuState
-import com.oxygenupdater.utils.Logger.logBillingError
+import com.oxygenupdater.utils.logBillingError
 
 @Composable
 inline fun adFreeConfig(

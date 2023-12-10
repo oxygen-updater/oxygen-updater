@@ -15,7 +15,6 @@ import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOs
 import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOxygenOs
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.device.defaultDeviceName
-import com.oxygenupdater.utils.Logger.logVerbose
 import java.time.ZoneId
 
 object Utils {
