@@ -319,7 +319,7 @@ private fun Notifications() {
                 1 -> R.string.news_notification_channel_name
                 2 -> R.string.download_status_notification_channel_name
                 else -> throw ArrayIndexOutOfBoundsException(index)
-            }.let { builder.append("\n\u2022 " + stringResource(it)) }
+            }.let { builder.append("\n• " + stringResource(it)) }
         }
         stringResource(R.string.summary_important_notifications_disabled) + builder.toString()
     }

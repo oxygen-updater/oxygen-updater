@@ -1,5 +1,6 @@
 package com.oxygenupdater.utils
 
+import android.app.Notification
 import android.app.Notification.CATEGORY_ERROR
 import android.app.Notification.CATEGORY_PROGRESS
 import android.app.Notification.CATEGORY_STATUS
@@ -8,7 +9,8 @@ import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
@@ -36,16 +38,14 @@ object LocalNotifications {
     /**
      * Contribute: shows a notification that a update file has been submitted successfully.
      */
-    fun showContributionSuccessfulNotification(context: Context, filenameSet: Set<String>) = try {
+    fun showContributionSuccessfulNotification(context: Context, filenameSet: Set<String>) {
         val contentIntent = PendingIntent.getActivity(
             context,
             0,
             // Since MainActivity's `launchMode` is `singleTask`, we don't
             // need to add any flags to avoid creating multiple instances
             Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                FLAG_MUTABLE
-            } else 0
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
         )
 
         val title = context.getString(R.string.contribute_successful_notification_title)
@@ -54,7 +54,7 @@ object LocalNotifications {
         val inboxStyle = NotificationCompat.InboxStyle().addLine(text)
         filenameSet.forEach {
             // Only the first 5-6 filenames will be shown
-            inboxStyle.addLine("\u2022 $it")
+            inboxStyle.addLine("• $it")
         }
 
         val notification = NotificationCompat.Builder(context, OtaUrlSubmittedNotifChannelId)
@@ -70,22 +70,20 @@ object LocalNotifications {
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
             .build()
 
-        notificationManager.notify(NotificationIds.LocalContribution, notification)
-    } catch (e: Exception) {
-        logError(TAG, "Can't display 'successful contribution' notification", e)
+        with(notificationManager) {
+            tryNotify(NotificationIds.LocalContribution, notification)
+        }
     }
 
     /**
      * Shows a notification that the downloaded update file is downloaded successfully.
      */
-    fun showDownloadCompleteNotification(context: Context) = try {
+    fun showDownloadCompleteNotification(context: Context) {
         val contentIntent = PendingIntent.getActivity(
             context,
             0,
             Intent(context, InstallGuideActivity::class.java),
-            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                FLAG_MUTABLE
-            } else 0
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
         )
 
         val title = context.getString(R.string.download_complete)
@@ -104,12 +102,10 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        notificationManager.run {
+        with(notificationManager) {
             cancel(NotificationIds.LocalMd5Verification)
-            notify(NotificationIds.LocalDownload, notification)
+            tryNotify(NotificationIds.LocalDownload, notification)
         }
-    } catch (e: Exception) {
-        logError(TAG, "Can't display 'download complete' notification", e)
     }
 
     fun showDownloadFailedNotification(
@@ -117,7 +113,7 @@ object LocalNotifications {
         resumable: Boolean,
         @StringRes message: Int,
         @StringRes notificationMessage: Int,
-    ) = try {
+    ) {
         // Since MainActivity's `launchMode` is `singleTask`, we don't
         // need to add any flags to avoid creating multiple instances
         val intent = Intent(context, MainActivity::class.java)
@@ -129,7 +125,7 @@ object LocalNotifications {
             context,
             0,
             intent,
-            FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) {
                 FLAG_MUTABLE
             } else 0
         )
@@ -147,12 +143,10 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        notificationManager.run {
+        with(notificationManager) {
             cancel(NotificationIds.LocalMd5Verification)
-            notify(NotificationIds.LocalDownload, notification)
+            tryNotify(NotificationIds.LocalDownload, notification)
         }
-    } catch (e: Exception) {
-        logError(TAG, "Can't display download failed notification: ", e)
     }
 
     fun showVerificationFailedNotification(context: Context) {
@@ -170,16 +164,16 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        notificationManager.run {
+        with(notificationManager) {
             cancel(NotificationIds.LocalDownload)
-            notify(NotificationIds.LocalMd5Verification, notification)
+            tryNotify(NotificationIds.LocalMd5Verification, notification)
         }
     }
 
     /**
      * Shows a notification that the downloaded update file is being verified on MD5 sums.
      */
-    fun showVerifyingNotification(context: Context) = try {
+    fun showVerifyingNotification(context: Context) {
         val notification = NotificationCompat.Builder(context, VerificationStatusNotifChannelId)
             .setSmallIcon(R.drawable.logo_notification)
             .setContentTitle(context.getString(R.string.download_verifying))
@@ -191,26 +185,25 @@ object LocalNotifications {
             .setVisibility(VISIBILITY_PUBLIC)
             .build()
 
-        notificationManager.run {
+        with(notificationManager) {
             cancel(NotificationIds.LocalDownload)
-            notify(NotificationIds.LocalMd5Verification, notification)
+            tryNotify(NotificationIds.LocalMd5Verification, notification)
         }
-    } catch (e: Exception) {
-        logError(TAG, "Can't display 'verifying' notification", e)
     }
 
-    /**
-     * Hides the download complete notification. Used when the install guide is manually clicked
-     * from within the app.
-     */
-    fun hideDownloadCompleteNotification() {
-        try {
-            notificationManager.apply {
-                cancel(NotificationIds.LocalDownload)
-                cancel(NotificationIds.LocalMd5Verification)
-            }
-        } catch (e: Exception) {
-            logError(TAG, "Can't hide 'download complete' notification", e)
-        }
+    fun hideDownloadCompleteNotification() = with(notificationManager) {
+        cancel(NotificationIds.LocalDownload)
+        cancel(NotificationIds.LocalMd5Verification)
+    }
+
+    @Suppress("NOTHING_TO_INLINE")
+    private inline fun NotificationManagerCompat.tryNotify(
+        id: Int,
+        notification: Notification,
+    ) = try {
+        notify(id, notification)
+    } catch (e: SecurityException) {
+        // ignore; user didn't grant notification permission
+        logError(TAG, "Can't display notification", e)
     }
 }

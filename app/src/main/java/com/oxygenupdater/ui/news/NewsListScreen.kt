@@ -530,7 +530,7 @@ private fun Footer(
                 DateUtils.FORMAT_ABBREV_ALL
             )
         }?.let {
-            "$it \u2022 $authorName"
+            "$it • $authorName"
         } ?: authorName,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         maxLines = 1,
