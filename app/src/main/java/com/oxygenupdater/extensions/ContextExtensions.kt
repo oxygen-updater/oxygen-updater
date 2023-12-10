@@ -58,7 +58,11 @@ fun Context.formatFileSize(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
 )
 
-fun Context.showToast(@StringRes resId: Int) = Toast.makeText(this, resId, Toast.LENGTH_LONG).show()
+fun Context.showToast(
+    @StringRes resId: Int,
+    duration: Int = Toast.LENGTH_LONG,
+) = Toast.makeText(this, resId, duration).show()
+
 fun Context.showToast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
 
 fun Context.shareExternally(title: String, text: String) {
@@ -67,10 +71,8 @@ fun Context.shareExternally(title: String, text: String) {
         // Rich text preview: should work only on API 29+
         .putExtra(Intent.EXTRA_TITLE, title)
         // Main share content: will work on all API levels
-        .putExtra(
-            Intent.EXTRA_TEXT,
-            "$prefix\n\n$text"
-        ).setType("text/plain")
+        .putExtra(Intent.EXTRA_TEXT, "$prefix\n\n$text")
+        .setType("text/plain")
 
     startActivity(Intent.createChooser(intent, null))
 }
@@ -84,24 +86,21 @@ fun Context.copyToClipboard(text: String) = getSystemService<ClipboardManager>()
 
 fun Context.openPlayStorePage() {
     val packageName = packageName
+    val url = "https://play.google.com/store/apps/details?id=$packageName"
+    val intent = Intent(Intent.ACTION_VIEW, url.toUri()).withAppReferrer(packageName)
 
     try {
-        // Try opening Play Store
-        startActivity(
-            Intent(Intent.ACTION_VIEW, "market://details?id=$packageName".toUri()).withAppReferrer(this)
-        )
+        // Try opening Play Store: https://developer.android.com/distribute/marketing-tools/linking-to-google-play#android-app
+        startActivity(intent.setPackage("com.android.vending"))
     } catch (e: ActivityNotFoundException) {
         try {
             // Try opening browser
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$packageName".toUri()
-                ).withAppReferrer(this)
-            )
+            startActivity(intent)
         } catch (e1: ActivityNotFoundException) {
-            // Give up and cry
-            showToast(R.string.error_unable_to_rate_app)
             logWarning("ContextExtensions", "Can't open Play Store app page", e1)
+            showToast(R.string.error_unable_to_rate_app, Toast.LENGTH_SHORT)
+            // Fallback: copy to clipboard instead
+            copyToClipboard(url)
         }
     }
 }
@@ -139,21 +138,26 @@ fun Context.openEmail() {
     }
 }
 
-fun Context.openAppDetailsPage() = try {
-    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:$packageName".toUri()))
+@Suppress("NOTHING_TO_INLINE")
+inline fun Context.openAppDetailsPage() = try {
+    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageNameUri))
 } catch (e: Exception) {
     logError("ContextExtensions", "openAppDetailsPage failed", e)
 }
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun Context.openAppLocalePage() = try {
-    startActivity(Intent(Settings.ACTION_APP_LOCALE_SETTINGS, "package:$packageName".toUri()))
+@Suppress("NOTHING_TO_INLINE")
+inline fun Context.openAppLocalePage() = try {
+    startActivity(Intent(Settings.ACTION_APP_LOCALE_SETTINGS, packageNameUri))
 } catch (e: Exception) {
     logError("ContextExtensions", "openAppLocalePage failed", e)
 }
 
+inline val Context.packageNameUri
+    get() = "package:$packageName".toUri()
+
 fun CustomTabsIntent.launch(context: Context, url: String) = apply {
-    intent.withAppReferrer(context)
+    intent.withAppReferrer(context.packageName)
 }.launchUrl(context, url.toUri())
 
 @Composable

@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.news
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -9,6 +10,7 @@ import android.webkit.WebView
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import com.google.accompanist.web.AccompanistWebViewClient
+import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.utils.ApiBaseUrl
 import com.oxygenupdater.utils.Logger.logDebug
 
@@ -37,7 +39,14 @@ class WebViewClient(private val context: Context) : AccompanistWebViewClient() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isRedirect)
             return super.shouldOverrideUrlLoading(view, this)
 
-        context.startActivity(Intent(Intent.ACTION_VIEW, url))
+        val uri = url
+        try {
+            context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+        } catch (e: ActivityNotFoundException) {
+            // Fallback: copy to clipboard instead
+            context.copyToClipboard(uri.toString())
+        }
+
         true
     } ?: super.shouldOverrideUrlLoading(view, request)
 
@@ -50,7 +59,13 @@ class WebViewClient(private val context: Context) : AccompanistWebViewClient() {
         view: WebView?,
         url: String?,
     ) = url?.run {
-        context.startActivity(Intent(Intent.ACTION_VIEW, toUri()))
+        try {
+            context.startActivity(Intent(Intent.ACTION_VIEW, toUri()))
+        } catch (e: ActivityNotFoundException) {
+            // Fallback: copy to clipboard instead
+            context.copyToClipboard(url)
+        }
+
         true
     } ?: super.shouldOverrideUrlLoading(view, url)
 

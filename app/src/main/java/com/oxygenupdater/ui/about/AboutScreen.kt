@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.about
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.FaqActivity
+import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.openEmail
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.startActivity
@@ -102,9 +104,16 @@ private fun Buttons(windowWidthSize: WindowWidthSizeClass) = with(LocalContext.c
     )
 }
 
-private fun Context.openLink(link: LinkType) = startActivity(
-    Intent(Intent.ACTION_VIEW, link.value.toUri()).withAppReferrer(this)
-)
+private fun Context.openLink(link: LinkType) {
+    val url = link.value
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW, url.toUri()).withAppReferrer(packageName))
+    } catch (e: ActivityNotFoundException) {
+        // Fallback: copy to clipboard instead
+        copyToClipboard(url)
+    }
+}
+
 
 @JvmInline
 private value class LinkType(val value: String) {

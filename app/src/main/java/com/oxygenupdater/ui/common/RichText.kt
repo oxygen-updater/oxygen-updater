@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.common
 
+import android.content.ActivityNotFoundException
 import android.graphics.Typeface
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
@@ -20,6 +21,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -36,6 +38,7 @@ import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
+import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.ui.theme.DefaultTextStyle
 
@@ -58,7 +61,6 @@ fun RichText(
     @Suppress("NAME_SHADOWING")
     val text = text ?: ""
 
-    val uriHandler = LocalUriHandler.current
     val urlColor = MaterialTheme.colorScheme.primary
     val typography = MaterialTheme.typography
     val annotated = remember(contentColor, urlColor, text, type) {
@@ -83,12 +85,21 @@ fun RichText(
         }
     }
 
+    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     ClickableText(
         text = annotated,
         style = DefaultTextStyle.run { if (textAlign != null) copy(textAlign = textAlign) else this },
     ) {
         val range = annotated.getUrlAnnotations(it, it).firstOrNull()
-        if (range != null) uriHandler.openUri(range.item.url)
+        val url = range?.item?.url ?: return@ClickableText
+        try {
+            uriHandler.openUri(url)
+        } catch (e: ActivityNotFoundException) {
+            // Fallback: copy to clipboard instead
+            context.copyToClipboard(url)
+        }
+
     }
 }
 
