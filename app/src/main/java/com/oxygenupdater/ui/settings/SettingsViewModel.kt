@@ -12,7 +12,7 @@ import com.oxygenupdater.models.SystemVersionProperties.oxygenDeviceName
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.SettingsListWrapper
-import com.oxygenupdater.utils.NotificationTopicSubscriber
+import com.oxygenupdater.utils.FcmUtils
 import com.topjohnwu.superuser.Shell
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -145,12 +145,7 @@ class SettingsViewModel(
         crashlytics.setUserId("Device: $device, Update Method: $method")
     }
 
-    fun subscribeToNotificationTopics(enabledDevices: List<Device>?) = viewModelScope.launch(Dispatchers.IO) {
-        if (enabledDevices.isNullOrEmpty()) return@launch
-
-        NotificationTopicSubscriber.resubscribe(
-            enabledDevices,
-            serverRepository.fetchAllMethods() ?: listOf()
-        )
+    fun resubscribeToFcmTopic() = viewModelScope.launch(Dispatchers.IO) {
+        FcmUtils.resubscribe()
     }
 }

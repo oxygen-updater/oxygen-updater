@@ -4,9 +4,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.preference.PreferenceManager
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.firebase.Firebase
-import com.google.firebase.analytics.analytics
-import com.google.firebase.crashlytics.crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.database.DatabaseBuilders.buildLocalAppDatabase
 import com.oxygenupdater.repositories.BillingRepository
 import com.oxygenupdater.repositories.ServerRepository
@@ -59,8 +58,8 @@ private val notificationModule = module {
 
 private val miscellaneousSingletonModule = module {
     single { AppUpdateManagerFactory.create(androidContext()) }
-    single { Firebase.analytics }
-    single { Firebase.crashlytics }
+    single { FirebaseAnalytics.getInstance(androidContext()) }
+    single { FirebaseCrashlytics.getInstance() }
     single { WorkManager.getInstance(androidContext()) }
 }
 

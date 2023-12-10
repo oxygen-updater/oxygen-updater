@@ -42,7 +42,6 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.update.DownloadStatus
 import com.oxygenupdater.ui.update.WorkInfoWithStatus
-import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logWarning
@@ -171,19 +170,6 @@ class MainViewModel(
 
     fun fetchServerStatus() = viewModelScope.launch(Dispatchers.IO) {
         serverStatusFlow.emit(serverRepository.fetchServerStatus())
-    }
-
-    /**
-     * TODO(main): don't call this if it's the first launch, i.e. user has just completed onboarding.
-     *  Onboarding already calls [com.oxygenupdater.ui.settings.SettingsViewModel.subscribeToNotificationTopics].
-     */
-    fun resubscribeToNotificationTopicsIfNeeded(enabledDevices: List<Device>?) = viewModelScope.launch(Dispatchers.IO) {
-        if (enabledDevices.isNullOrEmpty()) return@launch
-
-        NotificationTopicSubscriber.resubscribeIfNeeded(
-            enabledDevices,
-            serverRepository.fetchAllMethods() ?: listOf()
-        )
     }
 
     /**

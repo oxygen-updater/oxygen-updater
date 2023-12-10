@@ -120,7 +120,6 @@ import com.oxygenupdater.ui.update.UpdateInformationViewModel
 import com.oxygenupdater.ui.update.UpdateScreen
 import com.oxygenupdater.ui.update.WorkProgress
 import com.oxygenupdater.utils.ContributorUtils
-import com.oxygenupdater.utils.NotificationTopicSubscriber
 import com.oxygenupdater.utils.Utils
 import com.oxygenupdater.utils.Utils.checkPlayServices
 import com.oxygenupdater.utils.hasRootAccess
@@ -243,10 +242,7 @@ class MainActivity : BaseActivity() {
             initialMethodIndex = settingsViewModel.initialMethodIndex,
             methodChanged = settingsViewModel::saveSelectedMethod,
             startApp = { contribute ->
-                if (checkPlayServices(this@MainActivity, false)) {
-                    // Subscribe to notifications for the newly selected device and update method
-                    settingsViewModel.subscribeToNotificationTopics(enabledDevices)
-                } else showToast(R.string.notification_no_notification_support)
+                settingsViewModel.resubscribeToFcmTopic()
 
                 if (PrefManager.checkIfSetupScreenIsFilledIn()) {
                     PrefManager.putBoolean(PrefManager.KeySetupDone, true)
@@ -291,14 +287,6 @@ class MainActivity : BaseActivity() {
 
         val allDevices by viewModel.deviceState.collectAsStateWithLifecycle()
         val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
-        LaunchedEffect(enabledDevices) {
-            // Resubscribe to notification topics, if needed.
-            // We're doing it here, instead of [SplashActivity], because it requires the app to be setup first
-            // (`deviceId`, `updateMethodId`, etc need to be saved in [SharedPreferences]).
-            if (checkPlayServices(this@MainActivity, false)) {
-                viewModel.resubscribeToNotificationTopicsIfNeeded(enabledDevices)
-            }
-        }
 
         viewModel.deviceOsSpec?.let {
             var show by remember {
@@ -634,11 +622,11 @@ class MainActivity : BaseActivity() {
             initialMethodIndex = settingsViewModel.initialMethodIndex,
             methodChanged = {
                 settingsViewModel.saveSelectedMethod(it)
+                settingsViewModel.resubscribeToFcmTopic()
 
-                if (checkPlayServices(this@MainActivity, true)) {
-                    // Subscribe to notifications for the newly selected device and update method
-                    NotificationTopicSubscriber.resubscribeIfNeeded(state.enabledDevices, state.methodsForDevice)
-                } else showToast(R.string.notification_no_notification_support)
+                if (!checkPlayServices(this@MainActivity, true)) {
+                    showToast(R.string.notification_no_notification_support)
+                }
             },
             adFreePrice = adFreePrice,
             adFreeConfig = adFreeConfig,
@@ -695,7 +683,10 @@ class MainActivity : BaseActivity() {
         val analytics by inject<FirebaseAnalytics>()
         analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
 
-        if (!checkPlayServices(this, false)) showToast(R.string.notification_no_notification_support)
+        if (PrefManager.checkIfSetupScreenIsFilledIn()) settingsViewModel.resubscribeToFcmTopic()
+        if (!checkPlayServices(this, false)) {
+            showToast(R.string.notification_no_notification_support)
+        }
 
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
