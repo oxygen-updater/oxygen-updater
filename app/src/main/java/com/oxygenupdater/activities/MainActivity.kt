@@ -54,7 +54,6 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
-import com.google.android.gms.ads.AdView
 import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentDebugSettings.DebugGeography
 import com.google.android.ump.ConsentInformation
@@ -173,9 +172,6 @@ class MainActivity : BaseActivity() {
         // Restore state on reselect
         .setRestoreState(true)
         .build()
-
-    @Volatile
-    private var bannerAdView: AdView? = null
 
     @Volatile
     private var currentRoute: String? = null
@@ -462,18 +458,19 @@ class MainActivity : BaseActivity() {
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
                         adListener = adLoadListener { adLoaded = it },
-                        onViewUpdate = { bannerAdView = it },
+                        onViewUpdate = ::onBannerAdInit,
                         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
                         modifier = if (navType != NavType.BottomBar && adLoaded) Modifier.navigationBarsPadding() else Modifier
                     )
                 }
 
-                AnimatedVisibility(navType == NavType.BottomBar) {
-                    MainNavigationBar(
-                        currentRoute = currentRoute,
-                        navigateTo = { navController.navigateWithDefaults(it) },
-                        setSubtitleResId = { subtitleResId = it },
-                    )
+                    AnimatedVisibility(navType == NavType.BottomBar) {
+                        MainNavigationBar(
+                            currentRoute = currentRoute,
+                            navigateTo = { navController.navigateWithDefaults(it) },
+                            setSubtitleResId = { subtitleResId = it },
+                        )
+                    }
                 }
             }
         }
@@ -819,16 +816,16 @@ class MainActivity : BaseActivity() {
             UserMessagingPlatform.loadAndShowConsentFormIfRequired(this@MainActivity) { error ->
                 if (error != null) crashlytics.logUmpConsentFormError(TAG, error)
 
-                if (error != null || consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
+                if (error != null || consentInformation.canRequestAds()) setupMobileAds()
             }
         }, { error ->
             crashlytics.logUmpConsentFormError(TAG, error)
-            (application as? OxygenUpdater)?.setupMobileAds()
+            setupMobileAds()
         })
 
         // Check if SDK can be initialized in parallel while checking for new consent info.
         // Consent obtained in the previous session can be used to request ads.
-        if (consentInformation.canRequestAds()) (application as? OxygenUpdater)?.setupMobileAds()
+        if (consentInformation.canRequestAds()) setupMobileAds()
     }
 
     override fun onResume() = super.onResume().also {

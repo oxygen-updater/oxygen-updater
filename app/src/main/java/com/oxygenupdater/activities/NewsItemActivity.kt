@@ -27,14 +27,12 @@ import coil.size.Size
 import com.google.accompanist.web.rememberSaveableWebViewState
 import com.google.accompanist.web.rememberWebViewNavigator
 import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
-import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Image
@@ -43,6 +41,7 @@ import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.ui.CollapsingAppBar
 import com.oxygenupdater.ui.common.PullRefresh
+import com.oxygenupdater.ui.common.buildAdRequest
 import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.news.NewsItemScreen
@@ -79,9 +78,6 @@ class NewsItemActivity : SupportActionBarActivity(
 
         override fun onAdShowedFullScreenContent() = logDebug(TAG, "Interstitial ad was shown")
     } else null
-
-    @Volatile
-    private var bannerAdView: AdView? = null
 
     private val timer = Timer()
 
@@ -175,7 +171,7 @@ class NewsItemActivity : SupportActionBarActivity(
                 webViewState = webViewState,
                 navigator = navigator,
                 showAds = showAds,
-                onBannerAdInit = { bannerAdView = it },
+                onBannerAdInit = ::onBannerAdInit,
                 onError = { errorTitle = it },
                 onLoadFinished = viewModel::markRead,
                 modifier = modifier
@@ -183,8 +179,11 @@ class NewsItemActivity : SupportActionBarActivity(
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
+    override fun onCreate(savedInstanceState: Bundle?) {
         if (!handleIntent(intent)) return onBackPressed()
+
+        setupMobileAds()
+        super.onCreate(savedInstanceState)
 
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
         viewModel.refreshItem(newsItemId)
@@ -256,7 +255,7 @@ class NewsItemActivity : SupportActionBarActivity(
     private fun setupInterstitialAd() = InterstitialAd.load(
         this,
         BuildConfig.AD_INTERSTITIAL_NEWS_ID,
-        OxygenUpdater.buildAdRequest(),
+        buildAdRequest(),
         interstitialAdLoadCallback
     )
 

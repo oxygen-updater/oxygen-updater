@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.install.InstallGuideScreen
@@ -25,13 +24,11 @@ class InstallGuideActivity : SupportActionBarActivity(
 
     private var showDownloadInstructions = false
 
-    @Volatile
-    private var bannerAdView: AdView? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         /** Set this first because we need its value before `super` lays out [Content] */
         showDownloadInstructions = intent?.getBooleanExtra(IntentShowDownloadInstructions, false) == true
 
+        setupMobileAds()
         super.onCreate(savedInstanceState)
     }
 
@@ -49,7 +46,7 @@ class InstallGuideActivity : SupportActionBarActivity(
                 state = state,
                 showDownloadInstructions = showDownloadInstructions,
                 showAds = showAds,
-                onBannerAdInit = { bannerAdView = it },
+                onBannerAdInit = ::onBannerAdInit,
                 modifier = modifier
             )
         }

@@ -1,11 +1,11 @@
 package com.oxygenupdater.activities
 
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.android.gms.ads.AdView
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.faq.FaqScreen
@@ -22,8 +22,10 @@ class FaqActivity : SupportActionBarActivity(
     private val viewModel: FaqViewModel by viewModels()
     private val billingViewModel: BillingViewModel by viewModels()
 
-    @Volatile
-    private var bannerAdView: AdView? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        setupMobileAds()
+        super.onCreate(savedInstanceState)
+    }
 
     @Composable
     override fun Content(modifier: Modifier) {
@@ -38,7 +40,7 @@ class FaqActivity : SupportActionBarActivity(
             FaqScreen(
                 state = state,
                 showAds = showAds,
-                onBannerAdInit = { bannerAdView = it },
+                onBannerAdInit = ::onBannerAdInit,
                 modifier = modifier
             )
         }
