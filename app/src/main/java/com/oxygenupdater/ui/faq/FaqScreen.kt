@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.faq
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,36 +18,25 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.ads.AdView
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.RichText
-import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun FaqScreen(
-    modifier: Modifier,
-    state: RefreshAwareState<List<InAppFaq>>,
-    showAds: Boolean,
-    onBannerAdInit: (AdView) -> Unit,
-) = Column(modifier) {
+fun FaqScreen(state: RefreshAwareState<List<InAppFaq>>) = Column {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
-    var adLoaded by rememberSaveableState("adLoaded", false)
 
     // Perf: re-use common modifiers to avoid recreating the same object repeatedly
     val typography = MaterialTheme.typography
@@ -75,27 +65,17 @@ fun FaqScreen(
             } else FaqItem(
                 item = it,
                 last = index == lastIndex,
-                adLoaded = adLoaded,
                 textModifier = itemTextModifier,
                 modifier = itemPlaceholderModifier
             )
         }
     }
-
-    if (showAds) BannerAd(
-        adUnitId = BuildConfig.AD_BANNER_FAQ_ID,
-        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-        adListener = adLoadListener { adLoaded = it },
-        onViewUpdate = onBannerAdInit,
-        modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
-    )
 }
 
 @Composable
 private fun FaqItem(
     item: InAppFaq,
     last: Boolean,
-    adLoaded: Boolean,
     modifier: Modifier,
     textModifier: Modifier,
 ) {
@@ -109,11 +89,7 @@ private fun FaqItem(
             .then(modifierDefaultPadding) // must be after `clickable`
     )
 
-    ExpandCollapse(
-        visible = expanded,
-        // Don't re-consume navigation bar insets
-        modifier = if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier
-    ) {
+    ExpandCollapse(expanded) {
         RichText(
             text = item.body,
             contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -121,7 +97,7 @@ private fun FaqItem(
         )
     }
 
-    if (!last) ItemDivider()
+    if (last) Spacer(Modifier.navigationBarsPadding()) else ItemDivider()
 }
 
 @PreviewThemes
@@ -144,9 +120,6 @@ fun PreviewFaqScreen() = PreviewAppTheme {
                 ),
             )
         ),
-        showAds = true,
-        onBannerAdInit = {},
-        modifier = Modifier
     )
 }
 

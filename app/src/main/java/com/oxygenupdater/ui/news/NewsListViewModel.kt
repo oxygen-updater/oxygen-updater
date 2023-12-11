@@ -3,7 +3,7 @@ package com.oxygenupdater.ui.news
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.main.Screen
@@ -55,9 +55,9 @@ class NewsListViewModel @Inject constructor(
     }
 
     fun toggleRead(
-        newsItem: NewsItem,
-        newRead: Boolean = !newsItem.readState,
+        article: Article,
+        newRead: Boolean = !article.readState,
     ) = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.toggleNewsItemReadLocally(newsItem, newRead)
+        serverRepository.toggleArticleReadLocally(article, newRead)
     }.let {}
 }

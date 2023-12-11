@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 @Stable
 @Entity(tableName = "news_item")
 @JsonClass(generateAdapter = true)
-data class NewsItem(
+data class Article(
     @PrimaryKey
     val id: Long?,
 

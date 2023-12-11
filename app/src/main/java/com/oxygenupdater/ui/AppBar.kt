@@ -78,8 +78,8 @@ fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
     onNavIconClick: () -> Unit,
     @StringRes subtitleResId: Int,
+    root: Boolean,
     showIcon: Boolean = true,
-    root: Boolean = true,
     actions: @Composable (RowScope.() -> Unit)? = null,
 ) = Column {
     val colorScheme = MaterialTheme.colorScheme

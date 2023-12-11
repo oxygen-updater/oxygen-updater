@@ -1,14 +1,14 @@
 package com.oxygenupdater.utils
 
-import android.app.Notification
 import android.app.Notification.CATEGORY_ERROR
 import android.app.Notification.CATEGORY_PROGRESS
 import android.app.Notification.CATEGORY_STATUS
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_MUTABLE
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import androidx.annotation.StringRes
@@ -18,9 +18,12 @@ import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.InstallGuideActivity
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
+import com.oxygenupdater.extensions.tryNotify
+import com.oxygenupdater.ui.main.ChildScreen
+import com.oxygenupdater.ui.main.DownloadedArg
+import com.oxygenupdater.ui.main.OuScheme
 import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
 import com.oxygenupdater.ui.update.KeyDownloadErrorResumable
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
@@ -39,7 +42,7 @@ object LocalNotifications {
             // Since MainActivity's `launchMode` is `singleTask`, we don't
             // need to add any flags to avoid creating multiple instances
             Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
         )
 
         val title = context.getString(R.string.contribute_successful_notification_title)
@@ -76,8 +79,13 @@ object LocalNotifications {
         val contentIntent = PendingIntent.getActivity(
             context,
             0,
-            Intent(context, InstallGuideActivity::class.java),
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(OuScheme + ChildScreen.Guide + "$DownloadedArg=true"),
+                context,
+                MainActivity::class.java
+            ),
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
         )
 
         val title = context.getString(R.string.download_complete)
@@ -119,7 +127,7 @@ object LocalNotifications {
             context,
             0,
             intent,
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_MUTABLE else 0
+            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
         )
 
         val notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)
@@ -186,15 +194,5 @@ object LocalNotifications {
     fun hideDownloadCompleteNotification(context: Context) = with(NotificationManagerCompat.from(context)) {
         cancel(NotificationIds.LocalDownload)
         cancel(NotificationIds.LocalMd5Verification)
-    }
-
-    @Suppress("NOTHING_TO_INLINE")
-    private inline fun NotificationManagerCompat.tryNotify(
-        id: Int,
-        notification: Notification,
-    ) = try {
-        notify(id, notification)
-    } catch (e: SecurityException) {
-        // ignore; user didn't grant notification permission
     }
 }

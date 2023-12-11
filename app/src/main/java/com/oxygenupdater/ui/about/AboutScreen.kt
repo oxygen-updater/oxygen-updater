@@ -23,11 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.FaqActivity
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.openPlayStorePage
-import com.oxygenupdater.extensions.startActivity
-import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.extensions.withAppReferrer
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Discord
@@ -40,6 +37,7 @@ import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
+import com.oxygenupdater.ui.main.ChildScreen
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -49,9 +47,15 @@ import com.oxygenupdater.ui.theme.PreviewWindowSize
 fun AboutScreen(
     navType: NavType,
     windowWidthSize: WindowWidthSizeClass,
+    navigateTo: (ChildScreen) -> Unit,
     openEmail: () -> Unit,
 ) = Column(Modifier.verticalScroll(rememberScrollState())) {
-    Buttons(windowWidthSize = windowWidthSize, openEmail = openEmail)
+    Buttons(
+        // We have 8 total items, so group evenly by 4 if we have enough space; otherwise 2
+        columnCount = if (windowWidthSize == WindowWidthSizeClass.Expanded) 4 else 2,
+        navigateTo = navigateTo,
+        openEmail = openEmail,
+    )
 
     RichText(
         text = stringResource(R.string.about_description),
@@ -89,15 +93,19 @@ fun AboutScreen(
 
 @Composable
 private fun Buttons(
-    windowWidthSize: WindowWidthSizeClass,
+    columnCount: Int,
+    navigateTo: (ChildScreen) -> Unit,
     openEmail: () -> Unit,
 ) = with(LocalContext.current) {
     LazyVerticalGrid(
-        // We have 8 total items, so group evenly by 4 if we have enough space; otherwise 2
-        columnCount = if (windowWidthSize == WindowWidthSizeClass.Expanded) 4 else 2,
+        columnCount = columnCount,
         items = arrayOf(
-            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) { startInstallActivity(true) },
-            GridItem(CustomIcons.Faq, R.string.faq_menu_item) { startActivity<FaqActivity>() },
+            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) {
+                navigateTo(ChildScreen.Guide)
+            },
+            GridItem(CustomIcons.Faq, R.string.faq_menu_item) {
+                navigateTo(ChildScreen.Faq)
+            },
             GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord) },
             GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, openEmail),
             GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub) },
@@ -138,6 +146,7 @@ fun PreviewAboutScreen() = PreviewAppTheme {
     AboutScreen(
         navType = NavType.from(windowWidthSize),
         windowWidthSize = windowWidthSize,
+        navigateTo = {},
         openEmail = {},
     )
 }

@@ -2,10 +2,13 @@ package com.oxygenupdater.workers
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import android.net.Uri
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.GROUP_ALERT_CHILDREN
 import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
@@ -20,8 +23,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
-import com.oxygenupdater.activities.NewsItemActivity
-import com.oxygenupdater.dao.NewsItemDao
+import com.oxygenupdater.dao.ArticleDao
 import com.oxygenupdater.enums.NotificationElement
 import com.oxygenupdater.enums.NotificationType
 import com.oxygenupdater.enums.NotificationType.GENERAL_NOTIFICATION
@@ -29,7 +31,13 @@ import com.oxygenupdater.enums.NotificationType.NEWS
 import com.oxygenupdater.enums.NotificationType.NEW_DEVICE
 import com.oxygenupdater.enums.NotificationType.NEW_VERSION
 import com.oxygenupdater.extensions.setBigTextStyle
+import com.oxygenupdater.extensions.tryNotify
+import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.currentLocale
+import com.oxygenupdater.ui.main.ChildScreen
+import com.oxygenupdater.ui.main.ExternalArg
+import com.oxygenupdater.ui.main.NewsListRoute
+import com.oxygenupdater.ui.main.OuScheme
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DeviceNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GeneralNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NewsNotifChannelId
@@ -50,7 +58,7 @@ import kotlin.random.Random
 class DisplayDelayedNotificationWorker @AssistedInject constructor(
     @Assisted private val context: Context,
     @Assisted parameters: WorkerParameters,
-    private val newsItemDao: NewsItemDao,
+    private val articleDao: ArticleDao,
     private val notificationManager: NotificationManagerCompat,
 ) : CoroutineWorker(context, parameters) {
 
@@ -90,7 +98,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
                 // So use the "bump" feature on admin portal with care - the notification will still be shown on older app versions
                 @Suppress("DEPRECATION")
                 if (messageContents[NotificationElement.NEWS_ITEM_IS_BUMP.name]?.toBoolean() == true
-                    && newsItemDao.getById(
+                    && articleDao.getById(
                         messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
                     )?.read == true
                 ) {
@@ -125,7 +133,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
             builder.setGroup(notificationGroupKey)
         }
 
-        notificationManager.notify(notificationId, builder.build())
+        notificationManager.tryNotify(notificationId, builder.build())
 
         val imageUrl = messageContents[NotificationElement.NEWS_ITEM_IMAGE.name]?.trim() ?: ""
         if (imageUrl.isNotEmpty()) {
@@ -138,7 +146,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
         // Summary notification is not shown for API < 24 because notification
         // groups aren't supported anyway (meaning multiple notifications will
         // be shown separately instead of using InboxStyle to emulate a "group").
-        if (notificationType != NEW_VERSION && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (notificationType != NEW_VERSION && SDK_INT >= VERSION_CODES.N) {
             val summaryNotification = NotificationCompat.Builder(
                 context,
                 notificationGroupKey
@@ -153,7 +161,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
                 .setGroupAlertBehavior(GROUP_ALERT_CHILDREN)
                 .build()
 
-            notificationManager.notify(
+            notificationManager.tryNotify(
                 getNotificationGroupId(notificationType),
                 summaryNotification
             )
@@ -170,7 +178,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
             .data(imageUrl)
             .size(Utils.dpToPx(context, 64f).toInt()) // memory optimization
             .target {
-                notificationManager.notify(
+                notificationManager.tryNotify(
                     notificationId,
                     setLargeIcon(it.toBitmap()).build()
                 )
@@ -272,17 +280,21 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
         context,
         notificationId,
         if (notificationType == NEWS) {
-            Intent(context, NewsItemActivity::class.java)
-                .putExtra(
-                    NewsItemActivity.IntentNewsItemId,
-                    messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLong()
-                )
-                .putExtra(NewsItemActivity.IntentDelayAdStart, true)
-        } else {
-            Intent(context, MainActivity::class.java)
-        },
-        FLAG_UPDATE_CURRENT or if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.FLAG_MUTABLE
-        } else 0
+            val id = messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLongOrNull() ?: NotSetL
+            Intent(
+                Intent.ACTION_VIEW,
+                if (id != NotSetL) {
+                    // Open article if ID is valid, and mark it "external" so
+                    // that interstitial ad is shown after a delay for better UX.
+                    Uri.parse(OuScheme + ChildScreen.Article + id + "?${ExternalArg}=true")
+                } else {
+                    // Otherwise NewsListScreen
+                    Uri.parse(OuScheme + NewsListRoute)
+                },
+                context,
+                MainActivity::class.java
+            )
+        } else Intent(context, MainActivity::class.java),
+        FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.S) FLAG_IMMUTABLE else 0
     )
 }

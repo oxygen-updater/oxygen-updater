@@ -166,9 +166,6 @@ android {
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
             it.buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
-            it.buildConfigField("String", "AD_BANNER_NEWS_ID", "\"ca-app-pub-1816831161514116/5072283884\"")
-            it.buildConfigField("String", "AD_BANNER_INSTALL_ID", "\"ca-app-pub-1816831161514116/8933025813\"")
-            it.buildConfigField("String", "AD_BANNER_FAQ_ID", "\"ca-app-pub-1816831161514116/1987794774\"")
             it.buildConfigField("String", "AD_INTERSTITIAL_NEWS_ID", "\"ca-app-pub-1816831161514116/2367225965\"")
             it.buildConfigField("String", "BASE64_PUBLIC_KEY", "\"${billing["base64PublicKey"]}\"")
             it.buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")

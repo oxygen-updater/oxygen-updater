@@ -7,10 +7,10 @@ import androidx.room.RenameColumn
 import androidx.room.RewriteQueriesToDropUnusedColumns
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
-import com.oxygenupdater.dao.NewsItemDao
+import com.oxygenupdater.dao.ArticleDao
 import com.oxygenupdater.dao.SubmittedUpdateFileDao
 import com.oxygenupdater.dao.UpdateDataDao
-import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.SubmittedUpdateFile
 import com.oxygenupdater.models.UpdateData
 
@@ -18,7 +18,7 @@ import com.oxygenupdater.models.UpdateData
 @Database(
     version = 2,
     entities = [
-        NewsItem::class,
+        Article::class,
         SubmittedUpdateFile::class,
         UpdateData::class,
     ],
@@ -27,7 +27,8 @@ import com.oxygenupdater.models.UpdateData
     ],
 )
 abstract class LocalAppDb : RoomDatabase() {
-    abstract fun newsItemDao(): NewsItemDao
+
+    abstract fun articleDao(): ArticleDao
     abstract fun submittedUpdateFileDao(): SubmittedUpdateFileDao
     abstract fun updateDataDao(): UpdateDataDao
 

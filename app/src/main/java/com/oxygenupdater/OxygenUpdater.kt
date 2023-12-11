@@ -1,19 +1,15 @@
 package com.oxygenupdater
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.os.Build
-import android.provider.Settings
 import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.database.SqliteMigrations
@@ -28,11 +24,6 @@ import com.topjohnwu.superuser.Shell
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.math.BigInteger
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import java.util.Locale
-import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -124,45 +115,6 @@ class OxygenUpdater : Application(), Configuration.Provider {
         analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
         // Sync crashlytics collection to user's preference, but only if we're on a release build
         crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
-    }
-
-    val mobileAdsInitDone = AtomicBoolean(false)
-    fun setupMobileAds(callback: () -> Unit) {
-        if (mobileAdsInitDone.get()) return else mobileAdsInitDone.set(true)
-
-        MobileAds.initialize(this)
-        MobileAds.setRequestConfiguration(MobileAds.getRequestConfiguration().toBuilder().apply {
-            // If it's a debug build, add current device's ID to the list of test device IDs for ads
-            if (BuildConfig.DEBUG) setTestDeviceIds(buildList(2) {
-                /** (uppercase) MD5 checksum of "emulator" */
-                add(AdRequest.DEVICE_ID_EMULATOR)
-
-                /**
-                 * (uppercase) MD5 checksum of [Settings.Secure.ANDROID_ID],
-                 * which is what Play Services Ads expects.
-                 */
-                try {
-                    @SuppressLint("HardwareIds")
-                    val androidId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-                    val digest = MessageDigest.getInstance("MD5").digest(androidId.toByteArray())
-
-                    // Create a 32-length uppercase hex string (`x` for lowercase)
-                    add(String.format(Locale.US, "%032X", BigInteger(1, digest)))
-                } catch (e: NoSuchAlgorithmException) {
-                    crashlytics.logError(TAG, e.message ?: "MD5 algorithm not found", e)
-                }
-            })
-        }.build())
-
-        // By default video ads run at device volume, which could be annoying
-        // to some users. We're reducing ad volume to be 10% of device volume.
-        // Note that this doesn't always guarantee that ads will run at a
-        // reduced volume. This is either a longstanding SDK bug or due to
-        // an undocumented behaviour.
-        MobileAds.setAppVolume(0.1f)
-
-        // Init complete
-        callback()
     }
 
     private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {

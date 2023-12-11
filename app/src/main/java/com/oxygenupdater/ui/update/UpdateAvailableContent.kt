@@ -68,7 +68,6 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
-import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.settings.KeyDevice
@@ -112,6 +111,7 @@ fun UpdateAvailable(
     forceDownloadErrorDialog: Boolean,
     getPrefStr: (key: String, default: String) -> String,
     downloadAction: (DownloadAction) -> Unit,
+    openInstallGuide: () -> Unit,
     logDownloadError: () -> Unit,
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
@@ -151,6 +151,7 @@ fun UpdateAvailable(
             downloadStatus = downloadStatus,
             forceDownloadErrorDialog = forceDownloadErrorDialog,
             downloadAction = downloadAction,
+            openInstallGuide = openInstallGuide,
             logDownloadError = logDownloadError,
             hideDownloadCompleteNotification = hideDownloadCompleteNotification,
             showDownloadFailedNotification = showDownloadFailedNotification,
@@ -201,6 +202,7 @@ fun UpdateAvailable(
         downloadStatus = downloadStatus,
         forceDownloadErrorDialog = forceDownloadErrorDialog,
         downloadAction = downloadAction,
+        openInstallGuide = openInstallGuide,
         logDownloadError = logDownloadError,
         hideDownloadCompleteNotification = hideDownloadCompleteNotification,
         showDownloadFailedNotification = showDownloadFailedNotification,
@@ -336,6 +338,7 @@ private fun DownloadButtonContainer(
     downloadStatus: DownloadStatus,
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
+    openInstallGuide: () -> Unit,
     logDownloadError: () -> Unit,
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
@@ -373,7 +376,7 @@ private fun DownloadButtonContainer(
     if (showAlreadyDownloadedSheet) {
         ModalBottomSheet({ showAlreadyDownloadedSheet = false }) { hide ->
             AlreadyDownloadedSheet(hide) {
-                if (it) context.startInstallActivity(false)
+                if (it) openInstallGuide()
                 else if (hasDownloadPermissions()) downloadAction(DownloadAction.Delete)
                 else requestDownloadPermissions()
             }
@@ -411,12 +414,14 @@ private fun DownloadButtonContainer(
         refreshing = refreshing,
         downloadStatus = downloadStatus,
         downloadAction = downloadAction,
+        openInstallGuide = openInstallGuide,
         buttonConfig = downloadButtonConfig(
             downloadSize = downloadSize,
             failureType = failureType,
             workProgress = workProgress,
             downloadStatus = downloadStatus,
             downloadAction = downloadAction,
+            openInstallGuide = openInstallGuide,
             logDownloadError = logDownloadError,
             hasDownloadPermissions = hasDownloadPermissions,
             requestDownloadPermissions = requestDownloadPermissions,
@@ -436,6 +441,7 @@ private fun DownloadButton(
     refreshing: Boolean,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
+    openInstallGuide: () -> Unit,
     buttonConfig: DownloadButtonConfig,
 ) {
     val (titleResId, details, sizeOrProgressText, progress, actionButtonConfig, onDownloadClick) = buttonConfig
@@ -479,11 +485,10 @@ private fun DownloadButton(
             }
 
             actionButtonConfig?.let { (forCancel, icon, tint) ->
-                val context = LocalContext.current
                 IconButton(
                     onClick = {
                         if (forCancel) downloadAction(DownloadAction.Cancel)
-                        else context.startInstallActivity(false)
+                        else openInstallGuide()
                     },
                     modifier = Modifier.requiredSize(56.dp)
                 ) {
@@ -612,6 +617,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
         forceDownloadErrorDialog = false,
         getPrefStr = PreviewGetPrefStr,
         downloadAction = {},
+        openInstallGuide = {},
         logDownloadError = {},
         hideDownloadCompleteNotification = {},
         showDownloadFailedNotification = {},

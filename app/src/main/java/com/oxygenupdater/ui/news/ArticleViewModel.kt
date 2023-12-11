@@ -1,10 +1,12 @@
 package com.oxygenupdater.ui.news
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.oxygenupdater.activities.NewsItemActivity
-import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.utils.logWarning
@@ -18,13 +20,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsItemViewModel @Inject constructor(
+class ArticleViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
     private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
     private val refreshingFlow = MutableStateFlow(true)
-    private val flow = MutableStateFlow(NewsItemActivity.item)
+    private val flow = MutableStateFlow(item)
 
     val state = refreshingFlow.combine(flow) { refreshing, item ->
         RefreshAwareState(refreshing, item)
@@ -36,14 +38,19 @@ class NewsItemViewModel @Inject constructor(
 
     fun refreshItem(id: Long) = viewModelScope.launch(Dispatchers.IO) {
         refreshingFlow.value = true
-        flow.emit(serverRepository.fetchNewsItem(id).also { NewsItemActivity.item = it })
+        flow.emit(serverRepository.fetchArticle(id).also { item = it })
         refreshingFlow.value = false
     }
 
-    fun markRead(item: NewsItem) = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.toggleNewsItemReadLocally(item, true)
+    fun clearItem() {
+        flow.value = null
+        item = null
+    }
 
-        val result = serverRepository.markNewsItemRead(item.id!!) ?: return@launch
+    fun markRead(item: Article) = viewModelScope.launch(Dispatchers.IO) {
+        serverRepository.toggleArticleReadLocally(item, true)
+
+        val result = serverRepository.markArticleRead(item.id!!) ?: return@launch
         if (!result.success) crashlytics.logWarning(
             TAG,
             "Failed to mark article as read on the server: ${result.errorMessage}"
@@ -51,6 +58,8 @@ class NewsItemViewModel @Inject constructor(
     }.let {}
 
     companion object {
-        private const val TAG = "NewsItemViewModel"
+        private const val TAG = "ArticleViewModel"
+
+        var item by mutableStateOf<Article?>(null)
     }
 }

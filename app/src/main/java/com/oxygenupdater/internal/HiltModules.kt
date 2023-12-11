@@ -82,7 +82,7 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun newsItemDao(localAppDb: LocalAppDb) = localAppDb.newsItemDao()
+    fun articleDao(localAppDb: LocalAppDb) = localAppDb.articleDao()
 
     @Singleton
     @Provides

@@ -1,7 +1,7 @@
 package com.oxygenupdater.models
 
 import com.oxygenupdater.ValueClassTestHelper
-import org.junit.Test
+import kotlin.test.Test
 
 class DeviceOsSpecTest {
 

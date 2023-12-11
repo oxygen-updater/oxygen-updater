@@ -55,60 +55,60 @@
 			android:resizeableActivity="true"
 			android:theme="@style/Theme.OxygenUpdater.Splash">
 
-			<tools:validation testUrl="https://${hostName}/inapp" />
-
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 
-			<intent-filter
-				android:autoVerify="true"
-				tools:targetApi="m">
+			<!-- For each of the main screens in the app. Internal use only. -->
+			<!-- oxygenupdater://update|news|device|about|settings -->
+			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="http" />
-				<data android:scheme="https" />
-				<data android:host="${hostName}" />
-				<data android:host="www.${hostName}" />
-				<data android:path="/inapp" />
+				<data android:scheme="oxygenupdater" />
+				<data android:host="update" />
+				<data android:host="news" />
+				<data android:host="device" />
+				<data android:host="about" />
+				<data android:host="settings" />
+				<data android:pathPattern="/..*" />
 			</intent-filter>
 
-			<meta-data
-				android:name="android.app.shortcuts"
-				android:resource="${shortcutXml}" />
-		</activity>
+			<!-- oxygenupdater://guide?downloaded=<true|false> -->
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
 
-		<activity
-			android:name=".activities.InstallGuideActivity"
-			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
-			android:label="@string/install_guide"
-			android:parentActivityName=".activities.MainActivity"
-			android:resizeableActivity="true"
-			android:theme="@style/Theme.OxygenUpdater.DayNight" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
 
-		<activity
-			android:name=".activities.FaqActivity"
-			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
-			android:label="@string/faq"
-			android:parentActivityName=".activities.MainActivity"
-			android:resizeableActivity="true" />
+				<data android:scheme="oxygenupdater" />
+				<data android:host="guide" />
+				<data android:pathPattern="\\?downloaded=..*" />
+				<!-- `pathAdvancedPattern` is supported only on API >= 31 -->
+				<data android:pathAdvancedPattern="\\?downloaded=true" />
+				<data android:pathAdvancedPattern="\\?downloaded=false" />
+			</intent-filter>
 
-		<activity
-			android:name=".activities.NewsItemActivity"
-			android:configChanges="colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
-			android:exported="true"
-			android:label="@string/news"
-			android:parentActivityName=".activities.MainActivity"
-			android:resizeableActivity="true"
-			android:theme="@style/Theme.OxygenUpdater.DayNight">
+			<!-- oxygenupdater://article/<id>?external=<true|false> -->
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
 
-			<intent-filter
-				android:autoVerify="true"
-				tools:targetApi="m">
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data android:scheme="oxygenupdater" />
+				<data android:host="article" />
+				<data android:pathPattern="/..*\\?external=..*" />
+				<!-- `pathAdvancedPattern` is supported only on API >= 31 -->
+				<data android:pathAdvancedPattern="/[0-9]+\\?external=true" />
+				<data android:pathAdvancedPattern="/[0-9]+\\?external=false" />
+			</intent-filter>
+
+			<!-- Article web URL -->
+			<intent-filter android:autoVerify="true">
 				<action android:name="android.intent.action.VIEW" />
 
 				<category android:name="android.intent.category.DEFAULT" />
@@ -119,11 +119,12 @@
 				<data android:host="${hostName}" />
 				<data android:host="www.${hostName}" />
 				<data android:pathPattern="/article/..*" />
+				<!-- `pathAdvancedPattern` is supported only on API >= 31 -->
+				<data android:pathAdvancedPattern="/article/[0-9]+/{0,1}" />
 			</intent-filter>
 
-			<intent-filter
-				android:autoVerify="true"
-				tools:targetApi="m">
+			<!-- Article API URL -->
+			<intent-filter android:autoVerify="true">
 				<action android:name="android.intent.action.VIEW" />
 
 				<category android:name="android.intent.category.DEFAULT" />
@@ -134,19 +135,13 @@
 				<data android:host="${hostName}" />
 				<data android:host="www.${hostName}" />
 				<data android:pathPattern="/api/.*/news-content/..*" />
+				<!-- `pathAdvancedPattern` is supported only on API >= 31 -->
+				<data android:pathAdvancedPattern="/api/.*/news-content/[0-9]+/.*" />
 			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
 
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
-
-				<!-- Accepts URIs that begin with "oxygenupdater://news” -->
-				<data
-					android:host="news"
-					android:pathPattern="/..*"
-					android:scheme="oxygenupdater" />
-			</intent-filter>
+			<meta-data
+				android:name="android.app.shortcuts"
+				android:resource="${shortcutXml}" />
 		</activity>
 
 		<!-- Push notifications services and receiver, Package updated receiver -->

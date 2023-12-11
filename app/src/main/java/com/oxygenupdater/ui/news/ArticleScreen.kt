@@ -22,10 +22,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -36,22 +34,17 @@ import com.google.accompanist.web.WebViewNavigator
 import com.google.accompanist.web.WebViewState
 import com.google.accompanist.web.rememberSaveableWebViewState
 import com.google.accompanist.web.rememberWebViewNavigator
-import com.google.android.gms.ads.AdView
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.shareExternally
-import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.IconText
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
-import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -62,22 +55,19 @@ import java.time.LocalDateTime
 
 @Suppress("DEPRECATION")
 @Composable
-fun NewsItemScreen(
+fun ArticleScreen(
     modifier: Modifier,
-    state: RefreshAwareState<NewsItem?>,
+    state: RefreshAwareState<Article?>,
     webViewState: WebViewState,
     navigator: WebViewNavigator,
-    showAds: Boolean,
-    onBannerAdInit: (AdView) -> Unit,
     onError: (String) -> Unit,
-    onLoadFinished: (NewsItem) -> Unit,
+    onLoadFinished: (Article) -> Unit,
 ) {
     val (refreshing, data) = state
     // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
     val item = rememberSaveable(data ?: return, key = data.id.toString()) { data }
 
     Column(modifier) {
-        var adLoaded by rememberSaveableState("adLoaded", false)
         Column(
             Modifier
                 .weight(1f)
@@ -122,24 +112,15 @@ fun NewsItemScreen(
                 url = url,
                 showDivider = showDivider,
                 onError = onError,
-                adLoaded = adLoaded,
                 onLoadFinished = { onLoadFinished(item) },
             )
         }
-
-        if (showAds) BannerAd(
-            adUnitId = BuildConfig.AD_BANNER_NEWS_ID,
-            adListener = adLoadListener { adLoaded = it },
-            onViewUpdate = onBannerAdInit,
-            // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-            modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
-        )
     }
 }
 
 @SuppressLint("PrivateResource")
 @Composable
-private fun Buttons(item: NewsItem) = with(LocalContext.current) {
+private fun Buttons(item: Article) = with(LocalContext.current) {
     LazyVerticalGrid(
         columnCount = 2,
         items = arrayOf(
@@ -162,7 +143,6 @@ private fun RefreshAwareWebView(
     url: String,
     showDivider: Boolean,
     onError: (String) -> Unit,
-    adLoaded: Boolean,
     onLoadFinished: () -> Unit,
 ) {
     LaunchedEffect(navigator, url) {
@@ -216,8 +196,8 @@ private fun RefreshAwareWebView(
             it.settings.javaScriptEnabled = true
             it.settings.userAgentString = userAgent
         },
-        // Don't re-consume navigation bar insets
-        modifier = (if (adLoaded) Modifier else Modifier.navigationBarsPadding())
+        modifier = Modifier
+            .navigationBarsPadding()
             .padding(horizontal = 8.dp) // news-content HTML already has an 8px margin
     )
 }
@@ -252,7 +232,7 @@ private fun WebResourceError.errorString() = description?.toString() ?: when (er
     else -> "ERROR_$errorCode"
 }
 
-private fun NewsItem.getRelativeTime() = epochMilli?.let {
+private fun Article.getRelativeTime() = epochMilli?.let {
     // Weird bug in `android.text.format` that causes a crash in
     // older Android versions, due to using the [FORMAT_SHOW_TIME]
     // flag. Hacky workaround is to call the function again, but
@@ -277,11 +257,11 @@ private fun NewsItem.getRelativeTime() = epochMilli?.let {
 @Suppress("DEPRECATION")
 @PreviewThemes
 @Composable
-fun PreviewNewsItemScreen() = PreviewAppTheme {
+fun PreviewArticleScreen() = PreviewAppTheme {
     val date = LocalDateTime.now().toString()
-    NewsItemScreen(
+    ArticleScreen(
         state = RefreshAwareState(
-            false, NewsItem(
+            false, Article(
                 1,
                 title = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
                 subtitle = "An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered",
@@ -295,8 +275,6 @@ fun PreviewNewsItemScreen() = PreviewAppTheme {
         ),
         webViewState = rememberSaveableWebViewState(),
         navigator = rememberWebViewNavigator(),
-        showAds = true,
-        onBannerAdInit = {},
         onError = {},
         onLoadFinished = {},
         modifier = Modifier,

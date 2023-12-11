@@ -89,7 +89,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.activities.NewsItemActivity
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.launch
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
@@ -99,7 +98,7 @@ import com.oxygenupdater.icons.Image
 import com.oxygenupdater.icons.Info
 import com.oxygenupdater.icons.NewsMultiple
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.models.NewsItem
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.DropdownMenuItem
@@ -126,11 +125,11 @@ import kotlin.random.Random
 fun NewsListScreen(
     navType: NavType,
     windowSize: WindowSizeClass,
-    state: RefreshAwareState<List<NewsItem>>,
+    state: RefreshAwareState<List<Article>>,
     onRefresh: () -> Unit,
     unreadCountState: MutableIntState,
     onMarkAllReadClick: () -> Unit,
-    onToggleReadClick: (NewsItem) -> Unit,
+    onToggleReadClick: (Article) -> Unit,
     openItem: (id: Long) -> Unit,
 ) = PullRefresh(
     state = state,
@@ -180,7 +179,7 @@ fun NewsListScreen(
             rich = false,
             onRefreshClick = onRefresh,
         ) else {
-            val onItemToggleRead: (NewsItem) -> Unit = {
+            val onItemToggleRead: (Article) -> Unit = {
                 onToggleReadClick(it)
                 if (it.readState) unreadCountState.intValue++ else {
                     // Coerce to at least 0, just in case there's an inconsistency
@@ -188,7 +187,7 @@ fun NewsListScreen(
                 }
                 it.readState = !it.readState
             }
-            val onItemClick: (NewsItem) -> Unit = {
+            val onItemClick: (Article) -> Unit = {
                 // Decrease unread count because we're making it read
                 if (!it.readState) {
                     // Coerce to at least 0, just in case there's an inconsistency
@@ -196,7 +195,7 @@ fun NewsListScreen(
                 }
                 it.readState = true
 
-                NewsItemActivity.item = it
+                ArticleViewModel.item = it
                 openItem(it.id ?: NotSetL)
             }
 
@@ -261,7 +260,7 @@ fun NewsListScreen(
 @Composable
 private fun LazyItemScope.NewsListItem(
     refreshing: Boolean,
-    item: NewsItem,
+    item: Article,
     size: DpSize,
     onToggleReadClick: () -> Unit,
     onClick: () -> Unit,
@@ -308,7 +307,7 @@ private fun LazyItemScope.NewsListItem(
 @Composable
 private fun LazyGridItemScope.NewsGridItem(
     refreshing: Boolean,
-    item: NewsItem,
+    item: Article,
     size: DpSize,
     onToggleReadClick: () -> Unit,
     onClick: () -> Unit,
@@ -376,7 +375,7 @@ private fun GridItemBadge() {
 }
 
 /**
- * Draws max 2 [title][NewsItem.title] & [subtitle][NewsItem.subtitle] lines, with the latter being
+ * Draws max 2 [title][Article.title] & [subtitle][Article.subtitle] lines, with the latter being
  * auto-resized to fit available space (from 12sp to 14sp).
  *
  * Even though [GridItemTitles] text measurer logic is superior (max title lines with min 1 subtitle line),
@@ -384,7 +383,7 @@ private fun GridItemBadge() {
  * which isn't possible if drawing both together in the same element.
  */
 @Composable
-private fun ListItemTitles(refreshing: Boolean, item: NewsItem) {
+private fun ListItemTitles(refreshing: Boolean, item: Article) {
     val titleMedium = MaterialTheme.typography.titleMedium
 
     Text(
@@ -407,14 +406,14 @@ private fun ListItemTitles(refreshing: Boolean, item: NewsItem) {
 }
 
 /**
- * This draws text via [rememberTextMeasurer] into [Spacer] to maximizes [title][NewsItem.title] lines
- * while also ensuring at least 1 line for [subtitle][NewsItem.subtitle].
+ * This draws text via [rememberTextMeasurer] into [Spacer] to maximizes [title][Article.title] lines
+ * while also ensuring at least 1 line for [subtitle][Article.subtitle].
  *
  * Because of how grid items are laid out (titles are drawn over a "background" image) we skip drawing
  * titles when UI is refreshing, because image's [withPlaceholder] is already enough to signal refresh status.
  */
 @Composable
-private fun GridItemTitles(refreshing: Boolean, item: NewsItem) {
+private fun GridItemTitles(refreshing: Boolean, item: Article) {
     if (refreshing) return // don't draw titles for grid items if refreshing
 
     val titleMedium = MaterialTheme.typography.titleMedium
@@ -466,7 +465,7 @@ private fun GridItemTitles(refreshing: Boolean, item: NewsItem) {
 private fun NewsImage(
     modifier: Modifier = Modifier,
     refreshing: Boolean,
-    item: NewsItem,
+    item: Article,
     size: DpSize,
 ) {
     val defaultImage = CustomIcons.Image.run {
@@ -510,7 +509,7 @@ private fun NewsImage(
 @Composable
 private fun Footer(
     refreshing: Boolean,
-    item: NewsItem,
+    item: Article,
     onToggleReadClick: () -> Unit,
     startPadding: Dp,
     menuXOffset: Dp,
@@ -584,7 +583,7 @@ private fun Banner(
 @Composable
 private fun ItemMenuOpener(
     refreshing: Boolean,
-    item: NewsItem,
+    item: Article,
     onToggleReadClick: () -> Unit,
     xOffset: Dp,
 ) = Box {
@@ -609,7 +608,7 @@ private fun ItemMenuOpener(
 private fun ItemMenu(
     expanded: Boolean,
     onDismiss: () -> Unit,
-    item: NewsItem,
+    item: Article,
     onToggleReadClick: () -> Unit,
 ) = DropdownMenu(expanded, onDismiss) {
     DropdownMenuItem(
@@ -723,7 +722,7 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
         windowSize = windowSize,
         state = RefreshAwareState(
             false, listOf(
-                NewsItem(
+                Article(
                     1,
                     title = stringResource(R.string.app_name),
                     subtitle = long,
@@ -734,7 +733,7 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
                     authorName = "Author",
                     read = true,
                 ),
-                NewsItem(
+                Article(
                     2,
                     title = long,
                     subtitle = long,

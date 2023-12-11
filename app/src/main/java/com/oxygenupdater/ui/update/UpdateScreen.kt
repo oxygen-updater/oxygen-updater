@@ -42,6 +42,7 @@ fun UpdateScreen(
     pauseDownload: () -> Unit,
     cancelDownload: (filename: String?) -> Unit,
     deleteDownload: (filename: String?) -> Boolean,
+    openInstallGuide: () -> Unit,
     logDownloadError: () -> Unit,
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
@@ -123,6 +124,7 @@ fun UpdateScreen(
                     }
                 }
             },
+            openInstallGuide = openInstallGuide,
             logDownloadError = logDownloadError,
             hideDownloadCompleteNotification = hideDownloadCompleteNotification,
             showDownloadFailedNotification = showDownloadFailedNotification,

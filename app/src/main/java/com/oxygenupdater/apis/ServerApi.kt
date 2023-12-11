@@ -1,9 +1,9 @@
 package com.oxygenupdater.apis
 
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuide
-import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
@@ -80,16 +80,16 @@ interface ServerApi {
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
         @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
-    ): Response<List<NewsItem>>
+    ): Response<List<Article>>
 
-    @GET("news-item/{newsItemId}")
-    suspend fun fetchNewsItem(
-        @Path("newsItemId") newsItemId: Long,
+    @GET("news-item/{id}")
+    suspend fun fetchArticle(
+        @Path("id") id: Long,
         @Query("language") language: String = if (currentLocale.language == "nl") "nl" else "en",
-    ): Response<NewsItem>
+    ): Response<Article>
 
     @POST("news-read")
-    suspend fun markNewsItemRead(@Body newsItemId: Map<String, Long>): Response<ServerPostResult>
+    suspend fun markArticleRead(@Body id: Map<String, Long>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:

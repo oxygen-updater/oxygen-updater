@@ -7,7 +7,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.dao.NewsItemDao
+import com.oxygenupdater.dao.ArticleDao
 import com.oxygenupdater.dao.UpdateDataDao
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.get
@@ -17,8 +17,8 @@ import com.oxygenupdater.internal.settings.KeyDevice
 import com.oxygenupdater.internal.settings.KeyDeviceId
 import com.oxygenupdater.internal.settings.KeyNotificationDelayInSeconds
 import com.oxygenupdater.internal.settings.KeyUpdateMethodId
+import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.DeviceRequestFilter
-import com.oxygenupdater.models.NewsItem
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.logError
@@ -34,7 +34,7 @@ class ServerRepository @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val serverApi: ServerApi,
     private val updateDataDao: UpdateDataDao,
-    private val newsItemDao: NewsItemDao,
+    private val articleDao: ArticleDao,
     private val crashlytics: FirebaseCrashlytics,
 ) {
 
@@ -97,10 +97,10 @@ class ServerRepository @Inject constructor(
     }
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun fetchNewsFromDb() = newsItemDao.getAll()
+    suspend fun fetchNewsFromDb() = articleDao.getAll()
 
     @Suppress("RedundantSuspendModifier")
-    suspend fun markAllReadLocally() = newsItemDao.markAllRead()
+    suspend fun markAllReadLocally() = articleDao.markAllRead()
 
     suspend fun fetchNews() = performServerRequest {
         serverApi.fetchNews(
@@ -108,27 +108,27 @@ class ServerRepository @Inject constructor(
             sharedPreferences[KeyUpdateMethodId, NotSetL],
         )
     }.let {
-        if (!it.isNullOrEmpty()) newsItemDao.refreshNewsItems(it)
+        if (!it.isNullOrEmpty()) articleDao.refreshArticles(it)
 
         // Note: we're returning a local copy so that read statuses are respected
-        newsItemDao.getAll()
+        articleDao.getAll()
     }
 
-    suspend fun fetchNewsItem(newsItemId: Long) = performServerRequest {
-        serverApi.fetchNewsItem(newsItemId)
+    suspend fun fetchArticle(id: Long) = performServerRequest {
+        serverApi.fetchArticle(id)
     }.let {
-        if (it != null) newsItemDao.insertOrUpdate(it)
+        if (it != null) articleDao.insertOrUpdate(it)
 
-        newsItemDao.getById(newsItemId)
+        articleDao.getById(id)
     }
 
-    suspend fun toggleNewsItemReadLocally(
-        newsItem: NewsItem,
-        read: Boolean = !newsItem.readState,
-    ) = newsItemDao.toggleRead(newsItem, read)
+    suspend fun toggleArticleReadLocally(
+        article: Article,
+        read: Boolean = !article.readState,
+    ) = articleDao.toggleRead(article, read)
 
-    suspend fun markNewsItemRead(newsItemId: Long) = performServerRequest {
-        serverApi.markNewsItemRead(ArrayMap<String, Long>(1).apply { put("news_item_id", newsItemId) })
+    suspend fun markArticleRead(id: Long) = performServerRequest {
+        serverApi.markArticleRead(ArrayMap<String, Long>(1).apply { put("news_item_id", id) })
     }
 
     suspend fun fetchUpdateMethodsForDevice(deviceId: Long) = performServerRequest {

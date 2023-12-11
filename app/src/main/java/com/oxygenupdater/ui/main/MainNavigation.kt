@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.SystemUpdateAlt
@@ -83,14 +84,20 @@ fun MainNavigationBar(
 @Composable
 fun MainNavigationRail(
     currentRoute: String?,
+    root: Boolean,
+    onNavIconClick: () -> Unit,
     navigateTo: (route: String) -> Unit,
-    openAboutScreen: () -> Unit,
     setSubtitleResId: (Int) -> Unit,
 ) = NavigationRail(header = {
-    CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.primary) {
+    val colorScheme = MaterialTheme.colorScheme
+    val color = if (root) colorScheme.primary else colorScheme.onSurface
+    CompositionLocalProvider(LocalContentColor provides color) {
         // 64.dp => TopAppBar max height
-        IconButton(openAboutScreen, Modifier.requiredHeight(64.dp)) {
-            Icon(CustomIcons.LogoNotification, stringResource(R.string.about))
+        IconButton(onNavIconClick, Modifier.requiredHeight(64.dp)) {
+            Icon(
+                if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
+                if (root) stringResource(R.string.about) else null,
+            )
         }
     }
 }) {
@@ -173,7 +180,7 @@ sealed class Screen(
 }
 
 const val UpdateRoute = "update"
-const val NewsListRoute = "newsList"
+const val NewsListRoute = "news"
 const val DeviceRoute = "device"
 const val AboutRoute = "about"
 const val SettingsRoute = "settings"

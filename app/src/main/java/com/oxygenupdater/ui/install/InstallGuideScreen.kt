@@ -2,6 +2,7 @@ package com.oxygenupdater.ui.install
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,40 +23,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.ads.AdView
-import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.ui.common.BannerAd
 import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.RichText
-import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
 fun InstallGuideScreen(
-    modifier: Modifier,
     state: RefreshAwareState<List<InstallGuide>>,
-    showDownloadInstructions: Boolean,
-    showAds: Boolean,
-    onBannerAdInit: (AdView) -> Unit,
-) = Column(modifier) {
+    downloaded: Boolean,
+) = Column {
     val (refreshing, data) = state
     val list = if (!refreshing) rememberSaveable(data) { data } else data
     val lastIndex = list.lastIndex
-    var adLoaded by rememberSaveableState("adLoaded", false)
 
     LazyColumn(Modifier.weight(1f)) {
-        if (showDownloadInstructions) item {
+        // Show download instructions only if user hasn't downloaded yet
+        if (!downloaded) item {
             val bodyMedium = MaterialTheme.typography.bodyMedium
             Text(
                 text = AnnotatedString(
@@ -74,18 +67,10 @@ fun InstallGuideScreen(
             InstallGuideItem(
                 refreshing = refreshing,
                 item = it,
-                last = index == lastIndex, adLoaded = adLoaded,
+                last = index == lastIndex,
             )
         }
     }
-
-    if (showAds) BannerAd(
-        adUnitId = BuildConfig.AD_BANNER_INSTALL_ID,
-        adListener = adLoadListener { adLoaded = it },
-        onViewUpdate = onBannerAdInit,
-        // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded
-        modifier = if (adLoaded) Modifier.navigationBarsPadding() else Modifier
-    )
 }
 
 @Composable
@@ -93,7 +78,6 @@ private fun InstallGuideItem(
     refreshing: Boolean,
     item: InstallGuide,
     last: Boolean,
-    adLoaded: Boolean,
 ) {
     var expanded by remember { item.expanded }
     val contentColor = MaterialTheme.colorScheme.onSurfaceVariant
@@ -128,11 +112,7 @@ private fun InstallGuideItem(
         }
     }
 
-    ExpandCollapse(
-        visible = expanded,
-        // Don't re-consume navigation bar insets
-        modifier = if (last && !adLoaded) Modifier.navigationBarsPadding() else Modifier
-    ) {
+    ExpandCollapse(expanded) {
         RichText(
             text = item.body,
             textIndent = ListItemTextIndent,
@@ -143,7 +123,7 @@ private fun InstallGuideItem(
         )
     }
 
-    if (!last) ItemDivider()
+    if (last) Spacer(Modifier.navigationBarsPadding()) else ItemDivider()
 }
 
 @PreviewThemes
@@ -166,10 +146,7 @@ fun PreviewInstallGuideScreen() = PreviewAppTheme {
                 ),
             )
         ),
-        showDownloadInstructions = true,
-        showAds = true,
-        onBannerAdInit = {},
-        modifier = Modifier
+        downloaded = false,
     )
 }
 

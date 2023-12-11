@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.getSystemService
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.formatFileSize
-import com.oxygenupdater.extensions.startInstallActivity
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.NotSetL
@@ -51,6 +50,7 @@ fun downloadButtonConfig(
     workProgress: WorkProgress?,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
+    openInstallGuide: () -> Unit,
     logDownloadError: () -> Unit,
     hasDownloadPermissions: () -> Boolean,
     requestDownloadPermissions: () -> Unit,
@@ -130,7 +130,7 @@ fun downloadButtonConfig(
         ).also {
             // Open install guide automatically, but only after the normal download flow completes
             LaunchedEffect(Unit) {
-                if (previousProgress != null) context.startInstallActivity(false)
+                if (previousProgress != null) openInstallGuide()
                 previousProgress = null
                 previousProgressText = null
             }
