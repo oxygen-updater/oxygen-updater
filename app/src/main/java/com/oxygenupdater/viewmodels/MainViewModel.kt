@@ -156,7 +156,7 @@ class MainViewModel(
         initialValue = WorkInfoWithStatus(null, DownloadStatus.NotDownloading)
     )
 
-    private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.IO) {
+    private fun fetchAllDevices() = viewModelScope.launch(Dispatchers.Main) {
         val response = serverRepository.fetchDevices(DeviceRequestFilter.All) ?: listOf()
         deviceOsSpec = Utils.checkDeviceOsSpec(response)
         deviceMismatch = Utils.checkDeviceMismatch(response)

@@ -1,5 +1,7 @@
 package com.oxygenupdater.ui.update
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.os.Environment
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -116,6 +118,12 @@ fun UpdateScreen(
                         if (deleteDownload(filename)) downloadStatus = DownloadStatus.NotDownloading
                     }
                 }
+            },
+            copyURLAction =  {
+                val clipboard =
+                    context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+                val clip = ClipData.newPlainText("response", updateData.downloadUrl)
+                clipboard?.setPrimaryClip(clip)
             },
             logDownloadError = logDownloadError,
         )

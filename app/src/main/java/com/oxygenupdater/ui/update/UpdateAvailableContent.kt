@@ -77,6 +77,7 @@ import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.animatedClickable
+import com.oxygenupdater.ui.common.animatedDualClickable
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.withPlaceholder
@@ -109,6 +110,7 @@ fun UpdateAvailable(
     workProgress: WorkProgress?,
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
+    copyURLAction: (() -> Unit)?,
     logDownloadError: () -> Unit,
 ) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(modifierMaxWidth) {
     Column(
@@ -143,6 +145,7 @@ fun UpdateAvailable(
             forceDownloadErrorDialog = forceDownloadErrorDialog,
             downloadAction = downloadAction,
             logDownloadError = logDownloadError,
+            copyURLAction = copyURLAction
         )
 
         ExtraInfo(
@@ -185,6 +188,7 @@ fun UpdateAvailable(
         forceDownloadErrorDialog = forceDownloadErrorDialog,
         downloadAction = downloadAction,
         logDownloadError = logDownloadError,
+        copyURLAction = copyURLAction
     )
 
     ConditionalNavBarPadding(navType)
@@ -312,6 +316,7 @@ private fun DownloadButtonContainer(
     downloadStatus: DownloadStatus,
     forceDownloadErrorDialog: Boolean,
     downloadAction: (DownloadAction) -> Unit,
+    copyURLAction: (() -> Unit)?,
     logDownloadError: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -380,6 +385,7 @@ private fun DownloadButtonContainer(
         refreshing = refreshing,
         downloadStatus = downloadStatus,
         downloadAction = downloadAction,
+        copyURLAction = copyURLAction,
         buttonConfig = downloadButtonConfig(
             downloadSize = downloadSize,
             failureType = failureType,
@@ -404,6 +410,7 @@ private fun DownloadButton(
     refreshing: Boolean,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
+    copyURLAction: (() -> Unit)?,
     buttonConfig: DownloadButtonConfig,
 ) {
     val (titleResId, details, sizeOrProgressText, progress, actionButtonConfig, onDownloadClick) = buttonConfig
@@ -412,7 +419,7 @@ private fun DownloadButton(
         modifierMaxWidth
             .alpha(if (refreshing) 0.38f else 1f)
             .background(colorScheme.backgroundVariant)
-            .animatedClickable(!refreshing && onDownloadClick != null, onDownloadClick)
+            .animatedDualClickable(!refreshing && onDownloadClick != null, onDownloadClick, copyURLAction)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             val iconContentDescription = stringResource(R.string.icon)
@@ -579,6 +586,7 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
         workProgress = null,
         forceDownloadErrorDialog = false,
         downloadAction = {},
+        copyURLAction = {}
     ) {}
 }
 

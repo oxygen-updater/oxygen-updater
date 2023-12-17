@@ -126,7 +126,9 @@ class NewsItemActivity : SupportActionBarActivity(
         },
         title = item?.title ?: stringResource(R.string.loading),
         subtitle = item?.authorName ?: stringResource(R.string.summary_please_wait),
-        onNavIconClick = ::onBackPressed,
+        onNavIconClick = {
+            onBackPressedDispatcher.onBackPressed()
+        },
     )
 
     @Suppress("DEPRECATION")
@@ -175,7 +177,7 @@ class NewsItemActivity : SupportActionBarActivity(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = super.onCreate(savedInstanceState).also {
-        if (!handleIntent(intent)) return onBackPressed()
+        if (!handleIntent(intent)) return onBackPressedDispatcher.onBackPressed()
 
         viewModel.refreshItem(newsItemId)
     }

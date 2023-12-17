@@ -4,7 +4,9 @@ import android.view.MotionEvent
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -65,7 +67,7 @@ fun Modifier.withPlaceholder(
 
 fun Modifier.animatedClickable(
     enabled: Boolean = true,
-    onClick: (() -> Unit)?,
+    onClick: (() -> Unit)?
 ) = if (!enabled || onClick == null) this else composed(debugInspectorInfo {
     name = "animatedClickable"
     properties["enabled"] = enabled
@@ -79,6 +81,37 @@ fun Modifier.animatedClickable(
 
     @OptIn(ExperimentalComposeUiApi::class)
     clickable(onClick = onClick)
+        .motionEventSpy {
+            when (it.action) {
+                MotionEvent.ACTION_DOWN -> scale = 0.95f
+                MotionEvent.ACTION_UP -> scale = 1f
+            }
+        }
+        .graphicsLayer {
+            scaleX = animatedScale
+            scaleY = animatedScale
+        }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+fun Modifier.animatedDualClickable(
+    enabled: Boolean = true,
+    onClick: (() -> Unit)?,
+    onLongClick: (() -> Unit)? = null
+) = if (!enabled || onClick == null) this else composed(debugInspectorInfo {
+    name = "animatedClickable"
+    properties["enabled"] = enabled
+    properties["onClick"] = onClick
+    properties["onLongClick"] = onLongClick
+}) {
+    var scale by remember { mutableFloatStateOf(1f) }
+    val animatedScale by animateFloatAsState(
+        scale, spring(dampingRatio = Spring.DampingRatioMediumBouncy),
+        label = "ScaleAnimation"
+    )
+
+    @OptIn(ExperimentalComposeUiApi::class)
+    combinedClickable(onClick = onClick, onLongClick = onLongClick)
         .motionEventSpy {
             when (it.action) {
                 MotionEvent.ACTION_DOWN -> scale = 0.95f

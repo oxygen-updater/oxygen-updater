@@ -45,7 +45,9 @@ abstract class SupportActionBarActivity(
     @Composable
     protected open fun TopAppBar() = TopAppBar(
         scrollBehavior = scrollBehavior,
-        navIconClicked = ::onBackPressed,
+        navIconClicked = {
+            onBackPressedDispatcher.onBackPressed()
+        },
         subtitleResId = subtitleResId,
         root = false,
     )
