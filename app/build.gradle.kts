@@ -294,10 +294,8 @@ dependencies {
 
     implementation(libs.coil.compose)
 
-    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.placeholder.material3)
-    implementation(libs.accompanist.webview)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

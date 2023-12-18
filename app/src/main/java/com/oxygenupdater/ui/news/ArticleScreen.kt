@@ -1,13 +1,9 @@
 package com.oxygenupdater.ui.news
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.net.http.SslError
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import android.text.format.DateUtils
-import android.webkit.WebResourceError
-import android.webkit.WebSettings
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -22,18 +18,10 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.web.LoadingState
-import com.google.accompanist.web.WebView
-import com.google.accompanist.web.WebViewNavigator
-import com.google.accompanist.web.WebViewState
-import com.google.accompanist.web.rememberSaveableWebViewState
-import com.google.accompanist.web.rememberWebViewNavigator
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.shareExternally
 import com.oxygenupdater.models.Article
@@ -50,16 +38,13 @@ import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.light
-import com.oxygenupdater.utils.AppUserAgent
 import java.time.LocalDateTime
 
-@Suppress("DEPRECATION")
 @Composable
 fun ArticleScreen(
     modifier: Modifier,
     state: RefreshAwareState<Article?>,
     webViewState: WebViewState,
-    navigator: WebViewNavigator,
     onError: (String) -> Unit,
     onLoadFinished: (Article) -> Unit,
 ) {
@@ -108,7 +93,6 @@ fun ArticleScreen(
             RefreshAwareWebView(
                 refreshing = refreshing,
                 webViewState = webViewState,
-                navigator = navigator,
                 url = url,
                 showDivider = showDivider,
                 onError = onError,
@@ -134,32 +118,28 @@ private fun Buttons(item: Article) = with(LocalContext.current) {
     )
 }
 
-@Suppress("DEPRECATION")
 @Composable
 private fun RefreshAwareWebView(
     refreshing: Boolean,
     webViewState: WebViewState,
-    navigator: WebViewNavigator,
     url: String,
     showDivider: Boolean,
     onError: (String) -> Unit,
     onLoadFinished: () -> Unit,
 ) {
-    LaunchedEffect(navigator, url) {
-        // null viewState => first load
-        if (webViewState.viewState == null) navigator.loadUrl(url)
-    }
+    LaunchedEffect(url) { webViewState.webView?.loadUrl(url) }
 
     val loading = webViewState.loadingState
     val paddingTop = if (showDivider) Modifier.padding(top = 13.dp) else Modifier
     if (refreshing || loading == LoadingState.Initializing) LinearProgressIndicator(
         paddingTop then modifierMaxWidth
     ) else if (loading is LoadingState.Loading) LinearProgressIndicator(
-        loading.progress, paddingTop then modifierMaxWidth
+        progress = { loading.progress },
+        modifier = paddingTop then modifierMaxWidth
     ) else if (loading == LoadingState.Finished) {
-        val error = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Errors not for our URLs are filtered out in [WebViewClient]
-            webViewState.errorsForCurrentRequest.firstOrNull()?.error?.errorString()
+        val error = if (SDK_INT >= VERSION_CODES.M) {
+            /** Errors not for our URLs are filtered out in [WebViewClient] */
+            webViewState.errorForCurrentRequest?.errorCodeString
         } else null
 
         // Ensure finished & error callbacks are done just once per load
@@ -170,66 +150,14 @@ private fun RefreshAwareWebView(
         if (showDivider) ItemDivider(modifierDefaultPaddingTop)
     }
 
-    val context = LocalContext.current
-    val client = remember(context) { WebViewClient(context) }
-    val userAgent = AppUserAgent + try {
-        " " + WebSettings.getDefaultUserAgent(context)
-    } catch (e: Exception) {
-        ""
-    }
-
     // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap.
     // Also see https://github.com/android/nowinandroid/pull/722.
-    val runningInPreview = LocalInspectionMode.current
     WebView(
         state = webViewState,
-        navigator = navigator,
-        client = client,
-        onCreated = {
-            // Must be done to avoid the white background in dark themes
-            it.setBackgroundColor(Color.TRANSPARENT)
-
-            // AndroidViews are not supported by preview, bail early
-            if (runningInPreview) return@WebView
-
-            @SuppressLint("SetJavaScriptEnabled")
-            it.settings.javaScriptEnabled = true
-            it.settings.userAgentString = userAgent
-        },
         modifier = Modifier
             .navigationBarsPadding()
             .padding(horizontal = 8.dp) // news-content HTML already has an 8px margin
     )
-}
-
-@RequiresApi(Build.VERSION_CODES.M)
-private fun WebResourceError.errorString() = description?.toString() ?: when (errorCode) {
-    // Basic errors
-    android.webkit.WebViewClient.ERROR_UNKNOWN -> "ERROR_UNKNOWN"
-    android.webkit.WebViewClient.ERROR_HOST_LOOKUP -> "ERROR_HOST_LOOKUP"
-    android.webkit.WebViewClient.ERROR_UNSUPPORTED_AUTH_SCHEME -> "ERROR_UNSUPPORTED_AUTH_SCHEME"
-    android.webkit.WebViewClient.ERROR_AUTHENTICATION -> "ERROR_AUTHENTICATION"
-    android.webkit.WebViewClient.ERROR_PROXY_AUTHENTICATION -> "ERROR_PROXY_AUTHENTICATION"
-    android.webkit.WebViewClient.ERROR_CONNECT -> "ERROR_CONNECT"
-    android.webkit.WebViewClient.ERROR_IO -> "ERROR_IO"
-    android.webkit.WebViewClient.ERROR_TIMEOUT -> "ERROR_TIMEOUT"
-    android.webkit.WebViewClient.ERROR_REDIRECT_LOOP -> "ERROR_REDIRECT_LOOP"
-    android.webkit.WebViewClient.ERROR_UNSUPPORTED_SCHEME -> "ERROR_UNSUPPORTED_SCHEME"
-    android.webkit.WebViewClient.ERROR_FAILED_SSL_HANDSHAKE -> "ERROR_FAILED_SSL_HANDSHAKE"
-    android.webkit.WebViewClient.ERROR_BAD_URL -> "ERROR_BAD_URL"
-    android.webkit.WebViewClient.ERROR_FILE -> "ERROR_FILE"
-    android.webkit.WebViewClient.ERROR_FILE_NOT_FOUND -> "ERROR_FILE_NOT_FOUND"
-    android.webkit.WebViewClient.ERROR_TOO_MANY_REQUESTS -> "ERROR_TOO_MANY_REQUESTS"
-    android.webkit.WebViewClient.ERROR_UNSAFE_RESOURCE -> "ERROR_UNSAFE_RESOURCE"
-    // SSL errors, in order of severity
-    SslError.SSL_NOTYETVALID -> "SSL_NOT_YET_VALID"
-    SslError.SSL_EXPIRED -> "SSL_EXPIRED"
-    SslError.SSL_IDMISMATCH -> "SSL_ID_MISMATCH"
-    SslError.SSL_UNTRUSTED -> "SSL_UNTRUSTED"
-    SslError.SSL_DATE_INVALID -> "SSL_DATE_INVALID"
-    SslError.SSL_INVALID -> "SSL_INVALID"
-    // Assume it's an HTTP error
-    else -> "ERROR_$errorCode"
 }
 
 private fun Article.getRelativeTime() = epochMilli?.let {
@@ -254,7 +182,6 @@ private fun Article.getRelativeTime() = epochMilli?.let {
     }
 }?.toString()
 
-@Suppress("DEPRECATION")
 @PreviewThemes
 @Composable
 fun PreviewArticleScreen() = PreviewAppTheme {
@@ -273,8 +200,7 @@ fun PreviewArticleScreen() = PreviewAppTheme {
                 read = false,
             )
         ),
-        webViewState = rememberSaveableWebViewState(),
-        navigator = rememberWebViewNavigator(),
+        webViewState = rememberWebViewState(),
         onError = {},
         onLoadFinished = {},
         modifier = Modifier,

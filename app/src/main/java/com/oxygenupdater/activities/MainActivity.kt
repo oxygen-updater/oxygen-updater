@@ -73,8 +73,6 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
-import com.google.accompanist.web.rememberSaveableWebViewState
-import com.google.accompanist.web.rememberWebViewNavigator
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -161,6 +159,7 @@ import com.oxygenupdater.ui.news.ArticleScreen
 import com.oxygenupdater.ui.news.ArticleViewModel
 import com.oxygenupdater.ui.news.NewsListScreen
 import com.oxygenupdater.ui.news.NewsListViewModel
+import com.oxygenupdater.ui.news.rememberWebViewState
 import com.oxygenupdater.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
@@ -935,7 +934,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
-    @Suppress("DEPRECATION")
     private fun NavGraphBuilder.articleScreen(
         showAds: Boolean,
         scrollBehavior: TopAppBarScrollBehavior,
@@ -971,18 +969,17 @@ class MainActivity : AppCompatActivity() {
             onDispose { viewModel.clearItem() }
         }
 
-        val navigator = rememberWebViewNavigator()
-        val onRefresh = {
+        val webViewState = rememberWebViewState()
+        val onRefresh: () -> Unit = {
             if (showAds) {
                 interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
                 loadInterstitialAd()
             }
 
             viewModel.refreshItem(id)
-            navigator.reload()
+            webViewState.webView?.reload()
         }
 
-        val webViewState = rememberSaveableWebViewState()
         val state by viewModel.state.collectAsStateWithLifecycle()
         PullRefresh(
             state = state,
@@ -997,7 +994,6 @@ class MainActivity : AppCompatActivity() {
             ArticleScreen(
                 state = state,
                 webViewState = webViewState,
-                navigator = navigator,
                 onError = { errorTitle = it },
                 onLoadFinished = viewModel::markRead,
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
