@@ -114,7 +114,6 @@ import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.about.AboutScreen
 import com.oxygenupdater.ui.common.BannerAd
-import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.buildAdRequest
 import com.oxygenupdater.ui.common.loadBannerAd
@@ -123,8 +122,6 @@ import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.device.DeviceScreen
 import com.oxygenupdater.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.ui.device.UnsupportedDeviceOsSpecDialog
-import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
-import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.faq.FaqScreen
 import com.oxygenupdater.ui.faq.FaqViewModel
 import com.oxygenupdater.ui.install.InstallGuideScreen
@@ -159,7 +156,6 @@ import com.oxygenupdater.ui.news.ArticleScreen
 import com.oxygenupdater.ui.news.ArticleViewModel
 import com.oxygenupdater.ui.news.NewsListScreen
 import com.oxygenupdater.ui.news.NewsListViewModel
-import com.oxygenupdater.ui.news.rememberWebViewState
 import com.oxygenupdater.ui.onboarding.OnboardingScreen
 import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
@@ -651,7 +647,7 @@ class MainActivity : AppCompatActivity() {
                         openAboutScreen = { navController.navigateWithDefaults(AboutRoute) },
                     )
 
-                    articleScreen(showAds = showAds, scrollBehavior = scrollBehavior)
+                    articleScreen(showAds = { showAds }, scrollBehavior = scrollBehavior)
                     installGuideScreen(setSubtitleResId = { subtitleResId = it })
                     faqScreen(setSubtitleResId = { subtitleResId = it })
                 }
@@ -935,7 +931,7 @@ class MainActivity : AppCompatActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     private fun NavGraphBuilder.articleScreen(
-        showAds: Boolean,
+        showAds: () -> Boolean,
         scrollBehavior: TopAppBarScrollBehavior,
     ) = composable(
         route = ArticleRoute,
@@ -958,47 +954,19 @@ class MainActivity : AppCompatActivity() {
             navDeepLink { uriPattern = BuildConfig.SERVER_DOMAIN + "article/{$IdArg}/" },
         )
     ) { entry ->
-        val arguments = entry.arguments ?: return@composable
-        val id = arguments.getLong(IdArg, NotSetL)
+        val id = entry.arguments?.getLong(IdArg, NotSetL) ?: return@composable
         if (id == NotSetL) return@composable
 
-        val viewModel = hiltViewModel<ArticleViewModel>(this@MainActivity)
-        DisposableEffect(Unit) {
-            viewModel.refreshItem(id)
-            // Clear to avoid loading the previous article in the WebView
-            onDispose { viewModel.clearItem() }
-        }
-
-        val webViewState = rememberWebViewState()
-        val onRefresh: () -> Unit = {
-            if (showAds) {
+        ArticleScreen(
+            viewModel = hiltViewModel<ArticleViewModel>(this@MainActivity),
+            id = id,
+            scrollBehavior = scrollBehavior,
+            showAds = showAds,
+            loadInterstitialAd = {
                 interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
                 loadInterstitialAd()
-            }
-
-            viewModel.refreshItem(id)
-            webViewState.webView?.reload()
-        }
-
-        val state by viewModel.state.collectAsStateWithLifecycle()
-        PullRefresh(
-            state = state,
-            shouldShowProgressIndicator = { it?.isFullyLoaded != true },
-            onRefresh = onRefresh,
-        ) {
-            var errorTitle by remember { mutableStateOf<String?>(null) }
-            errorTitle?.let { title ->
-                ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, confirm = onRefresh) }
-            }
-
-            ArticleScreen(
-                state = state,
-                webViewState = webViewState,
-                onError = { errorTitle = it },
-                onLoadFinished = viewModel::markRead,
-                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
-            )
-        }
+            },
+        )
     }
 
     private fun NavGraphBuilder.installGuideScreen(
@@ -1016,21 +984,11 @@ class MainActivity : AppCompatActivity() {
             navDeepLink { uriPattern = OuScheme + GuideRoute },
         )
     ) {
-        val viewModel = hiltViewModel<InstallGuideViewModel>(this@MainActivity)
-
-        LaunchedEffect(Unit) { setSubtitleResId(R.string.install_guide) }
-
-        val state by viewModel.state.collectAsStateWithLifecycle()
-        PullRefresh(
-            state = state,
-            shouldShowProgressIndicator = { it.isEmpty() },
-            onRefresh = viewModel::refresh,
-        ) {
-            InstallGuideScreen(
-                state = state,
-                downloaded = it.arguments?.getBoolean(DownloadedArg, false) ?: false,
-            )
-        }
+        InstallGuideScreen(
+            viewModel = hiltViewModel<InstallGuideViewModel>(this@MainActivity),
+            downloaded = it.arguments?.getBoolean(DownloadedArg, false) ?: false,
+            setSubtitleResId = setSubtitleResId,
+        )
     }
 
     private fun NavGraphBuilder.faqScreen(
@@ -1041,18 +999,10 @@ class MainActivity : AppCompatActivity() {
             navDeepLink { uriPattern = OuScheme + FaqRoute },
         )
     ) {
-        val viewModel = hiltViewModel<FaqViewModel>(this@MainActivity)
-
-        LaunchedEffect(Unit) { setSubtitleResId(R.string.faq) }
-
-        val state by viewModel.state.collectAsStateWithLifecycle()
-        PullRefresh(
-            state = state,
-            shouldShowProgressIndicator = { it.isEmpty() },
-            onRefresh = viewModel::refresh,
-        ) {
-            FaqScreen(state)
-        }
+        FaqScreen(
+            viewModel = hiltViewModel<FaqViewModel>(this@MainActivity),
+            setSubtitleResId = setSubtitleResId,
+        )
     }
 
     /**

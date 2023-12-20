@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -23,12 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oxygenupdater.R
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
+import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
@@ -39,36 +42,59 @@ import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
 fun InstallGuideScreen(
-    state: RefreshAwareState<List<InstallGuide>>,
+    viewModel: InstallGuideViewModel,
     downloaded: Boolean,
-) = Column {
-    val (refreshing, data) = state
-    val list = if (!refreshing) rememberSaveable(data) { data } else data
-    val lastIndex = list.lastIndex
+    setSubtitleResId: (Int) -> Unit,
+) {
+    LaunchedEffect(Unit) { setSubtitleResId(R.string.install_guide) }
 
-    LazyColumn(Modifier.weight(1f)) {
-        // Show download instructions only if user hasn't downloaded yet
-        if (!downloaded) item {
-            val bodyMedium = MaterialTheme.typography.bodyMedium
-            Text(
-                text = AnnotatedString(
-                    stringResource(R.string.install_guide_download_instructions),
-                    bodyMedium.toSpanStyle(),
-                    bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
-                ),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                style = bodyMedium,
-                modifier = modifierDefaultPadding
-            )
-            ItemDivider()
-        }
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    InstallGuideScreen(
+        state = state,
+        onRefresh = viewModel::refresh,
+        downloaded = downloaded,
+    )
+}
 
-        itemsIndexed(items = list, key = { _, it -> it.id }) { index, it ->
-            InstallGuideItem(
-                refreshing = refreshing,
-                item = it,
-                last = index == lastIndex,
-            )
+@Composable
+private fun InstallGuideScreen(
+    state: RefreshAwareState<List<InstallGuide>>,
+    onRefresh: () -> Unit,
+    downloaded: Boolean,
+) = PullRefresh(
+    state = state,
+    shouldShowProgressIndicator = { it.isEmpty() },
+    onRefresh = onRefresh,
+) {
+    Column {
+        val (refreshing, data) = state
+        val list = if (!refreshing) rememberSaveable(data) { data } else data
+        val lastIndex = list.lastIndex
+
+        LazyColumn(Modifier.weight(1f)) {
+            // Show download instructions only if user hasn't downloaded yet
+            if (!downloaded) item {
+                val bodyMedium = MaterialTheme.typography.bodyMedium
+                Text(
+                    text = AnnotatedString(
+                        stringResource(R.string.install_guide_download_instructions),
+                        bodyMedium.toSpanStyle(),
+                        bodyMedium.toParagraphStyle().copy(textIndent = ListItemTextIndent)
+                    ),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = bodyMedium,
+                    modifier = modifierDefaultPadding
+                )
+                ItemDivider()
+            }
+
+            itemsIndexed(items = list, key = { _, it -> it.id }) { index, it ->
+                InstallGuideItem(
+                    refreshing = refreshing,
+                    item = it,
+                    last = index == lastIndex,
+                )
+            }
         }
     }
 }
@@ -146,6 +172,7 @@ fun PreviewInstallGuideScreen() = PreviewAppTheme {
                 ),
             )
         ),
+        onRefresh = {},
         downloaded = false,
     )
 }
