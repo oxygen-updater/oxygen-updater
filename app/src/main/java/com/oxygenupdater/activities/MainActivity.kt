@@ -615,6 +615,7 @@ class MainActivity : AppCompatActivity() {
                         navType = navType,
                         windowSize = windowSize,
                         state = newsListState,
+                        showAds = { showAds },
                     )
 
                     deviceScreen(
@@ -770,6 +771,7 @@ class MainActivity : AppCompatActivity() {
         navType: NavType,
         windowSize: WindowSizeClass,
         state: RefreshAwareState<List<Article>>,
+        showAds: () -> Boolean,
     ) = composable(
         route = NewsListRoute,
         deepLinks = listOf(
@@ -780,10 +782,11 @@ class MainActivity : AppCompatActivity() {
             // Avoid refreshing every time this screen is visited by guessing
             // if it's the first load (`refreshing` is true only initially)
             if (state.refreshing) newsListViewModel.refresh()
-
-            // Eagerly load an interstitial ad to eventually show when clicking on an item
-            interstitialAdLoadType = InterstitialAdLoadType.LoadOnly
-            loadInterstitialAd()
+            if (showAds()) {
+                // Eagerly load an interstitial ad to eventually show when clicking on an item
+                interstitialAdLoadType = InterstitialAdLoadType.LoadOnly
+                loadInterstitialAd()
+            }
         }
 
         NewsListScreen(
@@ -800,7 +803,7 @@ class MainActivity : AppCompatActivity() {
             openItem = {
                 // Show interstitial ad at a natural transition point. Frequency
                 // is capped to once in a 5m window in the AdMob dashboard.
-                interstitialAd.let { ad ->
+                if (showAds()) interstitialAd.let { ad ->
                     if (ad != null) ad.show(this@MainActivity) else {
                         interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowImmediately
                         loadInterstitialAd()
@@ -961,8 +964,8 @@ class MainActivity : AppCompatActivity() {
             viewModel = hiltViewModel<ArticleViewModel>(this@MainActivity),
             id = id,
             scrollBehavior = scrollBehavior,
-            showAds = showAds,
             loadInterstitialAd = {
+                if (!showAds()) return@ArticleScreen
                 interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
                 loadInterstitialAd()
             },
@@ -1333,13 +1336,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (!isExternalArticleUri) return logDebug(TAG, "Intent data: $uri")
-
         logDebug(TAG, "External article URI detected: $uri")
 
-        // If an article deep link came from outside the app, we
-        // need to delay showing the interstitial ad for better UX.
-        interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
-        loadInterstitialAd()
+        if (billingViewModel.shouldShowAds.value) {
+            // If an article deep link came from outside the app, we
+            // need to delay showing the interstitial ad for better UX.
+            interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
+            loadInterstitialAd()
+        }
 
         // We need to manually set this because it is always set to "update"
         // when receiving this URI for the first time after launching.

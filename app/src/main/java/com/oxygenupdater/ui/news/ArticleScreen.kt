@@ -58,7 +58,6 @@ fun ArticleScreen(
     viewModel: ArticleViewModel,
     id: Long,
     scrollBehavior: TopAppBarScrollBehavior,
-    showAds: () -> Boolean,
     loadInterstitialAd: () -> Unit,
 ) {
     DisposableEffect(Unit) {
@@ -69,7 +68,7 @@ fun ArticleScreen(
 
     val webViewState = rememberWebViewState()
     val onRefresh: () -> Unit = {
-        if (showAds()) loadInterstitialAd()
+        loadInterstitialAd()
 
         viewModel.refreshItem(id)
         webViewState.webView?.reload()
