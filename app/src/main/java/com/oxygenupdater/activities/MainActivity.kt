@@ -482,8 +482,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         Row {
-            navController = rememberNavController()
-
             var subtitleResId by rememberSaveableState("subtitleResId", if (startScreen.useVersionName) 0 else startScreen.labelResId)
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             currentRoute = navBackStackEntry?.destination?.route
@@ -1059,6 +1057,9 @@ class MainActivity : AppCompatActivity() {
         setContent {
             val windowSize = calculateWindowSizeClass(this)
 
+            /** Do this as early as possible because it's used in [onNewIntent] */
+            navController = rememberNavController()
+
             AppTheme(settingsViewModel.theme) {
                 EdgeToEdge()
 
@@ -1223,7 +1224,7 @@ class MainActivity : AppCompatActivity() {
 
         try {
             navController.handleDeepLink(intent)
-        } catch (e: IllegalStateException) {
+        } catch (e: Exception) {
             crashlytics.logWarning(TAG, "NavController can't handle deep link", e)
         }
     }
