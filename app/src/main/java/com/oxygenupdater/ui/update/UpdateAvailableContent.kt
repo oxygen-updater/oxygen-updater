@@ -246,14 +246,14 @@ private fun ExtraInfo(
     failureType: Int?,
     getPrefStr: (key: String, default: String) -> String,
 ) {
-    val onSurfaceVariant = MaterialTheme.colorScheme.onSurfaceVariant
+    val colorScheme = MaterialTheme.colorScheme
     val bodySmall = MaterialTheme.typography.bodySmall
     if (updateData.systemIsUpToDate) {
         // User is already up-to-date, so remind them why they're seeing this update: they enabled advanced mode
         val updateMethod = getPrefStr(KeyUpdateMethod, "<UNKNOWN>")
         Text(
             text = stringResource(R.string.update_information_header_advanced_mode_helper, updateMethod),
-            color = onSurfaceVariant,
+            color = colorScheme.error,
             style = bodySmall,
             modifier = modifierDefaultPaddingHorizontal
         )
@@ -265,6 +265,7 @@ private fun ExtraInfo(
     SelectionContainer(modifierDefaultPaddingHorizontal) {
         val withPlaceholder = Modifier.withPlaceholder(refreshing, bodySmall)
         Column {
+            val onSurfaceVariant = colorScheme.onSurfaceVariant
             Text(
                 text = stringResource(R.string.update_information_file_name, updateData.filename ?: Build.UNKNOWN),
                 color = onSurfaceVariant,
