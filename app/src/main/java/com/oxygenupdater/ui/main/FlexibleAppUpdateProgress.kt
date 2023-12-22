@@ -1,11 +1,13 @@
 package com.oxygenupdater.ui.main
 
+import androidx.annotation.VisibleForTesting
 import androidx.collection.IntIntPair
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.testTag
 import com.google.android.play.core.install.model.InstallStatus
 import com.oxygenupdater.ui.common.modifierMaxWidth
 
@@ -24,8 +26,9 @@ fun FlexibleAppUpdateProgress(
         updateSnackbarText(null)
     }
 
-    if (status == InstallStatus.PENDING) LinearProgressIndicator(modifierMaxWidth)
-    else if (status == InstallStatus.DOWNLOADING) {
+    if (status == InstallStatus.PENDING) LinearProgressIndicator(
+        modifierMaxWidth.testTag(FlexibleAppUpdateProgress_IndicatorTestTag)
+    ) else if (status == InstallStatus.DOWNLOADING) {
         val progress = bytesDownloaded().toFloat() / totalBytesToDownload().coerceAtLeast(1)
         val animatedProgress by animateFloatAsState(
             targetValue = progress,
@@ -34,7 +37,12 @@ fun FlexibleAppUpdateProgress(
         )
         LinearProgressIndicator(
             progress = { animatedProgress },
-            modifier = modifierMaxWidth
+            modifier = modifierMaxWidth.testTag(FlexibleAppUpdateProgress_IndicatorTestTag)
         )
     }
 }
+
+private const val TAG = "FlexibleAppUpdateProgress"
+
+@VisibleForTesting
+const val FlexibleAppUpdateProgress_IndicatorTestTag = TAG + "_Indicator"

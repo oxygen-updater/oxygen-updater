@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.main
 
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.requiredHeight
@@ -32,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -47,7 +49,7 @@ fun MainNavigationBar(
     currentRoute: String?,
     navigateTo: (route: String) -> Unit,
     setSubtitleResId: (Int) -> Unit,
-) = NavigationBar {
+) = NavigationBar(Modifier.testTag(MainNavigation_BarTestTag)) {
     MainScreens.forEach { screen ->
         val labelResId = screen.labelResId
         key(labelResId) { // because this is in a `forEach`
@@ -88,21 +90,29 @@ fun MainNavigationRail(
     onNavIconClick: () -> Unit,
     navigateTo: (route: String) -> Unit,
     setSubtitleResId: (Int) -> Unit,
-) = NavigationRail(header = {
-    val colorScheme = MaterialTheme.colorScheme
-    val color = if (root) colorScheme.primary else colorScheme.onSurface
-    CompositionLocalProvider(LocalContentColor provides color) {
-        // 64.dp => TopAppBar max height
-        IconButton(onNavIconClick, Modifier.requiredHeight(64.dp)) {
-            Icon(
-                if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
-                if (root) stringResource(R.string.about) else null,
-            )
+) = NavigationRail(
+    header = {
+        val colorScheme = MaterialTheme.colorScheme
+        val color = if (root) colorScheme.primary else colorScheme.onSurface
+        CompositionLocalProvider(LocalContentColor provides color) {
+            // 64.dp => TopAppBar max height
+            IconButton(
+                onClick = onNavIconClick,
+                modifier = Modifier
+                    .requiredHeight(64.dp)
+                    .testTag(MainNavigation_Rail_IconButtonTestTag)
+            ) {
+                Icon(
+                    if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
+                    if (root) stringResource(R.string.about) else null,
+                )
+            }
         }
-    }
-}) {
+    },
+    modifier = Modifier.testTag(MainNavigation_RailTestTag)
+) {
     // Allow vertical scroll in case height isn't enough for all 5 icons
-    LazyColumn {
+    LazyColumn(Modifier.testTag(MainNavigation_Rail_LazyColumnTestTag)) {
         items(MainScreens) { screen ->
             val labelResId = screen.labelResId
             val route = screen.route
@@ -140,7 +150,9 @@ fun MainNavigationRail(
 private inline fun NavigationLabel(label: String) = Text(
     text = label,
     maxLines = 1,
-    modifier = Modifier.basicMarquee()
+    modifier = Modifier
+        .basicMarquee()
+        .testTag(MainNavigation_LabelTestTag)
 )
 
 val MainScreens = arrayOf(
@@ -184,3 +196,20 @@ const val NewsListRoute = "news"
 const val DeviceRoute = "device"
 const val AboutRoute = "about"
 const val SettingsRoute = "settings"
+
+private const val TAG = "MainNavigation"
+
+@VisibleForTesting
+const val MainNavigation_BarTestTag = TAG + "_Bar"
+
+@VisibleForTesting
+const val MainNavigation_RailTestTag = TAG + "_Rail"
+
+@VisibleForTesting
+const val MainNavigation_LabelTestTag = TAG + "_Label"
+
+@VisibleForTesting
+const val MainNavigation_Rail_LazyColumnTestTag = TAG + "_Rail_LazyColumn"
+
+@VisibleForTesting
+const val MainNavigation_Rail_IconButtonTestTag = TAG + "_Rail_IconButton"

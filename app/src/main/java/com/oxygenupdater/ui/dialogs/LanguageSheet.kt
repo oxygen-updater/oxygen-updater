@@ -2,7 +2,7 @@ package com.oxygenupdater.ui.dialogs
 
 import android.content.res.Resources
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
@@ -29,11 +30,13 @@ import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
+import com.oxygenupdater.ui.common.modifierSemanticsNotSelected
+import com.oxygenupdater.ui.common.modifierSemanticsSelected
 import com.oxygenupdater.ui.theme.PreviewThemes
 import java.util.Locale
 
 @Composable
-fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
+fun LanguageSheet(onClick: (String) -> Unit, selectedLocale: Locale) {
     SheetHeader(R.string.label_language)
 
     val list = remember { BuildConfig.SUPPORTED_LANGUAGES }
@@ -47,15 +50,14 @@ fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
 
     // Perf: re-use common modifiers to avoid recreating the same object repeatedly
     val iconSpacerSizeModifier = Modifier.size(40.dp) // 24 + 16
-    LazyColumn {
+    LazyColumn(Modifier.testTag(LanguageSheet_LazyColumnTestTag)) {
         items(list, { it }) { tag ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .animatedClickable {
-                        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(tag))
-                        hide() // hide first; activity may recreate on change
-                    } then modifierDefaultPadding // must be after `clickable`
+                    .animatedClickable { onClick(tag) }
+                    .then(modifierDefaultPadding) // must be after `clickable`
+                    .testTag(BottomSheet_ItemRowTestTag)
             ) {
                 val primary = colorScheme.primary
                 val locale = Locale.forLanguageTag(tag)
@@ -64,8 +66,8 @@ fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
                     imageVector = Icons.Rounded.Done,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
-                    modifier = Modifier.padding(end = 16.dp)
-                ) else Spacer(iconSpacerSizeModifier)
+                    modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
+                ) else Spacer(iconSpacerSizeModifier then modifierSemanticsNotSelected)
 
                 Column(Modifier.weight(1f)) {
                     // App-level localized name, which is displayed both as a title and summary
@@ -112,16 +114,22 @@ fun LanguageSheet(hide: () -> Unit, selectedLocale: Locale) {
  * Note: [LocaleListCompat.matchesLanguageAndScript] could be used in place of this, but that is too complex
  * and makes unnecessary computations for our use-case.
  */
-private fun Locale.approxEquals(other: Locale): Boolean {
+@VisibleForTesting
+fun Locale.approxEquals(other: Locale): Boolean {
     val country = country
     return language == other.language && (country.isBlank() || country == other.country)
 }
+
+private const val TAG = "LanguageSheet"
+
+@VisibleForTesting
+const val LanguageSheet_LazyColumnTestTag = TAG + "_LazyColumn"
 
 @PreviewThemes
 @Composable
 fun PreviewLanguageSheet() = PreviewModalBottomSheet {
     LanguageSheet(
-        hide = {},
+        onClick = {},
         selectedLocale = Locale.forLanguageTag("en"),
     )
 }

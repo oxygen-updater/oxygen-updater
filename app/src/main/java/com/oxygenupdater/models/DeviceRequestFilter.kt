@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class DeviceRequestFilter(val value: String) {
+value class DeviceRequestFilter private constructor(val value: String) {
 
     override fun toString() = "DeviceRequestFilter.$value"
 

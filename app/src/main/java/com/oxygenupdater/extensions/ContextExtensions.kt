@@ -101,6 +101,13 @@ fun Context.openPlayStorePage() {
     }
 }
 
+fun Context.openLink(url: String) = try {
+    startActivity(Intent(Intent.ACTION_VIEW, url.toUri()).withAppReferrer(packageName))
+} catch (e: ActivityNotFoundException) {
+    // Fallback: copy to clipboard instead
+    copyToClipboard(url)
+}
+
 @Suppress("NOTHING_TO_INLINE")
 @Throws(ActivityNotFoundException::class)
 inline fun Context.openAppDetailsPage() = startActivity(

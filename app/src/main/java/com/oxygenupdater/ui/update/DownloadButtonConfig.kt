@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.storage.StorageManager
+import androidx.annotation.VisibleForTesting
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material.icons.rounded.Close
@@ -266,6 +267,9 @@ private const val SafeMargin = 1048576 * 25L // 25 MB
 
 private val DefaultWorkProgress = WorkProgress(NotSetL, NotSetL, 0, null)
 
+@VisibleForTesting
+var previousProgress: Float? = null
+
 /** Used for maintaining progress text across DOWNLOADING -> PAUSED */
-private var previousProgressText: String? = null
-private var previousProgress: Float? = null
+@VisibleForTesting
+var previousProgressText: String? = null

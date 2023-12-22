@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class NavType(val value: Int) {
+value class NavType private constructor(val value: Int) {
 
     override fun toString() = "NavType." + when (this) {
         BottomBar -> "BottomBar"

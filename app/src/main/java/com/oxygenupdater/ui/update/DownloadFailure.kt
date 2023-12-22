@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class DownloadFailure(val value: Int) {
+value class DownloadFailure private constructor(val value: Int) {
 
     override fun toString() = "DownloadFailure." + when (this) {
         NullUpdateDataOrDownloadUrl -> "NullUpdateDataOrDownloadUrl"

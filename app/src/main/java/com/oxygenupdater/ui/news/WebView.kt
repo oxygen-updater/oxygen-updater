@@ -29,6 +29,7 @@ import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
@@ -38,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.viewinterop.AndroidView
 import com.oxygenupdater.ui.news.WebViewError.Companion.from
 import com.oxygenupdater.utils.AppUserAgent
@@ -85,7 +87,7 @@ fun WebView(
             }.also { state.webView = it }
         },
         onRelease = WebView::destroy,
-        modifier = modifier
+        modifier = modifier.testTag(WebViewTestTag)
     )
 }
 
@@ -221,3 +223,6 @@ data class WebViewError(
         )
     }
 }
+
+@VisibleForTesting
+const val WebViewTestTag = "WebView"

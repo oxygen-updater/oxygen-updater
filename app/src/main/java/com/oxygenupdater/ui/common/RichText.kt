@@ -11,6 +11,7 @@ import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.LocalContentColor
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.ParagraphStyle
@@ -57,7 +59,7 @@ fun RichText(
     contentColor: Color = LocalContentColor.current,
     type: RichTextType = RichTextType.Html,
     custom: ((text: String, contentColor: Color, urlColor: Color) -> AnnotatedString)? = null,
-) = SelectionContainer(modifier) {
+) = SelectionContainer(modifier.testTag(RichText_ContainerTestTag)) {
     @Suppress("NAME_SHADOWING")
     val text = text ?: ""
 
@@ -93,6 +95,8 @@ fun RichText(
     ) {
         val range = annotated.getUrlAnnotations(it, it).firstOrNull()
         val url = range?.item?.url ?: return@ClickableText
+        // Note: while this can be simplified to `context.openUrl(url)`, we must
+        // use LocalUriHandler because its behaviour can be tested.
         try {
             uriHandler.openUri(url)
         } catch (e: ActivityNotFoundException) {
@@ -279,7 +283,7 @@ private fun changelogToAnnotatedString(
 
 @Immutable
 @JvmInline
-value class RichTextType(val value: Int) {
+value class RichTextType private constructor(val value: Int) {
 
     override fun toString() = "RichTextType." + when (this) {
         Custom -> "Custom"
@@ -297,6 +301,11 @@ value class RichTextType(val value: Int) {
 
 /** Quirky method to add an approximate margin (obtained experimentally) to bulleted lines when they wrap */
 val ListItemTextIndent = TextIndent(restLine = 9.05.sp)
+
+private const val TAG = "RichText"
+
+@VisibleForTesting
+const val RichText_ContainerTestTag = TAG + "_Container"
 
 private const val OsVersionLineHeading = "#"
 

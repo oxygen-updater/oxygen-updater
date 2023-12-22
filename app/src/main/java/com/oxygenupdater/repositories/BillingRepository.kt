@@ -873,7 +873,7 @@ class BillingRepository @Inject constructor(
 
     @Immutable
     @JvmInline
-    value class SkuState(val value: Int) {
+    value class SkuState private constructor(val value: Int) {
 
         override fun toString() = "SkuState." + when (this) {
             Unknown -> "Unknown"

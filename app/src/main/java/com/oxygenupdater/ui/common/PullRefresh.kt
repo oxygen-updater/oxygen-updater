@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.common
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.ui.RefreshAwareState
 
@@ -26,7 +28,10 @@ fun <T> PullRefresh(
     content: @Composable () -> Unit,
 ) {
     val refreshing = state.refreshing
-    if (refreshing && shouldShowProgressIndicator(state.data)) Box(modifierMaxSize, Alignment.Center) {
+    if (refreshing && shouldShowProgressIndicator(state.data)) Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifierMaxSize.testTag(PullRefresh_ProgressIndicatorTestTag)
+    ) {
         CircularProgressIndicator(Modifier.size(64.dp), strokeWidth = 6.dp)
     } else rememberPullToRefreshState().let {
         /**
@@ -42,7 +47,11 @@ fun <T> PullRefresh(
         if (!refreshing) LaunchedEffect(Unit) { it.endRefresh() }
         if (it.isRefreshing) LaunchedEffect(Unit) { onRefresh() }
 
-        Box(Modifier.nestedScroll(it.nestedScrollConnection)) {
+        Box(
+            Modifier
+                .nestedScroll(it.nestedScrollConnection)
+                .testTag(PullRefresh_ContentTestTag)
+        ) {
             content()
 
             PullToRefreshContainer(
@@ -61,7 +70,19 @@ fun <T> PullRefresh(
                         scaleX = scale
                         scaleY = scale
                     }
+                    .testTag(PullRefresh_IndicatorContainerTestTag)
             )
         }
     }
 }
+
+private const val TAG = "PullRefresh"
+
+@VisibleForTesting
+const val PullRefresh_ProgressIndicatorTestTag = TAG + "_ProgressIndicator"
+
+@VisibleForTesting
+const val PullRefresh_ContentTestTag = TAG + "_Content"
+
+@VisibleForTesting
+const val PullRefresh_IndicatorContainerTestTag = TAG + "_IndicatorContainer"

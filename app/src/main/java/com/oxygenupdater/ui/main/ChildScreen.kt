@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class ChildScreen(val value: String) {
+value class ChildScreen private constructor(val value: String) {
 
     override fun toString() = value
 

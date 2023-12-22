@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.text.format.DateUtils
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -84,8 +85,9 @@ fun ArticleScreen(
     )
 }
 
+@VisibleForTesting
 @Composable
-private fun ArticleScreen(
+fun ArticleScreen(
     modifier: Modifier,
     state: RefreshAwareState<Article?>,
     onRefresh: () -> Unit,
@@ -215,7 +217,8 @@ private fun RefreshAwareWebView(
     )
 }
 
-private fun Article.getRelativeTime() = epochMilli?.let {
+@VisibleForTesting
+fun Article.getRelativeTime() = epochMilli?.let {
     // Weird bug in `android.text.format` that causes a crash in
     // older Android versions, due to using the [FORMAT_SHOW_TIME]
     // flag. Hacky workaround is to call the function again, but
@@ -237,24 +240,26 @@ private fun Article.getRelativeTime() = epochMilli?.let {
     }
 }?.toString()
 
+@VisibleForTesting
+val PreviewArticleData = LocalDateTime.now().let { now ->
+    Article(
+        id = 1,
+        title = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
+        subtitle = "An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered",
+        imageUrl = "https://github.com/oxygen-updater.png",
+        text = "Text",
+        datePublished = now.minusHours(2).toString(),
+        dateLastEdited = now.toString(),
+        authorName = "Author",
+        read = false,
+    )
+}
+
 @PreviewThemes
 @Composable
 fun PreviewArticleScreen() = PreviewAppTheme {
-    val date = LocalDateTime.now().toString()
     ArticleScreen(
-        state = RefreshAwareState(
-            false, Article(
-                1,
-                title = "An unnecessarily long news title, to get an accurate understanding of how long titles are rendered",
-                subtitle = "An unnecessarily long news subtitle, to get an accurate understanding of how long subtitles are rendered",
-                imageUrl = "https://github.com/oxygen-updater.png",
-                text = "Text",
-                datePublished = date,
-                dateLastEdited = date,
-                authorName = "Author",
-                read = false,
-            )
-        ),
+        state = RefreshAwareState(false, PreviewArticleData),
         onRefresh = {},
         webViewState = rememberWebViewState(),
         onLoadFinished = {},

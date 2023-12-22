@@ -41,6 +41,8 @@ android {
     buildToolsVersion = "34.0.0"
     compileSdk = 34
 
+    testBuildType = "instrumentation"
+
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
 
@@ -50,13 +52,32 @@ android {
         versionCode = 114
         versionName = "6.2.0"
 
+        testApplicationId = "$namespace.$testBuildType"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testHandleProfiling = true
 
         proguardFiles(
             getDefaultProguardFile("proguard-android-optimize.txt"),
             "proguard-rules.pro",
         )
     }
+
+    @Suppress("UnstableApiUsage")
+    testOptions.managedDevices.localDevices.maybeCreate("pixel7ProApi33").apply {
+        device = "Pixel 7 Pro"
+        apiLevel = 33 // keep in sync with ci.yml
+
+        // Use Automated Test Devices on API 30 — 33 for better runtime performance
+        // https://developer.android.com/studio/test/gradle-managed-devices#gmd-atd
+        systemImageSource = "google-atd"
+    }
+
+    testCoverage {
+        jacocoVersion = libs.versions.jacoco.get()
+    }
+
+    @Suppress("UnstableApiUsage")
+    experimentalProperties["android.experimental.self-instrumenting"] = true
 
     // Because the app has an in-app language switch feature, we need
     // to disable splitting configuration APKs for language resources.
@@ -78,10 +99,10 @@ android {
     signingConfigs {
         val keystore = loadProperties(
             "keystore",
-            Pair("storePassword", ""),
-            Pair("keyPassword", ""),
-            Pair("keyAlias", ""),
-            Pair("storeFile", "keyStore.jks")
+            "storePassword" to "",
+            "keyPassword" to "",
+            "keyAlias" to "",
+            "storeFile" to "keyStore.jks",
         )
 
         create("release") {
@@ -95,7 +116,7 @@ android {
     buildTypes {
         // Config for releases and testing on a real device
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
-        getByName("release") {
+        release {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
             buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
@@ -127,9 +148,10 @@ android {
             isShrinkResources = true
             isDebuggable = false
         }
+
         // Config for use during debugging and testing on an emulator
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
-        getByName("debug") {
+        val debug = getByName("debug") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
             buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
@@ -155,13 +177,28 @@ android {
             }
         }
 
+        create(testBuildType) {
+            initWith(debug)
+
+            // AGP 4.1+ does its own instrumentation, which is probably incompatible
+            // with Jacoco because turning this on fails all tests with `IllegalClassFormatException`.
+            // enableUnitTestCoverage = true
+            // Prefer running via `./gradlew createManagedDeviceInstrumentationAndroidTestCoverageReport`.
+            // Reports are generated in `build/reports/coverage/androidTest/instrumentation/managedDevice/index.html`.
+            enableAndroidTestCoverage = true
+
+            // Tests don't work with minification for some reason
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
+
         val languages = fileTree("src/main/res") {
             include("values-*/strings.xml")
         }.files.map {
             it.parentFile.name.removePrefix("values-").replace("-r", "-")
         }.joinToString { "\"$it\"" }
 
-        val billing = loadProperties("billing", Pair("base64PublicKey", ""))
+        val billing = loadProperties("billing", "base64PublicKey" to "")
 
         // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
         buildTypes.forEach {
@@ -209,24 +246,23 @@ android {
     // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
     @Suppress("UnstableApiUsage")
     androidResources.generateLocaleConfig = true
-
-    testBuildType = "debug"
 }
 
 // Required to workaround https://issuetracker.google.com/issues/260059413
 kotlin {
     jvmToolchain(17) // keep in sync with `javaVersion` above
     compilerOptions {
-        // Disable the annoying "Parameter specified as non-null is null" exceptions
-        freeCompilerArgs.add("-Xno-param-assertions")
-        // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
-        // Requires a fresh build to show all outputs
+        val prefix = "plugin:androidx.compose.compiler.plugins.kotlin"
         val composeMetrics = project.layout.buildDirectory.dir("composeMetrics").get().asFile.path
         freeCompilerArgs.addAll(
-            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=$composeMetrics",
-            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=$composeMetrics",
+            // Disable the annoying "Parameter specified as non-null is null" exceptions
+            "-Xno-param-assertions",
+            // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
+            // Requires a fresh build to show all outputs
+            "-P", "$prefix:metricsDestination=$composeMetrics",
+            "-P", "$prefix:reportsDestination=$composeMetrics",
             // Strong skipping mode from 1.5.4 onwards: https://r.android.com/c/2671135
-            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true",
+            "-P", "$prefix:experimentalStrongSkipping=true",
         )
     }
 }
@@ -324,4 +360,17 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.androidx.annotation)
+
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.ext.truth)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    val testBuildTypeImplementation = "${android.testBuildType}Implementation"
+    // Needed for createAndroidComposeRule, but not createComposeRule
+    testBuildTypeImplementation(libs.androidx.compose.ui.test.manifest)
+    // Required for testing to avoid `NoSuchMethodError: No static method forceEnableAppTracing()`
+    testBuildTypeImplementation(libs.androidx.tracing)
 }

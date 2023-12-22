@@ -2,6 +2,7 @@ package com.oxygenupdater.ui.news
 
 import android.annotation.SuppressLint
 import android.text.format.DateUtils
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -48,7 +49,6 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -75,7 +75,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
@@ -124,7 +128,8 @@ import kotlin.random.Random
 @Composable
 fun NewsListScreen(
     navType: NavType,
-    windowSize: WindowSizeClass,
+    windowWidthSize: WindowWidthSizeClass,
+    windowHeightSize: WindowHeightSizeClass,
     state: RefreshAwareState<List<Article>>,
     onRefresh: () -> Unit,
     unreadCountState: MutableIntState,
@@ -201,7 +206,7 @@ fun NewsListScreen(
 
             if (navType == NavType.BottomBar) {
                 val size = DpSize(80.dp, 80.dp)
-                LazyColumn(modifierMaxSize) {
+                LazyColumn(modifierMaxSize.testTag(NewsListScreen_LazyColumnTestTag)) {
                     items(items = list, key = { it.id ?: Random.nextLong() }) {
                         NewsListItem(
                             refreshing = refreshing,
@@ -213,14 +218,14 @@ fun NewsListScreen(
                     }
                 }
             } else Column {
-                val size = remember(windowSize) {
+                val size = remember(windowWidthSize, windowHeightSize) {
                     DpSize(
-                        width = when (windowSize.widthSizeClass) {
+                        width = when (windowWidthSize) {
                             WindowWidthSizeClass.Medium -> 192.dp
                             WindowWidthSizeClass.Expanded -> 224.dp
                             else -> 160.dp
                         },
-                        height = when (windowSize.heightSizeClass) {
+                        height = when (windowHeightSize) {
                             WindowHeightSizeClass.Medium -> 192.dp
                             WindowHeightSizeClass.Expanded -> 224.dp
                             else -> 128.dp
@@ -234,10 +239,10 @@ fun NewsListScreen(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
-                    modifier = Modifier.windowInsetsPadding(
+                    modifier = Modifier
                         // Leave space for 2/3-button nav bar in landscape mode
-                        WindowInsets.systemBars.only(WindowInsetsSides.Horizontal)
-                    )
+                        .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
+                        .testTag(NewsListScreen_LazyVerticalGridTestTag)
                 ) {
                     items(items = list, key = { it.id ?: Random.nextLong() }) {
                         NewsGridItem(
@@ -268,9 +273,14 @@ private fun LazyItemScope.NewsListItem(
     Modifier
         .animateItemPlacement()
         .clickable(!refreshing, onClick = onClick)
+        .testTag(NewsListScreen_ItemColumnTestTag)
 ) {
     Box {
-        if (!refreshing && !item.readState) Badge(Modifier.offset(4.dp, 16.dp))
+        if (!refreshing && !item.readState) Badge(
+            Modifier
+                .offset(4.dp, 16.dp)
+                .testTag(NewsListScreen_ItemBadgeTestTag)
+        )
 
         Row(modifierDefaultPaddingStartTopEnd) {
             Column(
@@ -311,7 +321,11 @@ private fun LazyGridItemScope.NewsGridItem(
     size: DpSize,
     onToggleReadClick: () -> Unit,
     onClick: () -> Unit,
-) = Column(Modifier.animateItemPlacement()) {
+) = Column(
+    Modifier
+        .animateItemPlacement()
+        .testTag(NewsListScreen_ItemColumnTestTag)
+) {
     Box(
         Modifier
             .requiredSize(size)
@@ -358,19 +372,22 @@ private fun GridItemBadge() {
             .drawWithCache {
                 // Top-left triangle
                 val path = Path()
+                val width = size.width
+                val height = size.height
+
                 path.moveTo(0f, 0f)
                 if (ltr) {
-                    path.lineTo(this.size.width, 0f)
-                    path.lineTo(0f, this.size.height)
+                    path.lineTo(width, 0f)
+                    path.lineTo(0f, height)
                 } else {
-                    path.lineTo(this.size.width, this.size.height)
-                    path.lineTo(this.size.width, 0f)
+                    path.lineTo(width, height)
+                    path.lineTo(width, 0f)
                 }
                 path.close()
-                onDrawBehind {
-                    drawPath(path, error)
-                }
+
+                onDrawBehind { drawPath(path, error) }
             }
+            .testTag(NewsListScreen_ItemBadgeTestTag)
     )
 }
 
@@ -401,12 +418,13 @@ private fun ListItemTitles(refreshing: Boolean, item: Article) {
     AutoresizeText(
         text = item.subtitle ?: "",
         fontSizeRange = FontSizeRange(12f, 14f),
-        modifier = Modifier.withPlaceholder(refreshing)
+        modifier = Modifier
+            .withPlaceholder(refreshing)
     )
 }
 
 /**
- * This draws text via [rememberTextMeasurer] into [Spacer] to maximizes [title][Article.title] lines
+ * This draws text via [rememberTextMeasurer] into [Spacer] to maximize [title][Article.title] lines
  * while also ensuring at least 1 line for [subtitle][Article.subtitle].
  *
  * Because of how grid items are laid out (titles are drawn over a "background" image) we skip drawing
@@ -429,6 +447,8 @@ private fun GridItemTitles(refreshing: Boolean, item: Article) {
         (subtitleLineHeight + titleFontPadding).sp.roundToPx()
     }
 
+    val titleStr = item.title ?: "Unknown title"
+    val subtitleStr = item.subtitle ?: ""
     Spacer(
         modifierMaxSize
             .padding(horizontal = 12.dp, vertical = 8.dp)
@@ -437,7 +457,7 @@ private fun GridItemTitles(refreshing: Boolean, item: Article) {
                 val height = size.height.toInt()
 
                 val title = textMeasurer.measure(
-                    text = item.title ?: "Unknown title",
+                    text = titleStr,
                     // Leave space for min 1 subtitle line
                     constraints = Constraints(maxWidth = width, maxHeight = height - spaceForOneSubtitleLine),
                     overflow = TextOverflow.Ellipsis,
@@ -446,7 +466,7 @@ private fun GridItemTitles(refreshing: Boolean, item: Article) {
 
                 val titleHeight = title.size.height
                 val subtitle = textMeasurer.measure(
-                    text = item.subtitle ?: "",
+                    text = subtitleStr,
                     // Limit to remaining space
                     constraints = Constraints(maxWidth = width, maxHeight = height - titleHeight),
                     overflow = TextOverflow.Ellipsis,
@@ -457,6 +477,16 @@ private fun GridItemTitles(refreshing: Boolean, item: Article) {
                     drawText(title, currentColor)
                     drawText(subtitle, onSurfaceVariant, Offset(0f, titleHeight.toFloat())) // position just below title
                 }
+            }
+            // We need to explicitly set text semantics here, because we're drawing it ourselves
+            .semantics {
+                set(
+                    SemanticsProperties.Text,
+                    listOf(
+                        AnnotatedString(item.title ?: "Unknown title"),
+                        AnnotatedString(item.subtitle ?: ""),
+                    )
+                )
             }
     )
 }
@@ -501,7 +531,7 @@ private fun NewsImage(
             .requiredSize(size)
             .clip(MaterialTheme.shapes.small)
             .withPlaceholder(refreshing)
-            .then(modifier)
+            .then(modifier.testTag(NewsListScreen_ItemImageTestTag))
     )
 }
 
@@ -519,18 +549,8 @@ private fun Footer(
     modifier = modifierMaxWidth.padding(start = startPadding)
 ) {
     val bodySmall = MaterialTheme.typography.bodySmall
-    val authorName = item.authorName ?: "Unknown Author"
     Text(
-        text = item.epochMilli?.let {
-            DateUtils.getRelativeTimeSpanString(
-                it,
-                System.currentTimeMillis(),
-                DateUtils.SECOND_IN_MILLIS,
-                DateUtils.FORMAT_ABBREV_ALL
-            )
-        }?.let {
-            "$it • $authorName"
-        } ?: authorName,
+        text = item.getFooterText(),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         maxLines = 1,
         style = bodySmall,
@@ -567,6 +587,7 @@ private fun Banner(
             expanded = showMenu,
             onDismissRequest = { showMenu = false },
             offset = DpOffset(24.dp, 0.dp),
+            modifier = Modifier.testTag(NewsListScreen_MarkAllReadMenuTestTag)
         ) {
             DropdownMenuItem(
                 icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
@@ -610,7 +631,11 @@ private fun ItemMenu(
     onDismiss: () -> Unit,
     item: Article,
     onToggleReadClick: () -> Unit,
-) = DropdownMenu(expanded, onDismiss) {
+) = DropdownMenu(
+    expanded = expanded,
+    onDismissRequest = onDismiss,
+    modifier = Modifier.testTag(NewsListScreen_ItemMenuTestTag)
+) {
     DropdownMenuItem(
         icon = if (item.readState) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
         textResId = if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
@@ -711,41 +736,82 @@ private data class FontSizeRange(
 // Perf: re-use common modifiers to avoid recreating the same object repeatedly
 private val itemMenuIconModifier = Modifier.requiredSize(20.dp)
 
+@VisibleForTesting
+fun Article.getFooterText(): String {
+    val authorName = authorName ?: "Unknown Author"
+    return epochMilli?.let {
+        DateUtils.getRelativeTimeSpanString(
+            it,
+            System.currentTimeMillis(),
+            DateUtils.SECOND_IN_MILLIS,
+            DateUtils.FORMAT_ABBREV_ALL
+        )
+    }?.let {
+        "$it • $authorName"
+    } ?: authorName
+}
+
+private const val TAG = "NewsListScreen"
+
+@VisibleForTesting
+const val NewsListScreen_MarkAllReadMenuTestTag = TAG + "_MarkAllReadMenu"
+
+@VisibleForTesting
+const val NewsListScreen_LazyColumnTestTag = TAG + "_LazyColumn"
+
+@VisibleForTesting
+const val NewsListScreen_LazyVerticalGridTestTag = TAG + "_LazyVerticalGrid"
+
+@VisibleForTesting
+const val NewsListScreen_ItemColumnTestTag = TAG + "_ItemColumn"
+
+@VisibleForTesting
+const val NewsListScreen_ItemBadgeTestTag = TAG + "_ItemBadge"
+
+@VisibleForTesting
+const val NewsListScreen_ItemImageTestTag = TAG + "_ItemImage"
+
+@VisibleForTesting
+const val NewsListScreen_ItemMenuTestTag = TAG + "_ItemMenu"
+
+@VisibleForTesting
+val PreviewNewsListData = LocalDateTime.now().let { now ->
+    val subtitle = "Unnecessarily long subtitle, to get an accurate understanding of how its rendered"
+    listOf(
+        Article(
+            id = 1,
+            title = "Oxygen Updater",
+            subtitle = subtitle,
+            imageUrl = "https://github.com/oxygen-updater.png",
+            text = "",
+            datePublished = now.minusDays(1).toString(),
+            dateLastEdited = now.minusHours(4).toString(),
+            authorName = "Author",
+            read = true,
+        ),
+        Article(
+            id = 2,
+            title = "An unnecessarily long article title, to get an accurate understanding of how long titles are rendered. This line has a length of 255 characters and should provide enough information to tweak the AppBar UI for the best balance between readability & design.",
+            subtitle = subtitle,
+            imageUrl = "https://github.com/oxygen-updater.png",
+            text = "",
+            datePublished = now.minusDays(2).toString(),
+            dateLastEdited = now.minusHours(5).toString(),
+            authorName = "Author",
+            read = false,
+        ),
+    )
+}
+
 @PreviewThemes
 @Composable
 fun PreviewNewsListScreen() = PreviewAppTheme {
-    val now = LocalDateTime.now()
-    val long = "Unnecessarily long text, to get an accurate understanding of how its rendered"
     val windowSize = PreviewWindowSize
     NewsListScreen(
         navType = NavType.from(windowSize.widthSizeClass),
-        windowSize = windowSize,
-        state = RefreshAwareState(
-            false, listOf(
-                Article(
-                    1,
-                    title = stringResource(R.string.app_name),
-                    subtitle = long,
-                    imageUrl = "https://github.com/oxygen-updater.png",
-                    text = long,
-                    datePublished = now.minusDays(1).toString(),
-                    dateLastEdited = now.minusHours(4).toString(),
-                    authorName = "Author",
-                    read = true,
-                ),
-                Article(
-                    2,
-                    title = long,
-                    subtitle = long,
-                    imageUrl = "https://github.com/oxygen-updater.png",
-                    text = long,
-                    datePublished = now.minusDays(2).toString(),
-                    dateLastEdited = now.minusHours(5).toString(),
-                    authorName = "Author",
-                    read = false,
-                ),
-            )
-        ),
+        windowWidthSize = windowSize.widthSizeClass,
+        windowHeightSize = windowSize.heightSizeClass,
+        state = RefreshAwareState(false, PreviewNewsListData),
         onRefresh = {},
         unreadCountState = remember { mutableIntStateOf(1) },
         onMarkAllReadClick = {},

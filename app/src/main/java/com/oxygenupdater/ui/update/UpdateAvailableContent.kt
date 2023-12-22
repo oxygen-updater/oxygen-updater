@@ -1,6 +1,8 @@
 package com.oxygenupdater.ui.update
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -11,6 +13,7 @@ import android.os.Environment
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -57,6 +60,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -120,7 +124,9 @@ fun UpdateAvailable(
     logDownloadError: () -> Unit,
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
-) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(modifierMaxWidth) {
+) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(
+    modifierMaxWidth.testTag(UpdateAvailableContentTestTag)
+) {
     Column(
         Modifier
             .weight(1f)
@@ -172,7 +178,7 @@ fun UpdateAvailable(
 
         ConditionalNavBarPadding(navType)
     }
-} else Column {
+} else Column(Modifier.testTag(UpdateAvailableContentTestTag)) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
@@ -349,19 +355,20 @@ private fun DownloadButtonContainer(
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
 ) {
-    val context = LocalContext.current
-
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    val downloadPermissionState = if (LocalInspectionMode.current) Unit
-    else if (SDK_INT >= VERSION_CODES.R) rememberAllFilesPermissionState(context) else rememberMultiplePermissionsState(
-        listOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    )
+    val downloadPermissionState = if (LocalInspectionMode.current) Unit else if (SDK_INT >= VERSION_CODES.R) {
+        rememberAllFilesPermissionState(LocalContext.current)
+    } else {
+        rememberMultiplePermissionsState(listOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE))
+    }
 
     // Deferred read
     val hasDownloadPermissions = {
         if (SDK_INT >= VERSION_CODES.R && downloadPermissionState is AllFilesPermissionState) {
             downloadPermissionState.status.isGranted
-        } else if (downloadPermissionState is MultiplePermissionsState) downloadPermissionState.allPermissionsGranted else {
+        } else if (downloadPermissionState is MultiplePermissionsState) {
+            downloadPermissionState.allPermissionsGranted
+        } else {
             // If state is somehow something else, we can't check if permissions are granted.
             // So, make an educated guess: on API < 23 both READ & WRITE permissions
             // are granted automatically, while on API >= 23 only READ is granted
@@ -457,6 +464,7 @@ private fun DownloadButton(
             .alpha(if (refreshing) 0.38f else 1f)
             .background(colorScheme.backgroundVariant)
             .animatedClickable(!refreshing && onDownloadClick != null, onDownloadClick)
+            .testTag(UpdateAvailableContent_DownloadButtonTestTag)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             val iconContentDescription = stringResource(R.string.icon)
@@ -500,6 +508,7 @@ private fun DownloadButton(
                         // Leave space for 2/3-button nav bar in landscape mode
                         .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
                         .requiredSize(56.dp) // must be after `windowInsetsPadding`
+                        .testTag(UpdateAvailableContent_ActionButtonTestTag)
                 ) {
                     Icon(icon, iconContentDescription, tint = tint)
                 }
@@ -507,7 +516,9 @@ private fun DownloadButton(
         }
 
         progress?.let {
-            if (it == NotSetF) LinearProgressIndicator(modifierMaxWidth) else {
+            if (it == NotSetF) LinearProgressIndicator(
+                modifierMaxWidth.testTag(UpdateAvailableContent_ProgressIndicatorTestTag)
+            ) else {
                 val animatedProgress by animateFloatAsState(
                     targetValue = it,
                     animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
@@ -515,7 +526,7 @@ private fun DownloadButton(
                 )
                 LinearProgressIndicator(
                     progress = { animatedProgress },
-                    modifier = modifierMaxWidth
+                    modifier = modifierMaxWidth.testTag(UpdateAvailableContent_ProgressIndicatorTestTag)
                 )
             }
         }
@@ -582,6 +593,20 @@ private val modifierDefaultPaddingHorizontal = Modifier.padding(horizontal = 16.
 private val modifierDefaultPaddingVertical = Modifier.padding(vertical = 16.dp)
 private val modifierDownloadIconWidth = Modifier.requiredWidth(56.dp) // must be width, not size!
 
+private const val TAG = "UpdateAvailableContent"
+
+@VisibleForTesting
+const val UpdateAvailableContentTestTag = TAG
+
+@VisibleForTesting
+const val UpdateAvailableContent_ProgressIndicatorTestTag = TAG + "_ProgressIndicator"
+
+@VisibleForTesting
+const val UpdateAvailableContent_ActionButtonTestTag = TAG + "_ActionButton"
+
+@VisibleForTesting
+const val UpdateAvailableContent_DownloadButtonTestTag = TAG + "_DownloadButton"
+
 @PreviewThemes
 @Composable
 fun PreviewUpdateAvailable() = PreviewAppTheme {
@@ -590,36 +615,7 @@ fun PreviewUpdateAvailable() = PreviewAppTheme {
         navType = NavType.from(windowWidthSize),
         windowWidthSize = windowWidthSize,
         refreshing = false,
-        updateData = """##Personalization
-• Expands Omoji's functionality and library.
-
-##Health
-• Adds a new TalkBack feature that recognizes and announces images in apps and Photos.
-• Adds the new Zen Space app, with two modes, Deep Zen and Light Zen, to help you focus on the present.
-• Improves Simple mode with a new helper widget and quick tutorials on the Home screen.
-
-##Gaming experience
-• Adds the Championship mode to Game Assistant. This mode improves performance while also disabling notifications, calls, and other messages to give you a more immersive gaming experience.
-• Adds a music playback control to Game Assistant, so you can listen to and control music easily while gaming.""".let { changelog ->
-            UpdateData(
-                id = 1,
-                versionNumber = "KB2001_11_F.66",
-                otaVersionNumber = "KB2001_11.F.66_2660_202305041648",
-                changelog = changelog,
-                description = """#KB2001_13.1.0.513(EX01)
-##2023-05-15
-
-A system update is available. The OxygenOS 13.1 update brings new Zen Space features, a new TalkBack feature to describe images, and better gaming performance and experience.
-
-""" + changelog,
-                downloadUrl = "https://gauss-componentotacostmanual-in.allawnofs.com/remove-a7779e2dc9b4b40458be6db38b226089/component-ota/23/03/15/4b70c7244ce7411994c97313e8ceb82d.zip",
-                downloadSize = 4777312256,
-                filename = "4b70c7244ce7411994c97313e8ceb82d.zip",
-                md5sum = "0dc48e34ca895ae5653a32ef4daf2933",
-                updateInformationAvailable = true,
-                systemIsUpToDate = false,
-            )
-        },
+        updateData = PreviewUpdateData,
         downloadStatus = NotDownloading,
         failureType = null,
         workProgress = null,
@@ -632,5 +628,3 @@ A system update is available. The OxygenOS 13.1 update brings new Zen Space feat
         showDownloadFailedNotification = {},
     )
 }
-
-private const val TAG = "UpdateAvailableContent"

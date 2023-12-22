@@ -1,5 +1,7 @@
 package com.oxygenupdater.ui.onboarding
 
+import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,13 +27,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Info
-import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
@@ -47,7 +49,9 @@ import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.settings.DeviceChooser
+import com.oxygenupdater.ui.settings.DeviceSettingsListConfig
 import com.oxygenupdater.ui.settings.MethodChooser
+import com.oxygenupdater.ui.settings.MethodSettingsListConfig
 import com.oxygenupdater.ui.settings.SettingsAnalytics
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewGetPrefBool
@@ -80,6 +84,7 @@ fun OnboardingScreen(
                 .weight(1f)
                 .fillMaxHeight()
                 .verticalScroll(rememberScrollState())
+                .testTag(OnboardingScreen_MainColumnTestTag)
         ) {
             DeviceChooser(config = deviceConfig, getPrefStr = getPrefStr, onSelect = onDeviceSelect)
             MethodChooser(config = methodConfig, getPrefStr = getPrefStr, onSelect = onMethodSelect)
@@ -100,6 +105,7 @@ fun OnboardingScreen(
                 .weight(1f)
                 .fillMaxHeight()
                 .verticalScroll(rememberScrollState())
+                .testTag(OnboardingScreen_SecondaryColumnTestTag)
         ) {
             val bodyMedium = typography.bodyMedium
             Text(
@@ -124,7 +130,9 @@ fun OnboardingScreen(
             text = stringResource(R.string.onboarding_disclaimer),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = typography.bodySmall,
-            modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
+            modifier = Modifier
+                .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
+                .testTag(OnboardingScreen_DisclaimerTestTag)
         )
         Spacer(Modifier.navigationBarsPadding())
     }
@@ -139,6 +147,7 @@ fun OnboardingScreen(
         Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())
+            .testTag(OnboardingScreen_MainColumnTestTag)
     ) {
         DeviceChooser(config = deviceConfig, getPrefStr = getPrefStr, onSelect = onDeviceSelect)
         MethodChooser(config = methodConfig, getPrefStr = getPrefStr, onSelect = onMethodSelect)
@@ -168,7 +177,9 @@ fun OnboardingScreen(
         text = stringResource(R.string.onboarding_disclaimer),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = typography.bodySmall,
-        modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
+        modifier = Modifier
+            .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp)
+            .testTag(OnboardingScreen_DisclaimerTestTag)
     )
 
     StartApp(onClick = onStartAppClick)
@@ -193,7 +204,10 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
         )
 
         var showSheet by rememberSaveableState("showContributorSheet", false)
-        IconButton({ showSheet = true }) {
+        IconButton(
+            onClick = { showSheet = true },
+            modifier = Modifier.testTag(OnboardingScreen_ContributorInfoButtonTestTag),
+        ) {
             Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
         }
 
@@ -207,6 +221,21 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
     )
 }
 
+private const val TAG = "OnboardingScreen"
+
+@VisibleForTesting
+const val OnboardingScreen_MainColumnTestTag = TAG + "_MainColumn"
+
+@VisibleForTesting
+const val OnboardingScreen_SecondaryColumnTestTag = TAG + "_SecondaryColumn"
+
+@VisibleForTesting
+const val OnboardingScreen_ContributorInfoButtonTestTag = TAG + "_ContributorInfoButton"
+
+@VisibleForTesting
+const val OnboardingScreen_DisclaimerTestTag = TAG + "_Disclaimer"
+
+@SuppressLint("VisibleForTests")
 @OptIn(ExperimentalMaterial3Api::class)
 @PreviewThemes
 @Composable
@@ -214,45 +243,9 @@ fun PreviewOnboardingScreen() = PreviewAppTheme {
     OnboardingScreen(
         windowWidthSize = PreviewWindowSize.widthSizeClass,
         scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(),
-        deviceConfig = SettingsListConfig(
-            list = listOf(
-                Device(
-                    id = 1,
-                    name = "OnePlus 7 Pro",
-                    productNames = listOf("OnePlus7Pro"),
-                    enabled = true,
-                ),
-                Device(
-                    id = 2,
-                    name = "OnePlus 8T",
-                    productNames = listOf("OnePlus8T"),
-                    enabled = true,
-                ),
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        deviceConfig = DeviceSettingsListConfig,
         onDeviceSelect = {},
-        methodConfig = SettingsListConfig(
-            list = listOf(
-                UpdateMethod(
-                    id = 1,
-                    name = "Stable (full)",
-                    recommendedForRootedDevice = true,
-                    recommendedForNonRootedDevice = false,
-                    supportsRootedDevice = true,
-                ),
-                UpdateMethod(
-                    id = 2,
-                    name = "Stable (incremental)",
-                    recommendedForRootedDevice = false,
-                    recommendedForNonRootedDevice = true,
-                    supportsRootedDevice = false,
-                )
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        methodConfig = MethodSettingsListConfig,
         onMethodSelect = {},
         getPrefStr = PreviewGetPrefStr,
         getPrefBool = PreviewGetPrefBool,

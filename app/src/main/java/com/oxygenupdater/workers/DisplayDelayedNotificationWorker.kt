@@ -286,7 +286,7 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
                 if (id != NotSetL) {
                     // Open article if ID is valid, and mark it "external" so
                     // that interstitial ad is shown after a delay for better UX.
-                    Uri.parse(OuScheme + ChildScreen.Article + id + "?${ExternalArg}=true")
+                    Uri.parse(OuScheme + ChildScreen.Article.value + id + "?${ExternalArg}=true")
                 } else {
                     // Otherwise NewsListScreen
                     Uri.parse(OuScheme + NewsListRoute)

@@ -64,6 +64,9 @@ hilt = "1.1.0"
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
 
+# https://github.com/jacoco/jacoco/releases
+jacoco = "0.8.11"
+
 # https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
 libsu = "5.2.2"
 
@@ -103,6 +106,15 @@ room = "2.6.1"
 # https://developer.android.com/jetpack/androidx/releases/work
 work-runtime = "2.9.0"
 
+# https://developer.android.com/jetpack/androidx/releases/test
+test-core = "1.6.0-alpha05"
+test-runner = "1.6.0-alpha06"
+test-rules = "1.6.0-alpha03"
+test-ext-junit = "1.2.0-alpha03"
+
+# https://developer.android.com/jetpack/androidx/releases/tracing
+tracing = "1.3.0-alpha02"
+
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-placeholder-material3 = { module = "com.google.accompanist:accompanist-placeholder-material3", version.ref = "accompanist" }
@@ -113,6 +125,13 @@ androidx-annotation = { module = "androidx.annotation:annotation", version.ref =
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preference" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "work-runtime" }
+
+androidx-test-core = { module = "androidx.test:core", version.ref = "test-core" }
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "test-runner" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "test-rules" }
+androidx-test-ext-truth = { module = "androidx.test.ext:truth", version.ref = "test-rules" }
+androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "test-ext-junit" }
+androidx-tracing = { module = "androidx.tracing:tracing", version.ref = "tracing" }
 
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
@@ -143,6 +162,8 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compos
 androidx-compose-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 

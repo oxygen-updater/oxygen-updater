@@ -24,6 +24,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.toggleableState
+import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
@@ -37,6 +40,8 @@ val modifierDefaultPadding = Modifier.padding(16.dp)
 val modifierDefaultPaddingStart = Modifier.padding(start = 16.dp)
 val modifierDefaultPaddingTop = Modifier.padding(top = 16.dp)
 val modifierDefaultPaddingStartTopEnd = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp)
+val modifierSemanticsSelected = Modifier.semantics { toggleableState = ToggleableState.On }
+val modifierSemanticsNotSelected = Modifier.semantics { toggleableState = ToggleableState.Off }
 
 // TODO(compose): switch to https://github.com/fornewid/placeholder
 /**

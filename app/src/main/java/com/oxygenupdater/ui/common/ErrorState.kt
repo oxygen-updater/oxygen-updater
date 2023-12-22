@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.common
 
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,45 +37,59 @@ fun ErrorState(
     @StringRes textResId: Int = R.string.error_maintenance_retry,
     rich: Boolean = true,
     onRefreshClick: (() -> Unit)?,
-) = if (navType != NavType.BottomBar) Row(modifierMaxWidth) {
+) = if (navType != NavType.BottomBar) Row(modifierMaxWidth.testTag(ErrorStateTestTag)) {
     Icon(
         imageVector = icon,
         contentDescription = stringResource(R.string.icon),
         tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.requiredSize(192.dp)
+        modifier = Modifier
+            .requiredSize(192.dp)
+            .testTag(ErrorState_IconTestTag)
     )
 
     Column(modifierDefaultPadding.verticalScroll(rememberScrollState())) {
-        Text(stringResource(titleResId), style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = stringResource(titleResId),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.testTag(ErrorState_TitleTestTag)
+        )
 
         if (rich) RichText(
             text = stringResource(textResId),
             modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
         ) else Text(
             text = stringResource(textResId),
-            modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+            modifier = Modifier
+                .padding(top = 4.dp, bottom = 16.dp)
+                .testTag(ErrorState_TextTestTag)
         )
 
-        if (onRefreshClick != null) OutlinedIconButton(onRefreshClick, Icons.Rounded.Refresh, R.string.download_error_retry)
+        if (onRefreshClick != null) OutlinedIconButton(
+            onClick = onRefreshClick,
+            icon = Icons.Rounded.Refresh,
+            textResId = R.string.download_error_retry,
+        )
         ConditionalNavBarPadding(navType)
     }
 } else Column(
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
-    modifier = modifierMaxSize
+    modifier = modifierMaxSize.testTag(ErrorStateTestTag)
 ) {
     Text(
         text = stringResource(titleResId),
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.titleLarge,
-        modifier = modifierDefaultPadding
+        modifier = modifierDefaultPadding.testTag(ErrorState_TitleTestTag)
     )
 
     Icon(
         imageVector = icon,
         contentDescription = stringResource(R.string.icon),
         tint = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.requiredSize(150.dp)
+        modifier = Modifier
+            .requiredSize(150.dp)
+            .testTag(ErrorState_IconTestTag)
     )
 
     if (rich) RichText(
@@ -83,12 +99,30 @@ fun ErrorState(
     ) else Text(
         text = stringResource(textResId),
         textAlign = TextAlign.Center,
-        modifier = modifierDefaultPadding
+        modifier = modifierDefaultPadding.testTag(ErrorState_TextTestTag)
     )
 
-    if (onRefreshClick != null) OutlinedIconButton(onRefreshClick, Icons.Rounded.Refresh, R.string.download_error_retry)
+    if (onRefreshClick != null) OutlinedIconButton(
+        onClick = onRefreshClick,
+        icon = Icons.Rounded.Refresh,
+        textResId = R.string.download_error_retry,
+    )
     ConditionalNavBarPadding(navType)
 }
+
+private const val TAG = "ErrorState"
+
+@VisibleForTesting
+const val ErrorStateTestTag = TAG
+
+@VisibleForTesting
+const val ErrorState_IconTestTag = TAG + "_Icon"
+
+@VisibleForTesting
+const val ErrorState_TitleTestTag = TAG + "_Title"
+
+@VisibleForTesting
+const val ErrorState_TextTestTag = TAG + "_Text"
 
 @PreviewThemes
 @Composable

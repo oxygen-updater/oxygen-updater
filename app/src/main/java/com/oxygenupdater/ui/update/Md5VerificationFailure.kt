@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class Md5VerificationFailure(val value: Int) {
+value class Md5VerificationFailure private constructor(val value: Int) {
 
     override fun toString() = "Md5VerificationFailure." + when (this) {
         NullUpdateData -> "NullUpdateData"

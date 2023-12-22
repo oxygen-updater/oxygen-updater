@@ -10,8 +10,7 @@
 	<!-- Request write permission only on API <= 29 -->
 	<uses-permission
 		android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-		android:maxSdkVersion="29"
-		tools:ignore="ScopedStorage" />
+		android:maxSdkVersion="29" />
 	<!-- Request "all files access" permission only on API >= 30 -->
 	<uses-permission
 		android:name="android.permission.MANAGE_EXTERNAL_STORAGE"

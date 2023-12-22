@@ -1,8 +1,6 @@
 package com.oxygenupdater.ui.about
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -19,13 +17,12 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.oxygenupdater.R
-import com.oxygenupdater.extensions.copyToClipboard
+import com.oxygenupdater.extensions.openLink
 import com.oxygenupdater.extensions.openPlayStorePage
-import com.oxygenupdater.extensions.withAppReferrer
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Discord
 import com.oxygenupdater.icons.Faq
@@ -49,7 +46,11 @@ fun AboutScreen(
     windowWidthSize: WindowWidthSizeClass,
     navigateTo: (ChildScreen) -> Unit,
     openEmail: () -> Unit,
-) = Column(Modifier.verticalScroll(rememberScrollState())) {
+) = Column(
+    Modifier
+        .verticalScroll(rememberScrollState())
+        .testTag(AboutScreenTestTag)
+) {
     Buttons(
         // We have 8 total items, so group evenly by 4 if we have enough space; otherwise 2
         columnCount = if (windowWidthSize == WindowWidthSizeClass.Expanded) 4 else 2,
@@ -59,23 +60,23 @@ fun AboutScreen(
 
     RichText(
         text = stringResource(R.string.about_description),
-        modifier = modifierDefaultPaddingStartTopEnd
+        modifier = modifierDefaultPaddingStartTopEnd.testTag(AboutScreen_DescriptionTestTag)
     )
 
     RichText(
         text = stringResource(R.string.about_support),
-        modifier = modifierDefaultPaddingStartTopEnd
+        modifier = modifierDefaultPaddingStartTopEnd.testTag(AboutScreen_SupportTestTag)
     )
 
     Text(
         text = stringResource(R.string.about_background_story_header),
         style = MaterialTheme.typography.titleMedium,
-        modifier = modifierDefaultPaddingStartTopEnd
+        modifier = modifierDefaultPaddingStartTopEnd.testTag(AboutScreen_BackgroundStoryHeaderTestTag)
     )
 
     RichText(
         text = stringResource(R.string.about_background_story),
-        modifier = modifierDefaultPaddingStartTopEnd
+        modifier = modifierDefaultPaddingStartTopEnd.testTag(AboutScreen_BackgroundStoryTestTag)
     )
 
     Spacer(Modifier.weight(1f))
@@ -85,7 +86,9 @@ fun AboutScreen(
         text = stringResource(R.string.about_third_party_app_notice),
         color = MaterialTheme.colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
-        modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+        modifier = Modifier
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            .testTag(AboutScreen_ThirdPartyNoticeTestTag)
     )
 
     ConditionalNavBarPadding(navType)
@@ -106,28 +109,18 @@ private fun Buttons(
             GridItem(CustomIcons.Faq, R.string.faq_menu_item) {
                 navigateTo(ChildScreen.Faq)
             },
-            GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord) },
+            GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord.value) },
             GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, openEmail),
-            GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub) },
-            GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website) },
-            GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon) },
+            GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub.value) },
+            GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website.value) },
+            GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon.value) },
             GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text, ::openPlayStorePage),
         ),
     )
 }
 
-private fun Context.openLink(link: LinkType) {
-    val url = link.value
-    try {
-        startActivity(Intent(Intent.ACTION_VIEW, url.toUri()).withAppReferrer(packageName))
-    } catch (e: ActivityNotFoundException) {
-        // Fallback: copy to clipboard instead
-        copyToClipboard(url)
-    }
-}
-
 @JvmInline
-private value class LinkType(val value: String) {
+private value class LinkType private constructor(val value: String) {
 
     override fun toString() = value
 
@@ -138,6 +131,26 @@ private value class LinkType(val value: String) {
         val Website = LinkType("https://oxygenupdater.com/")
     }
 }
+
+private const val TAG = "AboutScreen"
+
+@VisibleForTesting
+const val AboutScreenTestTag = TAG
+
+@VisibleForTesting
+const val AboutScreen_DescriptionTestTag = TAG + "_Description"
+
+@VisibleForTesting
+const val AboutScreen_SupportTestTag = TAG + "_Support"
+
+@VisibleForTesting
+const val AboutScreen_BackgroundStoryHeaderTestTag = TAG + "_BackgroundStoryHeader"
+
+@VisibleForTesting
+const val AboutScreen_BackgroundStoryTestTag = TAG + "_BackgroundStory"
+
+@VisibleForTesting
+const val AboutScreen_ThirdPartyNoticeTestTag = TAG + "_ThirdPartyNotice"
 
 @PreviewThemes
 @Composable

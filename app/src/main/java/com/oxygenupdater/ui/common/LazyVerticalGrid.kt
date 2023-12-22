@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.common
 
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -29,8 +31,9 @@ fun LazyVerticalGrid(
 ) = LazyVerticalGrid(
     columns = GridCells.Fixed(columnCount),
     userScrollEnabled = false,
-    // 32dp total vertical padding + 24dp icon
-    modifier = Modifier.height((56 * (items.size / columnCount)).dp)
+    modifier = Modifier
+        .height((ItemHeight * (items.size / columnCount)).dp)
+        .testTag(LazyVerticalGridTestTag)
 ) {
     itemsIndexed(items) { index, it ->
         IconText(
@@ -45,7 +48,8 @@ fun LazyVerticalGrid(
                     color = MaterialTheme.colorScheme.backgroundVariant,
                     ltr = LocalLayoutDirection.current == LayoutDirection.Ltr,
                     drawEnd = (index + 1) % columnCount != 0,
-                ) then modifierDefaultPadding // padding after everything else
+                )
+                .then(modifierDefaultPadding) // padding after everything else
         )
     }
 }
@@ -56,3 +60,10 @@ class GridItem(
     @StringRes val textResId: Int,
     val onClick: () -> Unit,
 )
+
+@VisibleForTesting
+const val LazyVerticalGridTestTag = "LazyVerticalGrid"
+
+/** 32dp total vertical padding + 24dp icon */
+@VisibleForTesting
+const val ItemHeight = 56
