@@ -336,34 +336,34 @@ class MainViewModel @Inject constructor(
     @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(
         launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
-        info: AppUpdateInfo,
     ) {
         resetAppUpdateIgnoreCount()
 
         // If an in-app update is already running, resume the update.
-        appUpdateManager.startUpdateFlowForResult(info, launcher, AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE))
+        appUpdateManager.startUpdateFlowForResult(
+            appUpdateInfoFlow.value ?: return,
+            launcher,
+            AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
+        )
     }
 
     /**
-     * Calls [AppUpdateManager.startUpdateFlowForResult]. The app update type is [AppUpdateType.FLEXIBLE] by default, if it's allowed.
-     * However, it is forced to be [AppUpdateType.IMMEDIATE] if any of the following criteria satisfy:
+     * Calls [AppUpdateManager.startUpdateFlowForResult]. The app update type is [AppUpdateType.FLEXIBLE]
+     * by default, if it's allowed. However, it is forced to be [AppUpdateType.IMMEDIATE] if any of the
+     * following criteria satisfy:
      * * [AppUpdateInfo.clientVersionStalenessDays] exceeds the max threshold
      * * The user has ignored the flexible update too many times
      * If [AppUpdateType.FLEXIBLE] isn't allowed, then it's [AppUpdateType.IMMEDIATE]
      *
-     * @param info The update info. Note that this can not be re-used,
-     * so every call of this function requires a fresh instance of [AppUpdateInfo],
-     * which can be requested from [AppUpdateManager.getAppUpdateInfo].
-     *
-     * @throws IntentSender.SendIntentException if a stale [info] is being used (probably, not sure)
+     * @throws IntentSender.SendIntentException if a stale [AppUpdateInfo] is being used (probably, not sure)
      */
     @Throws(IntentSender.SendIntentException::class)
     fun requestUpdate(
         launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
-        info: AppUpdateInfo,
     ) {
-        // TODO: implement app update priority whenever Google adds support for it in Play Developer Console and the library itself
-        //  (the library doesn't yet have an annotation interface for priority constants)
+        val info = appUpdateInfoFlow.value ?: return
+        // TODO: implement app update priority whenever Google adds support for it in Play Developer Console
+        //  and the library itself (there's no annotation interface for priority constants yet)
         appUpdateType = if (info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
             val stalenessDays = info.clientVersionStalenessDays() ?: 0
             val ignoreCount = sharedPreferences[KeyFlexibleAppUpdateIgnoreCount, 0]

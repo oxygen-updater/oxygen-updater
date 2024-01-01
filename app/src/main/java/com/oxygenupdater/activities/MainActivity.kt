@@ -474,16 +474,20 @@ class MainActivity : AppCompatActivity() {
             mutableStateOf<IntIntPair?>(null, referentialEqualityPolicy())
         }
 
-        AppUpdateInfo(
-            info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
-            snackbarMessageId = { snackbarText?.first },
-            updateSnackbarText = { snackbarText = it },
-            resetAppUpdateIgnoreCount = viewModel::resetAppUpdateIgnoreCount,
-            incrementAppUpdateIgnoreCount = viewModel::incrementAppUpdateIgnoreCount,
-            unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
-            requestUpdate = viewModel::requestUpdate,
-            requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
-        )
+        val appUpdateInfo by viewModel.appUpdateInfo.collectAsStateWithLifecycle()
+        appUpdateInfo?.let { it ->
+            AppUpdateInfo(
+                status = it.installStatus(),
+                availability = it::updateAvailability,
+                snackbarMessageId = { snackbarText?.first },
+                updateSnackbarText = { snackbarText = it },
+                resetAppUpdateIgnoreCount = viewModel::resetAppUpdateIgnoreCount,
+                incrementAppUpdateIgnoreCount = viewModel::incrementAppUpdateIgnoreCount,
+                unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
+                requestUpdate = viewModel::requestUpdate,
+                requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
+            )
+        }
 
         // Display the "No connection" banner if required
         val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.collectAsStateWithLifecycle()
@@ -582,11 +586,16 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                FlexibleAppUpdateProgress(
-                    state = viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
-                    snackbarMessageId = { snackbarText?.first },
-                    updateSnackbarText = { snackbarText = it },
-                )
+                val appUpdateStatus by viewModel.appUpdateStatus.collectAsStateWithLifecycle()
+                appUpdateStatus?.let { it ->
+                    FlexibleAppUpdateProgress(
+                        status = it.installStatus(),
+                        bytesDownloaded = it::bytesDownloaded,
+                        totalBytesToDownload = it::totalBytesToDownload,
+                        snackbarMessageId = { snackbarText?.first },
+                        updateSnackbarText = { snackbarText = it },
+                    )
+                }
 
                 val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
                 ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)

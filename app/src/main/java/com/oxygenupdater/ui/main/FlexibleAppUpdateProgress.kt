@@ -6,17 +6,17 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.model.InstallStatus
 import com.oxygenupdater.ui.common.modifierMaxWidth
 
 @Composable
 fun FlexibleAppUpdateProgress(
-    state: InstallState?,
-    snackbarMessageId: () -> Int?, // deferred read
+    @InstallStatus status: Int,
+    bytesDownloaded: () -> Long, // deferred read
+    totalBytesToDownload: () -> Long,
+    snackbarMessageId: () -> Int?,
     updateSnackbarText: (IntIntPair?) -> Unit,
 ) {
-    val status = state?.installStatus() ?: return
     if (status == InstallStatus.DOWNLOADED) {
         updateSnackbarText(AppUpdateDownloadedSnackbarData)
     } else if (snackbarMessageId() == AppUpdateDownloadedSnackbarData.first) {
@@ -26,12 +26,11 @@ fun FlexibleAppUpdateProgress(
 
     if (status == InstallStatus.PENDING) LinearProgressIndicator(modifierMaxWidth)
     else if (status == InstallStatus.DOWNLOADING) {
-        val bytesDownloaded = state.bytesDownloaded().toFloat()
-        val totalBytesToDownload = state.totalBytesToDownload().coerceAtLeast(1)
-        val progress = bytesDownloaded / totalBytesToDownload
+        val progress = bytesDownloaded().toFloat() / totalBytesToDownload().coerceAtLeast(1)
         val animatedProgress by animateFloatAsState(
-            progress, ProgressIndicatorDefaults.ProgressAnimationSpec,
-            label = "FlexibleUpdateProgressAnimation"
+            targetValue = progress,
+            animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+            label = "FlexibleUpdateProgressAnimation",
         )
         LinearProgressIndicator(
             progress = { animatedProgress },
