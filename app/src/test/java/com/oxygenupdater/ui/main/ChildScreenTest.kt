@@ -6,5 +6,5 @@ import kotlin.test.Test
 class ChildScreenTest {
 
     @Test
-    fun `check if values are unique`() = ValueClassTestHelper.ensureUniqueValues<ChildScreen>()
+    fun `check if values are unique`() = ValueClassTestHelper.ensureUniqueValues<ChildScreen>(false)
 }
