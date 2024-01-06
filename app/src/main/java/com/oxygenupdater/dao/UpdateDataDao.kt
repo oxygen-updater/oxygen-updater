@@ -19,9 +19,16 @@ interface UpdateDataDao {
     fun getId(): Long?
 
     @Transaction
-    fun refresh(data: UpdateData?) = if (data == null) deleteAll() else if (data.id == getId()) update(data) else {
-        deleteAll() // ensure there's only one row
-        insert(data)
+    fun refresh(data: UpdateData?) = if (data == null) deleteAll() else when (val id = data.id) {
+        getId() -> if (id != null) update(data) else {
+            deleteAll() // ensure there's only one row
+            insert(data.copy(id = 0)) // use 0 instead of null
+        }
+
+        else -> {
+            deleteAll() // ensure there's only one row
+            insert(data)
+        }
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
