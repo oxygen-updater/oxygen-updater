@@ -42,7 +42,21 @@ const val KeyFlexibleAppUpdateIgnoreCount = "flexibleAppUpdateIgnoreCount"
 
 // Notifications properties
 const val KeyFirebaseToken = "firebase_token"
-const val KeyNotificationTopic = "notification_topic"
+
+/**
+ * Value must not be changed for legacy reasons
+ *
+ * @see [com.oxygenupdater.utils.FcmUtils.currentFullTopic]
+ */
+const val KeyNotificationFullTopic = "notification_topic"
+
+/**
+ * Since v6.2.0
+ *
+ * @see [com.oxygenupdater.utils.FcmUtils.currentDeviceTopic]
+ */
+const val KeyNotificationDeviceTopic = "notification_topic_device"
+
 const val KeyNotificationDelayInSeconds = "notification_delay_in_seconds"
 
 // IAB properties

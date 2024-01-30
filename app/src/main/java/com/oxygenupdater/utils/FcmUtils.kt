@@ -7,7 +7,8 @@ import com.oxygenupdater.extensions.get
 import com.oxygenupdater.extensions.set
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.KeyDeviceId
-import com.oxygenupdater.internal.settings.KeyNotificationTopic
+import com.oxygenupdater.internal.settings.KeyNotificationDeviceTopic
+import com.oxygenupdater.internal.settings.KeyNotificationFullTopic
 import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,25 +19,33 @@ class FcmUtils @Inject constructor(
     private val firebaseMessaging: FirebaseMessaging,
 ) {
 
-    private val currentTopic: String
-        get() {
-            val deviceId = sharedPreferences[KeyDeviceId, NotSetL]
-            val updateMethodId = sharedPreferences[KeyUpdateMethodId, NotSetL]
+    /**
+     * Added in v6.2.0 to make it easier & quicker to send notifications to devices
+     * regardless of the selected update method.
+     *
+     * However, this should be used only once enough time passes until most people
+     * have updated to this version.
+     */
+    private val currentDeviceTopic: String
+        get() = DeviceTopicPrefix + sharedPreferences[KeyDeviceId, NotSetL]
 
-            return DeviceTopicPrefix + deviceId + UpdateMethodTopicPrefix + updateMethodId
-        }
+    private val currentFullTopic: String
+        get() = currentDeviceTopic + UpdateMethodTopicPrefix + sharedPreferences[KeyUpdateMethodId, NotSetL]
+
+    fun resubscribe() {
+        resubscribe(key = KeyNotificationDeviceTopic, currentTopic = currentDeviceTopic)
+        resubscribe(key = KeyNotificationFullTopic, currentTopic = currentFullTopic)
+    }
 
     /**
-     * 1. Unsubscribe from old topic (if any, and if different from [currentTopic])
+     * 1. Unsubscribe from old topic (if any, and if different from current topics)
      *    to avoid duplicate/incorrect notifications.
-     * 2. Subscribe to new/current [currentTopic]. This is never skipped, because
-     *    FCM registration token might've changed and we should account for it..
+     * 2. Subscribe to new/current topics. This is never skipped, because FCM
+     *    registration token might've changed and we should account for it.
      */
-    fun resubscribe() {
-        val oldTopic = sharedPreferences[KeyNotificationTopic, ""]
-        val currentTopic = currentTopic
-
+    private fun resubscribe(key: String, currentTopic: String) {
         // 1. Unsubscribe from old topic (if changed)
+        val oldTopic = sharedPreferences[key, ""]
         if (oldTopic.isNotEmpty() && oldTopic != currentTopic) {
             firebaseMessaging.unsubscribeFromTopic(oldTopic)
             logDebug(TAG, "Unsubscribed from old topic: $oldTopic")
@@ -45,7 +54,7 @@ class FcmUtils @Inject constructor(
         // 2. Subscribe to new/current topic
         firebaseMessaging.subscribeToTopic(currentTopic)
         logDebug(TAG, "Subscribed to new topic: $currentTopic")
-        sharedPreferences[KeyNotificationTopic] = currentTopic
+        sharedPreferences[key] = currentTopic
     }
 
     companion object {
