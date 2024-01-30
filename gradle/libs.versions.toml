@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.2.0"
+agp = "8.2.2"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "2.9.9"
@@ -10,26 +10,26 @@ crashlytics-plugin = "2.9.9"
 google-services-plugin = "4.4.0"
 
 # https://github.com/google/ksp/releases
-ksp = "1.9.21-1.0.16"
+ksp = "1.9.22-1.0.17"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.7.3"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.6.0-beta03" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.0-beta01"
+compose = "1.6.0" # keep in sync with Kotlin & accompanist version
+compose-m3 = "1.2.0-rc01"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
-compose-compiler = "1.5.7"
+compose-compiler = "1.5.8"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
-accompanist = "0.33.2-alpha" # keep in sync with Compose version
+accompanist = "0.34.0" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
 activity-compose = "1.8.2"
@@ -54,10 +54,10 @@ core-splashscreen = "1.0.1"
 desugar = "2.0.4"
 
 # https://firebase.google.com/support/release-notes/android
-firebase-bom = "32.7.0"
+firebase-bom = "32.7.1"
 
 # https://github.com/google/dagger/releases
-dagger = "2.48.1"
+dagger = "2.50"
 # https://developer.android.com/jetpack/androidx/releases/hilt
 hilt = "1.1.0"
 
@@ -65,10 +65,10 @@ hilt = "1.1.0"
 junit = "4.13.2"
 
 # https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
-libsu = "5.2.1"
+libsu = "5.2.2"
 
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-lifecycle = "2.7.0-rc02"
+lifecycle = "2.7.0"
 
 # https://github.com/square/moshi/blob/master/CHANGELOG.md
 moshi = "1.15.0"
@@ -84,11 +84,11 @@ okhttp = "4.12.0"
 # https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
 play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
-play-services-base = "18.2.0"
+play-services-base = "18.3.0"
 # https://developers.google.com/admob/android/rel-notes
 play-services-ads = "22.6.0"
 # https://developers.google.com/admob/android/privacy/release-notes
-ump = "2.1.0"
+ump = "2.2.0"
 
 # https://developer.android.com/jetpack/androidx/releases/preference
 preference = "1.2.1"
