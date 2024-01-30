@@ -123,7 +123,7 @@ fun SettingsScreen(
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     persistBool: (key: String, value: Boolean) -> Unit,
 ) = Column(Modifier.verticalScroll(rememberScrollState())) {
-    //region Support us
+    // region Support us
     Column(Modifier.background(MaterialTheme.colorScheme.backgroundVariant)) {
         Header(R.string.preference_header_support)
 
@@ -146,24 +146,24 @@ fun SettingsScreen(
             onContributorEnrollmentChange = onContributorEnrollmentChange,
         )
     }
-    //endregion
+    // endregion
 
-    //region Device
+    // region Device
     Header(R.string.preference_header_device)
 
     DeviceChooser(config = deviceConfig, getPrefStr = getPrefStr, onSelect = onDeviceSelect)
     MethodChooser(config = methodConfig, getPrefStr = getPrefStr, onSelect = onMethodSelect)
 
     Notifications()
-    //endregion
+    // endregion
 
-    //region UI
+    // region UI
     Header(R.string.preference_header_ui)
     Theme(onSelect = onThemeSelect)
     Language()
-    //endregion
+    // endregion
 
-    //region Advanced
+    // region Advanced
     Header(R.string.preference_header_advanced)
     AdvancedMode(initial = advancedMode, onChange = onAdvancedModeChange)
     SettingsAnalytics(getPrefBool = getPrefBool, persistBool = persistBool)
@@ -172,9 +172,9 @@ fun SettingsScreen(
         showPrivacyOptionsForm = showPrivacyOptionsForm,
         getPrefBool = getPrefBool,
     )
-    //endregion
+    // endregion
 
-    //region About
+    // region About
     Header(R.string.preference_header_about)
 
     val context = LocalContext.current
@@ -200,7 +200,7 @@ fun SettingsScreen(
         titleResId = R.string.app_name,
         subtitle = "v${BuildConfig.VERSION_NAME}",
     )
-    //endregion
+    // endregion
 
     ConditionalNavBarPadding(navType)
 }
@@ -406,7 +406,8 @@ private fun AdvancedMode(
 ) {
     var showSheet by rememberSaveableState("showAdvancedModeSheet", false)
 
-    var advancedMode by remember { mutableStateOf(initial) }
+    // Maintain state if user leaves this screen, then comes back to it
+    var advancedMode by rememberSaveableState("advancedMode", initial)
     SettingsSwitchItem(
         checked = advancedMode,
         onCheckedChange = {
