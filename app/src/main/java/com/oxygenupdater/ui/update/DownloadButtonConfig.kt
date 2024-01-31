@@ -87,9 +87,7 @@ fun downloadButtonConfig(
         }
 
         DownloadQueued, Downloading -> {
-            val (bytesDone, totalBytes, currentProgress, downloadEta) = workProgress ?: WorkProgress(
-                NotSetL, NotSetL, 0, null,
-            )
+            val (bytesDone, totalBytes, currentProgress, downloadEta) = workProgress ?: DefaultWorkProgress
 
             val sizeOrProgressText = if (bytesDone != NotSetL && totalBytes != NotSetL) {
                 val bytesDoneStr = context.formatFileSize(bytesDone)
@@ -128,6 +126,8 @@ fun downloadButtonConfig(
             actionButtonConfig = Triple(false, Icons.AutoMirrored.Rounded.Launch, MaterialTheme.colorScheme.primary),
             onDownloadClick = showAlreadyDownloadedSheet,
         ).also {
+            if (downloadStatus == DownloadCompleted) return@also
+
             // Open install guide automatically, but only after the normal download flow completes
             LaunchedEffect(Unit) {
                 if (previousProgress != null) openInstallGuide()
@@ -263,6 +263,8 @@ private fun enqueueIfSpaceAvailable(
 
 /** Amount of free storage space to reserve when downloading an update */
 private const val SafeMargin = 1048576 * 25L // 25 MB
+
+private val DefaultWorkProgress = WorkProgress(NotSetL, NotSetL, 0, null)
 
 /** Used for maintaining progress text across DOWNLOADING -> PAUSED */
 private var previousProgressText: String? = null

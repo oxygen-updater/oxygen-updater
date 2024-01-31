@@ -14,12 +14,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
-import androidx.work.BackoffPolicy
 import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
 import androidx.work.ForegroundInfo
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
@@ -31,33 +28,45 @@ import com.oxygenupdater.extensions.get
 import com.oxygenupdater.extensions.remove
 import com.oxygenupdater.extensions.set
 import com.oxygenupdater.extensions.showToast
+import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.KeyDownloadBytesDone
 import com.oxygenupdater.models.TimeRemaining
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.update.DownloadFailure
+import com.oxygenupdater.ui.update.DownloadStatus
+import com.oxygenupdater.ui.update.Md5VerificationFailure
 import com.oxygenupdater.utils.LocalNotifications
 import com.oxygenupdater.utils.LocalNotifications.showDownloadFailedNotification
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
+import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.VerificationStatusNotifChannelId
 import com.oxygenupdater.utils.NotificationIds
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.oxygenupdater.utils.isNetworkError
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.logVerbose
 import com.oxygenupdater.utils.logWarning
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.RandomAccessFile
+import java.math.BigInteger
+import java.security.DigestInputStream
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 /**
- * Handles downloading ZIPs from OnePlus OTA servers
+ * Handles downloading ZIPs from OnePlus/Google OTA servers, and also verifies their MD5 checksum.
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */
@@ -72,7 +81,7 @@ class DownloadWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, parameters) {
 
     private var isFirstPublish = true
-    private var previousProgressTimestamp = 0L
+    private var previousProgressTimeMs = 0L
     private val measurements = ArrayList<Double>()
     private val updateData = UpdateData.createFromWorkData(parameters.inputData)
 
@@ -127,12 +136,13 @@ class DownloadWorker @AssistedInject constructor(
                 cancelPendingIntent
             )
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
         return notification
     }
 
-    private fun createProgressNotification(
+    private fun createDownloadProgressNotification(
         bytesDone: Long,
         totalBytes: Long,
         progress: Int,
@@ -163,12 +173,26 @@ class DownloadWorker @AssistedInject constructor(
             )
             .setStyle(NotificationCompat.BigTextStyle().setSummaryText(downloadEta ?: ""))
             .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
 
         LocalNotifications.hideDownloadCompleteNotification(context)
 
         return notification
     }
+
+    private fun createVerificationProgressNotification() = NotificationCompat.Builder(
+        context, VerificationStatusNotifChannelId
+    )
+        .setSmallIcon(R.drawable.logo_notification)
+        .setContentTitle(context.getString(R.string.download_verifying))
+        .setProgress(100, 50, true)
+        .setOngoing(true)
+        .setCategory(CATEGORY_PROGRESS)
+        .setPriority(PRIORITY_LOW)
+        .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        .build()
 
     /**
      * Wrapped in a try/catch to ignore a potential [java.lang.IllegalStateException] when using [WorkRequest.Builder.setExpedited].
@@ -218,7 +242,6 @@ class DownloadWorker @AssistedInject constructor(
         }
 
         val response = downloadApi.downloadZip(updateData.downloadUrl!!, rangeHeader)
-
         val body = response.body()
 
         if (!response.isSuccessful || body == null) {
@@ -262,11 +285,12 @@ class DownloadWorker @AssistedInject constructor(
                         randomAccessFile.write(buffer, 0, bytes)
                         bytesRead += bytes
 
-                        publishProgressIfNeeded(bytesRead, contentLength)
+                        publishDownloadProgress(bytesDone = bytesRead, totalBytes = contentLength)
                     }
                 } catch (e: Exception) {
                     return@withContext if (isStopped) {
                         logDebug(TAG, "Ignoring exception since worker is in stopped state: ${e.message}")
+                        // Mark success as download completed only
                         Result.success()
                     } else {
                         crashlytics.logError(TAG, "Exception while reading from byteStream", e)
@@ -349,33 +373,14 @@ class DownloadWorker @AssistedInject constructor(
             }
         }
 
-        enqueueVerificationWork()
-
-        Result.success()
-    }
-
-    private fun enqueueVerificationWork() {
         Handler(Looper.getMainLooper()).postDelayed({
             // Since download has completed successfully, we can start the verification work immediately
             context.showToast(R.string.download_verifying_start)
         }, 0)
 
-        val verificationWorkRequest = OneTimeWorkRequestBuilder<Md5VerificationWorker>()
-            .setInputData(Data.Builder().apply {
-                putString(Md5VerificationWorker.FILENAME, updateData!!.filename!!)
-                putString(Md5VerificationWorker.MD5, updateData.md5sum)
-            }.build())
-            .setBackoffCriteria(
-                BackoffPolicy.LINEAR,
-                WorkRequest.MIN_BACKOFF_MILLIS,
-                TimeUnit.MILLISECONDS
-            ).build()
-
-        workManager.enqueueUniqueWork(
-            WorkUniqueMd5Verification,
-            ExistingWorkPolicy.REPLACE,
-            verificationWorkRequest
-        )
+        LocalNotifications.showVerifyingNotification(context)
+        publishVerificationProgress()
+        verify()
     }
 
     /**
@@ -408,47 +413,170 @@ class DownloadWorker @AssistedInject constructor(
         if (tempFile.exists() && zipFile.exists()) tempFile.delete()
     }
 
+    private suspend fun verify() = withContext(Dispatchers.IO) {
+        if (updateData == null) {
+            crashlytics.logWarning(TAG, "updateData = null")
+            return@withContext Result.failure(Data.Builder().apply {
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullUpdateData.value)
+            }.build())
+        }
+
+        val filename = updateData.filename
+        val md5 = updateData.md5sum
+        if (filename.isNullOrEmpty() || md5.isNullOrEmpty()) {
+            crashlytics.logWarning(TAG, "Required parameters are null/empty: filename=$filename, md5=$md5")
+            return@withContext Result.failure(Data.Builder().apply {
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.EmptyFilenameOrMd5.value)
+            }.build())
+        }
+
+        logDebug(TAG, "Verifying $filename")
+        val calculatedDigest = calculateMd5()
+        if (calculatedDigest == null) {
+            crashlytics.logWarning(TAG, "calculatedDigest = null")
+            return@withContext Result.failure(Data.Builder().apply {
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.NullCalculatedChecksum.value)
+            }.build())
+        }
+
+        logVerbose(TAG, "Calculated digest: $calculatedDigest")
+        logVerbose(TAG, "Provided digest: $md5")
+
+        if (calculatedDigest.equals(md5, ignoreCase = true)) {
+            LocalNotifications.showDownloadCompleteNotification(context)
+            // Mark success as verification completed
+            Result.success(Data.Builder().apply {
+                putInt(WorkDataDownloadSuccessType, DownloadStatus.VerificationCompleted.value)
+            }.build())
+        } else {
+            LocalNotifications.showVerificationFailedNotification(context)
+            crashlytics.logWarning(TAG, "md5 != calculatedDigest")
+            Result.failure(Data.Builder().apply {
+                putInt(WorkDataMd5VerificationFailureType, Md5VerificationFailure.ChecksumsNotEqual.value)
+            }.build())
+        }
+    }
+
+    private suspend fun calculateMd5(): String? = withContext(Dispatchers.IO) {
+        val digest = try {
+            MessageDigest.getInstance("MD5")
+        } catch (e: NoSuchAlgorithmException) {
+            crashlytics.logError(TAG, "Exception while getting digest", e)
+            return@withContext null
+        }
+
+        var retryCount = 0
+        while (!zipFile.exists()) {
+            if (retryCount >= 3) {
+                crashlytics.logError(
+                    TAG,
+                    "File doesn't exist, even after retrying thrice every 2s",
+                    FileNotFoundException("File doesn't exist, even after retrying thrice every 2s")
+                )
+
+                return@withContext null
+            }
+
+            val suffix = "after 2s (${2 - retryCount} retries left)"
+            crashlytics.logWarning(
+                TAG, "File doesn't exist yet, retrying $suffix"
+            )
+
+            retryCount++
+
+            // If the downloaded file isn't accessible accessible yet
+            // (because it's still being flushed or previously-existing files are being rotated),
+            // wait a bit and check again
+            try {
+                delay(2000)
+            } catch (e: CancellationException) {
+                crashlytics.logError(TAG, "Error while trying to re-verify file $suffix", e)
+            }
+        }
+
+        DigestInputStream(zipFile.inputStream(), digest).use { stream ->
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+
+            return@withContext try {
+                while (stream.read(buffer, 0, buffer.size) > 0) {
+                    publishVerificationProgress()
+                }
+
+                // Complete hash computation
+                val md5sum = digest.digest()
+                // Convert to a hexadecimal string
+                val bigIntStr = BigInteger(1, md5sum).toString(16)
+
+                // Fill to 32 characters
+                String.format("%32s", bigIntStr).replace(' ', '0')
+            } catch (e: IOException) {
+                throw RuntimeException("Unable to process file for MD5", e)
+            }
+        }
+    }
+
+    /**
+     * @param bytesDone bytes read so far, including any bytes previously read in paused/cancelled download for the same file
+     * @param totalBytes total bytes that need to be read
+     */
+    private suspend fun publishDownloadProgress(
+        bytesDone: Long,
+        totalBytes: Long,
+    ) = publishProgressIfNeeded { currentTimeMs ->
+        val progress = (bytesDone * 100 / totalBytes).toInt()
+        val previousBytesDone = sharedPreferences[KeyDownloadBytesDone, NotSetL]
+
+        sharedPreferences[KeyDownloadBytesDone] = bytesDone
+
+        val downloadEta = calculateDownloadEta(
+            currentTimeMs = currentTimeMs,
+            previousBytesDone = previousBytesDone,
+            bytesDone = bytesDone,
+            totalBytes = totalBytes,
+        )?.toString(context)
+
+        trySetForeground(createDownloadProgressNotification(bytesDone, totalBytes, progress, downloadEta))
+        setProgress(Data.Builder().apply {
+            putLong(WorkDataDownloadBytesDone, bytesDone)
+            putLong(WorkDataDownloadTotalBytes, totalBytes)
+            putInt(WorkDataDownloadProgress, progress)
+            putString(WorkDataDownloadEta, downloadEta)
+        }.build())
+    }
+
     /**
      * Publish progress if at least [MinMsBetweenProgressPublish] milliseconds have passed since the previous event.
      *
      * Additionally, we're calling [setProgress] only if this worker is not in the stopped state.
-     *
-     * @param bytesDone bytes read so far, including any bytes previously read in paused/cancelled download for the same file
-     * @param totalBytes total bytes that need to be read
      */
-    private suspend fun publishProgressIfNeeded(bytesDone: Long, totalBytes: Long) = withContext(Dispatchers.IO) {
+    private suspend fun publishVerificationProgress() = publishProgressIfNeeded {
+        trySetForeground(createVerificationProgressNotification())
+        setProgress(Data.Builder().apply {
+            putInt(WorkDataDownloadProgress, NotSet)
+        }.build())
+    }
+
+    /**
+     * Publish progress if at least [MinMsBetweenProgressPublish] milliseconds have passed since the previous event.
+     *
+     * Additionally, we're calling [setProgress] only if this worker is not in the stopped state.
+     */
+    private suspend inline fun publishProgressIfNeeded(
+        crossinline block: suspend (currentTimeMs: Long) -> Unit,
+    ) = withContext(Dispatchers.IO) {
         if (isStopped) return@withContext
 
-        val currentTimestamp = System.currentTimeMillis()
-        if (isFirstPublish || currentTimestamp - previousProgressTimestamp > MinMsBetweenProgressPublish) {
-            val progress = (bytesDone * 100 / totalBytes).toInt()
-            val previousBytesDone = sharedPreferences[KeyDownloadBytesDone, NotSetL]
+        val currentTimeMs = System.currentTimeMillis()
+        if (!isFirstPublish && currentTimeMs - previousProgressTimeMs <= MinMsBetweenProgressPublish) return@withContext
 
-            sharedPreferences[KeyDownloadBytesDone] = bytesDone
+        block(currentTimeMs)
 
-            val downloadEta = calculateDownloadEta(
-                currentTimestamp,
-                previousBytesDone,
-                bytesDone,
-                totalBytes
-            )?.toString(context)
-
-            trySetForeground(createProgressNotification(bytesDone, totalBytes, progress, downloadEta))
-            setProgress(Data.Builder().apply {
-                putLong(WorkDataDownloadBytesDone, bytesDone)
-                putLong(WorkDataDownloadTotalBytes, totalBytes)
-                putInt(WorkDataDownloadProgress, progress)
-                putString(WorkDataDownloadEta, downloadEta)
-            }.build())
-
-            if (!isFirstPublish) previousProgressTimestamp = currentTimestamp
-
-            isFirstPublish = false
-        }
+        if (!isFirstPublish) previousProgressTimeMs = currentTimeMs
+        isFirstPublish = false
     }
 
     private fun calculateDownloadEta(
-        currentTimestamp: Long,
+        currentTimeMs: Long,
         previousBytesDone: Long,
         bytesDone: Long,
         totalBytes: Long,
@@ -457,7 +585,7 @@ class DownloadWorker @AssistedInject constructor(
         var secondsRemaining = NotSetL
 
         if (previousBytesDone != NotSetL) {
-            val secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(currentTimestamp - previousProgressTimestamp)
+            val secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(currentTimeMs - previousProgressTimeMs)
             bytesDonePerSecond = if (secondsElapsed > 0L) {
                 (bytesDone - previousBytesDone) / secondsElapsed.toDouble()
             } else 0.0
@@ -488,6 +616,8 @@ class DownloadWorker @AssistedInject constructor(
 
     companion object {
         private const val TAG = "DownloadWorker"
+        const val FILENAME = "filename"
+        const val MD5 = "md5"
 
         /**
          * Minimum difference between file size reported by `body.contentLength()` and what's saved in our backend.

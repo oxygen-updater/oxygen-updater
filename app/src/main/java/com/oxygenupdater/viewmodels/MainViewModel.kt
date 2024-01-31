@@ -20,7 +20,6 @@ import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkInfo.State
@@ -77,14 +76,16 @@ import com.oxygenupdater.workers.WorkDataDownloadFailureExtraOtaVersion
 import com.oxygenupdater.workers.WorkDataDownloadFailureExtraUrl
 import com.oxygenupdater.workers.WorkDataDownloadFailureExtraVersion
 import com.oxygenupdater.workers.WorkDataDownloadFailureType
+import com.oxygenupdater.workers.WorkDataDownloadProgress
+import com.oxygenupdater.workers.WorkDataDownloadSuccessType
+import com.oxygenupdater.workers.WorkDataMd5VerificationFailureType
 import com.oxygenupdater.workers.WorkUniqueDownload
-import com.oxygenupdater.workers.WorkUniqueMd5Verification
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.File
@@ -169,25 +170,38 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private lateinit var downloadWorkRequest: OneTimeWorkRequest
-
     private var appUpdateType = AppUpdateType.FLEXIBLE
 
     private val flexibleAppUpdateListener: (InstallState) -> Unit = { appUpdateStatusFlow.tryEmit(it) }
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
-    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkFlow(WorkUniqueDownload).combine(
-        workManager.getWorkInfosForUniqueWorkFlow(WorkUniqueMd5Verification)
-    ) { download, verification ->
-        val infoAndStatus = if (download.isNotEmpty()) download[0].let {
+    val workInfoWithStatus = workManager.getWorkInfosForUniqueWorkFlow(WorkUniqueDownload).map { info ->
+        val infoAndStatus = info.firstOrNull()?.let {
             val status = when (it.state) {
                 State.ENQUEUED, State.BLOCKED -> DownloadStatus.DownloadQueued
-                State.RUNNING -> DownloadStatus.Downloading
-                State.SUCCEEDED -> DownloadStatus.DownloadCompleted
-                State.FAILED -> if (it.outputData.getInt(WorkDataDownloadFailureType, NotSet) != NotSet) {
-                    DownloadStatus.NotDownloading
-                } else DownloadStatus.DownloadFailed
+                State.RUNNING -> when (it.progress.getInt(WorkDataDownloadProgress, 0)) {
+                    NotSet -> DownloadStatus.Verifying
+                    else -> DownloadStatus.Downloading
+                }
+
+                State.SUCCEEDED -> when (it.outputData.getInt(WorkDataDownloadSuccessType, NotSet)) {
+                    // We don't set any output data until the verification process has also completed
+                    NotSet -> DownloadStatus.DownloadCompleted
+                    else -> DownloadStatus.VerificationCompleted
+                }
+
+                State.FAILED -> {
+                    val outputData = it.outputData
+                    when (outputData.getInt(WorkDataMd5VerificationFailureType, NotSet)) {
+                        NotSet -> when (outputData.getInt(WorkDataDownloadFailureType, NotSet)) {
+                            NotSet -> DownloadStatus.DownloadFailed
+                            else -> DownloadStatus.NotDownloading
+                        }
+
+                        else -> DownloadStatus.VerificationFailed
+                    }
+                }
 
                 // Downloads are paused by cancelling work (we're tracking `bytesDone` and sending a `Range` header for
                 // resume operations). The only place from where the user can cancel the download is the action button,
@@ -199,14 +213,7 @@ class MainViewModel @Inject constructor(
                 }
             }
             WorkInfoWithStatus(it, status)
-        } else if (verification.isNotEmpty()) verification[0].let {
-            val status = when (it.state) {
-                State.ENQUEUED, State.BLOCKED, State.RUNNING -> DownloadStatus.Verifying
-                State.SUCCEEDED -> DownloadStatus.VerificationCompleted
-                State.FAILED, State.CANCELLED -> DownloadStatus.VerificationFailed
-            }
-            WorkInfoWithStatus(it, status)
-        } else WorkInfoWithStatus(null, lastDownloadStatus ?: DownloadStatus.NotDownloading)
+        } ?: WorkInfoWithStatus(null, lastDownloadStatus ?: DownloadStatus.NotDownloading)
 
         infoAndStatus.also { lastDownloadStatus = it.downloadStatus }
     }.stateIn(
@@ -267,22 +274,15 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun setupDownloadWorkRequest(updateData: UpdateData) {
-        // Setup only if not done before
-        if (::downloadWorkRequest.isInitialized) return
-
-        downloadWorkRequest = OneTimeWorkRequestBuilder<DownloadWorker>()
+    fun enqueueDownloadWork(updateData: UpdateData) = workManager.enqueueUniqueWork(
+        WorkUniqueDownload,
+        ExistingWorkPolicy.REPLACE,
+        OneTimeWorkRequestBuilder<DownloadWorker>()
             .setInputData(updateData.toWorkData())
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
-    }
-
-    fun enqueueDownloadWork() = workManager.enqueueUniqueWork(
-        WorkUniqueDownload,
-        ExistingWorkPolicy.REPLACE,
-        downloadWorkRequest
     )
 
     fun cancelDownloadWork(context: Context, filename: String?) {

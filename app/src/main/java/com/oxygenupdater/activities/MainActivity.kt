@@ -742,10 +742,7 @@ class MainActivity : AppCompatActivity() {
             getPrefStr = viewModel::getPref,
             getPrefBool = viewModel::getPref,
             setSubtitleResId = setSubtitleResId,
-            enqueueDownload = {
-                viewModel.setupDownloadWorkRequest(it)
-                viewModel.enqueueDownloadWork()
-            },
+            enqueueDownload = viewModel::enqueueDownloadWork,
             pauseDownload = viewModel::pauseDownloadWork,
             cancelDownload = { viewModel.cancelDownloadWork(this@MainActivity, it) },
             deleteDownload = { viewModel.deleteDownloadedFile(this@MainActivity, it) },

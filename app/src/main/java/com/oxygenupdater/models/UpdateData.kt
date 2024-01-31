@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 import androidx.work.Data
 import com.oxygenupdater.OxygenUpdater
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.workers.Md5VerificationWorker
+import com.oxygenupdater.workers.DownloadWorker
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
@@ -72,11 +72,8 @@ data class UpdateData(
         putString("description", description)
         putString("downloadUrl", downloadUrl)
         putLong("downloadSize", downloadSize)
-        putString(Md5VerificationWorker.FILENAME, filename)
-        putString(Md5VerificationWorker.MD5, md5sum)
-        putString("information", information)
-        putBoolean("updateInformationAvailable", updateInformationAvailable)
-        putBoolean("systemIsUpToDate", systemIsUpToDate)
+        putString(DownloadWorker.FILENAME, filename)
+        putString(DownloadWorker.MD5, md5sum)
     }.build()
 
     companion object {
@@ -89,11 +86,8 @@ data class UpdateData(
             description = inputData.getString("description"),
             downloadUrl = inputData.getString("downloadUrl"),
             downloadSize = inputData.getLong("downloadSize", NotSetL),
-            filename = inputData.getString(Md5VerificationWorker.FILENAME),
-            md5sum = inputData.getString(Md5VerificationWorker.MD5),
-            information = inputData.getString("information"),
-            updateInformationAvailable = inputData.getBoolean("updateInformationAvailable", false),
-            systemIsUpToDate = inputData.getBoolean("systemIsUpToDate", false)
+            filename = inputData.getString(DownloadWorker.FILENAME),
+            md5sum = inputData.getString(DownloadWorker.MD5),
         ) else null
     }
 }

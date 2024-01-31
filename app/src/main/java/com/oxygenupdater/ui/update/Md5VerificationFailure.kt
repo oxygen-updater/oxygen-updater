@@ -8,7 +8,7 @@ value class Md5VerificationFailure(val value: Int) {
 
     override fun toString() = "Md5VerificationFailure." + when (this) {
         NullUpdateData -> "NullUpdateData"
-        NullOrEmptyProvidedChecksum -> "NullOrEmptyProvidedChecksum"
+        EmptyFilenameOrMd5 -> "EmptyFilenameOrMd5"
         NullCalculatedChecksum -> "NullCalculatedChecksum"
         ChecksumsNotEqual -> "ChecksumsNotEqual"
         else -> "Invalid"
@@ -24,7 +24,7 @@ value class Md5VerificationFailure(val value: Int) {
         val NullUpdateData = Md5VerificationFailure(0)
 
         /** If the provided checksum (received from the backend) is null or empty */
-        val NullOrEmptyProvidedChecksum = Md5VerificationFailure(1)
+        val EmptyFilenameOrMd5 = Md5VerificationFailure(1)
 
         /**
          * Happens in one of the following cases:

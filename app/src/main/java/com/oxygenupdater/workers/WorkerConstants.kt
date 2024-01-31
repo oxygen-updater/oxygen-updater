@@ -5,13 +5,13 @@ package com.oxygenupdater.workers
  */
 
 const val WorkUniqueDownload = "WorkUniqueDownload"
-const val WorkUniqueMd5Verification = "WorkUniqueMd5Verification"
 const val WorkUniqueReadOtaDb = "WorkUniqueReadOtaDb"
 
 const val WorkDataDownloadBytesDone = "DownloadBytesDone"
 const val WorkDataDownloadTotalBytes = "DownloadTotalBytes"
 const val WorkDataDownloadProgress = "DownloadProgress"
 const val WorkDataDownloadEta = "DownloadEta"
+const val WorkDataDownloadSuccessType = "DownloadSuccessType"
 const val WorkDataDownloadFailureType = "DownloadFailureType"
 
 /**
