@@ -22,10 +22,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -491,7 +496,10 @@ private fun DownloadButton(
                         if (forCancel) downloadAction(DownloadAction.Cancel)
                         else openInstallGuide()
                     },
-                    modifier = Modifier.requiredSize(56.dp)
+                    modifier = Modifier
+                        // Leave space for 2/3-button nav bar in landscape mode
+                        .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
+                        .requiredSize(56.dp) // must be after `windowInsetsPadding`
                 ) {
                     Icon(icon, iconContentDescription, tint = tint)
                 }
