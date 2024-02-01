@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui
 
+import android.annotation.SuppressLint
 import android.view.animation.AccelerateInterpolator
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
@@ -19,36 +20,41 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RichTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.layout.Layout
@@ -61,6 +67,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.fastFirst
 import androidx.compose.ui.util.lerp
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
@@ -76,34 +83,57 @@ import kotlin.math.roundToInt
 @Composable
 fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
-    onNavIconClick: () -> Unit,
     @StringRes subtitleResId: Int,
     root: Boolean,
-    showIcon: Boolean = true,
+    onNavIconClick: (() -> Unit)? = null,
     actions: @Composable (RowScope.() -> Unit)? = null,
 ) = Column {
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
-    val colors = TopAppBarDefaults.topAppBarColors(
-        scrolledContainerColor = colorScheme.surface,
-        navigationIconContentColor = if (root) colorScheme.primary else colorScheme.onSurface,
-    )
 
-    TopAppBar(
-        navigationIcon = icon@{
-            if (!showIcon) return@icon
+    val statusBarHeightPx: Int
+    val heightPx: Int
+    with(LocalDensity.current) {
+        statusBarHeightPx = WindowInsets.statusBars.getTop(this)
+        heightPx = CollapsingAppBarHeight.first.roundToPx() + statusBarHeightPx
+    }
 
+    // Sets the app bar's height offset to collapse the entire bar's height when content is
+    // scrolled.
+    val layoutHeight = heightPx + scrollBehavior.state.heightOffset.toInt()
+    val limit = -heightPx.toFloat()
+    SideEffect {
+        if (scrollBehavior.state.heightOffsetLimit != limit) scrollBehavior.state.heightOffsetLimit = limit
+    }
+
+    // Sometimes it goes out of boundary, don't know why. Force within [0,1].
+    val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
+    // Additional offset for placeables depending on how much we've collapsed
+    val yOffset = lerp(statusBarHeightPx, 0, collapsedFraction)
+
+    Layout(
+        content = {
             // Nav icon
-            IconButton(onNavIconClick) {
-                Icon(
-                    if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
-                    if (root) stringResource(R.string.about) else null,
-                )
+            if (onNavIconClick != null) IconButton(
+                onClick = onNavIconClick,
+                colors = IconButtonDefaults.iconButtonColors(
+                    contentColor = if (root) colorScheme.primary else colorScheme.onSurface,
+                ),
+                modifier = layoutIdNavIconModifier.padding(horizontal = 4.dp)
+            ) {
+                if (root) Icon(CustomIcons.LogoNotification, stringResource(R.string.about))
+                else Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
             }
-        },
-        title = {
+
             // Title & subtitle
-            Column(verticalArrangement = Arrangement.Center) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                modifier = layoutIdTextModifier.padding(
+                    /** Ensure it's offset even if nav icon isn't shown (i.e. when [onNavIconClick] is null) */
+                    start = if (onNavIconClick != null) 0.dp else 16.dp,
+                    end = 4.dp,
+                )
+            ) {
                 Text(
                     stringResource(R.string.app_name),
                     overflow = TextOverflow.Ellipsis, maxLines = 1,
@@ -116,20 +146,66 @@ fun TopAppBar(
                     modifier = Modifier.basicMarquee()
                 )
             }
-        },
-        actions = { if (actions != null) actions() },
-        colors = colors,
-        scrollBehavior = scrollBehavior,
-    )
 
-    // Perf: reduce recompositions by mutating only on value
-    val dividerAlpha by remember {
-        derivedStateOf(structuralEqualityPolicy()) {
-            if (scrollBehavior.state.collapsedFraction != 1f) 1f else 0f
+            if (actions != null) CompositionLocalProvider(
+                LocalContentColor provides colorScheme.onSurfaceVariant,
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                    content = actions,
+                    modifier = layoutIdActionsModifier.padding(end = 4.dp)
+                )
+            }
+        },
+        modifier = appBarModifier(scrollBehavior)
+            // Leave space for 2/3-button nav bar in landscape mode
+            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
+            // Don't let content bleed outside height / inset area
+            .clipToBounds()
+    ) { measurables, constraints ->
+        /** [LayoutIdText] measure depends on both nav & actions, so get them first */
+        var navIconPlaceable: Placeable? = null
+        var actionsPlaceable: Placeable? = null
+        for (it in measurables) {
+            when (it.layoutId) {
+                LayoutIdNavIcon -> navIconPlaceable = it.measure(constraints)
+                LayoutIdActions -> actionsPlaceable = it.measure(constraints)
+            }
+        }
+
+        val navIconWidth = navIconPlaceable?.width ?: 0
+        val actionsWidth = actionsPlaceable?.width ?: 0
+        val maxWidth = constraints.maxWidth
+        val textPlaceable = measurables
+            .fastFirst { it.layoutId == LayoutIdText }
+            .measure(
+                constraints.copy(
+                    minWidth = 0,
+                    maxWidth = (maxWidth - navIconWidth - actionsWidth).coerceAtLeast(0)
+                )
+            )
+
+        layout(maxWidth, layoutHeight) {
+            navIconPlaceable?.placeRelative(
+                x = 0,
+                y = yOffset + (layoutHeight - navIconPlaceable.height) shr 1,
+            )
+
+            textPlaceable.placeRelative(
+                x = navIconWidth,
+                y = yOffset + (layoutHeight - textPlaceable.height) shr 1,
+            )
+
+            actionsPlaceable?.placeRelative(
+                x = maxWidth - actionsWidth,
+                y = yOffset + (layoutHeight - actionsPlaceable.height) shr 1,
+            )
         }
     }
 
     // Perf: `if (showDivider) ItemDivider()` causes recomposition; we avoid that by "hiding" via graphicsLayer alpha
+    val dividerAlpha = if (collapsedFraction != 1f) 1f else 0f
     ItemDivider(Modifier.graphicsLayer { alpha = dividerAlpha })
 }
 
@@ -169,20 +245,6 @@ fun CollapsingAppBar(
         if (scrollBehavior.state.heightOffsetLimit != limit) scrollBehavior.state.heightOffsetLimit = limit
     }
 
-    // Set up support for resizing the top app bar when vertically dragging the bar itself
-    val appBarModifier = Modifier.draggable(
-        state = rememberDraggableState { scrollBehavior.state.heightOffset += it },
-        orientation = Orientation.Vertical,
-        onDragStopped = {
-            settleAppBar(
-                state = scrollBehavior.state,
-                velocity = it,
-                flingAnimationSpec = scrollBehavior.flingAnimationSpec,
-                snapAnimationSpec = scrollBehavior.snapAnimationSpec,
-            )
-        },
-    )
-
     // Sometimes it goes out of boundary, don't know why. Force within [0,1].
     val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
     Layout({
@@ -209,13 +271,12 @@ fun CollapsingAppBar(
         }
 
         Column(
-            layoutIdTextModifier
-                .padding(
-                    start = if (onNavIconClick != null) {
-                        // Lerp only if there's a nav icon
-                        lerp(20f, 56f, collapsedFraction).dp
-                    } else 16.dp, end = 16.dp
-                )
+            layoutIdTextModifier.padding(
+                start = if (onNavIconClick != null) {
+                    // Lerp only if there's a nav icon
+                    lerp(20f, 56f, collapsedFraction).dp
+                } else 16.dp, end = 16.dp
+            )
         ) {
             CollapsingAppBarTitle(scrollBehavior = scrollBehavior, title = title)
 
@@ -229,7 +290,11 @@ fun CollapsingAppBar(
                 )
             }
         }
-    }, appBarModifier) { measurables, constraints ->
+        // Note: we're intentionally not consuming horizontal system bar insets
+        // because it'd be an issue only below Android 6/Marshmallow, where nav
+        // bar is always black in landscape mode, even though we've setup
+        // edge-to-edge properly (i.e. it should be transparent/translucent).
+    }, appBarModifier(scrollBehavior)) { measurables, constraints ->
         var imagePlaceable: Placeable? = null
         var navIconPlaceable: Placeable? = null
         var textPlaceable: Placeable? = null
@@ -293,10 +358,12 @@ private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title
 private const val LayoutIdImage = "image"
 private const val LayoutIdNavIcon = "navigationIcon"
 private const val LayoutIdText = "text"
+private const val LayoutIdActions = "actions"
 
 private val layoutIdImageModifier = Modifier.layoutId(LayoutIdImage)
 private val layoutIdNavIconModifier = Modifier.layoutId(LayoutIdNavIcon)
 private val layoutIdTextModifier = Modifier.layoutId(LayoutIdText)
+private val layoutIdActionsModifier = Modifier.layoutId(LayoutIdActions)
 
 /** min (material3/tokens/TopAppBarSmallTokens.ContainerHeight) to max */
 private val CollapsingAppBarHeight = 64.dp to 256.dp
@@ -311,6 +378,27 @@ private val CollapsingAppBarTitleSize = 22f to 24f
 private val CollapsingAppBarSubtitleSize = 14f to 16f
 
 private val accelerateInterpolator = AccelerateInterpolator(3f)
+
+/**
+ * Sets up support for resizing the top app bar when vertically dragging the bar itself
+ */
+@SuppressLint("ModifierFactoryExtensionFunction")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun appBarModifier(
+    scrollBehavior: TopAppBarScrollBehavior,
+) = Modifier.draggable(
+    state = rememberDraggableState { scrollBehavior.state.heightOffset += it },
+    orientation = Orientation.Vertical,
+    onDragStopped = {
+        settleAppBar(
+            state = scrollBehavior.state,
+            velocity = it,
+            flingAnimationSpec = scrollBehavior.flingAnimationSpec,
+            snapAnimationSpec = scrollBehavior.snapAnimationSpec,
+        )
+    },
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 private suspend fun settleAppBar(

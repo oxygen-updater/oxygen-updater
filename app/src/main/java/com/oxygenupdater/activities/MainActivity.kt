@@ -3,11 +3,13 @@ package com.oxygenupdater.activities
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -329,6 +331,18 @@ class MainActivity : AppCompatActivity() {
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { !light },
             navigationBarStyle = navigationBarStyle,
         )
+
+        // Below Android 6/Marshmallow, the above function adds window flags to
+        // draw system bars as translucent for better legibility, because status
+        // bar content & nav bar icons are always white on these old Android
+        // versions. However, if a dark theme is active, the background is
+        // guaranteed to be a dark enough colour, and so it's better if we clear
+        // these flags for the same "proper" edge-to-edge as on newer versions.
+        @Suppress("DEPRECATION")
+        if (SDK_INT < VERSION_CODES.M && !light) window.run {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -349,10 +363,8 @@ class MainActivity : AppCompatActivity() {
         // Use normal app bar if height isn't enough (e.g. landscape phones)
         if (windowSize.heightSizeClass == WindowHeightSizeClass.Compact) TopAppBar(
             scrollBehavior = scrollBehavior,
-            onNavIconClick = {},
             subtitleResId = R.string.onboarding,
             root = true,
-            showIcon = false,
         ) else CollapsingAppBar(
             scrollBehavior = scrollBehavior,
             image = { modifier ->
@@ -552,10 +564,10 @@ class MainActivity : AppCompatActivity() {
                         onNavIconClick = onNavIconClick,
                     ) else TopAppBar(
                         scrollBehavior = scrollBehavior,
-                        onNavIconClick = onNavIconClick,
+                        // Don't show nav icon if SideRail is shown
+                        onNavIconClick = if (isNavTypeBottomBar) onNavIconClick else null,
                         subtitleResId = subtitleResId,
                         root = isMainScreen,
-                        showIcon = isNavTypeBottomBar,
                     ) {
                         val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
                         MainMenu(
@@ -1077,7 +1089,7 @@ class MainActivity : AppCompatActivity() {
                                 onDispose {}
                             }
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) NotificationPermission(
+                            if (SDK_INT >= VERSION_CODES.TIRAMISU) NotificationPermission(
                                 canShow = viewModel.canShowNotifPermissionSheet,
                                 hide = { viewModel.persist(KeyIgnoreNotificationPermissionSheet, it) }
                             )
