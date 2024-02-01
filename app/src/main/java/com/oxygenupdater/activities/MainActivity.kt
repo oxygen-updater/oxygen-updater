@@ -561,7 +561,8 @@ class MainActivity : AppCompatActivity() {
                         },
                         title = ArticleViewModel.item?.title ?: stringResource(R.string.loading),
                         subtitle = ArticleViewModel.item?.authorName ?: stringResource(R.string.summary_please_wait),
-                        onNavIconClick = onNavIconClick,
+                        // Don't show nav icon if SideRail is shown
+                        onNavIconClick = if (isNavTypeBottomBar) onNavIconClick else null,
                     ) else TopAppBar(
                         scrollBehavior = scrollBehavior,
                         // Don't show nav icon if SideRail is shown
