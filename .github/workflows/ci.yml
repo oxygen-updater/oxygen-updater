@@ -14,6 +14,8 @@ concurrency:
 
 jobs:
   debug:
+    # Skip job if the HEAD commit message ends with the appropriate opt-out phrase
+    if: ${{ !endsWith(github.event.head_commit.message, '[ci skip-debug]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -58,6 +60,8 @@ jobs:
 
   # Must be a separate job because we're utilizing matrices
   instrumentation:
+    # Skip job if the HEAD commit message ends with the appropriate opt-out phrase
+    if: ${{ !endsWith(github.event.head_commit.message, '[ci skip-instrumentation]') }}
     runs-on: ubuntu-latest
     strategy:
       # Let other tests continue if any matrix job fails
