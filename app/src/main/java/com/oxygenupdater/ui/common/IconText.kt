@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.common
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.requiredSize
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -34,8 +36,16 @@ fun IconText(
     iconTint: Color = MaterialTheme.colorScheme.primary,
     style: TextStyle = MaterialTheme.typography.bodyMedium,
     content: @Composable (RowScope.() -> Unit)? = null,
-) = Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-    Icon(icon, stringResource(R.string.icon), Modifier.requiredSize(24.dp), tint = iconTint)
+) = Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier.testTag(IconTextTestTag)
+) {
+    Icon(
+        imageVector = icon,
+        contentDescription = stringResource(R.string.icon),
+        tint = iconTint,
+        modifier = Modifier.requiredSize(24.dp)
+    )
 
     Text(
         text = text,
@@ -48,6 +58,11 @@ fun IconText(
     // Extra content if callers want to re-use the same RowScope
     if (content != null) content()
 }
+
+private const val TAG = "IconText"
+
+@VisibleForTesting
+const val IconTextTestTag = TAG
 
 @PreviewThemes
 @Composable

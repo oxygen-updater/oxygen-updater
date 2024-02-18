@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Build
 import android.provider.Settings
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -52,9 +54,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
@@ -99,10 +103,6 @@ import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotifUtils
 import com.oxygenupdater.utils.logInfo
 
-private var previousAdFreeConfig = Triple<Boolean, Int, (() -> Unit)?>(
-    false, R.string.settings_buy_ad_free_label, null
-)
-
 @Composable
 fun SettingsScreen(
     navType: NavType,
@@ -122,7 +122,11 @@ fun SettingsScreen(
     getPrefStr: (key: String, default: String) -> String,
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     persistBool: (key: String, value: Boolean) -> Unit,
-) = Column(Modifier.verticalScroll(rememberScrollState())) {
+) = Column(
+    Modifier
+        .verticalScroll(rememberScrollState())
+        .testTag(SettingsScreenTestTag)
+) {
     // region Support us
     Column(Modifier.background(MaterialTheme.colorScheme.backgroundVariant)) {
         Header(R.string.preference_header_support)
@@ -316,9 +320,7 @@ private fun Notifications() {
     } else if (disabled.none { it }) {
         subtitleIsError = false
         stringResource(R.string.summary_on)
-    } else {
-        subtitleIsError = true
-        val builder = StringBuilder()
+    } else stringResource(R.string.summary_important_notifications_disabled) + buildString {
         disabled.forEachIndexed { index, flag ->
             if (!flag) return@forEachIndexed
             when (index) {
@@ -326,9 +328,10 @@ private fun Notifications() {
                 1 -> R.string.news_notification_channel_name
                 2 -> R.string.download_status_notification_channel_name
                 else -> throw ArrayIndexOutOfBoundsException(index)
-            }.let { builder.append("\n• " + stringResource(it)) }
+            }.let { append("\n• " + stringResource(it)) }
         }
-        stringResource(R.string.summary_important_notifications_disabled) + builder.toString()
+    }.also {
+        subtitleIsError = true
     }
 
     SettingsItem(
@@ -396,7 +399,12 @@ private fun Language() {
         subtitle = language,
     )
 
-    if (showSheet) ModalBottomSheet({ showSheet = false }) { LanguageSheet(it, selectedLocale) }
+    if (showSheet) ModalBottomSheet({ showSheet = false }) { hide ->
+        LanguageSheet({
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(it))
+            hide()
+        }, selectedLocale)
+    }
 }
 
 @Composable
@@ -524,11 +532,11 @@ fun SettingsItem(
     enabled: Boolean = true,
     content: @Composable (RowScope.() -> Unit)? = null,
 ) = Row(
-    modifierMaxWidth
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifierMaxWidth
         .alpha(if (enabled) 1f else 0.38f)
         .animatedClickable(enabled, onClick)
-        .then(modifierDefaultPadding), // must be after `clickable`
-    verticalAlignment = Alignment.CenterVertically
+        .then(modifierDefaultPadding) // must be after `clickable`
 ) {
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
@@ -559,6 +567,56 @@ fun SettingsItem(
     if (content != null) content()
 }
 
+@VisibleForTesting
+const val SettingsScreenTestTag = "SettingsScreen"
+
+@VisibleForTesting
+val DeviceSettingsListConfig = SettingsListConfig(
+    list = listOf(
+        Device(
+            id = 1,
+            name = "OnePlus 7 Pro",
+            productNames = listOf("OnePlus7Pro"),
+            enabled = true,
+        ),
+        Device(
+            id = 2,
+            name = "OnePlus 8T",
+            productNames = listOf("OnePlus8T"),
+            enabled = true,
+        ),
+    ),
+    initialIndex = 1,
+    selectedId = NotSetL,
+)
+
+@VisibleForTesting
+val MethodSettingsListConfig = SettingsListConfig(
+    list = listOf(
+        UpdateMethod(
+            id = 1,
+            name = "Stable (full)",
+            recommendedForRootedDevice = true,
+            recommendedForNonRootedDevice = false,
+            supportsRootedDevice = true,
+        ),
+        UpdateMethod(
+            id = 2,
+            name = "Stable (incremental)",
+            recommendedForRootedDevice = false,
+            recommendedForNonRootedDevice = true,
+            supportsRootedDevice = false,
+        )
+    ),
+    initialIndex = 1,
+    selectedId = NotSetL,
+)
+
+@VisibleForTesting
+var previousAdFreeConfig = Triple<Boolean, Int, (() -> Unit)?>(
+    false, R.string.settings_buy_ad_free_label, null
+)
+
 @PreviewThemes
 @Composable
 fun PreviewSettingsScreen() = PreviewAppTheme {
@@ -567,45 +625,9 @@ fun PreviewSettingsScreen() = PreviewAppTheme {
         adFreePrice = null,
         adFreeConfig = previousAdFreeConfig,
         onContributorEnrollmentChange = {},
-        deviceConfig = SettingsListConfig(
-            list = listOf(
-                Device(
-                    id = 1,
-                    name = "OnePlus 7 Pro",
-                    productNames = listOf("OnePlus7Pro"),
-                    enabled = true,
-                ),
-                Device(
-                    id = 2,
-                    name = "OnePlus 8T",
-                    productNames = listOf("OnePlus8T"),
-                    enabled = true,
-                ),
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        deviceConfig = DeviceSettingsListConfig,
         onDeviceSelect = {},
-        methodConfig = SettingsListConfig(
-            list = listOf(
-                UpdateMethod(
-                    id = 1,
-                    name = "Stable (full)",
-                    recommendedForRootedDevice = true,
-                    recommendedForNonRootedDevice = false,
-                    supportsRootedDevice = true,
-                ),
-                UpdateMethod(
-                    id = 2,
-                    name = "Stable (incremental)",
-                    recommendedForRootedDevice = false,
-                    recommendedForNonRootedDevice = true,
-                    supportsRootedDevice = false,
-                )
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        methodConfig = MethodSettingsListConfig,
         onMethodSelect = {},
         onThemeSelect = {},
         advancedMode = false,

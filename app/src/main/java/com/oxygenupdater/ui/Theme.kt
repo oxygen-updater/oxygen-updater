@@ -11,7 +11,7 @@ import com.oxygenupdater.R
  */
 @Immutable
 @JvmInline
-value class Theme(val value: Int) {
+value class Theme private constructor(val value: Int) {
 
     val titleResId
         get() = when (this) {

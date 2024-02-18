@@ -7,9 +7,11 @@ import android.os.Build
 import android.os.Build.UNKNOWN
 import android.text.format.Formatter
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,6 +45,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,14 +101,21 @@ fun DeviceScreen(
         Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())
+            .testTag(DeviceScreen_ScrollableColumnTestTag)
     ) {
         DeviceMismatchStatus(status = deviceMismatchStatus)
 
         DeviceSoftwareInfo()
         ItemDivider(modifierDefaultPaddingTop)
-        DeviceHardwareInfo(navType = navType)
+        DeviceHardwareInfo()
+
+        ConditionalNavBarPadding(navType)
     }
-} else Column(Modifier.verticalScroll(rememberScrollState())) {
+} else Column(
+    Modifier
+        .verticalScroll(rememberScrollState())
+        .testTag(DeviceScreen_ScrollableColumnTestTag)
+) {
     DeviceHeaderCompact(
         deviceName = deviceName,
         deviceOsSpec = deviceOsSpec,
@@ -114,7 +124,9 @@ fun DeviceScreen(
 
     DeviceSoftwareInfo()
     ItemDivider(modifierDefaultPaddingTop)
-    DeviceHardwareInfo(navType = navType)
+    DeviceHardwareInfo()
+
+    ConditionalNavBarPadding(navType)
 }
 
 @Composable
@@ -134,7 +146,6 @@ private fun DeviceHeaderCompact(
             DeviceNameWithSpec(
                 deviceName = deviceName,
                 deviceOsSpec = deviceOsSpec,
-                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -166,17 +177,22 @@ private fun DeviceHeaderExpanded(
 }
 
 @Composable
-private fun DeviceNameWithSpec(
+private fun ColumnScope.DeviceNameWithSpec(
     deviceName: String,
     deviceOsSpec: DeviceOsSpec?,
-    modifier: Modifier = Modifier,
 ) {
-    Text(deviceName, style = MaterialTheme.typography.titleLarge)
-    SelectionContainer(modifier) {
+    Text(
+        text = deviceName,
+        style = MaterialTheme.typography.titleLarge,
+        modifier = Modifier.testTag(DeviceScreen_NameTestTag)
+    )
+
+    SelectionContainer(Modifier.weight(1f)) {
         Text(
             text = Build.MODEL,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.testTag(DeviceScreen_ModelTestTag)
         )
     }
 
@@ -195,7 +211,9 @@ private fun DeviceNameWithSpec(
         } else MaterialTheme.colorScheme.error,
         overflow = TextOverflow.Ellipsis,
         style = MaterialTheme.typography.bodySmall,
-        modifier = Modifier.padding(vertical = 8.dp)
+        modifier = Modifier
+            .padding(vertical = 8.dp)
+            .testTag(DeviceScreen_SupportStatusTestTag)
     )
 }
 
@@ -211,7 +229,7 @@ fun DeviceMismatchStatus(status: Triple<Boolean, String, String>?) {
         ),
         color = MaterialTheme.colorScheme.error,
         style = MaterialTheme.typography.bodySmall,
-        modifier = modifierDefaultPadding
+        modifier = modifierDefaultPadding.testTag(DeviceScreen_MismatchTextTestTag)
     )
 
     ItemDivider()
@@ -243,7 +261,7 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
             contentDescription = stringResource(R.string.device_information_image_description),
             placeholder = defaultImage,
             error = defaultImage,
-            modifier = requiredSizeModifier
+            modifier = requiredSizeModifier.testTag(DeviceScreen_ImageTestTag)
         )
 
         if (notSupported) {
@@ -252,14 +270,17 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
                 imageVector = Icons.Rounded.ErrorOutline,
                 contentDescription = stringResource(R.string.icon),
                 tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .testTag(DeviceScreen_NotSupportedIconTestTag)
             )
         }
     }
 }
 
+@Suppress("UnusedReceiverParameter")
 @Composable
-fun DeviceSoftwareInfo(showHeader: Boolean = true) {
+fun ColumnScope.DeviceSoftwareInfo(showHeader: Boolean = true) {
     if (showHeader) Header(R.string.device_information_software_header)
 
     Item(
@@ -308,8 +329,9 @@ private fun Header(@StringRes textResId: Int) = Text(
     modifier = modifierDefaultPaddingStartTopEnd
 )
 
+@Suppress("UnusedReceiverParameter")
 @Composable
-private fun DeviceHardwareInfo(navType: NavType) {
+private fun ColumnScope.DeviceHardwareInfo() {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
@@ -370,7 +392,6 @@ private fun DeviceHardwareInfo(navType: NavType) {
     }
 
     Spacer(modifierDefaultPaddingTop)
-    ConditionalNavBarPadding(navType)
 }
 
 @Composable
@@ -416,6 +437,29 @@ private fun getRamBytes(context: Context) = try {
     logInfo("DeviceScreen", "Memory information is unavailable due to error", e)
     0L
 }
+
+private const val TAG = "DeviceScreen"
+
+@VisibleForTesting
+const val DeviceScreen_ScrollableColumnTestTag = TAG + "_ScrollableColumn"
+
+@VisibleForTesting
+const val DeviceScreen_NameTestTag = TAG + "_Name"
+
+@VisibleForTesting
+const val DeviceScreen_ModelTestTag = TAG + "_Model"
+
+@VisibleForTesting
+const val DeviceScreen_SupportStatusTestTag = TAG + "_SupportStatus"
+
+@VisibleForTesting
+const val DeviceScreen_ImageTestTag = TAG + "_Image"
+
+@VisibleForTesting
+const val DeviceScreen_NotSupportedIconTestTag = TAG + "_NotSupportedIcon"
+
+@VisibleForTesting
+const val DeviceScreen_MismatchTextTestTag = TAG + "_MismatchText"
 
 @PreviewThemes
 @Composable

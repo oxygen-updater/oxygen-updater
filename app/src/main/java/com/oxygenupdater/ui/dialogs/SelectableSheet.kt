@@ -1,6 +1,8 @@
 package com.oxygenupdater.ui.dialogs
 
+import android.annotation.SuppressLint
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,17 +22,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
-import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.SelectableModel
-import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
+import com.oxygenupdater.ui.common.modifierSemanticsNotSelected
+import com.oxygenupdater.ui.common.modifierSemanticsSelected
+import com.oxygenupdater.ui.settings.DeviceSettingsListConfig
+import com.oxygenupdater.ui.settings.MethodSettingsListConfig
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
@@ -53,7 +58,9 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     val colorScheme = MaterialTheme.colorScheme
     LazyColumn(
         state = rememberLazyListState(initialFirstVisibleItemIndex = initialFirstVisibleItemIndex),
-        modifier = Modifier.weight(1f, false),
+        modifier = Modifier
+            .weight(1f, false)
+            .testTag(SelectableSheet_LazyColumnTestTag)
     ) {
         itemsIndexed(items = list, key = { _, it -> it.id }) { index, item ->
             Row(
@@ -64,6 +71,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                         hide()
                     }
                     .padding(horizontal = 16.dp, vertical = 8.dp) // must be after `clickable`
+                    .testTag(BottomSheet_ItemRowTestTag)
             ) {
                 val primary = colorScheme.primary
                 val name = item.name ?: return@itemsIndexed
@@ -72,8 +80,8 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     imageVector = Icons.Rounded.Done,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
-                    modifier = Modifier.padding(end = 16.dp)
-                ) else Spacer(Modifier.size(40.dp)) // 24 + 16
+                    modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
+                ) else Spacer(modifierSemanticsNotSelected.size(40.dp)) // 24 + 16
 
                 Text(
                     text = name,
@@ -97,60 +105,31 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     SheetCaption(captionResId)
 }
 
+private const val TAG = "SelectableSheet"
+
+@VisibleForTesting
+const val SelectableSheet_LazyColumnTestTag = TAG + "_LazyColumn"
+
+@SuppressLint("VisibleForTests")
 @PreviewThemes
 @Composable
 fun PreviewDeviceSheet() = PreviewModalBottomSheet {
     SelectableSheet(
         hide = {},
-        config = SettingsListConfig(
-            list = listOf(
-                Device(
-                    id = 1,
-                    name = "OnePlus 7 Pro",
-                    productNames = listOf("OnePlus7Pro"),
-                    enabled = true,
-                ),
-                Device(
-                    id = 2,
-                    name = "OnePlus 8T",
-                    productNames = listOf("OnePlus8T"),
-                    enabled = true,
-                ),
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        config = DeviceSettingsListConfig,
         titleResId = R.string.onboarding_device_chooser_title,
         captionResId = R.string.onboarding_device_chooser_caption,
         onClick = {},
     )
 }
 
+@SuppressLint("VisibleForTests")
 @PreviewThemes
 @Composable
 fun PreviewMethodSheet() = PreviewModalBottomSheet {
     SelectableSheet(
         hide = {},
-        config = SettingsListConfig(
-            list = listOf(
-                UpdateMethod(
-                    id = 1,
-                    name = "Stable (full)",
-                    recommendedForRootedDevice = true,
-                    recommendedForNonRootedDevice = false,
-                    supportsRootedDevice = true,
-                ),
-                UpdateMethod(
-                    id = 2,
-                    name = "Stable (incremental)",
-                    recommendedForRootedDevice = false,
-                    recommendedForNonRootedDevice = true,
-                    supportsRootedDevice = false,
-                )
-            ),
-            initialIndex = 1,
-            selectedId = NotSetL,
-        ),
+        config = MethodSettingsListConfig,
         titleResId = R.string.onboarding_method_chooser_title,
         captionResId = R.string.onboarding_method_chooser_caption,
         onClick = {},

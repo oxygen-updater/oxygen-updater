@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class DownloadStatus(val value: Int) {
+value class DownloadStatus private constructor(val value: Int) {
 
     override fun toString() = "DownloadStatus." + when (this) {
         NotDownloading -> "NotDownloading"

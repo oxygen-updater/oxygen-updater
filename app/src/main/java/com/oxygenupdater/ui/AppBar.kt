@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.animation.AccelerateInterpolator
 import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec
@@ -61,6 +62,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -68,6 +70,7 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastFirst
+import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.lerp
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
@@ -119,7 +122,9 @@ fun TopAppBar(
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = if (root) colorScheme.primary else colorScheme.onSurface,
                 ),
-                modifier = layoutIdNavIconModifier.padding(horizontal = 4.dp)
+                modifier = layoutIdNavIconModifier
+                    .padding(horizontal = 4.dp)
+                    .testTag(AppBar_IconButtonTestTag)
             ) {
                 if (root) Icon(CustomIcons.LogoNotification, stringResource(R.string.about))
                 else Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
@@ -138,12 +143,15 @@ fun TopAppBar(
                     stringResource(R.string.app_name),
                     overflow = TextOverflow.Ellipsis, maxLines = 1,
                     style = typography.titleLarge,
+                    modifier = Modifier.testTag(AppBar_TitleTestTag)
                 )
                 Text(
                     if (subtitleResId == 0) "v${BuildConfig.VERSION_NAME}" else stringResource(subtitleResId),
                     maxLines = 1,
                     style = typography.bodyMedium,
-                    modifier = Modifier.basicMarquee()
+                    modifier = Modifier
+                        .basicMarquee()
+                        .testTag(AppBar_SubtitleTestTag)
                 )
             }
 
@@ -278,7 +286,7 @@ fun CollapsingAppBar(
                 } else 16.dp, end = 16.dp
             )
         ) {
-            CollapsingAppBarTitle(scrollBehavior = scrollBehavior, title = title)
+            CollapsingAppBarTitle(collapsedFraction = { collapsedFraction }, title = title)
 
             if (subtitle != null) {
                 val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
@@ -287,6 +295,7 @@ fun CollapsingAppBar(
                     fontSize = lerp(maxSubtitleSize, minSubtitleSize, collapsedFraction).sp,
                     overflow = TextOverflow.Ellipsis, maxLines = 1,
                     style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.testTag(AppBar_SubtitleTestTag)
                 )
             }
         }
@@ -294,11 +303,11 @@ fun CollapsingAppBar(
         // because it'd be an issue only below Android 6/Marshmallow, where nav
         // bar is always black in landscape mode, even though we've setup
         // edge-to-edge properly (i.e. it should be transparent/translucent).
-    }, appBarModifier(scrollBehavior)) { measurables, constraints ->
+    }, appBarModifier(scrollBehavior).testTag(CollapsingAppBarTestTag)) { measurables, constraints ->
         var imagePlaceable: Placeable? = null
         var navIconPlaceable: Placeable? = null
         var textPlaceable: Placeable? = null
-        for (it in measurables) {
+        measurables.fastForEach {
             when (it.layoutId) {
                 LayoutIdImage -> imagePlaceable = it.measure(constraints)
                 LayoutIdNavIcon -> navIconPlaceable = it.measure(constraints)
@@ -325,48 +334,88 @@ fun CollapsingAppBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CollapsingAppBarTitle(scrollBehavior: TopAppBarScrollBehavior, title: String) {
+private fun CollapsingAppBarTitle(
+    collapsedFraction: () -> Float, // must be lazy
+    title: String,
+) {
     // Accessibility: show full title on long press if it overflows
     var showTooltip by rememberSaveableState("showTooltip", false)
     val tooltipState = rememberTooltipState(isPersistent = true)
     BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
 
     val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
-    // Sometimes it goes out of boundary, don't know why. Force within [0,1].
-    val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
-    TooltipBox(TooltipDefaults.rememberRichTooltipPositionProvider(), {
-        val colorScheme = MaterialTheme.colorScheme
-        RichTooltip(
-            colors = TooltipDefaults.richTooltipColors(
-                containerColor = colorScheme.inverseSurface,
-                contentColor = colorScheme.inverseOnSurface,
-            ),
-            text = { Text(title) },
-        )
-    }, tooltipState, enableUserInput = showTooltip) {
+    TooltipBox(
+        positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
+        tooltip = {
+            val colorScheme = MaterialTheme.colorScheme
+            RichTooltip(
+                colors = TooltipDefaults.richTooltipColors(
+                    containerColor = colorScheme.inverseSurface,
+                    contentColor = colorScheme.inverseOnSurface,
+                ),
+                text = { Text(title) },
+                modifier = Modifier.testTag(CollapsingAppBar_TooltipTestTag)
+            )
+        },
+        state = tooltipState,
+        enableUserInput = showTooltip,
+        modifier = Modifier.testTag(CollapsingAppBar_TooltipBoxTestTag)
+    ) {
+        val fraction = collapsedFraction()
         Text(
             text = title,
             onTextLayout = { showTooltip = it.hasVisualOverflow },
             overflow = TextOverflow.Ellipsis,
-            maxLines = lerp(4, 1, collapsedFraction),
-            fontSize = lerp(maxTitleSize, minTitleSize, collapsedFraction).sp,
+            maxLines = lerp(4, 1, fraction),
+            fontSize = lerp(maxTitleSize, minTitleSize, fraction).sp,
             style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.testTag(AppBar_TitleTestTag)
         )
     }
 }
+
+private const val TAG = "AppBar"
+
+@VisibleForTesting
+const val AppBar_IconButtonTestTag = TAG + "_IconButton"
+
+@VisibleForTesting
+const val AppBar_TitleTestTag = TAG + "_Title"
+
+@VisibleForTesting
+const val AppBar_SubtitleTestTag = TAG + "_Subtitle"
+
+@VisibleForTesting
+const val CollapsingAppBarTestTag = "Collapsing$TAG"
+
+@VisibleForTesting
+const val CollapsingAppBar_ImageTestTag = CollapsingAppBarTestTag + "_Image"
+
+@VisibleForTesting
+const val CollapsingAppBar_TooltipBoxTestTag = CollapsingAppBarTestTag + "_TooltipBox"
+
+@VisibleForTesting
+const val CollapsingAppBar_TooltipTestTag = CollapsingAppBarTestTag + "_Tooltip"
 
 private const val LayoutIdImage = "image"
 private const val LayoutIdNavIcon = "navigationIcon"
 private const val LayoutIdText = "text"
 private const val LayoutIdActions = "actions"
 
-private val layoutIdImageModifier = Modifier.layoutId(LayoutIdImage)
-private val layoutIdNavIconModifier = Modifier.layoutId(LayoutIdNavIcon)
+private val layoutIdImageModifier = Modifier
+    .layoutId(LayoutIdImage)
+    .testTag(CollapsingAppBar_ImageTestTag)
+
+private val layoutIdNavIconModifier = Modifier
+    .layoutId(LayoutIdNavIcon)
+    .testTag(AppBar_IconButtonTestTag)
+
 private val layoutIdTextModifier = Modifier.layoutId(LayoutIdText)
 private val layoutIdActionsModifier = Modifier.layoutId(LayoutIdActions)
 
 /** min (material3/tokens/TopAppBarSmallTokens.ContainerHeight) to max */
-private val CollapsingAppBarHeight = 64.dp to 256.dp
+@VisibleForTesting
+val CollapsingAppBarHeight = 64.dp to 256.dp
 
 /** same as LargeTitleBottomPadding in material3/AppBar.kt */
 private val CollapsingAppBarBottomPadding = 28.dp

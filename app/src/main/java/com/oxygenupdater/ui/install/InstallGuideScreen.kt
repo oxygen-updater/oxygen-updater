@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.install
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -56,8 +58,9 @@ fun InstallGuideScreen(
     )
 }
 
+@VisibleForTesting
 @Composable
-private fun InstallGuideScreen(
+fun InstallGuideScreen(
     state: RefreshAwareState<List<InstallGuide>>,
     onRefresh: () -> Unit,
     downloaded: Boolean,
@@ -71,7 +74,11 @@ private fun InstallGuideScreen(
         val list = if (!refreshing) rememberSaveable(data) { data } else data
         val lastIndex = list.lastIndex
 
-        LazyColumn(Modifier.weight(1f)) {
+        LazyColumn(
+            Modifier
+                .weight(1f)
+                .testTag(InstallGuideScreen_LazyColumnTestTag)
+        ) {
             // Show download instructions only if user hasn't downloaded yet
             if (!downloaded) item {
                 val bodyMedium = MaterialTheme.typography.bodyMedium
@@ -83,7 +90,7 @@ private fun InstallGuideScreen(
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = bodyMedium,
-                    modifier = modifierDefaultPadding
+                    modifier = modifierDefaultPadding.testTag(InstallGuideScreen_InstructionsTestTag)
                 )
                 ItemDivider()
             }
@@ -114,6 +121,7 @@ private fun InstallGuideItem(
         modifier = modifierMaxWidth
             .animatedClickable { expanded = !expanded }
             .then(modifierDefaultPadding)
+            .testTag(InstallGuideScreen_ItemRowTestTag)
     ) {
         Icon(
             imageVector = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
@@ -126,14 +134,18 @@ private fun InstallGuideItem(
             Text(
                 text = item.title,
                 style = typography.titleMedium,
-                modifier = Modifier.withPlaceholder(refreshing, typography.titleMedium)
+                modifier = Modifier
+                    .withPlaceholder(refreshing, typography.titleMedium)
+                    .testTag(InstallGuideScreen_ItemTitleTestTag)
             )
 
             Text(
                 text = item.subtitle,
                 color = contentColor,
                 style = typography.bodySmall,
-                modifier = Modifier.withPlaceholder(refreshing, typography.bodySmall)
+                modifier = Modifier
+                    .withPlaceholder(refreshing, typography.bodySmall)
+                    .testTag(InstallGuideScreen_ItemSubtitleTestTag)
             )
         }
     }
@@ -152,31 +164,6 @@ private fun InstallGuideItem(
     if (last) Spacer(Modifier.navigationBarsPadding()) else ItemDivider()
 }
 
-@PreviewThemes
-@Composable
-fun PreviewInstallGuideScreen() = PreviewAppTheme {
-    InstallGuideScreen(
-        state = RefreshAwareState(
-            false, listOf(
-                InstallGuide(
-                    id = 1,
-                    title = PreviewTitle,
-                    subtitle = PreviewBodyPrefix,
-                    body = PreviewBodyHtml,
-                ),
-                InstallGuide(
-                    id = 2,
-                    title = PreviewTitle,
-                    subtitle = PreviewBodyPrefix,
-                    body = PreviewBodyHtml,
-                ),
-            )
-        ),
-        onRefresh = {},
-        downloaded = false,
-    )
-}
-
 private const val PreviewTitle = "An unnecessarily long guide entry, to get an accurate understanding of how long text is rendered"
 private const val PreviewBodyPrefix = "More information about this guide entry"
 private const val PreviewBodyHtml = """HTML markup, should be correctly styled:
@@ -188,3 +175,46 @@ private const val PreviewBodyHtml = """HTML markup, should be correctly styled:
 <u>underline</u>
 <a href="https://oxygenupdater.com/">link</a>
 <script>script tag should render as plain text</script>"""
+
+private const val TAG = "InstallGuideScreen"
+
+@VisibleForTesting
+const val InstallGuideScreen_LazyColumnTestTag = TAG + "_LazyColumn"
+
+@VisibleForTesting
+const val InstallGuideScreen_InstructionsTestTag = TAG + "_Instructions"
+
+@VisibleForTesting
+const val InstallGuideScreen_ItemRowTestTag = TAG + "_ItemRow"
+
+@VisibleForTesting
+const val InstallGuideScreen_ItemTitleTestTag = TAG + "_ItemTitle"
+
+@VisibleForTesting
+const val InstallGuideScreen_ItemSubtitleTestTag = TAG + "_ItemSubtitle"
+
+@VisibleForTesting
+val PreviewInstallGuideScreenData = listOf(
+    InstallGuide(
+        id = 1,
+        title = PreviewTitle,
+        subtitle = PreviewBodyPrefix,
+        body = PreviewBodyHtml,
+    ),
+    InstallGuide(
+        id = 2,
+        title = PreviewTitle,
+        subtitle = PreviewBodyPrefix,
+        body = PreviewBodyHtml,
+    ),
+)
+
+@PreviewThemes
+@Composable
+fun PreviewInstallGuideScreen() = PreviewAppTheme {
+    InstallGuideScreen(
+        state = RefreshAwareState(false, PreviewInstallGuideScreenData),
+        onRefresh = {},
+        downloaded = false,
+    )
+}

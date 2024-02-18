@@ -7,7 +7,7 @@ import androidx.compose.runtime.Immutable
  */
 @Immutable
 @JvmInline
-value class DeviceOsSpec(val value: Int) {
+value class DeviceOsSpec private constructor(val value: Int) {
 
     override fun toString() = "DeviceOsSpec." + when (this) {
         SupportedOxygenOs -> "SupportedOxygenOs"

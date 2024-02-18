@@ -8,7 +8,9 @@ import kotlin.test.assertTrue
 /** Helpers for [`@JvmInline`][JvmInline]` value class` tests */
 object ValueClassTestHelper {
 
-    inline fun <reified T> ensureUniqueValues() {
+    inline fun <reified T> ensureUniqueValues(
+        prefixClassNameInToStringCheck: Boolean = true,
+    ) {
         val clazz = T::class.java
         val declaredFields = clazz.declaredFields
 
@@ -39,10 +41,10 @@ object ValueClassTestHelper {
         // Ensure it's what we expect: "ClassName.FieldName" or "ClassName.value" if `value` is a String
         values.map { constructor.newInstance(it).toString() }.forEachIndexed { index, string ->
             val expected = if (valueFieldType == String::class.java) {
-                "${clazz.simpleName}.${values[index]}"
-            } else "${clazz.simpleName}.${fields[index].name}"
+                values[index] as String
+            } else fields[index].name
 
-            assertEquals(expected, string)
+            assertEquals(if (prefixClassNameInToStringCheck) "${clazz.simpleName}.$expected" else expected, string)
         }
     }
 }

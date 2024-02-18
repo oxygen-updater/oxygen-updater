@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui
 
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -11,16 +12,25 @@ import java.util.Locale
 val currentLocale: Locale
     get() = AppCompatDelegate.getApplicationLocales()[0] ?: LocaleListCompat.getAdjustedDefault()[0]!!
 
+/**
+ * We send full language tags only if the language in question is region-qualified in the app.
+ * This avoids polluting cache with unnecessary language variant info. For example, there will
+ * always be only one "English" or "Dutch" supported in the app.
+ */
 inline val currentLanguage: String
-    get() = currentLocale.run {
-        // We send full language tags only if the language in question is region-qualified in the app.
-        // This avoids polluting cache with unnecessary language variant info. For example, there will
-        // always be only one "English" or "Dutch" supported in the app.
-        // Note: this should be updated when the app adds more languages with region qualifiers.
-        val language = language
-        if (language == "pt" || language == "zh") toLanguageTag() else language
-    }
+    get() = currentLocale.languageOrLanguageTag()
 
 @Composable
 @ReadOnlyComposable
 fun currentLocale() = ConfigurationCompat.getLocales(LocalConfiguration.current)[0] ?: LocaleListCompat.getAdjustedDefault()[0]!!
+
+/**
+ * This is intentionally simple for performance.
+ *
+ * Its behaviour is fully-tested in [com.oxygenupdater.ui.CurrentLocaleTest].
+ */
+@Suppress("NOTHING_TO_INLINE")
+@VisibleForTesting
+inline fun Locale.languageOrLanguageTag() = language.let {
+    if (it == "pt" || it == "zh") toLanguageTag() else it
+} ?: "en" // fallback just in case

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 @JvmInline
-value class DownloadAction(val value: Int) {
+value class DownloadAction private constructor(val value: Int) {
 
     override fun toString() = "DownloadAction." + when (this) {
         Enqueue -> "Enqueue"

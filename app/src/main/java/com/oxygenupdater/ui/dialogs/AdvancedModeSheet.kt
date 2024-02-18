@@ -1,28 +1,22 @@
 package com.oxygenupdater.ui.dialogs
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material3.ButtonDefaults.textButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.ListItemTextIndent
-import com.oxygenupdater.ui.common.OutlinedIconButton
-import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
@@ -34,6 +28,7 @@ fun ColumnScope.AdvancedModeSheet(onClick: (result: Boolean) -> Unit) {
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
             .weight(1f, false)
             .verticalScroll(rememberScrollState())
+            .testTag(BottomSheet_ContentTestTag)
     ) {
         val bodyMedium = MaterialTheme.typography.bodyMedium
         Text(
@@ -56,28 +51,18 @@ fun ColumnScope.AdvancedModeSheet(onClick: (result: Boolean) -> Unit) {
         text = stringResource(R.string.settings_advanced_mode_caption),
         color = colorScheme.onSurfaceVariant,
         style = MaterialTheme.typography.bodySmall,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .testTag(BottomSheet_CaptionTestTag)
     )
 
-    Row(
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifierMaxWidth.padding(start = 16.dp, top = 12.dp, end = 16.dp, bottom = 16.dp)
-    ) {
-        TextButton(
-            onClick = { onClick(false) },
-            colors = textButtonColors(contentColor = colorScheme.error),
-            modifier = Modifier.padding(end = 8.dp),
-        ) {
-            Text(stringResource(android.R.string.cancel))
-        }
-
-        OutlinedIconButton(
-            onClick = { onClick(true) },
-            icon = Icons.Rounded.CheckCircleOutline,
-            textResId = R.string.enable,
-        )
-    }
+    SheetButtons(
+        dismissResId = android.R.string.cancel,
+        onDismiss = { onClick(false) },
+        confirmIcon = Icons.Rounded.CheckCircleOutline,
+        confirmResId = R.string.enable,
+        onConfirm = { onClick(true) },
+    )
 }
 
 @PreviewThemes

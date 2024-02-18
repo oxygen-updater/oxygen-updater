@@ -13,8 +13,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.annotation.RequiresApi
-import androidx.core.net.toUri
 import com.oxygenupdater.extensions.copyToClipboard
+import com.oxygenupdater.extensions.openLink
 import com.oxygenupdater.utils.ApiBaseUrl
 import com.oxygenupdater.utils.logDebug
 
@@ -110,14 +110,7 @@ class WebViewClient(private val context: Context) : android.webkit.WebViewClient
     @Deprecated("Deprecated in Java")
     override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
         if (url == null) return false
-
-        try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
-        } catch (e: ActivityNotFoundException) {
-            // Fallback: copy to clipboard instead
-            context.copyToClipboard(url)
-        }
-
+        context.openLink(url)
         return true
     }
 

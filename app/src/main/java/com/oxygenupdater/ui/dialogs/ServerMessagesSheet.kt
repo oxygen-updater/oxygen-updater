@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.dialogs
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -35,11 +38,14 @@ fun ServerMessagesSheet(list: List<ServerMessage>) {
     SheetHeader(R.string.settings_push_from_server)
 
     val colorScheme = MaterialTheme.colorScheme
-    LazyColumn(contentPadding = PaddingValues(bottom = 16.dp)) {
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 16.dp),
+        modifier = Modifier.testTag(ServerMessagesSheet_LazyColumnTestTag)
+    ) {
         items(items = list, key = { it.id }, contentType = { it.priority }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = modifierDefaultPadding
+                modifier = modifierDefaultPadding.testTag(BottomSheet_ItemRowTestTag)
             ) {
                 val priority = it.priority
                 val (icon, color) = remember(priority, colorScheme) {
@@ -62,33 +68,39 @@ fun ServerMessagesSheet(list: List<ServerMessage>) {
     }
 }
 
+private const val TAG = "ServerMessagesSheet"
+
+@VisibleForTesting
+const val ServerMessagesSheet_LazyColumnTestTag = TAG + "_LazyColumn"
+
+@VisibleForTesting
+val PreviewServerMessagesList = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered".let { message ->
+    listOf(
+        ServerMessage(
+            1L,
+            text = message,
+            priority = null,
+        ),
+        ServerMessage(
+            2L,
+            text = message,
+            priority = ServerMessagePriority.LOW,
+        ),
+        ServerMessage(
+            3L,
+            text = message,
+            priority = ServerMessagePriority.MEDIUM,
+        ),
+        ServerMessage(
+            4L,
+            text = message,
+            priority = ServerMessagePriority.HIGH,
+        ),
+    )
+}
+
 @PreviewThemes
 @Composable
 fun PreviewServerMessagesSheet() = PreviewModalBottomSheet {
-    val message = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
-    ServerMessagesSheet(
-        list = listOf(
-            ServerMessage(
-                1L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessagePriority.LOW,
-            ),
-            ServerMessage(
-                2L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessagePriority.MEDIUM,
-            ),
-            ServerMessage(
-                3L,
-                text = message,
-                deviceId = null,
-                updateMethodId = null,
-                priority = ServerMessagePriority.HIGH,
-            ),
-        )
-    )
+    ServerMessagesSheet(PreviewServerMessagesList)
 }

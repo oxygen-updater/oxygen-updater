@@ -44,6 +44,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -52,6 +53,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
 import androidx.core.os.postDelayed
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -474,16 +477,20 @@ class MainActivity : AppCompatActivity() {
             mutableStateOf<IntIntPair?>(null, referentialEqualityPolicy())
         }
 
-        AppUpdateInfo(
-            info = viewModel.appUpdateInfo.collectAsStateWithLifecycle().value,
-            snackbarMessageId = { snackbarText?.first },
-            updateSnackbarText = { snackbarText = it },
-            resetAppUpdateIgnoreCount = viewModel::resetAppUpdateIgnoreCount,
-            incrementAppUpdateIgnoreCount = viewModel::incrementAppUpdateIgnoreCount,
-            unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
-            requestUpdate = viewModel::requestUpdate,
-            requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
-        )
+        val appUpdateInfo by viewModel.appUpdateInfo.collectAsStateWithLifecycle()
+        appUpdateInfo?.let { it ->
+            AppUpdateInfo(
+                status = it.installStatus(),
+                availability = it::updateAvailability,
+                snackbarMessageId = { snackbarText?.first },
+                updateSnackbarText = { snackbarText = it },
+                resetAppUpdateIgnoreCount = viewModel::resetAppUpdateIgnoreCount,
+                incrementAppUpdateIgnoreCount = viewModel::incrementAppUpdateIgnoreCount,
+                unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
+                requestUpdate = viewModel::requestUpdate,
+                requestImmediateUpdate = viewModel::requestImmediateAppUpdate,
+            )
+        }
 
         // Display the "No connection" banner if required
         val isNetworkAvailable by OxygenUpdater.isNetworkAvailable.collectAsStateWithLifecycle()
@@ -582,15 +589,20 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                FlexibleAppUpdateProgress(
-                    state = viewModel.appUpdateStatus.collectAsStateWithLifecycle().value,
-                    snackbarMessageId = { snackbarText?.first },
-                    updateSnackbarText = { snackbarText = it },
-                )
+                val appUpdateStatus by viewModel.appUpdateStatus.collectAsStateWithLifecycle()
+                appUpdateStatus?.let { it ->
+                    FlexibleAppUpdateProgress(
+                        status = it.installStatus(),
+                        bytesDownloaded = it::bytesDownloaded,
+                        totalBytesToDownload = it::totalBytesToDownload,
+                        snackbarMessageId = { snackbarText?.first },
+                        updateSnackbarText = { snackbarText = it },
+                    )
+                }
 
                 val serverStatus by viewModel.serverStatus.collectAsStateWithLifecycle()
                 ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
-                ServerStatusBanner(serverStatus)
+                ServerStatusBanner(serverStatus, ::openPlayStorePage)
 
                 // NavHost can't preload other composables, so in order to get NewsList's unread count early,
                 // we're using the initial state here itself. State is refreshed only once the user visits that
@@ -736,7 +748,7 @@ class MainActivity : AppCompatActivity() {
             navType = navType,
             windowWidthSize = windowWidthSize,
             state = state,
-            refresh = {
+            onRefresh = {
                 settingsViewModel.updateCrashlyticsUserId()
                 viewModel.fetchServerStatus()
                 updateViewModel.refresh()
@@ -799,7 +811,8 @@ class MainActivity : AppCompatActivity() {
 
         NewsListScreen(
             navType = navType,
-            windowSize = windowSize,
+            windowWidthSize = windowSize.widthSizeClass,
+            windowHeightSize = windowSize.heightSizeClass,
             state = state,
             onRefresh = {
                 viewModel.fetchServerStatus()
@@ -869,14 +882,16 @@ class MainActivity : AppCompatActivity() {
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
         val adFreeState by billingViewModel.adFreeState.collectAsStateWithLifecycle(null)
 
-        val adFreeConfig = adFreeConfig(
-            state = adFreeState,
-            logBillingError = {
-                crashlytics.logBillingError("AdFreeConfig", "SKU '${PurchaseType.AD_FREE.sku}' is not available")
-            },
-            makePurchase = { billingViewModel.makePurchase(this@MainActivity, it) },
-            markPending = { showToast(R.string.purchase_error_pending_payment) },
-        )
+        val adFreeConfig = remember(adFreeState) {
+            adFreeConfig(
+                state = adFreeState,
+                logBillingError = {
+                    crashlytics.logBillingError("AdFreeConfig", "SKU '${PurchaseType.AD_FREE.sku}' is not available")
+                },
+                makePurchase = { billingViewModel.makePurchase(this@MainActivity, it) },
+                markPending = { showToast(R.string.purchase_error_pending_payment) },
+            )
+        }
 
         // Note: we use `this` instead of LocalLifecycleOwner because the latter can change, which results
         // in an IllegalArgumentException (can't reuse the same observer with different lifecycles)
@@ -1074,7 +1089,10 @@ class MainActivity : AppCompatActivity() {
                 EdgeToEdge()
 
                 // We're using Surface to avoid Scaffold's recomposition-on-scroll issue (when using scrollBehaviour and consuming innerPadding)
-                Surface {
+                Surface(Modifier.semantics {
+                    @OptIn(ExperimentalComposeUiApi::class)
+                    testTagsAsResourceId = true
+                }) {
                     Crossfade(
                         targetState = viewModel.shouldShowOnboarding,
                         label = "OnboardingMainCrossfade",
@@ -1363,7 +1381,7 @@ class MainActivity : AppCompatActivity() {
 
     @Immutable
     @JvmInline
-    private value class InterstitialAdLoadType(val value: Int) {
+    private value class InterstitialAdLoadType private constructor(val value: Int) {
 
         override fun toString() = "InterstitialAdLoadType." + when (this) {
             LoadOnly -> "LoadOnly"

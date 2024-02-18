@@ -2,6 +2,7 @@ package com.oxygenupdater.ui.update
 
 import android.content.Context
 import android.os.Environment
+import androidx.annotation.VisibleForTesting
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +31,7 @@ fun UpdateScreen(
     navType: NavType,
     windowWidthSize: WindowWidthSizeClass,
     state: RefreshAwareState<UpdateData?>,
-    refresh: () -> Unit,
+    onRefresh: () -> Unit,
     @Suppress("LocalVariableName") _downloadStatus: DownloadStatus,
     failureType: Int?,
     workProgress: WorkProgress?,
@@ -46,13 +47,13 @@ fun UpdateScreen(
     logDownloadError: () -> Unit,
     hideDownloadCompleteNotification: () -> Unit,
     showDownloadFailedNotification: () -> Unit,
-) = PullRefresh(state, { it == null }, refresh) {
+) = PullRefresh(state, { it == null }, onRefresh) {
     val (refreshing, data) = state
     if (data == null) {
         ErrorState(
             navType = navType,
             titleResId = R.string.update_information_error_title,
-            onRefreshClick = refresh,
+            onRefreshClick = onRefresh,
         )
         return@PullRefresh // skip the rest
     }
@@ -178,3 +179,37 @@ private const val TAG = "UpdateScreen"
 
 const val KeyDownloadErrorMessage = "download_error_message"
 const val KeyDownloadErrorResumable = "download_error_resumable"
+
+private const val PreviewChangelogPrefix = """#KB2001_13.1.0.513(EX01)
+##2023-06-10
+
+A system update is available. The OxygenOS 13.1 update brings new Zen Space features, a new TalkBack feature to describe images, and better gaming performance and experience.
+
+"""
+
+private const val PreviewChangelog = """##Personalization
+• Expands Omoji's functionality and library.
+
+##Health
+• Adds a new TalkBack feature that recognizes and announces images in apps and Photos.
+• Adds the new Zen Space app, with two modes, Deep Zen and Light Zen, to help you focus on the present.
+• Improves Simple mode with a new helper widget and quick tutorials on the Home screen.
+
+##Gaming experience
+• Adds the Championship mode to Game Assistant. This mode improves performance while also disabling notifications, calls, and other messages to give you a more immersive gaming experience.
+• Adds a music playback control to Game Assistant, so you can listen to and control music easily while gaming."""
+
+@VisibleForTesting(VisibleForTesting.PACKAGE_PRIVATE)
+val PreviewUpdateData = UpdateData(
+    id = 1,
+    versionNumber = "KB2001_11_F.66",
+    otaVersionNumber = "KB2001_11.F.66_2660_202305041648",
+    changelog = PreviewChangelog,
+    description = PreviewChangelogPrefix + PreviewChangelog,
+    downloadUrl = "https://gauss-componentotacostmanual-in.allawnofs.com/remove-a7779e2dc9b4b40458be6db38b226089/component-ota/23/03/15/4b70c7244ce7411994c97313e8ceb82d.zip",
+    downloadSize = 4777312256,
+    filename = "4b70c7244ce7411994c97313e8ceb82d.zip",
+    md5sum = "0dc48e34ca895ae5653a32ef4daf2933",
+    updateInformationAvailable = true,
+    systemIsUpToDate = true,
+)

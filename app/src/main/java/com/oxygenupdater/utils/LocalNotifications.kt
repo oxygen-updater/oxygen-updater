@@ -81,7 +81,7 @@ object LocalNotifications {
             0,
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(OuScheme + ChildScreen.Guide + "$DownloadedArg=true"),
+                Uri.parse(OuScheme + ChildScreen.Guide.value + "$DownloadedArg=true"),
                 context,
                 MainActivity::class.java
             ),

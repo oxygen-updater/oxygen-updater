@@ -1,11 +1,13 @@
 package com.oxygenupdater.ui.update
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -26,7 +28,7 @@ fun ChangelogContainer(
     showAdvancedModeTip: Boolean,
     getPrefStr: (key: String, default: String) -> String,
     content: (@Composable () -> Unit)? = null,
-) = Column(modifier) {
+) = Column(modifier.testTag(Changelog_ContainerTestTag)) {
     if (isDifferentVersion) {
         val bodySmall = MaterialTheme.typography.bodySmall
         Text(
@@ -40,6 +42,7 @@ fun ChangelogContainer(
             modifier = Modifier
                 .padding(start = 20.dp, end = 16.dp, bottom = 8.dp)
                 .withPlaceholder(refreshing, bodySmall)
+                .testTag(Changelog_DifferentVersionNoticeTestTag)
         )
     }
 
@@ -66,6 +69,18 @@ fun UpdateData.Changelog(
     ) else Text(
         text = stringResource(R.string.update_information_description_not_available),
         style = MaterialTheme.typography.bodyMedium,
-        modifier = if (extraTextPadding) modifierWithPlaceholder then modifierDefaultPaddingTop else modifierWithPlaceholder,
+        modifier = (if (extraTextPadding) modifierWithPlaceholder then modifierDefaultPaddingTop else modifierWithPlaceholder)
+            .testTag(Changelog_PlaceholderTestTag),
     )
 }
+
+private const val TAG = "Changelog"
+
+@VisibleForTesting
+const val Changelog_ContainerTestTag = TAG + "_Container"
+
+@VisibleForTesting
+const val Changelog_DifferentVersionNoticeTestTag = TAG + "_DifferentVersionNotice"
+
+@VisibleForTesting
+const val Changelog_PlaceholderTestTag = TAG + "_Placeholder"

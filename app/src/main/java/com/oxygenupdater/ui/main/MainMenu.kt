@@ -1,7 +1,10 @@
 package com.oxygenupdater.ui.main
 
+import android.annotation.SuppressLint
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
@@ -14,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
@@ -24,13 +28,15 @@ import com.oxygenupdater.ui.common.DropdownMenuItem
 import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
+import com.oxygenupdater.ui.dialogs.PreviewServerMessagesList
 import com.oxygenupdater.ui.dialogs.ServerMessagesSheet
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
 
+@Suppress("UnusedReceiverParameter")
 @Composable
-fun MainMenu(
+fun RowScope.MainMenu(
     serverMessages: List<ServerMessage>,
     showMarkAllRead: Boolean,
     onMarkAllReadClick: () -> Unit,
@@ -46,11 +52,20 @@ fun MainMenu(
     Box {
         // Hide other menu items behind overflow icon
         var showMenu by rememberSaveableState("showMenu", false)
-        IconButton({ showMenu = true }, Modifier.requiredWidth(40.dp)) {
+        IconButton(
+            onClick = { showMenu = true },
+            modifier = Modifier
+                .requiredWidth(40.dp)
+                .testTag(MainMenu_OverflowButtonTestTag)
+        ) {
             Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
         }
 
-        DropdownMenu(showMenu, { showMenu = false }) {
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false },
+            modifier = Modifier.testTag(MainMenu_DropdownMenuTestTag)
+        ) {
             // Mark all articles read
             if (showMarkAllRead) DropdownMenuItem(
                 icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
@@ -75,7 +90,12 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
     if (serverMessages.isEmpty()) return
 
     var showSheet by rememberSaveableState("showServerMessagesSheet", false)
-    IconButton({ showSheet = true }, Modifier.requiredWidth(40.dp)) {
+    IconButton(
+        onClick = { showSheet = true },
+        modifier = Modifier
+            .requiredWidth(40.dp)
+            .testTag(MainMenu_AnnouncementsButtonTestTag)
+    ) {
         Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server))
     }
 
@@ -102,35 +122,24 @@ private fun ContributorMenuItem(
     }
 }
 
+private const val TAG = "MainMenu"
+
+@VisibleForTesting
+const val MainMenu_AnnouncementsButtonTestTag = TAG + "_AnnouncementsButton"
+
+@VisibleForTesting
+const val MainMenu_OverflowButtonTestTag = TAG + "_OverflowButton"
+
+@VisibleForTesting
+const val MainMenu_DropdownMenuTestTag = TAG + "_DropdownMenu"
+
+@SuppressLint("VisibleForTests")
 @PreviewThemes
 @Composable
 fun PreviewMainMenu() = PreviewAppTheme {
     Row {
-        val message = "An unnecessarily long server message, to get an accurate understanding of how long titles are rendered"
         MainMenu(
-            serverMessages = listOf(
-                ServerMessage(
-                    1L,
-                    text = message,
-                    deviceId = null,
-                    updateMethodId = null,
-                    priority = ServerMessage.ServerMessagePriority.LOW,
-                ),
-                ServerMessage(
-                    2L,
-                    text = message,
-                    deviceId = null,
-                    updateMethodId = null,
-                    priority = ServerMessage.ServerMessagePriority.MEDIUM,
-                ),
-                ServerMessage(
-                    3L,
-                    text = message,
-                    deviceId = null,
-                    updateMethodId = null,
-                    priority = ServerMessage.ServerMessagePriority.HIGH,
-                ),
-            ),
+            serverMessages = PreviewServerMessagesList,
             showMarkAllRead = true,
             onMarkAllReadClick = {},
             onContributorEnrollmentChange = {},

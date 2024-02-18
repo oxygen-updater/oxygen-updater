@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.dialogs
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -17,21 +18,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierSemanticsNotSelected
+import com.oxygenupdater.ui.common.modifierSemanticsSelected
 import com.oxygenupdater.ui.theme.LocalTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
-
-private val list = arrayOf(
-    Theme.Light,
-    Theme.Dark,
-    Theme.System,
-    Theme.Auto,
-)
 
 @Composable
 fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
@@ -43,11 +40,18 @@ fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
 
     // Perf: re-use common modifiers to avoid recreating the same object repeatedly
     val iconSpacerSizeModifier = Modifier.size(40.dp) // 24 + 16
-    LazyColumn(Modifier.weight(1f, false)) {
-        items(items = list, key = { it.value }) {
+    LazyColumn(
+        Modifier
+            .weight(1f, false)
+            .testTag(ThemeSheet_LazyColumnTestTag)
+    ) {
+        items(items = Themes, key = { it.value }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.animatedClickable { onClick(it) } then modifierDefaultPadding
+                modifier = Modifier
+                    .animatedClickable { onClick(it) }
+                    .then(modifierDefaultPadding)
+                    .testTag(BottomSheet_ItemRowTestTag)
             ) {
                 val primary = colorScheme.primary
                 val selected = selectedTheme == it
@@ -55,8 +59,8 @@ fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
                     imageVector = Icons.Rounded.Done,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
-                    modifier = Modifier.padding(end = 16.dp)
-                ) else Spacer(iconSpacerSizeModifier)
+                    modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
+                ) else Spacer(iconSpacerSizeModifier then modifierSemanticsNotSelected)
 
                 Column {
                     Text(
@@ -76,6 +80,19 @@ fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
 
     SheetCaption(R.string.theme_additional_note)
 }
+
+@VisibleForTesting
+val Themes = arrayOf(
+    Theme.Light,
+    Theme.Dark,
+    Theme.System,
+    Theme.Auto,
+)
+
+private const val TAG = "ThemeSheet"
+
+@VisibleForTesting
+const val ThemeSheet_LazyColumnTestTag = TAG + "_LazyColumn"
 
 @PreviewThemes
 @Composable

@@ -55,7 +55,7 @@ fun AppTheme(
     }
 }
 
-/** Only for Compose [Preview] use. It wraps around [AppTheme] with suitable default values. */
+/** Only for Compose [Preview] or androidTest use. It wraps around [AppTheme] with suitable default values. */
 @Composable
 fun PreviewAppTheme(content: @Composable () -> Unit) {
     AppTheme(theme = Theme.System, content = { Surface(content = content) })
