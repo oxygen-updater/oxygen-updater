@@ -67,8 +67,10 @@ jobs:
       # Let other tests continue if any matrix job fails
       fail-fast: false
       matrix:
-        # minSdk, targetSdk (ATDs are supported only from 30 — 33)
-        api-level: [ 21, 33 ]
+        # Should ideally be min (21) & target SDK (34), but:
+        # - API 21 always fails with `InstallException: INSTALL_FAILED_DEXOPT`.
+        # - ATDs are supported only from API 30 until 33
+        api-level: [ 22, 33 ]
     env:
       # Used in `reactivecircus/android-emulator-runner` steps. Default:
       # `-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim`.

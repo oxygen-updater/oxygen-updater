@@ -1,4 +1,4 @@
-# Oxygen Updater (Android App) ![][badge-ci] [![latest release][badge-latest-release]][github-ou-releases]
+# Oxygen Updater (Android App) ![Android CI][badge-ci] [![latest release][badge-latest-release]][github-ou-releases]
 
 Skip staged rollout queues and update your OnePlus device ASAP!
 
@@ -67,7 +67,7 @@ You can still view/fork this repository, submit PRs, and/or raise issues. This i
 
 All help is welcome, so if you'd like to contribute to the app's code or translations check out [`CONTRIBUTING.md`][contributing].
 
-[badge-ci]: https://github.com/oxygen-updater/oxygen-updater/workflows/Android%20CI/badge.svg
+[badge-ci]: https://github.com/oxygen-updater/oxygen-updater/actions/workflows/ci.yml/badge.svg
 [badge-latest-release]: https://img.shields.io/badge/release-v6.2.0-%23f50514?logo=github
 
 [contributing]: ./CONTRIBUTING.md
