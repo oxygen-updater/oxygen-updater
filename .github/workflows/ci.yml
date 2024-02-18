@@ -29,6 +29,13 @@ jobs:
       - name: Build debug and run unit tests
         run: ./gradlew assembleDebug testDebug
 
+      # Format: `<branch_or_tag_name>_<sha>` or `<pr_number>/merge_<sha>`
+      - name: Get ref with short sha
+        id: ref-sha-suffix
+        run: |
+          sha_short=$(git rev-parse --short "$GITHUB_SHA")
+          echo "REF_SHA=${GITHUB_REF_NAME}_$sha_short" >> "$GITHUB_OUTPUT"
+
       # Makes it easier for the team to test, if needed
       - name: Upload debug APK to Discord
         # Not sure if it's needed, but just in case: run this step only if it's our own repo
@@ -36,14 +43,14 @@ jobs:
         run: |
           sha_short=$(git rev-parse --short "$GITHUB_SHA")
           file='./app/build/outputs/apk/debug/app-debug.apk'
-          filename="app-debug_$GITHUB_REF_NAME@$sha_short.apk"
-          curl -sS -X POST -F "file=@$file;filename=$filename" ${{ secrets.DISCORD_WEBHOOK_APKS }} > /dev/null || true
+          filename="oxygen-updater-debug_${{ steps.ref-sha-suffix.outputs.REF_SHA }}.apk"
+          curl -sS -X POST -F "file=@$file;filename=\"$filename\"" ${{ secrets.DISCORD_WEBHOOK_APKS }} > /dev/null || true
 
       - name: Upload unit test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: unit-test-results
+          name: test-results_${{ steps.ref-sha-suffix.outputs.REF_SHA }}
           compression-level: 9
           path: |
             app/build/reports/tests/*
@@ -124,7 +131,7 @@ jobs:
           emulator-options: ${{ env.EMULATOR_OPTIONS }}
           script: echo "Generated AVD snapshot for caching"
 
-      - name: Run instrumentation tests [API ${{ matrix.api-level }}; ${{ steps.determine-target.outputs.TARGET }}]
+      - name: Run instrumentation tests (${{ matrix.api-level }}; ${{ steps.determine-target.outputs.TARGET }})
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -140,7 +147,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: androidTest-results
+          # API-TARGET for uniqueness across matrix
+          name: androidTest-results_${{ matrix.api-level }}-${{ steps.determine-target.outputs.TARGET }}
           compression-level: 9
           path: |
             app/build/reports/androidTests/*
