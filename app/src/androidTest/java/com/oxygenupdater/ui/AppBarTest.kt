@@ -122,13 +122,13 @@ class AppBarTest : ComposeBaseTest() {
 
         // First we test for the initial null value of onNavIconClick
         rule[AppBar_IconButtonTestTag].assertDoesNotExist()
-        rule[AppBar_TitleTestTag].assertXPositionExactly(16.dp)
-        rule[AppBar_SubtitleTestTag].assertXPositionExactly(16.dp)
+        rule[AppBar_TitleTestTag, true].assertXPositionExactly(16.dp)
+        rule[AppBar_SubtitleTestTag, true].assertXPositionExactly(16.dp)
 
         // Then for non-null
         onNavIconClick = { trackCallback("onNavIconClick") }
-        rule[AppBar_TitleTestTag].assertXPositionExactly(20.dp)
-        rule[AppBar_SubtitleTestTag].assertXPositionExactly(20.dp)
+        rule[AppBar_TitleTestTag, true].assertXPositionExactly(20.dp)
+        rule[AppBar_SubtitleTestTag, true].assertXPositionExactly(20.dp)
         rule[AppBar_IconButtonTestTag].run {
             assertHeightIsAtLeast(CollapsingAppBarHeight.first)
             assertAndPerformClick()
@@ -136,7 +136,7 @@ class AppBarTest : ComposeBaseTest() {
         }
 
         // First we test for the expanded state
-        rule[AppBar_TitleTestTag].run {
+        rule[AppBar_TitleTestTag, true].run {
             assertHasTextExactly(title)
             fetchSemanticsNode().assertMaxLines(
                 lineHeight = LineHeightForTextStyle.headlineSmall,
@@ -146,7 +146,7 @@ class AppBarTest : ComposeBaseTest() {
 
         // Then for collapsed
         rule[CollapsingAppBarTestTag].performTouchInput { swipeUp() }
-        rule[AppBar_SubtitleTestTag].assertXPositionExactly(56.dp)
+        rule[AppBar_SubtitleTestTag, true].assertXPositionExactly(56.dp)
         rule[AppBar_TitleTestTag, true].fetchSemanticsNode().run {
             assertXPositionExactly(56.dp)
             assertMaxLines(
