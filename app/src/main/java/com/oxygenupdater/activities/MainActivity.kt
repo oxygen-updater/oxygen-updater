@@ -1247,7 +1247,7 @@ class MainActivity : AppCompatActivity() {
      *
      * @see <a href="https://developer.android.com/guide/navigation/design/deep-link#handle">AndroidX Navigation — Handling deep links</a>
      */
-    override fun onNewIntent(intent: Intent?) = super.onNewIntent(intent).also {
+    override fun onNewIntent(intent: Intent) = super.onNewIntent(intent).also {
         checkIntentForExternalArticleUri(intent, false)
 
         try {

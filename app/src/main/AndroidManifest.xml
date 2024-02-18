@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools">
 
 	<!-- Networking permissions for fetching update data -->
@@ -193,6 +194,12 @@
 		<meta-data
 			android:name="com.google.android.gms.version"
 			android:value="@integer/google_play_services_version" />
+
+		<!-- https://issuetracker.google.com/issues/327696048 -->
+		<property
+			android:name="android.adservices.AD_SERVICES_CONFIG"
+			android:resource="@xml/gma_ad_services_config"
+			tools:replace="android:resource" />
 
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"

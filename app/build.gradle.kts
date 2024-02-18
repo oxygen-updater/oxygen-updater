@@ -261,8 +261,11 @@ kotlin {
             // Requires a fresh build to show all outputs
             "-P", "$prefix:metricsDestination=$composeMetrics",
             "-P", "$prefix:reportsDestination=$composeMetrics",
-            // Strong skipping mode from 1.5.4 onwards: https://r.android.com/c/2671135
-            "-P", "$prefix:experimentalStrongSkipping=true",
+            // Introduced in 1.5.4: https://r.android.com/c/2671135,
+            // stabilized in 1.5.13: https://r.android.com/c/3040172
+            "-P", "$prefix:strongSkipping=true",
+            // Introduced in 1.5.9: https://r.android.com/c/2912628
+            "-P", "$prefix:nonSkippingGroupOptimization=true",
         )
     }
 }
