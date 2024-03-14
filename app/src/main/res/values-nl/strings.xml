@@ -67,7 +67,7 @@ Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a h
 	<string name="download_progress_text_one_minute_remaining">Ongeveer een minuut resterend</string>
 	<string name="download_progress_text_seconds_remaining">Enkele seconden resterend</string>
 	<string name="download_progress_text_unknown_time_remaining">Resterende tijd berekenen…</string>
-	<string name="download_progress_text_verifying">100%%, controleren op fouten…</string>
+	<string name="download_progress_text_verifying">100%, controleren op fouten…</string>
 	<string name="download_progress_text_paused">Gepauzeerd…</string>
 
 	<string name="download_verifying">Controleren…</string>
