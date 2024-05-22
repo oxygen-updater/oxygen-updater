@@ -70,11 +70,6 @@ interface ServerApi {
         @Query("language") language: String = currentLanguage,
     ): Response<List<UpdateMethod>>
 
-    @GET("allUpdateMethods")
-    suspend fun fetchAllUpdateMethods(
-        @Query("language") language: String = currentLanguage,
-    ): Response<List<UpdateMethod>>
-
     @GET("news/{deviceId}/{updateMethodId}")
     suspend fun fetchNews(
         @Path("deviceId") deviceId: Long,
@@ -90,6 +85,9 @@ interface ServerApi {
 
     @POST("news-read")
     suspend fun markArticleRead(@Body id: Map<String, Long>): Response<ServerPostResult>
+
+    @POST("osInfoHeartbeat")
+    suspend fun osInfoHeartbeat(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:

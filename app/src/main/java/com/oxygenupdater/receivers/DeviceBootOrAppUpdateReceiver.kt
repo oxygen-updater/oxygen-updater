@@ -8,8 +8,12 @@ import android.os.Handler
 import android.os.Looper
 import com.oxygenupdater.extensions.get
 import com.oxygenupdater.internal.settings.KeyContribute
+import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.utils.ContributorUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import javax.inject.Inject
 
 /**
@@ -27,9 +31,19 @@ class DeviceBootOrAppUpdateReceiver : BroadcastReceiver() {
     @Inject
     lateinit var contributorUtils: ContributorUtils
 
+    @Inject
+    lateinit var serverRepository: ServerRepository
+
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         if (action != Intent.ACTION_BOOT_COMPLETED && action != Intent.ACTION_MY_PACKAGE_REPLACED) return
+
+        @Suppress("DeferredResultUnused")
+        CoroutineScope(Dispatchers.IO).async {
+            // Ping server to track OTA versions (not PII)
+            serverRepository.osInfoHeartbeat(action.substringAfterLast('.'))
+        }
+
         if (!ContributorUtils.isAtLeastQ || !sharedPreferences[KeyContribute, false]) return
 
         Handler(Looper.getMainLooper()).postDelayed({

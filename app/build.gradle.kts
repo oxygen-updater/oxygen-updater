@@ -118,7 +118,7 @@ android {
         // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         release {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.9/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
             buildConfigField(
                 "String[]",
@@ -153,7 +153,7 @@ android {
         // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
         val debug = getByName("debug") {
             buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.8/\"")
+            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.9/\"")
             buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
             buildConfigField(
                 "String[]",

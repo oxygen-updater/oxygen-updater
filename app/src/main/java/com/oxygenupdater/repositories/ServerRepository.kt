@@ -135,8 +135,18 @@ class ServerRepository @Inject constructor(
         serverApi.fetchUpdateMethodsForDevice(deviceId)
     }
 
-    suspend fun fetchAllMethods() = performServerRequest {
-        serverApi.fetchAllUpdateMethods()
+    suspend fun osInfoHeartbeat(fromIntentAction: String) = performServerRequest {
+        serverApi.osInfoHeartbeat(
+            ArrayMap<String, Any>(7).apply {
+                put("fromAction", fromIntentAction)
+                put("otaVersion", SystemVersionProperties.oxygenOSOTAVersion)
+                put("osVersion", SystemVersionProperties.oxygenOSVersion)
+                put("osType", SystemVersionProperties.osType)
+                put("fingerprint", SystemVersionProperties.fingerprint)
+                put("isEuBuild", SystemVersionProperties.isEuBuild)
+                put("appVersion", BuildConfig.VERSION_NAME)
+            }
+        )
     }
 
     suspend fun submitOtaDbRows(rows: List<Map<String, Any?>>) = performServerRequest {
