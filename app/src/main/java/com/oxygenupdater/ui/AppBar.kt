@@ -103,7 +103,7 @@ fun TopAppBar(
 
     // Sets the app bar's height offset to collapse the entire bar's height when content is
     // scrolled.
-    val layoutHeight = heightPx + scrollBehavior.state.heightOffset.toInt()
+    val layoutHeight = (heightPx + scrollBehavior.state.heightOffset.toInt()).coerceAtLeast(0)
     val limit = -heightPx.toFloat()
     SideEffect {
         if (scrollBehavior.state.heightOffsetLimit != limit) scrollBehavior.state.heightOffsetLimit = limit
