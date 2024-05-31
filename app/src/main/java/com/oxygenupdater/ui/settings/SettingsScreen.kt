@@ -306,7 +306,7 @@ private fun Notifications() {
         mutableStateOf(if (runningInPreview) NotifStatus() else NotifUtils.toNotifStatus(context))
     }
 
-    if (!runningInPreview) LifecycleResumeEffect {
+    if (!runningInPreview) LifecycleResumeEffect(context) {
         // Check again in case user changed settings and came back to the app
         notifStatus = NotifUtils.toNotifStatus(context)
         onPauseOrDispose {}
