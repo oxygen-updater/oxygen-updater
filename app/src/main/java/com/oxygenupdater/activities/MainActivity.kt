@@ -110,12 +110,10 @@ import com.oxygenupdater.internal.settings.KeyIgnoreIncorrectDeviceWarnings
 import com.oxygenupdater.internal.settings.KeyIgnoreNotificationPermissionSheet
 import com.oxygenupdater.internal.settings.KeyIgnoreUnsupportedDeviceWarnings
 import com.oxygenupdater.internal.settings.KeySetupDone
-import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.CollapsingAppBar
-import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.TopAppBar
 import com.oxygenupdater.ui.about.AboutScreen
 import com.oxygenupdater.ui.common.BannerAd
@@ -604,16 +602,8 @@ class MainActivity : AppCompatActivity() {
                 ServerStatusDialogs(serverStatus.status, ::openPlayStorePage)
                 ServerStatusBanner(serverStatus, ::openPlayStorePage)
 
-                // NavHost can't preload other composables, so in order to get NewsList's unread count early,
-                // we're using the initial state here itself. State is refreshed only once the user visits that
-                // screen, so it's easy on the server too (no unnecessarily eager requests).
-                // Note: can't use `by` here because it doesn't propagate to [newsListScreen]
-                val newsListState = newsListViewModel.state.collectAsStateWithLifecycle().value
-                LaunchedEffect(Unit) { // run only on init
-                    val unreadCount = newsListViewModel.unreadCount.intValue
-                    Screen.NewsList.badge = if (unreadCount == 0) null else "$unreadCount"
-                }
-
+                // Note: if using `by`, they must be passed lazily, i.e. via a lambda.
+                // Otherwise updated values propagate to children that use them.
                 val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
                 NavHost(
                     navController = navController,
@@ -637,7 +627,6 @@ class MainActivity : AppCompatActivity() {
                     newsListScreen(
                         navType = navType,
                         windowSize = windowSize,
-                        state = newsListState,
                         showAds = { showAds },
                     )
 
@@ -790,7 +779,6 @@ class MainActivity : AppCompatActivity() {
     private fun NavGraphBuilder.newsListScreen(
         navType: NavType,
         windowSize: WindowSizeClass,
-        state: RefreshAwareState<List<Article>>,
         showAds: () -> Boolean,
     ) = composable(
         route = NewsListRoute,
@@ -799,9 +787,6 @@ class MainActivity : AppCompatActivity() {
         ),
     ) {
         LaunchedEffect(Unit) {
-            // Avoid refreshing every time this screen is visited by guessing
-            // if it's the first load (`refreshing` is true only initially)
-            if (state.refreshing) newsListViewModel.refresh()
             if (showAds()) {
                 // Eagerly load an interstitial ad to eventually show when clicking on an item
                 interstitialAdLoadType = InterstitialAdLoadType.LoadOnly
@@ -809,6 +794,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val state by newsListViewModel.state.collectAsStateWithLifecycle()
         NewsListScreen(
             navType = navType,
             windowWidthSize = windowSize.widthSizeClass,

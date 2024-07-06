@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,18 +41,34 @@ class NewsListViewModel @Inject constructor(
     @Suppress("DEPRECATION")
     var unreadCount = mutableIntStateOf(flow.value.count { !it.read })
 
+    init {
+        // We're fetching from server upon init, because we need the updated list to display
+        // the correct unread count badge in MainNavigation.
+        refresh()
+    }
+
     fun refresh() = viewModelScope.launch(Dispatchers.IO) {
         refreshingFlow.value = true
         flow.emit(serverRepository.fetchNews())
         refreshingFlow.value = false
+
+        withContext(Dispatchers.Main) {
+            @Suppress("DEPRECATION")
+            unreadCount.intValue = flow.value.count { !it.read }.also {
+                Screen.NewsList.badge = if (it == 0) null else "$it"
+            }
+        }
     }
 
     fun markAllRead() = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.markAllReadLocally()
         // Propagate to NewsListScreen
         flow.value.forEach { it.readState = true }
-        Screen.NewsList.badge = null
-        unreadCount.intValue = 0
+
+        withContext(Dispatchers.Main) {
+            Screen.NewsList.badge = null
+            unreadCount.intValue = 0
+        }
     }
 
     fun toggleRead(
