@@ -36,7 +36,7 @@ object SystemVersionProperties {
     private const val OnePlus3 = "OnePlus3"
 
     /** Required for workaround #6 */
-    private const val OnePlusPad = "OPD2203"
+    private val OnePlusPadAndPad2 = arrayOf("OPD2203", "OPD2403")
 
     /** Required for workaround #5 */
     private val OnePlus7Series = arrayOf("OnePlus7", "OnePlus7Pro")
@@ -150,8 +150,8 @@ object SystemVersionProperties {
 
             val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (oxygenDeviceName == OnePlusPad) {
-                    // Skip EUEX because that's already supported as OPD2203EEA
+                if (oxygenDeviceName in OnePlusPadAndPad2) {
+                    // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
                     if (pipeline != "EUEX") oxygenDeviceName += pipeline
                 } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
@@ -218,8 +218,8 @@ object SystemVersionProperties {
 
                 val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    if (oxygenDeviceName == OnePlusPad) {
-                        // Skip EUEX because that's already supported as OPD2203EEA
+                    if (oxygenDeviceName in OnePlusPadAndPad2) {
+                        // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
                         if (pipeline != "EUEX") oxygenDeviceName += pipeline
                     } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
