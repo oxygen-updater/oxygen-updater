@@ -1,34 +1,47 @@
 package com.oxygenupdater.internal
 
+import androidx.collection.MutableScatterMap
+import androidx.collection.ScatterMap
+import androidx.collection.emptyScatterMap
 import com.oxygenupdater.utils.logVerbose
 import java.io.File
-import java.math.BigDecimal
-import java.math.RoundingMode
 
-val CpuFrequency = try {
-    val firstCpuFreq = cpuFreq(0)
-    val lastCpuIndex = Runtime.getRuntime().availableProcessors() - 1
-    // Skip if single core
-    (if (lastCpuIndex == 0) firstCpuFreq else {
-        val lastCpuFreq = cpuFreq(lastCpuIndex)
-        // Choose higher frequency of the two
-        if (firstCpuFreq >= lastCpuFreq) firstCpuFreq else lastCpuFreq
-    }).takeIf {
-        it != BigDecimal.ZERO
+private const val TAG = "CpuFrequency"
+private const val PathPrefix = "/sys/devices/system/cpu/cpu"
+private const val CpuInfoMaxFreqPathSuffix = "/cpufreq/cpuinfo_max_freq"
+
+private var _cpuFrequencies: ScatterMap<Float, Int>? = null
+val CpuFrequencies: ScatterMap<Float, Int>
+    get() {
+        if (_cpuFrequencies != null) return _cpuFrequencies!!
+        _cpuFrequencies = try {
+            val numCpus = Runtime.getRuntime().availableProcessors()
+            if (numCpus == 1) cpuFreq(0).let {
+                if (it == 0f) return@let emptyScatterMap()
+                MutableScatterMap<Float, Int>(1).apply { put(it, 1) }
+            } else MutableScatterMap<Float, Int>(numCpus / 2).apply {
+                // Collect & group max frequencies of all CPUs
+                repeat(numCpus) {
+                    val freq = cpuFreq(it)
+                    if (freq == 0f) return@repeat
+                    compute(freq) { _, value -> if (value == null) 1 else value + 1 }
+                }
+            }.let {
+                if (it.isEmpty()) emptyScatterMap() else it
+            }
+        } catch (e: Exception) {
+            logVerbose(TAG, "Could not collect CPU frequencies", e)
+            null
+        }
+        return _cpuFrequencies!!
     }
+
+
+private fun cpuFreq(index: Int) = try {
+    val file = File(PathPrefix + index + CpuInfoMaxFreqPathSuffix)
+    file.readText().trim().ifEmpty { null }?.toLongOrNull()?.div(1_000_000f) ?: 0f
 } catch (e: Exception) {
-    logVerbose("CpuFrequency", "CPU Frequency information is not available", e)
-    null
+    logVerbose(TAG, "CPU Frequency information is not available", e)
+    0f
 }
 
-private const val CpuFreqPathPrefix = "/sys/devices/system/cpu/cpu"
-private const val CpuFreqPathSuffix = "/cpufreq/cpuinfo_max_freq"
-private fun cpuFreq(index: Int) = try {
-    val file = File(CpuFreqPathPrefix + index + CpuFreqPathSuffix)
-    if (file.canRead()) BigDecimal(file.readText().trim()).divide(
-        BigDecimal(1_000_000), 6, RoundingMode.HALF_EVEN
-    ).stripTrailingZeros() else BigDecimal.ZERO
-} catch (e: Exception) {
-    logVerbose("CpuFrequency", "CPU Frequency information is not available", e)
-    BigDecimal.ZERO
-}

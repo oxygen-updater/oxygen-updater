@@ -57,7 +57,7 @@ import coil.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Incremental
-import com.oxygenupdater.internal.CpuFrequency
+import com.oxygenupdater.internal.CpuFrequencies
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
@@ -363,20 +363,38 @@ private fun ColumnScope.DeviceHardwareInfo() {
         },
     )
 
-    if (CpuFrequency != null) {
+    CpuFrequencies.let { cpuFrequencies ->
+        if (cpuFrequencies.isEmpty()) return@let
+
         val locale = currentLocale()
         // Format according to locale (decimal vs comma)
         val formatted = remember(locale) {
-            try {
-                NumberFormat.getInstance(locale).format(CpuFrequency)
-            } catch (e: IllegalArgumentException) {
-                null
+            val instance = NumberFormat.getInstance(locale)
+            var validCount = 0
+            buildString {
+                cpuFrequencies.forEach { frequency, count ->
+                    val formatted = try {
+                        context.getString(
+                            R.string.device_information_gigahertz,
+                            instance.format(frequency).ifEmpty { return@forEach }
+                        )
+                    } catch (e: Exception) {
+                        return@forEach
+                    }
+                    append("• ").append(formatted)
+                    append(" (").append(count).append(')')
+                    appendLine()
+                    validCount++
+                }
+            }.trimEnd().let {
+                // Remove bullet prefix if single line (single-core or multi-core with the same GHz values)
+                if (validCount == 1) it.removePrefix("• ") else it
             }
         }
-        if (formatted != null) Item(
+        if (formatted.isNotEmpty()) Item(
             icon = Icons.Rounded.Speed,
             titleResId = R.string.device_information_cpu_frequency,
-            text = stringResource(R.string.device_information_gigahertz, formatted),
+            text = formatted,
         )
     }
 
