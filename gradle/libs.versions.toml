@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.5.0"
+agp = "8.5.1"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.2"
@@ -32,13 +32,13 @@ compose-compiler = "1.5.14"
 accompanist = "0.34.0" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.9.0"
+activity-compose = "1.9.1"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
-coil-compose = "2.6.0"
+coil-compose = "2.7.0"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
-annotation = "1.8.0"
+annotation = "1.8.1"
 
 # https://developer.android.com/google/play/billing/release-notes
 billing = "7.0.0"
@@ -54,7 +54,7 @@ core-splashscreen = "1.0.1"
 desugar = "2.0.4"
 
 # https://firebase.google.com/support/release-notes/android
-firebase-bom = "33.1.1"
+firebase-bom = "33.1.2"
 
 # https://github.com/google/dagger/releases
 dagger = "2.51.1"
@@ -71,7 +71,7 @@ jacoco = "0.8.12"
 libsu = "6.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-lifecycle = "2.8.3"
+lifecycle = "2.8.4"
 
 # https://github.com/square/moshi/blob/master/CHANGELOG.md
 moshi = "1.15.1"
@@ -91,7 +91,7 @@ play-services-base = "18.5.0"
 # https://developers.google.com/admob/android/rel-notes
 play-services-ads = "23.2.0"
 # https://developers.google.com/admob/android/privacy/release-notes
-ump = "2.2.0"
+ump = "3.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/preference
 preference = "1.2.1"
