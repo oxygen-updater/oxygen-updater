@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.5.1"
+agp = "8.5.2"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.2"
@@ -10,12 +10,12 @@ crashlytics-plugin = "3.0.2"
 google-services-plugin = "4.4.2"
 
 # https://github.com/google/ksp/releases
-ksp = "1.9.24-1.0.20"
+ksp = "1.9.25-1.0.20"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "1.9.24"
+kotlin = "1.9.25"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.8.1"
@@ -25,7 +25,7 @@ compose = "1.6.8" # keep in sync with Kotlin & accompanist version
 compose-m3 = "1.2.1"
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
-compose-compiler = "1.5.14"
+compose-compiler = "1.5.15"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
@@ -38,7 +38,7 @@ activity-compose = "1.9.1"
 coil-compose = "2.7.0"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
-annotation = "1.8.1"
+annotation = "1.8.2"
 
 # https://developer.android.com/google/play/billing/release-notes
 billing = "7.0.0"
@@ -57,7 +57,7 @@ desugar = "2.0.4"
 firebase-bom = "33.1.2"
 
 # https://github.com/google/dagger/releases
-dagger = "2.51.1"
+dagger = "2.52"
 # https://developer.android.com/jetpack/androidx/releases/hilt
 hilt = "1.2.0"
 
@@ -89,7 +89,7 @@ play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
 play-services-base = "18.5.0"
 # https://developers.google.com/admob/android/rel-notes
-play-services-ads = "23.2.0"
+play-services-ads = "23.3.0"
 # https://developers.google.com/admob/android/privacy/release-notes
 ump = "3.0.0"
 
@@ -104,11 +104,11 @@ retrofit = "2.11.0"
 room = "2.6.1"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.9.0"
+work-runtime = "2.9.1"
 
 # https://developer.android.com/jetpack/androidx/releases/test
 test-core = "1.6.1"
-test-runner = "1.6.1"
+test-runner = "1.6.2"
 test-rules = "1.6.1"
 test-ext-truth = "1.6.0"
 test-ext-junit = "1.2.1"
