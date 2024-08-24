@@ -2,6 +2,7 @@ package com.oxygenupdater.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.Color
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
@@ -50,6 +52,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -603,7 +606,7 @@ class MainActivity : AppCompatActivity() {
                 ServerStatusBanner(serverStatus, ::openPlayStorePage)
 
                 // Note: if using `by`, they must be passed lazily, i.e. via a lambda.
-                // Otherwise updated values propagate to children that use them.
+                // Otherwise updated values don't propagate to children that use them.
                 val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
                 NavHost(
                     navController = navController,
@@ -675,9 +678,26 @@ class MainActivity : AppCompatActivity() {
 
                 val showNavBar = isNavTypeBottomBar && isMainScreen
                 if (showAds) {
+                    val orientation = LocalConfiguration.current.orientation
+                    val density = LocalDensity.current.density
                     var adLoaded by rememberSaveableState("adLoaded", false)
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
+                        adWidth = remember(orientation) {
+                            val adWidthPx = if (SDK_INT >= VERSION_CODES.R) {
+                                val metrics = windowManager.currentWindowMetrics
+                                val insets = metrics.windowInsets.getInsets(WindowInsets.Type.systemBars())
+
+                                metrics.bounds.width() - (insets.right + insets.left)
+                            } else resources.displayMetrics.widthPixels
+
+                            /**
+                             * Note: keep in sync with
+                             * [androidx.compose.material3.tokens.NavigationRailTokens.ContainerWidth]
+                             * */
+                            val sideRailWidth = if (orientation == ORIENTATION_LANDSCAPE) 80 + 1 else 0
+                            (adWidthPx / density).toInt() - sideRailWidth
+                        },
                         adListener = adLoadListener { adLoaded = it },
                         onViewUpdate = ::onBannerAdInit,
                         // We draw the activity edge-to-edge, so nav bar padding should be applied only if ad loaded

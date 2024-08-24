@@ -22,7 +22,7 @@ kotlin-coroutines = "1.8.1"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
 compose = "1.6.8" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.2.1"
+compose-m3 = "1.2.1" # update sideRailWidth in MainActivity if changed
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-compiler = "1.5.15"

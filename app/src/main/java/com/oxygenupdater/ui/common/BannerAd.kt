@@ -15,7 +15,6 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.LoadAdError
 import com.oxygenupdater.utils.logDebug
-import java.util.UUID
 
 /**
  * Lays out an [AdView]. Note that [AdView.loadAd] is not called in the factory
@@ -28,6 +27,7 @@ import java.util.UUID
 @Composable
 fun ColumnScope.BannerAd(
     adUnitId: String,
+    adWidth: Int, // dp
     modifier: Modifier = Modifier,
     adListener: AdListener? = null,
     onViewUpdate: (AdView) -> Unit,
@@ -37,9 +37,12 @@ fun ColumnScope.BannerAd(
     factory = { context ->
         AdView(context).apply {
             setAdUnitId(adUnitId)
-            // TODO(compose/bug): size doesn't adjust to screen changes
-            // TODO(compose/bug): FULL_WIDTH is not suitable for use with NavType.SideRail, as that takes up some of the screen's width
-            setAdSize(AdSize(AdSize.FULL_WIDTH, AdSize.AUTO_HEIGHT))
+            /**
+             * TODO(compose/ads): factory block doesn't execute again when [adWidth] changes,
+             *  meaning [AdView.setAdSize] is never updated. Ideally we want it to, and also
+             *  have the ad reloaded for an orientation change.
+             */
+            setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth))
 
             adListener?.let { setAdListener(it) }
         }
@@ -56,8 +59,6 @@ fun loadBannerAd(adView: AdView?) = adView?.loadAd(buildAdRequest {
     // https://developers.google.com/admob/android/banner/collapsible
     addNetworkExtrasBundle(AdMobAdapter::class.java, Bundle().apply {
         putString("collapsible", "bottom")
-        // Prevent subsequent loads to also be collapsible (bad UX)
-        putString("collapsible_request_id", UUID.randomUUID().toString())
     })
 })?.also { logDebug(TAG, "loading") } ?: logDebug(TAG, "adView = null")
 
