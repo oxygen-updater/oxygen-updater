@@ -44,9 +44,19 @@ fun createServerApi(context: Context) = Retrofit.Builder()
 
 fun createDownloadApi() = Retrofit.Builder()
     .baseUrl(ApiBaseUrl).apply {
-        if (BuildConfig.DEBUG) client(
-            // Use a network interceptor to log all requests, even intermediary ones like redirects.
-            OkHttpClient.Builder().addNetworkInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC)).build()
+        client(
+            OkHttpClient.Builder().apply {
+                // Use a network interceptor to log all requests, even intermediary ones like redirects
+                if (BuildConfig.DEBUG) addNetworkInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC)).build()
+
+                // Use an application interceptor to use the platform-default user agent
+                addInterceptor { chain ->
+                    // This is what Android's HttpURLConnectionImpl uses
+                    val default = System.getProperty("http.agent") ?: "Java${System.getProperty("java.version")}"
+
+                    chain.proceed(chain.request().newBuilder().header(UserAgentTag, default).build())
+                }
+            }.build()
         )
     }.build().create<DownloadApi>()
 
