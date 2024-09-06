@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -38,7 +39,6 @@ import com.oxygenupdater.models.Article
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.IconText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
@@ -204,7 +204,7 @@ private fun RefreshAwareWebView(
             if (error == null) onLoadFinished() else onError(error)
         }
 
-        if (showDivider) ItemDivider(modifierDefaultPaddingTop)
+        if (showDivider) HorizontalDivider(modifierDefaultPaddingTop)
     }
 
     // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap.

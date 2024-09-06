@@ -43,6 +43,7 @@ import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material3.Badge
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -108,7 +109,6 @@ import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.DropdownMenuItem
 import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.IconText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
@@ -167,7 +167,7 @@ fun NewsListScreen(
             },
         )
 
-        ItemDivider()
+        HorizontalDivider()
 
         if (onlyUnread && unreadCount == 0) ErrorState(
             navType = navType,
@@ -261,7 +261,6 @@ fun NewsListScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyItemScope.NewsListItem(
     refreshing: Boolean,
@@ -271,7 +270,7 @@ private fun LazyItemScope.NewsListItem(
     onClick: () -> Unit,
 ) = Column(
     Modifier
-        .animateItemPlacement()
+        .animateItem(fadeInSpec = null, fadeOutSpec = null)
         .clickable(!refreshing, onClick = onClick)
         .testTag(NewsListScreen_ItemColumnTestTag)
 ) {
@@ -313,7 +312,6 @@ private fun LazyItemScope.NewsListItem(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun LazyGridItemScope.NewsGridItem(
     refreshing: Boolean,
@@ -323,7 +321,7 @@ private fun LazyGridItemScope.NewsGridItem(
     onClick: () -> Unit,
 ) = Column(
     Modifier
-        .animateItemPlacement()
+        .animateItem(fadeInSpec = null, fadeOutSpec = null)
         .testTag(NewsListScreen_ItemColumnTestTag)
 ) {
     Box(
@@ -535,7 +533,6 @@ private fun NewsImage(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Footer(
     refreshing: Boolean,

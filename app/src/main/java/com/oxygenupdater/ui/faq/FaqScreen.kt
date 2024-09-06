@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,6 @@ import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.IconText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.animatedClickable
@@ -129,7 +129,7 @@ fun FaqItem(
         )
     }
 
-    if (last) Spacer(Modifier.navigationBarsPadding()) else ItemDivider()
+    if (last) Spacer(Modifier.navigationBarsPadding()) else HorizontalDivider()
 }
 
 @VisibleForTesting

@@ -331,7 +331,7 @@ class MainViewModel @Inject constructor(
     }
 
     /**
-     * @throws IntentSender.SendIntentException if a stale [info] is being used (probably, not sure)
+     * @throws IntentSender.SendIntentException if a stale [appUpdateInfo] is being used (probably, not sure)
      */
     @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(

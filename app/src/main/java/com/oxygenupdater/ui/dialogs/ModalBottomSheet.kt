@@ -2,16 +2,14 @@ package com.oxygenupdater.ui.dialogs
 
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -28,12 +26,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewAppTheme
-import com.oxygenupdater.ui.theme.backgroundVariant
 
 /**
  * [hide] is automatically called when user presses back button.
@@ -42,20 +38,15 @@ import com.oxygenupdater.ui.theme.backgroundVariant
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @NonRestartableComposable
-fun ModalBottomSheet(hide: () -> Unit, content: @Composable ColumnScope.(() -> Unit) -> Unit) {
-    val colorScheme = MaterialTheme.colorScheme
-    // TODO(compose/sheet): move common layouts out of *Sheet
-    ModalBottomSheet(
-        onDismissRequest = hide,
-        sheetState = rememberModalBottomSheetState(true),
-        containerColor = colorScheme.backgroundVariant, // match bottom nav bar
-        contentColor = colorScheme.onSurface,
-        windowInsets = WindowInsets.navigationBars, // draw behind status bar only, not navigation
-        modifier = Modifier.testTag(BottomSheetTestTag)
-    ) { content(hide) }
-}
+fun ModalBottomSheet(
+    hide: () -> Unit,
+    content: @Composable ColumnScope.(() -> Unit) -> Unit,
+) = ModalBottomSheet(
+    onDismissRequest = hide,
+    sheetState = rememberModalBottomSheetState(true),
+    modifier = Modifier.testTag(BottomSheetTestTag)
+) { content(hide) }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
 fun SheetHeader(@StringRes titleResId: Int) = Text(
@@ -107,7 +98,7 @@ fun SheetButtons(
 @Composable
 @NonRestartableComposable
 fun SheetCaption(@StringRes captionResId: Int) {
-    ItemDivider()
+    HorizontalDivider()
     Text(
         text = stringResource(captionResId),
         color = MaterialTheme.colorScheme.onSurfaceVariant,

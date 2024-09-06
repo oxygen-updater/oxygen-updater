@@ -17,6 +17,7 @@ import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -41,7 +42,6 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.ExpandCollapse
 import com.oxygenupdater.ui.common.IconText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
@@ -56,7 +56,6 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
-import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.positive
 
 @Composable
@@ -103,12 +102,12 @@ fun UpToDate(
                     modifier = modifierDefaultPadding
                 )
 
-                ItemDivider()
+                HorizontalDivider()
                 DeviceSoftwareInfo(showHeader = false)
                 ConditionalNavBarPadding(navType)
             }
 
-            VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+            VerticalDivider()
 
             ChangelogContainer(
                 refreshing = refreshing,
@@ -154,9 +153,9 @@ fun UpToDate(
             )
         }
 
-        ItemDivider(Modifier.padding(top = 2.dp))
+        HorizontalDivider(Modifier.padding(top = 2.dp))
         DeviceSoftwareInfo(showHeader = false)
-        ItemDivider(modifierDefaultPaddingTop)
+        HorizontalDivider(modifierDefaultPaddingTop)
 
         ExpandableChangelog(
             refreshing = refreshing,
@@ -166,7 +165,7 @@ fun UpToDate(
             getPrefStr = getPrefStr,
         )
 
-        ItemDivider()
+        HorizontalDivider()
         ConditionalNavBarPadding(navType)
     }
 }
@@ -186,7 +185,7 @@ private inline fun AdvancedModeTip(
         ),
         modifier = modifierDefaultPadding
     )
-    ItemDivider()
+    HorizontalDivider()
 }
 
 @Composable

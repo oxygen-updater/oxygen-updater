@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.main
 
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -144,7 +143,6 @@ fun MainNavigationRail(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Suppress("NOTHING_TO_INLINE")
 @Composable
 private inline fun NavigationLabel(label: String) = Text(

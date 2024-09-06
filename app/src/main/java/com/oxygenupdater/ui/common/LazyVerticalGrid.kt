@@ -2,7 +2,6 @@ package com.oxygenupdater.ui.common
 
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
@@ -20,9 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.oxygenupdater.ui.theme.backgroundVariant
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
 fun LazyVerticalGrid(
@@ -45,7 +42,7 @@ fun LazyVerticalGrid(
             modifier = Modifier
                 .clickable(onClick = it.onClick)
                 .borderExceptTop(
-                    color = MaterialTheme.colorScheme.backgroundVariant,
+                    color = MaterialTheme.colorScheme.outlineVariant,
                     ltr = LocalLayoutDirection.current == LayoutDirection.Ltr,
                     drawEnd = (index + 1) % columnCount != 0,
                 )

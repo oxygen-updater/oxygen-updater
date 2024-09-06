@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +39,6 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
 import com.oxygenupdater.ui.common.CheckboxText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.modifierDefaultPadding
@@ -58,7 +58,6 @@ import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
-import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.utils.ContributorUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -97,7 +96,7 @@ fun OnboardingScreen(
         Spacer(Modifier.navigationBarsPadding())
     }
 
-    VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+    VerticalDivider()
 
     Column(Modifier.weight(1f)) {
         Column(
@@ -125,7 +124,7 @@ fun OnboardingScreen(
             )
         }
 
-        ItemDivider()
+        HorizontalDivider()
         Text(
             text = stringResource(R.string.onboarding_disclaimer),
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -172,7 +171,7 @@ fun OnboardingScreen(
         )
     }
 
-    ItemDivider()
+    HorizontalDivider()
     Text(
         text = stringResource(R.string.onboarding_disclaimer),
         color = MaterialTheme.colorScheme.onSurfaceVariant,

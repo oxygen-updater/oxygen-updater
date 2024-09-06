@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,7 +32,6 @@ import com.oxygenupdater.R
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ExpandCollapse
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.RichText
@@ -92,7 +92,7 @@ fun InstallGuideScreen(
                     style = bodyMedium,
                     modifier = modifierDefaultPadding.testTag(InstallGuideScreen_InstructionsTestTag)
                 )
-                ItemDivider()
+                HorizontalDivider()
             }
 
             itemsIndexed(items = list, key = { _, it -> it.id }) { index, it ->
@@ -161,7 +161,7 @@ private fun InstallGuideItem(
         )
     }
 
-    if (last) Spacer(Modifier.navigationBarsPadding()) else ItemDivider()
+    if (last) Spacer(Modifier.navigationBarsPadding()) else HorizontalDivider()
 }
 
 private const val PreviewTitle = "An unnecessarily long guide entry, to get an accurate understanding of how long text is rendered"

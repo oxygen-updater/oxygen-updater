@@ -167,7 +167,6 @@ import com.oxygenupdater.ui.settings.SettingsScreen
 import com.oxygenupdater.ui.settings.SettingsViewModel
 import com.oxygenupdater.ui.settings.adFreeConfig
 import com.oxygenupdater.ui.theme.AppTheme
-import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.light
 import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
 import com.oxygenupdater.ui.update.UpdateInformationViewModel
@@ -529,7 +528,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             AnimatedVisibility(!isNavTypeBottomBar) {
-                VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+                VerticalDivider()
             }
 
             Column {
@@ -837,7 +836,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // TODO(compose/news): handle shared element transition, see `movableContentOf` and `LookaheadScope`
+                // TODO(compose/news): handle shared element transition, see
+                //  https://developer.android.com/develop/ui/compose/animation/shared-elements
                 navController.navigateWithDefaults(
                     route = ChildScreen.Article.value + it,
                     isChildRoute = true,

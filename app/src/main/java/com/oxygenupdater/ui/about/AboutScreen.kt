@@ -11,6 +11,7 @@ import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -30,7 +31,6 @@ import com.oxygenupdater.icons.GitHub
 import com.oxygenupdater.icons.Patreon
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.GridItem
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
@@ -80,7 +80,7 @@ fun AboutScreen(
     )
 
     Spacer(Modifier.weight(1f))
-    ItemDivider(Modifier.padding(vertical = 16.dp))
+    HorizontalDivider(Modifier.padding(vertical = 16.dp))
 
     Text(
         text = stringResource(R.string.about_third_party_app_notice),

@@ -7,7 +7,6 @@ import android.provider.Settings
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
@@ -36,6 +35,7 @@ import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material.icons.rounded.PhoneAndroid
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TrackChanges
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -78,7 +78,6 @@ import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
@@ -97,7 +96,6 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
-import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotifUtils
@@ -128,7 +126,7 @@ fun SettingsScreen(
         .testTag(SettingsScreenTestTag)
 ) {
     // region Support us
-    Column(Modifier.background(MaterialTheme.colorScheme.backgroundVariant)) {
+    Column(Modifier.background(MaterialTheme.colorScheme.surfaceContainer)) {
         Header(R.string.preference_header_support)
 
         val config = adFreeConfig ?: previousAdFreeConfig
@@ -511,7 +509,7 @@ fun SettingsSwitchItem(
 @Composable
 @NonRestartableComposable
 private fun Header(@StringRes textResId: Int) {
-    ItemDivider()
+    HorizontalDivider()
     Text(
         text = stringResource(textResId),
         color = MaterialTheme.colorScheme.primary,
@@ -520,7 +518,6 @@ private fun Header(@StringRes textResId: Int) {
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @NonRestartableComposable
 fun SettingsItem(

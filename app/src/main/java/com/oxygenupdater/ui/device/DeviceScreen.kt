@@ -31,6 +31,7 @@ import androidx.compose.material.icons.rounded.PermDeviceInformation
 import androidx.compose.material.icons.rounded.Security
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.TripOrigin
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -62,7 +63,6 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
@@ -106,7 +106,7 @@ fun DeviceScreen(
         DeviceMismatchStatus(status = deviceMismatchStatus)
 
         DeviceSoftwareInfo()
-        ItemDivider(modifierDefaultPaddingTop)
+        HorizontalDivider(modifierDefaultPaddingTop)
         DeviceHardwareInfo()
 
         ConditionalNavBarPadding(navType)
@@ -123,7 +123,7 @@ fun DeviceScreen(
     )
 
     DeviceSoftwareInfo()
-    ItemDivider(modifierDefaultPaddingTop)
+    HorizontalDivider(modifierDefaultPaddingTop)
     DeviceHardwareInfo()
 
     ConditionalNavBarPadding(navType)
@@ -150,7 +150,7 @@ private fun DeviceHeaderCompact(
         }
     }
 
-    ItemDivider()
+    HorizontalDivider()
     DeviceMismatchStatus(status = deviceMismatchStatus)
 }
 
@@ -232,7 +232,7 @@ fun DeviceMismatchStatus(status: Triple<Boolean, String, String>?) {
         modifier = modifierDefaultPadding.testTag(DeviceScreen_MismatchTextTestTag)
     )
 
-    ItemDivider()
+    HorizontalDivider()
 }
 
 @Composable

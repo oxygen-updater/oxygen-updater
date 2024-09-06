@@ -63,9 +63,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LifecycleResumeEffect
@@ -83,7 +82,6 @@ import com.oxygenupdater.internal.settings.KeyDevice
 import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.animatedClickable
@@ -100,7 +98,6 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewGetPrefStr
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
-import com.oxygenupdater.ui.theme.backgroundVariant
 import com.oxygenupdater.ui.theme.positive
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.DownloadFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.NotDownloading
@@ -143,7 +140,7 @@ fun UpdateAvailable(
         ConditionalNavBarPadding(navType)
     }
 
-    VerticalDivider(color = MaterialTheme.colorScheme.backgroundVariant)
+    VerticalDivider()
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -193,7 +190,7 @@ fun UpdateAvailable(
         )
 
         Spacer(Modifier.weight(1f))
-        ItemDivider()
+        HorizontalDivider()
 
         ExtraInfo(
             refreshing = refreshing,
@@ -269,7 +266,7 @@ private fun ExtraInfo(
             modifier = modifierDefaultPaddingHorizontal
         )
 
-        ItemDivider()
+        HorizontalDivider()
     }
 
     // Filename & MD5
@@ -317,14 +314,13 @@ private fun DownloadLink(url: String) {
     val text = stringResource(R.string.update_information_download_link, url)
     val length = text.length
 
-    @OptIn(ExperimentalTextApi::class)
     @Suppress("NAME_SHADOWING")
     RichText(
         text = text,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         type = RichTextType.Custom,
         modifier = modifierDefaultPaddingHorizontal
-    ) { text, contentColor, urlColor ->
+    ) { text, contentColor, urlColor, onUrlClick ->
         AnnotatedString.Builder(length).apply {
             // Global
             append(text)
@@ -333,7 +329,8 @@ private fun DownloadLink(url: String) {
 
             // For download URL
             val start = text.indexOf('\n') + 1
-            addUrlAnnotation(UrlAnnotation(url), start, length)
+            val annotation = LinkAnnotation.Url(url, linkInteractionListener = onUrlClick)
+            addLink(annotation, start, length)
             addStyle(SpanStyle(color = urlColor, textDecoration = TextDecoration.Underline), start, length)
         }.toAnnotatedString()
     }
@@ -462,7 +459,7 @@ private fun DownloadButton(
     Box(
         modifierMaxWidth
             .alpha(if (refreshing) 0.38f else 1f)
-            .background(colorScheme.backgroundVariant)
+            .background(colorScheme.surfaceContainer)
             .animatedClickable(!refreshing && onDownloadClick != null, onDownloadClick)
             .testTag(UpdateAvailableContent_DownloadButtonTestTag)
     ) {
@@ -531,7 +528,13 @@ private fun DownloadButton(
             }
         }
 
-        if (navType == NavType.BottomBar) HorizontalDivider(Modifier.align(Alignment.BottomStart))
+        if (navType == NavType.BottomBar) HorizontalDivider(
+            // Bottom bar uses `surfaceContainer`, and dividers use `outlineVariant`.
+            // However, in AppTheme.kt, we overrode `outlineVariant = surfaceContainer`.
+            // `surfaceVariant` as this divider's color separates the download button from the bottom bar.
+            color = colorScheme.surfaceVariant,
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
     }
 }
 

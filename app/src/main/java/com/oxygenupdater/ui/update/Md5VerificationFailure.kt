@@ -29,7 +29,7 @@ value class Md5VerificationFailure private constructor(val value: Int) {
         /**
          * Happens in one of the following cases:
          * * the device doesn't have a provider for the MD5 algorithm,
-         * * downloaded file doesn't exist, even after retrying every 2 seconds upto 5 times
+         * * downloaded file doesn't exist, even after retrying every 2 seconds up to 5 times
          */
         val NullCalculatedChecksum = Md5VerificationFailure(2)
 

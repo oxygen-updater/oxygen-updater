@@ -48,7 +48,12 @@ fun AppTheme(
 
     CompositionLocalProvider(LocalTheme providesDefault theme) {
         MaterialTheme(
-            colorScheme = colorScheme,
+            colorScheme = colorScheme.run {
+                copy(
+                    // Used by dividers; modified to reduce contrast
+                    outlineVariant = surfaceContainer,
+                )
+            },
             typography = remember { appTypography() },
             content = content,
         )

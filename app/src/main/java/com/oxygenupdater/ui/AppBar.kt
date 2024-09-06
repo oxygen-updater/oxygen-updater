@@ -10,7 +10,6 @@ import androidx.compose.animation.core.AnimationState
 import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.animation.core.animateTo
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.gestures.Orientation
@@ -35,6 +34,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -76,13 +76,11 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.LogoNotification
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.rememberSaveableState
-import com.oxygenupdater.ui.theme.backgroundVariant
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
@@ -212,9 +210,9 @@ fun TopAppBar(
         }
     }
 
-    // Perf: `if (showDivider) ItemDivider()` causes recomposition; we avoid that by "hiding" via graphicsLayer alpha
+    // Perf: `if (showDivider) HorizontalDivider()` causes recomposition; we avoid that by "hiding" via graphicsLayer alpha
     val dividerAlpha = if (collapsedFraction != 1f) 1f else 0f
-    ItemDivider(Modifier.graphicsLayer { alpha = dividerAlpha })
+    HorizontalDivider(Modifier.graphicsLayer { alpha = dividerAlpha })
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -259,14 +257,14 @@ fun CollapsingAppBar(
         BoxWithConstraints(layoutIdImageModifier) {
             val size = Modifier.size(maxWidth, height)
             val colorScheme = MaterialTheme.colorScheme
-            val hover = colorScheme.backgroundVariant.copy(alpha = 0.75f)
+            val hover = colorScheme.surfaceContainer.copy(alpha = 0.75f)
             val surface = colorScheme.surface
             // Lerp from 75% opacity hover to 100% opacity surface
             val background = lerp(hover, surface, collapsedFraction)
 
             image(size)
             Box(size.background(background))
-            if (height != maxHeight) ItemDivider(Modifier.align(Alignment.BottomStart))
+            if (height != maxHeight) HorizontalDivider(Modifier.align(Alignment.BottomStart))
         }
 
         if (onNavIconClick != null) IconButton(

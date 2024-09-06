@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.sp
 @JvmInline
 value class LineHeightForTextStyle private constructor(val value: TextUnit) {
 
-    override fun toString() = "LineHeightForStyle." + when (this) {
+    override fun toString() = "LineHeightForTextStyle." + when (this) {
         displayLarge -> "displayLarge"
         displayMedium -> "displayMedium"
         displaySmall -> "displaySmall"

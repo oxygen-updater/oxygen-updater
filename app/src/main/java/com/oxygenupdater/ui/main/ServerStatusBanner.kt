@@ -3,6 +3,7 @@ package com.oxygenupdater.ui.main
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -17,7 +18,6 @@ import com.oxygenupdater.icons.Warning
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.ServerStatus.Status
 import com.oxygenupdater.ui.common.IconText
-import com.oxygenupdater.ui.common.ItemDivider
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -38,7 +38,7 @@ fun ServerStatusBanner(
                 .clickable(onClick = openPlayStorePage)
                 .then(modifierDefaultPadding)
         )
-        return ItemDivider()
+        return HorizontalDivider()
     }
 
     val status = serverStatus.status
@@ -64,7 +64,7 @@ fun ServerStatusBanner(
         style = MaterialTheme.typography.bodyMedium.copy(color = color),
         modifier = modifierMaxWidth then modifierDefaultPadding
     )
-    ItemDivider()
+    HorizontalDivider()
 }
 
 @PreviewThemes

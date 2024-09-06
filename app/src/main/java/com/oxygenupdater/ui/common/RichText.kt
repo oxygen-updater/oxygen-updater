@@ -12,10 +12,10 @@ import android.text.style.SuperscriptSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
 import androidx.annotation.VisibleForTesting
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -26,10 +26,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.LinkInteractionListener
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -49,7 +49,6 @@ import com.oxygenupdater.ui.theme.DefaultTextStyle
  * @param type Defaults to [RichTextType.Html]
  * @param custom required when [type] is [RichTextType.Custom]
  */
-@OptIn(ExperimentalTextApi::class)
 @Composable
 fun RichText(
     text: String?,
@@ -58,22 +57,45 @@ fun RichText(
     textIndent: TextIndent? = null,
     contentColor: Color = LocalContentColor.current,
     type: RichTextType = RichTextType.Html,
-    custom: ((text: String, contentColor: Color, urlColor: Color) -> AnnotatedString)? = null,
+    custom: ((
+        text: String,
+        contentColor: Color,
+        urlColor: Color,
+        onUrlClick: LinkInteractionListener,
+    ) -> AnnotatedString)? = null,
 ) = SelectionContainer(modifier.testTag(RichText_ContainerTestTag)) {
     @Suppress("NAME_SHADOWING")
     val text = text ?: ""
 
     val urlColor = MaterialTheme.colorScheme.primary
     val typography = MaterialTheme.typography
+
+    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
+    val onUrlClick = remember(context, uriHandler) {
+        LinkInteractionListener {
+            val url = (it as? LinkAnnotation.Url)?.url ?: return@LinkInteractionListener
+            // Note: while this can be simplified to `context.openUrl(url)`, we must
+            // use LocalUriHandler because its behaviour can be tested.
+            try {
+                uriHandler.openUri(url)
+            } catch (e: ActivityNotFoundException) {
+                // Fallback: copy to clipboard instead
+                context.copyToClipboard(url)
+            }
+        }
+    }
+
     val annotated = remember(contentColor, urlColor, text, type) {
         when (type) {
-            RichTextType.Custom -> custom?.invoke(text, contentColor, urlColor) ?: AnnotatedString(text)
+            RichTextType.Custom -> custom?.invoke(text, contentColor, urlColor, onUrlClick) ?: AnnotatedString(text)
             RichTextType.Html -> htmlToAnnotatedString(
                 html = text,
                 typography = typography,
                 contentColor = contentColor,
                 urlColor = urlColor,
                 textIndent = textIndent,
+                onUrlClick = onUrlClick,
             )
 
             RichTextType.Markdown -> changelogToAnnotatedString(
@@ -81,29 +103,17 @@ fun RichText(
                 typography = typography,
                 contentColor = contentColor,
                 urlColor = urlColor,
+                onUrlClick = onUrlClick,
             )
 
             else -> TODO("invalid rich text type: $type")
         }
     }
 
-    val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
-    ClickableText(
+    Text(
         text = annotated,
         style = DefaultTextStyle.run { if (textAlign != null) copy(textAlign = textAlign) else this },
-    ) {
-        val range = annotated.getUrlAnnotations(it, it).firstOrNull()
-        val url = range?.item?.url ?: return@ClickableText
-        // Note: while this can be simplified to `context.openUrl(url)`, we must
-        // use LocalUriHandler because its behaviour can be tested.
-        try {
-            uriHandler.openUri(url)
-        } catch (e: ActivityNotFoundException) {
-            // Fallback: copy to clipboard instead
-            context.copyToClipboard(url)
-        }
-    }
+    )
 }
 
 /**
@@ -118,7 +128,6 @@ fun RichText(
  *
  * @see <a href="https://developer.android.com/guide/topics/resources/string-resource#StylingWithHTML">Supported HTML elements in Android string resources</string>
  */
-@OptIn(ExperimentalTextApi::class)
 private fun htmlToAnnotatedString(
     html: String,
     typography: Typography,
@@ -128,6 +137,7 @@ private fun htmlToAnnotatedString(
     paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle().run {
         if (textIndent != null) copy(textIndent = textIndent) else this
     },
+    onUrlClick: LinkInteractionListener,
 ) = buildAnnotatedString {
     val fontSize = spanStyle.fontSize
     val spanned = HtmlCompat.fromHtml(
@@ -159,7 +169,8 @@ private fun htmlToAnnotatedString(
                 color = urlColor,
                 textDecoration = TextDecoration.Underline,
             ).also {
-                addUrlAnnotation(UrlAnnotation(span.url), start, end)
+                val annotation = LinkAnnotation.Url(span.url, linkInteractionListener = onUrlClick)
+                addLink(annotation, start, end)
             }
 
             is BackgroundColorSpan -> SpanStyle(background = Color(span.backgroundColor))
@@ -181,13 +192,13 @@ private fun htmlToAnnotatedString(
  * Converts an update's changelog string (rudimentary Markdown) into an [AnnotatedString],
  * keeping minimal formatting with preference to performance.
  */
-@OptIn(ExperimentalTextApi::class)
 private fun changelogToAnnotatedString(
     changelog: String,
     typography: Typography,
     contentColor: Color, urlColor: Color,
     spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
     paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle(),
+    onUrlClick: LinkInteractionListener,
 ) = try {
     buildAnnotatedString {
         if (changelog.isBlank()) return AnnotatedString("")
@@ -243,7 +254,8 @@ private fun changelogToAnnotatedString(
                         lineToAppend = line.substring(linkTitleStart + 1, linkTitleEnd)
                         val linkAddress = line.substring(linkAddressIndices)
                         val start = length // current length of AnnotatedString, before appending this line
-                        addUrlAnnotation(UrlAnnotation(linkAddress), start, start + lineToAppend.length)
+                        val annotation = LinkAnnotation.Url(linkAddress, linkInteractionListener = onUrlClick)
+                        addLink(annotation, start, start + lineToAppend.length)
                         SpanStyle(
                             color = urlColor,
                             textDecoration = TextDecoration.Underline,

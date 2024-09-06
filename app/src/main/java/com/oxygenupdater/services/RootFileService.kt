@@ -135,8 +135,8 @@ class RootFileService : RootService() {
         private const val ObserverMask = FileObserver.CLOSE_WRITE or FileObserver.DELETE_SELF
 
         /**
-         *  [Log] must be used directly, because [com.oxygenupdater.utils.Logger]
-         *  requires Koin to be initialized
+         *  [Log] must be used directly, because [com.oxygenupdater.utils.logDebug]
+         *  requires Hilt to be initialized
          */
         private fun log(message: String, t: Throwable? = null) {
             if (BuildConfig.DEBUG) Log.d(TAG, message, t)
