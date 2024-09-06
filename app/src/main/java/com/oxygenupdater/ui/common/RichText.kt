@@ -1,16 +1,6 @@
 package com.oxygenupdater.ui.common
 
 import android.content.ActivityNotFoundException
-import android.graphics.Typeface
-import android.text.style.BackgroundColorSpan
-import android.text.style.ForegroundColorSpan
-import android.text.style.RelativeSizeSpan
-import android.text.style.StrikethroughSpan
-import android.text.style.StyleSpan
-import android.text.style.SubscriptSpan
-import android.text.style.SuperscriptSpan
-import android.text.style.URLSpan
-import android.text.style.UnderlineSpan
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.LocalContentColor
@@ -28,23 +18,18 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.LinkInteractionListener
-import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.BaselineShift
+import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
-import androidx.core.text.HtmlCompat
-import androidx.core.text.getSpans
 import com.oxygenupdater.extensions.copyToClipboard
-import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.ui.theme.DefaultTextStyle
 
-// TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
 /**
  * @param type Defaults to [RichTextType.Html]
  * @param custom required when [type] is [RichTextType.Custom]
@@ -86,107 +71,73 @@ fun RichText(
         }
     }
 
-    val annotated = remember(contentColor, urlColor, text, type) {
-        when (type) {
-            RichTextType.Custom -> custom?.invoke(text, contentColor, urlColor, onUrlClick) ?: AnnotatedString(text)
-            RichTextType.Html -> htmlToAnnotatedString(
+    if (type == RichTextType.Html) Text(
+        text = remember(text, urlColor, onUrlClick) {
+            htmlToAnnotatedString(
                 html = text,
-                typography = typography,
-                contentColor = contentColor,
                 urlColor = urlColor,
-                textIndent = textIndent,
                 onUrlClick = onUrlClick,
             )
+        },
+        style = typography.bodyMedium.merge(
+            color = contentColor,
+            textAlign = textAlign ?: TextAlign.Unspecified,
+            textIndent = textIndent,
+        ),
+    ) else {
+        val annotated = when (type) {
+            RichTextType.Custom -> if (custom != null) remember(text, contentColor, urlColor, onUrlClick) {
+                custom.invoke(text, contentColor, urlColor, onUrlClick)
+            } else remember(text) { AnnotatedString(text) }
 
-            RichTextType.Markdown -> changelogToAnnotatedString(
-                changelog = text,
-                typography = typography,
-                contentColor = contentColor,
-                urlColor = urlColor,
-                onUrlClick = onUrlClick,
-            )
+            RichTextType.Markdown -> remember(text, typography, contentColor, urlColor, onUrlClick) {
+                changelogToAnnotatedString(
+                    changelog = text,
+                    typography = typography,
+                    contentColor = contentColor,
+                    urlColor = urlColor,
+                    onUrlClick = onUrlClick,
+                )
+            }
 
             else -> TODO("invalid rich text type: $type")
         }
-    }
 
-    Text(
-        text = annotated,
-        style = DefaultTextStyle.run { if (textAlign != null) copy(textAlign = textAlign) else this },
-    )
+        Text(
+            text = annotated,
+            style = DefaultTextStyle.merge(
+                textAlign = textAlign ?: TextAlign.Unspecified,
+            ),
+        )
+    }
 }
 
 /**
- * Converts an HTML string into an [AnnotatedString], keeping as much formatting as possible.
+ * Passthrough to [AnnotatedString.Companion.fromHtml].
  *
  * Note: doesn't support styling for some spans, they'll be rendered as-is:
  * - [android.text.style.AbsoluteSizeSpan]
  * - [android.text.style.BulletSpan]
  * - [android.text.style.QuoteSpan]
- * - [android.text.style.TypefaceSpan]
  * - etc.
  *
  * @see <a href="https://developer.android.com/guide/topics/resources/string-resource#StylingWithHTML">Supported HTML elements in Android string resources</string>
  */
-private fun htmlToAnnotatedString(
+@Suppress("NOTHING_TO_INLINE")
+private inline fun htmlToAnnotatedString(
     html: String,
-    typography: Typography,
-    contentColor: Color, urlColor: Color,
-    textIndent: TextIndent?,
-    spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
-    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle().run {
-        if (textIndent != null) copy(textIndent = textIndent) else this
-    },
+    urlColor: Color,
     onUrlClick: LinkInteractionListener,
-) = buildAnnotatedString {
-    val fontSize = spanStyle.fontSize
-    val spanned = HtmlCompat.fromHtml(
-        html.replace("\n", "<br>"),
-        HtmlCompat.FROM_HTML_MODE_COMPACT
-    )
-
-    append(spanned.toString())
-
-    // Can be done now itself, because this AnnotatedString is already full
-    val length = spanned.length
-    addStyle(spanStyle, 0, length)
-    addStyle(paragraphStyle, 0, length)
-
-    spanned.getSpans<Any>().forEach { span ->
-        val start = spanned.getSpanStart(span)
-        val end = spanned.getSpanEnd(span)
-        if (start == NotSet || end == NotSet) return@forEach
-
-        when (span) {
-            is StyleSpan -> when (span.style) {
-                Typeface.BOLD -> SpanStyle(fontWeight = FontWeight.Bold)
-                Typeface.ITALIC -> SpanStyle(fontStyle = FontStyle.Italic)
-                Typeface.BOLD_ITALIC -> SpanStyle(fontWeight = FontWeight.Bold, fontStyle = FontStyle.Italic)
-                else -> null
-            }
-
-            is URLSpan -> SpanStyle(
-                color = urlColor,
-                textDecoration = TextDecoration.Underline,
-            ).also {
-                val annotation = LinkAnnotation.Url(span.url, linkInteractionListener = onUrlClick)
-                addLink(annotation, start, end)
-            }
-
-            is BackgroundColorSpan -> SpanStyle(background = Color(span.backgroundColor))
-            is ForegroundColorSpan -> SpanStyle(color = Color(span.foregroundColor))
-            is RelativeSizeSpan -> SpanStyle(fontSize = fontSize * span.sizeChange)
-            is StrikethroughSpan -> SpanStyle(textDecoration = TextDecoration.LineThrough)
-            is SubscriptSpan -> SpanStyle(fontSize = fontSize * .8, baselineShift = BaselineShift.Subscript)
-            is SuperscriptSpan -> SpanStyle(fontSize = fontSize * .8, baselineShift = BaselineShift.Superscript)
-            is UnderlineSpan -> SpanStyle(textDecoration = TextDecoration.Underline)
-
-            else -> null
-        }?.let {
-            addStyle(it, start, end)
-        }
-    }
-}
+) = AnnotatedString.fromHtml(
+    htmlString = html.replace("\n", "<br>"),
+    linkStyles = TextLinkStyles(
+        style = SpanStyle(
+            color = urlColor,
+            textDecoration = TextDecoration.Underline,
+        ),
+    ),
+    linkInteractionListener = onUrlClick,
+)
 
 /**
  * Converts an update's changelog string (rudimentary Markdown) into an [AnnotatedString],
@@ -195,102 +146,107 @@ private fun htmlToAnnotatedString(
 private fun changelogToAnnotatedString(
     changelog: String,
     typography: Typography,
-    contentColor: Color, urlColor: Color,
-    spanStyle: SpanStyle = typography.bodyMedium.toSpanStyle().copy(color = contentColor),
-    paragraphStyle: ParagraphStyle = typography.bodyMedium.toParagraphStyle(),
+    contentColor: Color,
+    urlColor: Color,
     onUrlClick: LinkInteractionListener,
-) = try {
-    buildAnnotatedString {
-        if (changelog.isBlank()) return AnnotatedString("")
+): AnnotatedString {
+    val bodyMedium = typography.bodyMedium
+    val spanStyle = bodyMedium.toSpanStyle().copy(color = contentColor)
+    val paragraphStyle = bodyMedium.toParagraphStyle()
 
-        changelog.lineSequence().forEach { line ->
-            var heading = false
-            var lineToAppend = line
-            var paraStyleToApply = paragraphStyle
-            val spanStyleToApply = when {
-                // Heading 1 => App's headlineSmall typography (24sp; Google Sans Medium)
-                // Note that lines that are likely version numbers are skipped, since they'll be displayed elsewhere
-                H1.containsMatchIn(line) -> if (line.startsWith(OsVersionLineHeading)) return@forEach
-                else typography.headlineSmall.toSpanStyle().also {
-                    heading = true
-                    lineToAppend = line.replace(H1, "$1")
-                }
-                // Heading 2 => App's titleMedium (16sp; Google Sans Medium)
-                H2.containsMatchIn(line) -> typography.titleMedium.toSpanStyle().also {
-                    heading = true
-                    lineToAppend = line.replace(H2, "$1")
-                }
-                // Heading 3 => App's bodyMedium but bold
-                H3.containsMatchIn(line) -> spanStyle.copy(fontWeight = FontWeight.Bold).also {
-                    heading = true
-                    lineToAppend = line.replace(H3, "")
-                }
-                // List item => App's bodyMedium with bullet margins on wrap
-                LI.containsMatchIn(line) -> spanStyle.also {
-                    lineToAppend = line.replace(LI, "•")
-                    // Quirky method to add an approximate margin to bullet lines when they wrap
-                    paraStyleToApply = paragraphStyle.copy(textIndent = ListItemTextIndent)
-                }
+    return try {
+        buildAnnotatedString {
+            if (changelog.isBlank()) return AnnotatedString("")
 
-                else -> {
-                    // Links
-                    val urlStyle = line.indexOf('[').let { linkTitleStart ->
-                        if (linkTitleStart < 0) return@let null
-                        val linkTitleEnd = line.indexOf(']', linkTitleStart + 1)
-                        if (linkTitleEnd < 0) return@let null
-
-                        val linkAddressIndices = line.indexOf('(', linkTitleEnd + 1).let paren@{ start ->
-                            if (start < 0) return@paren null
-                            val end = line.indexOf(')', start + 1)
-                            if (end < 0) return@paren null
-                            start + 1 until end
-                        } ?: line.indexOf('{', linkTitleEnd + 1).let brace@{ start ->
-                            if (start < 0) return@let null
-                            val end = line.indexOf('}', start + 1)
-                            if (end < 0) return@let null
-                            start + 1 until end
-                        }
-
-                        lineToAppend = line.substring(linkTitleStart + 1, linkTitleEnd)
-                        val linkAddress = line.substring(linkAddressIndices)
-                        val start = length // current length of AnnotatedString, before appending this line
-                        val annotation = LinkAnnotation.Url(linkAddress, linkInteractionListener = onUrlClick)
-                        addLink(annotation, start, start + lineToAppend.length)
-                        SpanStyle(
-                            color = urlColor,
-                            textDecoration = TextDecoration.Underline,
-                        )
+            changelog.lineSequence().forEach { line ->
+                var heading = false
+                var lineToAppend = line
+                var paraStyleToApply = paragraphStyle
+                val spanStyleToApply = when {
+                    // Heading 1 => App's headlineSmall typography (24sp; Google Sans Medium)
+                    // Note that lines that are likely version numbers are skipped, since they'll be displayed elsewhere
+                    H1.containsMatchIn(line) -> if (line.startsWith(OsVersionLineHeading)) return@forEach
+                    else typography.headlineSmall.toSpanStyle().also {
+                        heading = true
+                        lineToAppend = line.replace(H1, "$1")
+                    }
+                    // Heading 2 => App's titleMedium (16sp; Google Sans Medium)
+                    H2.containsMatchIn(line) -> typography.titleMedium.toSpanStyle().also {
+                        heading = true
+                        lineToAppend = line.replace(H2, "$1")
+                    }
+                    // Heading 3 => App's bodyMedium but bold
+                    H3.containsMatchIn(line) -> spanStyle.copy(fontWeight = FontWeight.Bold).also {
+                        heading = true
+                        lineToAppend = line.replace(H3, "")
+                    }
+                    // List item => App's bodyMedium with bullet margins on wrap
+                    LI.containsMatchIn(line) -> spanStyle.also {
+                        lineToAppend = line.replace(LI, "•")
+                        // Quirky method to add an approximate margin to bullet lines when they wrap
+                        paraStyleToApply = paragraphStyle.copy(textIndent = ListItemTextIndent)
                     }
 
-                    // If this line isn't a link, treat as normal text: [lineToAppend] defaults to [line]
-                    urlStyle
-                }
-            }?.run {
-                // Override default with the supplied [contentColor]
-                if (color == Color.Unspecified) copy(color = contentColor.run {
-                    if (heading) copy(alpha = 1f) else this
-                }) else this
-            } ?: spanStyle
+                    else -> {
+                        // Links
+                        val urlStyle = line.indexOf('[').let { linkTitleStart ->
+                            if (linkTitleStart < 0) return@let null
+                            val linkTitleEnd = line.indexOf(']', linkTitleStart + 1)
+                            if (linkTitleEnd < 0) return@let null
 
-            append(lineToAppend)
+                            val linkAddressIndices = line.indexOf('(', linkTitleEnd + 1).let paren@{ start ->
+                                if (start < 0) return@paren null
+                                val end = line.indexOf(')', start + 1)
+                                if (end < 0) return@paren null
+                                start + 1 until end
+                            } ?: line.indexOf('{', linkTitleEnd + 1).let brace@{ start ->
+                                if (start < 0) return@let null
+                                val end = line.indexOf('}', start + 1)
+                                if (end < 0) return@let null
+                                start + 1 until end
+                            }
 
-            val end = length // current length of AnnotatedString after appending line
-            val start = end - lineToAppend.length
-            // SpanStyles override each other, so even though it would be more efficient, we can't
-            // add the default one globally (via `addStyle(spanStyle, 0, length)`) after the loop
-            addStyle(spanStyleToApply, start, end)
+                            lineToAppend = line.substring(linkTitleStart + 1, linkTitleEnd)
+                            val linkAddress = line.substring(linkAddressIndices)
+                            val start = length // current length of AnnotatedString, before appending this line
+                            val annotation = LinkAnnotation.Url(linkAddress, linkInteractionListener = onUrlClick)
+                            addLink(annotation, start, start + lineToAppend.length)
+                            SpanStyle(
+                                color = urlColor,
+                                textDecoration = TextDecoration.Underline,
+                            )
+                        }
 
-            // ParagraphStyles can't:
-            // - Overlap: add a global para style, and for specific LI items in between
-            // - Be applied out-of-order: add for LI item first (above), then for other text afterwards
-            //   (e.g. outside the loop by keeping track of LI indices already dealt with)
-            // So, we need to apply para styles on each iteration. By default, it's set to
-            // [paragraphStyle] but can be overridden in the LI item section above.
-            addStyle(paraStyleToApply, start, end)
+                        // If this line isn't a link, treat as normal text: [lineToAppend] defaults to [line]
+                        urlStyle
+                    }
+                }?.run {
+                    // Override default with the supplied [contentColor]
+                    if (color == Color.Unspecified) copy(color = contentColor.run {
+                        if (heading) copy(alpha = 1f) else this
+                    }) else this
+                } ?: spanStyle
+
+                append(lineToAppend)
+
+                val end = length // current length of AnnotatedString after appending line
+                val start = end - lineToAppend.length
+                // SpanStyles override each other, so even though it would be more efficient, we can't
+                // add the default one globally (via `addStyle(spanStyle, 0, length)`) after the loop
+                addStyle(spanStyleToApply, start, end)
+
+                // ParagraphStyles can't:
+                // - Overlap: add a global para style, and for specific LI items in between
+                // - Be applied out-of-order: add for LI item first (above), then for other text afterwards
+                //   (e.g. outside the loop by keeping track of LI indices already dealt with)
+                // So, we need to apply para styles on each iteration. By default, it's set to
+                // [paragraphStyle] but can be overridden in the LI item section above.
+                addStyle(paraStyleToApply, start, end)
+            }
         }
+    } catch (e: Exception) {
+        AnnotatedString(changelog, spanStyle, paragraphStyle)
     }
-} catch (e: Exception) {
-    AnnotatedString(changelog, spanStyle, paragraphStyle)
 }
 
 @Immutable
