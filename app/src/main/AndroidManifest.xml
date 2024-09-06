@@ -30,13 +30,14 @@
 		android:name=".OxygenUpdater"
 		android:allowBackup="false"
 		android:dataExtractionRules="@xml/data_extraction_rules"
+		android:enableOnBackInvokedCallback="true"
 		android:fullBackupContent="false"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
 		android:requestLegacyExternalStorage="true"
 		android:supportsRtl="true"
 		android:theme="@style/Theme.OxygenUpdater.DayNight"
-		tools:targetApi="s">
+		tools:targetApi="tiramisu">
 
 		<meta-data
 			android:name="asset_statements"
