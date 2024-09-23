@@ -45,10 +45,12 @@
 	<string name="download_error_server">Une erreur serveur s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger.</string>
 
 	<string name="download_error_internal">Malheureusement, une erreur critique s\'est produite pendant le téléchargement de la mise à jour. Veuillez réessayer de la télécharger. Si le problème persiste, veuillez contacter le développeur pour obtenir de l\'assistance.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Il semble que le lien de téléchargement soit invalide. L\'erreur provient soit de notre part lorsque nous avons ajouté les données de mise à jour, soit le fichier a été supprimé des serveurs de OnePlus. Une notification nous a été envoyée, nous vérifierons cela dès que possible.
-
-Si vous souhaitez en savoir plus, n\'hésitez pas à nous contacter par <a href="mailto:support@oxygenupdater.com">email</a> ou par <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
-	<string name="download_error_could_not_move_temp_file">"Le fichier de mise à jour a été téléchargé, mais n\'a pas pu être déplacé automatiquement. Ouvrez le gestionnaire de fichiers, allez à \"%1$s\" et déplacez manuellement le fichier de mise à jour à la racine du stockage interne."</string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Cela peut signifier que OnePlus a supprimé le fichier de mise à jour OTA de ses serveurs."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"La plupart du temps, cela indique un problème avec les serveurs OTA de OnePlus, mais il peut également s'agir de votre connexion Internet."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Notre équipe en a été informée et nous allons nous pencher sur la question dès que possible. Comme notre application se télécharge directement à partir des serveurs OTA officiels, nous ne pouvons pas faire grand-chose. Vous pouvez toujours accéder au fichier de mise à jour OTA en utilisant un VPN ou une autre connexion Internet. N\'hésitez pas à <a href="mailto:support@oxygenupdater.com">nous envoyer un e-mail</a> ou à rejoindre notre <a href="https://discord.gg/5TXdhKJ">serveur Discord</a>.]]></string>
+	<string name="download_error_could_not_move_temp_file">"Le fichier de mise à jour a été téléchargé, mais n'a pas pu être déplacé automatiquement. Ouvrez le gestionnaire de fichiers, allez à \"%1$s\" et déplacez manuellement le fichier de mise à jour à la racine du stockage interne."</string>
 	<string name="download_error_retry">"Réessayer"</string>
 	<string name="download_error_resume">"Reprendre"</string>
 	<string name="download_error_storage">"Espace de stockage insuffisant sur votre appareil pour télécharger la mise à jour. Veuillez libérer de l'espace et réessayer."</string>

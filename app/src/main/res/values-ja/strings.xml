@@ -45,9 +45,11 @@
 	<string name="download_error_corrupt">ダウンロード済アップデートファイルは損傷しています。再度ダウンロードして下さい。</string>
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[ダウンロードリンクが無効なようです。私たちがアップデートデータを追加中にミスしたか、OnePlus がアップデートファイルを削除した可能性があります。チームに通知され、早急に調査します。
-
-追加で知りたい場合、お気軽に<a href="mailto:support@oxygenupdater.com">メール</a>または<a href="https://discord.gg/5TXdhKJ">Discord サーバー</a>で連絡してください。]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"これは、OnePlusがサーバーからOTAアップデートファイルを削除したことを意味する可能性があります。"</string>
+	<string name="download_error_unsuccessful_explanation_generic">"ほとんどの場合、これはOnePlusのOTAサーバーに問題があることを示していますが、インターネット接続に問題がある可能性もあります。"</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[私たちのチームには報告済みで、早急に調査します。私たちのアプリは公式OTAサーバーから直接ダウンロードするため、私たちにできることはあまりありません。VPNまたは別のインターネット接続を使用することで、OTAアップデートファイルにアクセスできる可能性があります。 <a href="mailto:support@oxygenupdater.com">メール</a>または<a href="https://discord.gg/5TXdhKJ">Discordサーバー</a>にお気軽にご参加ください。]]></string>
 	<string name="download_error_could_not_move_temp_file">ファイルはダウンロードされましたが、正しいディレクトリに移動することができませんでした。ファイルマネージャを開き、\"%1$s\" に移動し手動で内部ストレージの最上部ディレクトリにファイルを移動します。</string>
 
 	<string name="download_error_retry">再試行</string>

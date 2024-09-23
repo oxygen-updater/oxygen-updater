@@ -42,9 +42,11 @@
 	<string name="download_error_corrupt">"Файл обновления поврежден! Попробуйте загрузить обновление еще раз."</string>
 	<string name="download_error_server">Ошибка сервера при загрузке обновления. Пожалуйста, попробуйте загрузить обновление еще раз.</string>
 	<string name="download_error_internal">К сожалению, при загрузке обновления произошла техническая ошибка. Попробуйте скачать его еще раз. Если это повторяется, обратитесь за помощью к разработчику этого приложения.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Похоже, ссылка для скачивания недействительна. Это может означать, что мы допустили ошибку при добавлении данных обновления, или OnePlus извлек/удалил файл обновления со своих серверов. Уведомление было отправлено команде, и мы рассмотрим его как можно скорее.
-
-Если вы хотите узнать больше, не стесняйтесь обращаться к нам через <a href="mailto:support@oxygenupdater.com">email</a> или на наш <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Это может означать, что OnePlus удалила файл обновления OTA со своих серверов."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Чаще всего это указывает на проблемы с серверами OnePlus OTA, однако это может быть связано и с вашим интернет-соединением."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Наша команда была уведомлена, и мы рассмотрим этот вопрос как можно скорее. Обратите внимание, что поскольку наше приложение загружается напрямую с официальных серверов OTA, мы мало что можем сделать. Возможно, вы сможете получить доступ к файлу OTA-обновления, используя VPN или другое интернет-соединение. Не стесняйтесь <a href="mailto:support@oxygenupdater.com">написать нам</a> или присоединиться к нашему <a href="https://discord.gg/5TXdhKJ">дискорд-серверу</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Файл был загружен, но не может быть перемещен в правильный каталог. Откройте файловый менеджер, перейдите к \"%1$s\" и вручную переместите файл в самый верхний каталог внутреннего хранилища.</string>
 	<string name="download_error_retry">"Попробовать снова"</string>
 	<string name="download_error_resume">"Продолжить"</string>

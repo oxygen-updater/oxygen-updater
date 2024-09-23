@@ -299,8 +299,8 @@ class DownloadWorker @AssistedInject constructor(
 
                         when {
                             isNetworkError(e) -> {
-                                if (retryCount <= 5) {
-                                    logDebug(TAG, "Network error encountered. Retrying ($retryCount/5)")
+                                if (retryCount <= MaxRetries) {
+                                    logDebug(TAG, "Network error encountered. Retrying ($retryCount/$MaxRetries)")
                                     Result.retry()
                                 } else {
                                     showDownloadFailedNotification(
@@ -312,12 +312,14 @@ class DownloadWorker @AssistedInject constructor(
 
                                     Result.failure(Data.Builder().apply {
                                         putInt(WorkDataDownloadFailureType, DownloadFailure.ServerError.value)
+                                        putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
+                                        putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
                                     }.build())
                                 }
                             }
 
-                            e is IOException -> if (retryCount <= 5) {
-                                logDebug(TAG, "IOException encountered. Retrying ($retryCount/5)")
+                            e is IOException -> if (retryCount <= MaxRetries) {
+                                logDebug(TAG, "IOException encountered. Retrying ($retryCount/$MaxRetries)")
                                 Result.retry()
                             } else {
                                 showDownloadFailedNotification(
@@ -624,5 +626,6 @@ class DownloadWorker @AssistedInject constructor(
          * Currently: `1 MB`
          */
         private const val ThresholdBytesDifferenceWithBackend = 1048576L
+        private const val MaxRetries = 3
     }
 }

@@ -56,7 +56,16 @@ const val DownloadErrorSheet_RichContentTestTag = TAG + "_RichContent"
 fun PreviewDownloadErrorUnsuccessfulResponseSheet() = PreviewModalBottomSheet {
     DownloadErrorSheet(
         hide = {},
-        params = DownloadErrorParams(stringResource(R.string.download_error_unsuccessful_response), RichTextType.Html)
+        params = DownloadErrorParams(
+            text = stringResource(
+                R.string.download_error_unsuccessful_http_code_message, 404, "Not Found",
+            ) + stringResource(
+                R.string.download_error_unsuccessful_explanation_file_removed
+            ) + "\n\n" + stringResource(
+                R.string.download_error_unsuccessful_suffix
+            ),
+            type = RichTextType.Html,
+        )
     )
 }
 

@@ -44,9 +44,11 @@
 	<string name="download_error_corrupt">下載的檔案已毀損！請嘗試重新下載</string>
 	<string name="download_error_server">下載更新時伺服器發生錯誤，請嘗試重新下載更新。</string>
 	<string name="download_error_internal">抱歉，下載更新時發生了技術問題，請嘗試再次下載。如果這種情況不斷發生，請聯絡此應用程式開發者以取得協助。</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[似乎下載連結無法使用。這可能是因為我們在取得更新訊息的時候出了點問題，也可能是 OnePlus 已經將該檔案從他們的伺服器移除了。本應用程式已經向開發者傳送了一則訊息，我們將盡快處理。
-
-如果您還想了解更多，請透過 <a href="mailto:support@oxygenupdater.com"> mail </a> 或者我們的 <a href="https://discord.gg/5TXdhKJ">Discord 伺服器</a>來聯絡我們。]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"這可能表示 OnePlus 從他們的伺服器移除了 OTA 更新檔案。"</string>
+	<string name="download_error_unsuccessful_explanation_generic">"大多數情況下，這表示 OnePlus OTA 伺服器出現問題；但也可能是您的網際網路連線問題。"</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[我們的團隊已收到通知，並將盡快調查此事。請注意，由於我們的應用程式直接從官方 OTA 伺服器下載，因此我們能做的不多。您可能仍可透過 VPN 或其他網際網路連線存取 OTA 更新檔案。請隨時<a href="mailto:support@oxygenupdater.com">寄信給我們</a>或加入我們的<a href="https://discord.gg/5TXdhKJ">Discord伺服器</a>。]]></string>
 	<string name="download_error_could_not_move_temp_file">更新檔案已下載，但無法移動到正確的目錄。請打開您的檔案管理器，轉到 \"%1$s\"，然後手動將檔案移動到內部儲存空間。</string>
 
 	<string name="download_error_retry">重試</string>

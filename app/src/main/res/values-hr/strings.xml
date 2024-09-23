@@ -299,10 +299,11 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 
 	<!-- Internal error when downloading. Never a connection error! -->
 	<string name="download_error_internal">"Nažalost došlo je do tehničkih problema tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte kreatora ove aplikacije za pomoć."</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"To može značiti da je OnePlus uklonio OTA datoteku ažuriranja sa svojih poslužitelja."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Većinu vremena to ukazuje na problem s OnePlus OTA poslužiteljima; međutim, to može biti i vaša internetska veza."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Naš tim je obaviješten i mi ćemo ovo razmotriti što prije. Imajte na umu da, budući da se naša aplikacija preuzima izravno sa službenih OTA poslužitelja, ne možemo puno učiniti. Možda ćete i dalje moći pristupiti datoteci OTA ažuriranja pomoću VPN-a ili druge internetske veze. Slobodno nam pošaljite <a href="mailto:support@oxygenupdater.com">e-poruku</a> ili se pridružite našem <a href="https://discord.gg/5TXdhKJ">poslužitelju Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<!-- Resume a paused download -->

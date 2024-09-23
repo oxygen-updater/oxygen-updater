@@ -44,9 +44,11 @@
 	<string name="download_error_corrupt">קובץ ההורדה נפגע! אנא נסה להוריד שנית.</string>
 	<string name="download_error_server">אירעה שגיאת שרת בזמן הורדת העדכון. אנא נסה להוריד שנית את העדכון</string>
 	<string name="download_error_internal">למרבה הצער, אירעה שגיאה טכנית במהלך הורדת העדכון. אנא נסה להוריד שנית. אם הודעה זאת ממשיכה להופיע, אנא צור קשר עם מפתחי האפליקציה עבור תמיכה טכנית</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[נראה כי קישור ההורדה שגוי. דבר זה עלול לומר שנעשתה טעות בזמן הוספת נתוני העדכון או שOnePlus הוציאה/ הסירה את קובץ העדכון מהשרתים שלהם. התראה נשלחה אל צוות המפתחים, וייטופל באופן מיידי.
-
-אם ברצונך לדעת עוד, הינך מוזמן ליצור איתנו קשר דרך כתובת המייל: support@oxygenupdater.com או דרך שרת הDiscord שלנו:https://discord.gg/5TXdhKJ</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"המשמעות עשויה להיות ש-OnePlus הסירה את קובץ עדכון ה-OTA מהשרתים שלהם."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"לרוב, זה מצביע על בעיה בשרתי OnePlus OTA; עם זאת, זה יכול להיות גם חיבור האינטרנט שלך."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[הצוות שלנו קיבל הודעה, ואנו נבדוק זאת בהקדם האפשרי. שימו לב שמכיוון שהאפליקציה שלנו מורידה ישירות משרתי OTA רשמיים, אין הרבה מה לעשות. ייתכן שעדיין תוכל לגשת לקובץ עדכון OTA באמצעות VPN או חיבור אינטרנט אחר. אל תהסס לשלוח לנו <a href="mailto:support@oxygenupdater.com">אימייל</a> או להצטרף ל<a href="https://discord.gg/5TXdhKJ">שרת הדיסקורד</a> שלנו.]]></string>
 	<string name="download_error_could_not_move_temp_file">קובץ העדכון ירד בהצלחה, אך לא היה ניתן להעביר אותו אל המיקום המדוייק. אנא השתמש בסייר קבצים, נווט אל \"%1$s\" והעבר את הקובץ אל התיקייה העליונה ביותר באחסון פנימי</string>
 
 	<string name="download_error_retry">נסה שוב</string>

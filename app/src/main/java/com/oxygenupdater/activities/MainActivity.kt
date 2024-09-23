@@ -185,6 +185,8 @@ import com.oxygenupdater.viewmodels.BillingViewModel
 import com.oxygenupdater.viewmodels.MainViewModel
 import com.oxygenupdater.workers.WorkDataDownloadBytesDone
 import com.oxygenupdater.workers.WorkDataDownloadEta
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraHttpCode
+import com.oxygenupdater.workers.WorkDataDownloadFailureExtraHttpMessage
 import com.oxygenupdater.workers.WorkDataDownloadFailureType
 import com.oxygenupdater.workers.WorkDataDownloadProgress
 import com.oxygenupdater.workers.WorkDataDownloadTotalBytes
@@ -751,7 +753,7 @@ class MainActivity : AppCompatActivity() {
 
         val outputData = workInfo?.outputData
         val progress = workInfo?.progress
-        val failureType = outputData?.getInt(WorkDataDownloadFailureType, NotSet)
+        val failureType = outputData?.getInt(WorkDataDownloadFailureType, NotSet) ?: NotSet
         UpdateScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
@@ -763,6 +765,13 @@ class MainActivity : AppCompatActivity() {
             },
             _downloadStatus = downloadStatus,
             failureType = failureType,
+            httpFailureCodeAndMessage = {
+                outputData?.let {
+                    val code = it.getInt(WorkDataDownloadFailureExtraHttpCode, NotSet)
+                    val message = it.getString(WorkDataDownloadFailureExtraHttpMessage)
+                    if (code != NotSet && !message.isNullOrBlank()) code to message else null
+                }
+            },
             workProgress = if (progress == null) null else remember(progress) {
                 WorkProgress(
                     bytesDone = progress.getLong(WorkDataDownloadBytesDone, NotSetL),

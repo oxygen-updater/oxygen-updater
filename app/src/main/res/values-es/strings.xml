@@ -50,10 +50,11 @@
 	<string name="download_error_corrupt">¡El archivo de la actualización descargado está dañado! Por favor, intenta descargarlo de nuevo.</string>
 	<string name="download_error_server">Ha ocurrido un error en el servidor mientras se descargaba la actualización. Por favor, intenta descargar la actualización de nuevo.</string>
 	<string name="download_error_internal">Desafortunadamente, un error técnico ha ocurrido mientras se descargaba la actualización. Intenta descargarla de nuevo. Si el error no desaparece, por favor contacta con el desarrollador de esta app para obtener asistencia.</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Esto puede significar que OnePlus ha eliminado el archivo de actualización OTA de sus servidores."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"La mayoría de las veces, esto indica un problema con los servidores de OnePlus OTA; sin embargo, también podría ser su conexión a Internet."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Nuestro equipo ha sido notificado y nos ocuparemos de ello lo antes posible. Ten en cuenta que, dado que nuestra aplicación se descarga directamente de los servidores OTA oficiales, no podemos hacer mucho. Es posible que puedas acceder al archivo de actualización de la OTA utilizando una VPN o una conexión a Internet diferente. No dude en <a href="mailto:support@oxygenupdater.com">escribirnos</a> o unirse a nuestro <a href="https://discord.gg/5TXdhKJ">servidor Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">Reintentar</string>

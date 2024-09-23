@@ -44,9 +44,11 @@
 	<string name="download_error_corrupt">Stažený aktualizační soubor je poškozen! Zkuste jej prosím stáhnout znovu.</string>
 	<string name="download_error_server">Při stahování aktualizace došlo k chybě serveru. Zkuste prosím stáhnout aktualizaci znovu.</string>
 	<string name="download_error_internal">Při stahování aktualizace bohužel došlo k technické chybě. Zkuste ji stáhnout znovu. Pokud k tomu dochází i nadále, kontaktujte prosím vývojáře této aplikace a požádejte o pomoc.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Zdá se, že odkaz ke stažení je neplatný. To může znamenat, že jsme při přidávání aktualizačních dat udělali chybu, nebo společnost OnePlus stáhla/odstranila aktualizační soubor ze svých serverů. Oznámení bylo odesláno týmu a my se na to co nejdříve podíváme.
-
-Pokud se chcete dozvědět více, neváhejte nás kontaktovat buď prostřednictvím <a href="mailto:support@oxygenupdater.com">e-mailu</a> nebo na našem <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"To může znamenat, že společnost OnePlus odstranila soubor s aktualizací OTA ze svých serverů."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Většinou to znamená problém se servery OTA společnosti OnePlus; může to však být také vaše internetové připojení."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Náš tým byl informován a co nejdříve se na to podíváme. Upozorňujeme, že vzhledem k tomu, že naše aplikace stahuje přímo z oficiálních serverů OTA, nemůžeme s tím nic moc dělat. K souboru s aktualizací OTA můžete mít stále přístup pomocí sítě VPN nebo jiného internetového připojení. Neváhejte a <a href="mailto:support@oxygenupdater.com">napište nám</a> nebo se připojte k našemu <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Soubor byl stažen, ale nepodařilo se jej přesunout do správného adresáře. Otevřete správce souborů, přejděte na \"%1$s\" a ručně přesuňte soubor do nejvyššího adresáře interního úložiště.</string>
 
 	<string name="download_error_retry">Zkusit znovu</string>

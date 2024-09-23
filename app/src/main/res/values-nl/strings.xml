@@ -45,9 +45,11 @@
 	<string name="download_error_corrupt">De gedownloade update is beschadigd! Probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Het lijkt erop dat de download link niet geldig is. Dit komt omdat we een fout gemaakt hebben met het toevoegen van de update, of omdat OnePlus de update heeft teruggetrokken van hun servers. Er is een notificatie verzonden naar het team, en we zullen er zo snel mogelijk naar kijken.
-
-Als je hier meer over wil weten, voel je dan vrij om ons te contacteren via <a href="mailto:support@oxygenupdater.com">email</a> of op onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Dit kan betekenen dat OnePlus het OTA-updatebestand van hun servers heeft verwijderd."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Meestal duidt zo'n fout op een probleem met de OnePlus OTA-servers, maar het kan ook je internetverbinding zijn."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Ons team is op de hoogte gesteld en we zullen hier zo snel mogelijk naar kijken. Omdat onze app rechtstreeks downloadt van officiële OTA-servers, kunnen we niet veel doen. Mogelijk kun je nog steeds toegang krijgen tot het OTA-updatebestand door een VPN of een andere internetverbinding te gebruiken. Stuur ons een e-mail op <a href="mailto:support@oxygenupdater.com">email</a> of word lid van onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Het bestand is gedownload, maar kon niet worden verplaatst naar de juiste map. Open een bestandsbeheerder, navigeer naar \"%1$s\" en verplaats handmatig het bestand naar de meest bovenliggende map van het interne geheugen.</string>
 	<string name="download_error_retry">Opnieuw</string>
 	<string name="download_error_resume">Hervatten</string>

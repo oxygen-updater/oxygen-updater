@@ -46,9 +46,11 @@
 	<string name="download_error_corrupt">Den nedlastede oppdateringsfilen er skadet! Prøv å laste ned den igjen.</string>
 	<string name="download_error_server">Det oppsto en serverfeil under nedlasting av oppdateringen. Prøv å laste ned oppdateringen igjen.</string>
 	<string name="download_error_internal">Dessverre skjedde det en teknisk feil under nedlasting av oppdateringen. Prøv å laste den ned igjen. Hvis dette fortsetter å skje, kan du kontakte utvikleren av denne appen for å få hjelp.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Det ser ut til at nedlastingslenken er ugyldig. Dette kan enten bety at vi gjorde en feil mens vi la til oppdateringsdata, eller at OnePlus har trukket eller fjernet oppdateringsfilen fra serverne deres. Det er sendt en melding til teamet, og vi vil undersøke denne ASAP.
-
-Hvis du ønsker å vite mer, ta gjerne kontakt med oss enten via <a href="mailto:support@oxygenupdater.com">e-post</a>eller på vår <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Dette kan bety at OnePlus har fjernet OTA-oppdateringsfilen fra serverne sine."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Som oftest indikerer dette et problem med OnePlus OTA-servere, men det kan også være internettforbindelsen din."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Teamet vårt har blitt varslet, og vi vil se på dette så snart som mulig. Merk at siden appen vår lastes ned direkte fra offisielle OTA-servere, er det ikke mye vi kan gjøre. Du kan fortsatt få tilgang til OTA-oppdateringsfilen ved å bruke et VPN eller en annen internettforbindelse. Send oss gjerne en <a href="mailto:support@oxygenupdater.com">epost</a> eller bli med på vår <a href="https://discord.gg/5TXdhKJ">Discord-server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Filen er lastet ned, men kan ikke flyttes til riktig katalog. Åpne en filbehandling, naviger til \"%1$s\" og flytt filen manuelt til den øverste katalogen med intern lagring</string>
 
 	<string name="download_error_retry">Prøv igjen</string>

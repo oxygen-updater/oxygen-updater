@@ -44,9 +44,11 @@
 	<string name="download_error_corrupt">The downloaded update file is damaged! Please try downloading it again.</string>
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[It seems that the download link is invalid. This could either mean we made a mistake while adding update data, or OnePlus has pulled/removed the update file from their servers. A notification has been sent to the team, and we\'ll look into this ASAP.
-
-If you\'d like to know more, feel free to contact us either via <a href="mailto:support@oxygenupdater.com">email</a> or on our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"This may mean that OnePlus removed the OTA update file from their servers."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Most of the time, this indicates an issue with OnePlus OTA servers; however, it could also be your internet connection."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Our team has been notified, and we\'ll look into this ASAP. Note that because our app downloads directly from official OTA servers, there\'s not much we can do. You may still be able to access the OTA update file by using a VPN or a different internet connection. Feel free to <a href="mailto:support@oxygenupdater.com">email us</a> or join our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">The file has been downloaded, but couldn\'t be moved to the correct directory. Open a file manager, navigate to \"%1$s\" and manually move the file to the topmost directory of internal storage.</string>
 
 	<string name="download_error_retry">Retry</string>

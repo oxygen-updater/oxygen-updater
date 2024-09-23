@@ -32,6 +32,8 @@ import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationComplete
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.VerificationFailed
 import com.oxygenupdater.ui.update.DownloadStatus.Companion.Verifying
 import java.io.IOException
+import java.net.HttpURLConnection.HTTP_GONE
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
 import java.util.UUID
 
 @Immutable
@@ -47,7 +49,8 @@ data class DownloadButtonConfig(
 @Composable
 fun downloadButtonConfig(
     downloadSize: Long,
-    failureType: Int?,
+    failureType: Int,
+    httpFailureCodeAndMessage: () -> Pair<Int, String>?,
     workProgress: WorkProgress?,
     downloadStatus: DownloadStatus,
     downloadAction: (DownloadAction) -> Unit,
@@ -166,22 +169,36 @@ fun downloadButtonConfig(
             previousProgress = null
             previousProgressText = null
 
-            if (failureType != null && failureType != NotSet) when (failureType) {
+            if (failureType != NotSet) when (failureType) {
                 DownloadFailure.ServerError.value,
                 DownloadFailure.ConnectionError.value,
                 -> setDownloadErrorDialogParams(DownloadErrorParams(
-                    stringResource(R.string.download_error_server),
+                    stringResource(R.string.download_error_unsuccessful_explanation_generic),
                     resumable = failureType == DownloadFailure.ConnectionError.value
                 ) { resumable ->
                     if (!resumable) downloadAction(DownloadAction.Delete)
                     enqueueIfSpaceAvailable()
                 })
 
-                DownloadFailure.UnsuccessfulResponse.value -> setDownloadErrorDialogParams(
-                    DownloadErrorParams(
-                        stringResource(R.string.download_error_unsuccessful_response), RichTextType.Html
+                DownloadFailure.UnsuccessfulResponse.value -> {
+                    val prefix = httpFailureCodeAndMessage()?.let { (code, message) ->
+                        val codeAndMessage = stringResource(
+                            R.string.download_error_unsuccessful_http_code_message, code, message,
+                        )
+                        val explanation = stringResource(
+                            if (code == HTTP_NOT_FOUND || code == HTTP_GONE) {
+                                R.string.download_error_unsuccessful_explanation_file_removed
+                            } else R.string.download_error_unsuccessful_explanation_generic
+                        )
+                        codeAndMessage + explanation + "\n\n"
+                    } ?: ""
+
+                    setDownloadErrorDialogParams(
+                        DownloadErrorParams(
+                            text = prefix + stringResource(R.string.download_error_unsuccessful_suffix),
+                            type = RichTextType.Html,
+                        )
                     )
-                ).also {
                     LaunchedEffect(Unit) { logDownloadError() }
                 }
 

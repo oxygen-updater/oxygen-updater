@@ -112,7 +112,8 @@ fun UpdateAvailable(
     refreshing: Boolean,
     updateData: UpdateData,
     downloadStatus: DownloadStatus,
-    failureType: Int?,
+    failureType: Int,
+    httpFailureCodeAndMessage: () -> Pair<Int, String>?,
     workProgress: WorkProgress?,
     forceDownloadErrorDialog: Boolean,
     getPrefStr: (key: String, default: String) -> String,
@@ -155,6 +156,7 @@ fun UpdateAvailable(
             refreshing = refreshing,
             downloadSize = updateData.downloadSize,
             failureType = failureType,
+            httpFailureCodeAndMessage = httpFailureCodeAndMessage,
             workProgress = workProgress,
             downloadStatus = downloadStatus,
             forceDownloadErrorDialog = forceDownloadErrorDialog,
@@ -206,6 +208,7 @@ fun UpdateAvailable(
         refreshing = refreshing,
         downloadSize = updateData.downloadSize,
         failureType = failureType,
+        httpFailureCodeAndMessage = httpFailureCodeAndMessage,
         workProgress = workProgress,
         downloadStatus = downloadStatus,
         forceDownloadErrorDialog = forceDownloadErrorDialog,
@@ -251,7 +254,7 @@ private fun ExtraInfo(
     refreshing: Boolean,
     updateData: UpdateData,
     downloadStatus: DownloadStatus,
-    failureType: Int?,
+    failureType: Int,
     getPrefStr: (key: String, default: String) -> String,
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -300,7 +303,7 @@ private fun ExtraInfo(
             // - Unknown
             // For simplicity, we're negating boolean logic by checking for the only other possible values:
             // null and CouldNotMoveTempFile. This will need to be adjusted later if new failures are added.
-            it != null && it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
+            it != NotSet && it != DownloadFailure.CouldNotMoveTempFile.value
         })
     ) {
         DownloadLink(url = updateData.downloadUrl ?: "null")
@@ -342,7 +345,8 @@ private fun DownloadButtonContainer(
     navType: NavType,
     refreshing: Boolean,
     downloadSize: Long,
-    failureType: Int?,
+    failureType: Int,
+    httpFailureCodeAndMessage: () -> Pair<Int, String>?,
     workProgress: WorkProgress?,
     downloadStatus: DownloadStatus,
     forceDownloadErrorDialog: Boolean,
@@ -428,6 +432,7 @@ private fun DownloadButtonContainer(
         buttonConfig = downloadButtonConfig(
             downloadSize = downloadSize,
             failureType = failureType,
+            httpFailureCodeAndMessage = httpFailureCodeAndMessage,
             workProgress = workProgress,
             downloadStatus = downloadStatus,
             downloadAction = downloadAction,
@@ -620,7 +625,8 @@ fun PreviewUpdateAvailable() = PreviewAppTheme {
         refreshing = false,
         updateData = PreviewUpdateData,
         downloadStatus = NotDownloading,
-        failureType = null,
+        failureType = NotSet,
+        httpFailureCodeAndMessage = { NotSet to "" },
         workProgress = null,
         forceDownloadErrorDialog = false,
         getPrefStr = PreviewGetPrefStr,

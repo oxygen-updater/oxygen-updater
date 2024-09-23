@@ -45,8 +45,11 @@
 	<string name="download_error_corrupt">Stiahnutý aktualizačný súbor je poškodený! Skúste ho stiahnuť znova.</string>
 	<string name="download_error_server">Počas sťahovania aktualizácie sa vyskytla chyba servera. Skúste aktualizáciu stiahnuť znova.</string>
 	<string name="download_error_internal">Počas sťahovania aktualizácie sa, bohužiaľ, vyskytla technická chyba. Skúste ju stiahnuť znova. Ak sa to bude opakovať, obráťte sa so žiadosťou o pomoc na vývojára tejto aplikácie.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Zdá sa, že odkaz na stiahnutie je neplatný. To by mohlo znamenať, že sme pri pridávaní aktualizačných údajov urobili chybu, alebo OnePlus stiahol/odstránil aktualizačný súbor zo svojich serverov. Nášmu tímu bolo odoslané oznámenie a budeme sa snažiť tento problém vyriešiť čo najskôr.
-Ak by ste sa chceli dozvedieť viac, neváhajte nás kontaktovať buď prostredníctvom <a href="mailto:support@oxygenupdater.com">emailu</a> alebo na našom <a href="https://discord.gg/5TXdhKJ">Discord serveri</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"To môže znamenať, že spoločnosť OnePlus odstránila súbor aktualizácie OTA zo svojich serverov."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Väčšinou to znamená problém so servermi OnePlus OTA, môže to však byť aj vaše internetové pripojenie."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Náš tím bol informovaný a čo najskôr sa na to pozrieme. Upozorňujeme, že keďže naša aplikácia sa sťahuje priamo z oficiálnych serverov OTA, nemôžeme s tým veľa urobiť. Prístup k súboru aktualizácie OTA môžete mať aj tak pomocou siete VPN alebo iného internetového pripojenia. Neváhajte a napíšte nám <a href="mailto:support@oxygenupdater.com">email</a> alebo sa pripojte k nášmu <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Súbor bol stiahnutý, ale nepodarilo sa ho presunúť do správneho adresára. Otvorte správcu súborov, prejdite do \"%1$s\" a ručne presuňte súbor do najvyššieho adresára interného úložiska.</string>
 
 	<string name="download_error_retry">Skúsiť znova</string>

@@ -42,9 +42,11 @@
 	<string name="download_error_corrupt">"Il file scaricato è danneggiato! Riprova."</string>
 
 	<string name="download_error_internal">"Errore interno."</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Sembra che il link per il download non sia valido. Ciò potrebbe significare che abbiamo commesso un errore durante l\'aggiunta dei dati di aggiornamento oppure che OnePlus ha rimosso il file di aggiornamento dai propri server. Una notifica è stata inviata al team e la esamineremo al più presto.
-
-Se desideri saperne di più, non esitare a contattarci tramite <a href="mailto:support@oxygenupdater.com">email</a> o sul nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Ciò potrebbe significare che OnePlus ha rimosso il file di aggiornamento OTA dai propri server."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Nella maggior parte dei casi, ciò indica un problema con i server OTA di OnePlus; tuttavia, potrebbe anche trattarsi della connessione a Internet."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Il nostro team è stato avvisato e provvederà ad esaminare il problema il prima possibile. Poiché la nostra app scarica direttamente dai server OTA ufficiali, non possiamo fare molto. Potreste comunque essere in grado di accedere al file di aggiornamento OTA utilizzando una VPN o una connessione Internet diversa. Non esitate a <a href="mailto:support@oxygenupdater.com">inoltrarci un\'e-mail</a> o a unirvi al nostro <a href="https://discord.gg/5TXdhKJ">server discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Il file è stato scaricato ma non è stato possibile spostarlo. Apri un file manager, naviga a \"%1$s\" e sposta il file nella cartella più\' in alto di internal storage.</string>
 	<string name="download_error_server">"Errore nel server."</string>
 	<string name="download_error_retry">"Riprova"</string>

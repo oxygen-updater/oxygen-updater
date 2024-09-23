@@ -44,9 +44,12 @@
 	<string name="download_error_corrupt">Преземениот фајл за ажурирање е оштетен! Ве молиме превземете го павторно.</string>
 	<string name="download_error_server">Настана серверска грешка при превземање на ажурирањето. Ве молиме обидете се да го превземете ажурирањето повторно.</string>
 	<string name="download_error_internal">За жал, настана техничка грешка при превземање на ажурирањето. Обидете се да го превземето повторно. Ако грешките продолжат, ве молиме исконтактирајте го развивачот на оваа апликација за помош.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Се чини дека линкот за превземање е невалиден. Ова значи дека или ние сме направиле грешка при додавање информации, или OnePlus јо има повлечено/избришано датотеката за ажурирање од нивните сервери. Испратена е нотификација до тимот, ќе го провериме ова во најкус можен рок.
-
-Ако сакате да дознаете повеќе, слободно контактирајте не на <a href="mailto:support@oxygenupdater.com">е-пошта</a> или на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"195 / 5,000
+Ова може да значи дека OnePlus ја отстрани датотеката за ажурирање OTA од нивните сервери."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Најчесто, ова укажува на проблем со серверите на OnePlus OTA; сепак, тоа може да биде и вашата интернет конекција."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Нашиот тим е известен и ќе го разгледаме ова што е можно поскоро. Забележете дека бидејќи нашата апликација се презема директно од официјалните сервери OTA, нема многу што можеме да направиме. Можеби сепак ќе можете да пристапите до датотеката за ажурирање OTA со користење на VPN или друга интернет конекција. Слободно <a href="mailto:support@oxygenupdater.com">испратете ни е-пошта</a> или придружете се на нашиот <a href="https://discord.gg/5TXdhKJ">Discord сервер</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Датотеката е превземена, но неможе да се премести до соодветниот директориум. Отворете го менаџерот на податоци, навигирајте до \"%1$s\" и мануелно преместета ја датотеката во најгорниот директориум на внатрешната меморија.</string>
 
 	<string name="download_error_retry">Обиди се повторно</string>

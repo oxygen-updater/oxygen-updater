@@ -44,8 +44,11 @@
 	<string name="download_error_corrupt">Fișierul descărcat este compromis! Vă rugăm să îl descărcați din nou.</string>
 	<string name="download_error_server">A avut loc o eroare de server la descărcarea actualizării. Vă rugăm să încercați din nou descărcarea.</string>
 	<string name="download_error_internal">Din păcate a avut loc o eroare tehnică în timpul descărcării. Încercați să descărcați actualizarea din nou. Dacă problema persistă, vă rugăm să contactați dezvoltatorii aplicației pentru asistență.</string>
-	<string name="download_error_unsuccessful_response"><![CDATA[Se pare că linkul de descărcare nu este valid. Acest lucru ar putea însemna fie că am greșit în timp ce adăugam date de actualizare, fie că OnePlus a extras / eliminat fișierul de actualizare de pe server-ele lor. O notificare a fost trimisă echipei și vom analiza acest lucru cât mai curând posibil.
-Dacă doriți să aflați mai multe, nu ezitați să ne contactați fie prin <a href="mailto:support@oxygenupdater.com">e-mail</a> sau intrând pe <a href="https://discord.gg/5TXdhKJ">server-ul nostru de Discord</a>.]]></string>
+	<!-- Space/NBSP at the end is necessary -->
+	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Acest lucru poate însemna că OnePlus a eliminat fișierul de actualizare OTA de pe serverele sale."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"De cele mai multe ori, acest lucru indică o problemă cu serverele OnePlus OTA; cu toate acestea, ar putea fi vorba și de conexiunea dvs. la internet."</string>
+	<string name="download_error_unsuccessful_suffix"><![CDATA[Echipa noastră a fost notificată și ne vom ocupa de această problemă cât mai curând posibil. Rețineți că, deoarece aplicația noastră descarcă direct de pe serverele OTA oficiale, nu putem face prea multe. Este posibil să mai puteți accesa fișierul de actualizare OTA utilizând un VPN sau o altă conexiune la internet. Nu ezitați să ne trimiteți <a href="mailto:support@oxygenupdater.com">email</a> sau să vă alăturați serverului nostru <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Fișierul a fost descărcat, dar nu a putut fi mutat în directorul corespunzător. Deschideți un manager de fișiere, navigați către \"%1$s\" și mutați manual fișierul în cel mai de sus director al stocării interne.</string>
 
 	<string name="download_error_retry">Reîncercare</string>
