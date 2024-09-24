@@ -8,6 +8,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.UsesSharedPreferencesTest
 import com.oxygenupdater.assertAndPerformClick
 import com.oxygenupdater.get
+import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
@@ -105,7 +106,8 @@ class UpdateScreenTest : UsesSharedPreferencesTest() {
             state = RefreshAwareState(false, data),
             onRefresh = { trackCallback("onRefresh") },
             _downloadStatus = DownloadStatus.NotDownloading,
-            failureType = null,
+            failureType = NotSet,
+            httpFailureCodeAndMessage = { NotSet to "" },
             workProgress = null,
             forceDownloadErrorDialog = false,
             getPrefStr = ::getPrefStr,

@@ -69,7 +69,7 @@ class UpdateAvailableContentTest : ComposeBaseTest() {
     )
 
     private var downloadStatus by mutableStateOf(NotDownloading)
-    private var failureType by mutableStateOf<Int?>(null)
+    private var failureType by mutableStateOf<Int>(NotSet)
     private var workProgress by mutableStateOf<WorkProgress?>(null)
 
     @get:Rule
@@ -109,6 +109,7 @@ class UpdateAvailableContentTest : ComposeBaseTest() {
                 updateData = updateData,
                 downloadStatus = downloadStatus,
                 failureType = failureType,
+                httpFailureCodeAndMessage = { NotSet to "" },
                 workProgress = workProgress,
                 forceDownloadErrorDialog = false,
                 getPrefStr = GetPrefStrForUpdateMethod,
@@ -189,7 +190,6 @@ class UpdateAvailableContentTest : ComposeBaseTest() {
             /** Now we also test for [DownloadFailed] for all [failureType]s */
             downloadStatus = DownloadFailed
             // First for values where link should not be shown
-            failureType = null; ensureDownloadLinkNotShown()
             failureType = NotSet; ensureDownloadLinkNotShown()
             failureType = CouldNotMoveTempFile.value; ensureDownloadLinkNotShown()
 
