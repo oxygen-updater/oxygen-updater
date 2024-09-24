@@ -1002,8 +1002,8 @@ class MainActivity : AppCompatActivity() {
             viewModel = hiltViewModel<ArticleViewModel>(this@MainActivity),
             id = id,
             scrollBehavior = scrollBehavior,
+            showAds = showAds,
             loadInterstitialAd = {
-                if (!showAds()) return@ArticleScreen
                 interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
                 loadInterstitialAd()
             },
