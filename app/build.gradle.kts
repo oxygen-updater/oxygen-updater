@@ -38,8 +38,8 @@ android {
     namespace = "com.oxygenupdater"
 
     // https://developer.android.com/studio/releases/build-tools
-    buildToolsVersion = "34.0.0"
-    compileSdk = 34
+    buildToolsVersion = "35.0.0"
+    compileSdk = 35
 
     testBuildType = "instrumentation"
 
@@ -47,7 +47,7 @@ android {
         applicationId = "com.arjanvlek.oxygenupdater"
 
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
 
         versionCode = 120
         versionName = "6.4.1"
@@ -94,6 +94,8 @@ android {
         "META-INF/*.version", // AndroidX version files
         "/*.properties",
         "META-INF/*.properties",
+        // https://github.com/Kotlin/kotlinx.coroutines#avoiding-including-the-debug-infrastructure-in-the-resulting-apk
+        "DebugProbesKt.bin",
     )
 
     signingConfigs {
@@ -194,8 +196,8 @@ android {
 
         val languages = fileTree("src/main/res") {
             include("values-*/strings.xml")
-        }.files.map {
-            it.parentFile.name.removePrefix("values-").replace("-r", "-")
+        }.files.mapNotNull {
+            it.parentFile?.name?.removePrefix("values-")?.replace("-r", "-")
         }.joinToString { "\"$it\"" }
 
         val billing = loadProperties("billing", "base64PublicKey" to "")
@@ -331,7 +333,10 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(platform(libs.coil.bom))
     implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+    implementation(libs.coil.network.cache)
 
     implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.placeholder.material3)

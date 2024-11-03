@@ -10,6 +10,13 @@ import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.SingletonImageLoader
+import coil3.annotation.ExperimentalCoilApi
+import coil3.network.cachecontrol.CacheControlCacheStrategy
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.util.DebugLogger
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.database.SqliteMigrations
@@ -27,7 +34,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltAndroidApp
-class OxygenUpdater : Application(), Configuration.Provider {
+class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoader.Factory {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
@@ -102,6 +109,18 @@ class OxygenUpdater : Application(), Configuration.Provider {
     }
 
     /**
+     * Coil 3 does not respect `Cache-Control` headers by default, so we
+     * enable it here.
+     *
+     * Requires `coreLibraryDesugaring` for API <25 support.
+     */
+    @OptIn(ExperimentalCoilApi::class)
+    override fun newImageLoader(context: PlatformContext) = ImageLoader.Builder(context)
+        .logger(if (BuildConfig.DEBUG) DebugLogger() else null).components {
+            add(OkHttpNetworkFetcherFactory(cacheStrategy = { CacheControlCacheStrategy() }))
+        }.build()
+
+    /**
      * Syncs analytics and crashlytics collection to user's preference.
      *
      * @see [FirebaseAnalytics.setAnalyticsCollectionEnabled]
@@ -114,7 +133,7 @@ class OxygenUpdater : Application(), Configuration.Provider {
         // Sync analytics collection to user's preference
         analytics.setAnalyticsCollectionEnabled(shouldShareLogs)
         // Sync crashlytics collection to user's preference, but only if we're on a release build
-        crashlytics.setCrashlyticsCollectionEnabled(shouldShareLogs && !BuildConfig.DEBUG)
+        crashlytics.isCrashlyticsCollectionEnabled = shouldShareLogs && !BuildConfig.DEBUG
     }
 
     private fun setupNetworkCallback() = getSystemService<ConnectivityManager>()?.run {

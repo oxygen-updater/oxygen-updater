@@ -36,7 +36,6 @@ val CpuFrequencies: ScatterMap<Float, Int>
         return _cpuFrequencies!!
     }
 
-
 private fun cpuFreq(index: Int) = try {
     val file = File(PathPrefix + index + CpuInfoMaxFreqPathSuffix)
     file.readText().trim().ifEmpty { null }?.toLongOrNull()?.div(1_000_000f) ?: 0f
