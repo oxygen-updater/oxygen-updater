@@ -20,9 +20,6 @@ private inline fun invokeGet(key: String) = with(ClassAndMethod) {
 }
 
 fun systemProperty(key: String) = invokeGet(key)
-fun systemPropertyPairs(keys: Array<String>) = keys.map {
-    it to invokeGet(it)
-}
 
 /**
  * Reading system properties is an integral part of the app, without which it cannot perform

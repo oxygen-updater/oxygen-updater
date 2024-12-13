@@ -2,6 +2,8 @@ package com.oxygenupdater.models
 
 import android.os.Build
 import android.os.Build.UNKNOWN
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import android.util.Log
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.utils.logInfo
@@ -101,7 +103,7 @@ object SystemVersionProperties {
         var oxygenOSOTAVersion = UNKNOWN
         var osType = UNKNOWN
         var isEuBuild = false
-        var securityPatchDate = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        var securityPatchDate = if (SDK_INT >= VERSION_CODES.M) {
             Build.VERSION.SECURITY_PATCH
         } else UNKNOWN // read later on
 
@@ -123,7 +125,7 @@ object SystemVersionProperties {
 
                 // Append _IN to mark device as Indian variant
                 if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
-            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
+            } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
                 // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                 // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
                 // correct regional OOS12 build (GLO: H.31, IND: H.30). There's another OOS12 workaround below.
@@ -134,7 +136,7 @@ object SystemVersionProperties {
             // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
             // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
             // number, so we're not losing any info.
-            if (oxygenOSVersion == UNKNOWN || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) oxygenOSVersion = pickFirstValid(
+            if (oxygenOSVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) oxygenOSVersion = pickFirstValid(
                 BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, oxygenOSVersion
             ) { key, value ->
                 if (key != RomVersionLookupKey) return@pickFirstValid value
@@ -149,7 +151,7 @@ object SystemVersionProperties {
             }
 
             val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (SDK_INT >= VERSION_CODES.S) {
                 if (oxygenDeviceName in OnePlusPadAndPad2) {
                     // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
                     if (pipeline != "EUEX") oxygenDeviceName += pipeline
@@ -172,7 +174,7 @@ object SystemVersionProperties {
             }
 
             // On Android >= 6/Marshmallow, security patch is picked up from `Build.VERSION.SECURITY_PATCH` above
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (SDK_INT < VERSION_CODES.M) {
                 securityPatchDate = systemProperty(SecurityPatchLookupKey)
             }
         } catch (e: Exception) {
@@ -201,7 +203,7 @@ object SystemVersionProperties {
 
                     // Append _IN to mark device as Indian variant
                     if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
-                } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
+                } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                     // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
                     // correct regional OOS12 build (GLO: H.31, IND: H.30). There's another OOS12 workaround below.
@@ -212,12 +214,12 @@ object SystemVersionProperties {
                 // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
                 // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
                 // number, so we're not losing any info.
-                if (oxygenOSVersion == UNKNOWN || Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) oxygenOSVersion = readBuildPropItem(
+                if (oxygenOSVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) oxygenOSVersion = readBuildPropItem(
                     BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion
                 )
 
                 val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (SDK_INT >= VERSION_CODES.S) {
                     if (oxygenDeviceName in OnePlusPadAndPad2) {
                         // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
                         if (pipeline != "EUEX") oxygenDeviceName += pipeline
@@ -240,7 +242,7 @@ object SystemVersionProperties {
                 }
 
                 // On Android >= 6/Marshmallow, security patch is picked up from `Build.VERSION.SECURITY_PATCH` above
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                if (SDK_INT < VERSION_CODES.M) {
                     securityPatchDate = readBuildPropItem(SecurityPatchLookupKey, properties)
                 }
             } catch (e: Exception) {
@@ -261,7 +263,8 @@ object SystemVersionProperties {
         default: String = UNKNOWN,
         workarounds: (key: String, value: String) -> String?,
     ): String {
-        for ((key, value) in systemPropertyPairs(keys)) {
+        for (key in keys) {
+            val value = systemProperty(key)
             if (value.isEmpty() || value == UNKNOWN) continue // invalid, skip to next iteration
 
             val newValue = workarounds(key, value)
