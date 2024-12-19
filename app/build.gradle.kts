@@ -333,13 +333,15 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.accompanist.permissions)
+
+    implementation(libs.eygraber.compose.placeholder.material3)
+
     implementation(platform(libs.coil.bom))
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.network.cache)
 
-    implementation(libs.accompanist.permissions)
-    implementation(libs.accompanist.placeholder.material3)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)

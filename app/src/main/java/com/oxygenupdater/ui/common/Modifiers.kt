@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
@@ -22,16 +23,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.toggleableState
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material3.placeholder
-import com.google.accompanist.placeholder.shimmer
+import com.eygraber.compose.placeholder.PlaceholderDefaults
+import com.eygraber.compose.placeholder.PlaceholderHighlight
+import com.eygraber.compose.placeholder.material3.color
+import com.eygraber.compose.placeholder.placeholder
+import com.eygraber.compose.placeholder.shimmer
 
 // Perf: re-use common modifiers to avoid recreating the same object repeatedly
 val modifierMaxWidth = Modifier.fillMaxWidth()
@@ -43,30 +45,19 @@ val modifierDefaultPaddingStartTopEnd = Modifier.padding(start = 16.dp, top = 16
 val modifierSemanticsSelected = Modifier.semantics { toggleableState = ToggleableState.On }
 val modifierSemanticsNotSelected = Modifier.semantics { toggleableState = ToggleableState.Off }
 
-// TODO(compose): switch to https://github.com/fornewid/placeholder
 /**
  * @param textStyle if not null, it assumes composable is a Text, and uses [textShape] over [RoundedCornerShape]
  */
-@Suppress("DEPRECATION")
+@Composable
 fun Modifier.withPlaceholder(
     refreshing: Boolean,
     textStyle: TextStyle? = null,
-) = if (!refreshing) this else composed(debugInspectorInfo {
-    name = "withPlaceholder"
-    properties["refreshing"] = refreshing
-    properties["textStyle"] = textStyle
-}) {
-    placeholder(
-        visible = refreshing,
-        shape = if (textStyle != null) {
-            val density = LocalDensity.current
-            remember(density, textStyle) {
-                textShape(density, fontSize = textStyle.fontSize, lineHeight = textStyle.lineHeight)
-            }
-        } else MaterialTheme.shapes.extraSmall,
-        highlight = PlaceholderHighlight.shimmer(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
-    )
-}
+) = if (!refreshing) this else placeholder(
+    visible = refreshing,
+    color = PlaceholderDefaults.color(),
+    shape = if (textStyle != null) textShape(textStyle) else MaterialTheme.shapes.extraSmall,
+    highlight = PlaceholderHighlight.shimmer(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)),
+)
 
 fun Modifier.animatedClickable(
     enabled: Boolean = true,

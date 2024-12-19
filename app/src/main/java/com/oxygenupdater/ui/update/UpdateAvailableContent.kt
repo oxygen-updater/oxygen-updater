@@ -357,8 +357,8 @@ private fun DownloadButtonContainer(
     showDownloadFailedNotification: () -> Unit,
 ) {
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    val downloadPermissionState = if (LocalInspectionMode.current) Unit else if (SDK_INT >= VERSION_CODES.R) {
-        rememberAllFilesPermissionState(LocalContext.current)
+    val downloadPermissionState = if (SDK_INT >= VERSION_CODES.R) {
+        if (LocalInspectionMode.current) Unit else rememberAllFilesPermissionState(LocalContext.current)
     } else {
         rememberMultiplePermissionsState(listOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE))
     }
