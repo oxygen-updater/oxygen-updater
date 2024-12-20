@@ -32,6 +32,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
@@ -205,8 +206,28 @@ fun NewsListScreen(
             }
 
             if (navType == NavType.BottomBar) {
+                val listState = rememberLazyListState()
                 val size = DpSize(80.dp, 80.dp)
-                LazyColumn(modifierMaxSize.testTag(NewsListScreen_LazyColumnTestTag)) {
+
+                // Run when we have new articles, by keying the first item's ID.
+                // This should be more performant than using the list itself as the key.
+                LaunchedEffect(list.firstOrNull()?.id) {
+                    // Scroll to the first item upon refresh
+                    if (listState.firstVisibleItemIndex > 0) try {
+                        listState.animateScrollToItem(0)
+                    } catch (e: Exception) {
+                        try {
+                            listState.scrollToItem(0)
+                        } catch (e: Exception) {
+                            // ignore
+                        }
+                    }
+                }
+
+                LazyColumn(
+                    state = listState,
+                    modifier = modifierMaxSize.testTag(NewsListScreen_LazyColumnTestTag)
+                ) {
                     items(items = list, key = { it.id ?: Random.nextLong() }) {
                         NewsListItem(
                             refreshing = refreshing,
@@ -218,6 +239,7 @@ fun NewsListScreen(
                     }
                 }
             } else Column {
+                val gridState = rememberLazyGridState()
                 val size = remember(windowWidthSize, windowHeightSize) {
                     DpSize(
                         width = when (windowWidthSize) {
@@ -233,9 +255,24 @@ fun NewsListScreen(
                     )
                 }
 
+                // Run when we have new articles, by keying the first item's ID.
+                // This should be more performant than using the list itself as the key.
+                LaunchedEffect(list.firstOrNull()?.id) {
+                    // Scroll to the first item upon refresh
+                    if (gridState.firstVisibleItemIndex > 0) try {
+                        gridState.animateScrollToItem(0)
+                    } catch (e: Exception) {
+                        try {
+                            gridState.scrollToItem(0)
+                        } catch (e: Exception) {
+                            // ignore
+                        }
+                    }
+                }
+
                 LazyVerticalGrid(
                     columns = GridCells.FixedSize(size.width),
-                    state = rememberLazyGridState(),
+                    state = gridState,
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp),
                     horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
