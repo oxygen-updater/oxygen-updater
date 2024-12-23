@@ -24,6 +24,7 @@ import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logVerbose
+import com.oxygenupdater.utils.logWarning
 import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 import javax.inject.Inject
@@ -111,7 +112,7 @@ class ServerRepository @Inject constructor(
         if (!it.isNullOrEmpty()) articleDao.refreshArticles(it)
 
         // Note: we're returning a local copy so that read statuses are respected
-        articleDao.getAll()
+        fetchNewsFromDb()
     }
 
     suspend fun fetchArticle(id: Long) = performServerRequest {
@@ -129,6 +130,11 @@ class ServerRepository @Inject constructor(
 
     suspend fun markArticleRead(id: Long) = performServerRequest {
         serverApi.markArticleRead(ArrayMap<String, Long>(1).apply { put("news_item_id", id) })
+    }?.also {
+        if (!it.success) crashlytics.logWarning(
+            TAG,
+            "Failed to mark article as read on the server: ${it.errorMessage}"
+        )
     }
 
     suspend fun fetchUpdateMethodsForDevice(deviceId: Long) = performServerRequest {

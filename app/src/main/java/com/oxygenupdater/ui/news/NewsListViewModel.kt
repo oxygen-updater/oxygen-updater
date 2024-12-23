@@ -52,12 +52,7 @@ class NewsListViewModel @Inject constructor(
         flow.emit(serverRepository.fetchNews())
         refreshingFlow.value = false
 
-        withContext(Dispatchers.Main) {
-            @Suppress("DEPRECATION")
-            unreadCount.intValue = flow.value.count { !it.read }.also {
-                Screen.NewsList.badge = if (it == 0) null else "$it"
-            }
-        }
+        updateUnreadCountAndBadge()
     }
 
     fun markAllRead() = viewModelScope.launch(Dispatchers.IO) {
@@ -71,10 +66,37 @@ class NewsListViewModel @Inject constructor(
         }
     }
 
-    fun toggleRead(
+    fun markRead(item: Article) = viewModelScope.launch(Dispatchers.IO) {
+        // Mark read locally
+        serverRepository.toggleArticleReadLocally(item, true)
+
+        // Remove UI unread badge by updating read status in the list itself
+        flow.value.find { it.id == item.id }?.readState = true
+
+        // Update unread badge and reduce count (but coerce to at least 0, just in case there's an inconsistency)
+        if (unreadCount.intValue > 0) unreadCount.intValue--.also {
+            Screen.NewsList.badge = if (it == 0) null else "$it"
+        }
+
+        // Mark read on server
+        serverRepository.markArticleRead(item.id!!)
+    }.let {}
+
+    fun toggleReadLocally(
         article: Article,
         newRead: Boolean = !article.readState,
     ) = viewModelScope.launch(Dispatchers.IO) {
         serverRepository.toggleArticleReadLocally(article, newRead)
     }.let {}
+
+    private suspend fun updateUnreadCountAndBadge() = withContext(Dispatchers.Main) {
+        @Suppress("DEPRECATION")
+        unreadCount.intValue = flow.value.count { !it.read }.also {
+            Screen.NewsList.badge = if (it == 0) null else "$it"
+        }
+    }
+
+    companion object {
+        private const val TAG = "NewsListViewModel"
+    }
 }

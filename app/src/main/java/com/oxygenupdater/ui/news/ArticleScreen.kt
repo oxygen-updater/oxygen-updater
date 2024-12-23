@@ -60,6 +60,7 @@ fun ArticleScreen(
     id: Long,
     scrollBehavior: TopAppBarScrollBehavior,
     showAds: () -> Boolean,
+    onLoadFinished: (Article) -> Unit,
     loadInterstitialAd: () -> Unit,
 ) {
     DisposableEffect(Unit) {
@@ -82,7 +83,7 @@ fun ArticleScreen(
         onRefresh = onRefresh,
         webViewState = webViewState,
         showAds = showAds,
-        onLoadFinished = viewModel::markRead,
+        onLoadFinished = onLoadFinished,
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
     )
 }

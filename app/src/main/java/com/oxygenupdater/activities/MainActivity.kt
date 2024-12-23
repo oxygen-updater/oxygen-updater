@@ -834,7 +834,7 @@ class MainActivity : AppCompatActivity() {
             },
             unreadCountState = newsListViewModel.unreadCount,
             onMarkAllReadClick = newsListViewModel::markAllRead,
-            onToggleReadClick = newsListViewModel::toggleRead,
+            onToggleReadClick = newsListViewModel::toggleReadLocally,
             openItem = {
                 // Show interstitial ad at a natural transition point. Frequency
                 // is capped to once in a 5m window in the AdMob dashboard.
@@ -1003,6 +1003,7 @@ class MainActivity : AppCompatActivity() {
             id = id,
             scrollBehavior = scrollBehavior,
             showAds = showAds,
+            onLoadFinished = newsListViewModel::markRead,
             loadInterstitialAd = {
                 interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
                 loadInterstitialAd()
@@ -1147,7 +1148,12 @@ class MainActivity : AppCompatActivity() {
             ActionPageUpdate -> Screen.Update
             ActionPageNews -> Screen.NewsList
             ActionPageDevice -> Screen.Device
-            else -> Screen.Update
+            /**
+             * If [currentRoute] has been set by [checkIntentForExternalArticleUri],
+             * then it's a deep link to open an article. When the user presses back,
+             * they should go to the NewsList screen as that's the natural path.
+             */
+            else -> if (currentRoute == ArticleRoute) Screen.NewsList else Screen.Update
         }
 
         defaultNavOptions = buildNavOptions(startScreen.route)

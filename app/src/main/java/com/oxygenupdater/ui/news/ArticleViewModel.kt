@@ -5,11 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.utils.logWarning
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class ArticleViewModel @Inject constructor(
     private val serverRepository: ServerRepository,
-    private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
     private val refreshingFlow = MutableStateFlow(true)
@@ -46,16 +43,6 @@ class ArticleViewModel @Inject constructor(
         flow.value = null
         item = null
     }
-
-    fun markRead(item: Article) = viewModelScope.launch(Dispatchers.IO) {
-        serverRepository.toggleArticleReadLocally(item, true)
-
-        val result = serverRepository.markArticleRead(item.id!!) ?: return@launch
-        if (!result.success) crashlytics.logWarning(
-            TAG,
-            "Failed to mark article as read on the server: ${result.errorMessage}"
-        )
-    }.let {}
 
     companion object {
         private const val TAG = "ArticleViewModel"

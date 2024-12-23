@@ -213,7 +213,8 @@ class NewsListScreenTest : ComposeBaseTest() {
         // Finally, test if tapping on the item
         node.assertAndPerformClick()
         ensureCallbackInvokedExactlyOnce("openItem: ${article.id}")
-        badge.assertDoesNotExist()
+        // While it may seem that we should also check that badge no longer exists,
+        // the unread count/badge logic is handled by the ViewModel, through ArticleScreen.
     }
 
     private fun setContent(

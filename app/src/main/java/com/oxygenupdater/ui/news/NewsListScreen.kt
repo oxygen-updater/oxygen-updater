@@ -146,7 +146,7 @@ fun NewsListScreen(
     var onlyUnread by rememberSaveableState("onlyUnread", false)
 
     val data = if (onlyUnread) state.data.filterNot { it.readState } else state.data
-    val list = if (!refreshing) rememberSaveable(onlyUnread) { data } else data
+    val list = if (!refreshing) rememberSaveable(data) { data } else data
 
     LaunchedEffect(onlyUnread) {
         unreadCountState.intValue = if (onlyUnread) list.size else list.count { !it.readState }
@@ -194,13 +194,6 @@ fun NewsListScreen(
                 it.readState = !it.readState
             }
             val onItemClick: (Article) -> Unit = {
-                // Decrease unread count because we're making it read
-                if (!it.readState) {
-                    // Coerce to at least 0, just in case there's an inconsistency
-                    if (unreadCountState.intValue > 0) unreadCountState.intValue--
-                }
-                it.readState = true
-
                 ArticleViewModel.item = it
                 openItem(it.id ?: NotSetL)
             }

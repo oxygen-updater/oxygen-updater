@@ -48,10 +48,10 @@ interface ArticleDao {
 
         // Remove items not present in the server response. Calling deleteAll() before inserting fresh rows from the
         // server is slightly more efficient, but we'd lose read statuses in that case.
-        val something = getAll().mapNotNull { item ->
+        val unknownIds = getAll().mapNotNull { item ->
             item.id?.let { if (!newIds.contains(it)) it else null }
         }.toLongArray()
-        deleteByIds(*something)
+        if (unknownIds.isNotEmpty()) deleteByIds(*unknownIds)
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
