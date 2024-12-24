@@ -63,11 +63,11 @@ android {
     }
 
     @Suppress("UnstableApiUsage")
-    testOptions.managedDevices.localDevices.maybeCreate("pixel7ProApi33").apply {
-        device = "Pixel 7 Pro"
-        apiLevel = 33 // keep in sync with ci.yml
+    testOptions.managedDevices.localDevices.maybeCreate("pixel9ProApi35").apply {
+        device = "Pixel 9 Pro"
+        apiLevel = 35 // keep in sync with ci.yml
 
-        // Use Automated Test Devices on API 30 — 33 for better runtime performance
+        // Use Automated Test Devices on API 30 — 35 for better runtime performance
         // https://developer.android.com/studio/test/gradle-managed-devices#gmd-atd
         systemImageSource = "google-atd"
     }
