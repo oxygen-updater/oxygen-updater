@@ -23,7 +23,7 @@ import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.extensions.tryNotify
 import com.oxygenupdater.ui.main.ChildScreen
 import com.oxygenupdater.ui.main.DownloadedArg
-import com.oxygenupdater.ui.main.OuScheme
+import com.oxygenupdater.ui.main.OuSchemeSuffixed
 import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
 import com.oxygenupdater.ui.update.KeyDownloadErrorResumable
 import com.oxygenupdater.utils.NotificationChannels.DownloadAndInstallationGroup.DownloadStatusNotifChannelId
@@ -81,7 +81,7 @@ object LocalNotifications {
             0,
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(OuScheme + ChildScreen.Guide.value + "$DownloadedArg=true"),
+                Uri.parse(OuSchemeSuffixed + ChildScreen.Guide.value + "$DownloadedArg=true"),
                 context,
                 MainActivity::class.java
             ),

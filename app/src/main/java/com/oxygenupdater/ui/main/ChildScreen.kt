@@ -22,7 +22,8 @@ value class ChildScreen private constructor(val value: String) {
     }
 }
 
-const val OuScheme = "oxygenupdater://"
+const val OuScheme = "oxygenupdater"
+const val OuSchemeSuffixed = "$OuScheme://"
 
 const val IdArg = "id"
 const val ExternalArg = "external"

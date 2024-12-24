@@ -153,6 +153,7 @@ import com.oxygenupdater.ui.main.NewsListRoute
 import com.oxygenupdater.ui.main.NoConnectionSnackbarData
 import com.oxygenupdater.ui.main.NotificationPermission
 import com.oxygenupdater.ui.main.OuScheme
+import com.oxygenupdater.ui.main.OuSchemeSuffixed
 import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.ui.main.ServerStatusBanner
 import com.oxygenupdater.ui.main.ServerStatusDialogs
@@ -811,15 +812,12 @@ class MainActivity : AppCompatActivity() {
     ) = composable(
         route = NewsListRoute,
         deepLinks = listOf(
-            navDeepLink { uriPattern = OuScheme + NewsListRoute },
+            navDeepLink { uriPattern = OuSchemeSuffixed + NewsListRoute },
         ),
     ) {
         LaunchedEffect(Unit) {
-            if (showAds()) {
-                // Eagerly load an interstitial ad to eventually show when clicking on an item
-                interstitialAdLoadType = InterstitialAdLoadType.LoadOnly
-                loadInterstitialAd()
-            }
+            // Eagerly load an interstitial ad to eventually show when clicking on an item
+            if (showAds()) loadInterstitialAd(InterstitialAdLoadType.LoadOnly)
         }
 
         val state by newsListViewModel.state.collectAsStateWithLifecycle()
@@ -840,8 +838,7 @@ class MainActivity : AppCompatActivity() {
                 // is capped to once in a 5m window in the AdMob dashboard.
                 if (showAds()) interstitialAd.let { ad ->
                     if (ad != null) ad.show(this@MainActivity) else {
-                        interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowImmediately
-                        loadInterstitialAd()
+                        loadInterstitialAd(InterstitialAdLoadType.LoadAndShowImmediately)
                     }
                 }
 
@@ -990,7 +987,7 @@ class MainActivity : AppCompatActivity() {
             },
         ),
         deepLinks = listOf(
-            navDeepLink { uriPattern = OuScheme + ArticleRoute },
+            navDeepLink { uriPattern = OuSchemeSuffixed + ArticleRoute },
             navDeepLink { uriPattern = BuildConfig.SERVER_DOMAIN + "api/.*/news-content/{$IdArg}/.*" },
             navDeepLink { uriPattern = BuildConfig.SERVER_DOMAIN + "article/{$IdArg}/" },
         )
@@ -1005,8 +1002,7 @@ class MainActivity : AppCompatActivity() {
             showAds = showAds,
             onLoadFinished = newsListViewModel::markRead,
             loadInterstitialAd = {
-                interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
-                loadInterstitialAd()
+                loadInterstitialAd(InterstitialAdLoadType.LoadAndShowDelayed)
             },
         )
     }
@@ -1023,7 +1019,7 @@ class MainActivity : AppCompatActivity() {
             },
         ),
         deepLinks = listOf(
-            navDeepLink { uriPattern = OuScheme + GuideRoute },
+            navDeepLink { uriPattern = OuSchemeSuffixed + GuideRoute },
         )
     ) {
         InstallGuideScreen(
@@ -1038,7 +1034,7 @@ class MainActivity : AppCompatActivity() {
     ) = composable(
         route = FaqRoute,
         deepLinks = listOf(
-            navDeepLink { uriPattern = OuScheme + FaqRoute },
+            navDeepLink { uriPattern = OuSchemeSuffixed + FaqRoute },
         )
     ) {
         FaqScreen(
@@ -1314,12 +1310,14 @@ class MainActivity : AppCompatActivity() {
      * because it seemed to be more reliable than custom SharedPreferences-based handling
      * done prior to v5.2.0.
      */
-    private fun loadInterstitialAd() = InterstitialAd.load(
-        this,
-        BuildConfig.AD_INTERSTITIAL_NEWS_ID,
-        buildAdRequest(),
-        interstitialAdLoadCallback
-    ).also {
+    private fun loadInterstitialAd(type: InterstitialAdLoadType) {
+        interstitialAdLoadType = type
+        InterstitialAd.load(
+            this,
+            BuildConfig.AD_INTERSTITIAL_NEWS_ID,
+            buildAdRequest(),
+            interstitialAdLoadCallback
+        )
         interstitialLoadCallMs = System.currentTimeMillis()
     }
 
@@ -1347,11 +1345,9 @@ class MainActivity : AppCompatActivity() {
         firstLaunch: Boolean,
     ) {
         val uri = intent?.data?.normalizeScheme() ?: return
-        val scheme = uri.scheme ?: return
         val host = uri.host ?: return
-        val path = uri.path ?: return
 
-        val isExternalArticleUri = when (scheme) {
+        val isExternalArticleUri = when (uri.scheme ?: return) {
             // Compare host without the `https://` at the beginning.
             // If it's somehow not our domain, return early.
             "http", "https" -> if ("$host/" != BuildConfig.SERVER_DOMAIN.substring(8)) false else {
@@ -1376,11 +1372,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            OuScheme -> {
-                if ("$host/" != ChildScreen.Article.value || path.toLongOrNull() == null) false
-                // Ensure it's marked as "external" (done only if intent is from a notification)
-                else uri.getBooleanQueryParameter(ExternalArg, false)
-            }
+            OuScheme -> if ("$host/" != ChildScreen.Article.value
+                // Can't use `uri.path` as it's prefixed by "/"
+                || uri.pathSegments.getOrNull(0)?.toLongOrNull() == null
+            ) false else uri.getBooleanQueryParameter(ExternalArg, false)
+            // ^ It's marked as "external" only if intent is from a notification
 
             else -> false
         }
@@ -1391,8 +1387,7 @@ class MainActivity : AppCompatActivity() {
         if (billingViewModel.shouldShowAds.value) {
             // If an article deep link came from outside the app, we
             // need to delay showing the interstitial ad for better UX.
-            interstitialAdLoadType = InterstitialAdLoadType.LoadAndShowDelayed
-            loadInterstitialAd()
+            loadInterstitialAd(InterstitialAdLoadType.LoadAndShowDelayed)
         }
 
         // We need to manually set this because it is always set to "update"

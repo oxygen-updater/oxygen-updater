@@ -37,7 +37,7 @@ import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.main.ChildScreen
 import com.oxygenupdater.ui.main.ExternalArg
 import com.oxygenupdater.ui.main.NewsListRoute
-import com.oxygenupdater.ui.main.OuScheme
+import com.oxygenupdater.ui.main.OuSchemeSuffixed
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DeviceNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GeneralNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.NewsNotifChannelId
@@ -283,14 +283,12 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
             val id = messageContents[NotificationElement.NEWS_ITEM_ID.name]?.toLongOrNull() ?: NotSetL
             Intent(
                 Intent.ACTION_VIEW,
-                if (id != NotSetL) {
-                    // Open article if ID is valid, and mark it "external" so
-                    // that interstitial ad is shown after a delay for better UX.
-                    Uri.parse(OuScheme + ChildScreen.Article.value + id + "?${ExternalArg}=true")
-                } else {
-                    // Otherwise NewsListScreen
-                    Uri.parse(OuScheme + NewsListRoute)
-                },
+                // Open article if ID is valid, and mark it "external" so
+                // that interstitial ad is shown after a delay for better UX.
+                // Otherwise, open NewsListScreen.
+                if (id != NotSetL) Uri.parse(
+                    OuSchemeSuffixed + ChildScreen.Article.value + "$id?${ExternalArg}=true"
+                ) else Uri.parse(OuSchemeSuffixed + NewsListRoute),
                 context,
                 MainActivity::class.java
             )
