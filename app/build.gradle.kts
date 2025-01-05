@@ -239,7 +239,6 @@ android {
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 
     buildFeatures {
-        viewBinding = true
         compose = true
         // AGP 8+ doesn't generate BuildConfig by default
         buildConfig = true

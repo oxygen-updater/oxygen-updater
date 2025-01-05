@@ -1,6 +1,5 @@
 package com.oxygenupdater.ui.common
 
-import android.content.ActivityNotFoundException
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.LocalContentColor
@@ -64,7 +63,8 @@ fun RichText(
             // use LocalUriHandler because its behaviour can be tested.
             try {
                 uriHandler.openUri(url)
-            } catch (e: ActivityNotFoundException) {
+            } catch (e: Exception) {
+                // e: ActivityNotFoundException | IllegalArgumentException
                 // Fallback: copy to clipboard instead
                 context.copyToClipboard(url)
             }
