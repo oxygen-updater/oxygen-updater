@@ -1,3 +1,6 @@
+import com.android.build.api.dsl.ApplicationBuildType
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
+import java.net.URL
 import java.util.Properties
 
 plugins {
@@ -30,8 +33,92 @@ fun loadProperties(
     }
 }
 
-fun arrayForBuildConfig(vararg array: String) = array.joinToString(prefix = "{", postfix = "}") {
-    "\"$it\""
+/**
+ * If the build name is "release", it will use the production server, and getprop keys will
+ * be for OnePlus/OxygenOS specific values.
+ *
+ * Otherwise, the test server will be used (unless [localOverride] is set), and getprop keys
+ * will be for what we find on any Android device/emulator.
+ *
+ * @param localOverride if `true`, uses the local (LAN) server. Cannot be used on release builds.
+ *   Note: if `true`, and local server is not HTTPS, we need `android:usesCleartextTraffic="true"`
+ *   in AndroidManifest.xml as well.
+ */
+fun ApplicationBuildType.setupBuildConfig(
+    localOverride: Boolean = false, // default must always be false
+) {
+    val buildName = name
+    val release = buildName == "release"
+
+    if (release) assert(!localOverride) { "`release = true` is incompatible with localOverride" }
+    // Disable Crashlytics upload for non-release builds
+    else configure<CrashlyticsExtension> {
+        nativeSymbolUploadEnabled = false
+        mappingFileUploadEnabled = false
+    }
+
+    val minify = release || !localOverride
+    isMinifyEnabled = minify
+    isShrinkResources = minify
+
+    isDebuggable = !release
+
+    // To distinguish in app drawer and allow multiple builds to exist in parallel on the same device
+    if (release) {
+        resValue("string", "app_name", "Oxygen Updater")
+    } else {
+        versionNameSuffix = "-$buildName"
+        applicationIdSuffix = ".$buildName"
+        resValue("string", "app_name", "Oxygen Updater ($buildName)")
+    }
+
+    val domain: String
+    val apiBase: String
+    val notifPrefix: String
+    if (release) {
+        domain = "https://oxygenupdater.com/"
+        apiBase = "api/v2.9/"
+        notifPrefix = ""
+    } else if (localOverride) {
+        domain = "http://192.168.1.3:81/"
+        apiBase = "v2.9/"
+        notifPrefix = "local_"
+    } else {
+        domain = "https://test.oxygenupdater.com/"
+        apiBase = "api/v2.9/"
+        notifPrefix = "test_"
+    }
+
+    addManifestPlaceholders(
+        mapOf(
+            "hostName" to URL(domain).host,
+            "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
+        )
+    )
+
+    buildConfigField("String", "SERVER_DOMAIN", "\"$domain\"")
+    buildConfigField("String", "SERVER_API_BASE", "\"$apiBase\"")
+    buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"$notifPrefix\"")
+
+    val useReleaseLookupKeys = release || localOverride
+    val deviceNameLookupKeys = if (useReleaseLookupKeys) arrayOf(
+        "ro.display.series",
+        "ro.build.product",
+    ) else arrayOf("ro.product.name")
+    val versionNumberLookupKeys = if (useReleaseLookupKeys) arrayOf(
+        "ro.rom.version",
+        "ro.oxygen.version",
+        "ro.build.ota.versionname",
+        "ro.vendor.oplus.exp.version",
+        "ro.build.display.ota",
+    ) else arrayOf("ro.build.version.release")
+    val otaVersionLookupKey = if (useReleaseLookupKeys) "ro.build.version.ota" else "ro.build.version.incremental"
+
+    fun Array<String>.stringify() = joinToString(prefix = "{", postfix = "}") { "\"$it\"" }
+
+    buildConfigField("String[]", "DEVICE_NAME_LOOKUP_KEYS", deviceNameLookupKeys.stringify())
+    buildConfigField("String[]", "OS_VERSION_NUMBER_LOOKUP_KEYS", versionNumberLookupKeys.stringify())
+    buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"$otaVersionLookupKey\"")
 }
 
 android {
@@ -51,6 +138,20 @@ android {
 
         versionCode = 121
         versionName = "6.5.0"
+
+        addManifestPlaceholders(mapOf("advertisingAppId" to "ca-app-pub-1816831161514116~4275332954"))
+        buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
+        buildConfigField("String", "AD_INTERSTITIAL_NEWS_ID", "\"ca-app-pub-1816831161514116/2367225965\"")
+
+        val base64PublicKey = loadProperties("billing", "base64PublicKey" to "")["base64PublicKey"] as String
+        buildConfigField("String", "BASE64_PUBLIC_KEY", "\"$base64PublicKey\"")
+
+        val languages = fileTree("src/main/res") {
+            include("values-*/strings.xml")
+        }.files.mapNotNull {
+            it.parentFile?.name?.removePrefix("values-")?.replace("-r", "-")
+        }.joinToString { "\"$it\"" }
+        buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
         testApplicationId = "$namespace.$testBuildType"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -116,71 +217,20 @@ android {
     }
 
     buildTypes {
-        // Config for releases and testing on a real device
-        // Uses the production server, and reads system properties using the OnePlus/OxygenOS specific build.prop values
         release {
-            buildConfigField("String", "SERVER_DOMAIN", "\"https://oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.9/\"")
-            buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"\"")
-            buildConfigField(
-                "String[]",
-                "DEVICE_NAME_LOOKUP_KEYS",
-                arrayForBuildConfig(
-                    "ro.display.series",
-                    "ro.build.product",
-                )
-            )
-            buildConfigField(
-                "String[]",
-                "OS_VERSION_NUMBER_LOOKUP_KEYS",
-                arrayForBuildConfig(
-                    "ro.rom.version",
-                    "ro.oxygen.version",
-                    "ro.build.ota.versionname",
-                    "ro.vendor.oplus.exp.version",
-                    "ro.build.display.ota",
-                )
-            )
-            buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.ota\"")
-            // Latter one is only used on very old OOS versions
+            setupBuildConfig()
 
             signingConfig = signingConfigs.getByName("release")
-
-            isMinifyEnabled = true
-            isShrinkResources = true
-            isDebuggable = false
         }
 
-        // Config for use during debugging and testing on an emulator
-        // Uses the test server, and reads system properties using the default build.prop values present on any Android device/emulator
-        val debug = getByName("debug") {
-            buildConfigField("String", "SERVER_DOMAIN", "\"https://test.oxygenupdater.com/\"")
-            buildConfigField("String", "SERVER_API_BASE", "\"api/v2.9/\"")
-            buildConfigField("String", "NOTIFICATIONS_PREFIX", "\"test_\"")
-            buildConfigField(
-                "String[]",
-                "DEVICE_NAME_LOOKUP_KEYS",
-                arrayForBuildConfig("ro.product.name")
-            )
-            buildConfigField(
-                "String[]",
-                "OS_VERSION_NUMBER_LOOKUP_KEYS",
-                arrayForBuildConfig("ro.build.version.release")
-            )
-            buildConfigField("String", "OS_OTA_VERSION_NUMBER_LOOKUP_KEY", "\"ro.build.version.incremental\"")
-
-            isMinifyEnabled = true
-            isShrinkResources = true
-            isDebuggable = true
-
-            // Disable mapping.txt upload for non-release builds
-            configure<com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension> {
-                mappingFileUploadEnabled = false
-            }
+        debug {
+            setupBuildConfig(localOverride = false)
         }
 
         create(testBuildType) {
-            initWith(debug)
+            setupBuildConfig(localOverride = false)
+
+            signingConfig = signingConfigs.getByName("debug") // use debug's
 
             // AGP 4.1+ does its own instrumentation, which is probably incompatible
             // with Jacoco because turning this on fails all tests with `IllegalClassFormatException`.
@@ -192,39 +242,6 @@ android {
             // Tests don't work with minification for some reason
             isMinifyEnabled = false
             isShrinkResources = false
-        }
-
-        val languages = fileTree("src/main/res") {
-            include("values-*/strings.xml")
-        }.files.mapNotNull {
-            it.parentFile?.name?.removePrefix("values-")?.replace("-r", "-")
-        }.joinToString { "\"$it\"" }
-
-        val billing = loadProperties("billing", "base64PublicKey" to "")
-
-        // to distinguish in app drawer and allow multiple builds to exist in parallel on the same device
-        buildTypes.forEach {
-            it.buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
-            it.buildConfigField("String", "AD_INTERSTITIAL_NEWS_ID", "\"ca-app-pub-1816831161514116/2367225965\"")
-            it.buildConfigField("String", "BASE64_PUBLIC_KEY", "\"${billing["base64PublicKey"]}\"")
-            it.buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
-
-            val buildName = it.name
-            if (buildName != "release") {
-                it.versionNameSuffix = "-$buildName"
-                it.applicationIdSuffix = ".$buildName"
-                it.resValue("string", "app_name", "Oxygen Updater ($buildName)")
-            } else {
-                it.resValue("string", "app_name", "Oxygen Updater")
-            }
-
-            it.addManifestPlaceholders(
-                mapOf(
-                    "hostName" to "${if (buildName != "release") "test." else ""}oxygenupdater.com",
-                    "advertisingAppId" to "ca-app-pub-1816831161514116~4275332954",
-                    "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
-                )
-            )
         }
     }
 

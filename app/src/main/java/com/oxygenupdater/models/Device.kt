@@ -23,9 +23,8 @@ data class Device(
     companion object {
         @VisibleForTesting
         val ImageUrlPrefix = buildString(37) {
-            append("https://")
-            if (BuildConfig.DEBUG) append("test.")
-            append("oxygenupdater.com/img/device/")
+            append(BuildConfig.SERVER_DOMAIN)
+            append("img/device/")
         }
 
         @VisibleForTesting
