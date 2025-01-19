@@ -585,6 +585,7 @@ class MainActivity : AppCompatActivity() {
                         val serverMessages by viewModel.serverMessages.collectAsStateWithLifecycle()
                         MainMenu(
                             serverMessages = serverMessages,
+                            getPrefBool = viewModel::getPref,
                             showMarkAllRead = subtitleResId == Screen.NewsList.labelResId,
                             onMarkAllReadClick = newsListViewModel::markAllRead,
                             onContributorEnrollmentChange = {

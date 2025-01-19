@@ -145,6 +145,7 @@ fun SettingsScreen(
         )
 
         BecomeContributor(
+            getPrefBool = getPrefBool,
             onContributorEnrollmentChange = onContributorEnrollmentChange,
         )
     }
@@ -277,6 +278,7 @@ fun MethodChooser(
 
 @Composable
 private fun BecomeContributor(
+    getPrefBool: (key: String, default: Boolean) -> Boolean,
     onContributorEnrollmentChange: (Boolean) -> Unit,
 ) {
     var showSheet by rememberSaveableState("showContributorSheet", false)
@@ -287,10 +289,10 @@ private fun BecomeContributor(
         subtitle = stringResource(R.string.settings_contribute_label),
     )
 
-
     if (showSheet) ModalBottomSheet({ showSheet = false }) {
         ContributorSheet(
             hide = it,
+            getPrefBool = getPrefBool,
             confirm = onContributorEnrollmentChange,
         )
     }

@@ -12,6 +12,7 @@ import com.oxygenupdater.get
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.ui.dialogs.BottomSheetTestTag
 import com.oxygenupdater.ui.dialogs.PreviewServerMessagesList
+import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.validateColumnLayout
 import org.junit.Test
 
@@ -25,6 +26,7 @@ class MainMenuTest : ComposeBaseTest() {
             Row {
                 MainMenu(
                     serverMessages = serverMessages,
+                    getPrefBool = PreviewGetPrefBool,
                     showMarkAllRead = showMarkAllRead,
                     onMarkAllReadClick = {
                         trackCallback("onMarkAllReadClick")

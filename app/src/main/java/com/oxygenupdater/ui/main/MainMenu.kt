@@ -31,6 +31,7 @@ import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.PreviewServerMessagesList
 import com.oxygenupdater.ui.dialogs.ServerMessagesSheet
 import com.oxygenupdater.ui.theme.PreviewAppTheme
+import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
 
@@ -38,6 +39,7 @@ import com.oxygenupdater.utils.ContributorUtils
 @Composable
 fun RowScope.MainMenu(
     serverMessages: List<ServerMessage>,
+    getPrefBool: (key: String, default: Boolean) -> Boolean,
     showMarkAllRead: Boolean,
     onMarkAllReadClick: () -> Unit,
     onContributorEnrollmentChange: (Boolean) -> Unit,
@@ -78,6 +80,7 @@ fun RowScope.MainMenu(
             // OTA URL contribution
             if (showBecomeContributor) ContributorMenuItem(
                 onDismiss = { showMenu = false },
+                getPrefBool = getPrefBool,
                 onContributorEnrollmentChange = onContributorEnrollmentChange,
             )
         }
@@ -105,6 +108,7 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
 @Composable
 private fun ContributorMenuItem(
     onDismiss: () -> Unit,
+    getPrefBool: (key: String, default: Boolean) -> Boolean,
     onContributorEnrollmentChange: (Boolean) -> Unit,
 ) {
     var showSheet by rememberSaveableState("showContributorSheet", false)
@@ -117,6 +121,7 @@ private fun ContributorMenuItem(
     if (showSheet) ModalBottomSheet({ showSheet = false }) {
         ContributorSheet(
             hide = it,
+            getPrefBool = getPrefBool,
             confirm = onContributorEnrollmentChange,
         )
     }
@@ -141,6 +146,7 @@ fun PreviewMainMenu() = PreviewAppTheme {
         MainMenu(
             serverMessages = PreviewServerMessagesList,
             showMarkAllRead = true,
+            getPrefBool = PreviewGetPrefBool,
             onMarkAllReadClick = {},
             onContributorEnrollmentChange = {},
         )

@@ -18,8 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
+import com.oxygenupdater.internal.settings.KeyContribute
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.hasRootAccess
@@ -27,6 +29,7 @@ import com.oxygenupdater.utils.hasRootAccess
 @Composable
 fun ColumnScope.ContributorSheet(
     hide: () -> Unit,
+    getPrefBool: ((key: String, default: Boolean) -> Boolean)? = null,
     confirm: ((Boolean) -> Unit)? = null,
 ) {
     SheetHeader(R.string.contribute_title)
@@ -46,16 +49,20 @@ fun ColumnScope.ContributorSheet(
      * device is rooted with the OS being >= Android 10/Q.
      */
     if (confirm != null && ContributorUtils.isAtLeastQAndPossiblyRooted) {
-        ContributorSheetEnroll(hide = hide, confirm = confirm)
+        ContributorSheetEnroll(hide = hide, getPrefBool = getPrefBool, confirm = confirm)
     }
 }
 
 @Composable
 private fun ContributorSheetEnroll(
     hide: () -> Unit,
+    getPrefBool: ((key: String, default: Boolean) -> Boolean)? = null,
     confirm: (Boolean) -> Unit,
 ) {
-    var contribute by rememberSaveableState("contribute", true)
+    var contribute by rememberSaveableState(
+        "contribute", getPrefBool?.invoke(KeyContribute, false) ?: true
+    )
+
     CheckboxText(
         checked = contribute,
         onCheckedChange = { contribute = it },
@@ -84,5 +91,5 @@ private fun ContributorSheetEnroll(
 @PreviewThemes
 @Composable
 fun PreviewContributorSheet() = PreviewModalBottomSheet {
-    ContributorSheet(hide = {}, confirm = {})
+    ContributorSheet(hide = {}, getPrefBool = PreviewGetPrefBool, confirm = {})
 }

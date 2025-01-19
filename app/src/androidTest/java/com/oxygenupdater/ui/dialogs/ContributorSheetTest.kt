@@ -3,6 +3,7 @@ package com.oxygenupdater.ui.dialogs
 import androidx.compose.foundation.layout.Column
 import com.oxygenupdater.R
 import com.oxygenupdater.assertHasScrollAction
+import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import org.junit.Test
 
 class ContributorSheetTest : ModalBottomSheetTest() {
@@ -13,6 +14,7 @@ class ContributorSheetTest : ModalBottomSheetTest() {
             Column {
                 ContributorSheet(
                     hide = {},
+                    getPrefBool = PreviewGetPrefBool,
                     confirm = {},
                 )
             }
