@@ -125,7 +125,7 @@ android {
     namespace = "com.oxygenupdater"
 
     // https://developer.android.com/studio/releases/build-tools
-    buildToolsVersion = "35.0.0"
+    buildToolsVersion = "35.0.1"
     compileSdk = 35
 
     testBuildType = "instrumentation"

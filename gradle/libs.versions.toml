@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.7.3"
+agp = "8.8.0"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.2"
@@ -32,12 +32,13 @@ compose-compiler = "1.5.15"
 accompanist = "0.37.0" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.9.3"
+activity-compose = "1.10.0"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation
 navigation-compose = "2.8.5"
 
 # https://github.com/eygraber/compose-placeholder/releases
+# Can't upgrade to 1.0.9; it requires Kotlin 2
 eygraber-placeholder-compose = "1.0.8"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
@@ -63,10 +64,11 @@ core-splashscreen = "1.0.1"
 desugar = "2.1.4"
 
 # https://firebase.google.com/support/release-notes/android
+# Can't use 33.8.0; it causes build failures with Kotlin 1.9
 firebase-bom = "33.7.0"
 
 # https://github.com/google/dagger/releases
-dagger = "2.54"
+dagger = "2.55"
 # https://developer.android.com/jetpack/androidx/releases/hilt
 hilt = "1.2.0"
 
