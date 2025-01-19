@@ -114,7 +114,19 @@ class ContributorUtils @Inject constructor(
         private const val TAG = "ContributorUtils"
 
         val isAtLeastQ = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q // same as RootFileService
-        val isAtLeastQAndPossiblyRooted
-            get() = isAtLeastQ && Shell.isAppGrantedRoot() != false
+
+        /**
+         * lazy => init only once. This is preferable to a getter because
+         * this boolean is used to show contributor-related UIs. They should
+         * not vanish just because the user denied root permission.
+         *
+         * So, the initial value of [Shell.isAppGrantedRoot] is what's important
+         * here:
+         * - `null` if user has never been presented with the root access dialog
+         * - `true`/`false` otherwise, depending on what the user granted our app
+         */
+        val isAtLeastQAndPossiblyRooted by lazy(LazyThreadSafetyMode.PUBLICATION) {
+            isAtLeastQ && Shell.isAppGrantedRoot() != false
+        }
     }
 }
