@@ -1,7 +1,5 @@
 package com.oxygenupdater.ui.dialogs
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -52,7 +50,6 @@ fun ColumnScope.ContributorSheet(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 private fun ContributorSheetEnroll(
     hide: () -> Unit,

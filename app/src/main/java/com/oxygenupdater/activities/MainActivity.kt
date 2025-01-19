@@ -422,11 +422,13 @@ class MainActivity : AppCompatActivity() {
                         hasRootAccess {
                             viewModel.persist(KeyContribute, true)
                             viewModel.shouldShowOnboarding = false
+                            contributorUtils.startOrStop(this@MainActivity)
                         }
                     } else {
                         // Skip shell creation and thus don't show root permission prompt
                         viewModel.persist(KeyContribute, false)
                         viewModel.shouldShowOnboarding = false
+                        contributorUtils.startOrStop(this@MainActivity)
                     }
                 } else {
                     crashlytics.logWarning(TAG, "Required preferences not valid: ${viewModel.deviceId}, ${viewModel.updateMethodId}")
@@ -1132,7 +1134,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        contributorUtils.startOrStop(this)
+        if (!viewModel.shouldShowOnboarding) contributorUtils.startOrStop(this)
     }
 
     /** @return start [Screen] */
