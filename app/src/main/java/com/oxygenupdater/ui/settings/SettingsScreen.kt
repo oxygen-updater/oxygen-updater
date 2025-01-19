@@ -70,6 +70,7 @@ import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.LogoNotification
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.KeyAdFree
+import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.internal.settings.KeyDevice
 import com.oxygenupdater.internal.settings.KeyShareAnalyticsAndLogs
 import com.oxygenupdater.internal.settings.KeyUpdateMethod
@@ -112,7 +113,6 @@ fun SettingsScreen(
     methodConfig: SettingsListConfig<UpdateMethod>,
     onMethodSelect: (UpdateMethod) -> Unit,
     onThemeSelect: (Theme) -> Unit,
-    advancedMode: Boolean,
     onAdvancedModeChange: (Boolean) -> Unit,
     isPrivacyOptionsRequired: Boolean,
     showPrivacyOptionsForm: () -> Unit,
@@ -168,7 +168,7 @@ fun SettingsScreen(
 
     // region Advanced
     Header(R.string.preference_header_advanced)
-    AdvancedMode(initial = advancedMode, onChange = onAdvancedModeChange)
+    AdvancedMode(getPrefBool = getPrefBool, onChange = onAdvancedModeChange)
     SettingsAnalytics(getPrefBool = getPrefBool, persistBool = persistBool)
     PrivacyOptionsItem(
         isPrivacyOptionsRequired = isPrivacyOptionsRequired,
@@ -409,13 +409,15 @@ private fun Language() {
 
 @Composable
 private fun AdvancedMode(
-    initial: Boolean,
+    getPrefBool: (key: String, default: Boolean) -> Boolean,
     onChange: (Boolean) -> Unit,
 ) {
     var showSheet by rememberSaveableState("showAdvancedModeSheet", false)
 
     // Maintain state if user leaves this screen, then comes back to it
-    var advancedMode by rememberSaveableState("advancedMode", initial)
+    var advancedMode by rememberSaveableState(
+        "advancedMode", getPrefBool(KeyAdvancedMode, false)
+    )
     SettingsSwitchItem(
         checked = advancedMode,
         onCheckedChange = {
@@ -629,7 +631,6 @@ fun PreviewSettingsScreen() = PreviewAppTheme {
         methodConfig = MethodSettingsListConfig,
         onMethodSelect = {},
         onThemeSelect = {},
-        advancedMode = false,
         onAdvancedModeChange = {},
         isPrivacyOptionsRequired = true,
         showPrivacyOptionsForm = {},

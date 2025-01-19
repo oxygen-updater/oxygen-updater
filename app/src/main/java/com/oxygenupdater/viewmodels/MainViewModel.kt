@@ -127,11 +127,6 @@ class MainViewModel @Inject constructor(
 
     var shouldShowOnboarding by mutableStateOf(!sharedPreferences[KeySetupDone, false])
 
-    /**
-     * Not a getter because we only use this for an initial value
-     */
-    val advancedMode = sharedPreferences[KeyAdvancedMode, false]
-
     val canShowNotifPermissionSheet = !sharedPreferences[KeyIgnoreNotificationPermissionSheet, false]
 
     val shouldShowUnsupportedDeviceDialog

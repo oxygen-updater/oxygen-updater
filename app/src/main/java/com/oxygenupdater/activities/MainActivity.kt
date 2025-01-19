@@ -955,7 +955,6 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             onThemeSelect = settingsViewModel::updateTheme,
-            advancedMode = viewModel.advancedMode,
             onAdvancedModeChange = { viewModel.persist(KeyAdvancedMode, it) },
             isPrivacyOptionsRequired = consentInformation.privacyOptionsRequirementStatus == PrivacyOptionsRequirementStatus.REQUIRED,
             showPrivacyOptionsForm = {

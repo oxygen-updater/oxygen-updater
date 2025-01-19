@@ -72,7 +72,6 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
                 methodConfig = MethodSettingsListConfig,
                 onMethodSelect = { trackCallback("onMethodSelect: ${it.id}") },
                 onThemeSelect = { trackCallback("onThemeSelect: $it") },
-                advancedMode = false,
                 onAdvancedModeChange = { trackCallback("onAdvancedModeChange: $it") },
                 isPrivacyOptionsRequired = true,
                 showPrivacyOptionsForm = { trackCallback("showPrivacyOptionsForm") },
