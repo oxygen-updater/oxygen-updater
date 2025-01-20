@@ -3,7 +3,6 @@ package com.oxygenupdater.internal
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.app.NotificationManagerCompat
-import androidx.preference.PreferenceManager
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -50,7 +49,9 @@ object PrefModule {
     @Provides
     fun sharedPreferences(
         @ApplicationContext context: Context,
-    ): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    ): SharedPreferences = context.getSharedPreferences(
+        "${context.packageName}_preferences", Context.MODE_PRIVATE
+    )
 }
 
 @Module

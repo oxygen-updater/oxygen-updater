@@ -311,9 +311,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
 
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.browser)
-    implementation(libs.androidx.preference.ktx)
     implementation(libs.androidx.work.runtime)
 
     implementation(libs.androidx.core.ktx)
