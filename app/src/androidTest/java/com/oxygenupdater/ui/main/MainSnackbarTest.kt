@@ -43,7 +43,11 @@ class MainSnackbarTest : ComposeBaseTest() {
     private fun validateNodes(callbackToCheck: String? = null) {
         val (messageResId, actionResId) = snackbarText!!
         val children = rule.onAllNodes(
-            SemanticsMatcher.keyIsDefined(SemanticsProperties.IsTraversalGroup)
+            // Snackbar is wrapped in a Surface (implementation detail), which
+            // has `isContainer = true` even though it's deprecated. This is
+            // how we filter for the snackbar component.
+            @Suppress("DEPRECATION")
+            SemanticsMatcher.keyIsDefined(SemanticsProperties.IsContainer)
         )[1].onChildren()
         // Note: [1] because [0] would be Surface, which PreviewAppTheme wraps our content in
 

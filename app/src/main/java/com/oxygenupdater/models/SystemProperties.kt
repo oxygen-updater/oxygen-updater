@@ -5,7 +5,6 @@ import android.os.Build.UNKNOWN
 @Volatile
 var useSystemProperties = true
 
-@Suppress("NOTHING_TO_INLINE")
 @Throws(UnsupportedOperationException::class)
 private inline fun invokeGet(key: String) = with(ClassAndMethod) {
     if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")

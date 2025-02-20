@@ -108,14 +108,12 @@ fun Context.openLink(url: String) = try {
     copyToClipboard(url)
 }
 
-@Suppress("NOTHING_TO_INLINE")
 @Throws(ActivityNotFoundException::class)
 inline fun Context.openAppDetailsPage() = startActivity(
     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageNameUri)
 )
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Suppress("NOTHING_TO_INLINE")
 @Throws(ActivityNotFoundException::class)
 inline fun Context.openAppLocalePage() = startActivity(
     Intent(Settings.ACTION_APP_LOCALE_SETTINGS, packageNameUri)

@@ -15,7 +15,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -449,7 +448,6 @@ private fun DownloadButtonContainer(
     )
 }
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun DownloadButton(
     navType: NavType,

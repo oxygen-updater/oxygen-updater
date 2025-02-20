@@ -59,7 +59,6 @@ data class ServerStatus(
     }
 
     companion object {
-        @Suppress("NOTHING_TO_INLINE")
         private inline fun String.toSemverInts() =
             split("-")[0] // handle custom builds (e.g. debug, benchmark, etc)
                 .split(".").map { it.toInt() } // map each component to int

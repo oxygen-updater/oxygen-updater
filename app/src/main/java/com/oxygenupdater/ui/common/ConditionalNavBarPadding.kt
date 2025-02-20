@@ -12,7 +12,6 @@ import com.oxygenupdater.ui.main.NavType
  *
  * Meant to be used as the last (vertical) composable in children of [com.oxygenupdater.activities.MainActivity]'s NavHost.
  */
-@Suppress("NOTHING_TO_INLINE")
 @Composable
 inline fun ConditionalNavBarPadding(navType: NavType) {
     if (navType != NavType.BottomBar) Spacer(Modifier.navigationBarsPadding())

@@ -60,7 +60,7 @@ private fun ContributorSheetEnroll(
     confirm: (Boolean) -> Unit,
 ) {
     var contribute by rememberSaveableState(
-        "contribute", getPrefBool?.invoke(KeyContribute, false) ?: true
+        "contribute", getPrefBool?.invoke(KeyContribute, false) != false
     )
 
     CheckboxText(

@@ -155,7 +155,6 @@ class ReadOtaDbWorker @AssistedInject constructor(
         if (failed) Result.failure() else Result.success()
     }
 
-    @Suppress("NOTHING_TO_INLINE")
     private inline fun Cursor.toMap() = columnCount.let { columnCount ->
         // Memory efficient, albeit slower compared to HashMap
         // Note: we can't use SimpleArrayMap as it doesn't implement Map, thus can't be serialized by Moshi

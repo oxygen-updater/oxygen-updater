@@ -133,7 +133,6 @@ class WebViewState {
     var webView by mutableStateOf<WebView?>(null)
 }
 
-@Suppress("NOTHING_TO_INLINE")
 @Composable
 inline fun rememberWebViewState() = remember { WebViewState() }
 

@@ -41,7 +41,6 @@ open class ComposeBaseTest {
      * java.lang.ClassCastException: androidx.compose.runtime.internal.ComposableLambdaImpl cannot be cast to kotlin.jvm.functions.Function0
      * ```
      */
-    @Suppress("NOTHING_TO_INLINE")
     protected inline fun setContent(
         allowImmediateCallbacks: Boolean = false,
         noinline content: @Composable () -> Unit,

@@ -24,7 +24,7 @@ object NotifUtils {
             importance == NotificationManager.IMPORTANCE_NONE ||
                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && getNotificationChannelGroup(group)?.isBlocked == true)
         } else false
-    } ?: false
+    } == true
 
     fun toNotifStatus(context: Context) = with(NotificationManagerCompat.from(context)) {
         if (areNotificationsEnabled()) NotifStatus(
@@ -47,7 +47,7 @@ object NotifUtils {
     }
 
     /** Deletes all old notification channels */
-    @Suppress("DEPRECATION", "NOTHING_TO_INLINE")
+    @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.O)
     private inline fun NotificationManagerCompat.deleteOldNotificationChannels() {
         deleteNotificationChannel(NotificationChannels.OldPushNotifChannelId)
@@ -61,7 +61,6 @@ object NotifUtils {
      *
      * @see NotificationChannels
      */
-    @Suppress("NOTHING_TO_INLINE")
     @RequiresApi(Build.VERSION_CODES.O)
     private inline fun NotificationManagerCompat.createAllNotificationGroups(context: Context) = createNotificationChannelGroups(
         listOf(
@@ -95,7 +94,6 @@ object NotifUtils {
      * @see PushNotificationsGroup
      * @see MiscellaneousGroup
      */
-    @Suppress("NOTHING_TO_INLINE")
     @RequiresApi(Build.VERSION_CODES.O)
     private inline fun NotificationManagerCompat.createAllNotificationChannels(context: Context) = createNotificationChannels(
         listOf(

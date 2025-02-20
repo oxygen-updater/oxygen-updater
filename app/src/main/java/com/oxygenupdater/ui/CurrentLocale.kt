@@ -29,7 +29,6 @@ fun currentLocale() = ConfigurationCompat.getLocales(LocalConfiguration.current)
  *
  * Its behaviour is fully-tested in [com.oxygenupdater.ui.CurrentLocaleTest].
  */
-@Suppress("NOTHING_TO_INLINE")
 @VisibleForTesting
 inline fun Locale.languageOrLanguageTag() = language.let {
     if (it == "pt" || it == "zh") toLanguageTag() else it

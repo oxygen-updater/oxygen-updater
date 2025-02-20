@@ -34,6 +34,8 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.ZeroCornerSize
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
 import androidx.compose.material.icons.outlined.Share
@@ -53,13 +55,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -67,7 +66,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.graphicsLayer
@@ -443,11 +441,17 @@ private fun ListItemTitles(refreshing: Boolean, item: Article) {
             }
     )
 
-    AutoresizeText(
+    BasicText(
         text = item.subtitle ?: "",
-        fontSizeRange = FontSizeRange(12f, 14f),
-        modifier = Modifier
-            .withPlaceholder(refreshing)
+        overflow = TextOverflow.Ellipsis, maxLines = 2,
+        style = MaterialTheme.typography.bodyMedium.merge(
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        ),
+        autoSize = TextAutoSize.StepBased(
+            minFontSize = 12.sp,
+            maxFontSize = 14.sp,
+        ),
+        modifier = Modifier.withPlaceholder(refreshing)
     )
 }
 
@@ -700,64 +704,6 @@ private fun ItemMenu(
             onDismiss()
         },
     )
-}
-
-// TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap#core-libraries
-/**
- * @see <a href="https://stackoverflow.com/a/69780826">stackoverflow.com/a/69780826<a>
- */
-@Composable
-private fun AutoresizeText(
-    text: String,
-    fontSizeRange: FontSizeRange,
-    modifier: Modifier,
-    maxLines: Int = 2,
-) {
-    val (min, max, step) = fontSizeRange
-    var fontSizeValue by remember { mutableFloatStateOf(max) }
-    var readyToDraw by remember { mutableStateOf(false) }
-
-    Text(
-        text = text,
-        fontSize = fontSizeValue.sp,
-        overflow = TextOverflow.Ellipsis, maxLines = maxLines,
-        onTextLayout = {
-            // Fits before reaching min, mark readyToDraw
-            if (!it.hasVisualOverflow) readyToDraw = true
-            else if (!readyToDraw) {
-                val nextFontSizeValue = fontSizeValue - step
-                if (nextFontSizeValue <= min) {
-                    // Reached min, set & mark readyToDraw
-                    fontSizeValue = min
-                    readyToDraw = true
-                } else {
-                    // Doesn't fit yet and we haven't reached min, keep decreasing
-                    fontSizeValue = nextFontSizeValue
-                }
-            }
-        },
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodyMedium,
-        modifier = modifier.drawWithContent {
-            if (readyToDraw) drawContent()
-        }
-    )
-}
-
-@Immutable
-private data class FontSizeRange(
-    val min: Float,
-    val max: Float,
-    val step: Float = DefaultStep,
-) {
-    init {
-        require(min <= max) { "min should be less than or equal to max, $this" }
-        require(step > 0) { "step should be greater than 0, $this" }
-    }
-
-    companion object {
-        private const val DefaultStep = 1f
-    }
 }
 
 // Perf: re-use common modifiers to avoid recreating the same object repeatedly

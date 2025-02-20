@@ -1,5 +1,3 @@
-@file:Suppress("NOTHING_TO_INLINE")
-
 package com.oxygenupdater
 
 import androidx.compose.ui.geometry.Rect

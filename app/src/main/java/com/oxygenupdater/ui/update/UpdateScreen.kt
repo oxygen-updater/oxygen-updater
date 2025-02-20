@@ -145,7 +145,7 @@ private fun checkDownloadPaused(context: Context?, filename: String?) = if (file
     false
 } else context?.let {
     File(it.getExternalFilesDir(null), filename).exists()
-} ?: false
+} == true
 
 private fun correctStatus(
     context: Context?,

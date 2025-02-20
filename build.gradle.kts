@@ -9,6 +9,13 @@ plugins {
     alias(libs.plugins.hilt) apply false
 }
 
+configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        failOnNonReproducibleResolution()
+    }
+}
+
 tasks.register("clean").configure {
     delete("build")
 }

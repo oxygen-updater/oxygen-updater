@@ -1,6 +1,7 @@
 import com.android.build.api.dsl.ApplicationBuildType
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
-import java.net.URL
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
+import java.net.URI
 import java.util.Properties
 
 plugins {
@@ -9,6 +10,7 @@ plugins {
     alias(libs.plugins.gms.services)
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
     id("kotlin-parcelize")
@@ -91,7 +93,7 @@ fun ApplicationBuildType.setupBuildConfig(
 
     addManifestPlaceholders(
         mapOf(
-            "hostName" to URL(domain).host,
+            "hostName" to URI(domain).host,
             "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
         )
     )
@@ -185,7 +187,6 @@ android {
     // This ensures that the app won't crash if the user selects a
     // language that isn't in their device language list.
     // This'll obviously increase APK size significantly.
-    @Suppress("UnstableApiUsage")
     bundle.language.enableSplit = false
 
     packaging.resources.excludes += setOf(
@@ -245,13 +246,7 @@ android {
         }
     }
 
-    val javaVersion = JavaVersion.VERSION_17 // keep in sync with `jvmToolchain` below
-    kotlinOptions.jvmTarget = javaVersion.toString()
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
+    compileOptions.isCoreLibraryDesugaringEnabled = true
 
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
 
@@ -261,29 +256,41 @@ android {
         buildConfig = true
     }
 
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
     // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
     @Suppress("UnstableApiUsage")
     androidResources.generateLocaleConfig = true
 }
 
-// Required to workaround https://issuetracker.google.com/issues/260059413
+composeCompiler {
+    featureFlags = setOf(
+        // Introduced in 1.5.9: https://r.android.com/c/2912628
+        ComposeFeatureFlag.OptimizeNonSkippingGroups,
+        // Introduced in Kotlin 2.1.0: https://kotlinlang.org/docs/whatsnew21.html#pausable-composition
+        // Requires androidx.compose.runtime 1.8.0-alpha02 or higher
+        ComposeFeatureFlag.PausableComposition,
+    )
+
+    // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
+    // Requires a fresh build to show all outputs
+    metricsDestination = layout.buildDirectory.dir("composeMetrics")
+    reportsDestination = layout.buildDirectory.dir("composeMetrics")
+}
+
 kotlin {
-    jvmToolchain(17) // keep in sync with `javaVersion` above
+    jvmToolchain(17)
     compilerOptions {
-        val prefix = "plugin:androidx.compose.compiler.plugins.kotlin"
-        val composeMetrics = project.layout.buildDirectory.dir("composeMetrics").get().asFile.path
+        // https://kotlinlang.org/docs/whatsnew21.html#extra-compiler-checks
+        extraWarnings.set(true)
+
         freeCompilerArgs.addAll(
             // Disable the annoying "Parameter specified as non-null is null" exceptions
             "-Xno-param-assertions",
-            // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
-            // Requires a fresh build to show all outputs
-            "-P", "$prefix:metricsDestination=$composeMetrics",
-            "-P", "$prefix:reportsDestination=$composeMetrics",
-            // Introduced in 1.5.4: https://r.android.com/c/2671135,
-            // stabilized in 1.5.13: https://r.android.com/c/3040172
-            "-P", "$prefix:strongSkipping=true",
-            // Introduced in 1.5.9: https://r.android.com/c/2912628
-            "-P", "$prefix:nonSkippingGroupOptimization=true",
+            // https://kotlinlang.org/docs/whatsnew21.html#global-warning-suppression
+            "-Xsuppress-warning=NOTHING_TO_INLINE",
         )
     }
 }
@@ -297,10 +304,6 @@ ksp {
 hilt {
     // https://dagger.dev/hilt/gradle-setup#aggregating-task
     enableAggregatingTask = true
-}
-
-room {
-    schemaDirectory("$projectDir/schemas")
 }
 
 dependencies {

@@ -143,7 +143,6 @@ fun MainNavigationRail(
     }
 }
 
-@Suppress("NOTHING_TO_INLINE")
 @Composable
 private inline fun NavigationLabel(label: String) = Text(
     text = label,

@@ -8,7 +8,6 @@ fun NotificationCompat.Builder.setBigTextStyle(text: String?) = setContentText(t
     NotificationCompat.BigTextStyle().bigText(text)
 )
 
-@Suppress("NOTHING_TO_INLINE")
 inline fun NotificationManagerCompat.tryNotify(
     id: Int,
     notification: Notification,

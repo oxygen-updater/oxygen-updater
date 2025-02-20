@@ -320,7 +320,6 @@ class MainActivity : AppCompatActivity() {
      * from all devices anyway. Additionally, unnecessary changes in device lists will cause a repeated request
      * for update methods to also be sent.
      */
-    @Suppress("NOTHING_TO_INLINE")
     @Composable
     private inline fun PassthroughEnabledDevicesToSettingsViewModel(enabledDevices: List<Device>?) {
         if (enabledDevices == null) return
@@ -1163,7 +1162,7 @@ class MainActivity : AppCompatActivity() {
         //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
         downloadErrorMessage = try {
             intent?.getStringExtra(KeyDownloadErrorMessage)
-        } catch (ignored: IndexOutOfBoundsException) {
+        } catch (_: IndexOutOfBoundsException) {
             null
         }
 

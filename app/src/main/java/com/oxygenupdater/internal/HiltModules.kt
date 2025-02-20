@@ -79,7 +79,7 @@ object DatabaseModule {
                 sharedPreferences[KeySqlToRoomMigrationDone] = true
             }
         })
-    }.fallbackToDestructiveMigrationOnDowngrade().build()
+    }.fallbackToDestructiveMigrationOnDowngrade(false).build()
 
     @Singleton
     @Provides

@@ -304,7 +304,7 @@ object SystemVersionProperties {
                     // getprop output format is `[<item>]: [<value>]`, and we only need <value>.
                     // This is more efficient way to get rid of unneeded parts of the string, as
                     // opposed to `replace("[$item]: ", "").replace("[", "").replace("]", "")`.
-                    result = inputLine!!.drop(
+                    result = inputLine.drop(
                         item.length + 5 /* 2 for surrounding `[]`, 2 for `: `, and 1 more for `[` */
                     ).dropLast(1 /* last `]` */)
 

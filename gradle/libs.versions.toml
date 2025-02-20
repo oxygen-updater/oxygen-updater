@@ -1,48 +1,48 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.8.0"
+agp = "8.9.2"
 
 # https://firebase.google.com/support/release-notes/android
-crashlytics-plugin = "3.0.2"
+crashlytics-plugin = "3.0.3"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
 google-services-plugin = "4.4.2"
 
 # https://github.com/google/ksp/releases
-ksp = "1.9.25-1.0.20"
+ksp = "2.1.20-2.0.0"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "1.9.25"
+kotlin = "2.1.20"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
-kotlin-coroutines = "1.9.0"
+kotlin-coroutines = "1.10.2"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.7.6" # keep in sync with Kotlin & accompanist version
-compose-m3 = "1.3.1" # update sideRailWidth in MainActivity if changed
+compose = "1.8.0" # keep in sync with Kotlin & accompanist version
+compose-m2-icons = "1.7.8"
+compose-m3 = "1.3.2" # update sideRailWidth in MainActivity if changed
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 compose-compiler = "1.5.15"
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
-accompanist = "0.37.0" # keep in sync with Compose version
+accompanist = "0.37.2" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.10.0"
+activity-compose = "1.10.1"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation
-navigation-compose = "2.8.5"
+navigation-compose = "2.8.9"
 
 # https://github.com/eygraber/compose-placeholder/releases
-# Can't upgrade to 1.0.9; it requires Kotlin 2
-eygraber-placeholder-compose = "1.0.8"
+eygraber-placeholder-compose = "1.0.9"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
-coil = "3.0.4"
+coil = "3.1.0"
 
 # https://developer.android.com/jetpack/androidx/releases/appcompat
 appcompat = "1.7.0"
@@ -57,18 +57,17 @@ billing = "7.1.1"
 browser = "1.8.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
-core = "1.15.0"
+core = "1.16.0"
 core-splashscreen = "1.0.1"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
-desugar = "2.1.4"
+desugar = "2.1.5"
 
 # https://firebase.google.com/support/release-notes/android
-# Can't use 33.8.0; it causes build failures with Kotlin 1.9
-firebase-bom = "33.7.0"
+firebase-bom = "33.13.0"
 
 # https://github.com/google/dagger/releases
-dagger = "2.55"
+dagger = "2.56.2"
 # https://developer.android.com/jetpack/androidx/releases/hilt
 hilt = "1.2.0"
 
@@ -76,7 +75,7 @@ hilt = "1.2.0"
 junit = "4.13.2"
 
 # https://github.com/jacoco/jacoco/releases
-jacoco = "0.8.12"
+jacoco = "0.8.13"
 
 # https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
 libsu = "6.0.0"
@@ -95,21 +94,22 @@ okhttp = "4.12.0"
 # https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
 play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
-play-services-base = "18.5.0"
+play-services-base = "18.7.0"
 # https://developers.google.com/admob/android/rel-notes
+# Can't use 24+; requires minAPI 23
 play-services-ads = "23.6.0"
 # https://developers.google.com/admob/android/privacy/release-notes
-ump = "3.1.0"
+ump = "3.2.0"
 
 # https://github.com/square/retrofit/tags
 # https://github.com/square/retrofit/blob/master/CHANGELOG.md
 retrofit = "2.11.0"
 
 # https://developer.android.com/jetpack/androidx/releases/room
-room = "2.6.1"
+room = "2.7.1"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.10.0"
+work-runtime = "2.10.1"
 
 # https://developer.android.com/jetpack/androidx/releases/test
 test-core = "1.6.1"
@@ -119,7 +119,7 @@ test-ext-truth = "1.6.0"
 test-ext-junit = "1.2.1"
 
 # https://developer.android.com/jetpack/androidx/releases/tracing
-tracing = "1.3.0-alpha02"
+tracing = "1.3.0"
 
 [libraries]
 android-desugar = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar" }
@@ -157,7 +157,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 androidx-compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
 androidx-compose-animation-graphics = { module = "androidx.compose.animation:animation-graphics", version.ref = "compose" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-m2-icons" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-m3" }
 androidx-compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-m3" }
 androidx-compose-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
@@ -215,6 +215,7 @@ firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "
 gms-services = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 

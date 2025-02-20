@@ -123,7 +123,6 @@ fun RichText(
  *
  * @see <a href="https://developer.android.com/guide/topics/resources/string-resource#StylingWithHTML">Supported HTML elements in Android string resources</string>
  */
-@Suppress("NOTHING_TO_INLINE")
 private inline fun htmlToAnnotatedString(
     html: String,
     urlColor: Color,
