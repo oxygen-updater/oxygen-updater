@@ -34,6 +34,9 @@ object SystemVersionProperties {
     /** Required for workaround #4 */
     private const val BuildSoftVersionLookupKey = "ro.build.soft.version"
 
+    /** This includes both [Build.DISPLAY] and OnePlus SOTA info */
+    private const val FullOsVersionLookupKey = "persist.sys.oplus.ota_ver_display"
+
     /** Required for workaround #3 */
     private const val OnePlus3 = "OnePlus3"
 
@@ -50,7 +53,7 @@ object SystemVersionProperties {
      * This isn't a workaround, but was introduced in the first Open Beta for 7T-series.
      * These keys will be checked on all devices, for better future-proofing.
      *
-     * Note: this value used to be saved to shared prefs prior to v6 stable, but now it's in [isEuBuild].
+     * Note: this value used to be saved to shared prefs prior to v6 stable, but now it's in `isEuBuild`.
      */
     private val BuildEuLookupKeys = arrayOf("ro.build.eu", "ro.vendor.build.eu")
 
@@ -66,7 +69,7 @@ object SystemVersionProperties {
     /** Required for workaround #5*/
     private const val VendorOpIndia = "ro.vendor.op.india"
 
-    /** Required for [osType] */
+    /** Required for `osType` */
     private const val BuildOsTypeLookupKey = "ro.build.os_type"
 
     /** Matchable name of the device */
@@ -148,6 +151,9 @@ object SystemVersionProperties {
                 // shows only the number or adds custom formatting. Seen on devices from OnePlus 7-series onwards,
                 // on OS versions released before the Oppo merger (ColorOS base).
                 if (value.contains(OxygenOsPrefix)) value.replace(OxygenOsPrefix, "") else value
+            } else systemProperty(FullOsVersionLookupKey).let {
+                // Prefer OS version with SOTA info, if available
+                if (it != UNKNOWN) oxygenOSVersion = it
             }
 
             val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
@@ -216,7 +222,10 @@ object SystemVersionProperties {
                 // number, so we're not losing any info.
                 if (oxygenOSVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) oxygenOSVersion = readBuildPropItem(
                     BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion
-                )
+                ) else readBuildPropItem(FullOsVersionLookupKey, properties).let {
+                    // Prefer OS version with SOTA info, if available
+                    if (it != UNKNOWN) oxygenOSVersion = it
+                }
 
                 val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
                 if (SDK_INT >= VERSION_CODES.S) {
