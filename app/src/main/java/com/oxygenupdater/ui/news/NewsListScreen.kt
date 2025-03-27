@@ -114,6 +114,9 @@ import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxSize
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.scrollbar.Scrollbar
+import com.oxygenupdater.ui.common.scrollbar.rememberDraggableScroller
+import com.oxygenupdater.ui.common.scrollbar.scrollbarState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.Screen
@@ -206,28 +209,39 @@ fun NewsListScreen(
                     // Scroll to the first item upon refresh
                     if (listState.firstVisibleItemIndex > 0) try {
                         listState.animateScrollToItem(0)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         try {
                             listState.scrollToItem(0)
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             // ignore
                         }
                     }
                 }
 
-                LazyColumn(
-                    state = listState,
-                    modifier = modifierMaxSize.testTag(NewsListScreen_LazyColumnTestTag)
-                ) {
-                    items(items = list, key = { it.id ?: Random.nextLong() }) {
-                        NewsListItem(
-                            refreshing = refreshing,
-                            item = it,
-                            size = size,
-                            onToggleReadClick = { onItemToggleRead(it) },
-                            onClick = { onItemClick(it) },
-                        )
+                Box {
+                    LazyColumn(
+                        state = listState,
+                        modifier = modifierMaxSize.testTag(NewsListScreen_LazyColumnTestTag)
+                    ) {
+                        items(items = list, key = { it.id ?: Random.nextLong() }) {
+                            NewsListItem(
+                                refreshing = refreshing,
+                                item = it,
+                                size = size,
+                                onToggleReadClick = { onItemToggleRead(it) },
+                                onClick = { onItemClick(it) },
+                            )
+                        }
                     }
+
+                    // Must be at the end — highest in the Z-hierarchy => nothing draws above it,
+                    // and user can press/drag for fast scrolling.
+                    // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap
+                    listState.Scrollbar(
+                        state = listState.scrollbarState(),
+                        onThumbMoved = listState.rememberDraggableScroller(),
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                    )
                 }
             } else Column {
                 val gridState = rememberLazyGridState()
@@ -252,35 +266,46 @@ fun NewsListScreen(
                     // Scroll to the first item upon refresh
                     if (gridState.firstVisibleItemIndex > 0) try {
                         gridState.animateScrollToItem(0)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         try {
                             gridState.scrollToItem(0)
-                        } catch (e: Exception) {
+                        } catch (_: Exception) {
                             // ignore
                         }
                     }
                 }
 
-                LazyVerticalGrid(
-                    columns = GridCells.FixedSize(size.width),
-                    state = gridState,
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
-                    modifier = Modifier
-                        // Leave space for 2/3-button nav bar in landscape mode
-                        .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
-                        .testTag(NewsListScreen_LazyVerticalGridTestTag)
-                ) {
-                    items(items = list, key = { it.id ?: Random.nextLong() }) {
-                        NewsGridItem(
-                            refreshing = refreshing,
-                            item = it,
-                            size = size,
-                            onToggleReadClick = { onItemToggleRead(it) },
-                            onClick = { onItemClick(it) },
-                        )
+                Box {
+                    LazyVerticalGrid(
+                        columns = GridCells.FixedSize(size.width),
+                        state = gridState,
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally),
+                        modifier = Modifier
+                            // Leave space for 2/3-button nav bar in landscape mode
+                            .windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Horizontal))
+                            .testTag(NewsListScreen_LazyVerticalGridTestTag)
+                    ) {
+                        items(items = list, key = { it.id ?: Random.nextLong() }) {
+                            NewsGridItem(
+                                refreshing = refreshing,
+                                item = it,
+                                size = size,
+                                onToggleReadClick = { onItemToggleRead(it) },
+                                onClick = { onItemClick(it) },
+                            )
+                        }
                     }
+
+                    // Must be at the end — highest in the Z-hierarchy => nothing draws above it,
+                    // and user can press/drag for fast scrolling.
+                    // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap
+                    gridState.Scrollbar(
+                        state = gridState.scrollbarState(),
+                        onThumbMoved = gridState.rememberDraggableScroller(),
+                        modifier = Modifier.align(Alignment.CenterEnd),
+                    )
                 }
 
                 ConditionalNavBarPadding(navType)

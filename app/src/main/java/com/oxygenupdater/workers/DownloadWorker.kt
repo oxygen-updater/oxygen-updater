@@ -525,7 +525,7 @@ class DownloadWorker @AssistedInject constructor(
         bytesDone: Long,
         totalBytes: Long,
     ) = publishProgressIfNeeded { currentTimeMs ->
-        val progress = (bytesDone * 100 / totalBytes).toInt()
+        val progress = (bytesDone * 100 / totalBytes.coerceAtLeast(1L)).toInt()
         val previousBytesDone = sharedPreferences[KeyDownloadBytesDone, NotSetL]
 
         sharedPreferences[KeyDownloadBytesDone] = bytesDone

@@ -6,6 +6,7 @@ import android.os.Build.VERSION_CODES
 import android.text.format.DateUtils
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -28,6 +29,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
@@ -44,6 +46,8 @@ import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxWidth
+import com.oxygenupdater.ui.common.scrollbar.Scrollbar
+import com.oxygenupdater.ui.common.scrollbar.scrollbarState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.dialogs.ArticleErrorSheet
@@ -112,54 +116,60 @@ fun ArticleScreen(
             ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, confirm = onRefresh) }
         }
 
-        Column(modifier) {
-            Column(
-                Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState()) // must be after `nestedScroll`
-            ) {
-                Buttons(item = item)
+        val scrollState = rememberScrollState()
+        Column(
+            modifier
+                .fillMaxHeight()
+                .verticalScroll(scrollState)
+        ) {
+            Buttons(item = item)
 
-                var showDivider = false
-                val bodySmall = MaterialTheme.typography.bodySmall
-                val textModifier = Modifier.withPlaceholder(refreshing, bodySmall)
+            var showDivider = false
+            val bodySmall = MaterialTheme.typography.bodySmall
+            val textModifier = Modifier.withPlaceholder(refreshing, bodySmall)
 
-                item.subtitle?.let {
-                    showDivider = true
-                    IconText(
-                        icon = Icons.AutoMirrored.Rounded.Notes,
-                        text = it,
-                        style = bodySmall,
-                        textModifier = textModifier,
-                        modifier = modifierDefaultPaddingStartTopEnd
-                    )
-                }
-
-                item.getRelativeTime()?.let {
-                    showDivider = true
-                    IconText(
-                        icon = Icons.Rounded.Schedule,
-                        text = it,
-                        style = bodySmall,
-                        textModifier = textModifier,
-                        modifier = modifierDefaultPaddingStartTopEnd
-                    )
-                }
-
-                // We can't edit CSS in WebViews, so pass theme to backend to style it accordingly
-                val language = if (currentLocale().language == "nl") "NL" else "EN"
-                val theme = if (MaterialTheme.colorScheme.light) "Light" else "Dark"
-                val url = "${item.apiUrl}/$language/$theme?ads=${showAds()}"
-                RefreshAwareWebView(
-                    refreshing = refreshing,
-                    webViewState = webViewState,
-                    url = url,
-                    showDivider = showDivider,
-                    onError = { errorTitle = it },
-                    onLoadFinished = { onLoadFinished(item) },
+            item.subtitle?.let {
+                showDivider = true
+                IconText(
+                    icon = Icons.AutoMirrored.Rounded.Notes,
+                    text = it,
+                    style = bodySmall,
+                    textModifier = textModifier,
+                    modifier = modifierDefaultPaddingStartTopEnd
                 )
             }
+
+            item.getRelativeTime()?.let {
+                showDivider = true
+                IconText(
+                    icon = Icons.Rounded.Schedule,
+                    text = it,
+                    style = bodySmall,
+                    textModifier = textModifier,
+                    modifier = modifierDefaultPaddingStartTopEnd
+                )
+            }
+
+            // We can't edit CSS in WebViews, so pass theme to backend to style it accordingly
+            val language = if (currentLocale().language == "nl") "NL" else "EN"
+            val theme = if (MaterialTheme.colorScheme.light) "Light" else "Dark"
+            val url = "${item.apiUrl}/$language/$theme?ads=${showAds()}"
+            RefreshAwareWebView(
+                refreshing = refreshing,
+                webViewState = webViewState,
+                url = url,
+                showDivider = showDivider,
+                onError = { errorTitle = it },
+                onLoadFinished = { onLoadFinished(item) },
+            )
         }
+
+        // Must be at the end — highest in the Z-hierarchy => nothing draws above it
+        // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap
+        scrollState.Scrollbar(
+            state = scrollState.scrollbarState(),
+            modifier = Modifier.align(Alignment.CenterEnd),
+        )
     }
 }
 
@@ -211,8 +221,6 @@ private fun RefreshAwareWebView(
         if (showDivider) HorizontalDivider(modifierDefaultPaddingTop)
     }
 
-    // TODO(compose/news): add scrollbars when it's out as first-party solution: https://developer.android.com/jetpack/androidx/compose-roadmap.
-    // Also see https://github.com/android/nowinandroid/pull/722.
     WebView(
         state = webViewState,
         modifier = Modifier
@@ -234,7 +242,7 @@ fun Article.getRelativeTime() = epochMilli?.let {
             DateUtils.SECOND_IN_MILLIS,
             DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
         )
-    } catch (e: NullPointerException) {
+    } catch (_: NullPointerException) {
         DateUtils.getRelativeTimeSpanString(
             it,
             System.currentTimeMillis(),

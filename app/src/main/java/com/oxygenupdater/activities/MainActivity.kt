@@ -513,7 +513,7 @@ class MainActivity : AppCompatActivity() {
             val navType = NavType.from(windowWidthSize)
 
             /** Check if the current screen is ["main"][MainScreens], i.e. not a [ChildScreen] */
-            val isMainScreen = currentRoute?.let { !ChildScreen.check(it) } ?: true
+            val isMainScreen = currentRoute?.let { !ChildScreen.check(it) } != false
             val isNavTypeBottomBar = navType == NavType.BottomBar
 
             val onNavIconClick = {
@@ -700,7 +700,7 @@ class MainActivity : AppCompatActivity() {
                              * [androidx.compose.material3.tokens.NavigationRailTokens.ContainerWidth]
                              * */
                             val sideRailWidth = if (orientation == ORIENTATION_LANDSCAPE) 80 + 1 else 0
-                            (adWidthPx / density).toInt() - sideRailWidth
+                            (adWidthPx / density.coerceAtLeast(1f)).toInt() - sideRailWidth
                         },
                         adListener = adLoadListener { adLoaded = it },
                         onViewUpdate = ::onBannerAdInit,
@@ -1025,7 +1025,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         InstallGuideScreen(
             viewModel = hiltViewModel<InstallGuideViewModel>(this@MainActivity),
-            downloaded = it.arguments?.getBoolean(DownloadedArg, false) ?: false,
+            downloaded = it.arguments?.getBoolean(DownloadedArg, false) == true,
             setSubtitleResId = setSubtitleResId,
         )
     }

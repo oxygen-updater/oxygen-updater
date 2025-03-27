@@ -87,7 +87,7 @@
 
 				<data android:scheme="oxygenupdater" />
 				<data android:host="guide" />
-				<data android:pathPattern="\\?downloaded=..*" />
+				<data android:pathPattern=".*\\?downloaded=..*" />
 				<!-- `pathAdvancedPattern` is supported only on API >= 31 -->
 				<data android:pathAdvancedPattern="\\?downloaded=true" />
 				<data android:pathAdvancedPattern="\\?downloaded=false" />

@@ -29,7 +29,7 @@ fun LazyVerticalGrid(
     columns = GridCells.Fixed(columnCount),
     userScrollEnabled = false,
     modifier = Modifier
-        .height((ItemHeight * (items.size / columnCount)).dp)
+        .height((ItemHeight * (items.size / columnCount.coerceAtLeast(1))).dp)
         .testTag(LazyVerticalGridTestTag)
 ) {
     itemsIndexed(items) { index, it ->

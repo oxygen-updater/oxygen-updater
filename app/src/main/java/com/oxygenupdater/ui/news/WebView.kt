@@ -19,7 +19,7 @@ package com.oxygenupdater.ui.news
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.net.http.SslError
-import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.webkit.WebResourceError
@@ -58,7 +58,9 @@ fun WebView(
     BackHandler(state.canGoBack) { state.webView?.goBack() }
 
     // AndroidViews are not supported by preview
-    if (!LocalInspectionMode.current) AndroidView(
+    if (LocalInspectionMode.current) return
+
+    AndroidView(
         factory = { context ->
             WebView(context).apply {
                 layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
@@ -71,7 +73,7 @@ fun WebView(
                     javaScriptEnabled = true
                     userAgentString = AppUserAgent + try {
                         " " + WebSettings.getDefaultUserAgent(context)
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         ""
                     }
                 }
@@ -200,7 +202,7 @@ data class WebViewError(
          * API is restricted because the non-deprecated [WebViewClient.onReceivedError]
          * callback was added in API 23 (Marshmallow)
          */
-        @RequiresApi(Build.VERSION_CODES.M)
+        @RequiresApi(VERSION_CODES.M)
         fun from(resourceError: WebResourceError?) = WebViewError(
             resourceError?.errorCode ?: AndroidWebViewClient.ERROR_UNKNOWN,
             resourceError?.description as? String ?: "ERROR_UNKNOWN",
@@ -216,7 +218,7 @@ data class WebViewError(
          *
          * The callback is called only for status codes >= 400.
          */
-        @RequiresApi(Build.VERSION_CODES.M)
+        @RequiresApi(VERSION_CODES.M)
         fun from(errorResponse: WebResourceResponse?) = WebViewError(
             errorResponse?.statusCode ?: AndroidWebViewClient.ERROR_UNKNOWN,
         )
