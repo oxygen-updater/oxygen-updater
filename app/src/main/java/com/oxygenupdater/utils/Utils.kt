@@ -62,7 +62,7 @@ object Utils {
             it.trim()
         }
         val firmwareIsSupported = fingerprintParts.size == 6
-                && fingerprintParts[0].lowercase() == "oneplus"
+                && fingerprintParts[0].lowercase().let { it == "oneplus" || it == "oppo" }
                 // must be `contains` and not a direct equality check
                 && fingerprintParts[5].lowercase().contains("release-keys")
 
@@ -111,7 +111,7 @@ object Utils {
 
             if (it.id == savedDeviceId) chosenDevice = it
 
-            /** Filter out disabled devices; [checkDeviceOsSpec] handles those already. */
+            /** Filter out disabled devices; `checkDeviceOsSpec` handles those already. */
             if (it.enabled && it.productNames.contains(productName)) matchedDevice = it
         }
 
@@ -136,7 +136,7 @@ object Utils {
                 val chosenRegionCode = if (size > 1) this[1] else null
                 deviceCode != chosenDeviceCode || (regionCode != null && regionCode != chosenRegionCode)
             }
-        } ?: false
+        } == true
 
         return isChosenDeviceIncorrect to actualDeviceName
     }

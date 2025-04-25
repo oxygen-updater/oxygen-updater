@@ -157,7 +157,7 @@ object SystemVersionProperties {
             }
 
             val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
-            if (SDK_INT >= VERSION_CODES.S) {
+            if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
                 if (oxygenDeviceName in OnePlusPadAndPad2) {
                     // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
                     if (pipeline != "EUEX") oxygenDeviceName += pipeline
@@ -166,6 +166,10 @@ object SystemVersionProperties {
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
                     // model number is used for both regions. Not sure if future builds would also be affected.
                     if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                } else if ("oppo" == fingerprint.split("/").getOrNull(0)?.trim()?.lowercase()) {
+                    // Special handling for OPPO phones. They often use the same model number across all regions.
+                    // Append pipeline to model number, only if it's not already part of it.
+                    oxygenDeviceName += pipeline
                 }
             }
 
