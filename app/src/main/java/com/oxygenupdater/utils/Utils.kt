@@ -85,10 +85,12 @@ object Utils {
                 }
             }
 
-            // Device not found among the server-provided list; assume it's a newly-released OnePlus device that we're yet to add support for
+            // Device not found among the server-provided list; assume it's a newly-released
+            // OPPO/OnePlus device that we're yet to add support for.
             UnsupportedOxygenOs
         } else {
-            // Device isn't running OxygenOS at all. Note that it may still be a OnePlus device running a custom ROM.
+            // Device isn't running OxygenOS/ColorOS at all. Note that it may still be a OPPO/OnePlus
+            // device running a custom ROM.
             UnsupportedOs
         }
     }

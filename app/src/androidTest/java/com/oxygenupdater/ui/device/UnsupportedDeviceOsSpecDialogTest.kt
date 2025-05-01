@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.device
 
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,18 +42,24 @@ class UnsupportedDeviceOsSpecDialogTest : ComposeBaseTest() {
 
         // Then for new devices we don't yet support
         spec = DeviceOsSpec.UnsupportedOxygenOs
-        validateForNotSupportedSpecs(R.string.unsupported_device_warning_message)
+        validateForNotSupportedSpecs(R.string.unsupported_device_warning_message, Build.BRAND)
 
         // Then for devices not running OxygenOS
         spec = DeviceOsSpec.UnsupportedOs
         validateForNotSupportedSpecs(R.string.unsupported_os_warning_message)
     }
 
-    private fun validateForNotSupportedSpecs(@StringRes warningMessageResId: Int) {
+    private fun validateForNotSupportedSpecs(
+        @StringRes warningMessageResId: Int,
+        vararg formatArgs: String,
+    ) {
         rule[AlertDialogTestTag].run {
             assertExists()
             onParent().assert(isDialog())
         }
-        rule[AlertDialog_TextTestTag].assertHasTextExactly(warningMessageResId)
+
+        rule[AlertDialog_TextTestTag].assertHasTextExactly(
+            if (formatArgs.isEmpty()) warningMessageResId else activity.getString(warningMessageResId, *formatArgs)
+        )
     }
 }

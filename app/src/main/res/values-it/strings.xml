@@ -44,8 +44,8 @@
 	<string name="download_error_internal">"Errore interno."</string>
 	<!-- Space/NBSP at the end is necessary -->
 	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
-	<string name="download_error_unsuccessful_explanation_file_removed">"Ciò potrebbe significare che OnePlus ha rimosso il file di aggiornamento OTA dai propri server."</string>
-	<string name="download_error_unsuccessful_explanation_generic">"Nella maggior parte dei casi, ciò indica un problema con i server OTA di OnePlus; tuttavia, potrebbe anche trattarsi della connessione a Internet."</string>
+	<string name="download_error_unsuccessful_explanation_file_removed">"Ciò potrebbe significare che OPPO/OnePlus ha rimosso il file di aggiornamento OTA dai propri server."</string>
+	<string name="download_error_unsuccessful_explanation_generic">"Nella maggior parte dei casi, ciò indica un problema con i server OTA di OPPO/OnePlus; tuttavia, potrebbe anche trattarsi della connessione a Internet."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Il nostro team è stato avvisato e provvederà ad esaminare il problema il prima possibile. Poiché la nostra app scarica direttamente dai server OTA ufficiali, non possiamo fare molto. Potreste comunque essere in grado di accedere al file di aggiornamento OTA utilizzando una VPN o una connessione Internet diversa. Non esitate a <a href="mailto:support@oxygenupdater.com">inoltrarci un\'e-mail</a> o a unirvi al nostro <a href="https://discord.gg/5TXdhKJ">server discord</a>.]]></string>
 	<string name="download_error_could_not_move_temp_file">Il file è stato scaricato ma non è stato possibile spostarlo. Apri un file manager, naviga a \"%1$s\" e sposta il file nella cartella più\' in alto di internal storage.</string>
 	<string name="download_error_server">"Errore nel server."</string>
@@ -139,11 +139,11 @@ Questo può essere utile se si desidera:"</string>
 	<string name="onboarding_finished_button">"Avvia app"</string>
 	<string name="onboarding_app_uses">"Questa app ti permetterà di:
 
-&#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OnePlus con OxygenOS
+&#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OPPO/OnePlus con OxygenOS
 &#8226; Facilmente aggiornare un dispositivo rootato
 &#8226; Visualizzare le notivate in aggiornamenti
-&#8226; Leggere le novità su OnePlus e OxygenOS"</string>
-	<string name="onboarding_disclaimer">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
+&#8226; Leggere le novità su OPPO/OnePlus e OxygenOS"</string>
+	<string name="onboarding_disclaimer">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OPPO/OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
 	<string name="onboarding_device_chooser_title">"Seleziona il tuo dispositivo:"</string>
 	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra."</string>
 	<string name="onboarding_method_chooser_title">"Seleziona il tuo metodo d'aggiornamento."</string>
@@ -183,11 +183,11 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 
 	<!-- About screen strings -->
 	<string name="about">"Info app"</string>
-	<string name="about_description">Questa app scarica gli aggiornamenti ufficiali direttamente dai server di OnePlus e verifica anche l\'integrità dello ZIP scaricato prima di consentirti l\'installazione. In questo modo, l\'applicazione consente di saltare la coda di rollout e installare gli aggiornamenti ufficiali il prima possibile. Se riscontri bug nel SO, segnalali direttamente a OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Potresti voler unirti al nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>, in modo da poter parlare con altri utenti degli ultimi aggiornamenti. Altrimenti, non esitare a inviarci un\'e-mail all\'indirizzo <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> con i tuoi suggerimenti/feedback.</string>
+	<string name="about_description">Questa app scarica gli aggiornamenti ufficiali direttamente dai server di OPPO/OnePlus e verifica anche l\'integrità dello ZIP scaricato prima di consentirti l\'installazione. In questo modo, l\'applicazione consente di saltare la coda di rollout e installare gli aggiornamenti ufficiali il prima possibile. Se riscontri bug nel SO, segnalali direttamente a OPPO/OnePlus: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Potresti voler unirti al nostro <a href="https://discord.gg/5TXdhKJ">server Discord</a>, in modo da poter parlare con altri utenti degli ultimi aggiornamenti. Altrimenti, non esitare a inviarci un\'e-mail all\'indirizzo <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> con i tuoi suggerimenti/feedback.</string>
 	<string name="about_support">Se desideri sostenerci, puoi acquistare lo sblocco ad-free (impostazioni dell\'app), o consultare la nostra <a href="https://patreon.com/oxygenupdater">pagina Patreon</a>.</string>
 	<string name="about_background_story_header">Storia di fondo</string>
-	<string name="about_background_story">Questa app è stata originariamente sviluppata da Arjan Vlek come supplemento di un\'altra app, chiamata <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>\n\nDopo 4 anni, Luglio 2019, Arjan decise di abbandonare entrambi i suoi progetti e affidarli ad una squadra di sviluppatori da diverse nazioni. Presero la responsabilità di fornire la community con un servizio eccellente &amp; per fornire aggiornamenti OnePlus in modo veloce.\nUlteriori informazioni sull\'<a href="https://oxygenupdater.com/article/81/">annuncio</a>.\n\nIl 14 Agosto 2018 segnò il primo rilascio sotto nuove direttive, che portò un sacco di novità come dark mode e un redesign completo.\n\nPer ulteriori informazioni sul team, visualizza <a href="https://oxygenupdater.com/team/">il sito</a>.</string>
-	<string name="about_third_party_app_notice">Questa non è un\'applicazione ufficiale.\nIl nome OnePlus, il logo OnePlus e OxygenOS sono proprietà di OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
+	<string name="about_background_story">Questa app è stata originariamente sviluppata da Arjan Vlek come supplemento di un\'altra app, chiamata <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>\n\nDopo 4 anni, Luglio 2019, Arjan decise di abbandonare entrambi i suoi progetti e affidarli ad una squadra di sviluppatori da diverse nazioni. Presero la responsabilità di fornire la community con un servizio eccellente &amp; per fornire aggiornamenti OPPO/OnePlus in modo veloce.\nUlteriori informazioni sull\'<a href="https://oxygenupdater.com/article/81/">annuncio</a>.\n\nIl 14 Agosto 2018 segnò il primo rilascio sotto nuove direttive, che portò un sacco di novità come dark mode e un redesign completo.\n\nPer ulteriori informazioni sul team, visualizza <a href="https://oxygenupdater.com/team/">il sito</a>.</string>
+	<string name="about_third_party_app_notice">Questa non è un\'applicazione ufficiale.\nIl nome OPPO/OnePlus, il logo OPPO/OnePlus e OxygenOS sono proprietà di OPPO/OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OPPO/OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
 	<string name="about_rate_button_text">"Vota"</string>
 	<string name="about_website_button_text">Web</string>
 	<string name="about_email_button_text">Email</string>
@@ -260,10 +260,10 @@ Premi \"Installa\" per vedere il processo d'installazione. Premi su \"Cancella\"
 	<string name="delete_message_delete_button">"Cancella"</string>
 	<string name="unsupported_device_warning_title">"Device non supportato"</string>
 	<string name="carrier_exclusive_device_warning_message">Pare che tu stia utilizzando una versione esclusiva-gestore. Anche se utilizzi OxygenOS, non potrai installare aggiornamenti. I gestori solitamente \"racchiudono\" il dispositivo in modo che gli utenti non possano modificare il firmware senza il loro consenso. Ahimé, non possiamo farci nulla. Per ulteriori informazioni contattaci su Discord o via email.</string>
-	<string name="unsupported_device_warning_message">Auguri per il tuo nuovo dispositivo OnePlus! Sfortunatamente non abbiamo ancora aggiunto il supporto per il dispositivo. Non ti preoccupare, lo aggiungeremo appena possibile! Non ci piace commettere errori, ed è un processo molto lungo il verificare i nuovi dispositivi perciò sii paziente. Scrivici un email o contattaci su Discors se vuoi aiutarci, oppure per sapere quando aggiungeremo il supporto per il tuo dispositivo.</string>
+	<string name="unsupported_device_warning_message">Auguri per il tuo nuovo dispositivo %1$s! Sfortunatamente non abbiamo ancora aggiunto il supporto per il dispositivo. Non ti preoccupare, lo aggiungeremo appena possibile! Non ci piace commettere errori, ed è un processo molto lungo il verificare i nuovi dispositivi perciò sii paziente. Scrivici un email o contattaci su Discors se vuoi aiutarci, oppure per sapere quando aggiungeremo il supporto per il tuo dispositivo.</string>
 	<string name="unsupported_os_warning_message">"Pare che il tuo dispositivo non utilizzi OxygenOS. Nota bene che puoi soltanto aggiornare dispositivi utilizzanti OxygenOS.
 
-Altri dispositivi della OnePlus su custom ROM, non sono supportati."</string>
+Altri dispositivi della OPPO/OnePlus su custom ROM, non sono supportati."</string>
 
 	<string name="incorrect_device_warning_title">Dispositivo selezionato errato</string>
 	<string name="incorrect_device_warning_message">Sembra che tu abbia selezionato il dispositivo sbagliato: \"%1$s\", invece di \"%2$s\". Modifica la selezione nelle impostazioni dell\'app per assicurarti di ricevere aggiornamenti e notifiche per il dispositivo corretto.</string>

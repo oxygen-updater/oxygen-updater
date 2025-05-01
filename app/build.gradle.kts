@@ -37,7 +37,7 @@ fun loadProperties(
 
 /**
  * If the build name is "release", it will use the production server, and getprop keys will
- * be for OnePlus/OxygenOS specific values.
+ * be for OPPO/OnePlus OxygenOS/ColorOS specific values.
  *
  * Otherwise, the test server will be used (unless [localOverride] is set), and getprop keys
  * will be for what we find on any Android device/emulator.

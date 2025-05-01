@@ -66,7 +66,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 /**
- * Handles downloading ZIPs from OnePlus/Google OTA servers, and also verifies their MD5 checksum.
+ * Handles downloading ZIPs from OPPO/OnePlus/Google OTA servers, and also verifies their MD5 checksum.
  *
  * @author [Adhiraj Singh Chauhan](https://github.com/adhirajsinghchauhan)
  */

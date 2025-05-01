@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.device
 
+import android.os.Build
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
@@ -29,7 +30,9 @@ fun UnsupportedDeviceOsSpecDialog(
     if (show) AlertDialog(
         action = { hide(ignore) },
         titleResId = R.string.unsupported_device_warning_title,
-        text = stringResource(remember(spec) {
+        text = if (spec == DeviceOsSpec.UnsupportedOxygenOs) stringResource(
+            R.string.unsupported_device_warning_message, Build.MANUFACTURER
+        ) else stringResource(remember(spec) {
             when (spec) {
                 DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.carrier_exclusive_device_warning_message
                 DeviceOsSpec.UnsupportedOxygenOs -> R.string.unsupported_device_warning_message

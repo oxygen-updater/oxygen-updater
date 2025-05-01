@@ -30,7 +30,7 @@ value class DeviceOsSpec private constructor(val value: Int) {
         /** For new devices that haven't been added to the app yet */
         val UnsupportedOxygenOs = DeviceOsSpec(2)
 
-        /** For devices that aren't running OxygenOS. This may include OnePlus devices with a custom ROM installed. */
+        /** For devices that aren't running OxygenOS. This may include OPPO/OnePlus devices with a custom ROM installed. */
         val UnsupportedOs = DeviceOsSpec(3)
     }
 }

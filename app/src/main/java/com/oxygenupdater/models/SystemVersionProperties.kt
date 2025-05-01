@@ -15,7 +15,7 @@ import java.util.Scanner
 /**
  * Contains some properties of the OS / ROM installed on the device.
  *
- * Used to read / extract OnePlus-specific properties from the ROM.
+ * Used to read / extract OPPO/OnePlus-specific properties from the ROM.
  */
 object SystemVersionProperties {
 
