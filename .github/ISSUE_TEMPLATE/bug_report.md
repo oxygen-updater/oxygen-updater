@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Device (please complete the following information):**
  - Type: [e.g. OnePlus 6T]
- - OxygenOS version: [e.g. 9.0.5]
+ - OS version: [e.g. 9.0.5]
  - App version [e.g. 2.5.1]
 
 **Additional context**

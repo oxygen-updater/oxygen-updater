@@ -127,7 +127,7 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
      * @see [FirebaseCrashlytics.setCrashlyticsCollectionEnabled]
      */
     fun setupCrashReporting() {
-        analytics.setUserProperty("device_name", SystemVersionProperties.oxygenDeviceName)
+        analytics.setUserProperty("device_name", SystemVersionProperties.deviceProductName)
 
         val shouldShareLogs = sharedPreferences[KeyShareAnalyticsAndLogs, true]
         // Sync analytics collection to user's preference

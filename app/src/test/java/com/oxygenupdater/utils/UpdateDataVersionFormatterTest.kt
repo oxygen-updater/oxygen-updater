@@ -2,7 +2,7 @@ package com.oxygenupdater.utils
 
 import android.os.Build
 import com.oxygenupdater.models.UpdateData
-import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOxygenOsVersion
+import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedOsVersion
 import com.oxygenupdater.utils.UpdateDataVersionFormatter.getFormattedVersionNumber
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -32,21 +32,21 @@ class UpdateDataVersionFormatterTest {
     @Test
     fun `check if OS version is formatted correctly`() {
         // Invalid
-        assertEquals(Build.UNKNOWN, getFormattedOxygenOsVersion(""))
-        assertEquals(Build.UNKNOWN, getFormattedOxygenOsVersion(" "))
+        assertEquals(Build.UNKNOWN, getFormattedOsVersion(""))
+        assertEquals(Build.UNKNOWN, getFormattedOsVersion(" "))
 
         // Alpha, beta, or developer preview
-        assertEquals("Closed Beta 1", getFormattedOxygenOsVersion("Alpha_1"))
-        assertEquals("Open Beta 1", getFormattedOxygenOsVersion("Open_1"))
-        assertEquals("Open Beta 1", getFormattedOxygenOsVersion("Beta_1"))
-        assertEquals("Android ${Build.VERSION.RELEASE} DP 1", getFormattedOxygenOsVersion("DP_1"))
+        assertEquals("Closed Beta 1", getFormattedOsVersion("Alpha_1"))
+        assertEquals("Open Beta 1", getFormattedOsVersion("Open_1"))
+        assertEquals("Open Beta 1", getFormattedOsVersion("Beta_1"))
+        assertEquals("Android ${Build.VERSION.RELEASE} DP 1", getFormattedOsVersion("DP_1"))
 
         // Stable
-        assertEquals("1.2.3", getFormattedOxygenOsVersion("1.2.3"))
-        assertEquals("1.2.3.4", getFormattedOxygenOsVersion("1.2.3.4"))
-        assertEquals("1.2.3.4.AB01CD", getFormattedOxygenOsVersion("1.2.3.4.AB01CD"))
+        assertEquals("1.2.3", getFormattedOsVersion("1.2.3"))
+        assertEquals("1.2.3.4", getFormattedOsVersion("1.2.3.4"))
+        assertEquals("1.2.3.4.AB01CD", getFormattedOsVersion("1.2.3.4.AB01CD"))
 
         // Anything else
-        assertEquals("Custom version", getFormattedOxygenOsVersion("Custom version"))
+        assertEquals("Custom version", getFormattedOsVersion("Custom version"))
     }
 }

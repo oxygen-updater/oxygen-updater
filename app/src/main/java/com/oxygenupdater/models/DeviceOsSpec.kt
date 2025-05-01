@@ -10,16 +10,16 @@ import androidx.compose.runtime.Immutable
 value class DeviceOsSpec private constructor(val value: Int) {
 
     override fun toString() = "DeviceOsSpec." + when (this) {
-        SupportedOxygenOs -> "SupportedOxygenOs"
+        SupportedDeviceAndOs -> "SupportedDeviceAndOs"
         CarrierExclusiveOxygenOs -> "CarrierExclusiveOxygenOs"
-        UnsupportedOxygenOs -> "UnsupportedOxygenOs"
-        UnsupportedOs -> "UnsupportedOs"
+        UnsupportedDevice -> "UnsupportedDevice"
+        UnsupportedDeviceAndOs -> "UnsupportedDeviceAndOs"
         else -> "Invalid"
     }
 
     companion object {
         /** For devices that are supported by the app */
-        val SupportedOxygenOs = DeviceOsSpec(0)
+        val SupportedDeviceAndOs = DeviceOsSpec(0)
 
         /**
          * For carrier-exclusive devices like OnePlus 7T Pro 5G McLaren (T-Mobile).
@@ -28,9 +28,12 @@ value class DeviceOsSpec private constructor(val value: Int) {
         val CarrierExclusiveOxygenOs = DeviceOsSpec(1)
 
         /** For new devices that haven't been added to the app yet */
-        val UnsupportedOxygenOs = DeviceOsSpec(2)
+        val UnsupportedDevice = DeviceOsSpec(2)
 
-        /** For devices that aren't running OxygenOS. This may include OPPO/OnePlus devices with a custom ROM installed. */
-        val UnsupportedOs = DeviceOsSpec(3)
+        /**
+         * For devices that aren't running OxygenOS/ColorOS.
+         * This may include OPPO/OnePlus devices with a custom ROM installed.
+         */
+        val UnsupportedDeviceAndOs = DeviceOsSpec(3)
     }
 }

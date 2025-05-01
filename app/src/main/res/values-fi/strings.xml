@@ -142,7 +142,7 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="onboarding_finished_button">"Käynnistä sovellus"</string>
 	<string name="onboarding_app_uses">"Tämä sovellus mahdollistaa sinulle:
 
-&#8226; Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS laitteellesi
+&#8226; Nopeamman pääsyn viimeisimpiin Android päivityksiin OxygenOS/ColorOS laitteellesi
 &#8226; Rootatun laitteen päivittämisen helposti
 &#8226; Katsoa mitkä ovat uudistukset käytössäsi olevassa järjestelmäversiossa
 &#8226; Lukea viimeisimpiä uutisia koskien OPPO/OnePlussaa ja OxygeOS"</string>
@@ -150,7 +150,7 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="onboarding_device_chooser_title">"Valitse laitteesi:"</string>
 	<string name="onboarding_device_chooser_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella. Mikäli näin ei ole, valitse laitteesi yläpuolelta."</string>
 	<string name="onboarding_method_chooser_title">"Valitse päivitystapasi"</string>
-	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys. Jos sinulla on beta versio OxygenOS:stä, valitse jokin Open Beta päivitystavoista."</string>
+	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys. Jos sinulla on beta versio OxygenOS/ColorOS:stä, valitse jokin Open Beta päivitystavoista."</string>
 	<string name="onboarding_caption">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
 
 	<!-- Automatic install strings -->
@@ -167,7 +167,7 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="device_information_supported_oxygen_os">Laitteesi on tuettu</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Laitteesi ei ole tuettu, se on operaattori eksklusiivinen laite</string>
 	<string name="device_information_unsupported_oxygen_os">Emme ole vielä lisänneet tukea uudelle laitteellesi</string>
-	<string name="device_information_unsupported_os">Laitteesi ei ole tuettu, koska laitteellasi ei ole OxygenOS:ää</string>
+	<string name="device_information_unsupported_os">Laitteesi ei ole tuettu, koska laitteellasi ei ole OxygenOS/ColorOS:ää</string>
 	<string name="device_information_hardware_header">Laitteisto</string>
 	<string name="device_information_software_header">Ohjelmisto</string>
 	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
@@ -190,7 +190,7 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
 	<string name="about_background_story_header">Background story</string>
 	<string name="about_background_story">Tämän sovelluksen on alunperin kehittänyt Arjan Vlek hänen toisen sovelluksensa jatkona nimeltä <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (se tarjoaa vastaavia toimintoja Cyanogen OS käyttäjille).\n\nNeljän vuoden jälkeen, heinäkuussa 2019, Arjan päätti luopua molemmista projekteista ja siirsi sovellusten omistajuuden kehitystiimille jonka jäsenet ovat kotoisin eri maista. He ottivat vastuun tarjota yhteisölle erinomaisen palvelun &amp; tuen saadakseen OPPO/OnePlus päivitykset nopeammin.\nLöydät lisätietoja ilmoituksesta <a href="https://oxygenupdater.com/article/81/">täältä</a> (englanniksi).\n\n14 elokuuta 2019 merkitsi ensimmäistä julkaisua uuden omistajuuden alla ja tämä päivitys sisälsi uusia ominaisuuksia, kuten tumman tilan ja täydellisen uudelleensuunnitelun.\n\nLisätietoja uudesta tiimistä löydät <a href="https://oxygenupdater.com/team/">verkkosivuilta</a>.</string>
-	<string name="about_third_party_app_notice">Huomaathan, että tämä ei ole virallinen OPPO/OnePlus sovellus\nOnePlus -nimi, OPPO/OnePlus -logo ja OxygenOS ovat OPPO/OnePlussan omaisuutta.\nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc:n rekisteröityjä tavaramerkkejä.\nTämä sovellus käyttää OPPO/OnePlussan ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen.</string>
+	<string name="about_third_party_app_notice">Huomaathan, että tämä ei ole virallinen OPPO/OnePlus sovellus\nOnePlus -nimi, OPPO/OnePlus -logo ja OxygenOS/ColorOS ovat OPPO/OnePlussan omaisuutta.\nAndroid, Google, Google Play ja Google Play -logo ovat Google Inc:n rekisteröityjä tavaramerkkejä.\nTämä sovellus käyttää OPPO/OnePlussan ja sen emoyhtiön Oppon tietoja päivitystietojen näyttämiseen.</string>
 	<string name="about_rate_button_text">Arvostele</string>
 	<string name="about_website_button_text">Verkkosivu</string>
 	<string name="about_email_button_text">Sähköposti</string>
@@ -264,9 +264,9 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="delete_message_contents">"Olet jo ladannut tämän päivityksen, mutta et vielä asentanut sitä. Napsauta \"Asenna\" nähdäksesi kuinka päivitys asennetaan. Napsauta \"Poista\" painiketta poistaaksesi tiedosto. Paina takaisin painiketta sulkeaksi tämä viesti."</string>
 	<string name="delete_message_delete_button">"Poista"</string>
 	<string name="unsupported_device_warning_title">"Laitetta ei tueta"</string>
-	<string name="carrier_exclusive_device_warning_message">Näyttäisi siltä, että käytät operaattori eksklusiivista laitetta. vaikka käytössäsi on OxygenOS, et voi asentaa päivityksiä. Yleensä operaattorit lukitsevat laitteensa, jotta käyttäjä ei pysty päivittämään tai muokkaamaan laitteen ohjelmistoa ilman operaattorin lupaa. Tämä on yleinen tapa Amerikassa: "Paikallinen Päivitys" vaihtoehto on poistettu operaattori eksklusiivisista OxygenOS versioista. Tämä asetus on välttämätön, jotta voit asentaa päivityksiä manuaalisesti, vaikka et käyttäisi tätä sovellusta. Valitettavasti emme voi tehdä tälle mitään, olemme teknisesti ja mahdollisesti laillisesti rajoitettuja. Ota yhteyttä sähköpostilla tai Discordissa asian selkeyttämiseksi.</string>
+	<string name="carrier_exclusive_device_warning_message">Näyttäisi siltä, että käytät operaattori eksklusiivista laitetta. vaikka käytössäsi on OxygenOS/ColorOS, et voi asentaa päivityksiä. Yleensä operaattorit lukitsevat laitteensa, jotta käyttäjä ei pysty päivittämään tai muokkaamaan laitteen ohjelmistoa ilman operaattorin lupaa. Tämä on yleinen tapa Amerikassa: "Paikallinen Päivitys" vaihtoehto on poistettu operaattori eksklusiivisista OxygenOS/ColorOS versioista. Tämä asetus on välttämätön, jotta voit asentaa päivityksiä manuaalisesti, vaikka et käyttäisi tätä sovellusta. Valitettavasti emme voi tehdä tälle mitään, olemme teknisesti ja mahdollisesti laillisesti rajoitettuja. Ota yhteyttä sähköpostilla tai Discordissa asian selkeyttämiseksi.</string>
 	<string name="unsupported_device_warning_message">Onnittelut uudesta %1$s laitteesta! Valitettavasti emme ole vielä lisänneet tukea tälle laitteelle. Älä huoli, lisäämme sen mahdollisimman nopeasti. Emme halua tehdä virheitä ja laitteen testaus ja tuen lisääminen on aikaa vievää. Ole kärsivällinen. Lähetä sähköpostia tai liity Discord palvelimelle, jos haluat auttaa tai saada ilmoituksen, kun uusi versio sovelluksesta tukee laitettasi.</string>
-	<string name="unsupported_os_warning_message">"Näyttäisi siltä, että laiteellasi ei ole asennettuna OxygenOS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna OxygenOS.
+	<string name="unsupported_os_warning_message">"Näyttäisi siltä, että laiteellasi ei ole asennettuna OxygenOS/ColorOS. Huomioithan, että voit asentaa päivityksiä vain laitteille joilla on asennettuna OxygenOS/ColorOS.
 
 Muut laitteet, mukaan lukien OPPO/OnePlus laitteet joille on asennettu kustomoitu käyttöjärjestelmä, eivät ole tuettuja"</string>
 

@@ -21,7 +21,7 @@ class UnsupportedDeviceOsSpecDialogTest : ComposeBaseTest() {
     @Test
     fun unsupportedDeviceOsSpecDialog() {
         var show by mutableStateOf(false)
-        var spec by mutableStateOf(DeviceOsSpec.SupportedOxygenOs)
+        var spec by mutableStateOf(DeviceOsSpec.SupportedDeviceAndOs)
         setContent {
             UnsupportedDeviceOsSpecDialog(
                 show = show,
@@ -41,11 +41,11 @@ class UnsupportedDeviceOsSpecDialogTest : ComposeBaseTest() {
         validateForNotSupportedSpecs(R.string.carrier_exclusive_device_warning_message)
 
         // Then for new devices we don't yet support
-        spec = DeviceOsSpec.UnsupportedOxygenOs
+        spec = DeviceOsSpec.UnsupportedDevice
         validateForNotSupportedSpecs(R.string.unsupported_device_warning_message, Build.BRAND)
 
-        // Then for devices not running OxygenOS
-        spec = DeviceOsSpec.UnsupportedOs
+        // Then for devices not running OxygenOS/ColorOS
+        spec = DeviceOsSpec.UnsupportedDeviceAndOs
         validateForNotSupportedSpecs(R.string.unsupported_os_warning_message)
     }
 

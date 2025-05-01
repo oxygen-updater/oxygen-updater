@@ -1,14 +1,14 @@
 package com.oxygenupdater.utils
 
 import android.os.Build
+import android.os.Build.VERSION
+import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import java.util.regex.Pattern
 
 object UpdateDataVersionFormatter {
 
-    /**
-     * Prefix to check if we can format anything of the update info.
-     */
+    /** Prefix to check if we can format anything of the update info */
     private const val OsVersionLineHeading = "#"
 
     /**
@@ -32,32 +32,26 @@ object UpdateDataVersionFormatter {
         Pattern.CASE_INSENSITIVE
     )
 
-    /**
-     * User-readable name for regular versions of OxygenOS
-     */
-    private const val OxygenOsPrefix = "OxygenOS"
-
-    /**
-     * User-readable name for beta versions of OxygenOS
-     */
+    /** User-readable name for beta OS versions */
     private const val BetaPrefix = "Open Beta"
 
-    /**
-     * User-readable name for alpha versions of OxygenOS
-     */
+    /** User-readable name for alpha OS versions */
     private const val AlphaPrefix = "Closed Beta"
 
-    /**
-     * User-readable name for developer preview versions of OxygenOS
-     */
+    /** User-readable name for developer preview OS versions */
     private const val DpPrefix = "DP"
 
     /**
      * Get the formatted version number of the passed update version information. The output is as
-     * following: Regular update: "OxygenOS 4.0.0" Open Beta update: "OxygenOS Open Beta 28" Other
-     * update with "(#)OS Version": "OS Version: Windows 10 1709" Update without "(#)OS Version":
-     * "V. OnePlus5TOxygen_23_1804231200" Null versionInfo / no internal version number in
-     * versionInfo: "OxygenOS System Update"
+     * following:
+     * - Regular update: "OxygenOS 4.0.0"
+     * - Open Beta update: "OxygenOS Open Beta 28"
+     * - Other  update with "(#)OS Version": "OS Version: Windows 10 1709"
+     * - Update without "(#)OS Version": "V. OnePlus5TOxygen_23_1804231200"
+     * - Null [versionInfo] / no internal version number in [versionInfo]: "OS Update"
+     *
+     * Note: the OS prefix depends on the device brand/manufacturer; i.e. ColorOS for OPPO,
+     * and OxygenOS for OnePlus.
      *
      * @param versionInfo Update version information to get the formatted version number for.
      *
@@ -65,10 +59,16 @@ object UpdateDataVersionFormatter {
      */
     fun getFormattedVersionNumber(
         versionInfo: UpdateData?,
-        default: String = "OxygenOS System Update",
+        default: String = "OS Update",
     ): String {
         val firstLine = versionInfo?.description.run {
             if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
+        }
+
+        val osPrefix = when (SystemVersionProperties.brandLowercase) {
+            "oppo" -> "ColorOS " // space must be kept
+            "oneplus" -> "OxygenOS " // space must be kept
+            else -> ""
         }
 
         val canVersionInfoBeFormatted = firstLine.trim().startsWith(OsVersionLineHeading)
@@ -78,13 +78,13 @@ object UpdateDataVersionFormatter {
 
             when {
                 alphaBetaDpMatcher.find() -> when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
-                    "alpha" -> "$OxygenOsPrefix $AlphaPrefix ${alphaBetaDpMatcher.group(2)}"
-                    "beta" -> "$OxygenOsPrefix $BetaPrefix ${alphaBetaDpMatcher.group(2)}"
-                    "dp" -> "Android ${Build.VERSION.RELEASE} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
-                    else -> "$OxygenOsPrefix $BetaPrefix ${alphaBetaDpMatcher.group(2)}"
+                    "alpha" -> osPrefix + "$AlphaPrefix ${alphaBetaDpMatcher.group(2)}"
+                    "beta" -> osPrefix + "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
+                    "dp" -> "Android ${VERSION.RELEASE} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
+                    else -> osPrefix + "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
                 }
 
-                stableMatcher.find() -> "$OxygenOsPrefix ${stableMatcher.group()}"
+                stableMatcher.find() -> osPrefix + stableMatcher.group()
                 else -> firstLine.replace(OsVersionLineHeading, "")
             }
         } else versionInfo?.versionNumber.run {
@@ -93,14 +93,14 @@ object UpdateDataVersionFormatter {
     }
 
     /**
-     * Used for formatting [com.oxygenupdater.models.SystemVersionProperties.oxygenOSVersion]
+     * Used for formatting [com.oxygenupdater.models.SystemVersionProperties.osVersion]
      */
-    fun getFormattedOxygenOsVersion(version: String) = if (version.isBlank()) Build.UNKNOWN else {
+    fun getFormattedOsVersion(version: String) = if (version.isBlank()) Build.UNKNOWN else {
         val alphaBetaDpMatcher = AlphaBetaDpPattern.matcher(version)
         if (alphaBetaDpMatcher.find()) when (alphaBetaDpMatcher.group(1)?.lowercase() ?: "") {
             "alpha" -> "$AlphaPrefix ${alphaBetaDpMatcher.group(2)}"
             "beta" -> "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
-            "dp" -> "Android ${Build.VERSION.RELEASE} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
+            "dp" -> "Android ${VERSION.RELEASE} $DpPrefix ${alphaBetaDpMatcher.group(2)}"
             else -> "$BetaPrefix ${alphaBetaDpMatcher.group(2)}"
         } else version
     }

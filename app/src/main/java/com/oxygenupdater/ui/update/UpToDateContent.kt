@@ -66,7 +66,7 @@ fun UpToDate(
     updateData: UpdateData,
     getPrefStr: (key: String, default: String) -> String,
 ) {
-    val currentOtaVersion = SystemVersionProperties.oxygenOSOTAVersion
+    val currentOtaVersion = SystemVersionProperties.otaVersion
     val method = getPrefStr(KeyUpdateMethod, "")
 
     val incomingOtaVersion = updateData.otaVersionNumber

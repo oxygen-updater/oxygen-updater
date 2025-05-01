@@ -139,8 +139,8 @@ class UpToDateContentTest : ComposeBaseTest() {
          * - [R.string.device_information_os_version]
          * - [R.string.device_information_incremental_os_version]
          */
-        if (SystemVersionProperties.oxygenOSVersion != UNKNOWN) count += 3
-        if (SystemVersionProperties.oxygenOSOTAVersion != UNKNOWN) count += 3
+        if (SystemVersionProperties.osVersion != UNKNOWN) count += 3
+        if (SystemVersionProperties.otaVersion != UNKNOWN) count += 3
         if (SystemVersionProperties.securityPatchDate != UNKNOWN) count += 3
 
         assertCountEquals(count)

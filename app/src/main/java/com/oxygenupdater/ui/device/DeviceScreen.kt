@@ -199,14 +199,14 @@ private fun ColumnScope.DeviceNameWithSpec(
     Text(
         text = stringResource(remember(deviceOsSpec) {
             when (deviceOsSpec) {
-                DeviceOsSpec.SupportedOxygenOs -> R.string.device_information_supported_oxygen_os
+                DeviceOsSpec.SupportedDeviceAndOs -> R.string.device_information_supported_oxygen_os
                 DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.device_information_carrier_exclusive_oxygen_os
-                DeviceOsSpec.UnsupportedOxygenOs -> R.string.device_information_unsupported_oxygen_os
-                DeviceOsSpec.UnsupportedOs -> R.string.device_information_unsupported_os
+                DeviceOsSpec.UnsupportedDevice -> R.string.device_information_unsupported_oxygen_os
+                DeviceOsSpec.UnsupportedDeviceAndOs -> R.string.device_information_unsupported_os
                 else -> R.string.device_information_unsupported_os
             }
         }),
-        color = if (deviceOsSpec == DeviceOsSpec.SupportedOxygenOs) {
+        color = if (deviceOsSpec == DeviceOsSpec.SupportedDeviceAndOs) {
             MaterialTheme.colorScheme.onSurfaceVariant
         } else MaterialTheme.colorScheme.error,
         overflow = TextOverflow.Ellipsis,
@@ -237,7 +237,7 @@ fun DeviceMismatchStatus(status: Triple<Boolean, String, String>?) {
 
 @Composable
 private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: Dp) {
-    val notSupported = deviceOsSpec != DeviceOsSpec.SupportedOxygenOs
+    val notSupported = deviceOsSpec != DeviceOsSpec.SupportedDeviceAndOs
     var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
     if (notSupported) deviceOsSpec?.let {
         UnsupportedDeviceOsSpecDialog(showUnsupportedDialog, { showUnsupportedDialog = false }, it)
@@ -289,15 +289,15 @@ fun ColumnScope.DeviceSoftwareInfo(showHeader: Boolean = true) {
         text = Build.VERSION.RELEASE,
     )
 
-    SystemVersionProperties.oxygenOSVersion.takeIf { it != UNKNOWN }?.let {
+    SystemVersionProperties.osVersion.takeIf { it != UNKNOWN }?.let {
         Item(
             icon = Icons.Rounded.TripOrigin,
             titleResId = R.string.device_information_oxygen_os_version,
-            text = UpdateDataVersionFormatter.getFormattedOxygenOsVersion(it),
+            text = UpdateDataVersionFormatter.getFormattedOsVersion(it),
         )
     }
 
-    SystemVersionProperties.oxygenOSOTAVersion.takeIf { it != UNKNOWN }?.let {
+    SystemVersionProperties.otaVersion.takeIf { it != UNKNOWN }?.let {
         Item(
             icon = Icons.Rounded.TripOrigin,
             titleResId = R.string.device_information_oxygen_os_ota_version,
@@ -488,7 +488,7 @@ fun PreviewDeviceScreen() = PreviewAppTheme {
         navType = NavType.from(windowWidthSize),
         windowWidthSize = windowWidthSize,
         deviceName = name,
-        deviceOsSpec = DeviceOsSpec.SupportedOxygenOs,
+        deviceOsSpec = DeviceOsSpec.SupportedDeviceAndOs,
         deviceMismatchStatus = Triple(false, name, name),
     )
 }

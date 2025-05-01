@@ -145,7 +145,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="onboarding">Instellingen</string>
 	<string name="onboarding_finished_button">Start de app</string>
 
-	<string name="onboarding_app_uses">Met deze app kun je:\n\n&#8226; De nieuwste Android-updates voor jouw OxygenOS-apparaat als eerste downloaden\n&#8226; Een \"rooted\" apparaat eenvoudig bijwerken\n&#8226; Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n&#8226; Nieuwsberichten over OxygenOS en OPPO/OnePlus lezen</string>
+	<string name="onboarding_app_uses">Met deze app kun je:\n\n&#8226; De nieuwste Android-updates voor jouw OxygenOS/ColorOS-apparaat als eerste downloaden\n&#8226; Een \"rooted\" apparaat eenvoudig bijwerken\n&#8226; Bekijken wat er nieuw is in de systeemsoftware die je momenteel gebruikt\n&#8226; Nieuwsberichten over OxygenOS/ColorOS en OPPO/OnePlus lezen</string>
 
 	<string name="onboarding_disclaimer">Dit is geen officiële app van OPPO/OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OPPO/OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. Door deze app te gebruiken, ga je hiermee akkoord.</string>
 
@@ -153,7 +153,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="onboarding_device_chooser_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? Kies dan hierboven je apparaat.</string>
 
 	<string name="onboarding_method_chooser_title">Kies je update-methode</string>
-	<string name="onboarding_method_chooser_caption">De incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt. Als je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor "Volledige Update". Gebruik je een bèta-versie van OxygenOS? Kies dan voor de Open Bèta.</string>
+	<string name="onboarding_method_chooser_caption">De incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt. Als je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor "Volledige Update". Gebruik je een bèta-versie van OxygenOS/ColorOS? Kies dan voor de Open Bèta.</string>
 
 	<string name="onboarding_caption">Veel plezier met het gebruik van Oxygen Updater!</string>
 
@@ -168,7 +168,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="device_information_supported_oxygen_os">Je apparaat wordt ondersteund.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Je apparaat wordt niet ondersteund, omdat het een provider-exclusief apparaat is.</string>
 	<string name="device_information_unsupported_oxygen_os">We hebben nog geen ondersteuning toegevoegd voor je nieuwe apparaat.</string>
-	<string name="device_information_unsupported_os">Je apparaat wordt niet ondersteund, omdat het niet ondersteund wordt door OxygenOS.</string>
+	<string name="device_information_unsupported_os">Je apparaat wordt niet ondersteund, omdat het niet ondersteund wordt door OxygenOS/ColorOS.</string>
 
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
@@ -192,7 +192,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="about_support">Als je ons graag wil supporten, kan je de advertentievrije versie kopen (instellingen van de app), of bekijk onze <a href="https://patreon.com/oxygenupdater">Patreon pagina</a>.</string>
 	<string name="about_background_story_header">Achtergrondverhaal</string>
 	<string name="about_background_story">Deze app is oorspronkelijk ontwikkeld door Arjan Vlek als een follow-up van een van zijn andere apps, genaamd <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (deze app biedt een vergelijkbare functie voor CyanogenOS-gebruikers).\n\nNa 4 jaar, in juli 2019, besloot Arjan om te stoppen met beide projecten en het stokje door te geven aan een nieuw team van ontwikkelaars uit verschillende landen. Zij namen de verantwoordelijkheid om de gemeenschap tevreden te stellen door een uitstekende service &amp; ondersteuning te bieden, zodat gebruikers updates sneller ontvangen.\nMeer informatie over de aankondiging kan je <a href="https://oxygenupdater.com/article/81/">hier</a> vinden.\n\nOp 14 augustus 2019 bracht het nieuwe team hun eerste release uit wat bestond uit een donkere modus en een compleet herontwerp.\n\nVoor meer informatie over het team, bekijk hier <a href="https://oxygenupdater.com/team/">de website</a>.</string>
-	<string name="about_third_party_app_notice">Onthoudt dat dit geen officiële OPPO/OnePlus-applicatie is.\nDe OPPO/OnePlus naam, het OPPO/OnePlus Logo en OxygenOS zijn eigendommen van OPPO/OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OPPO/OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.</string>
+	<string name="about_third_party_app_notice">Onthoudt dat dit geen officiële OPPO/OnePlus-applicatie is.\nDe OPPO/OnePlus naam, het OPPO/OnePlus Logo en OxygenOS/ColorOS zijn eigendommen van OPPO/OnePlus.\nAndroid, Google, Google Play en het Google Play Logo zijn geregistreerde handelsmerken van Google Inc.\nDeze app gebruikt data van OPPO/OnePlus en het zusterbedrijf OPPO om update-informatie te tonen.</string>
 	<string name="about_rate_button_text">Beoordeel</string>
 	<string name="about_website_button_text">Website</string>
 	<string name="about_email_button_text">Email</string>
@@ -266,9 +266,9 @@ Dit kan handig zijn als je:"</string>
 	<string name="delete_message_delete_button">Verwijder</string>
 
 	<string name="unsupported_device_warning_title">Niet-ondersteund apparaat</string>
-	<string name="carrier_exclusive_device_warning_message">Het lijkt erop dat je een provider-exclusief apparaat gebruikt. Zelfs als je OxygenOS draait, dan heb je alsnog niet de mogelijkheid om updates te installeren. Providers vergrendelen het apparaat zodat gebruikers geen wijzigingen kunnen aanbrengen zonder toestemming van de provider. Dit is gebruikelijk in de VS: de "Lokale Upgrade" optie is verwijderd uit de provider-exclusieve versies van OxygenOS. Deze optie is nodig om zelf-gedownloade updates te installeren, zelfs als je deze app niet gebruikt. Helaas kunnen wij hier niets aan doen, omdat we technisch en mogelijk legaal gezien hierin gelimiteerd zijn. Je kunt ons een email sturen of ons op Discord vinden voor meer informatie.</string>
+	<string name="carrier_exclusive_device_warning_message">Het lijkt erop dat je een provider-exclusief apparaat gebruikt. Zelfs als je OxygenOS/ColorOS draait, dan heb je alsnog niet de mogelijkheid om updates te installeren. Providers vergrendelen het apparaat zodat gebruikers geen wijzigingen kunnen aanbrengen zonder toestemming van de provider. Dit is gebruikelijk in de VS: de "Lokale Upgrade" optie is verwijderd uit de provider-exclusieve versies van OxygenOS/ColorOS. Deze optie is nodig om zelf-gedownloade updates te installeren, zelfs als je deze app niet gebruikt. Helaas kunnen wij hier niets aan doen, omdat we technisch en mogelijk legaal gezien hierin gelimiteerd zijn. Je kunt ons een email sturen of ons op Discord vinden voor meer informatie.</string>
 	<string name="unsupported_device_warning_message">Gefeliciteerd met je nieuwe %1$s apparaat! Helaas hebben we nog geen ondersteuning toegevoegd voor dit apparaat. Maar geen zorgen, we zullen zo snel mogelijk ondersteuning voor dit apparaat toevoegen. We houden er niet van om fouten te maken, en het is een tijdrovend proces om de werking van de ondersteuning te kunnen garanderen voor nieuwe apparaten, dus wacht a.u.b rustig af. Stuur ons een email of neem deel aan onze Discord server als je ons wil helpen, of om notificaties te krijgen omtrent app-updates die ondersteuning bieden voor jouw apparaat.</string>
-	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS aan.\n\nAndere apparaten, waaronder OPPO/OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
+	<string name="unsupported_os_warning_message">Het lijkt erop dat jouw apparaat niet over OxygenOS/ColorOS-systeemsoftware beschikt.\nDeze app biedt alleen systeemupdates voor apparaten met OxygenOS/ColorOS aan.\n\nAndere apparaten, waaronder OPPO/OnePlus-apparaten met aangepaste software (\"Custom ROMs\"), worden niet ondersteund.</string>
 
 	<string name="incorrect_device_warning_title">Geselecteerde toestel komt niet overeen</string>
 	<string name="incorrect_device_warning_message">Het lijkt erop dat je een verkeerd toestel hebt geselecteerd: \"%1$s\", in plaats van \"%2$s\". Verander het geselecteerde toestel in de instellingen van de app, zodat je zeker weet dat je updates en notificaties ontvangt voor het correcte toestel.</string>

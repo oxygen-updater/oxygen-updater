@@ -147,12 +147,12 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="onboarding">Nastavenie</string>
 	<string name="onboarding_finished_button">Spustiť aplikáciu</string>
 
-	<string name="onboarding_app_uses">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS\n&#8226; Ľahko aktualizujte rootované zariadenie\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n&#8226; Prečítajte si najnovšie správy o OPPO/OnePlus a OxygenOS</string>
+	<string name="onboarding_app_uses">Táto aplikácia vám umožní:\n\n&#8226; Získajte rýchlejší prístup k najnovším aktualizáciám systému Android pre svoje zariadenie so systémom OxygenOS/ColorOS\n&#8226; Ľahko aktualizujte rootované zariadenie\n&#8226; Prezrite si, čo je nové v softvéri, ktorý momentálne používate\n&#8226; Prečítajte si najnovšie správy o OPPO/OnePlus a OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Toto nie je oficiálna aplikácia OPPO/OnePlus. Používanie tejto aplikácie je úplne na vaše vlastné riziko. Spoločnosť OPPO/OnePlus ani vývojári aplikácie nezodpovedajú za vaše kroky vrátane škôd spôsobených používaním tejto aplikácie. Používaním tejto aplikácie vyjadrujete súhlas s vyššie uvedenými podmienkami.</string>
 	<string name="onboarding_device_chooser_title">Vyberte svoje zariadenie</string>
 	<string name="onboarding_device_chooser_caption">Vaše zariadenie by malo byť vybrané vyššie. Ak nie, vyberte svoje zariadenie vyššie.</string>
 	<string name="onboarding_method_chooser_title">Vyberte spôsob aktualizácie</string>
-	<string name="onboarding_method_chooser_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie. Nie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie. Ak máte beta verziu systému OxygenOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
+	<string name="onboarding_method_chooser_caption">Tu je zvyčajne správnou voľbou inkrementálna aktualizácia, pretože ponúka oveľa rýchlejšie a menšie sťahovanie. Nie je však kompatibilná s rootovanými zariadeniami. Ak máte rootované zariadenie, vyberte možnosť Úplnej aktualizácie. Ak máte beta verziu systému OxygenOS/ColorOS, vyberte (jeden z) Open Beta spôsobov aktualizácie.</string>
 	<string name="onboarding_caption">Želáme príjemné používanie aplikácie! Neskôr môžete svoje nastavenia kedykoľvek zmeniť.</string>
 
 	<!-- Automatic install strings -->
@@ -166,7 +166,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="device_information_supported_oxygen_os">Vaše zariadenie je podporované</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Vaše zariadenie nie je podporované, pretože je exkluzívne pre operátora</string>
 	<string name="device_information_unsupported_oxygen_os">Vaše nové zariadenie zatiaľ nie je podporované</string>
-	<string name="device_information_unsupported_os">Vaše zariadenie nie je podporované, pretože nepoužíva OxygenOS</string>
+	<string name="device_information_unsupported_os">Vaše zariadenie nie je podporované, pretože nepoužíva OxygenOS/ColorOS</string>
 
 	<string name="device_information_hardware_header">Hardvér</string>
 	<string name="device_information_software_header">Softvér</string>
@@ -190,7 +190,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="about_support">Ak nás chcete podporiť, možete si kúpiť verziu bez reklám (v nastavení aplikácie), alebo pozrieť <a href="https://patreon.com/oxygenupdater">náš Patreon</a>.</string>
 	<string name="about_background_story_header">Pozadie príbehu</string>
 	<string name="about_background_story">Táto aplikácia bola pôvodne vyvinutá Arjanom Vlekom ako pokračovanie inej z jeho aplikácií, <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (podobná aplikácia pre používateľov Cyanogen OS).\n\nPo 4 rokoch, v júli 2019, sa Arjan rozhodol odstúpiť od oboch projektov a previedol vlastníctvo aplikácie na tím vývojárov pochádzajúcich z rôznych krajín. Prebrali zodpovednosť za to, že poskytnú komunite vynikajúce služby a podporu rýchlejšieho získavania OPPO/OnePlus aktualizácií.\nViac informácií o oznámení nájdete <a href="https://oxygenupdater.com/article/81/">tu</a>.\n\n14. augusta 2019 sme vydali prvú verziu v novom vlastníctve, ktoré prinieslo nové funkcie ako tmavý režim a kompletný redizajn aplikácie.\n\nĎalšie informácie o tíme nájdete na <a href="https://oxygenupdater.com/team/">našom webe</a>.</string>
-	<string name="about_third_party_app_notice">Upozorňujeme, že nejde o oficiálnu aplikáciu od OPPO/OnePlus.\nNázov OPPO/OnePlus, logo OPPO/OnePlus a OxygenOS sú majetkom OPPO/OnePlus.\nAndroid, Google, Google Play a logo Google Play sú registrované ochranné známky spoločnosti Google Inc.\nTáto aplikácia používa na zobrazenie informácií o aktualizácii údaje od spoločnosti OPPO/OnePlus a jej materskej spoločnosti Oppo.</string>
+	<string name="about_third_party_app_notice">Upozorňujeme, že nejde o oficiálnu aplikáciu od OPPO/OnePlus.\nNázov OPPO/OnePlus, logo OPPO/OnePlus a OxygenOS/ColorOS sú majetkom OPPO/OnePlus.\nAndroid, Google, Google Play a logo Google Play sú registrované ochranné známky spoločnosti Google Inc.\nTáto aplikácia používa na zobrazenie informácií o aktualizácii údaje od spoločnosti OPPO/OnePlus a jej materskej spoločnosti Oppo.</string>
 	<string name="about_rate_button_text">Ohodnotiť</string>
 	<string name="about_website_button_text">Náš web</string>
 	<string name="about_email_button_text">Email</string>
@@ -265,9 +265,9 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="delete_message_delete_button">Vymazať</string>
 
 	<string name="unsupported_device_warning_title">Nepodporované zariadenie</string>
-	<string name="carrier_exclusive_device_warning_message">Zdá sa, že používate zariadenie exkluzívne pre operátora Aj keď používate OxygenOS, nebudete môcť inštalovať aktualizácie. Operátori zvyčajne uzamknú zariadenie, aby používatelia nemohli aktualizovať alebo upravovať firmvér bez súhlasu samotného operátora. V USA je to bežná prax: možnosť \"Lokálna aktualizácia\" je nedostupná pre verzie OxygenOS exkluzívne pre oeprátora. Táto možnosť je nevyhnutná na inštaláciu aktualizácií svojpomocne, aj keď túto aplikáciu nepoužívate. Bohužiaľ s tým nemôžeme nič urobiť, pretože sme technicky a pravdepodobne aj právne obmedzení. Pre väčšiu prehľadnosť nás kontaktujte prostredníctvom e-mailu alebo Discord serveru.</string>
+	<string name="carrier_exclusive_device_warning_message">Zdá sa, že používate zariadenie exkluzívne pre operátora Aj keď používate OxygenOS/ColorOS, nebudete môcť inštalovať aktualizácie. Operátori zvyčajne uzamknú zariadenie, aby používatelia nemohli aktualizovať alebo upravovať firmvér bez súhlasu samotného operátora. V USA je to bežná prax: možnosť \"Lokálna aktualizácia\" je nedostupná pre verzie OxygenOS/ColorOS exkluzívne pre oeprátora. Táto možnosť je nevyhnutná na inštaláciu aktualizácií svojpomocne, aj keď túto aplikáciu nepoužívate. Bohužiaľ s tým nemôžeme nič urobiť, pretože sme technicky a pravdepodobne aj právne obmedzení. Pre väčšiu prehľadnosť nás kontaktujte prostredníctvom e-mailu alebo Discord serveru.</string>
 	<string name="unsupported_device_warning_message">Gratulujeme k vášmu novému zariadeniu %1$s! Pre toto zariadenie sme, bohužiaľ, zatiaľ nepridali podporu. Nerobte si však starosti, pridáme ju čo najskôr. Neradi robíme chyby a je to časovo náročný proces overovania a testovania podpory nových zariadení, takže buďte trpezliví. Pošlite nám e-mail alebo sa pripojte k nášmu Discord serveru, ak nám chcete pomôcť alebo dostať upozornenie, keď vydáme novú verziu aplikácie, ktorá obsahuje podporu pre vaše zariadenie.</string>
-	<string name="unsupported_os_warning_message">Zdá sa, že vaše zariadenie nebeží na OxygenOS. Upozorňujeme, že aktualizácie systému môžete inštalovať iba na zariadenia so systémom OxygenOS.\n\nOstatné zariadenia, vrátane zariadení OPPO/OnePlus s Custom ROM, nie sú podporované.</string>
+	<string name="unsupported_os_warning_message">Zdá sa, že vaše zariadenie nebeží na OxygenOS/ColorOS. Upozorňujeme, že aktualizácie systému môžete inštalovať iba na zariadenia so systémom OxygenOS/ColorOS.\n\nOstatné zariadenia, vrátane zariadení OPPO/OnePlus s Custom ROM, nie sú podporované.</string>
 
 	<string name="incorrect_device_warning_title">Nezhoda s vybraným zariadením</string>
 	<string name="incorrect_device_warning_message">Zdá sa, že ste vybrali nesprávne zariadenie: \"%1$s\", namiesto \"%2$s\". Zmeňte svoj výber v nastaveniach aplikácie, aby ste dostávali aktualizácie a upozornenia pre správne zariadenie.</string>

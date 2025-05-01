@@ -145,15 +145,15 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 	<string name="onboarding_finished_button">"Démarrer l'application"</string>
 	<string name="onboarding_app_uses">"Cette application vous permettra:
 
-&#8226; D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS
+&#8226; D'avoir un accès plus rapide aux dernières mises à jour Android pour votre appareil sous OxygenOS/ColorOS
 &#8226; De mettre à jour aisément un appareil rooté
 &#8226; De voir les nouveautés du système d'exploitation que vous utilisez
-&#8226; Lire les dernières informations à propos de OPPO/OnePlus et OxygenOS"</string>
+&#8226; Lire les dernières informations à propos de OPPO/OnePlus et OxygenOS/ColorOS"</string>
 	<string name="onboarding_disclaimer">"Cette application n'est pas une application officielle de OPPO/OnePlus. Son usage est à vos propres risques. Ni OPPO/OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celles causées par l'usage de cette application. En utilisant cette application vous acceptez les termes et conditions énoncées précédemment."</string>
 	<string name="onboarding_device_chooser_title">"Choisissez votre appareil:"</string>
 	<string name="onboarding_device_chooser_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus."</string>
 	<string name="onboarding_method_chooser_title">"Choisissez votre méthode de mise à jour."</string>
-	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit. Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète. Si vous utilisez une version bêta d'OxygenOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
+	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit. Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète. Si vous utilisez une version bêta d'OxygenOS/ColorOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
 	<string name="onboarding_caption">"Profitez de cette application ! Vous pourrez changer vos réglages plus tard si vous le souhaitez."</string>
 
 	<!-- Automatic install strings -->
@@ -171,7 +171,7 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="device_information_supported_oxygen_os">Votre appareil est supporté</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Votre appareil n\'est pas supporté car vendu exclusivement par un opérateur</string>
 	<string name="device_information_unsupported_oxygen_os">Nous ne supportons pas actuellement votre appareil.</string>
-	<string name="device_information_unsupported_os">Votre appareil n\'est pas supporté, étant donné qu\'il ne fonctionne pas sous OxygenOS</string>
+	<string name="device_information_unsupported_os">Votre appareil n\'est pas supporté, étant donné qu\'il ne fonctionne pas sous OxygenOS/ColorOS</string>
 
 	<string name="device_information_hardware_header">Matériel</string>
 	<string name="device_information_software_header">Logiciel</string>
@@ -195,7 +195,7 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="about_support">Si vous souhaitez nous supporter, vous pouvez acheter la version sans publicités (à partir des réglages de l\'application) ou vous rendre sur notre <a href="https://patreon.com/oxygenupdater">page Patreon</a>.</string>
 	<string name="about_background_story_header">Histoire</string>
 	<string name="about_background_story">Cette application a été initialement développée par Arjan Vlek à la suite d\'une autre de ses applications appelée <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (qui fournit des fonctionnalités similaires pour les utilisateurs de Cyanogen OS).\n\nAprès 4 ans, en Juillet 2019, Arjan a décidé de se retirer des deux projets et a transféré les applications à une équipe de développeurs venant chacun de différents pays. Ils ont pris la responsabilité de continuer à rendre à la communauté le service d\'obtenir les mises à jour réalisées par OPPO/OnePlus plus rapidement.\nVous pouvez trouver plus d\'informations à propos de l\'annonce <a href="https://oxygenupdater.com/article/81/">ici</a>.\n\nLe 14 Août 2019 a marqué la première publication d\'une nouvelle version de l\'application par la nouvelle équipe, qui a introduit de nouvelles fonctionnalités (thème sombre et redesign).\n\nPour plus d\'information à propos de l\'équipe, consultez <a href="https://oxygenupdater.com/team/">le site</a>.</string>
-	<string name="about_third_party_app_notice">Veuillez noter que cette application n\'est pas une application officielle de OPPO/OnePlus.\nLe nom OPPO/OnePlus, le logo OPPO/OnePlus et OxygenOS sont propriétés de OPPO/OnePlus.\nAndroid, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc.\nCette application utilise des données de OPPO/OnePlus et d\'OPPO pour montrer les informations de mise à jour.</string>
+	<string name="about_third_party_app_notice">Veuillez noter que cette application n\'est pas une application officielle de OPPO/OnePlus.\nLe nom OPPO/OnePlus, le logo OPPO/OnePlus et OxygenOS/ColorOS sont propriétés de OPPO/OnePlus.\nAndroid, Google, Google Play et le logo Google Play sont des marques déposées de Google Inc.\nCette application utilise des données de OPPO/OnePlus et d\'OPPO pour montrer les informations de mise à jour.</string>
 	<string name="about_rate_button_text">"Noter"</string>
 	<string name="about_website_button_text">Site</string>
 	<string name="about_email_button_text">Email</string>
@@ -271,9 +271,9 @@ Cliquez sur « Installation » afin de savoir comment faire. Appuyez sur « S
 	<string name="delete_message_delete_button">"Supprimer."</string>
 
 	<string name="unsupported_device_warning_title">"Appareil non compatible"</string>
-	<string name="carrier_exclusive_device_warning_message">Il semblerait que vous utilisez un appareil vendu par un opérateur. Même s\'il fonctionne sous OxygenOS, vous n\'aurez pas la possibilité d\'installer les mises à jour par vous même. Cela est dû au fait que les opérateurs verrouilent souvent les appareils vendus par eux afin que les utilisateurs ne puissent pas mettre à jour ou modifier le système d\'exploitation sans leur permission. Cela est une pratique courante aux Etats-Unis où l\'option "Mise à niveau locale" a été enlevée des appareils OPPO/OnePlus vendus par les opérateurs. Cette option est nécessaire pour installer les mises à jour par vous même, même si vous n\'utilisez pas cette application. Malheureusement, nous ne pouvons rien faire pour cela étant donné que nous sommes techniquement et possiblement légalement limités. N\'hésitez pas à nous contacter par email ou à rejoindre notre serveur Discord pour plus de clarification.</string>
+	<string name="carrier_exclusive_device_warning_message">Il semblerait que vous utilisez un appareil vendu par un opérateur. Même s\'il fonctionne sous OxygenOS/ColorOS, vous n\'aurez pas la possibilité d\'installer les mises à jour par vous même. Cela est dû au fait que les opérateurs verrouilent souvent les appareils vendus par eux afin que les utilisateurs ne puissent pas mettre à jour ou modifier le système d\'exploitation sans leur permission. Cela est une pratique courante aux Etats-Unis où l\'option "Mise à niveau locale" a été enlevée des appareils OPPO/OnePlus vendus par les opérateurs. Cette option est nécessaire pour installer les mises à jour par vous même, même si vous n\'utilisez pas cette application. Malheureusement, nous ne pouvons rien faire pour cela étant donné que nous sommes techniquement et possiblement légalement limités. N\'hésitez pas à nous contacter par email ou à rejoindre notre serveur Discord pour plus de clarification.</string>
 	<string name="unsupported_device_warning_message">Félicitations pour votre nouvel appareil %1$s! Malheureusement, nous ne le supportons pas encore. Ne vous inquiétez pas cependant, nous le ferons aussi vite que possible. Nous n\'aimons pas des faire des erreurs, et faire des vérifications avant de pouvoir le supporter est un long processus. Envoyez-nous un email ou rejoignez notre serveur Discord si vous souhaitez nous aider ou juste être notifié quand une nouvelle version de l\'application supportant votre appareil sera réalisée.</string>
-	<string name="unsupported_os_warning_message">"Il semblerait que votre appareil ne fonctionne pas sous OxygenOS. Veuillez noter que vous pouvez installer les mises à jour systèmes seulement sur les appareils fonctionnant sous OxygenOS.
+	<string name="unsupported_os_warning_message">"Il semblerait que votre appareil ne fonctionne pas sous OxygenOS/ColorOS. Veuillez noter que vous pouvez installer les mises à jour systèmes seulement sur les appareils fonctionnant sous OxygenOS/ColorOS.
 
 Les autres appareils, incluant les appareils OPPO/OnePlus fonctionnant sous des roms custom ne sont pas compatibles."</string>
 

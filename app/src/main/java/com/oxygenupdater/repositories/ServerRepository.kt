@@ -54,8 +54,8 @@ class ServerRepository @Inject constructor(
         serverApi.fetchUpdateData(
             deviceId,
             methodId,
-            SystemVersionProperties.oxygenOSOTAVersion,
-            SystemVersionProperties.oxygenOSVersion,
+            SystemVersionProperties.otaVersion,
+            SystemVersionProperties.osVersion,
             SystemVersionProperties.osType,
             SystemVersionProperties.fingerprint,
             SystemVersionProperties.isEuBuild,
@@ -145,8 +145,8 @@ class ServerRepository @Inject constructor(
         serverApi.osInfoHeartbeat(
             ArrayMap<String, Any>(7).apply {
                 put("fromAction", fromIntentAction)
-                put("otaVersion", SystemVersionProperties.oxygenOSOTAVersion)
-                put("osVersion", SystemVersionProperties.oxygenOSVersion)
+                put("otaVersion", SystemVersionProperties.otaVersion)
+                put("osVersion", SystemVersionProperties.osVersion)
                 put("osType", SystemVersionProperties.osType)
                 put("fingerprint", SystemVersionProperties.fingerprint)
                 put("isEuBuild", SystemVersionProperties.isEuBuild)
@@ -160,11 +160,11 @@ class ServerRepository @Inject constructor(
             ArrayMap<String, Any>(7).apply {
                 put("rows", rows)
                 put("fingerprint", SystemVersionProperties.fingerprint)
-                put("currentOtaVersion", SystemVersionProperties.oxygenOSOTAVersion)
+                put("currentOtaVersion", SystemVersionProperties.otaVersion)
                 put("isEuBuild", SystemVersionProperties.isEuBuild)
                 put("appVersion", BuildConfig.VERSION_NAME)
                 put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
-                put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
+                put("actualDeviceName", SystemVersionProperties.deviceProductName)
             }
         )
     }
@@ -187,7 +187,7 @@ class ServerRepository @Inject constructor(
                 put("httpMessage", httpMessage)
                 put("appVersion", BuildConfig.VERSION_NAME)
                 put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
-                put("actualDeviceName", SystemVersionProperties.oxygenDeviceName)
+                put("actualDeviceName", SystemVersionProperties.deviceProductName)
             }
         )
     }

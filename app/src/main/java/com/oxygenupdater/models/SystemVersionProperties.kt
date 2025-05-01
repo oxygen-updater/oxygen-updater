@@ -73,19 +73,24 @@ object SystemVersionProperties {
     private const val BuildOsTypeLookupKey = "ro.build.os_type"
 
     /** Matchable name of the device */
-    val oxygenDeviceName: String
+    val deviceProductName: String
 
-    /** Human-readable OxygenOS version. Shown within the UI of the app */
-    val oxygenOSVersion: String
+    /** Human-readable OS version. Shown within the UI of the app */
+    val osVersion: String
 
     /** Used to check for updates and shown in the "Device" tab */
-    val oxygenOSOTAVersion: String
+    val otaVersion: String
 
     /** Shown in the "Device" tab */
     val securityPatchDate: String
 
     /** Used for checking device/OS compatibility */
     val fingerprint: String = Build.FINGERPRINT.trim()
+    val brandLowercase = (Build.BRAND.takeIf {
+        it != UNKNOWN
+    } ?: Build.MANUFACTURER.takeIf {
+        it != UNKNOWN
+    } ?: fingerprint.split("/").getOrNull(0))?.trim()?.lowercase() ?: UNKNOWN
 
     /**
      * This prop is present only on 7-series and above, on OS versions before the Oppo merger (ColorOS base).
@@ -101,9 +106,9 @@ object SystemVersionProperties {
 
     init {
         // Default to something sensible or set to Build.UNKNOWN
-        var oxygenDeviceName = Build.PRODUCT
-        var oxygenOSVersion = Build.DISPLAY
-        var oxygenOSOTAVersion = UNKNOWN
+        var deviceProductName = Build.PRODUCT
+        var osVersion = Build.DISPLAY
+        var otaVersion = UNKNOWN
         var osType = UNKNOWN
         var isEuBuild = false
         var securityPatchDate = if (SDK_INT >= VERSION_CODES.M) {
@@ -113,34 +118,34 @@ object SystemVersionProperties {
         try {
             if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
 
-            if (oxygenDeviceName == OnePlus3) {
+            if (deviceProductName == OnePlus3) {
                 // Workaround #3: don't use `ro.product.name` for OP3/3T; they have the same value.
                 // Note: prior to v5.10.0, `ro.product.name` was read only on devices from 7-series onwards, and only
                 // when `ro.display.series` also existed. It was meant as a workaround that added support for regional
                 // variants. As a result, the app never used `ro.product.name` on devices & OS versions released after
                 // the Oppo merger (ColorOS base), instead relying on `ro.build.product`. This caused issues with 10T
                 // on OOS13, where `ro.build.product` had a value of `qssi` for some reason.
-                oxygenDeviceName = pickFirstValid(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, oxygenDeviceName) { _, value -> value }
-            } else if (OnePlus7TSeries.contains(oxygenDeviceName)) {
+                deviceProductName = pickFirstValid(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, deviceProductName) { _, value -> value }
+            } else if (OnePlus7TSeries.contains(deviceProductName)) {
                 // Workaround #4 (Build.PRODUCT + ro.build.soft.version): support Indian variants for 7T-series,
                 // on OS versions released before the Oppo merger (ColorOS base).
                 val buildSoftVersion = systemProperty(BuildSoftVersionLookupKey)
 
                 // Append _IN to mark device as Indian variant
-                if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
-            } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
+                if (buildSoftVersion.getOrNull(0) == 'I') deviceProductName += "_IN"
+            } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(deviceProductName)) {
                 // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                 // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
                 // correct regional OOS12 build (GLO: H.31, IND: H.30). There's another OOS12 workaround below.
                 val india = systemProperty(VendorOpIndia)
-                if (india == "1" || india == "true") oxygenDeviceName += "_IN"
+                if (india == "1" || india == "true") deviceProductName += "_IN"
             }
 
             // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
             // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
             // number, so we're not losing any info.
-            if (oxygenOSVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) oxygenOSVersion = pickFirstValid(
-                BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, oxygenOSVersion
+            if (osVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) osVersion = pickFirstValid(
+                BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, osVersion
             ) { key, value ->
                 if (key != RomVersionLookupKey) return@pickFirstValid value
 
@@ -153,30 +158,30 @@ object SystemVersionProperties {
                 if (value.contains(OxygenOsPrefix)) value.replace(OxygenOsPrefix, "") else value
             } else systemProperty(FullOsVersionLookupKey).let {
                 // Prefer OS version with SOTA info, if available
-                if (it != UNKNOWN) oxygenOSVersion = it
+                if (it != UNKNOWN) osVersion = it
             }
 
             val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
             if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
-                if (oxygenDeviceName in OnePlusPadAndPad2) {
+                if (deviceProductName in OnePlusPadAndPad2) {
                     // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
-                    if (pipeline != "EUEX") oxygenDeviceName += pipeline
-                } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
+                    if (pipeline != "EUEX") deviceProductName += pipeline
+                } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
                     // model number is used for both regions. Not sure if future builds would also be affected.
-                    if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
-                } else if ("oppo" == fingerprint.split("/").getOrNull(0)?.trim()?.lowercase()) {
+                    if (pipeline.startsWith("IN")) deviceProductName += "_IN"
+                } else if ("oppo" == brandLowercase) {
                     // Special handling for OPPO phones. They often use the same model number across all regions.
                     // Append pipeline to model number, only if it's not already part of it.
-                    oxygenDeviceName += pipeline
+                    deviceProductName += pipeline
                 }
             }
 
             val euBooleanStr = pickFirstValid(BuildEuLookupKeys) { _, value -> value }
             isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
-            oxygenOSOTAVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
+            otaVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
 
             // This prop is present only on 7-series and above
             osType = systemProperty(BuildOsTypeLookupKey).let {
@@ -198,56 +203,56 @@ object SystemVersionProperties {
 
                 getBuildPropProcess.destroy()
 
-                if (oxygenDeviceName == OnePlus3) {
+                if (deviceProductName == OnePlus3) {
                     // Workaround #3: don't use `ro.product.name` for OP3/3T; they have the same value.
                     // Note: prior to v5.10.0, `ro.product.name` was read only on devices from 7-series onwards, and only
                     // when `ro.display.series` also existed. It was meant as a workaround that added support for regional
                     // variants. As a result, the app never used `ro.product.name` on devices & OS versions released after
                     // the Oppo merger (ColorOS base), instead relying on `ro.build.product`. This caused issues with 10T
                     // on OOS13, where `ro.build.product` had a value of `qssi` for some reason.
-                    oxygenDeviceName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, properties, oxygenDeviceName)
-                } else if (OnePlus7TSeries.contains(oxygenDeviceName)) {
+                    deviceProductName = readBuildPropItem(BuildConfig.DEVICE_NAME_LOOKUP_KEYS, properties, deviceProductName)
+                } else if (OnePlus7TSeries.contains(deviceProductName)) {
                     // Workaround #4 (Build.PRODUCT + ro.build.soft.version): support Indian variants for 7T-series,
                     // on OS versions released before the Oppo merger (ColorOS base).
                     val buildSoftVersion = readBuildPropItem(BuildSoftVersionLookupKey, properties)
 
                     // Append _IN to mark device as Indian variant
-                    if (buildSoftVersion.getOrNull(0) == 'I') oxygenDeviceName += "_IN"
-                } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(oxygenDeviceName)) {
+                    if (buildSoftVersion.getOrNull(0) == 'I') deviceProductName += "_IN"
+                } else if (SDK_INT == VERSION_CODES.R && OnePlus7Series.contains(deviceProductName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.op.india): differentiate between 7-series GLO/IND on the
                     // last two OOS11 builds (11.0.8.1 & 11.0.9.1). This property was used by system OTA to deliver the
                     // correct regional OOS12 build (GLO: H.31, IND: H.30). There's another OOS12 workaround below.
                     val india = readBuildPropItem(VendorOpIndia, properties)
-                    if (india == "1" || india == "true") oxygenDeviceName += "_IN"
+                    if (india == "1" || india == "true") deviceProductName += "_IN"
                 }
 
                 // Prefer `Build.DISPLAY` on Android>13/T, to pick the new OOS13.1 format: KB2001_13.1.0.513(EX01),
                 // which corresponds to the KB2001_11_F.66 version number. Below OOS13.1, `Build.DISPLAY` is the version
                 // number, so we're not losing any info.
-                if (oxygenOSVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) oxygenOSVersion = readBuildPropItem(
-                    BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, oxygenOSVersion
+                if (osVersion == UNKNOWN || SDK_INT < VERSION_CODES.TIRAMISU) osVersion = readBuildPropItem(
+                    BuildConfig.OS_VERSION_NUMBER_LOOKUP_KEYS, properties, osVersion
                 ) else readBuildPropItem(FullOsVersionLookupKey, properties).let {
                     // Prefer OS version with SOTA info, if available
-                    if (it != UNKNOWN) oxygenOSVersion = it
+                    if (it != UNKNOWN) osVersion = it
                 }
 
                 val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
                 if (SDK_INT >= VERSION_CODES.S) {
-                    if (oxygenDeviceName in OnePlusPadAndPad2) {
+                    if (deviceProductName in OnePlusPadAndPad2) {
                         // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
-                        if (pipeline != "EUEX") oxygenDeviceName += pipeline
-                    } else if (OnePlus7Series.contains(oxygenDeviceName) || OnePlus7TSeries.contains(oxygenDeviceName)) {
+                        if (pipeline != "EUEX") deviceProductName += pipeline
+                    } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                         // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
                         // model number is used for both regions. Not sure if future builds would also be affected.
-                        if (pipeline.startsWith("IN")) oxygenDeviceName += "_IN"
+                        if (pipeline.startsWith("IN")) deviceProductName += "_IN"
                     }
                 }
 
                 val euBooleanStr = readBuildPropItem(BuildEuLookupKeys, properties)
                 isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
-                oxygenOSOTAVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties)
+                otaVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties)
 
                 // This prop is present only on 7-series and above
                 osType = readBuildPropItem(BuildOsTypeLookupKey, properties).let {
@@ -263,9 +268,9 @@ object SystemVersionProperties {
             }
         }
 
-        this.oxygenDeviceName = oxygenDeviceName
-        this.oxygenOSVersion = oxygenOSVersion
-        this.oxygenOSOTAVersion = oxygenOSOTAVersion
+        this.deviceProductName = deviceProductName
+        this.osVersion = osVersion
+        this.otaVersion = otaVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
         this.isEuBuild = isEuBuild

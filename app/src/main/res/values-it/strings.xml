@@ -139,10 +139,10 @@ Questo può essere utile se si desidera:"</string>
 	<string name="onboarding_finished_button">"Avvia app"</string>
 	<string name="onboarding_app_uses">"Questa app ti permetterà di:
 
-&#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OPPO/OnePlus con OxygenOS
+&#8226; Avere accesso più veloce agli ultimi aggiornamenti di Android per il tuo dispositivo OPPO/OnePlus con OxygenOS/ColorOS
 &#8226; Facilmente aggiornare un dispositivo rootato
 &#8226; Visualizzare le notivate in aggiornamenti
-&#8226; Leggere le novità su OPPO/OnePlus e OxygenOS"</string>
+&#8226; Leggere le novità su OPPO/OnePlus e OxygenOS/ColorOS"</string>
 	<string name="onboarding_disclaimer">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OPPO/OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
 	<string name="onboarding_device_chooser_title">"Seleziona il tuo dispositivo:"</string>
 	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra."</string>
@@ -163,7 +163,7 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="device_information_supported_oxygen_os">Il tuo dispositivo è supportato.</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">Dispositivo non supportato, in quanto esclusivo col gestore.</string>
 	<string name="device_information_unsupported_oxygen_os">Dispositivo non ancora supportato.</string>
-	<string name="device_information_unsupported_os">Il tuo dispositivo non è supportato, non utilizza OxygenOS.</string>
+	<string name="device_information_unsupported_os">Il tuo dispositivo non è supportato, non utilizza OxygenOS/ColorOS.</string>
 
 	<string name="device_information_hardware_header">Hardware</string>
 	<string name="device_information_software_header">Software</string>
@@ -187,7 +187,7 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="about_support">Se desideri sostenerci, puoi acquistare lo sblocco ad-free (impostazioni dell\'app), o consultare la nostra <a href="https://patreon.com/oxygenupdater">pagina Patreon</a>.</string>
 	<string name="about_background_story_header">Storia di fondo</string>
 	<string name="about_background_story">Questa app è stata originariamente sviluppata da Arjan Vlek come supplemento di un\'altra app, chiamata <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>\n\nDopo 4 anni, Luglio 2019, Arjan decise di abbandonare entrambi i suoi progetti e affidarli ad una squadra di sviluppatori da diverse nazioni. Presero la responsabilità di fornire la community con un servizio eccellente &amp; per fornire aggiornamenti OPPO/OnePlus in modo veloce.\nUlteriori informazioni sull\'<a href="https://oxygenupdater.com/article/81/">annuncio</a>.\n\nIl 14 Agosto 2018 segnò il primo rilascio sotto nuove direttive, che portò un sacco di novità come dark mode e un redesign completo.\n\nPer ulteriori informazioni sul team, visualizza <a href="https://oxygenupdater.com/team/">il sito</a>.</string>
-	<string name="about_third_party_app_notice">Questa non è un\'applicazione ufficiale.\nIl nome OPPO/OnePlus, il logo OPPO/OnePlus e OxygenOS sono proprietà di OPPO/OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OPPO/OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
+	<string name="about_third_party_app_notice">Questa non è un\'applicazione ufficiale.\nIl nome OPPO/OnePlus, il logo OPPO/OnePlus e OxygenOS/ColorOS sono proprietà di OPPO/OnePlus\nAndroid, Google, Google Play e il logo Google Play sono marchi registrati di Google Inc.\nQuesta app utilizza dati di OPPO/OnePlus e l\'azienda genitore Oppo per visualizzare alcune informazioni.</string>
 	<string name="about_rate_button_text">"Vota"</string>
 	<string name="about_website_button_text">Web</string>
 	<string name="about_email_button_text">Email</string>
@@ -259,9 +259,9 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 Premi \"Installa\" per vedere il processo d'installazione. Premi su \"Cancella\" per cancellare il file. Premi \"indietro\" per chiudere questo messaggio."</string>
 	<string name="delete_message_delete_button">"Cancella"</string>
 	<string name="unsupported_device_warning_title">"Device non supportato"</string>
-	<string name="carrier_exclusive_device_warning_message">Pare che tu stia utilizzando una versione esclusiva-gestore. Anche se utilizzi OxygenOS, non potrai installare aggiornamenti. I gestori solitamente \"racchiudono\" il dispositivo in modo che gli utenti non possano modificare il firmware senza il loro consenso. Ahimé, non possiamo farci nulla. Per ulteriori informazioni contattaci su Discord o via email.</string>
+	<string name="carrier_exclusive_device_warning_message">Pare che tu stia utilizzando una versione esclusiva-gestore. Anche se utilizzi OxygenOS/ColorOS, non potrai installare aggiornamenti. I gestori solitamente \"racchiudono\" il dispositivo in modo che gli utenti non possano modificare il firmware senza il loro consenso. Ahimé, non possiamo farci nulla. Per ulteriori informazioni contattaci su Discord o via email.</string>
 	<string name="unsupported_device_warning_message">Auguri per il tuo nuovo dispositivo %1$s! Sfortunatamente non abbiamo ancora aggiunto il supporto per il dispositivo. Non ti preoccupare, lo aggiungeremo appena possibile! Non ci piace commettere errori, ed è un processo molto lungo il verificare i nuovi dispositivi perciò sii paziente. Scrivici un email o contattaci su Discors se vuoi aiutarci, oppure per sapere quando aggiungeremo il supporto per il tuo dispositivo.</string>
-	<string name="unsupported_os_warning_message">"Pare che il tuo dispositivo non utilizzi OxygenOS. Nota bene che puoi soltanto aggiornare dispositivi utilizzanti OxygenOS.
+	<string name="unsupported_os_warning_message">"Pare che il tuo dispositivo non utilizzi OxygenOS/ColorOS. Nota bene che puoi soltanto aggiornare dispositivi utilizzanti OxygenOS/ColorOS.
 
 Altri dispositivi della OPPO/OnePlus su custom ROM, non sono supportati."</string>
 

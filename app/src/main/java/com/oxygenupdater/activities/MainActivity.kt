@@ -359,7 +359,7 @@ class MainActivity : AppCompatActivity() {
 
         val deviceName = settingsViewModel.deviceName ?: remember(cachedEnabledDevices) {
             cachedEnabledDevices?.find {
-                it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+                it.productNames.contains(SystemVersionProperties.deviceProductName)
             }?.name
         }
 
@@ -446,7 +446,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val showDeviceBadge = viewModel.deviceOsSpec.let {
-            it != null && it != DeviceOsSpec.SupportedOxygenOs
+            it != null && it != DeviceOsSpec.SupportedDeviceAndOs
         } || viewModel.deviceMismatch.let { it != null && it.first }
         Screen.Device.badge = if (showDeviceBadge) "!" else null
 
@@ -864,7 +864,7 @@ class MainActivity : AppCompatActivity() {
             windowWidthSize = windowWidthSize,
             deviceName = remember(allDevices) {
                 allDevices?.find {
-                    it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
+                    it.productNames.contains(SystemVersionProperties.deviceProductName)
                 }?.name ?: DefaultDeviceName
             },
             deviceOsSpec = viewModel.deviceOsSpec,

@@ -23,12 +23,12 @@ import org.junit.Test
 
 class DeviceScreenTest : ComposeBaseTest() {
 
-    private var spec by mutableStateOf(DeviceOsSpec.SupportedOxygenOs)
+    private var spec by mutableStateOf(DeviceOsSpec.SupportedDeviceAndOs)
     private var mismatchStatus by mutableStateOf<Triple<Boolean, String, String>?>(null)
 
     @Before
     fun setup() {
-        spec = DeviceOsSpec.SupportedOxygenOs
+        spec = DeviceOsSpec.SupportedDeviceAndOs
         mismatchStatus = null
     }
 
@@ -73,11 +73,11 @@ class DeviceScreenTest : ComposeBaseTest() {
         validateForNotSupportedSpecs(R.string.device_information_carrier_exclusive_oxygen_os)
 
         // Then for new devices we don't yet support
-        spec = DeviceOsSpec.UnsupportedOxygenOs
+        spec = DeviceOsSpec.UnsupportedDevice
         validateForNotSupportedSpecs(R.string.device_information_unsupported_oxygen_os)
 
-        // Then for devices not running OxygenOS
-        spec = DeviceOsSpec.UnsupportedOs
+        // Then for devices not running OxygenOS/ColorOS
+        spec = DeviceOsSpec.UnsupportedDeviceAndOs
         validateForNotSupportedSpecs(R.string.device_information_unsupported_os)
 
         // First we test for the initial null value of deviceMismatchStatus

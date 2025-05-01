@@ -141,15 +141,15 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 	<string name="onboarding_finished_button">"App starten"</string>
 	<string name="onboarding_app_uses">"Diese App erlaubt es dir:
 
-&#8226; Schneller die neusten Updates für dein OxygenOS Gerät zu bekommen
+&#8226; Schneller die neusten Updates für dein OxygenOS/ColorOS Gerät zu bekommen
 &#8226; Ein gerootetes Gerät einfach zu aktualisieren
 &#8226; Zu sehen was in deiner aktuellen Version alles neu ist
-&#8226; Die neusten Updates über OPPO/OnePlus und OxygenOS zu sehen"</string>
+&#8226; Die neusten Updates über OPPO/OnePlus und OxygenOS/ColorOS zu sehen"</string>
 	<string name="onboarding_disclaimer">"Das ist keine Offizielle OPPO/OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder OPPO/OnePlus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden. durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu."</string>
 	<string name="onboarding_device_chooser_title">"Wähle dein Gerät"</string>
 	<string name="onboarding_device_chooser_caption">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus."</string>
 	<string name="onboarding_method_chooser_title">"Wähle deine Update Methode"</string>
-	<string name="onboarding_method_chooser_caption">"Für gewöhnlich ist das \"inkrementelle Update\" die richtige Wahl, da es einen schnelleren und kleineren Download bietet. Dies ist jedoch nicht mit gerooteten Geräten kompatibel. Falls du ein gerootetes Gerät hast dann wähle bitte das \"komplette Update\". Falls auf deinem Gerät eine Beta Version von OxygenOS läuft, dann wähle eine der offenen Beta Update Methoden."</string>
+	<string name="onboarding_method_chooser_caption">"Für gewöhnlich ist das \"inkrementelle Update\" die richtige Wahl, da es einen schnelleren und kleineren Download bietet. Dies ist jedoch nicht mit gerooteten Geräten kompatibel. Falls du ein gerootetes Gerät hast dann wähle bitte das \"komplette Update\". Falls auf deinem Gerät eine Beta Version von OxygenOS/ColorOS läuft, dann wähle eine der offenen Beta Update Methoden."</string>
 	<string name="onboarding_caption">"Viel Spaß beim Benutzen dieser App! Du kannst jederzeit die Einstellungen später noch ändern."</string>
 
 	<!-- Automatic install strings -->
@@ -190,7 +190,7 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="about_support">Wenn du uns unterstützen möchtest kannst du entweder die werbefrei Version kaufen (Verfügbar über die App Einstellungen) oder besuchen Sie unsere <a href="https://patreon.com/oxygenupdater">Patreon Seite</a>.</string>
 	<string name="about_background_story_header">Geschichte</string>
 	<string name="about_background_story">Diese App wurde ursprünglich von Arjan Vlek als Nachfolger einer anderen seiner Apps, namens <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (sie bietet ähnliche Funktionen für Cyanogen OS-Nutzer), entwickelt.\n\nNach 4 Jahren, im Juli 2019, hat sich Arjan entschieden von seinen Projekten zurück zu treten und sie einem Team von Entwicklern von verschiedenen Herkunften zu überlassen. Diese haben die Verantwortung auf sich genommen der Community einen perfekten Service zu bieten &amp; OPPO/OnePlus Geräte schneller mit Updates zu versorgen.\nDu kannst mehr über die Ankündigung herausfinden und zwar <a href="https://oxygenupdater.com/article/81/">hier</a>.\n\n14 August 2019 war der erste release unter neuer Leitung, welcher mit neuen Features wie dem Darkmode und einem kompletten Redesign erschienen ist.\n\nFür mehr Infos besuche <a href="https://oxygenupdater.com/team/">die Webseite</a>.</string>
-	<string name="about_third_party_app_notice">Bitte beachte, diese App ist nicht offiziell von OPPO/OnePlus.\nDer OPPO/OnePlus Name, das OPPO/OnePlus Logo und OxygenOS sind Eigentum von OPPO/OnePlus.\nAndroid, Google, Google Play und das Google Play Logo gehören mit Trademarks Google Inc.\nDiese App benutzt Daten von OPPO/OnePlus und seiner Vaterfirma Oppo um Update Informationen anzuzeigen.</string>
+	<string name="about_third_party_app_notice">Bitte beachte, diese App ist nicht offiziell von OPPO/OnePlus.\nDer OPPO/OnePlus Name, das OPPO/OnePlus Logo und OxygenOS/ColorOS sind Eigentum von OPPO/OnePlus.\nAndroid, Google, Google Play und das Google Play Logo gehören mit Trademarks Google Inc.\nDiese App benutzt Daten von OPPO/OnePlus und seiner Vaterfirma Oppo um Update Informationen anzuzeigen.</string>
 	<string name="about_rate_button_text">Bewerten</string>
 	<string name="about_website_button_text">Webseite</string>
 	<string name="about_email_button_text">E-Mail</string>
@@ -265,9 +265,9 @@ Wahlen Sie \"Installieren\" zum Installieren des Updates. Wahlen sie \"Löschen\
 	<string name="delete_message_delete_button">"Löschen"</string>
 	<string name="unsupported_device_warning_title">"Nicht unterstütztes Gerät"</string>
 
-	<string name="carrier_exclusive_device_warning_message">Es sieht so aus als ob du ein Betreiber-exklusives Gerät benutzt. Auch wenn dieses Gerät OxygenOS verwendet, wirst du keine Updates installieren können. Betreiber sperren normalerweiße die Geräte damit Benutzer die Firmware nicht updaten oder irgendwelche Modifizierungen vornehmen können die nicht von dem Betreiber genehmigt worden sind. Dies ist eine gängige Praxis in den USA, die \"Lokale Upgrade\" Option ist auf Betreiber-exklusiven Versionen von OxygenOS nicht verfügbar. Diese Option ist aber notwendig um Update selbst installieren zu können, selbst wenn du nicht diese App benutzt. Leider können wir nichts dagegen tun, da wir technisch und möglicherweise rechtlich eingeschränkt sind. Kontaktieren Sie uns für mehr Informationen per E-Mail oder Discord.</string>
+	<string name="carrier_exclusive_device_warning_message">Es sieht so aus als ob du ein Betreiber-exklusives Gerät benutzt. Auch wenn dieses Gerät OxygenOS/ColorOS verwendet, wirst du keine Updates installieren können. Betreiber sperren normalerweiße die Geräte damit Benutzer die Firmware nicht updaten oder irgendwelche Modifizierungen vornehmen können die nicht von dem Betreiber genehmigt worden sind. Dies ist eine gängige Praxis in den USA, die \"Lokale Upgrade\" Option ist auf Betreiber-exklusiven Versionen von OxygenOS/ColorOS nicht verfügbar. Diese Option ist aber notwendig um Update selbst installieren zu können, selbst wenn du nicht diese App benutzt. Leider können wir nichts dagegen tun, da wir technisch und möglicherweise rechtlich eingeschränkt sind. Kontaktieren Sie uns für mehr Informationen per E-Mail oder Discord.</string>
 	<string name="unsupported_device_warning_message">Herzlichen Glückwunsch zu Ihrem neuen %1$s-Gerät! Leider unterstützen wird dieses Gerät zurzeit noch nicht. Keine Sorge, wir werden es so schnell wie möglich hinzufügen. Wir mögen es nicht, Fehler zu machen, und es ist ein zeitaufwändiger Prozess, die Unterstützung für neue Geräte zu überprüfen und zu testen. Bitte haben Sie etwas Geduld. Senden Sie uns eine E-Mail oder treten Sie unserem Discord-Server bei, wenn Sie uns helfen oder benachrichtigt werden möchten, wenn wir eine neue Version der App veröffentlichen, die Unterstützung für Ihr Gerät enthält.</string>
-	<string name="unsupported_os_warning_message">"Es sieht so aus als ob ihr Gerät kein OxygenOS verwendet. Bitte beachte, dass du nur System Updates auf Geräten mit OxygenOS installieren kannst.
+	<string name="unsupported_os_warning_message">"Es sieht so aus als ob ihr Gerät kein OxygenOS/ColorOS verwendet. Bitte beachte, dass du nur System Updates auf Geräten mit OxygenOS/ColorOS installieren kannst.
 
 Andere Geräte, inklusive OPPO/OnePlus Geräten mit Custom ROMs, werden nicht unterstützt."</string>
 

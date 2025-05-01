@@ -21,7 +21,7 @@ import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.SelectableModel
-import com.oxygenupdater.models.SystemVersionProperties.oxygenDeviceName
+import com.oxygenupdater.models.SystemVersionProperties.deviceProductName
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.SettingsListConfig
@@ -94,12 +94,12 @@ class SettingsViewModel @Inject constructor(
 
             var matched: Boolean? = null  // save computation for future use
             if (deviceName == null) { // take first match only
-                matched = device.productNames.contains(oxygenDeviceName)
+                matched = device.productNames.contains(deviceProductName)
                 if (matched) deviceName = device.name
             }
 
             if (deviceId != NotSetL && deviceId == device.id) selectedDeviceIndex = index
-            if (matched ?: device.productNames.contains(oxygenDeviceName)) initialDeviceIndex = index
+            if (matched ?: device.productNames.contains(deviceProductName)) initialDeviceIndex = index
         }
 
         // If there's only one device, select it, otherwise fallback to initial index

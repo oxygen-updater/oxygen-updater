@@ -147,12 +147,12 @@
 	<string name="onboarding">セットアップ</string>
 	<string name="onboarding_finished_button">アプリの開始</string>
 
-	<string name="onboarding_app_uses">本アプリでは次のことができます：\n\n&#8226; OxygenOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OPPO/OnePlus と OxygenOS に関する最新ニュースを読む</string>
+	<string name="onboarding_app_uses">本アプリでは次のことができます：\n\n&#8226; OxygenOS/ColorOS 搭載デバイスの最新の Android アップデートを高速アクセスで取得\n&#8226; ルート化済デバイスを簡単に更新\n&#8226; 現在使用しているシステムソフトウェアの最新情報を表示\n&#8226; OPPO/OnePlus と OxygenOS/ColorOS に関する最新ニュースを読む</string>
 	<string name="onboarding_disclaimer">これは OPPO/OnePlus の公式アプリケーションではありません。このアプリの使用は完全にあなた自身の責任です。 OPPO/OnePlus もアプリの開発者も、本アプリの使用によって引き起こされた損害を含め、あなたの行動に責任を負いません。 このアプリを使用すると、上記の利用規約に同意したことになります。</string>
 	<string name="onboarding_device_chooser_title">あなたのデバイスを選択</string>
 	<string name="onboarding_device_chooser_caption">通常、デバイスは上記で選択済です。 そうでない場合は、上でデバイスを選択して下さい。</string>
 	<string name="onboarding_method_chooser_title">アップデート方法を選択</string>
-	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。 ただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。 OxygenOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
+	<string name="onboarding_method_chooser_caption">通常、高速で小規模ダウンロードであるため、増分アップデートが正しい選択です。 ただし、ルート化済デバイスとの互換性はありません。ルート化済デバイスの場合は完全アップデートを選択します。 OxygenOS/ColorOS のベータ版を使用している場合は、オープンベータアップベート（のいずれか）を選択します。</string>
 	<string name="onboarding_caption">アプリの使用をお楽しみください！後からいつでも設定を変更できます。</string>
 
 	<!-- Automatic install strings -->
@@ -166,7 +166,7 @@
 	<string name="device_information_supported_oxygen_os">サポートされているデバイス</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">キャリア専用の、サポートされていないデバイス</string>
 	<string name="device_information_unsupported_oxygen_os">まだ新しいデバイスに対応していません</string>
-	<string name="device_information_unsupported_os">OxygenOS を実行していないため、サポートされていません</string>
+	<string name="device_information_unsupported_os">OxygenOS/ColorOS を実行していないため、サポートされていません</string>
 
 	<string name="device_information_hardware_header">ハードウェア</string>
 	<string name="device_information_software_header">ソフトウェア</string>
@@ -191,7 +191,7 @@
 	<string name="about_support">私たちを支援したい場合は、広告の除去を購入もしくは <a href="https://patreon.com/oxygenupdater">Patreon のページ</a>を確認してください。</string>
 	<string name="about_background_story_header">経緯</string>
 	<string name="about_background_story">本アプリは Arjan Vlek が彼の他のアプリ <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a>(Cyanogen OS ユーザ向けに同様の機能を提供する) のフォローアップとして開発したものです。\n\n4年後、2019年7月にArjan は双方のプロジェクトから辞任することを決定し、アプリの所有権をさまざまな国からの開発者チームに移しました。彼らは、OnePlusの更新を迅速に取得するための優れたサービスとサポートをコミュニティに提供する責任を負っています。\n\n発表の詳細については、<a href="https://oxygenupdater.com/article/81/">こちら</a>をご覧ください。\n\n2019年8月14日 ダークモードや完全な再設計などの新機能を備えた新しい所有権の下での最初のリリース。\n\nチームの詳細については、<a href="https://oxygenupdater.com/team/">ウェブサイト</a>.</string>
-	<string name="about_third_party_app_notice">注意、これは OPPO/OnePlus 公式のアプリケーションではありません。\nOnePlus、OnePlus ロゴ、および OxygenOS は OPPO/OnePlus の登録商標です。\nAndroid、Google、Google Play、および Google Play ロゴは Google Inc. の登録商標です。\nこのアプリは OPPO/OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
+	<string name="about_third_party_app_notice">注意、これは OPPO/OnePlus 公式のアプリケーションではありません。\nOnePlus、OnePlus ロゴ、および OxygenOS/ColorOS は OPPO/OnePlus の登録商標です。\nAndroid、Google、Google Play、および Google Play ロゴは Google Inc. の登録商標です。\nこのアプリは OPPO/OnePlus およびその親会社 Oppo のデータを使用して更新情報を表示します。</string>
 	<string name="about_rate_button_text">評価</string>
 	<string name="about_website_button_text">ウェブサイト</string>
 	<string name="about_email_button_text">メール</string>
@@ -266,9 +266,9 @@
 	<string name="delete_message_delete_button">削除</string>
 
 	<string name="unsupported_device_warning_title">未サポートデバイス</string>
-	<string name="carrier_exclusive_device_warning_message">キャリア独自のデバイスを使用しているようです。OxygenOS を実行していても、アップデートをインストールすることはできません。たいてい、キャリアはユーザーが許可無しにファームウェアを変更できないようデバイスをロックします。これはアメリカでは一般的なことで、"ローカルアップグレード" オプションはキャリア独自の OxygenOS から削除されています。このオプションは、このアプリを使用しなくても自身でアップデートをインストールするために必要です。残念ながら、技術的または法的な制限により何もできません。メールや Discord でより明確に説明いたします。</string>
+	<string name="carrier_exclusive_device_warning_message">キャリア独自のデバイスを使用しているようです。OxygenOS/ColorOS を実行していても、アップデートをインストールすることはできません。たいてい、キャリアはユーザーが許可無しにファームウェアを変更できないようデバイスをロックします。これはアメリカでは一般的なことで、"ローカルアップグレード" オプションはキャリア独自の OxygenOS/ColorOS から削除されています。このオプションは、このアプリを使用しなくても自身でアップデートをインストールするために必要です。残念ながら、技術的または法的な制限により何もできません。メールや Discord でより明確に説明いたします。</string>
 	<string name="unsupported_device_warning_message">新しい %1$s デバイスの入手おめでとうございます！ 残念ながら、まだこのデバイスのサポートをしていません。ご心配なく、可能な限り早く追加します。ミスを避けるため、新しいデバイスの検証とテストには時間が掛かるため、ご容赦ください。私たちを手助けする場合、メールを送るか Discord サーバーに参加し、デバイスのサポートを含む新しいアプリのリリースの通知を受け取ってください。</string>
-	<string name="unsupported_os_warning_message">デバイスで OxygenOS が実行されていないようです。 OxygenOS を実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。\n\nカスタム ROM を実行している OPPO/OnePlus デバイスを含むその他のデバイスはサポートされていません。</string>
+	<string name="unsupported_os_warning_message">デバイスで OxygenOS/ColorOS が実行されていないようです。 OxygenOS/ColorOS を実行しているデバイスにのみシステムアップデートをインストールできることに注意してください。\n\nカスタム ROM を実行している OPPO/OnePlus デバイスを含むその他のデバイスはサポートされていません。</string>
 
 	<string name="incorrect_device_warning_title">選択されたデバイスとの不一致</string>
 	<string name="incorrect_device_warning_message">\"%2$s\" の代わりに、間違ったデバイスを選択したようです: \"%1$s\"。正しいデバイスのアップデートと通知を受け取るためにアプリ内の設定から選択を変更してください。</string>

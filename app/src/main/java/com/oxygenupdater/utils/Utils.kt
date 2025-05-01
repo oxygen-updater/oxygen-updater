@@ -9,9 +9,9 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.DeviceOsSpec.Companion.CarrierExclusiveOxygenOs
-import com.oxygenupdater.models.DeviceOsSpec.Companion.SupportedOxygenOs
-import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOs
-import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedOxygenOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.SupportedDeviceAndOs
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedDevice
+import com.oxygenupdater.models.DeviceOsSpec.Companion.UnsupportedDeviceAndOs
 import com.oxygenupdater.models.SystemVersionProperties
 import java.time.ZoneId
 
@@ -67,18 +67,18 @@ object Utils {
                 && fingerprintParts[5].lowercase().contains("release-keys")
 
         if (devices.isNullOrEmpty()) {
-            // To prevent incorrect results on empty server response.
-            // This still checks if official ROM is used and if an OxygenOS version is found on the device.
-            return if (firmwareIsSupported) SupportedOxygenOs else UnsupportedOxygenOs
+            // To prevent incorrect results on empty server response. This still checks if
+            // official ROM is used and if an OxygenOS/ColorOS version is found on the device.
+            return if (firmwareIsSupported) SupportedDeviceAndOs else UnsupportedDevice
         }
 
         return if (firmwareIsSupported) {
-            // User's device is definitely running OxygenOS, now onto other checks…
+            // User's device is definitely running OxygenOS/ColorOS, now onto other checks…
             devices.forEach {
                 // Find the user's device in the list of devices retrieved from the server
                 if ((fingerprintParts.size > 2 && it.productNames.contains(fingerprintParts[1]))
-                    || it.productNames.contains(SystemVersionProperties.oxygenDeviceName)
-                ) return if (it.enabled) SupportedOxygenOs else {
+                    || it.productNames.contains(SystemVersionProperties.deviceProductName)
+                ) return if (it.enabled) SupportedDeviceAndOs else {
                     // Device found, but is disabled, which means it's carrier-exclusive
                     // (only carrier-exclusive devices are disabled in the database)
                     CarrierExclusiveOxygenOs
@@ -87,11 +87,11 @@ object Utils {
 
             // Device not found among the server-provided list; assume it's a newly-released
             // OPPO/OnePlus device that we're yet to add support for.
-            UnsupportedOxygenOs
+            UnsupportedDevice
         } else {
-            // Device isn't running OxygenOS/ColorOS at all. Note that it may still be a OPPO/OnePlus
-            // device running a custom ROM.
-            UnsupportedOs
+            // Device isn't running OxygenOS/ColorOS at all. Note that it may still be an
+            // OPPO/OnePlus device running a custom ROM.
+            UnsupportedDeviceAndOs
         }
     }
 
@@ -100,7 +100,7 @@ object Utils {
      * and the second is the actual device name (`null` if we no match was found).
      */
     fun checkDeviceMismatch(devices: List<Device>?, savedDeviceId: Long): Pair<Boolean, String?> {
-        val productName = SystemVersionProperties.oxygenDeviceName
+        val productName = SystemVersionProperties.deviceProductName
         val (deviceCode, regionCode) = productName.split("_", limit = 2).run {
             Pair(this[0], if (size > 1) this[1] else null)
         }

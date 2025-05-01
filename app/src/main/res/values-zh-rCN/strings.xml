@@ -143,12 +143,12 @@
 	<string name="onboarding">设置</string>
 	<string name="onboarding_finished_button">开始吧！</string>
 
-	<string name="onboarding_app_uses">这款 App 可以帮助您：\n\n&#8226; 更快地接收 OxygenOS 的最新更新\n&#8226; 更轻松地升级 Root 过的设备\n&#8226; 查看当前系统版本的更新亮点\n&#8226; 了解关于 OPPO/OnePlus 与 OxygenOS 的最新消息</string>
+	<string name="onboarding_app_uses">这款 App 可以帮助您：\n\n&#8226; 更快地接收 OxygenOS/ColorOS 的最新更新\n&#8226; 更轻松地升级 Root 过的设备\n&#8226; 查看当前系统版本的更新亮点\n&#8226; 了解关于 OPPO/OnePlus 与 OxygenOS/ColorOS 的最新消息</string>
 	<string name="onboarding_disclaimer">本应用并不是官方的 OPPO/OnePlus 应用程序，使用此应用程序完全由您自己承担风险。OnePlus 和应用开发者都不对您的行为负责，包括使用此应用程序造成的任何损害。 使用此应用程序即表示您同意上述条款。</string>
 	<string name="onboarding_device_chooser_title">选择您的设备：</string>
 	<string name="onboarding_device_chooser_caption">一般情况下，应用已经自动选择了您的设备。\n如果没有，请在上面选择。</string>
 	<string name="onboarding_method_chooser_title">选择您的更新方式：</string>
-	<string name="onboarding_method_chooser_caption">一般情况下，我们更加推荐增量更新，因为下载的更新包更加小巧。 只是它与 Root 设备不兼容。 如果您的设备已经 Root，请选择全量更新。 而如果您运行的是 OxygenOS 的测试版, 请选择开放测试版系统</string>
+	<string name="onboarding_method_chooser_caption">一般情况下，我们更加推荐增量更新，因为下载的更新包更加小巧。 只是它与 Root 设备不兼容。 如果您的设备已经 Root，请选择全量更新。 而如果您运行的是 OxygenOS/ColorOS 的测试版, 请选择开放测试版系统</string>
 	<string name="onboarding_caption">敬请使用吧！\n\n您可以随时在设置中更改您的设定。</string>
 
 	<!-- Automatic install strings -->
@@ -162,7 +162,7 @@
 	<string name="device_information_supported_oxygen_os">您的设备受支持</string>
 	<string name="device_information_carrier_exclusive_oxygen_os">不支持您的设备，因为它是运营商合约机</string>
 	<string name="device_information_unsupported_oxygen_os">您的设备太新了，我们还没有支持它</string>
-	<string name="device_information_unsupported_os">不支持您的设备，因为它没有运行 OxygenOS</string>
+	<string name="device_information_unsupported_os">不支持您的设备，因为它没有运行 OxygenOS/ColorOS</string>
 
 	<string name="device_information_hardware_header">硬件</string>
 	<string name="device_information_software_header">软件</string>
@@ -187,7 +187,7 @@
 	<string name="about_support">如果您愿意支持我们，可以去购买移除广告服务（在设置里），也可以看看我们的 <a href="https://patreon.com/oxygenupdater">Patreon 页面</a>。</string>
 	<string name="about_background_story_header">幕后故事</string>
 	<string name="about_background_story">该应用原本由 Arjan Vlek 开发，作为他的另一款应用 <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> 的续作。(它可以为 Cyanogen OS 用户提供与本应用类似的功能)\n\n2019 年 6 月，距离发布四年之后，Arjan 决定停止支持这两款应用，并将它们的所有权转让给其它团队。而这个团队，则担负起了为整个 OPPO/OnePlus 社区提供优质的支持服务的责任，帮助无数用户更快地获取 OPPO/OnePlus 系统更新。\n您可以在 <a href="https://oxygenupdater.com/article/81/">这里</a> 了解更多关于此的信息。\n\n2019 年 8 月 14 日，新团队发布了他们所负责以来的第一个版本。该版本为用户带来了深色模式的支持、令人耳目一新的界面设计，以及其它的新功能。\n\n如果您想更深入了解这个团队，您可以去看看他们的<a href="https://oxygenupdater.com/team/">网站</a>。</string>
-	<string name="about_third_party_app_notice">请注意，这并不是 OPPO/OnePlus 出品的官方应用！\nOnePlus 的名称、Logo、以及 OxygenOS 都由 OPPO/OnePlus 所有！\nAndroid、Google、Google Play 以及 Google Play 的 Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OPPO/OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
+	<string name="about_third_party_app_notice">请注意，这并不是 OPPO/OnePlus 出品的官方应用！\nOnePlus 的名称、Logo、以及 OxygenOS/ColorOS 都由 OPPO/OnePlus 所有！\nAndroid、Google、Google Play 以及 Google Play 的 Logo，均为 Google LLC. 所持有的商标。\n本应用使用来自 OPPO/OnePlus 及其母公司 OPPO 的数据，为用户提供更新信息。</string>
 	<string name="about_rate_button_text">评分</string>
 	<string name="about_website_button_text">网站</string>
 	<string name="about_email_button_text">邮箱</string>
@@ -263,9 +263,9 @@
 	<string name="delete_message_delete_button">删除</string>
 
 	<string name="unsupported_device_warning_title">不支持此设备</string>
-	<string name="carrier_exclusive_device_warning_message">您好像正在使用运营商合约机。尽管它运行的依然是 OxygenOS，但您却不能随意安装更新。运营商通常会锁定设备，以防用户在未经运营商允许的情况下更新或修改固件。对于美国的运营商来说这十分正常，并且“系统更新”中的“本地升级”也被移除了（哪怕您不使用这个应用，想要自行安装更新，这个选项都是十分重要的）。可惜的是，我们对此也无能为力，无论是从技术上还是法律上都不可能做到。但是您可以通过邮件或 Discord 与我们联系以获取更多信息。</string>
+	<string name="carrier_exclusive_device_warning_message">您好像正在使用运营商合约机。尽管它运行的依然是 OxygenOS/ColorOS，但您却不能随意安装更新。运营商通常会锁定设备，以防用户在未经运营商允许的情况下更新或修改固件。对于美国的运营商来说这十分正常，并且“系统更新”中的“本地升级”也被移除了（哪怕您不使用这个应用，想要自行安装更新，这个选项都是十分重要的）。可惜的是，我们对此也无能为力，无论是从技术上还是法律上都不可能做到。但是您可以通过邮件或 Discord 与我们联系以获取更多信息。</string>
 	<string name="unsupported_device_warning_message">恭喜您使用全新的 %1$s 设备！ 不幸的是，我们尚未添加对此设备的支持。 不过请放心，我们会尽快添加它。 我们不想犯错，所以验证和测试对新设备的支持是一个很耗时的过程，请您耐心等待。 如果您想为我们提供帮助，请向我们发送邮件或加入我们的 Discord 服务器。这样的话，一旦我们发布支持您的设备的新版应用程序，您就可以收到通知。</string>
-	<string name="unsupported_os_warning_message">您的设备好像并没有使用 OxygenOS。请注意，您只能在运行 OxygenOS 的设备上安装系统更新。\n不仅不支持其他非 OPPO/OnePlus 设备，也不支持运行第三方 ROM 的 OPPO/OnePlus 设备。</string>
+	<string name="unsupported_os_warning_message">您的设备好像并没有使用 OxygenOS/ColorOS。请注意，您只能在运行 OxygenOS/ColorOS 的设备上安装系统更新。\n不仅不支持其他非 OPPO/OnePlus 设备，也不支持运行第三方 ROM 的 OPPO/OnePlus 设备。</string>
 
 	<string name="incorrect_device_warning_title">已选中的设备不符</string>
 	<string name="incorrect_device_warning_message">您好像把自己的设备选成“%1$s”了，而不是正确的“%2$s”。请更改您在应用设置中的选项，以确保您可以收到正确的更新及推送消息。</string>

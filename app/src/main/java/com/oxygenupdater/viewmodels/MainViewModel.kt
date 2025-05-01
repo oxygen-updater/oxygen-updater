@@ -397,17 +397,17 @@ class MainViewModel @Inject constructor(
         val chosenDevice = sharedPreferences[KeyDevice, "<UNKNOWN>"]
         val chosenMethod = sharedPreferences[KeyUpdateMethod, "<UNKNOWN>"]
         val advancedMode = sharedPreferences[KeyAdvancedMode, false]
-        val osVersionWithType = SystemVersionProperties.oxygenOSVersion + SystemVersionProperties.osType.let {
+        val osVersionWithType = SystemVersionProperties.osVersion + SystemVersionProperties.osType.let {
             if (it.isNotEmpty()) " ($it)" else ""
         }
 
         // Don't localize any part of this, it'll be an annoyance for us while reading emails
         val emailBody = """
 --------------------
-• Device: $chosenDevice (${SystemVersionProperties.oxygenDeviceName})
+• Device: $chosenDevice (${SystemVersionProperties.deviceProductName})
 • Method: $chosenMethod
 • OS version: $osVersionWithType
-• OTA version: ${SystemVersionProperties.oxygenOSOTAVersion}
+• OTA version: ${SystemVersionProperties.otaVersion}
 • Advanced mode: $advancedMode
 • App version: ${BuildConfig.VERSION_NAME}
 --------------------

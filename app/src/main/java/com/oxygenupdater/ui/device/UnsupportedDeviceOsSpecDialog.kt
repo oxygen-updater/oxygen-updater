@@ -24,19 +24,19 @@ fun UnsupportedDeviceOsSpecDialog(
     hide: (Boolean) -> Unit,
     spec: DeviceOsSpec,
 ) {
-    if (spec == DeviceOsSpec.SupportedOxygenOs) return
+    if (spec == DeviceOsSpec.SupportedDeviceAndOs) return
 
     var ignore by remember { mutableStateOf(false) }
     if (show) AlertDialog(
         action = { hide(ignore) },
         titleResId = R.string.unsupported_device_warning_title,
-        text = if (spec == DeviceOsSpec.UnsupportedOxygenOs) stringResource(
-            R.string.unsupported_device_warning_message, Build.MANUFACTURER
+        text = if (spec == DeviceOsSpec.UnsupportedDevice) stringResource(
+            R.string.unsupported_device_warning_message, Build.BRAND
         ) else stringResource(remember(spec) {
             when (spec) {
                 DeviceOsSpec.CarrierExclusiveOxygenOs -> R.string.carrier_exclusive_device_warning_message
-                DeviceOsSpec.UnsupportedOxygenOs -> R.string.unsupported_device_warning_message
-                DeviceOsSpec.UnsupportedOs -> R.string.unsupported_os_warning_message
+                DeviceOsSpec.UnsupportedDevice -> R.string.unsupported_device_warning_message
+                DeviceOsSpec.UnsupportedDeviceAndOs -> R.string.unsupported_os_warning_message
                 else -> R.string.unsupported_os_warning_message
             }
         }),
@@ -62,20 +62,20 @@ fun PreviewCarrierExclusiveDialog() = PreviewAppTheme {
 
 @PreviewThemes
 @Composable
-fun PreviewUnsupportedOxygenOsDialog() = PreviewAppTheme {
+fun PreviewUnsupportedDeviceDialog() = PreviewAppTheme {
     UnsupportedDeviceOsSpecDialog(
         show = true,
         hide = {},
-        spec = DeviceOsSpec.UnsupportedOxygenOs,
+        spec = DeviceOsSpec.UnsupportedDevice,
     )
 }
 
 @PreviewThemes
 @Composable
-fun PreviewUnsupportedOsDialog() = PreviewAppTheme {
+fun PreviewUnsupportedDeviceAndOsDialog() = PreviewAppTheme {
     UnsupportedDeviceOsSpecDialog(
         show = true,
         hide = {},
-        spec = DeviceOsSpec.UnsupportedOs,
+        spec = DeviceOsSpec.UnsupportedDeviceAndOs,
     )
 }
