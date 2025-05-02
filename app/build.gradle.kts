@@ -82,7 +82,7 @@ fun ApplicationBuildType.setupBuildConfig(
         apiBase = "api/v2.9/"
         notifPrefix = ""
     } else if (localOverride) {
-        domain = "http://192.168.1.3:81/"
+        domain = "http://192.168.1.4:81/"
         apiBase = "v2.9/"
         notifPrefix = "local_"
     } else {
@@ -138,8 +138,8 @@ android {
         minSdk = 21
         targetSdk = 36
 
-        versionCode = 122
-        versionName = "6.5.1"
+        versionCode = 123
+        versionName = "6.6.0"
 
         addManifestPlaceholders(mapOf("advertisingAppId" to "ca-app-pub-1816831161514116~4275332954"))
         buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
