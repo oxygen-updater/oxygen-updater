@@ -127,8 +127,8 @@ android {
     namespace = "com.oxygenupdater"
 
     // https://developer.android.com/studio/releases/build-tools
-    buildToolsVersion = "35.0.1"
-    compileSdk = 35
+    buildToolsVersion = "36.0.0"
+    compileSdk = 36
 
     testBuildType = "instrumentation"
 
@@ -136,7 +136,7 @@ android {
         applicationId = "com.arjanvlek.oxygenupdater"
 
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 36
 
         versionCode = 122
         versionName = "6.5.1"

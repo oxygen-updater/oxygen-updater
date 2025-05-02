@@ -5,7 +5,9 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
+import android.os.StrictMode
 import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
@@ -79,7 +81,7 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
          */
         override fun onLost(network: Network) {
             @Suppress("DEPRECATION")
-            val networkAvailability = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            val networkAvailability = if (SDK_INT < VERSION_CODES.N) {
                 getSystemService<ConnectivityManager>()
                     ?.activeNetworkInfo
                     ?.isConnectedOrConnecting == true
@@ -97,15 +99,56 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
 
     override fun onCreate() {
         super.onCreate()
+        setupStrictMode()
 
         setupCrashReporting()
         setupNetworkCallback()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) NotifUtils.refreshNotificationChannels(this)
+        if (SDK_INT >= VERSION_CODES.O) NotifUtils.refreshNotificationChannels(this)
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
         sharedPreferences[KeyVersionCode] = BuildConfig.VERSION_CODE
         SqliteMigrations.deleteLocalBillingDatabase(this)
+    }
+
+    private fun setupStrictMode() {
+        if (!BuildConfig.DEBUG) return // only for DEBUG builds
+
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder().apply {
+                // Memory leaks
+                detectActivityLeaks()
+                detectLeakedClosableObjects()
+                detectLeakedRegistrationObjects()
+                detectLeakedSqlLiteObjects()
+
+                // File/content URI permissions
+                detectFileUriExposure()
+                if (SDK_INT >= VERSION_CODES.O) detectContentUriWithoutPermission()
+                if (SDK_INT >= VERSION_CODES.Q) detectCredentialProtectedWhileLocked()
+
+                // Especially useful when bumping compile & target SDK
+                if (SDK_INT >= VERSION_CODES.P) detectNonSdkApiUsage()
+
+                if (SDK_INT >= VERSION_CODES.S) {
+                    // detectIncorrectContextUse() // noisy; GMS Ads often causes violations
+                    detectUnsafeIntentLaunch()
+                }
+
+                if (SDK_INT >= VERSION_CODES.BAKLAVA) detectBlockedBackgroundActivityLaunch()
+            }.penaltyLog().build()
+        )
+
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().apply {
+                detectNetwork()
+                detectCustomSlowCalls()
+
+                if (SDK_INT >= VERSION_CODES.M) detectResourceMismatches()
+                if (SDK_INT >= VERSION_CODES.O) detectUnbufferedIo()
+                if (SDK_INT >= VERSION_CODES.UPSIDE_DOWN_CAKE) detectExplicitGc()
+            }.penaltyLog().build()
+        )
     }
 
     /**
@@ -143,7 +186,7 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
         _isNetworkAvailable.tryEmit(activeNetworkInfo?.isConnectedOrConnecting == true)
 
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (SDK_INT >= VERSION_CODES.N) {
                 registerDefaultNetworkCallback(networkCallback)
             } else registerNetworkCallback(NetworkRequest.Builder().build(), networkCallback)
         } catch (e: SecurityException) {
