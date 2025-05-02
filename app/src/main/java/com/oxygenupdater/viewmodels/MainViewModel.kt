@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Environment
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
@@ -404,7 +405,7 @@ class MainViewModel @Inject constructor(
         // Don't localize any part of this, it'll be an annoyance for us while reading emails
         val emailBody = """
 --------------------
-• Device: $chosenDevice (${SystemVersionProperties.deviceProductName})
+• Device: $chosenDevice (${SystemVersionProperties.deviceProductName}/${Build.DEVICE})
 • Method: $chosenMethod
 • OS version: $osVersionWithType
 • OTA version: ${SystemVersionProperties.otaVersion}
