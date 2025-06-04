@@ -12,21 +12,21 @@ class UpdateDataVersionFormatterTest {
     @Test
     fun `check if version number is formatted correctly`() {
         // Default
-        assertEquals("", getFormattedVersionNumber(UpdateData(id = 1), ""))
-        assertEquals("default", getFormattedVersionNumber(UpdateData(id = 1), "default"))
+        assertEquals("", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1), ""))
+        assertEquals("default", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1), "default"))
 
         // Can be extracted from `description`'s first line
-        assertEquals("OxygenOS Closed Beta 1", getFormattedVersionNumber(UpdateData(id = 1, description = "#Alpha_1")))
-        assertEquals("OxygenOS Open Beta 1", getFormattedVersionNumber(UpdateData(id = 1, description = "#Open_1")))
-        assertEquals("OxygenOS Open Beta 1", getFormattedVersionNumber(UpdateData(id = 1, description = "#Beta_1")))
-        assertEquals("Android ${Build.VERSION.RELEASE} DP 1", getFormattedVersionNumber(UpdateData(id = 1, description = "#DP_1")))
-        assertEquals("OxygenOS 1.2.3", getFormattedVersionNumber(UpdateData(id = 1, description = "#1.2.3")))
-        assertEquals("OxygenOS 1.2.3.4", getFormattedVersionNumber(UpdateData(id = 1, description = "#1.2.3.4")))
-        assertEquals("OxygenOS 1.2.3.4.AB01CD", getFormattedVersionNumber(UpdateData(id = 1, description = "#1.2.3.4.AB01CD")))
-        assertEquals("Custom version", getFormattedVersionNumber(UpdateData(id = 1, description = "#Custom version")))
+        assertEquals("OxygenOS Closed Beta 1", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#Alpha_1")))
+        assertEquals("OxygenOS Open Beta 1", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#Open_1")))
+        assertEquals("OxygenOS Open Beta 1", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#Beta_1")))
+        assertEquals("Android ${Build.VERSION.RELEASE} DP 1", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#DP_1")))
+        assertEquals("OxygenOS 1.2.3", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#1.2.3")))
+        assertEquals("OxygenOS 1.2.3.4", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#1.2.3.4")))
+        assertEquals("OxygenOS 1.2.3.4.AB01CD", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#1.2.3.4.AB01CD")))
+        assertEquals("Custom version", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, description = "#Custom version")))
 
         // Fallback to `versionNumber`
-        assertEquals("XY1234_11_A.01", getFormattedVersionNumber(UpdateData(id = 1, versionNumber = "XY1234_11_A.01")))
+        assertEquals("XY1234_11_A.01", getFormattedVersionNumber("OxygenOS ", UpdateData(id = 1, versionNumber = "XY1234_11_A.01")))
     }
 
     @Test

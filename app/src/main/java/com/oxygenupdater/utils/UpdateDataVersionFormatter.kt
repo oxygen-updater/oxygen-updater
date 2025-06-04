@@ -2,6 +2,7 @@ package com.oxygenupdater.utils
 
 import android.os.Build
 import android.os.Build.VERSION
+import androidx.annotation.VisibleForTesting
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
 import java.util.regex.Pattern
@@ -60,15 +61,28 @@ object UpdateDataVersionFormatter {
     fun getFormattedVersionNumber(
         versionInfo: UpdateData?,
         default: String = "OS Update",
-    ): String {
-        val firstLine = versionInfo?.description.run {
-            if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
-        }
-
-        val osPrefix = when (SystemVersionProperties.brandLowercase) {
+    ) = getFormattedVersionNumber(
+        osPrefix = when (SystemVersionProperties.brandLowercase) {
             "oppo" -> "ColorOS " // space must be kept
             "oneplus" -> "OxygenOS " // space must be kept
             else -> ""
+        },
+        versionInfo = versionInfo,
+        default = default,
+    )
+
+    /**
+     * Required only for testing purposes, as [SystemVersionProperties.brandLowercase]
+     * cannot be used without mocking.
+     */
+    @VisibleForTesting
+    internal fun getFormattedVersionNumber(
+        osPrefix: String = "",
+        versionInfo: UpdateData?,
+        default: String = "OS Update",
+    ): String {
+        val firstLine = versionInfo?.description.run {
+            if (isNullOrBlank()) "" else splitToSequence("\r\n", "\n", "\r", limit = 2).firstOrNull() ?: ""
         }
 
         val canVersionInfoBeFormatted = firstLine.trim().startsWith(OsVersionLineHeading)

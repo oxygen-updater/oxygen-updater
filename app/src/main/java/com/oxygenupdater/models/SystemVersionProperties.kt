@@ -85,7 +85,7 @@ object SystemVersionProperties {
     val securityPatchDate: String
 
     /** Used for checking device/OS compatibility */
-    val fingerprint: String = Build.FINGERPRINT.trim()
+    val fingerprint = Build.FINGERPRINT.trim()
     val brandLowercase = (Build.BRAND.takeIf {
         it != UNKNOWN
     } ?: Build.MANUFACTURER.takeIf {
