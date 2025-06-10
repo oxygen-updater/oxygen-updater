@@ -117,6 +117,7 @@
 	<string name="settings_contribute_label">Hjälp till med att förbättra appen</string>
 
 	<string name="settings_device">"Enhet"</string>
+	<string name="settings_search_devices">"Sök enheter"</string>
 	<string name="settings_entered_incorrectly">"Kunde inte spara dina inställningar. Gå tillbaka och välj din enhet och uppdateringsmetod igen."</string>
 	<string name="settings_push_from_server">"Viktigt meddelande är tillgängligt"</string>
 	<string name="settings_saving">"Dina inställningar sparas fortfarande. Om detta tar för lång tid: Kolla din nätverksanslutning, stäng sedan av applikationen och starta den igen."</string>
@@ -146,9 +147,7 @@ Detta kan vara användbart om du vill:"</string>
 &#8226; Ta reda på vad som är nytt i den system mjukvaran du använder just nu
 &#8226; Läsa de senaste nyheterna som relaterar till OPPO/OnePlus och OXygenOS"</string>
 	<string name="onboarding_disclaimer">"Detta är inte en officiell OPPO/OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OPPO/OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app. Genom att använda denna app accepterar du de ovanstående villkoren."</string>
-	<string name="onboarding_device_chooser_title">"Välj din enhet:"</string>
 	<string name="onboarding_device_chooser_caption">"Din enhet är oftast redan förvald ovan, om inte, välj din enhet ovan."</string>
-	<string name="onboarding_method_chooser_title">"Välj din uppdateringsmetod:"</string>
 	<string name="onboarding_method_chooser_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek. Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet. Om du har installerat en beta version av OxygenOS/ColorOS, välj en av uppdateringsmetoderna för Open Beta."</string>
 	<string name="onboarding_caption">"Hoppas du kommer tycka om appen! Du kan alltid ändra inställningar senare."</string>
 

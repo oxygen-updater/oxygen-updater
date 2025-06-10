@@ -76,10 +76,7 @@ class OnboardingScreenTest : UsesSharedPreferencesTest() {
 
         // DeviceChooser
         children[0].run {
-            assertHasTextExactly(
-                R.string.settings_device,
-                androidx.compose.ui.R.string.not_selected,
-            )
+            assertHasTextExactly(R.string.settings_device, androidx.compose.ui.R.string.not_selected)
 
             assertAndPerformClick()
             sheet.assertIsDisplayed()

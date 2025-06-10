@@ -234,8 +234,9 @@ fun DeviceChooser(
         SelectableSheet(
             hide = hide,
             config = config,
-            titleResId = R.string.settings_device,
+            titleResId = R.string.settings_search_devices,
             captionResId = R.string.onboarding_device_chooser_caption,
+            filter = DeviceSearchFilter,
             onClick = onSelect,
         )
     }
@@ -565,6 +566,12 @@ fun SettingsItem(
 
     // Extra content if callers want to re-use the same RowScope
     if (content != null) content()
+}
+
+@VisibleForTesting
+val DeviceSearchFilter: (Device, String) -> Boolean = { device, query ->
+    device.name?.contains(query, ignoreCase = true) == true
+            || device.productNames.any { it.contains(query, ignoreCase = true) }
 }
 
 @VisibleForTesting

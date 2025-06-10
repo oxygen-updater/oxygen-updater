@@ -108,6 +108,7 @@
 	<string name="settings_buy_ad_free_label">"Отключить рекламу"</string>
 	<string name="settings_contribute_label">Помогите улучшить приложение</string>
 	<string name="settings_device">"Устройство"</string>
+	<string name="settings_search_devices">"Устройства для поиска"</string>
 	<string name="settings_entered_incorrectly">"Ошибка сохранения настроек. Пожалуйста, выберите снова ваше устройство / вариант обновления."</string>
 	<string name="settings_push_from_server">"Если какое-либо критическое предупреждение"</string>
 	<string name="settings_saving">"Ваши настройки сохраняются. Если сохранение будет долгим, проверьте подключение и перезапустите приложение."</string>
@@ -137,9 +138,7 @@
 &#8226; Просмотреть, что нового в установленной прошивке
 &#8226; Читать последние новости о OPPO/OnePlus и OxygenOS/ColorOS"</string>
 	<string name="onboarding_disclaimer">"Данное приложение не является официальным приложением OPPO/OnePlus. Вы используете его на свой страх и риск. OPPO/OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству. Используя Oxygen Updater, вы соглашаетесь с условиями, указанными выше."</string>
-	<string name="onboarding_device_chooser_title">"Выберите ваше устройство:"</string>
 	<string name="onboarding_device_chooser_caption">"Обычно устройство определяется автоматически. Если нет, выберите ваше устройство выше."</string>
-	<string name="onboarding_method_chooser_title">"Выберите метод обновления"</string>
 	<string name="onboarding_method_chooser_caption">"Обычно, частичное обновление является оптимальным решением, так как оно характеризуется быстрой загрузкой меньших по объему файлов. К сожалению его нельзя использовать с устройствами с рутом. Если у вас есть рут, используйте Полное обновление. Если вы используете бета версии прошивок, то выберите \"Open Beta\"."</string>
 	<string name="onboarding_caption">"Наслаждайтесь использованием данного приложения! Вы всегда можете изменить настройки приложения."</string>
 

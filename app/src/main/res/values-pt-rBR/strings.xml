@@ -120,6 +120,7 @@ conservar bateria</string>
 	<string name="settings_contribute_label">Ajude a melhorar o aplicativo</string>
 
 	<string name="settings_device">Device</string>
+	<string name="settings_search_devices">Dispositivos de pesquisa</string>
 	<string name="settings_entered_incorrectly">Erro ao salvar suas configurações. Volte e selecione seu dispositivo / método de atualização novamente.</string>
 
 	<string name="settings_push_from_server">Mensagens informativas e de aviso</string>
@@ -149,9 +150,7 @@ Isso pode ser útil se você quiser:"</string>
 
 	<string name="onboarding_app_uses">Este aplicativo vai te possibilitar:\n\n&#8226; Obtenha acesso mais rápido às últimas atualizações do Android para o seu dispositivo com OxygenOS/ColorOS\n&#8226; Atualize facilmente um dispositivo com acesso root\n&#8226; Veja o que há de novo no software do sistema que você está usando atualmente\n&#8226; Leia as última notícias sobre OxygenOS/ColorOS e OPPO/OnePlus</string>
 	<string name="onboarding_disclaimer">Este não é um aplicativo oficial OPPO/OnePlus. O uso deste aplicativo é totalmente por sua própria conta e risco. Nem a OPPO/OnePlus nem o desenvolvedor do aplicativo são responsáveis por suas ações, incluindo quaisquer danos causados pelo uso deste aplicativo. Ao usar este aplicativo, você concorda com os termos e condições indicados acima.</string>
-	<string name="onboarding_device_chooser_title">Escolha seu dispositivo</string>
 	<string name="onboarding_device_chooser_caption">Normalmente, o seu dispositivo já está selecionado acima. Caso contrário, selecione seu dispositivo acima.</string>
-	<string name="onboarding_method_chooser_title">Escolha o seu método de atualização</string>
 	<string name="onboarding_method_chooser_caption">Normalmente, a atualização incremental é a escolha certa aqui, porque oferece downloads muito mais rápidos e menores. No entanto, não é compatível com dispositivos com acesso root. Se você tiver um dispositivo com acesso root, escolha a atualização completa. Se você tiver uma versão beta do OxygenOS/ColorOS, escolha (um dos) canais de atualização do Open Beta.</string>
 	<string name="onboarding_caption">Aprecie este aplicativo! Você sempre pode alterar suas configurações mais tarde.</string>
 

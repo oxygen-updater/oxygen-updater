@@ -126,6 +126,7 @@
 	<string name="settings_contribute_label">Ayuda a mejorar la app</string>
 
 	<string name="settings_device">Dispositivo</string>
+	<string name="settings_search_devices">Buscar dispositivos</string>
 	<string name="settings_entered_incorrectly">Error al guardar tus preferencias. Por favor, regresa y selecciona tu dispositivo de nuevo / método de actualización de nuevo.</string>
 
 	<string name="settings_push_from_server">Mensajes con avisos disponibles</string>
@@ -155,9 +156,7 @@ Esto puede ser útil si quieres:"</string>
 
 	<string name="onboarding_app_uses">Esta app te permitirá:\n\n&#8226; Acceder rápidamente a nuevas actualizaciones para tu OPPO/OnePlus gracias a OxygenOS/ColorOS\n&#8226; Actualiza fácilmente tu dispositivo con acceso root\n&#8226; Ver las novedades del sistema operativo que estás usando actualmente\n&#8226; Leer las últimas noticias sobre OPPO/OnePlus y OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Esta no es una aplicación oficial de OPPO/OnePlus. El uso de esta app está sujeto a tu propia responsabilidad. Ni OPPO/OnePlus ni el desarrollador son responsables de tu acciones, incluyendo el daño causado por esta app. Al usar esta app, aceptas los términos y condiciones arriba mencionados.</string>
-	<string name="onboarding_device_chooser_title">Elige tu dispositivo</string>
 	<string name="onboarding_device_chooser_caption">Tu dispositivo suele seleccionarse automáticamente. Si no es así, selecciona tu dispositivo arriba.</string>
-	<string name="onboarding_method_chooser_title">Elige el método para actualizar</string>
 	<string name="onboarding_method_chooser_caption">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas. Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa. Si tienes una versión beta de OxygenOS/ColorOS, elige (uno de los) método(s) de actualización de la beta abierta.</string>
 	<string name="onboarding_caption">¡Disfruta esta app! Siempre podrás cambiar las preferencias más tarde.</string>
 

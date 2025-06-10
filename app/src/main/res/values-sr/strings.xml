@@ -122,6 +122,7 @@
 	<string name="settings_contribute_label">Помозите напредовању апликације</string>
 
 	<string name="settings_device">Уређај</string>
+	<string name="settings_search_devices">Претражи уређаје</string>
 	<string name="settings_entered_incorrectly">Грешка приликом чувања ваших подешавања. Молимо вас и изаберите ваш уређај / методу ажурирања.</string>
 
 	<string name="settings_push_from_server">Важна порука је доступна</string>
@@ -151,9 +152,7 @@
 
 	<string name="onboarding_app_uses">Ова апликација ће вам омогућити:\n\n&#8226; Добијте бржи приступ последњим ажурирањима андроида за ваше уређаје који раде на OxgenOS-y.\n&#8226; Лако ажурирајте рутован уређај\n&#8226; Погледајте шта има ново у софтверу који тренутно користите\n&#8226; Прочитајте последње вести о OPPO/OnePlus-у и OxgenOS-у</string>
 	<string name="onboarding_disclaimer">Ово није званична OPPO/OnePlus апликација. Користите ову апликацију комплетно на ваш ризик. Ни OPPO/OnePlus нити људи који раде на овој апликацији нису одговорни за ваше поступке, укључујући било коју штету која је настала коришћењем ове апликације. Коришћењем ове апликације прихватате услове наведене изнад.</string>
-	<string name="onboarding_device_chooser_title">Изаберите ваш уређај</string>
 	<string name="onboarding_device_chooser_caption">Обично је ваш уређај већ изабран. Ако није, изаберите уређај изнад.</string>
-	<string name="onboarding_method_chooser_title">Изаберите методу ажурирањ</string>
 	<string name="onboarding_method_chooser_caption">Обично је делимично ажурирање прави избор, зато што омогућава мања и бржа преузимања. Али тај метод ажурирања није компатибилан са рутованим уређајима. Ако имате рутован уређај изаберите пуно ажурирање. Ако имате beta верзију OxgenOS-a, изаберите једну од Open Beta метода ажурирања.</string>
 	<string name="onboarding_caption">Уживајте у коришћењу апликације! Можете увек променити поставке у подешавањима касније.</string>
 

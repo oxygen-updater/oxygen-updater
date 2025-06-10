@@ -122,6 +122,7 @@ spare batteri</string>
 	<string name="settings_contribute_label">Hjelp til å forbedre appen</string>
 
 	<string name="settings_device">Enhet</string>
+	<string name="settings_search_devices">Søk enheter</string>
 	<string name="settings_entered_incorrectly">Feil ved lagring av innstillingene. Gå tilbake og velg din enhet / oppdateringsmetode igjen.</string>
 
 	<string name="settings_push_from_server">Informasjons- og advarselsmeldinger</string>
@@ -151,9 +152,7 @@ Dette kan være nyttig hvis du vil:"</string>
 
 	<string name="onboarding_app_uses">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS/ColorOS-drevne enhet\n&#8226; Oppdater enkelt en forankret enhet\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket\n&#8226; Les de siste nyhetene om OPPO/OnePlus og OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Dette er ikke en offisiell OPPO/OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OPPO/OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen. Gjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
-	<string name="onboarding_device_chooser_title">Velg enheten din</string>
 	<string name="onboarding_device_chooser_caption">Enheten er vanligvis allerede valgt ovenfor. Hvis ikke, velg enheten ovenfor.</string>
-	<string name="onboarding_method_chooser_title">Velg din oppdateringsmetode</string>
 	<string name="onboarding_method_chooser_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger. Men den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering. Hvis du har en beta-versjon av OxygenOS/ColorOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
 	<string name="onboarding_caption">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
 

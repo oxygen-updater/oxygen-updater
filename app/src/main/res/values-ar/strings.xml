@@ -116,6 +116,7 @@
 	<string name="settings_buy_ad_free_label">الترقية للتخلص من الإعلانات</string>
 	<string name="settings_contribute_label">المساعدة في تحسين التطبيق</string>
 	<string name="settings_device">الجهاز</string>
+	<string name="settings_search_devices">أجهزة البحث</string>
 	<string name="settings_entered_incorrectly">خطأ في حفظ إعداداتك. فضلاً عد وإختر جهازك وطريقة التحديث مرة أخرى.</string>
 	<string name="settings_push_from_server">رسائل معلوماتية وتحذيرية</string>
 	<string name="settings_saving">جاري حفظ إعداداتك. اذا إستغرق ذلك وقتاً طويلاً: أفحص اتصالك, وأخرج من التطبيق وأفتحه مجدداً.</string>
@@ -140,9 +141,7 @@
 	<string name="onboarding_finished_button">بدء التطبيق</string>
 	<string name="onboarding_app_uses">هذا التطبيق يتيح لك:\n\n&#8226; الوصول سريعاً إلى آخر تحديثات أندرويد لنظام أكسجين\n&#8226; التحديث بشكل مبسط للأجهزة التي تملك (روت)\n&#8226; مشاهدة كل ماهو جديد في النظام الذي تستعمله حالياً\n&#8226; قراءة أخر الأخبار حول جهاز ون بلس ونظام أكسجين</string>
 	<string name="onboarding_disclaimer">هذا التطبيق لا يعتبر تطبيق رسمي من شركة ون بلس. وإستعمال هذا التطبيق على مسؤوليتك الخاصة كاملاً. لا شركة ون بلس ولا المطور مسؤولين عن أعمالك ويشتمل ذلك أي أضرار تنتج عن إستعمال هذا التطبيق. بإستعمالك هذا التطبيق فأنت تعتبر موافقاً على الأحكام والشروط التي ذكرت بالأعلى.</string>
-	<string name="onboarding_device_chooser_title">إختر جهازك</string>
 	<string name="onboarding_device_chooser_caption">جهازك غالباً تم إختياره بالأعلى. إذا لم يكن كذلك قم انت بإختياره من الأعلى.إسحب إلى اليسار للإستمرار.</string>
-	<string name="onboarding_method_chooser_title">إختر الطريقة التي تفضلها للتحديث</string>
 	<string name="onboarding_method_chooser_caption">عادتاً, التحديث التدريجي هو الإختيار الأمثل هنا, لعرضه تحميلات أسرع وأصغر. على كل حال, لا يعتبر ذلك مناسباً للأجهزة التي تملك (روت). اذا كنت تملك جهاز ذو (روت) مفعل, فأختر التحديث الكامل.</string>
 	<string name="onboarding_caption">إستمتع بهذا التطبيق! يمكنك دائماً تغيير إعداداتك لاحقاً.</string>
 

@@ -116,6 +116,7 @@
 	<string name="settings_contribute_label">Hilf uns die App zu verbessern</string>
 
 	<string name="settings_device">"Gerät"</string>
+	<string name="settings_search_devices">"Geräte suchen"</string>
 	<string name="settings_entered_incorrectly">"Fehler beim Speichern der Einstellungen. Bitte wähle dein Gerät und deine Update Methode erneut aus."</string>
 	<string name="settings_push_from_server">"Informationen und Warnungen"</string>
 	<string name="settings_saving">"Deine Einstellungen werden weiterhin gespeichert. wenn das zu lange dauern sollte: Überprüfe deine Verbindung, schließe die App und starte sie erneut."</string>
@@ -146,9 +147,7 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 &#8226; Zu sehen was in deiner aktuellen Version alles neu ist
 &#8226; Die neusten Updates über OPPO/OnePlus und OxygenOS/ColorOS zu sehen"</string>
 	<string name="onboarding_disclaimer">"Das ist keine Offizielle OPPO/OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder OPPO/OnePlus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden. durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu."</string>
-	<string name="onboarding_device_chooser_title">"Wähle dein Gerät"</string>
 	<string name="onboarding_device_chooser_caption">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein. Falls nicht, wähle dein Gerät oben aus."</string>
-	<string name="onboarding_method_chooser_title">"Wähle deine Update Methode"</string>
 	<string name="onboarding_method_chooser_caption">"Für gewöhnlich ist das \"inkrementelle Update\" die richtige Wahl, da es einen schnelleren und kleineren Download bietet. Dies ist jedoch nicht mit gerooteten Geräten kompatibel. Falls du ein gerootetes Gerät hast dann wähle bitte das \"komplette Update\". Falls auf deinem Gerät eine Beta Version von OxygenOS/ColorOS läuft, dann wähle eine der offenen Beta Update Methoden."</string>
 	<string name="onboarding_caption">"Viel Spaß beim Benutzen dieser App! Du kannst jederzeit die Einstellungen später noch ändern."</string>
 

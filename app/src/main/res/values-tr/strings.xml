@@ -124,6 +124,7 @@
 	<string name="settings_contribute_label">Uygulamayı geliştirmemize yardımcı olun.</string>
 
 	<string name="settings_device">Aygıt</string>
+	<string name="settings_search_devices">Arama cihazları</string>
 	<string name="settings_entered_incorrectly">Ayarlar kaydedilirken hata oluştu. Lütfen geri gidin ve güncelleme metodunuzu değiştirin, veya tekrar seçin.</string>
 
 	<string name="settings_push_from_server">Bilgilendirme ve uyarı mesajları.</string>
@@ -153,9 +154,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<string name="onboarding_app_uses">Bu uygulama size:\n\n&#8226; En sonki Android güncellemelerini OxygenOS/ColorOS kullanan cihazınıza kurmanızda yardımcı olacak.\n&#8226; Rootlu bir cihazı kolayca güncellemenizi sağlayacak.\n&#8226; Kullandığınız sistem yazılımında nelerin yeni olduğunu görmeniz için.\n&#8226; OPPO/OnePlus ve OxygenOS/ColorOS hakkındaki yenilikleri görmek için yardımcı olacak.</string>
 	<string name="onboarding_disclaimer">Orijinal bir OPPO/OnePlus uygulaması değildir. Uygulamayı kullanmak tamamen sizin sorumluluğunuzdadır. Her türlü durum altında cihazınızda oluşan sorunlarla ilgili OPPO/OnePlus ve uygulama geliştiricileri sorumlu değildir. Bu uygulamayı kullanarak, belirtilen şartları kabul etmiş olursunuz.</string>
-	<string name="onboarding_device_chooser_title">Cihazınızı seçin</string>
 	<string name="onboarding_device_chooser_caption">Cihazınız genellikle otomatik olarak tanınır ve burada seçilir, eğer değilse lütfen seçiniz.</string>
-	<string name="onboarding_method_chooser_title">Güncelleme metodunuzu seçiniz</string>
 	<string name="onboarding_method_chooser_caption">Genellikle artımlı güncelleme yöntemi tercih edilendir, çünkü bu yöntemde daha az ve daha hızlı indirmeler yapılır. Ancak rootlu cihazlar için uygun değildir. Eğer rootlu cihazınız varsa, bu yöntemi seçmeyiniz. Eğer OxygenOS/ColorOS un beta sürümüne sahipseniz, Açık Beta güncelleme yöntemlerinden birini seçiniz.</string>
 	<string name="onboarding_caption">Uygulamayı güle kullanın! Her zaman ayarlarınızı daha sonra değiştirebilirsiniz.</string>
 

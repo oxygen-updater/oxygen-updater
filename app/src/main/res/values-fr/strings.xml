@@ -121,6 +121,7 @@
 	<string name="settings_contribute_label">Aidez à améliorer l\'application</string>
 
 	<string name="settings_device">"Appareil"</string>
+	<string name="settings_search_devices">"Recherche d'appareils"</string>
 	<string name="settings_entered_incorrectly">"Une erreur s'est produite lors de la sauvegarde de vos réglages. Retournez en arrière et sélectionnez à nouveau votre appareil et méthode de mise à jour."</string>
 	<string name="settings_push_from_server">"Un message critique est disponible"</string>
 	<string name="settings_saving">"Vos réglages sont en cours d'enregistrement. Si cela prend trop de temps vérifiez votre connexion à Internet, quittez l'application et réessayez."</string>
@@ -150,9 +151,7 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 &#8226; De voir les nouveautés du système d'exploitation que vous utilisez
 &#8226; Lire les dernières informations à propos de OPPO/OnePlus et OxygenOS/ColorOS"</string>
 	<string name="onboarding_disclaimer">"Cette application n'est pas une application officielle de OPPO/OnePlus. Son usage est à vos propres risques. Ni OPPO/OnePlus ni le développeur de cette application ne peuvent être tenus pour responsable de vos actions, incluant celles causées par l'usage de cette application. En utilisant cette application vous acceptez les termes et conditions énoncées précédemment."</string>
-	<string name="onboarding_device_chooser_title">"Choisissez votre appareil:"</string>
 	<string name="onboarding_device_chooser_caption">"Votre appareil est normalement déjà sélectionné. Si ce n'est pas le cas, sélectionnez-le au-dessus."</string>
-	<string name="onboarding_method_chooser_title">"Choisissez votre méthode de mise à jour."</string>
 	<string name="onboarding_method_chooser_caption">"Habituellement, la méthode incrémentale de mise à jour est la meilleure car permettant un téléchargement plus rapide et plus petit. Cependant, elle n'est pas compatible avec les appareils rootés. Si vous possédez un appareil rooté, choisissez la méthode complète. Si vous utilisez une version bêta d'OxygenOS/ColorOS, choisissez une des méthodes de mise à jour pour les bêta ouvertes."</string>
 	<string name="onboarding_caption">"Profitez de cette application ! Vous pourrez changer vos réglages plus tard si vous le souhaitez."</string>
 
