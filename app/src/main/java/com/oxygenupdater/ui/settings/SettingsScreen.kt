@@ -68,7 +68,6 @@ import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.LogoNotification
-import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.KeyAdFree
 import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.internal.settings.KeyDevice
@@ -587,8 +586,8 @@ val DeviceSettingsListConfig = SettingsListConfig(
             enabled = true,
         ),
     ),
-    initialIndex = 1,
-    selectedId = NotSetL,
+    recommendedId = 2,
+    selectedId = 1,
 )
 
 @VisibleForTesting
@@ -609,8 +608,8 @@ val MethodSettingsListConfig = SettingsListConfig(
             supportsRootedDevice = false,
         )
     ),
-    initialIndex = 1,
-    selectedId = NotSetL,
+    recommendedId = 2,
+    selectedId = 1,
 )
 
 @VisibleForTesting

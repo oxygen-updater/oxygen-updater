@@ -48,7 +48,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
 ) {
     SheetHeader(titleResId)
 
-    val (list, initialIndex, selectedId) = config
+    val (list, recommendedId, selectedId) = config
     if (list.isEmpty()) return
 
     val initialFirstVisibleItemIndex = if (selectedId == NotSetL) 0 else remember(list, selectedId) {
@@ -74,8 +74,9 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     .testTag(BottomSheet_ItemRowTestTag)
             ) {
                 val primary = colorScheme.primary
-                val name = item.name ?: return@itemsIndexed
-                val selected = selectedId == item.id
+                val name = item.name ?: return@items
+                val id = item.id
+                val selected = selectedId == id
                 if (selected) Icon(
                     imageVector = Icons.Rounded.Done,
                     contentDescription = stringResource(R.string.summary_on),
@@ -92,7 +93,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                         .padding(vertical = 8.dp)
                 )
 
-                if (index == initialIndex) Icon(
+                if (id == recommendedId) Icon(
                     imageVector = Icons.Rounded.AutoAwesome,
                     contentDescription = stringResource(R.string.theme_auto),
                     tint = colorScheme.secondary,

@@ -45,11 +45,8 @@ class SettingsViewModel @Inject constructor(
     private val crashlytics: FirebaseCrashlytics,
 ) : ViewModel() {
 
-    private var initialDeviceIndex = NotSet
-    private var initialMethodIndex = NotSet
-
-    var deviceName: String? = null
-        private set
+    private var recommendedDeviceId = NotSetL
+    private var recommendedMethodId = NotSetL
 
     var theme by mutableStateOf(Theme.from(sharedPreferences[KeyThemeId, Theme.System.value]))
         private set
@@ -83,69 +80,64 @@ class SettingsViewModel @Inject constructor(
     }
 
     private fun setup(enabledDevices: List<Device>) = viewModelScope.launch(Dispatchers.IO) {
-        var selectedDeviceIndex = NotSet
-        initialDeviceIndex = NotSet
-        deviceName = null
+        var selectedIndex = NotSet
+        recommendedDeviceId = NotSetL
 
         val deviceId = sharedPreferences[KeyDeviceId, NotSetL]
         for ((index, device) in enabledDevices.withIndex()) {
             // Take first match only
-            if (selectedDeviceIndex != NotSet && initialDeviceIndex != NotSet && deviceName != null) break
+            if (selectedIndex != NotSet && recommendedDeviceId != NotSetL) break
 
-            var matched: Boolean? = null  // save computation for future use
-            if (deviceName == null) { // take first match only
-                matched = device.productNames.contains(deviceProductName)
-                if (matched) deviceName = device.name
-            }
-
-            if (deviceId != NotSetL && deviceId == device.id) selectedDeviceIndex = index
-            if (matched ?: device.productNames.contains(deviceProductName)) initialDeviceIndex = index
+            if (deviceId != NotSetL && deviceId == device.id) selectedIndex = index
+            if (device.productNames.contains(deviceProductName)) recommendedDeviceId = device.id
         }
 
-        // If there's only one device, select it, otherwise fallback to initial index
-        val size = enabledDevices.size
-        if (selectedDeviceIndex == NotSet) selectedDeviceIndex = if (size == 1) 0 else initialDeviceIndex
+        // Fallback to recommended index
+        if (selectedIndex == NotSet) selectedIndex = enabledDevices.indexOfFirst {
+            it.id == recommendedDeviceId
+        }
 
         deviceConfigFlow.emitIfChanged(
             list = enabledDevices,
-            initialIndex = initialDeviceIndex,
-            selectedId = if (selectedDeviceIndex == NotSet) deviceId else {
-                enabledDevices.getOrNull(selectedDeviceIndex)?.id ?: NotSetL
+            recommendedId = recommendedDeviceId,
+            selectedId = if (selectedIndex == NotSet) deviceId else {
+                enabledDevices.getOrNull(selectedIndex)?.id ?: NotSetL
             },
         )
 
-        if (selectedDeviceIndex != NotSet && selectedDeviceIndex < size) {
+        if (selectedIndex != NotSet && selectedIndex < enabledDevices.size) {
             // This call also fetches methods for device
-            saveSelectedDevice(enabledDevices[selectedDeviceIndex], deviceId, deviceId == NotSetL)
+            saveSelectedDevice(enabledDevices[selectedIndex], deviceId, deviceId == NotSetL)
         }
     }
 
     private fun fetchMethodsForDevice(deviceId: Long) = viewModelScope.launch(Dispatchers.IO) {
         val methods = serverRepository.fetchUpdateMethodsForDevice(deviceId) ?: listOf()
         val methodId = sharedPreferences[KeyUpdateMethodId, NotSetL]
-        var selectedMethodIndex = if (methodId == NotSetL) NotSet else methods.indexOfFirst {
+        var selectedIndex = if (methodId == NotSetL) NotSet else methods.indexOfFirst {
             it.id == methodId
         }
 
         val rooted = Shell.isAppGrantedRoot() == true
-        initialMethodIndex = methods.indexOfLast {
+        recommendedMethodId = methods.findLast {
             if (rooted) it.recommendedForRootedDevice else it.recommendedForNonRootedDevice
-        }
+        }?.id ?: NotSetL
 
-        // If there's only one method, select it, otherwise fallback to initial index
-        val size = methods.size
-        if (selectedMethodIndex == NotSet) selectedMethodIndex = if (size == 1) 0 else initialMethodIndex
+        // Fallback to recommended index
+        if (selectedIndex == NotSet) selectedIndex = methods.indexOfFirst {
+            it.id == recommendedMethodId
+        }
 
         methodConfigFlow.emitIfChanged(
             list = methods,
-            initialIndex = initialMethodIndex,
-            selectedId = if (selectedMethodIndex == NotSet) methodId else {
-                methods.getOrNull(selectedMethodIndex)?.id ?: NotSetL
+            recommendedId = recommendedMethodId,
+            selectedId = if (selectedIndex == NotSet) methodId else {
+                methods.getOrNull(selectedIndex)?.id ?: NotSetL
             },
         )
 
-        if (selectedMethodIndex != NotSet && selectedMethodIndex < size) {
-            saveSelectedMethod(methods[selectedMethodIndex], methodId == NotSetL)
+        if (selectedIndex != NotSet && selectedIndex < methods.size) {
+            saveSelectedMethod(methods[selectedIndex], methodId == NotSetL)
         }
     }
 
@@ -163,7 +155,7 @@ class SettingsViewModel @Inject constructor(
         // Clear methods if device changed
         if (oldId != NotSetL && oldId != id) {
             logDebug(TAG, "Device changed ($oldId -> $id); clearing saved method")
-            methodConfigFlow.tryEmit(SettingsListConfig(listOf(), initialMethodIndex, NotSetL))
+            methodConfigFlow.tryEmit(SettingsListConfig(listOf(), recommendedMethodId, NotSetL))
             sharedPreferences.remove(KeyUpdateMethodId, KeyUpdateMethod)
         }
 
@@ -173,7 +165,7 @@ class SettingsViewModel @Inject constructor(
             sharedPreferences.setIdAndName(KeyDevice, id, device.name)
 
             deviceConfigFlow.emitIfChanged(
-                initialIndex = initialDeviceIndex,
+                recommendedId = recommendedDeviceId,
                 selectedId = id,
             )
         }
@@ -197,7 +189,7 @@ class SettingsViewModel @Inject constructor(
             sharedPreferences.setIdAndName(KeyUpdateMethod, id, method.name)
 
             methodConfigFlow.emitIfChanged(
-                initialIndex = initialMethodIndex,
+                recommendedId = recommendedMethodId,
                 selectedId = id,
             )
         }
@@ -217,12 +209,12 @@ class SettingsViewModel @Inject constructor(
 
     private fun <T : SelectableModel> MutableStateFlow<SettingsListConfig<T>>.emitIfChanged(
         list: List<T> = value.list,
-        initialIndex: Int,
+        recommendedId: Long,
         selectedId: Long,
     ) {
-        if (list == value.list && initialIndex == value.initialIndex && selectedId == value.selectedId) return
+        if (list == value.list && recommendedId == value.recommendedId && selectedId == value.selectedId) return
 
-        tryEmit(SettingsListConfig(list, initialIndex, selectedId))
+        tryEmit(SettingsListConfig(list, recommendedId, selectedId))
     }
 
     companion object {

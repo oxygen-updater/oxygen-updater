@@ -357,7 +357,7 @@ class MainActivity : AppCompatActivity() {
         val cachedEnabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
         PassthroughEnabledDevicesToSettingsViewModel(cachedEnabledDevices)
 
-        val deviceName = settingsViewModel.deviceName ?: remember(cachedEnabledDevices) {
+        val deviceName = remember(cachedEnabledDevices) {
             cachedEnabledDevices?.find {
                 it.productNames.contains(SystemVersionProperties.deviceProductName)
             }?.name
