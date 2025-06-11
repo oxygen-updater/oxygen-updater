@@ -19,4 +19,6 @@ data class UpdateMethod(
 
     @Json(name = "supports_rooted_device")
     @ForceBoolean val supportsRootedDevice: Boolean = false,
-) : SelectableModel
+) : SelectableModel {
+    override val subtitle = null
+}

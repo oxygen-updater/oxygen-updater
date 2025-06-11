@@ -3,6 +3,8 @@ package com.oxygenupdater.ui.dialogs
 import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -152,14 +154,28 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
                 ) else Spacer(modifierSemanticsNotSelected.size(40.dp)) // 24 + 16
 
-                Text(
-                    text = name,
-                    color = if (selected) primary else Color.Unspecified,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier
+                Column(
+                    Modifier
                         .weight(1f)
                         .padding(vertical = 8.dp)
-                )
+                ) {
+                    Text(
+                        text = name,
+                        color = if (selected) primary else Color.Unspecified,
+                        maxLines = 1,
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.basicMarquee()
+                    )
+
+                    item.subtitle?.let {
+                        Text(
+                            text = it,
+                            color = if (selected) primary else colorScheme.onSurfaceVariant,
+                            overflow = TextOverflow.Ellipsis, maxLines = 1,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    }
+                }
 
                 if (id == recommendedId) Icon(
                     imageVector = Icons.Rounded.AutoAwesome,

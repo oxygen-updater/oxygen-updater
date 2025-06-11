@@ -583,13 +583,13 @@ val DeviceSettingsListConfig = SettingsListConfig(
         Device(
             id = 1,
             name = "OnePlus 7 Pro",
-            productNames = listOf("OnePlus7Pro"),
+            productNames = listOf("OnePlus7Pro,GM1917"),
             enabled = true,
         ),
         Device(
             id = 2,
             name = "OnePlus 8T",
-            productNames = listOf("OnePlus8T"),
+            productNames = listOf("OnePlus8T,KB2001"),
             enabled = true,
         ),
     ),

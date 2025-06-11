@@ -6,4 +6,5 @@ package com.oxygenupdater.models
 sealed interface SelectableModel {
     val id: Long
     val name: String?
+    val subtitle: String?
 }

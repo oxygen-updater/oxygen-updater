@@ -62,8 +62,9 @@ class SelectableSheetTest : ComposeBaseTest() {
                 // Icon (on) or Spacer (off)
                 isToggleable().matches(children[0].fetchSemanticsNode())
 
-                children[1].assertHasTextExactly(item.name) // text
-                children[2].run { // optional "recommended" icon
+                children[1].assertHasTextExactly(item.name) // name
+                children[2].assertHasTextExactly(item.subtitle) // model number
+                children[3].run { // optional "recommended" icon
                     if (item.id == config.recommendedId) assertExists() else assertDoesNotExist()
                 }
             }
@@ -103,8 +104,9 @@ class SelectableSheetTest : ComposeBaseTest() {
             assertCountEquals(1)
 
             val children = get(0).onChildren()
-            children[1].assertHasTextExactly(recommendedItem.name) // text
-            children[2].assertExists() // "recommended" icon
+            children[1].assertHasTextExactly(recommendedItem.name) // name
+            children[2].assertHasTextExactly(recommendedItem.subtitle) // model number
+            children[3].assertExists() // "recommended" icon
         }
     }
 }
