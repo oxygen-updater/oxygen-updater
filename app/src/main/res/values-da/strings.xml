@@ -150,7 +150,7 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<string name="onboarding_app_uses">Denne app vil tillade dig at:\n\n&#8226; Få hurtigere adgang til de seneste Android opdateringer til din OxygenOS/ColorOS styrede enhed\n&#8226; Nem opdatering en root\'et enhed\n&#8226; Se hvad der er nyt, i det syste,-software du allerede anvender\n&#8226; Læs seneste nyt om OPPO/OnePlus og OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Dette er ikke en officel OPPO/OnePlus applikation. Brug af denne app, er ene og alene på eget ansvar. Hverken OPPO/OnePlus eller denne apps udvikler kan drages til ansvar, hverken for dine handlinger, eller eventuelle skader denne app måtte foresage. Ved at anvende denne app, så accepterer du dens vilkår og betingelser, som er angivet herover.</string>
-	<string name="onboarding_device_chooser_caption">Din enhed er normalt allerede valgt ovenfor. Hvis ikke, vælg da din enhed ovenfor.</string>
+	<string name="onboarding_device_chooser_caption">Din enhed er normalt allerede valgt ovenfor</string>
 	<string name="onboarding_method_chooser_caption">Normalt, er den trinvise opdatering, det rigtige valg her, fordi den tilbyder hurtigere og mindre downloads. Dog er den ikke kompatibel med root\'ede enheder. Hvis du har en root\'et enhed, så vælg, da en fuld opdatering. Hvis du har en beta version af OxygenOS/ColorOS, vælg (en af) de åbne beta -opdateringsmetoder.</string>
 	<string name="onboarding_caption">Held og lykke med denne app! Du kan altid ændre dine indstillinger senere.</string>
 

@@ -146,8 +146,8 @@
 
 	<string name="onboarding_app_uses">這款 App 可以協助您：\n\n&#8226; 更快地接收 OxygenOS/ColorOS 的最新更新\n&#8226; 更輕鬆地升級 Root 過的裝置\n&#8226; 檢視目前系統版本的更新資訊\n&#8226; 了解關於 OPPO/OnePlus 與 OxygenOS/ColorOS 的最新通知</string>
 	<string name="onboarding_disclaimer">本應用程式不是 OPPO/OnePlus 官方推出的應用程式，使用此應用程式完全由您自己承擔風險。OnePlus 和本程式開發者都不對您的行為負責，包括使用此應用程式造成的任何損害。 使用此應用程式即表示您同意上述條款。</string>
-	<string name="onboarding_device_chooser_caption">一般情況下，應用程式已經自動選擇了您的裝置。\n如果沒有，請在上面選擇。</string>
-	<string name="onboarding_method_chooser_caption">一般情況下，我們更加推薦增量更新，因為下載的更新包更加小巧。 只是它與 Root 裝置不相容。 如果您的裝置已經 Root，請選擇全量更新。 而如果您使用的是 OxygenOS/ColorOS 的測試版, 請選擇開放測試版系統</string>
+	<string name="onboarding_device_chooser_caption">般情況下，應用程式已經自動選擇了您的裝置。</string>
+	<string name="onboarding_method_chooser_caption">般情況下，我們更加推薦增量更新，因為下載的更新包更加小巧。 只是它與 Root 裝置不相容。 如果您的裝置已經 Root，請選擇全量更新。 而如果您使用的是 OxygenOS/ColorOS 的測試版, 請選擇開放測試版系統</string>
 	<string name="onboarding_caption">敬請使用吧！\n\n您可以隨時在設定中更改您的設定。</string>
 
 	<!-- Automatic install strings -->

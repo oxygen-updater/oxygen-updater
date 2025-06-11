@@ -150,7 +150,7 @@ Dit kan handig zijn als je:"</string>
 
 	<string name="onboarding_disclaimer">Dit is geen officiële app van OPPO/OnePlus. Het gebruik van deze app is volledig op eigen risico. Noch de ontwikkelaar, noch OPPO/OnePlus zijn verantwoordelijk voor jouw acties, inclusief eventuele schade die is voortgekomen uit het gebruik van deze app. Door deze app te gebruiken, ga je hiermee akkoord.</string>
 
-	<string name="onboarding_device_chooser_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd. Is dit niet zo? Kies dan hierboven je apparaat.</string>
+	<string name="onboarding_device_chooser_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd</string>
 
 	<string name="onboarding_method_chooser_caption">De incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt. Als je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor "Volledige Update". Gebruik je een bèta-versie van OxygenOS/ColorOS? Kies dan voor de Open Bèta.</string>
 

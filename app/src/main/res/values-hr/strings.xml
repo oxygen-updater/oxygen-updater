@@ -146,7 +146,7 @@ Ovo može biti korisno ako želite:"</string>
 &#8226; Pregled novih mogućnosti vašeg software-a
 &#8226; Najnovije vijesti o OPPO/OnePlus-u i OxygenOs-u"</string>
 	<string name="onboarding_disclaimer">"Ovo nije službena aplikacija OPPO/OnePlus-a. Koristite ovu aplikaciju na svoj rizik. OPPO/OnePlus i developer ove aplikacije nisu dogovorni za vaše postupke, uključujući ikakvu štetu koristeči ovu aplikaciju."</string>
-	<string name="onboarding_device_chooser_caption">"Vaš uređaj je uobičajno već izabran. Ako nije izaberite svoj uređaj gore."</string>
+	<string name="onboarding_device_chooser_caption">"Vaš uređaj je uobičajno već izabran"</string>
 	<string name="onboarding_method_chooser_caption">"Uobičajno inkrementalno ažuriranje je pravi odabir ovdje zato što pruža puno brže i manje skidanja. Iako ono nije kompatibilno sa rootanim uređajima. Ako je vaš uređaj rootan izaberite puno ažuriranje. Ako imate beta verziju OxygenOS/ColorOS izaberite (jednu od) Open Beta metoda ažuriranje/a."</string>
 	<string name="onboarding_caption">"Uživajte u korištenju aplikacije!"</string>
 

@@ -149,7 +149,7 @@ This can be useful if you want to:"</string>
 
 	<string name="onboarding_app_uses">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS/ColorOS powered device\n&#8226; Easily update a rooted device\n&#8226; View what\'s new in the system software you are currently using\n&#8226; Read the latest news about OPPO/OnePlus and OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">This is not an official OPPO/OnePlus application. Usage of this app is completely at your own risk. Neither OPPO/OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. By using this app, you agree to the terms and conditions as stated above.</string>
-	<string name="onboarding_device_chooser_caption">Your device is usually already selected above. If not, select your device above.</string>
+	<string name="onboarding_device_chooser_caption">Your device is usually already selected above</string>
 	<string name="onboarding_method_chooser_caption">Usually, the incremental update is the right choice here, because it offers much faster and smaller downloads. However, it\'s not compatible with rooted devices. If you have a rooted device, choose the Full update. If you have a beta version of OxygenOS/ColorOS, choose (one of) the Open Beta update method(s).</string>
 	<string name="onboarding_caption">Enjoy using this app! You can always change your settings later on.</string>
 

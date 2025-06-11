@@ -149,7 +149,7 @@
 
 	<string name="onboarding_app_uses">יישום זה ייאפשר לך לעשות:\n\n&#8226; לקבל גישה מהירה לעדכוני גרסת האנדרואיד האחרונה עבור מכשירי OPPO/OnePlus המריצים את OxygenOS/ColorOS\n&#8226; לעדכן בקלות מכשירים עם גישת Root\n&#8226; לגלות מה חדש בעדכון המערכת שהינך משתמש בו\n&#8226; לקרוא את החדשות האחרונות על חברת OPPO/OnePlus ומערכת ההפעלה OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">אפליקציה זאת אינה אפליקציה רשמית מחברת OPPO/OnePlus ואינה מתיימרת להיות אחת כזו. שימוש באפליקציה זאת היא על אחריותך בלבד. OPPO/OnePlus או מפתחי האפליקציה אינם אחראים לפעולות שתעשה באפליקציה, המשמעות היא שכל נזק הנגרם עקב שימוש באפליקציה זאת על אחריותך בלבד. שימוש באפליקציה זאת משמעותה שהינך מסכים ומאשר את התנאים וההגבלות כאמור לעיל.</string>
-	<string name="onboarding_device_chooser_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית. אך אם לא בחר את המכשיר בצורה ידנית</string>
+	<string name="onboarding_device_chooser_caption">המכשיר שלך לרוב נבחר בצורה אוטומטית</string>
 	<string name="onboarding_method_chooser_caption">בדרך כלל, שיטת Incremental update הוא הבחירה הנכונה, מכיוון שהוא מציע הורדה מהירה יותר, וקבצים קלי משקל לעומת שיטת ה־ Full ם זאת, שיטת Incremental update איננה נתמכת במכשירים עם גישת Root. אם ברשותך מכשיר עם גישת Root, אנא בחר את שיטת Full update. ם הינך מריץ גרסת בטא של מערכת ההפעלה OxygenOS/ColorOS, אנא בחר אחד משיטות העדכונים שמיועדים לבטא (Open Beta).</string>
 	<string name="onboarding_caption">מאחלים לך הנאה בזמן שימוש באפליקציה! ברשותך תמיד האפשרות לשנות את ההגדרות שלך.</string>
 

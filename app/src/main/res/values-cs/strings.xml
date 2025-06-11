@@ -149,7 +149,7 @@ To může být užitečné, pokud chcete:"</string>
 
 	<string name="onboarding_app_uses">Tato aplikace vám umožní:\n\n&#8226; Získat rychlejší přístup k nejnovějším aktualizacím systému Android pro vaše zařízení s operačním systémem OxygenOS/ColorOS\n&#8226; Snadno aktualizovat zařízení s rootem\n&#8226; Prohlédnout si novinky o systémovém softwaru, který právě používáte\n&#8226; Přečíst si nejnovější zprávy o společnosti OPPO/OnePlus a OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Nejedná se o oficiální aplikaci společnosti OPPO/OnePlus. Používání této aplikace je zcela na vaše vlastní riziko. Společnost OPPO/OnePlus ani vývojář aplikace nenesou odpovědnost za vaše jednání, včetně jakýchkoli škod způsobených používáním této aplikace. Používáním této aplikace souhlasíte s výše uvedenými podmínkami.</string>
-	<string name="onboarding_device_chooser_caption">Vaše zařízení je obvykle již vybráno výše. Pokud ne, vyberte jej.</string>
+	<string name="onboarding_device_chooser_caption">Vaše zařízení je obvykle již vybráno výše</string>
 	<string name="onboarding_method_chooser_caption">Obvykle je zde správnou volbou aktualizace typu incremental, protože nabízí mnohem rychlejší a menší objem dat ke stažení. Není však kompatibilní se zařízeními s rootem. Pokud máte zařízení s rootem, zvolte plnou aktualizaci. Pokud máte beta verzi systému OxygenOS/ColorOS, zvolte jednu z metod aktualizace Open Beta.</string>
 	<string name="onboarding_caption">Užívejte si používání této aplikace! Vždy můžete později změnit nastavení.</string>
 

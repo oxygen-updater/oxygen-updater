@@ -145,7 +145,7 @@ Questo può essere utile se si desidera:"</string>
 &#8226; Visualizzare le notivate in aggiornamenti
 &#8226; Leggere le novità su OPPO/OnePlus e OxygenOS/ColorOS"</string>
 	<string name="onboarding_disclaimer">"Questa non è un applicazione ufficiale. L'uso di questa app è completamente a rischio proprio. Né OPPO/OnePlus né lo sviluppatore dell'app sono responsabili delle tue azioni, incluso qualsiasi danno causato dall'uso inappropriato di questa app. Usando l'app consenti ai termini e condizioni citati sopra."</string>
-	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato, se non lo è, selezionalo sopra."</string>
+	<string name="onboarding_device_chooser_caption">"Il tuo dovrebbe già essere selezionato"</string>
 	<string name="onboarding_method_chooser_caption">"Di solito, l'aggiornamento progressivo è la scelta corretta, perché offre download molto più facili e piccoli. Però, non completamente comnpatibili con dispositivi rootati. Se hai un dispositivo con root, seleziona l'aggiornamento completo. Se hai una versione beta, seleziona una delle opzioni Open Beta."</string>
 	<string name="onboarding_caption">"Goditi l'app! Puoi cambiare le tue impostazioni in qualsiasi momento."</string>
 
