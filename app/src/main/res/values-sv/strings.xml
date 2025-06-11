@@ -148,7 +148,7 @@ Detta kan vara användbart om du vill:"</string>
 &#8226; Läsa de senaste nyheterna som relaterar till OPPO/OnePlus och OXygenOS"</string>
 	<string name="onboarding_disclaimer">"Detta är inte en officiell OPPO/OnePlus applikation. Användande av denna app är helt på egen risk. Vare sig OPPO/OnePlus eller utvecklaren av denna app är ansvariga för dina handlingar, detta inkluderar skada av din enhet som har tillkommit efter användande av denna app. Genom att använda denna app accepterar du de ovanstående villkoren."</string>
 	<string name="onboarding_device_chooser_caption">"Din enhet är oftast redan förvald ovan"</string>
-	<string name="onboarding_method_chooser_caption">"Vanligtvis är en inkrementell uppdatering rätt val eftersom den möjliggör snabbare och mindre nedladdningsstorlek. Däremot är det inte kompatibelt med rostade enheter. Välj istället en full uppdatering om du har en rootad enhet. Om du har installerat en beta version av OxygenOS/ColorOS, välj en av uppdateringsmetoderna för Open Beta."</string>
+	<string name="onboarding_method_chooser_caption">"“Incremental” är ofta det bästa valet, eftersom det vanligtvis är en mycket mindre nedladdning"</string>
 	<string name="onboarding_caption">"Hoppas du kommer tycka om appen! Du kan alltid ändra inställningar senare."</string>
 
 	<!-- Automatic install strings -->

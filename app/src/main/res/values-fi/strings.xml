@@ -149,7 +149,7 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 &#8226; Lukea viimeisimpiä uutisia koskien OPPO/OnePlussaa ja OxygeOS"</string>
 	<string name="onboarding_disclaimer">"Tämä ei ole virallinen OPPO/OnePlus sovellus. Tämän sovelluksen käyttö tapahtuu täysin omalla vastuullasi. OPPO/OnePlus tai sovelluksen kehittäjä eivät ole vastuussa tekemistäsi toimenpiteistä, mukaanlukien mitkä tahansa vahingot joita sovelluksen käytöstä aiheutuu. Käyttämällä sovellusta hyväksyt yllä olevat käyttöehdot."</string>
 	<string name="onboarding_device_chooser_caption">"Laitteesi on normaalisti jo oletuksena valittuna yläpuolella"</string>
-	<string name="onboarding_method_chooser_caption">"Yleensä lisäävä päivitys on oikea valinta tässä kohtaa, koska se tarjoaa nopeammat ja pienemmät latauskoot Kuitenkaan tämä ei ole yhteensopiva tapa rootatuille laitteille. Jos laitteesi on rootattu valitse Täydellinen päivitys. Jos sinulla on beta versio OxygenOS/ColorOS:stä, valitse jokin Open Beta päivitystavoista."</string>
+	<string name="onboarding_method_chooser_caption">"“Incremental” on usein paras valinta, koska se on yleensä paljon pienempi lataus."</string>
 	<string name="onboarding_caption">"Nauti sovelluksesta! Voit aina muuttaa asetuksia myöhemmin."</string>
 
 	<!-- Automatic install strings -->

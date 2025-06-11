@@ -161,7 +161,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="onboarding_app_uses">Ta aplikacji pozwoli ci na:\n\n&#8226; Szybszy dostęp do aktualizacji na twoim urządzeniu z OxygenOS/ColorOS\n&#8226; Łatwa aktualizacja na urządzeniu z rootem\n&#8226; Zobaczyć nowości w systemie którego obecnie używasz\n&#8226; Przeczytać najnowsze wiadomości o OPPO/OnePlus i aktualizacjach OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">To nie jest oficjalna aplikacja OPPO/OnePlusa. Ponosisz pełne ryzyko za używanie tej aplikacji.Ani OPPO/OnePlus ani deweloper tej aplikacji nie są odpowiedzialni za twoje akcje, włączając wszelkie akcje mogące wyrządzić szkody przez tę aplikację. Używając tej apliakcji, zgadzasz się na zasady i warunki opisane powyżej.</string>
 	<string name="onboarding_device_chooser_caption">Twoje urządzenie jest zazwyczaj wybrane powyżej</string>
-	<string name="onboarding_method_chooser_caption">Zazwyczaj, częściowa aktualizacja jest tutaj właściwym wyborem, ponieważ umożliwia znacznie szybsze pobieranie oraz mniejszy rozmiar pliku. Aczkolwiek, ta opcja nie jest kompatybilna ze zrootowanymi urządzeniami. Jeśli masz zrootowane urzadzenie, wybierz Pełną aktualizację. Jeśli masz wersję beta OxygenOS/ColorOS, wybierz (jedną z) metod aktualizacji wersji Open Beta.</string>
+	<string name="onboarding_method_chooser_caption">“Incremental” jest często najlepszym wyborem, ponieważ zazwyczaj jest to znacznie mniejszy plik do pobrania</string>
 	<string name="onboarding_caption">Miłego korzystania z tej aplikacji! Możesz zawsze zmienić swoje ustawienia w dowolnym momencie.</string>
 
 	<!-- Automatic install strings -->

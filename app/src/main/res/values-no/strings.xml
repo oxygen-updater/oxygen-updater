@@ -153,7 +153,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="onboarding_app_uses">Denne appen lar deg få raskere tilgang til:\n\n&#8226; de siste Android-oppdateringene for din OxygenOS/ColorOS-drevne enhet\n&#8226; Oppdater enkelt en forankret enhet\n&#8226; Se hva som er nytt i systemprogramvaren du bruker for øyeblikket\n&#8226; Les de siste nyhetene om OPPO/OnePlus og OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Dette er ikke en offisiell OPPO/OnePlus-applikasjon. Bruk av denne appen er helt på egen risiko. Verken OPPO/OnePlus eller utvikleren av appen er ansvarlig for handlingene dine, inkludert skader forårsaket av bruk av denne appen. Gjennom å bruke denne appen, godtar du vilkårene og betingelsene som nevnt ovenfor.</string>
 	<string name="onboarding_device_chooser_caption">Enheten er vanligvis allerede valgt ovenfor</string>
-	<string name="onboarding_method_chooser_caption">Vanligvis er den inkrementelle oppdateringen det riktige valget her, fordi den tilbyr mye raskere og mindre nedlastinger. Men den er ikke kompatibel med forankrede enheter. Hvis du har en forankret enhet, velger du Full oppdatering. Hvis du har en beta-versjon av OxygenOS/ColorOS, velger du (en av) Open Beta-oppdateringsmetoden (e).</string>
+	<string name="onboarding_method_chooser_caption">“Incremental” er ofte det beste valget, ettersom det vanligvis er en mye mindre nedlasting</string>
 	<string name="onboarding_caption">Gled deg over å bruke denne appen! Du kan alltid endre innstillingene senere.</string>
 
 	<!-- Automatic install strings -->

@@ -152,7 +152,7 @@ Dit kan handig zijn als je:"</string>
 
 	<string name="onboarding_device_chooser_caption">Meestal is jouw apparaat al in de lijst hierboven geselecteerd</string>
 
-	<string name="onboarding_method_chooser_caption">De incrementele update is meestal de juiste keuze, omdat deze snellere en kleinere downloads biedt. Als je een \"rooted\" apparaat gebruikt, kun je deze update-methode echter niet kiezen. Kies in dat geval voor "Volledige Update". Gebruik je een bèta-versie van OxygenOS/ColorOS? Kies dan voor de Open Bèta.</string>
+	<string name="onboarding_method_chooser_caption">“Incrementeel” is vaak de beste keuze, omdat het meestal een veel kleinere download is</string>
 
 	<string name="onboarding_caption">Veel plezier met het gebruik van Oxygen Updater!</string>
 

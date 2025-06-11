@@ -148,7 +148,7 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 &#8226; Die neusten Updates über OPPO/OnePlus und OxygenOS/ColorOS zu sehen"</string>
 	<string name="onboarding_disclaimer">"Das ist keine Offizielle OPPO/OnePlus Applikation. Die Benutzung läuft komplett über deine eigene Verantwortung. Weder OPPO/OnePlus noch der Entwickler der App haften für deine Aktionen, inbegriffen sind Schäden welche durch die Benutzung dieser App verursacht werden. durch die Benutzung dieser App stimmst du den oben genannten Nutzungsbedingungen zu."</string>
 	<string name="onboarding_device_chooser_caption">"Normalerweise sollte dein Gerät bereits oben ausgewählt sein"</string>
-	<string name="onboarding_method_chooser_caption">"Für gewöhnlich ist das \"inkrementelle Update\" die richtige Wahl, da es einen schnelleren und kleineren Download bietet. Dies ist jedoch nicht mit gerooteten Geräten kompatibel. Falls du ein gerootetes Gerät hast dann wähle bitte das \"komplette Update\". Falls auf deinem Gerät eine Beta Version von OxygenOS/ColorOS läuft, dann wähle eine der offenen Beta Update Methoden."</string>
+	<string name="onboarding_method_chooser_caption">"„Incremental“ ist oft die beste Wahl, da es sich in der Regel um einen viel kleineren Download handelt"</string>
 	<string name="onboarding_caption">"Viel Spaß beim Benutzen dieser App! Du kannst jederzeit die Einstellungen später noch ändern."</string>
 
 	<!-- Automatic install strings -->

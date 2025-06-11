@@ -157,7 +157,7 @@ Esto puede ser útil si quieres:"</string>
 	<string name="onboarding_app_uses">Esta app te permitirá:\n\n&#8226; Acceder rápidamente a nuevas actualizaciones para tu OPPO/OnePlus gracias a OxygenOS/ColorOS\n&#8226; Actualiza fácilmente tu dispositivo con acceso root\n&#8226; Ver las novedades del sistema operativo que estás usando actualmente\n&#8226; Leer las últimas noticias sobre OPPO/OnePlus y OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Esta no es una aplicación oficial de OPPO/OnePlus. El uso de esta app está sujeto a tu propia responsabilidad. Ni OPPO/OnePlus ni el desarrollador son responsables de tu acciones, incluyendo el daño causado por esta app. Al usar esta app, aceptas los términos y condiciones arriba mencionados.</string>
 	<string name="onboarding_device_chooser_caption">Tu dispositivo suele seleccionarse automáticamente</string>
-	<string name="onboarding_method_chooser_caption">Normalmente, la actualización incremental es la mejor opción ya que ofrece unas descargas menos pesadas y más rápidas. Sin embargo, no es compatible con dispositivos rooteados. Si tu dispositivo tiene root, Elige la actualización completa. Si tienes una versión beta de OxygenOS/ColorOS, elige (uno de los) método(s) de actualización de la beta abierta.</string>
+	<string name="onboarding_method_chooser_caption">«Incremental» suele ser la mejor opción, ya que suele ser una descarga mucho más pequeña</string>
 	<string name="onboarding_caption">¡Disfruta esta app! Siempre podrás cambiar las preferencias más tarde.</string>
 
 	<!-- Automatic install strings -->

@@ -152,7 +152,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="onboarding_app_uses">Ez az alkalmazás lehetővé teszi a:\n\n&#8226; Gyorsabb hozzáférést a legfrissebb Android-frissítésekhez az OxygenOS/ColorOS-szel működő eszközödön\n&#8226; Rootolt eszközök egyszerű frissítését\n&#8226; Újdonságokat megtekintését a jelenleg használt szoftveredben\n&#8226; Legújabb hírek elolvasását a OPPO/OnePlus-szal és az OxygenOS/ColorOS-szel kapcsolatban</string>
 	<string name="onboarding_disclaimer">Ez nem egy hivatalos OPPO/OnePlus alkalmazás. Az alkalmazás használata teljesen a saját felelősségre történik. Sem az OPPO/OnePlus, sem az alkalmazás fejlesztője nem vállal felelősséget a tetteidért, ideértve az alkalmazás használatával okozott károkat is. Az alkalmazás használatával elfogadod a fentiekben meghatározott feltételeket.</string>
 	<string name="onboarding_device_chooser_caption">A készüléked általában már feljebb ki van választva</string>
-	<string name="onboarding_method_chooser_caption">Általában az inkrementális frissítés itt a megfelelő választás, mivel sokkal gyorsabb és kisebb letöltéseket kínál. Azonban nem kompatibilis rootolt eszközökkel. Ha az eszközöd rootolva van, válaszd a Teljes Frissítés lehetőséget. Ha OxygenOS/ColorOS bétaverziód van, válaszd a Nyílt Béta frissítési módszer(ek) egyikét.</string>
+	<string name="onboarding_method_chooser_caption">Az „incremental” gyakran a legjobb választás, mivel általában sokkal kisebb letöltésről van szó</string>
 	<string name="onboarding_caption">Reméljük élvezni fogod az alkalmazás használatát! A beállításokat később bármikor megváltoztathatod.</string>
 
 	<!-- Automatic install strings -->

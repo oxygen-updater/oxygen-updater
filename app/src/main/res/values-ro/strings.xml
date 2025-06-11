@@ -150,7 +150,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="onboarding_app_uses">Această aplicație vă va permite să:\n\n&#8226; Obțineți acces mai rapid la cele mai recente actualizări Android pentru dispozitivul dumneavoastră cu OxygenOS/ColorOS\n&#8226; Actualizați cu ușurință un dispozitiv rootat\n&#8226; Vedeți ce este nou în software-ul de sistem pe care îl utilizați în prezent\n&#8226; Citiți cele mai recente noutăți despre OPPO/OnePlus și OxygenOS/ColorOS</string>
 	<string name="onboarding_disclaimer">Aceasta nu este o aplicație oficială OPPO/OnePlus. Utilizați aplicația pe propria răspundere. Nici OPPO/OnePlus și nici dezvoltatorul aplicației nu sunt responsabili pentru acțiunile dumneavoastră, nici pentru orice daune cauzate de utilizarea acestei aplicații. Prin utilizarea acestei aplicații, sunteți de acord cu termenii și condițiile menționate mai sus.</string>
 	<string name="onboarding_device_chooser_caption">De regulă, dispozitivul dumneavoastră este preselectat mai sus</string>
-	<string name="onboarding_method_chooser_caption">De obicei, actualizarea incrementală este alegerea potrivită aici, deoarece oferă descărcări mult mai rapide și mai mici. Cu toate acestea, nu este compatibilă cu dispozitivele rootate. Dacă aveți un dispozitiv rootat, alegeți Actualizarea completă. Dacă aveți o versiune beta a OxygenOS/ColorOS, alegeți (una) dintre metodele de actualizare Open Beta.</string>
+	<string name="onboarding_method_chooser_caption">“Incremental” este adesea cea mai bună alegere, deoarece este de obicei o descărcare mult mai mică</string>
 	<string name="onboarding_caption">Bucurați-vă de utilizarea acestei aplicații! Vă puteți schimba oricând setările mai târziu.</string>
 
 	<!-- Automatic install strings -->
