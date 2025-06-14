@@ -248,8 +248,6 @@ android {
 
     compileOptions.isCoreLibraryDesugaringEnabled = true
 
-    composeOptions.kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-
     buildFeatures {
         compose = true
         // AGP 8+ doesn't generate BuildConfig by default
