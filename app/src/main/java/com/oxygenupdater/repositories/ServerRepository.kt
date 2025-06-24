@@ -64,7 +64,10 @@ class ServerRepository @Inject constructor(
         )
     }.let {
         if (it?.shouldFetchMostRecent == true) performServerRequest {
-            serverApi.fetchMostRecentUpdateData(deviceId, methodId)
+            serverApi.fetchMostRecentUpdateData(
+                deviceId = deviceId,
+                updateMethodId = methodId,
+            )
         } else it
     }.let {
         updateDataDao.refresh(it)
@@ -93,8 +96,8 @@ class ServerRepository @Inject constructor(
 
     suspend fun fetchServerMessages() = performServerRequest {
         serverApi.fetchServerMessages(
-            sharedPreferences[KeyDeviceId, NotSetL],
-            sharedPreferences[KeyUpdateMethodId, NotSetL]
+            deviceId = sharedPreferences[KeyDeviceId, NotSetL],
+            updateMethodId = sharedPreferences[KeyUpdateMethodId, NotSetL],
         )
     }
 
@@ -106,8 +109,8 @@ class ServerRepository @Inject constructor(
 
     suspend fun fetchNews() = performServerRequest {
         serverApi.fetchNews(
-            sharedPreferences[KeyDeviceId, NotSetL],
-            sharedPreferences[KeyUpdateMethodId, NotSetL],
+            deviceId = sharedPreferences[KeyDeviceId, NotSetL],
+            updateMethodId = sharedPreferences[KeyUpdateMethodId, NotSetL],
         )
     }.let {
         if (!it.isNullOrEmpty()) articleDao.refreshArticles(it)
