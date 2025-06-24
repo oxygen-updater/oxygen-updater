@@ -52,14 +52,15 @@ class ServerRepository @Inject constructor(
 
     suspend fun fetchUpdateData(deviceId: Long, methodId: Long) = performServerRequest {
         serverApi.fetchUpdateData(
-            deviceId,
-            methodId,
-            SystemVersionProperties.otaVersion,
-            SystemVersionProperties.osVersion,
-            SystemVersionProperties.osType,
-            SystemVersionProperties.fingerprint,
-            SystemVersionProperties.isEuBuild,
-            BuildConfig.VERSION_NAME
+            deviceId = deviceId,
+            updateMethodId = methodId,
+            incrementalSystemVersion = SystemVersionProperties.otaVersion,
+            osVersion = SystemVersionProperties.osVersion,
+            osType = SystemVersionProperties.osType,
+            fingerprint = SystemVersionProperties.fingerprint,
+            oplusPipeline = SystemVersionProperties.pipeline,
+            isEuBuild = SystemVersionProperties.isEuBuild,
+            appVersion = BuildConfig.VERSION_NAME,
         )
     }.let {
         if (it?.shouldFetchMostRecent == true) performServerRequest {
@@ -143,12 +144,13 @@ class ServerRepository @Inject constructor(
 
     suspend fun osInfoHeartbeat(fromIntentAction: String) = performServerRequest {
         serverApi.osInfoHeartbeat(
-            ArrayMap<String, Any>(7).apply {
+            ArrayMap<String, Any>(8).apply {
                 put("fromAction", fromIntentAction)
                 put("otaVersion", SystemVersionProperties.otaVersion)
                 put("osVersion", SystemVersionProperties.osVersion)
                 put("osType", SystemVersionProperties.osType)
                 put("fingerprint", SystemVersionProperties.fingerprint)
+                put("oplusPipeline", SystemVersionProperties.pipeline)
                 put("isEuBuild", SystemVersionProperties.isEuBuild)
                 put("appVersion", BuildConfig.VERSION_NAME)
             }

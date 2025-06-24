@@ -6,6 +6,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.util.Log
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.models.SystemVersionProperties.OplusPipelineLookupKeys
 import com.oxygenupdater.utils.logInfo
 import java.io.BufferedReader
 import java.io.IOException
@@ -64,7 +65,11 @@ object SystemVersionProperties {
      * Note: to keep things simple, we're checking if the value corresponding to this key starts with `EU`,
      * even though we've seen that (at least on Nord 2), it's `EUEX` for EU devices, and `IN` for India.
      */
-    private const val VendorOplusRegionMarkLookupKey = "ro.vendor.oplus.regionmark"
+    private val OplusPipelineLookupKeys = arrayOf(
+        "ro.oplus.pipeline_key",
+        "ro.oplus.pipeline.region",
+        "ro.vendor.oplus.regionmark",
+    )
 
     /** Required for workaround #5*/
     private const val VendorOpIndia = "ro.vendor.op.india"
@@ -102,6 +107,9 @@ object SystemVersionProperties {
      */
     val osType: String
 
+    /** @see OplusPipelineLookupKeys */
+    val pipeline: String
+
     val isEuBuild: Boolean
 
     init {
@@ -110,6 +118,7 @@ object SystemVersionProperties {
         var osVersion = Build.DISPLAY
         var otaVersion = UNKNOWN
         var osType = UNKNOWN
+        var pipeline = UNKNOWN
         var isEuBuild = false
         var securityPatchDate = if (SDK_INT >= VERSION_CODES.M) {
             Build.VERSION.SECURITY_PATCH
@@ -161,7 +170,7 @@ object SystemVersionProperties {
                 if (it != UNKNOWN) osVersion = it
             }
 
-            val pipeline = systemProperty(VendorOplusRegionMarkLookupKey)
+            pipeline = pickFirstValid(OplusPipelineLookupKeys, pipeline) { _, value -> value }
             if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
                 if (deviceProductName in OnePlusPadAndPad2) {
                     // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
@@ -236,7 +245,7 @@ object SystemVersionProperties {
                     if (it != UNKNOWN) osVersion = it
                 }
 
-                val pipeline = readBuildPropItem(VendorOplusRegionMarkLookupKey, properties)
+                pipeline = readBuildPropItem(OplusPipelineLookupKeys, properties, pipeline)
                 if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
                     if (deviceProductName in OnePlusPadAndPad2) {
                         // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
@@ -277,6 +286,7 @@ object SystemVersionProperties {
         this.otaVersion = otaVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
+        this.pipeline = pipeline
         this.isEuBuild = isEuBuild
     }
 
