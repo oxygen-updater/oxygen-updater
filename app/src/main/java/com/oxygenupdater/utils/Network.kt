@@ -1,7 +1,8 @@
 package com.oxygenupdater.utils
 
 import android.content.Context
-import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import android.os.storage.StorageManager
 import androidx.core.content.getSystemService
 import com.oxygenupdater.BuildConfig
@@ -18,7 +19,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
-
 
 private const val TAG = "OxygenUpdaterNetwork"
 private const val UserAgentTag = "User-Agent"
@@ -66,7 +66,7 @@ fun createDownloadApi() = Retrofit.Builder()
  * Limit cache size to stay under quota if device is Oreo and above.
  * Otherwise, default to [DefaultCacheSize]
  */
-private fun createOkHttpCache(context: Context) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+private fun createOkHttpCache(context: Context) = if (SDK_INT >= VERSION_CODES.O) {
     context.getSystemService<StorageManager>()?.run {
         try {
             val quota = getCacheQuotaBytes(getUuidForPath(context.cacheDir))

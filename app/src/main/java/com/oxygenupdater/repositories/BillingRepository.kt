@@ -3,8 +3,6 @@ package com.oxygenupdater.repositories
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Handler
-import android.os.Looper
 import android.os.SystemClock
 import androidx.annotation.UiThread
 import androidx.compose.runtime.Immutable
@@ -61,8 +59,6 @@ import java.security.SignatureException
 import java.security.spec.InvalidKeySpecException
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.set
-import kotlin.math.min
 
 /**
  * The BillingRepository implements all billing functionality for our test application.
@@ -119,13 +115,9 @@ class BillingRepository @Inject constructor(
                 .enablePrepaidPlans()
                 .build()
         )
+        .enableAutoServiceReconnection()
         .setListener(this)
         .build()
-
-    /**
-     * How long before the data source tries to reconnect to Google Play
-     */
-    private var reconnectMilliseconds = ReconnectTimerStartMs
 
     /**
      * When was the last successful ProductDetailsResponse?
@@ -289,35 +281,14 @@ class BillingRepository @Inject constructor(
     override fun onBillingSetupFinished(result: BillingResult) {
         val responseCode = result.responseCode
         logDebug(TAG, "[onBillingSetupFinished] $responseCode: ${result.debugMessage}")
-        when (responseCode) {
-            BillingResponseCode.OK -> ioScope.launch {
-                queryProductDetails()
-                refreshPurchases()
-            }.also {
-                reconnectMilliseconds = ReconnectTimerStartMs
-            }
-
-            else -> reconnectWithExponentialBackoff()
+        if (responseCode == BillingResponseCode.OK) ioScope.launch {
+            queryProductDetails()
+            refreshPurchases()
         }
     }
 
-    /**
-     * Rare occurrence; could happen if Play Store self-updates or is force-closed
-     */
-    override fun onBillingServiceDisconnected() = reconnectWithExponentialBackoff()
-
-    /**
-     * Reconnect to [BillingClient] with exponential backoff, with a max of
-     * [ReconnectTimerMaxTimeMs]
-     */
-    private fun reconnectWithExponentialBackoff() = handler.postDelayed(
-        { billingClient.startConnection(this) }, reconnectMilliseconds
-    ).let {
-        reconnectMilliseconds = min(
-            reconnectMilliseconds * 2,
-            ReconnectTimerMaxTimeMs
-        )
-    }
+    /** No-op. Handled internally via [BillingClient.Builder.enableAutoServiceReconnection]. */
+    override fun onBillingServiceDisconnected() {}
 
     /**
      * Called by [BillingClient] when new purchases are detected; typically in
@@ -328,10 +299,10 @@ class BillingRepository @Inject constructor(
      */
     override fun onPurchasesUpdated(result: BillingResult, list: List<Purchase>?) {
         when (result.responseCode) {
-            BillingResponseCode.OK -> list?.let {
-                processPurchaseList(it, null)
+            BillingResponseCode.OK -> if (list != null) {
+                processPurchaseList(list, null)
                 return
-            } ?: logDebug(
+            } else logDebug(
                 TAG,
                 "[onPurchasesUpdated] mull purchase list returned from OK response"
             )
@@ -905,16 +876,6 @@ class BillingRepository @Inject constructor(
         private const val TAG = "BillingRepository"
 
         /**
-         * 1 second
-         */
-        private const val ReconnectTimerStartMs = 1000L
-
-        /**
-         * 15 minutes
-         */
-        private const val ReconnectTimerMaxTimeMs = 1000L * 60L * 15L
-
-        /**
          * 4 hours
          */
         private const val ProductDetailsRequeryTimeMs = 1000L * 60L/* * 60L * 4L*/
@@ -929,7 +890,5 @@ class BillingRepository @Inject constructor(
         private val InappSkus = listOf(SkuInappAdFree)
         private val SubsSkus = listOf<String>()
         private val ConsumableSkus = listOf<String>()
-
-        private val handler = Handler(Looper.getMainLooper())
     }
 }

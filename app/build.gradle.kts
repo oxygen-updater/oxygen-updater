@@ -1,6 +1,5 @@
 import com.android.build.api.dsl.ApplicationBuildType
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import java.net.URI
 import java.util.Properties
 
@@ -264,18 +263,12 @@ android {
 }
 
 composeCompiler {
-    featureFlags = setOf(
-        // Introduced in 1.5.9: https://r.android.com/c/2912628
-        ComposeFeatureFlag.OptimizeNonSkippingGroups,
-        // Introduced in Kotlin 2.1.0: https://kotlinlang.org/docs/whatsnew21.html#pausable-composition
-        // Requires androidx.compose.runtime 1.8.0-alpha02 or higher
-        ComposeFeatureFlag.PausableComposition,
-    )
-
-    // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
-    // Requires a fresh build to show all outputs
-    metricsDestination = layout.buildDirectory.dir("composeMetrics")
-    reportsDestination = layout.buildDirectory.dir("composeMetrics")
+    layout.buildDirectory.let {
+        // https://github.com/androidx/androidx/blob/androidx-main/compose/compiler/design/compiler-metrics.md
+        // Requires a fresh build to show all outputs
+        metricsDestination = it.dir("composeMetrics")
+        reportsDestination = it.dir("composeMetrics")
+    }
 }
 
 kotlin {
@@ -289,6 +282,8 @@ kotlin {
             "-Xno-param-assertions",
             // https://kotlinlang.org/docs/whatsnew21.html#global-warning-suppression
             "-Xsuppress-warning=NOTHING_TO_INLINE",
+            // Apply (validation) annotations to both value parameter and field: https://youtrack.jetbrains.com/issue/KT-73255
+            "-Xannotation-default-target=param-property",
         )
     }
 }
@@ -358,7 +353,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.coil.network.cache)
-
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
