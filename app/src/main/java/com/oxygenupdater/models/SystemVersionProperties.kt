@@ -182,8 +182,10 @@ object SystemVersionProperties {
                     if (pipeline.startsWith("IN")) deviceProductName += "_IN"
                 } else if ("oppo" == brandLowercase) {
                     // Special handling for OPPO phones. They often use the same model number across all regions.
-                    // Append pipeline to model number, only if it's not already part of it (EUEX => EEA).
-                    if (pipeline != "EUEX") deviceProductName += pipeline
+                    // Append pipeline to model number, only if it's not already part of it. A quick check is to
+                    // see if the last character is a digit, since pipelines are almost exclusively alphabets.
+                    val lastChar = pipeline.lastOrNull() ?: '0'
+                    if (lastChar in '0'..'9') deviceProductName += pipeline
                 }
             }
 
@@ -257,8 +259,10 @@ object SystemVersionProperties {
                         if (pipeline.startsWith("IN")) deviceProductName += "_IN"
                     } else if ("oppo" == brandLowercase) {
                         // Special handling for OPPO phones. They often use the same model number across all regions.
-                        // Append pipeline to model number, only if it's not already part of it (EUEX => EEA).
-                        if (pipeline != "EUEX") deviceProductName += pipeline
+                        // Append pipeline to model number, only if it's not already part of it. A quick check is to
+                        // see if the last character is a digit, since pipelines are almost exclusively alphabets.
+                        val lastChar = pipeline.lastOrNull() ?: '0'
+                        if (lastChar in '0'..'9') deviceProductName += pipeline
                     }
                 }
 
