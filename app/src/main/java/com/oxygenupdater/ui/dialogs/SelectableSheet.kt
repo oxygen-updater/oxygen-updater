@@ -73,7 +73,8 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
             inputField = {
                 SearchBarDefaults.InputField(
                     query = query,
-                    onQueryChange = { query = it.trim() },
+                    // Don't trim `query` here, to allow inputting spaces
+                    onQueryChange = { query = it },
                     onSearch = {},
                     expanded = false,
                     onExpandedChange = {},
@@ -119,9 +120,9 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     // Debounce search query changes to filter list
     var items by remember { mutableStateOf(list) }
     LaunchedEffect(query) {
-        items = if (filter == null || query.isEmpty()) list else {
+        items = if (filter == null || query.isBlank()) list else {
             delay(100) // debounce by 100ms
-            list.filter { filter(it, query) }
+            list.filter { filter(it, query.trim()) }
         }
     }
 
