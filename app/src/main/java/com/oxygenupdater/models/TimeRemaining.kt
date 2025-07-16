@@ -34,8 +34,4 @@ data class TimeRemaining(private val seconds: Long) : Serializable {
             context.getString(R.string.download_progress_text_unknown_time_remaining)
         }
     }
-
-    companion object {
-        private const val serialVersionUID = 5271414164650145215L
-    }
 }

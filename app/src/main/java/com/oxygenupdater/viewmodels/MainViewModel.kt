@@ -30,6 +30,7 @@ import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.InstallState
+import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
 import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAILABLE
@@ -168,7 +169,16 @@ class MainViewModel @Inject constructor(
 
     private var appUpdateType = AppUpdateType.FLEXIBLE
 
-    private val flexibleAppUpdateListener: (InstallState) -> Unit = { appUpdateStatusFlow.tryEmit(it) }
+    /**
+     * Must be an object of [InstallStateUpdatedListener], instead of being a Kotlin lambda, to allow
+     * unregistering in [unregisterAppUpdateListener] properly. The Kotlin lambda wouldn't match any
+     * registered listener in the first place.
+     */
+    private val flexibleAppUpdateListener = object : InstallStateUpdatedListener {
+        override fun onStateUpdate(state: InstallState) {
+            appUpdateStatusFlow.tryEmit(state)
+        }
+    }
 
     private var lastDownloadStatus: DownloadStatus? = null
     private val cancelShouldPauseDownload = AtomicBoolean(false)
