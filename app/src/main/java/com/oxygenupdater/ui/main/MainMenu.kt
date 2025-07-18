@@ -115,10 +115,12 @@ private fun ContributorMenuItem(
 
     DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
         showSheet = true
-        onDismiss()
     }
 
-    if (showSheet) ModalBottomSheet({ showSheet = false }) {
+    if (showSheet) ModalBottomSheet({
+        showSheet = false
+        onDismiss()
+    }) {
         ContributorSheet(
             hide = it,
             getPrefBool = getPrefBool,
