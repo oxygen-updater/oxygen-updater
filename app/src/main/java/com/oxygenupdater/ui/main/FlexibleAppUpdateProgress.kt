@@ -8,6 +8,7 @@ import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.util.fastCoerceAtLeast
 import com.google.android.play.core.install.model.InstallStatus
 import com.oxygenupdater.ui.common.modifierMaxWidth
 
@@ -29,7 +30,7 @@ fun FlexibleAppUpdateProgress(
     if (status == InstallStatus.PENDING) LinearProgressIndicator(
         modifierMaxWidth.testTag(FlexibleAppUpdateProgress_IndicatorTestTag)
     ) else if (status == InstallStatus.DOWNLOADING) {
-        val progress = bytesDownloaded().toFloat() / totalBytesToDownload().coerceAtLeast(1)
+        val progress = bytesDownloaded().toFloat() / totalBytesToDownload().fastCoerceAtLeast(1)
         val animatedProgress by animateFloatAsState(
             targetValue = progress,
             animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,

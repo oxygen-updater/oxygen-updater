@@ -69,6 +69,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.fastCoerceAtLeast
+import androidx.compose.ui.util.fastCoerceIn
 import androidx.compose.ui.util.fastFirst
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.lerp
@@ -101,14 +103,14 @@ fun TopAppBar(
 
     // Sets the app bar's height offset to collapse the entire bar's height when content is
     // scrolled.
-    val layoutHeight = (heightPx + scrollBehavior.state.heightOffset.toInt()).coerceAtLeast(0)
+    val layoutHeight = (heightPx + scrollBehavior.state.heightOffset.toInt()).fastCoerceAtLeast(0)
     val limit = -heightPx.toFloat()
     SideEffect {
         if (scrollBehavior.state.heightOffsetLimit != limit) scrollBehavior.state.heightOffsetLimit = limit
     }
 
     // Sometimes it goes out of boundary, don't know why. Force within [0,1].
-    val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
+    val collapsedFraction = scrollBehavior.state.collapsedFraction.fastCoerceIn(0f, 1f)
     // Additional offset for placeables depending on how much we've collapsed
     val yOffset = lerp(statusBarHeightPx, 0, collapsedFraction)
 
@@ -188,7 +190,7 @@ fun TopAppBar(
             .measure(
                 constraints.copy(
                     minWidth = 0,
-                    maxWidth = (maxWidth - navIconWidth - actionsWidth).coerceAtLeast(0)
+                    maxWidth = (maxWidth - navIconWidth - actionsWidth).fastCoerceAtLeast(0)
                 )
             )
 
@@ -242,7 +244,7 @@ fun CollapsingAppBar(
     }
 
     val height = (maxHeight + heightOffset).coerceAtLeast(minHeight)
-    val heightPx = (maxHeightPx + heightOffsetPx).coerceAtLeast(minHeightPx)
+    val heightPx = (maxHeightPx + heightOffsetPx).fastCoerceAtLeast(minHeightPx)
 
     // Sets the app bar's height offset limit to hide just the bottom title area and keep top title
     // visible when collapsed.
@@ -252,7 +254,7 @@ fun CollapsingAppBar(
     }
 
     // Sometimes it goes out of boundary, don't know why. Force within [0,1].
-    val collapsedFraction = scrollBehavior.state.collapsedFraction.coerceIn(0f, 1f)
+    val collapsedFraction = scrollBehavior.state.collapsedFraction.fastCoerceIn(0f, 1f)
     Layout({
         BoxWithConstraints(layoutIdImageModifier) {
             val size = Modifier.size(maxWidth, height)

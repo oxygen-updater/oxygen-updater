@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.util.fastCoerceAtLeast
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlin.math.min
@@ -26,7 +27,7 @@ fun ScrollState.scrollbarState() = remember { ScrollbarState() }.also { state ->
             if (maxValue <= 0 || maxValue == Int.MAX_VALUE) return@snapshotFlow null
             if (viewportSize <= 0 || viewportSize == maxValue) return@snapshotFlow null
 
-            val maxValueFloat = maxValue.toFloat().coerceAtLeast(1f)
+            val maxValueFloat = maxValue.toFloat().fastCoerceAtLeast(1f)
             scrollbarStateValue(
                 thumbSizePercent = min(viewportSize / maxValueFloat, 1f),
                 thumbMovedPercent = min(value / maxValueFloat, 1f),
@@ -74,7 +75,7 @@ fun LazyListState.scrollbarState() = remember { ScrollbarState() }.also { state 
                 )
             }
 
-            val numItemsMin1 = numItems.coerceAtLeast(1)
+            val numItemsMin1 = numItems.fastCoerceAtLeast(1)
             val thumbMovedPercent = min(firstIndex / numItemsMin1, 1f)
             scrollbarStateValue(
                 thumbSizePercent = min(itemsVisible / numItemsMin1, 1f),
@@ -137,7 +138,7 @@ fun LazyGridState.scrollbarState() = remember { ScrollbarState() }.also { state 
                 )
             }
 
-            val numItemsMin1 = numItems.coerceAtLeast(1)
+            val numItemsMin1 = numItems.fastCoerceAtLeast(1)
             val thumbMovedPercent = min(firstIndex / numItemsMin1, 1f)
             scrollbarStateValue(
                 thumbSizePercent = min(itemsVisible / numItemsMin1, 1f),
@@ -194,7 +195,7 @@ fun LazyStaggeredGridState.scrollbarState(itemsAvailable: Int) = remember { Scro
                 )
             }
 
-            val numItemsMin1 = numItems.coerceAtLeast(1)
+            val numItemsMin1 = numItems.fastCoerceAtLeast(1)
             scrollbarStateValue(
                 thumbSizePercent = min(itemsVisible / numItemsMin1, 1f),
                 thumbMovedPercent = min(firstIndex / numItemsMin1, 1f),

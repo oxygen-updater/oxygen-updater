@@ -10,6 +10,7 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.content.ContextCompat
@@ -257,7 +258,7 @@ class DownloadWorker @AssistedInject constructor(
         }
 
         body.byteStream().use { stream ->
-            logInfo(TAG, "Downloading ZIP from ${startingByte.coerceAtLeast(0L)} bytes")
+            logInfo(TAG, "Downloading ZIP from ${startingByte.fastCoerceAtLeast(0L)} bytes")
 
             // Copy stream to file
             // We could have used the [InputStream.copyTo] extension defined in [IOStreams.kt],
@@ -265,7 +266,7 @@ class DownloadWorker @AssistedInject constructor(
             RandomAccessFile(tempFile, "rw").use { randomAccessFile ->
                 val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
                 var bytes: Int
-                var bytesRead = startingByte.coerceAtLeast(0L)
+                var bytesRead = startingByte.fastCoerceAtLeast(0L)
                 val contentLength = bytesRead + body.contentLength()
 
                 if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) {
@@ -525,7 +526,7 @@ class DownloadWorker @AssistedInject constructor(
         bytesDone: Long,
         totalBytes: Long,
     ) = publishProgressIfNeeded { currentTimeMs ->
-        val progress = (bytesDone * 100 / totalBytes.coerceAtLeast(1L)).toInt()
+        val progress = (bytesDone * 100 / totalBytes.fastCoerceAtLeast(1L)).toInt()
         val previousBytesDone = sharedPreferences[KeyDownloadBytesDone, NotSetL]
 
         sharedPreferences[KeyDownloadBytesDone] = bytesDone

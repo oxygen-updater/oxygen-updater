@@ -64,6 +64,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.compose.ui.util.packFloats
 import androidx.compose.ui.util.unpackFloat1
 import androidx.compose.ui.util.unpackFloat2
@@ -269,7 +270,7 @@ fun ScrollableState.Scrollbar(
             val thumbSizePx = max(state.thumbSizePercent * track.size, MinThumbSize.toPx())
             val trackSizePx = when (state.thumbTrackSizePercent) {
                 0f -> track.size
-                else -> (track.size - thumbSizePx) / state.thumbTrackSizePercent.coerceAtLeast(1f)
+                else -> (track.size - thumbSizePx) / state.thumbTrackSizePercent.fastCoerceAtLeast(1f)
             }
 
             val thumbTravelPercent = max(
@@ -463,7 +464,7 @@ private val ScrollbarTrack.size
 /**
  * Returns the position of the scrollbar thumb on the track as a percentage
  */
-private fun ScrollbarTrack.thumbPosition(dimension: Float) = max(min(dimension / size.coerceAtLeast(1f), 1f), 0f)
+private fun ScrollbarTrack.thumbPosition(dimension: Float) = max(min(dimension / size.fastCoerceAtLeast(1f), 1f), 0f)
 
 /**
  * Class definition for the core properties of a scroll bar

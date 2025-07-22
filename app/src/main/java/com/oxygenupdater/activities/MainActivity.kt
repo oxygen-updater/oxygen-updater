@@ -59,6 +59,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.core.os.postDelayed
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -700,7 +701,7 @@ class MainActivity : AppCompatActivity() {
                              * [androidx.compose.material3.tokens.NavigationRailTokens.ContainerWidth]
                              * */
                             val sideRailWidth = if (orientation == ORIENTATION_LANDSCAPE) 80 + 1 else 0
-                            (adWidthPx / density.coerceAtLeast(1f)).toInt() - sideRailWidth
+                            (adWidthPx / density.fastCoerceAtLeast(1f)).toInt() - sideRailWidth
                         },
                         adListener = adLoadListener { adLoaded = it },
                         onViewUpdate = ::onBannerAdInit,

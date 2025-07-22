@@ -1,6 +1,7 @@
 package com.oxygenupdater.ui.common.scrollbar
 
 import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.ui.util.fastCoerceAtLeast
 import kotlin.math.abs
 
 /**
@@ -35,7 +36,7 @@ inline fun <LazyState : ScrollableState, LazyStateItem> LazyState.interpolateFir
     if (firstItemSize == 0) return Float.NaN
 
     val itemOffset = offset(firstItem).toFloat()
-    val offsetPercentage = abs(itemOffset) / firstItemSize.coerceAtLeast(1)
+    val offsetPercentage = abs(itemOffset) / firstItemSize.fastCoerceAtLeast(1)
 
     val nextItem = nextItemOnMainAxis(firstItem) ?: return firstItemIndex + offsetPercentage
     val nextItemIndex = itemIndex(nextItem)
@@ -69,5 +70,5 @@ fun itemVisibilityPercentage(
     )
 
     val size = itemSize.toFloat()
-    return (size - startOffset - endOffset) / size.coerceAtLeast(1f)
+    return (size - startOffset - endOffset) / size.fastCoerceAtLeast(1f)
 }

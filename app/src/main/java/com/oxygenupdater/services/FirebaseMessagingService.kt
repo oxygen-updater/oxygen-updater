@@ -1,6 +1,7 @@
 package com.oxygenupdater.services
 
 import android.content.SharedPreferences
+import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.work.BackoffPolicy
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
@@ -65,7 +66,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             if (!it) return@let // new version notifications should be shown immediately
 
             val serverSpecifiedDelay = sharedPreferences[KeyNotificationDelayInSeconds, 10]
-            val delay = Random.nextLong(1, serverSpecifiedDelay.coerceAtLeast(2).toLong())
+            val delay = Random.nextLong(1, serverSpecifiedDelay.fastCoerceAtLeast(2).toLong())
             logDebug(TAG, "Displaying push notification in $delay second(s)")
             oneTimeWorkRequest.setInitialDelay(delay, TimeUnit.SECONDS)
         }

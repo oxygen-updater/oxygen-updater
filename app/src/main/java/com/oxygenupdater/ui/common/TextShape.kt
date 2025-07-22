@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
+import androidx.compose.ui.util.fastCoerceAtLeast
 import kotlin.math.abs
 import kotlin.math.floor
 
@@ -78,7 +79,7 @@ fun perLineTextShape(textStyle: TextStyle): Shape {
             val lineSize = size.copy(size.width, fontSizePx)
             val rect = RoundRect(Rect(offset, lineSize), cornerRadius)
 
-            val lines = floor(size.height / lineHeightPx.coerceAtLeast(1f)).toInt()
+            val lines = floor(size.height / lineHeightPx.fastCoerceAtLeast(1f)).toInt()
             repeat(lines) {
                 addRoundRect(rect.translate(Offset(0f, lineHeightPx * it)))
             }

@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastCoerceAtLeast
 
 @Composable
 @NonRestartableComposable
@@ -29,7 +30,7 @@ fun LazyVerticalGrid(
     columns = GridCells.Fixed(columnCount),
     userScrollEnabled = false,
     modifier = Modifier
-        .height((ItemHeight * (items.size / columnCount.coerceAtLeast(1))).dp)
+        .height((ItemHeight * (items.size / columnCount.fastCoerceAtLeast(1))).dp)
         .testTag(LazyVerticalGridTestTag)
 ) {
     itemsIndexed(items) { index, it ->
