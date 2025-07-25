@@ -6,7 +6,6 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import androidx.core.app.NotificationCompat
@@ -15,6 +14,7 @@ import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
 import androidx.core.app.NotificationCompat.PRIORITY_HIGH
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -286,9 +286,9 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
                 // Open article if ID is valid, and mark it "external" so
                 // that interstitial ad is shown after a delay for better UX.
                 // Otherwise, open NewsListScreen.
-                if (id != NotSetL) Uri.parse(
-                    OuSchemeSuffixed + ChildScreen.Article.value + "$id?${ExternalArg}=true"
-                ) else Uri.parse(OuSchemeSuffixed + NewsListRoute),
+                if (id != NotSetL) {
+                    (OuSchemeSuffixed + ChildScreen.Article.value + "$id?${ExternalArg}=true").toUri()
+                } else (OuSchemeSuffixed + NewsListRoute).toUri(),
                 context,
                 MainActivity::class.java
             )
