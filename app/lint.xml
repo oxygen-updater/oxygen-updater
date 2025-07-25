@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
 	<issue id="UnusedResources">
-		<ignore regexp="src/main/res/drawable-nodpi/oneplus[\d\w]*\.webp" />
 		<!-- Strings we need to keep that are actually being used in the app -->
 		<ignore regexp="theme_.*" />
 	</issue>

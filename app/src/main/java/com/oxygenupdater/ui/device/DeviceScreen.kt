@@ -24,11 +24,15 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Android
+import androidx.compose.material.icons.rounded.Aod
 import androidx.compose.material.icons.rounded.DeveloperBoard
+import androidx.compose.material.icons.rounded.DeviceUnknown
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.PermDeviceInformation
+import androidx.compose.material.icons.rounded.ScreenLockPortrait
 import androidx.compose.material.icons.rounded.Security
+import androidx.compose.material.icons.rounded.SecurityUpdateGood
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.TripOrigin
 import androidx.compose.material3.HorizontalDivider
@@ -44,10 +48,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -247,7 +251,15 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
         val requiredSizeModifier = Modifier.requiredSize(size)
 
         val context = LocalContext.current
-        val defaultImage = painterResource(R.drawable.oneplus7pro)
+        val defaultImage = rememberVectorPainter(
+            when (deviceOsSpec) {
+                DeviceOsSpec.SupportedDeviceAndOs -> Icons.Rounded.SecurityUpdateGood // device frame with tick mark
+                DeviceOsSpec.CarrierExclusiveOxygenOs -> Icons.Rounded.ScreenLockPortrait // device frame with locked icon
+                DeviceOsSpec.UnsupportedDevice -> Icons.Rounded.Aod // device frame with two horizontal lines
+                // Covers UnsupportedDeviceAndOs
+                else -> Icons.Rounded.DeviceUnknown // device frame with question mark
+            }
+        )
         AsyncImage(
             model = deviceName.let {
                 val sizePx = LocalDensity.current.run { size.roundToPx() }
