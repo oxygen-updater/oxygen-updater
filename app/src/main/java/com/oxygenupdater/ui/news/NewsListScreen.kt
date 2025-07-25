@@ -236,9 +236,10 @@ fun NewsListScreen(
                     // Must be at the end — highest in the Z-hierarchy => nothing draws above it,
                     // and user can press/drag for fast scrolling.
                     // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap
+                    val numItems = list.size
                     listState.Scrollbar(
-                        state = listState.scrollbarState(),
-                        onThumbMoved = listState.rememberDraggableScroller(),
+                        state = listState.scrollbarState(numItems),
+                        onThumbMoved = listState.rememberDraggableScroller(numItems),
                         modifier = Modifier.align(Alignment.CenterEnd),
                     )
                 }
@@ -300,9 +301,10 @@ fun NewsListScreen(
                     // Must be at the end — highest in the Z-hierarchy => nothing draws above it,
                     // and user can press/drag for fast scrolling.
                     // TODO(compose/news): switch to first-party solution when it's out: https://developer.android.com/jetpack/androidx/compose-roadmap
+                    val numItems = list.size
                     gridState.Scrollbar(
-                        state = gridState.scrollbarState(),
-                        onThumbMoved = gridState.rememberDraggableScroller(),
+                        state = gridState.scrollbarState(numItems),
+                        onThumbMoved = gridState.rememberDraggableScroller(numItems),
                         modifier = Modifier.align(Alignment.CenterEnd),
                     )
                 }

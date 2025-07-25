@@ -41,10 +41,13 @@ fun ScrollState.scrollbarState() = remember { ScrollbarState() }.also { state ->
 
 /**
  * Calculates a [ScrollbarState] driven by the changes in a [LazyListState].
+ *
+ * @param numItems the total amount of items available to scroll in the lazy list.
  */
 @Composable
-fun LazyListState.scrollbarState() = remember { ScrollbarState() }.also { state ->
-    val numItems = layoutInfo.totalItemsCount
+fun LazyListState.scrollbarState(
+    numItems: Int,
+) = remember { ScrollbarState() }.also { state ->
     val itemIndex = LazyListItemInfo::index
 
     LaunchedEffect(this, numItems) {
@@ -93,10 +96,13 @@ fun LazyListState.scrollbarState() = remember { ScrollbarState() }.also { state 
 
 /**
  * Calculates a [ScrollbarState] driven by the changes in a [LazyGridState].
+ *
+ * @param numItems the total amount of items available to scroll in the lazy grid.
  */
 @Composable
-fun LazyGridState.scrollbarState() = remember { ScrollbarState() }.also { state ->
-    val numItems = layoutInfo.totalItemsCount
+fun LazyGridState.scrollbarState(
+    numItems: Int,
+) = remember { ScrollbarState() }.also { state ->
     val itemIndex = LazyGridItemInfo::index
 
     LaunchedEffect(this, numItems) {
@@ -157,11 +163,12 @@ fun LazyGridState.scrollbarState() = remember { ScrollbarState() }.also { state 
 /**
  * Remembers a [ScrollbarState] driven by the changes in a [LazyStaggeredGridState].
  *
- * @param itemsAvailable the total amount of items available to scroll in the staggered grid.
+ * @param numItems the total amount of items available to scroll in the staggered grid.
  */
 @Composable
-fun LazyStaggeredGridState.scrollbarState(itemsAvailable: Int) = remember { ScrollbarState() }.also { state ->
-    val numItems = layoutInfo.totalItemsCount
+fun LazyStaggeredGridState.scrollbarState(
+    numItems: Int,
+) = remember { ScrollbarState() }.also { state ->
     val itemIndex = LazyStaggeredGridItemInfo::index
 
     LaunchedEffect(this, numItems) {

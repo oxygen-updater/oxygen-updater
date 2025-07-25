@@ -26,8 +26,8 @@ fun ScrollState.rememberDraggableScroller() = rememberDraggableScroller(
  * Remembers a function to react to [Scrollbar] thumb position displacements for a [LazyListState].
  */
 @Composable
-fun LazyListState.rememberDraggableScroller() = rememberDraggableScroller(
-    limit = layoutInfo.totalItemsCount,
+fun LazyListState.rememberDraggableScroller(numItems: Int) = rememberDraggableScroller(
+    limit = numItems,
     scroll = ::scrollToItem,
 )
 
@@ -35,8 +35,8 @@ fun LazyListState.rememberDraggableScroller() = rememberDraggableScroller(
  * Remembers a function to react to [Scrollbar] thumb position displacements for a [LazyGridState].
  */
 @Composable
-fun LazyGridState.rememberDraggableScroller() = rememberDraggableScroller(
-    limit = layoutInfo.totalItemsCount,
+fun LazyGridState.rememberDraggableScroller(numItems: Int) = rememberDraggableScroller(
+    limit = numItems,
     scroll = ::scrollToItem,
 )
 
@@ -44,8 +44,8 @@ fun LazyGridState.rememberDraggableScroller() = rememberDraggableScroller(
  * Remembers a function to react to [Scrollbar] thumb position displacements for a [LazyStaggeredGridState].
  */
 @Composable
-fun LazyStaggeredGridState.rememberDraggableScroller() = rememberDraggableScroller(
-    limit = layoutInfo.totalItemsCount,
+fun LazyStaggeredGridState.rememberDraggableScroller(numItems: Int) = rememberDraggableScroller(
+    limit = numItems,
     scroll = ::scrollToItem,
 )
 
