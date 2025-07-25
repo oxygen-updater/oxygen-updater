@@ -100,7 +100,7 @@ class RootFileService : RootService() {
         log("Copying original $FILENAME")
         val copiedPath = "$noBackupFilesDir/$FILENAME-${lastModified()}"
         val copyCommand = "cp -pf '$path' '$copiedPath'"
-        val chownCommand = "chown \"\$(stat -c '%U:%G' '$noBackupFilesDir')\" '$copiedPath'"
+        val chownCommand = "chown \"$(stat -c '%U:%G' '$noBackupFilesDir')\" '$copiedPath'"
         return ShellUtils.fastCmdResult("$copyCommand && $chownCommand")
     }
 

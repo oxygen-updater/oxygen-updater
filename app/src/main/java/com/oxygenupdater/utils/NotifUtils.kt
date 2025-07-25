@@ -213,29 +213,29 @@ data class NotifStatus(@Size(3) val disabled: List<Boolean>? = null)
  * Intermediate values (e.g. 11, 102, 1005, etc) can be used to further differentiate between the same category
  */
 object NotificationIds {
-    private const val localIdMultiplier = 10
-    private const val remoteIdMultiplier = 1000000
+    private const val LocalIdMultiplier = 10
+    private const val RemoteIdMultiplier = 1000000
 
-    const val LocalDownload = 1 * localIdMultiplier
-    const val LocalDownloadForeground = 10 * localIdMultiplier
+    const val LocalDownload = 1 * LocalIdMultiplier
+    const val LocalDownloadForeground = 10 * LocalIdMultiplier
 
-    const val LocalMd5Verification = 2 * localIdMultiplier
-    const val LocalContribution = 3 * localIdMultiplier
-    const val LocalInstallationStatus = 4 * localIdMultiplier
+    const val LocalMd5Verification = 2 * LocalIdMultiplier
+    const val LocalContribution = 3 * LocalIdMultiplier
+    const val LocalInstallationStatus = 4 * LocalIdMultiplier
 
-    const val RemoteNewUpdate = 1 * remoteIdMultiplier
+    const val RemoteNewUpdate = 1 * RemoteIdMultiplier
 
-    const val RemoteNewDevice = 2 * remoteIdMultiplier
-    const val RemoteNewDeviceGroup = 20 * remoteIdMultiplier
+    const val RemoteNewDevice = 2 * RemoteIdMultiplier
+    const val RemoteNewDeviceGroup = 20 * RemoteIdMultiplier
 
-    const val RemoteNews = 3 * remoteIdMultiplier
-    const val RemoteNewsGroup = 30 * remoteIdMultiplier
+    const val RemoteNews = 3 * RemoteIdMultiplier
+    const val RemoteNewsGroup = 30 * RemoteIdMultiplier
 
-    const val RemoteGeneral = 4 * remoteIdMultiplier
-    const val RemoteGeneralGroup = 40 * remoteIdMultiplier
+    const val RemoteGeneral = 4 * RemoteIdMultiplier
+    const val RemoteGeneralGroup = 40 * RemoteIdMultiplier
 
-    const val RemoteUnknown = 5 * remoteIdMultiplier
-    const val RemoteUnknownGroup = 50 * remoteIdMultiplier
+    const val RemoteUnknown = 5 * RemoteIdMultiplier
+    const val RemoteUnknownGroup = 50 * RemoteIdMultiplier
 }
 
 /**
@@ -243,35 +243,35 @@ object NotificationIds {
  */
 object NotificationChannels {
 
-    private const val prefix = "com.oxygenupdater.notifications"
-    private const val groupPrefix = "$prefix.group"
-    private const val channelPrefix = "$prefix.channel"
+    private const val PREFIX = "com.oxygenupdater.notifications"
+    private const val GroupPrefix = "$PREFIX.group"
+    private const val ChannelPrefix = "$PREFIX.channel"
 
     object DownloadAndInstallationGroup {
 
         /**
          * This group's ID
          */
-        const val ID = "$groupPrefix.download&installation"
+        const val ID = "$GroupPrefix.download&installation"
 
         /**
          * Name: Download status
          * Description: Notifications that reflect the current state of a download: pending, active, completed, or failed
          */
-        const val DownloadStatusNotifChannelId = "$channelPrefix.download"
+        const val DownloadStatusNotifChannelId = "$ChannelPrefix.download"
 
         /**
          * Name: Verification status
          * Description: Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.
          * MD5 checksums for downloaded files are verified to ensure the file hasn't been tampered with, and is a valid update file.
          */
-        const val VerificationStatusNotifChannelId = "$channelPrefix.verification"
+        const val VerificationStatusNotifChannelId = "$ChannelPrefix.verification"
 
         /**
          * Name: Installation status
          * Description: Get notified if an update was successfully installed or not
          */
-        const val InstallationStatusNotifChannelId = "$channelPrefix.installation"
+        const val InstallationStatusNotifChannelId = "$ChannelPrefix.installation"
     }
 
     object PushNotificationsGroup {
@@ -279,31 +279,31 @@ object NotificationChannels {
         /**
          * This group's ID
          */
-        const val ID = "$groupPrefix.push"
+        const val ID = "$GroupPrefix.push"
 
         /**
          * Name: System update available
          * Description: Get notified when there's a new update available for your selected device & update method
          */
-        const val UpdateNotifChannelId = "$channelPrefix.update"
+        const val UpdateNotifChannelId = "$ChannelPrefix.update"
 
         /**
          * Name: News article published
          * Description: Get notified when we publish a news article
          */
-        const val NewsNotifChannelId = "$channelPrefix.news"
+        const val NewsNotifChannelId = "$ChannelPrefix.news"
 
         /**
          * Name: New device supported
          * Description: Get notified when the app adds support for a new device
          */
-        const val DeviceNotifChannelId = "$channelPrefix.device"
+        const val DeviceNotifChannelId = "$ChannelPrefix.device"
 
         /**
          * Name: General
          * Description: General notifications that don't fit into other categories
          */
-        const val GeneralNotifChannelId = "$channelPrefix.general"
+        const val GeneralNotifChannelId = "$ChannelPrefix.general"
     }
 
     object MiscellaneousGroup {
@@ -311,7 +311,7 @@ object NotificationChannels {
         /**
          * This group's ID
          */
-        const val ID = "$groupPrefix.miscellaneous"
+        const val ID = "$GroupPrefix.miscellaneous"
 
         /**
          * Name: OTA filename submitted
@@ -327,9 +327,9 @@ object NotificationChannels {
             """,
             level = DeprecationLevel.WARNING
         )
-        const val OtaFilenameSubmittedNotifChannelId = "$channelPrefix.filename"
+        const val OtaFilenameSubmittedNotifChannelId = "$ChannelPrefix.filename"
 
-        const val OtaUrlSubmittedNotifChannelId = "$channelPrefix.url"
+        const val OtaUrlSubmittedNotifChannelId = "$ChannelPrefix.url"
     }
 
     /**
