@@ -20,7 +20,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.settings.KeyContribute
 import com.oxygenupdater.ui.common.CheckboxText
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.theme.PreviewGetPrefBool
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.utils.ContributorUtils
@@ -59,10 +59,7 @@ private fun ContributorSheetEnroll(
     getPrefBool: ((key: String, default: Boolean) -> Boolean)? = null,
     confirm: (Boolean) -> Unit,
 ) {
-    var contribute by rememberSaveableState(
-        "contribute", getPrefBool?.invoke(KeyContribute, false) != false
-    )
-
+    var contribute by rememberState(getPrefBool?.invoke(KeyContribute, false) != false)
     CheckboxText(
         checked = contribute,
         onCheckedChange = { contribute = it },

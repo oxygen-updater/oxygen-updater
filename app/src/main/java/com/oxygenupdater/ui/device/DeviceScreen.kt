@@ -69,7 +69,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -238,7 +238,7 @@ fun DeviceMismatchStatus(status: Triple<Boolean, String, String>?) {
 @Composable
 private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: Dp) {
     val notSupported = deviceOsSpec != DeviceOsSpec.SupportedDeviceAndOs
-    var showUnsupportedDialog by rememberSaveableState("showUnsupportedDialog", false)
+    var showUnsupportedDialog by rememberState(false)
     if (notSupported) deviceOsSpec?.let {
         UnsupportedDeviceOsSpecDialog(showUnsupportedDialog, { showUnsupportedDialog = false }, it)
     }

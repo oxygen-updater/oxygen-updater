@@ -85,7 +85,7 @@ import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.dialogs.AlreadyDownloadedSheet
@@ -385,7 +385,7 @@ private fun DownloadButtonContainer(
         }
     }
 
-    var showAlreadyDownloadedSheet by rememberSaveableState("showAlreadyDownloadedSheet", false)
+    var showAlreadyDownloadedSheet by rememberState(false)
     if (showAlreadyDownloadedSheet) {
         ModalBottomSheet({ showAlreadyDownloadedSheet = false }) { hide ->
             AlreadyDownloadedSheet(hide) {
@@ -398,8 +398,8 @@ private fun DownloadButtonContainer(
 
     // Since params are set automatically (i.e. without user action), we need an extra flag to control
     // when dialog can be shown, to avoid infinitely re-showing it on every state change.
-    var canShowDownloadErrorDialog by remember { mutableStateOf(forceDownloadErrorDialog) }
-    var downloadErrorDialogParams by remember { mutableStateOf<DownloadErrorParams?>(null) }
+    var canShowDownloadErrorDialog by rememberState(forceDownloadErrorDialog)
+    var downloadErrorDialogParams by rememberState<DownloadErrorParams?>(null)
     if (canShowDownloadErrorDialog) downloadErrorDialogParams?.let {
         ModalBottomSheet({
             canShowDownloadErrorDialog = false
@@ -412,7 +412,7 @@ private fun DownloadButtonContainer(
         }
     }
 
-    var manageStorageDialogData by remember { mutableStateOf<Pair<UUID, Long>?>(null) }
+    var manageStorageDialogData by rememberState<Pair<UUID, Long>?>(null)
     if (SDK_INT >= VERSION_CODES.O) manageStorageDialogData?.let {
         val text = stringResource(R.string.download_error_storage)
         ModalBottomSheet({ manageStorageDialogData = null }) { hide ->
@@ -471,7 +471,7 @@ private fun DownloadButton(
             val inProgress = downloadStatus.inProgress
             val successful = downloadStatus.successful
             if (inProgress) {
-                var atEnd by remember { mutableStateOf(false) }
+                var atEnd by rememberState(false)
                 LaunchedEffect(Unit) { atEnd = true /* start immediately */ } // run only on init
 
                 Icon(

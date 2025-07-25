@@ -45,7 +45,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxSize
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.settings.DeviceChooser
@@ -190,7 +190,7 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier = Modifier.padding(end = 16.dp)
 ) {
-    var contribute by rememberSaveableState("contribute", true)
+    var contribute by rememberState(true)
     if (ContributorUtils.isAtLeastQAndPossiblyRooted) {
         CheckboxText(
             checked = contribute,
@@ -202,7 +202,7 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
                 .padding(start = 4.dp)
         )
 
-        var showSheet by rememberSaveableState("showContributorSheet", false)
+        var showSheet by rememberState(false)
         IconButton(
             onClick = { showSheet = true },
             modifier = Modifier.testTag(OnboardingScreen_ContributorInfoButtonTestTag),

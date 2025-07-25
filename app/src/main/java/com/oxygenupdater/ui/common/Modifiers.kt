@@ -12,8 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -67,7 +65,7 @@ fun Modifier.animatedClickable(
     properties["enabled"] = enabled
     properties["onClick"] = onClick
 }) {
-    var scale by remember { mutableFloatStateOf(1f) }
+    var scale by rememberState(1f)
     val animatedScale by animateFloatAsState(
         scale, spring(dampingRatio = Spring.DampingRatioMediumBouncy),
         label = "ScaleAnimation"

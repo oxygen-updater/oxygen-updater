@@ -36,10 +36,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -68,6 +65,7 @@ import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.compose.ui.util.packFloats
 import androidx.compose.ui.util.unpackFloat1
 import androidx.compose.ui.util.unpackFloat2
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.common.scrollbar.ThumbState.Companion.Active
 import com.oxygenupdater.ui.common.scrollbar.ThumbState.Companion.Dormant
 import com.oxygenupdater.ui.common.scrollbar.ThumbState.Companion.Inactive
@@ -96,9 +94,9 @@ fun ScrollableState.Scrollbar(
     onThumbMoved: ((Float) -> Unit)? = null,
 ) {
     // Used to immediately show drag feedback in the UI while the scrolling implementation catches up
-    var interactionThumbTravelPercent by remember { mutableFloatStateOf(Float.NaN) }
+    var interactionThumbTravelPercent by rememberState(Float.NaN)
 
-    var track by remember { mutableStateOf(ScrollbarTrack(0L)) }
+    var track by rememberState(ScrollbarTrack(0L))
 
     val interactionSource: MutableInteractionSource?
     val modifier = if (onThumbMoved == null) {
@@ -111,8 +109,8 @@ fun ScrollableState.Scrollbar(
 
         // Using Offset.Unspecified and Float.NaN instead of null
         // to prevent unnecessary boxing of primitives
-        var pressedOffset by remember { mutableStateOf(Offset.Unspecified) }
-        var draggedOffset by remember { mutableStateOf(Offset.Unspecified) }
+        var pressedOffset by rememberState(Offset.Unspecified)
+        var draggedOffset by rememberState(Offset.Unspecified)
 
         // Process presses
         LaunchedEffect(Unit) {
@@ -358,7 +356,7 @@ private fun Modifier.scrollThumb(interactionSource: InteractionSource?): Modifie
 private fun scrollbarThumbColor(
     interactionSource: InteractionSource,
 ): State<Color> {
-    var state by remember { mutableIntStateOf(Inactive.value) }
+    var state by rememberState(Inactive.value)
 
     val pressed by interactionSource.collectIsPressedAsState()
     val hovered by interactionSource.collectIsHoveredAsState()

@@ -4,14 +4,13 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.common.CheckboxText
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.AlertDialog
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -21,8 +20,8 @@ fun IncorrectDeviceDialog(
     hide: (Boolean) -> Unit,
     mismatchStatus: Triple<Boolean, String, String>,
 ) {
-    var ignore by remember { mutableStateOf(false) }
-    var show by remember(mismatchStatus) { mutableStateOf(mismatchStatus.first) }
+    var ignore by rememberState(false)
+    var show by rememberState(mismatchStatus, mismatchStatus.first)
     if (show) AlertDialog(
         action = {
             hide(ignore)

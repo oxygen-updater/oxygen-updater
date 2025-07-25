@@ -25,8 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -46,6 +44,7 @@ import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxWidth
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.common.scrollbar.Scrollbar
 import com.oxygenupdater.ui.common.scrollbar.scrollbarState
 import com.oxygenupdater.ui.common.withPlaceholder
@@ -111,7 +110,7 @@ fun ArticleScreen(
         shouldShowProgressIndicator = { it?.isFullyLoaded != true },
         onRefresh = onRefresh,
     ) {
-        var errorTitle by remember { mutableStateOf<String?>(null) }
+        var errorTitle by rememberState<String?>(null)
         errorTitle?.let { title ->
             ModalBottomSheet({ errorTitle = null }) { ArticleErrorSheet(it, title, confirm = onRefresh) }
         }

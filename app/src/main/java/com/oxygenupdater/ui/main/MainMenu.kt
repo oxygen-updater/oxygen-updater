@@ -25,7 +25,7 @@ import com.oxygenupdater.icons.Announcement
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.ui.common.DropdownMenuItem
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.ContributorSheet
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.PreviewServerMessagesList
@@ -53,7 +53,7 @@ fun RowScope.MainMenu(
     // Box layout is required to make DropdownMenu position correctly (directly under icon)
     Box {
         // Hide other menu items behind overflow icon
-        var showMenu by rememberSaveableState("showMenu", false)
+        var showMenu by rememberState(false)
         IconButton(
             onClick = { showMenu = true },
             modifier = Modifier
@@ -92,7 +92,7 @@ fun RowScope.MainMenu(
 private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
     if (serverMessages.isEmpty()) return
 
-    var showSheet by rememberSaveableState("showServerMessagesSheet", false)
+    var showSheet by rememberState(false)
     IconButton(
         onClick = { showSheet = true },
         modifier = Modifier
@@ -111,7 +111,7 @@ private fun ContributorMenuItem(
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     onContributorEnrollmentChange: (Boolean) -> Unit,
 ) {
-    var showSheet by rememberSaveableState("showContributorSheet", false)
+    var showSheet by rememberState(false)
 
     DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
         showSheet = true

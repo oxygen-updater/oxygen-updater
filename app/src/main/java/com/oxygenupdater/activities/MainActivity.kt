@@ -42,7 +42,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -125,6 +124,7 @@ import com.oxygenupdater.ui.common.adLoadListener
 import com.oxygenupdater.ui.common.buildAdRequest
 import com.oxygenupdater.ui.common.loadBannerAd
 import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.device.DeviceScreen
 import com.oxygenupdater.ui.device.IncorrectDeviceDialog
@@ -459,7 +459,7 @@ class MainActivity : AppCompatActivity() {
              * We're maintaining `show` outside of [UnsupportedDeviceOsSpecDialog]
              * to allow re-opening after hiding it the first time.
              */
-            var show by remember { mutableStateOf(viewModel.shouldShowUnsupportedDeviceDialog) }
+            var show by rememberState(viewModel.shouldShowUnsupportedDeviceDialog)
             UnsupportedDeviceOsSpecDialog(
                 show = show,
                 hide = { ignore ->
@@ -477,10 +477,8 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        var snackbarText by remember {
-            // Referential equality because we're reusing static Pairs
-            mutableStateOf<IntIntPair?>(null, referentialEqualityPolicy())
-        }
+        // Referential equality because we're reusing static Pairs
+        var snackbarText by rememberState<IntIntPair?>(null, referentialEqualityPolicy())
 
         val appUpdateInfo by viewModel.appUpdateInfo.collectAsStateWithLifecycle()
         appUpdateInfo?.let { it ->
@@ -506,7 +504,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         Row {
-            var subtitleResId by rememberSaveableState("subtitleResId", if (startScreen.useVersionName) 0 else startScreen.labelResId)
+            var subtitleResId by rememberState(if (startScreen.useVersionName) 0 else startScreen.labelResId)
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             currentRoute = navBackStackEntry?.destination?.route
 
@@ -685,7 +683,7 @@ class MainActivity : AppCompatActivity() {
                 if (showAds) {
                     val orientation = LocalConfiguration.current.orientation
                     val density = LocalDensity.current.density
-                    var adLoaded by rememberSaveableState("adLoaded", false)
+                    var adLoaded by rememberSaveableState(false)
                     BannerAd(
                         adUnitId = BuildConfig.AD_BANNER_MAIN_ID,
                         adWidth = remember(orientation) {

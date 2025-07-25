@@ -58,7 +58,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -113,7 +112,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxSize
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.common.scrollbar.Scrollbar
 import com.oxygenupdater.ui.common.scrollbar.rememberDraggableScroller
 import com.oxygenupdater.ui.common.scrollbar.scrollbarState
@@ -144,7 +143,7 @@ fun NewsListScreen(
     onRefresh = onRefresh,
 ) {
     val refreshing = state.refreshing
-    var onlyUnread by rememberSaveableState("onlyUnread", false)
+    var onlyUnread by rememberState(false)
 
     val data = if (onlyUnread) state.data.filterNot { it.readState } else state.data
     val list = if (!refreshing) rememberSaveable(data) { data } else data
@@ -631,7 +630,7 @@ private fun Banner(
     onClick: () -> Unit,
     onMarkAllReadClick: () -> Unit,
 ) {
-    var showMenu by rememberSaveableState("showBannerMenu", false)
+    var showMenu by rememberState(false)
     IconText(
         icon = CustomIcons.Info,
         text = text,
@@ -664,7 +663,7 @@ private fun ItemMenuOpener(
     onToggleReadClick: () -> Unit,
     xOffset: Dp,
 ) = Box {
-    var showMenu by rememberSaveableState("showItemMenu", false)
+    var showMenu by rememberState(false)
     ItemMenu(showMenu, { showMenu = false }, item, onToggleReadClick)
 
     IconButton(
@@ -811,7 +810,7 @@ fun PreviewNewsListScreen() = PreviewAppTheme {
         windowHeightSize = windowSize.heightSizeClass,
         state = RefreshAwareState(false, PreviewNewsListData),
         onRefresh = {},
-        unreadCountState = remember { mutableIntStateOf(1) },
+        unreadCountState = rememberState(1),
         onMarkAllReadClick = {},
         onToggleReadClick = {},
         openItem = {},

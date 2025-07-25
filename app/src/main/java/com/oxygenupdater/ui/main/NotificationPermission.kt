@@ -13,7 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.ModalBottomSheet
 import com.oxygenupdater.ui.dialogs.NotificationPermissionSheet
 
@@ -27,7 +27,7 @@ fun NotificationPermission(
 ) {
     val context = LocalContext.current
     var invokeTime = 0L
-    var showSheet by rememberSaveableState("showNotificationPermissionSheet", false)
+    var showSheet by rememberState(false)
     val state = rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS) {
         showSheet = !it
         // If we returned here with a denied status within 250ms of invoking launchPermissionRequest,

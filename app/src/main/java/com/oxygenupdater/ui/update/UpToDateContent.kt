@@ -48,7 +48,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxSize
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.common.withPlaceholder
 import com.oxygenupdater.ui.device.DeviceSoftwareInfo
 import com.oxygenupdater.ui.main.NavType
@@ -197,7 +197,7 @@ private fun ExpandableChangelog(
     getPrefStr: (key: String, default: String) -> String,
 ) {
     val expandEnabled = updateData.isUpdateInformationAvailable
-    var expanded by rememberSaveableState("changelogExpanded", false)
+    var expanded by rememberState(false)
     IconText(
         icon = if (!expandEnabled) Icons.Rounded.ErrorOutline else if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
         text = stringResource(

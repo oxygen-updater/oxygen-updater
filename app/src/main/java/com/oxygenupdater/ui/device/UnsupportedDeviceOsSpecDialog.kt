@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -14,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.ui.common.CheckboxText
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.AlertDialog
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -26,7 +26,7 @@ fun UnsupportedDeviceOsSpecDialog(
 ) {
     if (spec == DeviceOsSpec.SupportedDeviceAndOs) return
 
-    var ignore by remember { mutableStateOf(false) }
+    var ignore by rememberState(false)
     if (show) AlertDialog(
         action = { hide(ignore) },
         titleResId = R.string.unsupported_device_warning_title,

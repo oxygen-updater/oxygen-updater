@@ -7,8 +7,6 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -19,6 +17,7 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.PullRefresh
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.utils.logDebug
@@ -89,7 +88,7 @@ fun UpdateScreen(
         Screen.Update.badge = if (updateData.systemIsUpToDate) null else "new"
 
         val context = LocalContext.current
-        var downloadStatus by remember(_downloadStatus) { mutableStateOf(_downloadStatus) }
+        var downloadStatus by rememberState(_downloadStatus, _downloadStatus)
         LifecycleResumeEffect(context, filename) {
             // Correct download status onResume
             downloadStatus = correctStatus(context, downloadStatus, filename)

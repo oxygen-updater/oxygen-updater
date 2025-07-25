@@ -78,7 +78,7 @@ import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.LogoNotification
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -339,7 +339,7 @@ private fun CollapsingAppBarTitle(
     title: String,
 ) {
     // Accessibility: show full title on long press if it overflows
-    var showTooltip by rememberSaveableState("showTooltip", false)
+    var showTooltip by rememberState(false)
     val tooltipState = rememberTooltipState(isPersistent = true)
     BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
 

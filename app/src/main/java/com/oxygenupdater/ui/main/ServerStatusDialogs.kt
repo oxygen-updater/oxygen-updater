@@ -2,8 +2,6 @@ package com.oxygenupdater.ui.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -11,6 +9,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.PlayStore
 import com.oxygenupdater.models.ServerStatus.Status
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.dialogs.AlertDialog
 
 @Composable
@@ -42,7 +41,7 @@ fun ServerStatusDialogs(
         else -> return
     }
 
-    var show by remember { mutableStateOf(true) }
+    var show by rememberState(true)
     if (show) AlertDialog(
         action = {
             action?.invoke(it)

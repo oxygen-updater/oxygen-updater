@@ -44,7 +44,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -82,7 +81,7 @@ import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxWidth
-import com.oxygenupdater.ui.common.rememberSaveableState
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.dialogs.AdvancedModeSheet
 import com.oxygenupdater.ui.dialogs.ContributorSheet
@@ -213,7 +212,7 @@ fun DeviceChooser(
     getPrefStr: (key: String, default: String) -> String,
     onSelect: (Device) -> Unit,
 ) {
-    var showSheet by rememberSaveableState("showDeviceSheet", false)
+    var showSheet by rememberState(false)
 
     val deviceSelectionEnabled = config.list.isNotEmpty()
     @SuppressLint("PrivateResource") val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
@@ -248,7 +247,7 @@ fun MethodChooser(
     getPrefStr: (key: String, default: String) -> String,
     onSelect: (UpdateMethod) -> Unit,
 ) {
-    var showSheet by rememberSaveableState("showMethodSheet", false)
+    var showSheet by rememberState(false)
 
     val methodSelectionEnabled = config.list.isNotEmpty()
     @SuppressLint("PrivateResource") val notSelected = stringResource(androidx.compose.ui.R.string.not_selected)
@@ -281,7 +280,7 @@ private fun BecomeContributor(
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     onContributorEnrollmentChange: (Boolean) -> Unit,
 ) {
-    var showSheet by rememberSaveableState("showContributorSheet", false)
+    var showSheet by rememberState(false)
     if (ContributorUtils.isAtLeastQAndPossiblyRooted) SettingsItem(
         onClick = { showSheet = true },
         icon = Icons.Outlined.GroupAdd,
@@ -302,9 +301,7 @@ private fun BecomeContributor(
 private fun Notifications() {
     val context = LocalContext.current
     val runningInPreview = LocalInspectionMode.current
-    var notifStatus by remember {
-        mutableStateOf(if (runningInPreview) NotifStatus() else NotifUtils.toNotifStatus(context))
-    }
+    var notifStatus by rememberState(if (runningInPreview) NotifStatus() else NotifUtils.toNotifStatus(context))
 
     if (!runningInPreview) LifecycleResumeEffect(context) {
         // Check again in case user changed settings and came back to the app
@@ -355,7 +352,7 @@ private fun Notifications() {
 
 @Composable
 private fun Theme(onSelect: (Theme) -> Unit) {
-    var showSheet by rememberSaveableState("showThemeSheet", false)
+    var showSheet by rememberState(false)
     SettingsItem(
         onClick = { showSheet = true },
         icon = Icons.Outlined.Palette,
@@ -380,7 +377,7 @@ private fun Language() {
         }
     }
 
-    var showSheet by rememberSaveableState("showLanguageSheet", false)
+    var showSheet by rememberState(false)
     val context = LocalContext.current
     SettingsItem(
         onClick = {
@@ -412,12 +409,10 @@ private fun AdvancedMode(
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     onChange: (Boolean) -> Unit,
 ) {
-    var showSheet by rememberSaveableState("showAdvancedModeSheet", false)
+    var showSheet by rememberState(false)
 
     // Maintain state if user leaves this screen, then comes back to it
-    var advancedMode by rememberSaveableState(
-        "advancedMode", getPrefBool(KeyAdvancedMode, false)
-    )
+    var advancedMode by rememberState(getPrefBool(KeyAdvancedMode, false))
     SettingsSwitchItem(
         checked = advancedMode,
         onCheckedChange = {
@@ -443,9 +438,7 @@ fun SettingsAnalytics(
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     persistBool: (key: String, value: Boolean) -> Unit,
 ) {
-    var shareLogs by rememberSaveableState(
-        "shareLogs", getPrefBool(KeyShareAnalyticsAndLogs, true)
-    )
+    var shareLogs by rememberState(getPrefBool(KeyShareAnalyticsAndLogs, true))
     SettingsSwitchItem(
         checked = shareLogs,
         onCheckedChange = {

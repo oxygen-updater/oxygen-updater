@@ -29,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,6 +50,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.modifierSemanticsNotSelected
 import com.oxygenupdater.ui.common.modifierSemanticsSelected
+import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.settings.DeviceSearchFilter
 import com.oxygenupdater.ui.settings.DeviceSettingsListConfig
 import com.oxygenupdater.ui.settings.MethodSettingsListConfig
@@ -67,7 +67,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     filter: ((T, String) -> Boolean)? = null,
     onClick: (item: T) -> Unit,
 ) {
-    var query by remember { mutableStateOf("") } // not saveable
+    var query by rememberState("") // not saveable
     if (filter == null) SheetHeader(titleResId) else {
         SearchBar(
             inputField = {
@@ -118,7 +118,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
     }
 
     // Debounce search query changes to filter list
-    var items by remember { mutableStateOf(list) }
+    var items by rememberState(list)
     LaunchedEffect(query) {
         items = if (filter == null || query.isBlank()) list else {
             delay(100) // debounce by 100ms
