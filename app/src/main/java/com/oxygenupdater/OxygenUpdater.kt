@@ -34,6 +34,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import kotlin.time.ExperimentalTime
 
 @HiltAndroidApp
 class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoader.Factory {
@@ -157,7 +158,7 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
      *
      * Requires `coreLibraryDesugaring` for API <25 support.
      */
-    @OptIn(ExperimentalCoilApi::class)
+    @OptIn(ExperimentalCoilApi::class, ExperimentalTime::class)
     override fun newImageLoader(context: PlatformContext) = ImageLoader.Builder(context)
         .logger(if (BuildConfig.DEBUG) DebugLogger() else null).components {
             add(OkHttpNetworkFetcherFactory(cacheStrategy = { CacheControlCacheStrategy() }))
