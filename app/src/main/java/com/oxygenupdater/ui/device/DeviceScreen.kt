@@ -22,19 +22,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.Aod
-import androidx.compose.material.icons.rounded.DeveloperBoard
-import androidx.compose.material.icons.rounded.DeviceUnknown
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Memory
-import androidx.compose.material.icons.rounded.PermDeviceInformation
-import androidx.compose.material.icons.rounded.ScreenLockPortrait
-import androidx.compose.material.icons.rounded.Security
-import androidx.compose.material.icons.rounded.SecurityUpdateGood
-import androidx.compose.material.icons.rounded.Speed
-import androidx.compose.material.icons.rounded.TripOrigin
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -60,8 +47,20 @@ import androidx.core.content.getSystemService
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
-import com.oxygenupdater.icons.Incremental
+import com.oxygenupdater.icons.Android
+import com.oxygenupdater.icons.DeveloperBoard
+import com.oxygenupdater.icons.Error
+import com.oxygenupdater.icons.Memory
+import com.oxygenupdater.icons.MobileCancel
+import com.oxygenupdater.icons.MobileCheck
+import com.oxygenupdater.icons.MobileInfo
+import com.oxygenupdater.icons.MobileLockPortrait
+import com.oxygenupdater.icons.MobileQuestion
+import com.oxygenupdater.icons.Security
+import com.oxygenupdater.icons.Speed
+import com.oxygenupdater.icons.Steppers
+import com.oxygenupdater.icons.Symbols
+import com.oxygenupdater.icons.TripOrigin
 import com.oxygenupdater.internal.CpuFrequencies
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
@@ -253,11 +252,11 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
         val context = LocalContext.current
         val defaultImage = rememberVectorPainter(
             when (deviceOsSpec) {
-                DeviceOsSpec.SupportedDeviceAndOs -> Icons.Rounded.SecurityUpdateGood // device frame with tick mark
-                DeviceOsSpec.CarrierExclusiveOxygenOs -> Icons.Rounded.ScreenLockPortrait // device frame with locked icon
-                DeviceOsSpec.UnsupportedDevice -> Icons.Rounded.Aod // device frame with two horizontal lines
+                DeviceOsSpec.SupportedDeviceAndOs -> Symbols.MobileCheck // device frame with tick mark
+                DeviceOsSpec.CarrierExclusiveOxygenOs -> Symbols.MobileLockPortrait // device frame with locked icon
+                DeviceOsSpec.UnsupportedDevice -> Symbols.MobileCancel // device frame with cancel mark
                 // Covers UnsupportedDeviceAndOs
-                else -> Icons.Rounded.DeviceUnknown // device frame with question mark
+                else -> Symbols.MobileQuestion // device frame with question mark
             }
         )
         AsyncImage(
@@ -279,7 +278,7 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
         if (notSupported) {
             Box(requiredSizeModifier.background(MaterialTheme.colorScheme.surface.copy(alpha = .75f)))
             Icon(
-                imageVector = Icons.Rounded.ErrorOutline,
+                imageVector = Symbols.Error,
                 contentDescription = stringResource(R.string.icon),
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier
@@ -296,14 +295,14 @@ fun ColumnScope.DeviceSoftwareInfo(showHeader: Boolean = true) {
     if (showHeader) Header(R.string.device_information_software_header)
 
     Item(
-        icon = Icons.Rounded.Android,
+        icon = Symbols.Android,
         titleResId = R.string.device_information_os_version,
         text = Build.VERSION.RELEASE,
     )
 
     SystemVersionProperties.osVersion.takeIf { it != UNKNOWN }?.let {
         Item(
-            icon = Icons.Rounded.TripOrigin,
+            icon = Symbols.TripOrigin,
             titleResId = R.string.device_information_oxygen_os_version,
             text = UpdateDataVersionFormatter.getFormattedOsVersion(it),
         )
@@ -311,21 +310,21 @@ fun ColumnScope.DeviceSoftwareInfo(showHeader: Boolean = true) {
 
     SystemVersionProperties.otaVersion.takeIf { it != UNKNOWN }?.let {
         Item(
-            icon = Icons.Rounded.TripOrigin,
+            icon = Symbols.TripOrigin,
             titleResId = R.string.device_information_oxygen_os_ota_version,
             text = it
         )
     }
 
     Item(
-        icon = CustomIcons.Incremental,
+        icon = Symbols.Steppers,
         titleResId = R.string.device_information_incremental_os_version,
         text = Build.VERSION.INCREMENTAL,
     )
 
     SystemVersionProperties.securityPatchDate.takeIf { it != UNKNOWN }?.let {
         Item(
-            icon = Icons.Rounded.Security,
+            icon = Symbols.Security,
             titleResId = R.string.device_information_patch_level_version,
             text = it,
         )
@@ -349,13 +348,13 @@ private fun ColumnScope.DeviceHardwareInfo() {
     val context = LocalContext.current
     val bytes = remember(context) { Formatter.formatShortFileSize(context, getRamBytes(context)) }
     if (bytes.isNotEmpty()) Item(
-        icon = Icons.Rounded.Memory,
+        icon = Symbols.Memory,
         titleResId = R.string.device_information_amount_of_memory,
         text = bytes,
     )
 
     Item(
-        icon = Icons.Rounded.DeveloperBoard,
+        icon = Symbols.DeveloperBoard,
         titleResId = R.string.device_information_system_on_a_chip,
         text = Build.BOARD.let { board ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -390,7 +389,7 @@ private fun ColumnScope.DeviceHardwareInfo() {
                             R.string.device_information_gigahertz,
                             instance.format(frequency).ifEmpty { return@forEach }
                         )
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         return@forEach
                     }
                     append("• ").append(formatted)
@@ -404,7 +403,7 @@ private fun ColumnScope.DeviceHardwareInfo() {
             }
         }
         if (formatted.isNotEmpty()) Item(
-            icon = Icons.Rounded.Speed,
+            icon = Symbols.Speed,
             titleResId = R.string.device_information_cpu_frequency,
             text = formatted,
         )
@@ -415,7 +414,7 @@ private fun ColumnScope.DeviceHardwareInfo() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
         // Not shown on Android 8/O & above because it requires too many permissions
         Item(
-            icon = Icons.Rounded.PermDeviceInformation,
+            icon = Symbols.MobileInfo,
             titleResId = R.string.device_information_serial_number,
             text = Build.SERIAL,
         )

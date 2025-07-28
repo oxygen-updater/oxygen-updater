@@ -5,9 +5,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.storage.StorageManager
 import androidx.annotation.VisibleForTesting
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Launch
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -19,6 +16,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.getSystemService
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.formatFileSize
+import com.oxygenupdater.icons.Close
+import com.oxygenupdater.icons.OpenInNew
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.NotSetL
@@ -108,7 +108,7 @@ fun downloadButtonConfig(
                 details = downloadEta ?: stringResource(R.string.summary_please_wait),
                 sizeOrProgressText = sizeOrProgressText,
                 progress = progress,
-                actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
+                actionButtonConfig = Triple(true, Symbols.Close, MaterialTheme.colorScheme.error),
                 onDownloadClick = { downloadAction(DownloadAction.Pause) },
             )
         }
@@ -118,7 +118,7 @@ fun downloadButtonConfig(
             details = stringResource(R.string.download_progress_text_paused),
             sizeOrProgressText = previousProgressText ?: context.formatFileSize(downloadSize),
             progress = previousProgress,
-            actionButtonConfig = Triple(true, Icons.Rounded.Close, MaterialTheme.colorScheme.error),
+            actionButtonConfig = Triple(true, Symbols.Close, MaterialTheme.colorScheme.error),
             onDownloadClick = if (hasDownloadPermissions()) enqueueIfSpaceAvailable else requestDownloadPermissions,
         )
 
@@ -127,7 +127,7 @@ fun downloadButtonConfig(
             details = null,
             sizeOrProgressText = context.formatFileSize(downloadSize),
             progress = null,
-            actionButtonConfig = Triple(false, Icons.AutoMirrored.Rounded.Launch, MaterialTheme.colorScheme.primary),
+            actionButtonConfig = Triple(false, Symbols.OpenInNew, MaterialTheme.colorScheme.primary),
             onDownloadClick = showAlreadyDownloadedSheet,
         ).also {
             if (downloadStatus == DownloadCompleted) return@also
@@ -172,13 +172,14 @@ fun downloadButtonConfig(
             if (failureType != NotSet) when (failureType) {
                 DownloadFailure.ServerError.value,
                 DownloadFailure.ConnectionError.value,
-                -> setDownloadErrorDialogParams(DownloadErrorParams(
-                    stringResource(R.string.download_error_unsuccessful_explanation_generic),
-                    resumable = failureType == DownloadFailure.ConnectionError.value
-                ) { resumable ->
-                    if (!resumable) downloadAction(DownloadAction.Delete)
-                    enqueueIfSpaceAvailable()
-                })
+                    -> setDownloadErrorDialogParams(
+                    DownloadErrorParams(
+                        stringResource(R.string.download_error_unsuccessful_explanation_generic),
+                        resumable = failureType == DownloadFailure.ConnectionError.value
+                    ) { resumable ->
+                        if (!resumable) downloadAction(DownloadAction.Delete)
+                        enqueueIfSpaceAvailable()
+                    })
 
                 DownloadFailure.UnsuccessfulResponse.value -> {
                     val prefix = httpFailureCodeAndMessage()?.let { (code, message) ->
@@ -205,12 +206,13 @@ fun downloadButtonConfig(
                 DownloadFailure.NullUpdateDataOrDownloadUrl.value,
                 DownloadFailure.DownloadUrlInvalidScheme.value,
                 DownloadFailure.Unknown.value,
-                -> setDownloadErrorDialogParams(DownloadErrorParams(
-                    stringResource(R.string.download_error_internal)
-                ) { resumable ->
-                    if (!resumable) downloadAction(DownloadAction.Delete)
-                    enqueueIfSpaceAvailable()
-                })
+                    -> setDownloadErrorDialogParams(
+                    DownloadErrorParams(
+                        stringResource(R.string.download_error_internal)
+                    ) { resumable ->
+                        if (!resumable) downloadAction(DownloadAction.Delete)
+                        enqueueIfSpaceAvailable()
+                    })
 
                 DownloadFailure.CouldNotMoveTempFile.value -> setDownloadErrorDialogParams(
                     DownloadErrorParams(
@@ -261,7 +263,7 @@ private fun enqueueIfSpaceAvailable(
 
             // Enqueue download work since the required space has been freed up
             enqueue()
-        } catch (e: IOException) {
+        } catch (_: IOException) {
             // Request the user to free up space manually because the system couldn't do it automatically
             setManageStorageDialogData(appSpecificExternalDirUuid to downloadSize + SafeMargin)
         } else setManageStorageDialogData(appSpecificExternalDirUuid to downloadSize - allocatableBytes)

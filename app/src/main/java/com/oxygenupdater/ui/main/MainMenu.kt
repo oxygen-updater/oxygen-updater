@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
-import androidx.compose.material.icons.outlined.GroupAdd
-import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,8 +17,11 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.Announcement
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.Crowdsource
+import com.oxygenupdater.icons.MoreVert
+import com.oxygenupdater.icons.PlaylistAddCheck
+import com.oxygenupdater.icons.ReleaseAlert
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.ui.common.DropdownMenuItem
 import com.oxygenupdater.ui.common.rememberState
@@ -60,7 +59,7 @@ fun RowScope.MainMenu(
                 .requiredWidth(40.dp)
                 .testTag(MainMenu_OverflowButtonTestTag)
         ) {
-            Icon(Icons.Rounded.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
+            Icon(Symbols.MoreVert, stringResource(androidx.compose.ui.R.string.dropdown_menu))
         }
 
         DropdownMenu(
@@ -70,7 +69,7 @@ fun RowScope.MainMenu(
         ) {
             // Mark all articles read
             if (showMarkAllRead) DropdownMenuItem(
-                icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
+                icon = Symbols.PlaylistAddCheck,
                 textResId = R.string.news_mark_all_read,
             ) {
                 onMarkAllReadClick()
@@ -99,7 +98,7 @@ private fun AnnouncementsMenuItem(serverMessages: List<ServerMessage>) {
             .requiredWidth(40.dp)
             .testTag(MainMenu_AnnouncementsButtonTestTag)
     ) {
-        Icon(CustomIcons.Announcement, stringResource(R.string.update_information_banner_server))
+        Icon(Symbols.ReleaseAlert, stringResource(R.string.update_information_banner_server))
     }
 
     if (showSheet) ModalBottomSheet({ showSheet = false }) { ServerMessagesSheet(serverMessages) }
@@ -113,7 +112,7 @@ private fun ContributorMenuItem(
 ) {
     var showSheet by rememberState(false)
 
-    DropdownMenuItem(Icons.Outlined.GroupAdd, R.string.contribute) {
+    DropdownMenuItem(Symbols.Crowdsource, R.string.contribute) {
         showSheet = true
     }
 

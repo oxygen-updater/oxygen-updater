@@ -36,14 +36,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.PlaylistAddCheck
-import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.HighlightOff
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.material3.Badge
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.HorizontalDivider
@@ -96,10 +88,17 @@ import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.launch
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
 import com.oxygenupdater.extensions.shareExternally
-import com.oxygenupdater.icons.CustomIcons
-import com.oxygenupdater.icons.Image
+import com.oxygenupdater.icons.Cancel
+import com.oxygenupdater.icons.CheckCircle
+import com.oxygenupdater.icons.FullCoverage
+import com.oxygenupdater.icons.ImageFilled
 import com.oxygenupdater.icons.Info
-import com.oxygenupdater.icons.NewsMultiple
+import com.oxygenupdater.icons.Link
+import com.oxygenupdater.icons.MoreVert
+import com.oxygenupdater.icons.OpenInBrowser
+import com.oxygenupdater.icons.PlaylistAddCheck
+import com.oxygenupdater.icons.Share
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.ui.RefreshAwareState
@@ -173,14 +172,14 @@ fun NewsListScreen(
         if (onlyUnread && unreadCount == 0) ErrorState(
             navType = navType,
             titleResId = R.string.news_empty_state_all_read_header,
-            icon = CustomIcons.NewsMultiple,
+            icon = Symbols.FullCoverage,
             textResId = R.string.news_empty_state_all_read_text,
             rich = false,
             onRefreshClick = null,
         ) else if (list.isEmpty()) ErrorState(
             navType = navType,
             titleResId = R.string.news_empty_state_none_available_header,
-            icon = CustomIcons.NewsMultiple,
+            icon = Symbols.FullCoverage,
             textResId = R.string.news_empty_state_none_available_text,
             rich = false,
             onRefreshClick = onRefresh,
@@ -556,7 +555,7 @@ private fun NewsImage(
     item: Article,
     size: DpSize,
 ) {
-    val defaultImage = CustomIcons.Image.run {
+    val defaultImage = Symbols.ImageFilled.run {
         rememberVectorPainter(
             defaultWidth = defaultWidth,
             defaultHeight = defaultHeight,
@@ -634,7 +633,7 @@ private fun Banner(
 ) {
     var showMenu by rememberState(false)
     IconText(
-        icon = CustomIcons.Info,
+        icon = Symbols.Info,
         text = text,
         modifier = modifierMaxWidth
             .combinedClickable(onLongClick = { showMenu = true }, onClick = onClick)
@@ -647,7 +646,7 @@ private fun Banner(
             modifier = Modifier.testTag(NewsListScreen_MarkAllReadMenuTestTag)
         ) {
             DropdownMenuItem(
-                icon = Icons.AutoMirrored.Rounded.PlaylistAddCheck,
+                icon = Symbols.PlaylistAddCheck,
                 textResId = R.string.news_mark_all_read,
                 onClick = {
                     onMarkAllReadClick()
@@ -674,7 +673,7 @@ private fun ItemMenuOpener(
         modifier = Modifier.offset(xOffset)
     ) {
         Icon(
-            imageVector = Icons.Rounded.MoreVert, contentDescription = stringResource(R.string.icon),
+            imageVector = Symbols.MoreVert, contentDescription = stringResource(R.string.icon),
             tint = if (refreshing) LocalContentColor.current else MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = itemMenuIconModifier
         )
@@ -694,7 +693,7 @@ private fun ItemMenu(
     modifier = Modifier.testTag(NewsListScreen_ItemMenuTestTag)
 ) {
     DropdownMenuItem(
-        icon = if (item.readState) Icons.Rounded.HighlightOff else Icons.Rounded.CheckCircleOutline,
+        icon = if (item.readState) Symbols.Cancel else Symbols.CheckCircle,
         textResId = if (item.readState) R.string.news_mark_unread else R.string.news_mark_read,
         onClick = {
             onToggleReadClick()
@@ -705,7 +704,7 @@ private fun ItemMenu(
     val context = LocalContext.current
     val customTabIntent = rememberCustomTabsIntent()
     DropdownMenuItem(
-        icon = Icons.Rounded.OpenInBrowser,
+        icon = Symbols.OpenInBrowser,
         textResId = androidx.browser.R.string.fallback_menu_item_open_in_browser,
         onClick = {
             customTabIntent.launch(context, item.webUrl)
@@ -714,7 +713,7 @@ private fun ItemMenu(
     )
 
     DropdownMenuItem(
-        icon = Icons.Outlined.Share,
+        icon = Symbols.Share,
         textResId = androidx.browser.R.string.fallback_menu_item_share_link,
         onClick = {
             context.shareExternally(item.title ?: "", item.webUrl)
@@ -723,7 +722,7 @@ private fun ItemMenu(
     )
 
     DropdownMenuItem(
-        icon = Icons.Rounded.Link,
+        icon = Symbols.Link,
         textResId = androidx.browser.R.string.fallback_menu_item_copy_link,
         onClick = {
             context.copyToClipboard(item.webUrl)

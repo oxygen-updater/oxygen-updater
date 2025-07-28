@@ -6,11 +6,6 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.PhoneAndroid
-import androidx.compose.material.icons.rounded.SystemUpdateAlt
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
@@ -38,10 +33,15 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.ArrowBack
+import com.oxygenupdater.icons.Help
 import com.oxygenupdater.icons.LogoNotification
-import com.oxygenupdater.icons.News
+import com.oxygenupdater.icons.Logos
+import com.oxygenupdater.icons.Mobile
+import com.oxygenupdater.icons.Newsmode
 import com.oxygenupdater.icons.Settings
+import com.oxygenupdater.icons.Symbols
+import com.oxygenupdater.icons.SystemUpdateAlt
 
 @Composable
 fun MainNavigationBar(
@@ -102,7 +102,7 @@ fun MainNavigationRail(
                     .testTag(MainNavigation_Rail_IconButtonTestTag)
             ) {
                 Icon(
-                    if (root) CustomIcons.LogoNotification else Icons.AutoMirrored.Rounded.ArrowBack,
+                    if (root) Logos.LogoNotification else Symbols.ArrowBack,
                     if (root) stringResource(R.string.about) else null,
                 )
             }
@@ -171,19 +171,19 @@ sealed class Screen(
     var badge by mutableStateOf<String?>(null)
 
     @Stable
-    object Update : Screen(UpdateRoute, Icons.Rounded.SystemUpdateAlt, R.string.update_information_header)
+    object Update : Screen(UpdateRoute, Symbols.SystemUpdateAlt, R.string.update_information_header)
 
     @Stable
-    object NewsList : Screen(NewsListRoute, CustomIcons.News, R.string.news)
+    object NewsList : Screen(NewsListRoute, Symbols.Newsmode, R.string.news)
 
     @Stable
-    object Device : Screen(DeviceRoute, Icons.Rounded.PhoneAndroid, R.string.device_information_header)
+    object Device : Screen(DeviceRoute, Symbols.Mobile, R.string.device_information_header)
 
     @Stable
-    object About : Screen(AboutRoute, Icons.AutoMirrored.Rounded.HelpOutline, R.string.about, true)
+    object About : Screen(AboutRoute, Symbols.Help, R.string.about, true)
 
     @Stable
-    object Settings : Screen(SettingsRoute, CustomIcons.Settings, R.string.settings)
+    object Settings : Screen(SettingsRoute, Symbols.Settings, R.string.settings)
 
     override fun toString() = "Screen.$route"
 }

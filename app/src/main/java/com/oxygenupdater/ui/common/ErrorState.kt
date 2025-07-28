@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,6 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Error
+import com.oxygenupdater.icons.Refresh
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -33,7 +33,7 @@ import com.oxygenupdater.ui.theme.PreviewWindowSize
 fun ErrorState(
     navType: NavType,
     @StringRes titleResId: Int,
-    icon: ImageVector = Icons.Rounded.ErrorOutline,
+    icon: ImageVector = Symbols.Error,
     @StringRes textResId: Int = R.string.error_maintenance_retry,
     rich: Boolean = true,
     onRefreshClick: (() -> Unit)?,
@@ -66,7 +66,7 @@ fun ErrorState(
 
         if (onRefreshClick != null) OutlinedIconButton(
             onClick = onRefreshClick,
-            icon = Icons.Rounded.Refresh,
+            icon = Symbols.Refresh,
             textResId = R.string.download_error_retry,
         )
         ConditionalNavBarPadding(navType)
@@ -104,7 +104,7 @@ fun ErrorState(
 
     if (onRefreshClick != null) OutlinedIconButton(
         onClick = onRefreshClick,
-        icon = Icons.Rounded.Refresh,
+        icon = Symbols.Refresh,
         textResId = R.string.download_error_retry,
     )
     ConditionalNavBarPadding(navType)

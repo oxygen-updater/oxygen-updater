@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Error
 import com.oxygenupdater.icons.Info
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.icons.Warning
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerMessage.ServerMessagePriority
@@ -50,10 +50,10 @@ fun ServerMessagesSheet(list: List<ServerMessage>) {
                 val priority = it.priority
                 val (icon, color) = remember(priority, colorScheme) {
                     when (priority) {
-                        ServerMessagePriority.LOW -> CustomIcons.Info to colorScheme.positive
-                        ServerMessagePriority.MEDIUM -> CustomIcons.Warning to colorScheme.warn
-                        ServerMessagePriority.HIGH -> CustomIcons.Error to colorScheme.error
-                        else -> CustomIcons.Info to null
+                        ServerMessagePriority.LOW -> Symbols.Info to colorScheme.positive
+                        ServerMessagePriority.MEDIUM -> Symbols.Warning to colorScheme.warn
+                        ServerMessagePriority.HIGH -> Symbols.Error to colorScheme.error
+                        else -> Symbols.Info to null
                     }
                 }
 

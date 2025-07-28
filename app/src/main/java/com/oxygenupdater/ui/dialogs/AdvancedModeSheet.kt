@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.CheckCircle
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.common.ListItemTextIndent
 import com.oxygenupdater.ui.theme.PreviewThemes
 
@@ -59,7 +59,7 @@ fun ColumnScope.AdvancedModeSheet(onClick: (result: Boolean) -> Unit) {
     SheetButtons(
         dismissResId = android.R.string.cancel,
         onDismiss = { onClick(false) },
-        confirmIcon = Icons.Rounded.CheckCircleOutline,
+        confirmIcon = Symbols.CheckCircle,
         confirmResId = R.string.enable,
         onConfirm = { onClick(true) },
     )

@@ -1,49 +1,69 @@
 package com.oxygenupdater.icons
 
-import androidx.compose.material.icons.materialIcon
-import androidx.compose.material.icons.materialPath
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 
-val CustomIcons.Error: ImageVector
-    get() {
-        if (_error != null) return _error!!
-        _error = materialIcon("Error") {
-            materialPath {
-                moveTo(12f, 7f)
-                curveToRelative(0.55f, 0f, 1f, 0.45f, 1f, 1f)
-                verticalLineToRelative(4f)
-                curveToRelative(0f, 0.55f, -0.45f, 1f, -1f, 1f)
-                reflectiveCurveToRelative(-1f, -0.45f, -1f, -1f)
-                lineTo(11f, 8f)
-                curveToRelative(0f, -0.55f, 0.45f, -1f, 1f, -1f)
-                close()
-                moveTo(11.99f, 2f)
-                curveTo(6.47f, 2f, 2f, 6.48f, 2f, 12f)
-                reflectiveCurveToRelative(4.47f, 10f, 9.99f, 10f)
-                curveTo(17.52f, 22f, 22f, 17.52f, 22f, 12f)
-                reflectiveCurveTo(17.52f, 2f, 11.99f, 2f)
-                close()
-                moveTo(12f, 20f)
-                curveToRelative(-4.42f, 0f, -8f, -3.58f, -8f, -8f)
-                reflectiveCurveToRelative(3.58f, -8f, 8f, -8f)
-                reflectiveCurveToRelative(8f, 3.58f, 8f, 8f)
-                reflectiveCurveToRelative(-3.58f, 8f, -8f, 8f)
-                close()
-                moveTo(13f, 17f)
-                horizontalLineToRelative(-2f)
-                verticalLineToRelative(-2f)
-                horizontalLineToRelative(2f)
-                verticalLineToRelative(2f)
-                close()
-            }
-        }
-        return _error!!
-    }
+val Symbols.Error: ImageVector
+    get() = _error ?: materialSymbol(
+        name = "Error",
+    ) {
+        moveTo(480f, 680f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 640f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 600f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 640f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 680f)
+        close()
+        moveToRelative(0f, -160f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 480f)
+        verticalLineToRelative(-160f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 280f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 320f)
+        verticalLineToRelative(160f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 520f)
+        close()
+        moveToRelative(0f, 360f)
+        quadToRelative(-83f, 0f, -156f, -31.5f)
+        reflectiveQuadTo(197f, 763f)
+        quadToRelative(-54f, -54f, -85.5f, -127f)
+        reflectiveQuadTo(80f, 480f)
+        quadToRelative(0f, -83f, 31.5f, -156f)
+        reflectiveQuadTo(197f, 197f)
+        quadToRelative(54f, -54f, 127f, -85.5f)
+        reflectiveQuadTo(480f, 80f)
+        quadToRelative(83f, 0f, 156f, 31.5f)
+        reflectiveQuadTo(763f, 197f)
+        quadToRelative(54f, 54f, 85.5f, 127f)
+        reflectiveQuadTo(880f, 480f)
+        quadToRelative(0f, 83f, -31.5f, 156f)
+        reflectiveQuadTo(763f, 763f)
+        quadToRelative(-54f, 54f, -127f, 85.5f)
+        reflectiveQuadTo(480f, 880f)
+        close()
+        moveToRelative(0f, -80f)
+        quadToRelative(134f, 0f, 227f, -93f)
+        reflectiveQuadToRelative(93f, -227f)
+        quadToRelative(0f, -134f, -93f, -227f)
+        reflectiveQuadToRelative(-227f, -93f)
+        quadToRelative(-134f, 0f, -227f, 93f)
+        reflectiveQuadToRelative(-93f, 227f)
+        quadToRelative(0f, 134f, 93f, 227f)
+        reflectiveQuadToRelative(227f, 93f)
+        close()
+        moveToRelative(0f, -320f)
+        close()
+    }.also { _error = it }
 
 private var _error: ImageVector? = null
 
 @Preview
 @Composable
-private fun Preview() = PreviewIcon(CustomIcons.Error)
+private fun Preview() = PreviewIcon(Symbols.Error)

@@ -4,8 +4,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Android
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
@@ -68,7 +68,7 @@ const val IconTextTestTag = TAG
 @Composable
 fun PreviewIconText() = PreviewAppTheme {
     IconText(
-        icon = Icons.Rounded.Android,
+        icon = Symbols.Android,
         text = stringResource(R.string.app_name),
         modifier = modifierDefaultPadding
     )

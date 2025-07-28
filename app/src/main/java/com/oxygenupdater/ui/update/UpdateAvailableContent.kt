@@ -36,9 +36,6 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -75,6 +72,9 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
+import com.oxygenupdater.icons.CheckCircle
+import com.oxygenupdater.icons.Download
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetF
 import com.oxygenupdater.internal.settings.KeyDevice
@@ -483,7 +483,7 @@ private fun DownloadButton(
                     modifier = modifierDownloadIconWidth
                 )
             } else Icon(
-                imageVector = if (successful) Icons.Rounded.CheckCircleOutline else Icons.Rounded.Download,
+                imageVector = if (successful) Symbols.CheckCircle else Symbols.Download,
                 contentDescription = iconContentDescription,
                 tint = if (successful) colorScheme.positive else colorScheme.primary,
                 modifier = modifierDownloadIconWidth

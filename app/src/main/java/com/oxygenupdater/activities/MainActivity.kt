@@ -102,9 +102,10 @@ import com.oxygenupdater.R
 import com.oxygenupdater.enums.PurchaseType
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.showToast
-import com.oxygenupdater.icons.CustomIcons
-import com.oxygenupdater.icons.Image
+import com.oxygenupdater.icons.ImageFilled
 import com.oxygenupdater.icons.LogoNotification
+import com.oxygenupdater.icons.Logos
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.internal.settings.KeyAdvancedMode
@@ -386,8 +387,8 @@ class MainActivity : AppCompatActivity() {
                         }
                     },
                     contentDescription = stringResource(R.string.device_information_image_description),
-                    placeholder = rememberVectorPainter(CustomIcons.Image),
-                    error = rememberVectorPainter(CustomIcons.LogoNotification),
+                    placeholder = rememberVectorPainter(Symbols.ImageFilled),
+                    error = rememberVectorPainter(Logos.LogoNotification),
                     contentScale = ContentScale.Crop,
                     colorFilter = if (deviceName == null) ColorFilter.tint(MaterialTheme.colorScheme.primary) else null,
                     modifier = modifier
@@ -560,8 +561,8 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 },
                                 contentDescription = stringResource(R.string.news),
-                                placeholder = rememberVectorPainter(CustomIcons.Image),
-                                error = rememberVectorPainter(CustomIcons.LogoNotification),
+                                placeholder = rememberVectorPainter(Symbols.ImageFilled),
+                                error = rememberVectorPainter(Logos.LogoNotification),
                                 contentScale = ContentScale.Crop,
                                 colorFilter = if (imageUrl == null) {
                                     ColorFilter.tint(MaterialTheme.colorScheme.primary)

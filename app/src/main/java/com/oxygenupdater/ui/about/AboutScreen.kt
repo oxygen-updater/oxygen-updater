@@ -6,11 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.MailOutline
-import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,11 +19,16 @@ import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.openLink
 import com.oxygenupdater.extensions.openPlayStorePage
-import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Discord
-import com.oxygenupdater.icons.Faq
+import com.oxygenupdater.icons.Forum
 import com.oxygenupdater.icons.GitHub
+import com.oxygenupdater.icons.Help
+import com.oxygenupdater.icons.Link
+import com.oxygenupdater.icons.Logos
+import com.oxygenupdater.icons.Mail
 import com.oxygenupdater.icons.Patreon
+import com.oxygenupdater.icons.Star
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.LazyVerticalGrid
@@ -103,18 +103,18 @@ private fun Buttons(
     LazyVerticalGrid(
         columnCount = columnCount,
         items = arrayOf(
-            GridItem(Icons.AutoMirrored.Rounded.HelpOutline, R.string.install_guide) {
+            GridItem(Symbols.Help, R.string.install_guide) {
                 navigateTo(ChildScreen.Guide)
             },
-            GridItem(CustomIcons.Faq, R.string.faq_menu_item) {
+            GridItem(Symbols.Forum, R.string.faq_menu_item) {
                 navigateTo(ChildScreen.Faq)
             },
-            GridItem(CustomIcons.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord.value) },
-            GridItem(Icons.Rounded.MailOutline, R.string.about_email_button_text, openEmail),
-            GridItem(CustomIcons.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub.value) },
-            GridItem(Icons.Rounded.Link, R.string.about_website_button_text) { openLink(LinkType.Website.value) },
-            GridItem(CustomIcons.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon.value) },
-            GridItem(Icons.Rounded.StarOutline, R.string.about_rate_button_text, ::openPlayStorePage),
+            GridItem(Logos.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord.value) },
+            GridItem(Symbols.Mail, R.string.about_email_button_text, openEmail),
+            GridItem(Logos.GitHub, R.string.about_github_button_text) { openLink(LinkType.GitHub.value) },
+            GridItem(Symbols.Link, R.string.about_website_button_text) { openLink(LinkType.Website.value) },
+            GridItem(Logos.Patreon, R.string.about_patreon_button_text) { openLink(LinkType.Patreon.value) },
+            GridItem(Symbols.Star, R.string.about_rate_button_text, ::openPlayStorePage),
         ),
     )
 }

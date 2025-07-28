@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.DoneAll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,8 +31,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.DoneAll
 import com.oxygenupdater.icons.Info
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
@@ -207,7 +206,7 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
             onClick = { showSheet = true },
             modifier = Modifier.testTag(OnboardingScreen_ContributorInfoButtonTestTag),
         ) {
-            Icon(CustomIcons.Info, stringResource(R.string.contribute_more_info))
+            Icon(Symbols.Info, stringResource(R.string.contribute_more_info))
         }
 
         if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it) }
@@ -215,7 +214,7 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
 
     OutlinedIconButton(
         onClick = { onClick(contribute) },
-        icon = Icons.Rounded.DoneAll,
+        icon = Symbols.DoneAll,
         textResId = R.string.onboarding_finished_button,
     )
 }

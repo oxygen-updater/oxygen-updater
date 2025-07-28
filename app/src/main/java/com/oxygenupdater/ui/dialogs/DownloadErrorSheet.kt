@@ -2,9 +2,6 @@ package com.oxygenupdater.ui.dialogs
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Autorenew
-import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -13,6 +10,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Download
+import com.oxygenupdater.icons.RestartAlt
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.RichTextType
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -40,7 +40,7 @@ fun DownloadErrorSheet(hide: () -> Unit, params: DownloadErrorParams) {
     SheetButtons(
         dismissResId = R.string.download_error_close,
         onDismiss = hide,
-        confirmIcon = if (resumable) Icons.Rounded.Download else Icons.Rounded.Autorenew,
+        confirmIcon = if (resumable) Symbols.Download else Symbols.RestartAlt,
         confirmResId = if (resumable) R.string.download_error_resume else R.string.download_error_retry,
         onConfirm = if (callback == null) null else ({ callback(resumable); hide() }),
     )

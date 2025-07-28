@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,6 +26,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.KeyboardArrowDown
+import com.oxygenupdater.icons.KeyboardArrowUp
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.models.InstallGuide
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ExpandCollapse
@@ -124,7 +124,7 @@ private fun InstallGuideItem(
             .testTag(InstallGuideScreen_ItemRowTestTag)
     ) {
         Icon(
-            imageVector = if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+            imageVector = if (expanded) Symbols.KeyboardArrowUp else Symbols.KeyboardArrowDown,
             contentDescription = stringResource(R.string.icon),
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(end = 16.dp)

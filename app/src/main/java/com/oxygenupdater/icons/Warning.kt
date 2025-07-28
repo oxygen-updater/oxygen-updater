@@ -1,55 +1,64 @@
 package com.oxygenupdater.icons
 
-import androidx.compose.material.icons.materialIcon
-import androidx.compose.material.icons.materialPath
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 
-val CustomIcons.Warning: ImageVector
-    get() {
-        if (_warning != null) return _warning!!
-        _warning = materialIcon("Warning") {
-            materialPath {
-                moveTo(21.3f, 18f)
-                lineTo(13.7f, 5f)
-                curveTo(13f, 3.7f, 11f, 3.7f, 10.3f, 5f)
-                lineTo(2.7f, 18f)
-                curveToRelative(-0.8f, 1.3f, 0.2f, 3f, 1.7f, 3f)
-                horizontalLineToRelative(15.1f)
-                curveTo(21.1f, 21f, 22f, 19.3f, 21.3f, 18f)
-                close()
-                moveTo(17.8f, 19f)
-                horizontalLineTo(6.2f)
-                curveToRelative(-0.8f, 0f, -1.3f, -0.8f, -0.9f, -1.5f)
-                lineToRelative(5.8f, -10f)
-                curveToRelative(0.4f, -0.7f, 1.3f, -0.7f, 1.7f, 0f)
-                lineToRelative(5.8f, 10f)
-                curveTo(19f, 18.2f, 18.6f, 19f, 17.8f, 19f)
-                close()
-                moveTo(11f, 16f)
-                horizontalLineToRelative(2f)
-                verticalLineToRelative(2f)
-                horizontalLineToRelative(-2f)
-                verticalLineTo(16f)
-                close()
-                moveTo(12f, 10f)
-                lineTo(12f, 10f)
-                curveToRelative(-0.6f, 0f, -1f, 0.4f, -1f, 1f)
-                verticalLineToRelative(2f)
-                curveToRelative(0f, 0.6f, 0.4f, 1f, 1f, 1f)
-                lineToRelative(0f, 0f)
-                curveToRelative(0.6f, 0f, 1f, -0.4f, 1f, -1f)
-                verticalLineToRelative(-2f)
-                curveTo(13f, 10.4f, 12.6f, 10f, 12f, 10f)
-                close()
-            }
-        }
-        return _warning!!
-    }
+val Symbols.Warning: ImageVector
+    get() = _warning ?: materialSymbol(
+        name = "Warning",
+    ) {
+        moveTo(109f, 840f)
+        quadToRelative(-11f, 0f, -20f, -5.5f)
+        reflectiveQuadTo(75f, 820f)
+        quadToRelative(-5f, -9f, -5.5f, -19.5f)
+        reflectiveQuadTo(75f, 780f)
+        lineToRelative(370f, -640f)
+        quadToRelative(6f, -10f, 15.5f, -15f)
+        reflectiveQuadToRelative(19.5f, -5f)
+        quadToRelative(10f, 0f, 19.5f, 5f)
+        reflectiveQuadToRelative(15.5f, 15f)
+        lineToRelative(370f, 640f)
+        quadToRelative(6f, 10f, 5.5f, 20.5f)
+        reflectiveQuadTo(885f, 820f)
+        quadToRelative(-5f, 9f, -14f, 14.5f)
+        reflectiveQuadToRelative(-20f, 5.5f)
+        horizontalLineTo(109f)
+        close()
+        moveToRelative(69f, -80f)
+        horizontalLineToRelative(604f)
+        lineTo(480f, 240f)
+        lineTo(178f, 760f)
+        close()
+        moveToRelative(302f, -40f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 680f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 640f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 680f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 720f)
+        close()
+        moveToRelative(0f, -120f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 560f)
+        verticalLineToRelative(-120f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 400f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 440f)
+        verticalLineToRelative(120f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 600f)
+        close()
+        moveToRelative(0f, -100f)
+        close()
+    }.also { _warning = it }
 
 private var _warning: ImageVector? = null
 
 @Preview
 @Composable
-private fun Preview() = PreviewIcon(CustomIcons.Warning)
+private fun Preview() = PreviewIcon(Symbols.Warning)
+

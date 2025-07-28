@@ -11,12 +11,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.DoneAll
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -34,8 +28,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.CheckCircle
+import com.oxygenupdater.icons.DoneAll
+import com.oxygenupdater.icons.Error
 import com.oxygenupdater.icons.Info
+import com.oxygenupdater.icons.KeyboardArrowDown
+import com.oxygenupdater.icons.KeyboardArrowUp
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.settings.KeyUpdateMethod
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
@@ -94,7 +93,7 @@ fun UpToDate(
                 val positive = MaterialTheme.colorScheme.positive
                 val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
                 IconText(
-                    icon = Icons.Rounded.CheckCircleOutline,
+                    icon = Symbols.CheckCircle,
                     text = stringResource(R.string.update_information_system_is_up_to_date),
                     iconTint = positive,
                     style = titleMedium,
@@ -135,7 +134,7 @@ fun UpToDate(
             val positive = MaterialTheme.colorScheme.positive
             val titleMedium = MaterialTheme.typography.titleMedium.copy(color = positive)
             IconText(
-                icon = Icons.Rounded.CheckCircleOutline,
+                icon = Symbols.CheckCircle,
                 text = stringResource(R.string.update_information_system_is_up_to_date),
                 iconTint = positive,
                 style = titleMedium,
@@ -144,7 +143,7 @@ fun UpToDate(
             )
 
             Icon(
-                imageVector = Icons.Rounded.DoneAll,
+                imageVector = Symbols.DoneAll,
                 contentDescription = stringResource(R.string.icon),
                 modifier = Modifier
                     .graphicsLayer(scaleX = 2f, scaleY = 2f, alpha = .1f)
@@ -178,7 +177,7 @@ private inline fun AdvancedModeTip(
     if (!show) return
 
     IconText(
-        icon = CustomIcons.Info,
+        icon = Symbols.Info,
         text = stringResource(
             R.string.update_information_banner_advanced_mode_tip,
             getPrefStr(KeyUpdateMethod, "<UNKNOWN>"),
@@ -199,7 +198,9 @@ private fun ExpandableChangelog(
     val expandEnabled = updateData.isUpdateInformationAvailable
     var expanded by rememberState(false)
     IconText(
-        icon = if (!expandEnabled) Icons.Rounded.ErrorOutline else if (expanded) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore,
+        icon = if (!expandEnabled) Symbols.Error else {
+            if (expanded) Symbols.KeyboardArrowUp else Symbols.KeyboardArrowDown
+        },
         text = stringResource(
             if (!expandEnabled) R.string.update_information_no_update_data_available
             else R.string.update_information_view_update_information

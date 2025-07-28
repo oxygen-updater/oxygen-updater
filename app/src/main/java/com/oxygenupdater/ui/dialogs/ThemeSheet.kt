@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,6 +20,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Check
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
@@ -56,7 +56,7 @@ fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
                 val primary = colorScheme.primary
                 val selected = selectedTheme == it
                 if (selected) Icon(
-                    imageVector = Icons.Rounded.Done,
+                    imageVector = Symbols.Check,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
                     modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected

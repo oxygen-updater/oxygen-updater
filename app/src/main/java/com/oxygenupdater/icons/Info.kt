@@ -1,51 +1,70 @@
 package com.oxygenupdater.icons
 
-import androidx.compose.material.icons.materialIcon
-import androidx.compose.material.icons.materialPath
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 
-val CustomIcons.Info: ImageVector
-    get() {
-        if (_info != null) return _info!!
-        _info = materialIcon("Info") {
-            materialPath {
-                moveTo(11f, 7f)
-                horizontalLineToRelative(2f)
-                verticalLineToRelative(2f)
-                horizontalLineToRelative(-2f)
-                verticalLineTo(7f)
-                close()
-                moveTo(12f, 11f)
-                lineTo(12f, 11f)
-                curveToRelative(0.6f, 0f, 1f, 0.4f, 1f, 1f)
-                verticalLineToRelative(4f)
-                curveToRelative(0f, 0.6f, -0.4f, 1f, -1f, 1f)
-                horizontalLineToRelative(0f)
-                curveToRelative(-0.6f, 0f, -1f, -0.4f, -1f, -1f)
-                verticalLineToRelative(-4f)
-                curveTo(11f, 11.4f, 11.4f, 11f, 12f, 11f)
-                close()
-                moveTo(12f, 2f)
-                curveTo(6.5f, 2f, 2f, 6.5f, 2f, 12f)
-                reflectiveCurveToRelative(4.5f, 10f, 10f, 10f)
-                reflectiveCurveToRelative(10f, -4.5f, 10f, -10f)
-                reflectiveCurveTo(17.5f, 2f, 12f, 2f)
-                close()
-                moveTo(12f, 20f)
-                curveToRelative(-4.4f, 0f, -8f, -3.6f, -8f, -8f)
-                reflectiveCurveToRelative(3.6f, -8f, 8f, -8f)
-                reflectiveCurveToRelative(8f, 3.6f, 8f, 8f)
-                reflectiveCurveTo(16.4f, 20f, 12f, 20f)
-                close()
-            }
-        }
-        return _info!!
-    }
+val Symbols.Info: ImageVector
+    get() = _info ?: materialSymbol(
+        name = "Info",
+    ) {
+        moveTo(480f, 680f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 640f)
+        verticalLineToRelative(-160f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 440f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 480f)
+        verticalLineToRelative(160f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 680f)
+        close()
+        moveToRelative(0f, -320f)
+        quadToRelative(17f, 0f, 28.5f, -11.5f)
+        reflectiveQuadTo(520f, 320f)
+        quadToRelative(0f, -17f, -11.5f, -28.5f)
+        reflectiveQuadTo(480f, 280f)
+        quadToRelative(-17f, 0f, -28.5f, 11.5f)
+        reflectiveQuadTo(440f, 320f)
+        quadToRelative(0f, 17f, 11.5f, 28.5f)
+        reflectiveQuadTo(480f, 360f)
+        close()
+        moveToRelative(0f, 520f)
+        quadToRelative(-83f, 0f, -156f, -31.5f)
+        reflectiveQuadTo(197f, 763f)
+        quadToRelative(-54f, -54f, -85.5f, -127f)
+        reflectiveQuadTo(80f, 480f)
+        quadToRelative(0f, -83f, 31.5f, -156f)
+        reflectiveQuadTo(197f, 197f)
+        quadToRelative(54f, -54f, 127f, -85.5f)
+        reflectiveQuadTo(480f, 80f)
+        quadToRelative(83f, 0f, 156f, 31.5f)
+        reflectiveQuadTo(763f, 197f)
+        quadToRelative(54f, 54f, 85.5f, 127f)
+        reflectiveQuadTo(880f, 480f)
+        quadToRelative(0f, 83f, -31.5f, 156f)
+        reflectiveQuadTo(763f, 763f)
+        quadToRelative(-54f, 54f, -127f, 85.5f)
+        reflectiveQuadTo(480f, 880f)
+        close()
+        moveToRelative(0f, -80f)
+        quadToRelative(134f, 0f, 227f, -93f)
+        reflectiveQuadToRelative(93f, -227f)
+        quadToRelative(0f, -134f, -93f, -227f)
+        reflectiveQuadToRelative(-227f, -93f)
+        quadToRelative(-134f, 0f, -227f, 93f)
+        reflectiveQuadToRelative(-93f, 227f)
+        quadToRelative(0f, 134f, 93f, 227f)
+        reflectiveQuadToRelative(227f, 93f)
+        close()
+        moveToRelative(0f, -320f)
+        close()
+    }.also { _info = it }
 
 private var _info: ImageVector? = null
 
 @Preview
 @Composable
-private fun Preview() = PreviewIcon(CustomIcons.Info)
+private fun Preview() = PreviewIcon(Symbols.Info)
+

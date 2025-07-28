@@ -8,8 +8,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +16,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.OpenInNew
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.update.DownloadAction
 import com.oxygenupdater.utils.logInfo
@@ -64,7 +64,7 @@ fun ManageStorageSheet(
     SheetButtons(
         dismissResId = R.string.download_error_close,
         onDismiss = hide,
-        confirmIcon = Icons.AutoMirrored.Rounded.Launch,
+        confirmIcon = Symbols.OpenInNew,
         confirmResId = android.R.string.ok,
         onConfirm = if (pair == null) null else ({
             val (uuid, bytes) = pair

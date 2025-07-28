@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
 import com.oxygenupdater.icons.Error
 import com.oxygenupdater.icons.Info
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.icons.Warning
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.ServerStatus.Status
@@ -32,7 +32,7 @@ fun ServerStatusBanner(
     val latestAppVersion = serverStatus.latestAppVersion
     if (latestAppVersion != null && serverStatus.shouldShowAppUpdateNotice()) {
         IconText(
-            icon = CustomIcons.Info,
+            icon = Symbols.Info,
             text = stringResource(R.string.new_app_version, latestAppVersion),
             modifier = modifierMaxWidth
                 .clickable(onClick = openPlayStorePage)
@@ -48,9 +48,9 @@ fun ServerStatusBanner(
     val error = MaterialTheme.colorScheme.error
     val (icon, @StringRes textResId, color) = remember(status, error, warn) {
         when (status) {
-            Status.WARNING -> Triple(CustomIcons.Warning, R.string.server_status_warning, warn)
-            Status.ERROR -> Triple(CustomIcons.Error, R.string.server_status_error, error)
-            Status.UNREACHABLE -> Triple(CustomIcons.Info, R.string.server_status_unreachable, error)
+            Status.WARNING -> Triple(Symbols.Warning, R.string.server_status_warning, warn)
+            Status.ERROR -> Triple(Symbols.Error, R.string.server_status_error, error)
+            Status.UNREACHABLE -> Triple(Symbols.Info, R.string.server_status_unreachable, error)
             else -> Triple(ImageVector.Builder("_blank_", 0.dp, 0.dp, 0f, 0f).build(), 0, null)
         }
     }

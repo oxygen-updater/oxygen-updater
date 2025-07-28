@@ -21,20 +21,6 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CloudDownload
-import androidx.compose.material.icons.outlined.GroupAdd
-import androidx.compose.material.icons.outlined.Language
-import androidx.compose.material.icons.outlined.Paid
-import androidx.compose.material.icons.outlined.Palette
-import androidx.compose.material.icons.outlined.Policy
-import androidx.compose.material.icons.rounded.AdsClick
-import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.LockOpen
-import androidx.compose.material.icons.rounded.NotificationsNone
-import androidx.compose.material.icons.rounded.PhoneAndroid
-import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.TrackChanges
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -65,8 +51,22 @@ import com.oxygenupdater.extensions.launch
 import com.oxygenupdater.extensions.openAppLocalePage
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.AdsClick
+import com.oxygenupdater.icons.Check
+import com.oxygenupdater.icons.CloudDownload
+import com.oxygenupdater.icons.Crowdsource
+import com.oxygenupdater.icons.Language
+import com.oxygenupdater.icons.LockOpen
 import com.oxygenupdater.icons.LogoNotification
+import com.oxygenupdater.icons.Logos
+import com.oxygenupdater.icons.Mobile
+import com.oxygenupdater.icons.Notifications
+import com.oxygenupdater.icons.Paid
+import com.oxygenupdater.icons.Palette
+import com.oxygenupdater.icons.Policy
+import com.oxygenupdater.icons.Star
+import com.oxygenupdater.icons.Symbols
+import com.oxygenupdater.icons.TrackChanges
 import com.oxygenupdater.internal.settings.KeyAdFree
 import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.internal.settings.KeyDevice
@@ -136,7 +136,7 @@ fun SettingsScreen(
 
         SettingsItem(
             onClick = { onClick?.invoke() },
-            icon = Icons.Outlined.Paid,
+            icon = Symbols.Paid,
             titleResId = R.string.label_buy_ad_free,
             subtitle = subtitle,
             enabled = enabled,
@@ -183,21 +183,21 @@ fun SettingsScreen(
     SettingsItem(
         // Use Chrome Custom Tabs to open the privacy policy link
         onClick = { customTabIntent.launch(context, "https://oxygenupdater.com/privacy/") },
-        icon = Icons.Outlined.Policy,
+        icon = Symbols.Policy,
         titleResId = R.string.label_privacy_policy,
         subtitle = stringResource(R.string.summary_privacy_policy),
     )
 
     SettingsItem(
         onClick = context::openPlayStorePage,
-        icon = Icons.Rounded.StarOutline,
+        icon = Symbols.Star,
         titleResId = R.string.label_rate_app,
         subtitle = stringResource(R.string.summary_rate_app),
     )
 
     SettingsItem(
         onClick = openAboutScreen,
-        icon = CustomIcons.LogoNotification,
+        icon = Logos.LogoNotification,
         titleResId = R.string.app_name,
         subtitle = "v${BuildConfig.VERSION_NAME}",
     )
@@ -222,7 +222,7 @@ fun DeviceChooser(
 
     SettingsItem(
         onClick = { showSheet = true },
-        icon = Icons.Rounded.PhoneAndroid,
+        icon = Symbols.Mobile,
         titleResId = R.string.settings_device,
         subtitle = subtitle,
         subtitleIsError = subtitle == notSelected,
@@ -257,7 +257,7 @@ fun MethodChooser(
 
     SettingsItem(
         onClick = { showSheet = true },
-        icon = Icons.Outlined.CloudDownload,
+        icon = Symbols.CloudDownload,
         titleResId = R.string.settings_update_method,
         subtitle = subtitle,
         subtitleIsError = subtitle == notSelected,
@@ -283,7 +283,7 @@ private fun BecomeContributor(
     var showSheet by rememberState(false)
     if (ContributorUtils.isAtLeastQAndPossiblyRooted) SettingsItem(
         onClick = { showSheet = true },
-        icon = Icons.Outlined.GroupAdd,
+        icon = Symbols.Crowdsource,
         titleResId = R.string.contribute,
         subtitle = stringResource(R.string.settings_contribute_label),
     )
@@ -343,7 +343,7 @@ private fun Notifications() {
             ).putExtra("app_package", packageName).putExtra("app_uid", context.applicationInfo.uid)
             context.startActivity(intent)
         },
-        icon = Icons.Rounded.NotificationsNone,
+        icon = Symbols.Notifications,
         titleResId = R.string.preference_header_notifications,
         subtitle = notifSummary,
         subtitleIsError = subtitleIsError,
@@ -355,7 +355,7 @@ private fun Theme(onSelect: (Theme) -> Unit) {
     var showSheet by rememberState(false)
     SettingsItem(
         onClick = { showSheet = true },
-        icon = Icons.Outlined.Palette,
+        icon = Symbols.Palette,
         titleResId = R.string.label_theme,
         subtitle = stringResource(LocalTheme.current.titleResId),
     )
@@ -391,7 +391,7 @@ private fun Language() {
                 true // fallback just in case
             }
         },
-        icon = Icons.Outlined.Language,
+        icon = Symbols.Language,
         titleResId = R.string.label_language,
         subtitle = language,
     )
@@ -419,7 +419,7 @@ private fun AdvancedMode(
             onChange(it)
             advancedMode = it
         },
-        icon = Icons.Rounded.LockOpen,
+        icon = Symbols.LockOpen,
         titleResId = R.string.settings_advanced_mode,
         showWarning = { showSheet = true },
     )
@@ -445,7 +445,7 @@ fun SettingsAnalytics(
             shareLogs = it
             persistBool(KeyShareAnalyticsAndLogs, it)
         },
-        icon = Icons.Rounded.TrackChanges,
+        icon = Symbols.TrackChanges,
         titleResId = R.string.settings_upload_logs,
     )
 }
@@ -461,7 +461,7 @@ fun PrivacyOptionsItem(
 
     SettingsItem(
         onClick = showPrivacyOptionsForm,
-        icon = Icons.Rounded.AdsClick,
+        icon = Symbols.AdsClick,
         titleResId = R.string.settings_ad_privacy,
         subtitle = stringResource(R.string.settings_ad_privacy_subtitle),
     )
@@ -493,7 +493,7 @@ fun SettingsSwitchItem(
             onCheckedChange = checkedChange,
             thumbContent = {
                 if (!checked) return@Switch
-                Icon(Icons.Rounded.Done, null, Modifier.size(SwitchDefaults.IconSize))
+                Icon(Symbols.Check, null, Modifier.size(SwitchDefaults.IconSize))
             },
             modifier = Modifier.windowInsetsPadding(
                 // Leave space for 2/3-button nav bar in landscape mode

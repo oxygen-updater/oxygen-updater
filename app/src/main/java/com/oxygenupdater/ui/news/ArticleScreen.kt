@@ -11,11 +11,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Notes
-import androidx.compose.material.icons.outlined.Share
-import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
@@ -35,6 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.shareExternally
+import com.oxygenupdater.icons.Link
+import com.oxygenupdater.icons.Notes
+import com.oxygenupdater.icons.Schedule
+import com.oxygenupdater.icons.Share
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.GridItem
@@ -130,7 +130,7 @@ fun ArticleScreen(
             item.subtitle?.let {
                 showDivider = true
                 IconText(
-                    icon = Icons.AutoMirrored.Rounded.Notes,
+                    icon = Symbols.Notes,
                     text = it,
                     style = bodySmall,
                     textModifier = textModifier,
@@ -141,7 +141,7 @@ fun ArticleScreen(
             item.getRelativeTime()?.let {
                 showDivider = true
                 IconText(
-                    icon = Icons.Rounded.Schedule,
+                    icon = Symbols.Schedule,
                     text = it,
                     style = bodySmall,
                     textModifier = textModifier,
@@ -178,10 +178,10 @@ private fun Buttons(item: Article) = with(LocalContext.current) {
     LazyVerticalGrid(
         columnCount = 2,
         items = arrayOf(
-            GridItem(Icons.Outlined.Share, androidx.browser.R.string.fallback_menu_item_share_link) {
+            GridItem(Symbols.Share, androidx.browser.R.string.fallback_menu_item_share_link) {
                 shareExternally(item.title ?: "", item.webUrl)
             },
-            GridItem(Icons.Rounded.Link, androidx.browser.R.string.fallback_menu_item_copy_link) {
+            GridItem(Symbols.Link, androidx.browser.R.string.fallback_menu_item_copy_link) {
                 copyToClipboard(item.webUrl)
             },
         ),

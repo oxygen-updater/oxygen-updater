@@ -1,8 +1,6 @@
 package com.oxygenupdater.ui.dialogs
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.Launch
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +9,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.OpenInNew
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
@@ -31,7 +31,7 @@ fun AlreadyDownloadedSheet(
     SheetButtons(
         dismissResId = R.string.delete_message_delete_button,
         onDismiss = { onClick(false); hide() },
-        confirmIcon = Icons.AutoMirrored.Rounded.Launch,
+        confirmIcon = Symbols.OpenInNew,
         confirmResId = R.string.install,
         onConfirm = { onClick(true); hide() },
     )

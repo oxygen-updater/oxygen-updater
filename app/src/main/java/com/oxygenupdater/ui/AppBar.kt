@@ -31,8 +31,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -76,8 +74,10 @@ import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.lerp
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.ArrowBack
 import com.oxygenupdater.icons.LogoNotification
+import com.oxygenupdater.icons.Logos
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.common.rememberState
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -126,8 +126,8 @@ fun TopAppBar(
                     .padding(horizontal = 4.dp)
                     .testTag(AppBar_IconButtonTestTag)
             ) {
-                if (root) Icon(CustomIcons.LogoNotification, stringResource(R.string.about))
-                else Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
+                if (root) Icon(Logos.LogoNotification, stringResource(R.string.about))
+                else Icon(Symbols.ArrowBack, null)
             }
 
             // Title & subtitle
@@ -275,7 +275,7 @@ fun CollapsingAppBar(
                 .height(minHeight)
                 .padding(horizontal = 4.dp)
         ) {
-            Icon(Icons.AutoMirrored.Rounded.ArrowBack, null)
+            Icon(Symbols.ArrowBack, null)
         }
 
         Column(

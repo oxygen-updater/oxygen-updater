@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.extensions.showToast
+import com.oxygenupdater.icons.CheckCircle
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.internal.settings.KeyContribute
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.rememberState
@@ -71,7 +71,7 @@ private fun ContributorSheetEnroll(
     SheetButtons(
         dismissResId = android.R.string.cancel,
         onDismiss = hide,
-        confirmIcon = Icons.Rounded.CheckCircleOutline,
+        confirmIcon = Symbols.CheckCircle,
         confirmResId = R.string.contribute_save,
         onConfirm = {
             if (contribute) hasRootAccess {

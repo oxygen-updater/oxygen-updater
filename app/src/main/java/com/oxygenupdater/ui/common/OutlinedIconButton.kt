@@ -6,8 +6,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -20,6 +18,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Android
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
@@ -67,7 +67,7 @@ const val OutlinedIconButton_TextTestTag = TAG + "_Text"
 fun PreviewOutlinedIconButton() = PreviewAppTheme {
     OutlinedIconButton(
         onClick = {},
-        icon = Icons.Rounded.Android,
+        icon = Symbols.Android,
         textResId = R.string.app_name,
     )
 }

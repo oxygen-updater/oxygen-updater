@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -20,6 +18,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Notifications
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.common.CheckboxText
 import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -53,7 +53,7 @@ fun ColumnScope.NotificationPermissionSheet(
     SheetButtons(
         dismissResId = android.R.string.cancel,
         onDismiss = { hide(ignore) },
-        confirmIcon = Icons.Rounded.NotificationsNone,
+        confirmIcon = Symbols.Notifications,
         confirmResId = android.R.string.ok,
         /** Don't hide sheet here, [com.oxygenupdater.ui.main.NotificationPermission] will do it once granted */
         onConfirm = launchPermissionRequest,

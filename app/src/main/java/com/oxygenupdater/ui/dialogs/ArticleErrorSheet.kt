@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Autorenew
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Autorenew
+import com.oxygenupdater.icons.Symbols
 
 @Composable
 fun ColumnScope.ArticleErrorSheet(
@@ -47,7 +47,7 @@ fun ColumnScope.ArticleErrorSheet(
     SheetButtons(
         dismissResId = R.string.download_error_close,
         onDismiss = hide,
-        confirmIcon = Icons.Rounded.Autorenew,
+        confirmIcon = Symbols.Autorenew,
         confirmResId = R.string.download_error_retry,
         onConfirm = { confirm(); hide() },
         modifier = Modifier.navigationBarsPadding()

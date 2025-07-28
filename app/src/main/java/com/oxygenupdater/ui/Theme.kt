@@ -2,6 +2,8 @@ package com.oxygenupdater.ui
 
 import androidx.compose.runtime.Immutable
 import com.oxygenupdater.R
+import com.oxygenupdater.ui.Theme.Companion.Auto
+import com.oxygenupdater.ui.Theme.Companion.System
 
 /**
  * Integer values for app and OnePlus' system themes.

@@ -24,11 +24,12 @@ class NewsListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val refreshingFlow = MutableStateFlow(true)
-    private val flow = MutableStateFlow(try {
-        runBlocking(Dispatchers.IO) { serverRepository.fetchNewsFromDb() }
-    } catch (e: InterruptedException) {
-        listOf()
-    })
+    private val flow = MutableStateFlow(
+        try {
+            runBlocking(Dispatchers.IO) { serverRepository.fetchNewsFromDb() }
+        } catch (e: InterruptedException) {
+            listOf()
+        })
 
     val state = refreshingFlow.combine(flow) { refreshing, list ->
         RefreshAwareState(refreshing, list)

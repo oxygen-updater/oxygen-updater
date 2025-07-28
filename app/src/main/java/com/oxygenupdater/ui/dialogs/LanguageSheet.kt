@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
+import com.oxygenupdater.icons.Check
+import com.oxygenupdater.icons.Symbols
+import com.oxygenupdater.icons.WandStars
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStart
@@ -63,7 +63,7 @@ fun LanguageSheet(onClick: (String) -> Unit, selectedLocale: Locale) {
                 val locale = Locale.forLanguageTag(tag)
                 val selected = locale.approxEquals(selectedLocale)
                 if (selected) Icon(
-                    imageVector = Icons.Rounded.Done,
+                    imageVector = Symbols.Check,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
                     modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
@@ -97,7 +97,7 @@ fun LanguageSheet(onClick: (String) -> Unit, selectedLocale: Locale) {
                 }
 
                 if (locale.approxEquals(systemLocale)) Icon(
-                    imageVector = Icons.Rounded.AutoAwesome,
+                    imageVector = Symbols.WandStars,
                     contentDescription = stringResource(R.string.theme_auto),
                     tint = colorScheme.secondary,
                     modifier = modifierDefaultPaddingStart

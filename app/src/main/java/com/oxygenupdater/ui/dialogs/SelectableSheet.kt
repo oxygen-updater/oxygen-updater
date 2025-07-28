@@ -15,10 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,7 +36,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.Backspace
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.Check
+import com.oxygenupdater.icons.Search
+import com.oxygenupdater.icons.Symbols
+import com.oxygenupdater.icons.WandStars
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.models.SelectableModel
@@ -88,7 +87,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                     },
                     leadingIcon = {
                         Icon(
-                            imageVector = Icons.Rounded.Search,
+                            imageVector = Symbols.Search,
                             contentDescription = stringResource(android.R.string.search_go),
                         )
                     },
@@ -97,7 +96,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                             onClick = { query = "" },
                             modifier = Modifier.requiredWidth(40.dp)
                         ) {
-                            Icon(CustomIcons.Backspace, "Clear")
+                            Icon(Symbols.Backspace, "Clear")
                         }
                     },
                     modifier = Modifier.testTag(SelectableSheet_SearchBarFieldTestTag)
@@ -149,7 +148,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                 val id = item.id
                 val selected = selectedId == id
                 if (selected) Icon(
-                    imageVector = Icons.Rounded.Done,
+                    imageVector = Symbols.Check,
                     contentDescription = stringResource(R.string.summary_on),
                     tint = primary,
                     modifier = Modifier.padding(end = 16.dp) then modifierSemanticsSelected
@@ -179,7 +178,7 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
                 }
 
                 if (id == recommendedId) Icon(
-                    imageVector = Icons.Rounded.AutoAwesome,
+                    imageVector = Symbols.WandStars,
                     contentDescription = stringResource(R.string.theme_auto),
                     tint = colorScheme.secondary,
                     modifier = modifierDefaultPaddingStart

@@ -1,0 +1,87 @@
+package com.oxygenupdater.icons
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+
+val Symbols.WandStars: ImageVector
+    get() = _wandStars ?: materialSymbol(
+        name = "WandStars",
+    ) {
+        moveToRelative(646.0f, 522.0f)
+        lineToRelative(-86.0f, 138.0f)
+        quadToRelative(-11.0f, 17.0f, -30.5f, 14.0f)
+        reflectiveQuadTo(505.0f, 651.0f)
+        lineToRelative(-28.0f, -112.0f)
+        lineToRelative(-273.0f, 273.0f)
+        quadToRelative(-11.0f, 11.0f, -27.5f, 11.5f)
+        reflectiveQuadTo(148.0f, 812.0f)
+        quadToRelative(-11.0f, -11.0f, -11.0f, -28.0f)
+        reflectiveQuadToRelative(11.0f, -28.0f)
+        lineToRelative(273.0f, -274.0f)
+        lineToRelative(-112.0f, -28.0f)
+        quadToRelative(-20.0f, -5.0f, -23.0f, -24.5f)
+        reflectiveQuadToRelative(14.0f, -30.5f)
+        lineToRelative(138.0f, -85.0f)
+        lineToRelative(-12.0f, -163.0f)
+        quadToRelative(-2.0f, -20.0f, 16.0f, -29.0f)
+        reflectiveQuadToRelative(33.0f, 4.0f)
+        lineToRelative(125.0f, 105.0f)
+        lineToRelative(151.0f, -61.0f)
+        quadToRelative(19.0f, -8.0f, 33.0f, 6.0f)
+        reflectiveQuadToRelative(6.0f, 33.0f)
+        lineToRelative(-61.0f, 151.0f)
+        lineToRelative(105.0f, 124.0f)
+        quadToRelative(13.0f, 15.0f, 4.0f, 33.0f)
+        reflectiveQuadToRelative(-29.0f, 16.0f)
+        lineToRelative(-163.0f, -11.0f)
+        close()
+        moveTo(134.0f, 254.0f)
+        quadToRelative(-6.0f, -6.0f, -6.0f, -14.0f)
+        reflectiveQuadToRelative(6.0f, -14.0f)
+        lineToRelative(52.0f, -52.0f)
+        quadToRelative(6.0f, -6.0f, 14.0f, -6.0f)
+        reflectiveQuadToRelative(14.0f, 6.0f)
+        lineToRelative(52.0f, 52.0f)
+        quadToRelative(6.0f, 6.0f, 6.0f, 14.0f)
+        reflectiveQuadToRelative(-6.0f, 14.0f)
+        lineToRelative(-52.0f, 52.0f)
+        quadToRelative(-6.0f, 6.0f, -14.0f, 6.0f)
+        reflectiveQuadToRelative(-14.0f, -6.0f)
+        lineToRelative(-52.0f, -52.0f)
+        close()
+        moveTo(555.0f, 517.0f)
+        lineTo(603.0f, 438.0f)
+        lineTo(696.0f, 445.0f)
+        lineTo(636.0f, 374.0f)
+        lineTo(671.0f, 288.0f)
+        lineTo(585.0f, 323.0f)
+        lineTo(514.0f, 264.0f)
+        lineTo(521.0f, 356.0f)
+        lineTo(442.0f, 405.0f)
+        lineTo(532.0f, 427.0f)
+        lineTo(555.0f, 517.0f)
+        close()
+        moveTo(706.0f, 826.0f)
+        lineTo(654.0f, 774.0f)
+        quadToRelative(-6.0f, -6.0f, -6.0f, -14.0f)
+        reflectiveQuadToRelative(6.0f, -14.0f)
+        lineToRelative(52.0f, -52.0f)
+        quadToRelative(6.0f, -6.0f, 14.0f, -6.0f)
+        reflectiveQuadToRelative(14.0f, 6.0f)
+        lineToRelative(52.0f, 52.0f)
+        quadToRelative(6.0f, 6.0f, 6.0f, 14.0f)
+        reflectiveQuadToRelative(-6.0f, 14.0f)
+        lineToRelative(-52.0f, 52.0f)
+        quadToRelative(-6.0f, 6.0f, -14.0f, 6.0f)
+        reflectiveQuadToRelative(-14.0f, -6.0f)
+        close()
+        moveTo(569.0f, 390.0f)
+        close()
+    }.also { _wandStars = it }
+
+private var _wandStars: ImageVector? = null
+
+@Preview
+@Composable
+private fun Preview() = PreviewIcon(Symbols.WandStars)
