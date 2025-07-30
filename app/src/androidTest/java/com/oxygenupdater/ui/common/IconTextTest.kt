@@ -1,9 +1,6 @@
 package com.oxygenupdater.ui.common
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Android
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +13,9 @@ import com.oxygenupdater.ComposeBaseTest
 import com.oxygenupdater.LineHeightForTextStyle
 import com.oxygenupdater.assertSizeIsEqualTo
 import com.oxygenupdater.get
+import com.oxygenupdater.icons.Android
+import com.oxygenupdater.icons.Check
+import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.validateRowLayout
 import org.junit.Test
 
@@ -27,7 +27,7 @@ class IconTextTest : ComposeBaseTest() {
         var content by mutableStateOf<(@Composable RowScope.() -> Unit)?>(null)
         setContent {
             IconText(
-                icon = Icons.Rounded.Android,
+                icon = Symbols.Android,
                 text = text,
                 maxLines = 1,
                 content = content,
@@ -51,7 +51,7 @@ class IconTextTest : ComposeBaseTest() {
         // Then for non-null
         content = {
             Icon(
-                imageVector = Icons.Rounded.Done,
+                imageVector = Symbols.Check,
                 contentDescription = null,
                 modifier = Modifier.testTag(ContentTestTag)
             )

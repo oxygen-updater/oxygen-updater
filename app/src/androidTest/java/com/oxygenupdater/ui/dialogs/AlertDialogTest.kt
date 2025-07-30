@@ -12,7 +12,7 @@ import androidx.compose.ui.test.onParent
 import com.oxygenupdater.ComposeBaseTest
 import com.oxygenupdater.R
 import com.oxygenupdater.get
-import com.oxygenupdater.icons.CustomIcons
+import com.oxygenupdater.icons.Logos
 import com.oxygenupdater.icons.PlayStore
 import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
 import org.junit.Test
@@ -47,7 +47,7 @@ class AlertDialogTest : ComposeBaseTest() {
         rule[AlertDialog_ContentTestTag].assertDoesNotExist()
 
         // Then for non-null
-        confirmIconAndResId = CustomIcons.PlayStore to R.string.error_google_play_button_text
+        confirmIconAndResId = Logos.PlayStore to R.string.error_google_play_button_text
         content = {}
         rule[OutlinedIconButtonTestTag].assertExists()
         rule[AlertDialog_ContentTestTag].assertExists()
