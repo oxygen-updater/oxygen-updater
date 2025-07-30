@@ -572,11 +572,16 @@ private fun NewsImage(
     AsyncImage(
         model = item.imageUrl?.let {
             val context = LocalContext.current
-            val sizePx = LocalDensity.current.run { size.width.roundToPx() to size.height.roundToPx() }
-            remember(it, sizePx) {
+            val widthPx: Int
+            val heightPx: Int
+            LocalDensity.current.run {
+                widthPx = size.width.roundToPx()
+                heightPx = size.height.roundToPx()
+            }
+            remember(it, widthPx, heightPx) {
                 ImageRequest.Builder(context)
                     .data(it)
-                    .size(sizePx.first, sizePx.second)
+                    .size(widthPx, heightPx)
                     .build()
             }
         },
