@@ -69,14 +69,14 @@ fun appTypography(): Typography {
         headlineSmall = DefaultTextStyle.copy(
             fontFamily = googleSans,
             fontWeight = FontWeight.Medium,
-            fontSize = 24.sp, //  keep in sync with CollapsingAppBarTitleSize in ../AppBar.kt
+            fontSize = 24.sp, //  keep in sync with CollapsingAppBarMaxTitleSize in ../AppBar.kt
             lineHeight = 32.sp,
             letterSpacing = 0.sp,
         ),
         titleLarge = DefaultTextStyle.copy(
             fontFamily = googleSans,
             fontWeight = FontWeight.Medium,
-            fontSize = 22.sp, //  keep in sync with CollapsingAppBarTitleSize in ../AppBar.kt
+            fontSize = 22.sp, //  keep in sync with CollapsingAppBarMinTitleSize in ../AppBar.kt
             lineHeight = 28.sp,
             letterSpacing = 0.sp,
         ),
@@ -95,12 +95,12 @@ fun appTypography(): Typography {
             letterSpacing = 0.1.sp,
         ),
         bodyLarge = DefaultTextStyle.copy(
-            fontSize = 16.sp, //  keep in sync with CollapsingAppBarSubtitleSize in ../AppBar.kt
+            fontSize = 16.sp, //  keep in sync with CollapsingAppBarMaxSubtitleSize in ../AppBar.kt
             lineHeight = 24.sp,
             letterSpacing = 0.5.sp,
         ),
         bodyMedium = DefaultTextStyle.copy(
-            fontSize = 14.sp, //  keep in sync with CollapsingAppBarSubtitleSize in ../AppBar.kt
+            fontSize = 14.sp, //  keep in sync with CollapsingAppBarMinSubtitleSize in ../AppBar.kt
             lineHeight = 20.sp,
             letterSpacing = 0.25.sp,
         ),

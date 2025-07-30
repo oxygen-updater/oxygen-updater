@@ -130,7 +130,7 @@ class AppBarTest : ComposeBaseTest() {
         rule[AppBar_TitleTestTag, true].assertXPositionExactly(20.dp)
         rule[AppBar_SubtitleTestTag, true].assertXPositionExactly(20.dp)
         rule[AppBar_IconButtonTestTag].run {
-            assertHeightIsAtLeast(CollapsingAppBarHeight.first)
+            assertHeightIsAtLeast(CollapsingAppBarMinHeight)
             assertAndPerformClick()
             ensureCallbackInvokedExactlyOnce("onNavIconClick")
         }

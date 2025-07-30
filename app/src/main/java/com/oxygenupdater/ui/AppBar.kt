@@ -98,7 +98,7 @@ fun TopAppBar(
     val heightPx: Int
     with(LocalDensity.current) {
         statusBarHeightPx = WindowInsets.statusBars.getTop(this)
-        heightPx = CollapsingAppBarHeight.first.roundToPx() + statusBarHeightPx
+        heightPx = CollapsingAppBarMinHeight.roundToPx() + statusBarHeightPx
     }
 
     // Sets the app bar's height offset to collapse the entire bar's height when content is
@@ -226,8 +226,6 @@ fun CollapsingAppBar(
     subtitle: String? = null,
     onNavIconClick: (() -> Unit)? = null,
 ) {
-    val (minHeight, maxHeight) = remember { CollapsingAppBarHeight }
-
     val statusBarHeightPx: Int
     val heightOffset: Dp
     val heightOffsetPx = scrollBehavior.state.heightOffset
@@ -238,12 +236,12 @@ fun CollapsingAppBar(
         statusBarHeightPx = WindowInsets.statusBars.getTop(this)
         heightOffset = heightOffsetPx.toDp()
 
-        minHeightPx = remember { minHeight.toPx() }
-        maxHeightPx = remember { maxHeight.toPx() }
+        minHeightPx = remember { CollapsingAppBarMinHeight.toPx() }
+        maxHeightPx = remember { CollapsingAppBarMaxHeight.toPx() }
         bottomPaddingPx = remember { CollapsingAppBarBottomPadding.roundToPx() }
     }
 
-    val height = (maxHeight + heightOffset).coerceAtLeast(minHeight)
+    val height = (CollapsingAppBarMaxHeight + heightOffset).coerceAtLeast(CollapsingAppBarMinHeight)
     val heightPx = (maxHeightPx + heightOffsetPx).fastCoerceAtLeast(minHeightPx)
 
     // Sets the app bar's height offset limit to hide just the bottom title area and keep top title
@@ -266,13 +264,13 @@ fun CollapsingAppBar(
 
             image(size)
             Box(size.background(background))
-            if (height != maxHeight) HorizontalDivider(Modifier.align(Alignment.BottomStart))
+            if (height != CollapsingAppBarMaxHeight) HorizontalDivider(Modifier.align(Alignment.BottomStart))
         }
 
         if (onNavIconClick != null) IconButton(
             onClick = onNavIconClick,
             modifier = layoutIdNavIconModifier
-                .height(minHeight)
+                .height(CollapsingAppBarMinHeight)
                 .padding(horizontal = 4.dp)
         ) {
             Icon(Symbols.ArrowBack, null)
@@ -288,16 +286,13 @@ fun CollapsingAppBar(
         ) {
             CollapsingAppBarTitle(collapsedFraction = { collapsedFraction }, title = title)
 
-            if (subtitle != null) {
-                val (minSubtitleSize, maxSubtitleSize) = CollapsingAppBarSubtitleSize
-                Text(
-                    text = subtitle,
-                    fontSize = lerp(maxSubtitleSize, minSubtitleSize, collapsedFraction).sp,
-                    overflow = TextOverflow.Ellipsis, maxLines = 1,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.testTag(AppBar_SubtitleTestTag)
-                )
-            }
+            if (subtitle != null) Text(
+                text = subtitle,
+                fontSize = lerp(CollapsingAppBarMaxSubtitleSize, CollapsingAppBarMinSubtitleSize, collapsedFraction).sp,
+                overflow = TextOverflow.Ellipsis, maxLines = 1,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.testTag(AppBar_SubtitleTestTag)
+            )
         }
         // Note: we're intentionally not consuming horizontal system bar insets
         // because it'd be an issue only below Android 6/Marshmallow, where nav
@@ -343,7 +338,6 @@ private fun CollapsingAppBarTitle(
     val tooltipState = rememberTooltipState(isPersistent = true)
     BackHandler(tooltipState.isVisible) { tooltipState.dismiss() }
 
-    val (minTitleSize, maxTitleSize) = CollapsingAppBarTitleSize
     TooltipBox(
         positionProvider = TooltipDefaults.rememberRichTooltipPositionProvider(),
         tooltip = {
@@ -367,7 +361,7 @@ private fun CollapsingAppBarTitle(
             onTextLayout = { showTooltip = it.hasVisualOverflow },
             overflow = TextOverflow.Ellipsis,
             maxLines = lerp(4, 1, fraction),
-            fontSize = lerp(maxTitleSize, minTitleSize, fraction).sp,
+            fontSize = lerp(CollapsingAppBarMaxTitleSize, CollapsingAppBarMinTitleSize, fraction).sp,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.testTag(AppBar_TitleTestTag)
         )
@@ -413,18 +407,26 @@ private val layoutIdNavIconModifier = Modifier
 private val layoutIdTextModifier = Modifier.layoutId(LayoutIdText)
 private val layoutIdActionsModifier = Modifier.layoutId(LayoutIdActions)
 
-/** min (material3/tokens/TopAppBarSmallTokens.ContainerHeight) to max */
+/** same as [androidx.compose.material3.tokens.AppBarSmallTokens.ContainerHeight] */
 @VisibleForTesting
-val CollapsingAppBarHeight = 64.dp to 256.dp
+val CollapsingAppBarMinHeight = 64.dp
 
-/** same as LargeTitleBottomPadding in material3/AppBar.kt */
+private val CollapsingAppBarMaxHeight = 256.dp
+
+/** same as [androidx.compose.material3.LargeTitleBottomPadding] */
 private val CollapsingAppBarBottomPadding = 28.dp
 
-/** min (titleLarge) to max (headlineSmall) */
-private val CollapsingAppBarTitleSize = 22f to 24f
+/** [androidx.compose.material3.Typography.titleLarge] */
+private const val CollapsingAppBarMinTitleSize = 22f
 
-/** min (bodyMedium) to max (bodyLarge) */
-private val CollapsingAppBarSubtitleSize = 14f to 16f
+/** [androidx.compose.material3.Typography.headlineSmall] */
+private const val CollapsingAppBarMaxTitleSize = 24f
+
+/** [androidx.compose.material3.Typography.bodyMedium] */
+private const val CollapsingAppBarMinSubtitleSize = 14f
+
+/** [androidx.compose.material3.Typography.bodyLarge] */
+private const val CollapsingAppBarMaxSubtitleSize = 16f
 
 private val accelerateInterpolator = AccelerateInterpolator(3f)
 
