@@ -20,8 +20,8 @@ class RememberSaveableStateTest : ComposeBaseTest() {
     @Test
     fun rememberSaveableState_retentionAfterRestoration() {
         restorationTester.setContent {
-            var show by rememberSaveableState("show", false) // generic
-            var value by rememberSaveableState("value", 0) // Int overload
+            var show by rememberSaveableState(false) // generic
+            var value by rememberSaveableState(0) // Int overload
             Button(
                 onClick = { show = true; value++ },
                 modifier = Modifier.testTag(ButtonTestTag)

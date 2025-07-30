@@ -102,8 +102,9 @@ fun ArticleScreen(
     onLoadFinished: (Article) -> Unit,
 ) {
     val (refreshing, data) = state
-    // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
-    val item = rememberSaveable(data ?: return, key = data.id.toString()) { data }
+    // We're using `id` not just for efficiency, but also because of https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269.
+    // The `key` overload was deprecated in Compose 1.9.0-alpha02.
+    val item = rememberSaveable(data?.id ?: return) { data }
 
     PullRefresh(
         state = state,

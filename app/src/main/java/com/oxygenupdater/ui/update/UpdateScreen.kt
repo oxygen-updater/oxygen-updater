@@ -58,8 +58,9 @@ fun UpdateScreen(
         return@PullRefresh // skip the rest
     }
 
-    // TODO(compose): remove `key` if https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269 is resolved
-    val updateData = if (!refreshing) rememberSaveable(data, key = data.id.toString()) { data } else data
+    // We're using `id` not just for efficiency, but also because of https://kotlinlang.slack.com/archives/CJLTWPH7S/p1693203706074269.
+    // The `key` overload was deprecated in Compose 1.9.0-alpha02.
+    val updateData = if (!refreshing) rememberSaveable(data.id) { data } else data
     val filename = updateData.filename
 
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
