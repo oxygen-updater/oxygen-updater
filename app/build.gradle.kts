@@ -149,9 +149,11 @@ android {
 
         val languages = fileTree("src/main/res") {
             include("values-*/strings.xml")
-        }.files.mapNotNull {
-            it.parentFile?.name?.removePrefix("values-")?.replace("-r", "-")
-        }.joinToString { "\"$it\"" }
+        }.files.run {
+            mapNotNull {
+                it.parentFile?.name?.removePrefix("values-")?.replace("-r", "-")
+            }.joinToString { "\"$it\"" }
+        }
         buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
         testApplicationId = "$namespace.$testBuildType"
