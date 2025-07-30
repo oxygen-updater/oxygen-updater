@@ -42,7 +42,11 @@ object SystemVersionProperties {
     private const val OnePlus3 = "OnePlus3"
 
     /** Required for workaround #6 */
-    private val OnePlusPadAndPad2 = arrayOf("OPD2203", "OPD2403")
+    private val OnePlusPadSeries = arrayOf(
+        "OPD2203", // Pad 1
+        "OPD2403", // Pad 2
+        "OPD2415", // Pad 3
+    )
 
     /** Required for workaround #5 */
     private val OnePlus7Series = arrayOf("OnePlus7", "OnePlus7Pro")
@@ -172,9 +176,11 @@ object SystemVersionProperties {
 
             pipeline = pickFirstValid(OplusPipelineLookupKeys, pipeline) { _, value -> value }
             if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
-                if (deviceProductName in OnePlusPadAndPad2) {
-                    // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
-                    if (pipeline != "EUEX") deviceProductName += pipeline
+                if (deviceProductName in OnePlusPadSeries) {
+                    // Append pipeline to model number, only if it's not already part of it. A quick check is to
+                    // see if the last character is a digit, since pipelines are almost exclusively alphabets.
+                    val lastChar = pipeline.lastOrNull() ?: '0'
+                    if (lastChar in '0'..'9') deviceProductName += pipeline
                 } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
@@ -249,9 +255,11 @@ object SystemVersionProperties {
 
                 pipeline = readBuildPropItem(OplusPipelineLookupKeys, properties, pipeline)
                 if (SDK_INT >= VERSION_CODES.S && pipeline != UNKNOWN) {
-                    if (deviceProductName in OnePlusPadAndPad2) {
-                        // Skip EUEX because that's already supported as OPD2203EEA/OPD2403EEA
-                        if (pipeline != "EUEX") deviceProductName += pipeline
+                    if (deviceProductName in OnePlusPadSeries) {
+                        // Append pipeline to model number, only if it's not already part of it. A quick check is to
+                        // see if the last character is a digit, since pipelines are almost exclusively alphabets.
+                        val lastChar = pipeline.lastOrNull() ?: '0'
+                        if (lastChar in '0'..'9') deviceProductName += pipeline
                     } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                         // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
