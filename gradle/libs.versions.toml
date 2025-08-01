@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.11.1"
+agp = "8.12.0"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.5"
@@ -32,7 +32,7 @@ accompanist = "0.37.3" # keep in sync with Compose version
 activity-compose = "1.10.1"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation
-navigation-compose = "2.9.2"
+navigation-compose = "2.9.3"
 
 # https://github.com/eygraber/compose-placeholder/releases
 eygraber-placeholder-compose = "1.0.11"
@@ -50,7 +50,7 @@ annotation = "1.9.1"
 billing = "8.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
-browser = "1.8.0"
+browser = "1.9.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
 core = "1.16.0"
@@ -106,14 +106,14 @@ retrofit = "3.0.0"
 room = "2.7.2"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.10.2"
+work-runtime = "2.10.3"
 
 # https://developer.android.com/jetpack/androidx/releases/test
-test-core = "1.6.1"
-test-runner = "1.6.2"
-test-rules = "1.6.1"
-test-ext-truth = "1.6.0"
-test-ext-junit = "1.2.1"
+test-core = "1.7.0"
+test-runner = "1.7.0"
+test-rules = "1.7.0"
+test-ext-truth = "1.7.0"
+test-ext-junit = "1.3.0"
 
 # https://developer.android.com/jetpack/androidx/releases/tracing
 tracing = "1.3.0"
