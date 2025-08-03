@@ -37,7 +37,7 @@ fun AppTheme(
     val dark = theme.dark ?: if (theme == Theme.System) isSystemInDarkTheme() else remember {
         // Avoid a potentially expensive call
         Calendar.getInstance()[Calendar.HOUR_OF_DAY].let { hour ->
-            if (hour in 19..23 || hour in 0..6) true
+            if (hour >= 19 && hour <= 23 || hour >= 0 && hour <= 6) true
             else context.getSystemService<PowerManager>()?.isPowerSaveMode == true
         }
     }

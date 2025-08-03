@@ -179,8 +179,8 @@ object SystemVersionProperties {
                 if (deviceProductName in OnePlusPadSeries) {
                     // Append pipeline to model number, only if it's not already part of it. A quick check is to
                     // see if the last character is a digit, since pipelines are almost exclusively alphabets.
-                    val lastChar = pipeline.lastOrNull() ?: '0'
-                    if (lastChar in '0'..'9') deviceProductName += pipeline
+                    val lastChar = deviceProductName.lastOrNull() ?: '0'
+                    if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
                 } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
@@ -190,8 +190,8 @@ object SystemVersionProperties {
                     // Special handling for OPPO phones. They often use the same model number across all regions.
                     // Append pipeline to model number, only if it's not already part of it. A quick check is to
                     // see if the last character is a digit, since pipelines are almost exclusively alphabets.
-                    val lastChar = pipeline.lastOrNull() ?: '0'
-                    if (lastChar in '0'..'9') deviceProductName += pipeline
+                    val lastChar = deviceProductName.lastOrNull() ?: '0'
+                    if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
                 }
             }
 
@@ -258,8 +258,8 @@ object SystemVersionProperties {
                     if (deviceProductName in OnePlusPadSeries) {
                         // Append pipeline to model number, only if it's not already part of it. A quick check is to
                         // see if the last character is a digit, since pipelines are almost exclusively alphabets.
-                        val lastChar = pipeline.lastOrNull() ?: '0'
-                        if (lastChar in '0'..'9') deviceProductName += pipeline
+                        val lastChar = deviceProductName.lastOrNull() ?: '0'
+                        if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
                     } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                         // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
@@ -269,8 +269,8 @@ object SystemVersionProperties {
                         // Special handling for OPPO phones. They often use the same model number across all regions.
                         // Append pipeline to model number, only if it's not already part of it. A quick check is to
                         // see if the last character is a digit, since pipelines are almost exclusively alphabets.
-                        val lastChar = pipeline.lastOrNull() ?: '0'
-                        if (lastChar in '0'..'9') deviceProductName += pipeline
+                        val lastChar = deviceProductName.lastOrNull() ?: '0'
+                        if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
                     }
                 }
 
