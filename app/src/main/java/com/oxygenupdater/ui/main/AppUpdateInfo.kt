@@ -30,10 +30,15 @@ fun AppUpdateInfo(
     unregisterAppUpdateListener()
     updateSnackbarText(AppUpdateDownloadedSnackbarData)
 } else {
-    if (snackbarMessageId() == AppUpdateDownloadedSnackbarData.first) {
-        // Dismiss only this snackbar
-        updateSnackbarText(null)
-    }
+    /**
+     * Note that we're not dismissing [AppUpdateDownloadedSnackbarData] because it is meant
+     * to be a persistent message that the user must interact with (the 'Reload' action to
+     * apply the update). In any case, if we were to dismiss it, it shouldn't be done here;
+     * rather, only in [FlexibleAppUpdateProgress], to allow that composable to handle the
+     * complete flow of a flexible app update, i.e. from start to finish. Duplicating the
+     * dismissal code here would have the effect of immediately dismissing the snackbar
+     * that was shown via [FlexibleAppUpdateProgress], which is of course not intended.
+     */
 
     /**
      * Control comes back to the activity in the form of a result only for a `FLEXIBLE` update request,

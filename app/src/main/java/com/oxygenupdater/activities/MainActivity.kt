@@ -602,6 +602,7 @@ class MainActivity : AppCompatActivity() {
                         totalBytesToDownload = it::totalBytesToDownload,
                         snackbarMessageId = { snackbarText?.first },
                         updateSnackbarText = { snackbarText = it },
+                        unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
                     )
                 }
 

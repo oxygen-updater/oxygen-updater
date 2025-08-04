@@ -19,13 +19,21 @@ fun FlexibleAppUpdateProgress(
     totalBytesToDownload: () -> Long,
     snackbarMessageId: () -> Int?,
     updateSnackbarText: (IntIntPair?) -> Unit,
+    unregisterAppUpdateListener: () -> Unit,
 ) {
     if (status == InstallStatus.DOWNLOADED) {
+        unregisterAppUpdateListener() // no need to observe progress now
         updateSnackbarText(AppUpdateDownloadedSnackbarData)
-    } else if (snackbarMessageId() == AppUpdateDownloadedSnackbarData.first) {
-        // Dismiss only this snackbar
-        updateSnackbarText(null)
     }
+    /**
+     * Note that we're not dismissing [AppUpdateDownloadedSnackbarData] because it is meant
+     * to be a persistent message that the user must interact with (the 'Reload' action to
+     * apply the update). In any case, if we were to dismiss it, it should only be done in
+     * this composable, and not [AppUpdateInfo], to allow this composable to handle the
+     * complete flow of a flexible app update, i.e. from start to finish. Duplicating the
+     * dismissal code in [AppUpdateInfo] would have the effect of immediately dismissing
+     * the snackbar that was shown via this composable, which is of course not intended.
+     */
 
     if (status == InstallStatus.PENDING) LinearProgressIndicator(
         modifierMaxWidth.testTag(FlexibleAppUpdateProgress_IndicatorTestTag)
