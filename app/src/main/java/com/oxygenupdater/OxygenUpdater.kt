@@ -9,6 +9,8 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.StrictMode
 import android.util.Log
+import androidx.compose.runtime.Composer
+import androidx.compose.runtime.ExperimentalComposeRuntimeApi
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
@@ -104,6 +106,9 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
 
         setupCrashReporting()
         setupNetworkCallback()
+
+        @OptIn(ExperimentalComposeRuntimeApi::class)
+        Composer.setDiagnosticStackTraceEnabled(BuildConfig.DEBUG)
 
         if (SDK_INT >= VERSION_CODES.O) NotifUtils.refreshNotificationChannels(this)
 

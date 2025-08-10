@@ -4,24 +4,24 @@
 agp = "8.12.0"
 
 # https://firebase.google.com/support/release-notes/android
-crashlytics-plugin = "3.0.5"
+crashlytics-plugin = "3.0.6"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
 google-services-plugin = "4.4.3"
 
 # https://github.com/google/ksp/releases
-ksp = "2.2.0-2.0.2"
+ksp = "2.2.10-2.0.2"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "2.2.0"
+kotlin = "2.2.10"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.10.2"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.8.3" # keep in sync with Accompanist version
+compose = "1.9.0" # keep in sync with Accompanist version
 compose-m3 = "1.3.2" # update sideRailWidth in MainActivity if changed
 
 # https://github.com/google/accompanist#compose-versions
@@ -53,7 +53,7 @@ billing = "8.0.0"
 browser = "1.9.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
-core = "1.16.0"
+core = "1.17.0"
 core-splashscreen = "1.0.1"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
