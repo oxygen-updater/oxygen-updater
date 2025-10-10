@@ -274,14 +274,14 @@
 	<string name="unsupported_os_warning_message">Изгледа као да ваш уређај није на OxygenOS/ColorOS-у. Молимо вас запамтите да можете да радите ажурирања само за уређаје са OxygenOS/ColorOS-ом.\n\nОстали уређаји, укључујући OPPO/OnePlus уређаје који користе друге ROM-ове нису подржани.</string>
 
 	<!-- TODO: translate these 2 strings below -->
-	<string name="incorrect_device_warning_title">Selected device mismatch</string>
-	<string name="incorrect_device_warning_message">It looks like you\'ve selected the wrong device: \"%1$s\", instead of \"%2$s\". Change your selection in the app\'s settings to ensure you receive updates and notifications for the correct device.</string>
+	<string name="incorrect_device_warning_title">Обележени уређај се не подудара</string>
+	<string name="incorrect_device_warning_message">Изгледа као да сте изабрали погрешан уређај: \"%1$s\", уместо \"%2$s\". Промените ваш избор у подешавању апликације да би осигурали добијање исправних ажурирања и нотификација за исправан уређај.</string>
 
 	<string name="do_not_show_again_checkbox">Не приказуј поново</string>
 
 	<!-- Purchasing strings -->
 	<!-- TODO: translate this string below -->
-	<string name="purchase_error_pending_payment">Your purchase is in the \"payment pending\" state. Once payment is completed, you\'ll be granted all benefits that you\'re entitled to.</string>
+    <string name="purchase_error_pending_payment">Твоја куповина је у \"чекање на плаћање\" статусу. Када плаћање буде завршено, добићете све бенефите који вам припадају.</string>
 	<string name="purchase_error_after_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута. Ако сте већ платили, молимо вас контактирајте Google Play подршку.</string>
 
 	<!-- Other strings-->
