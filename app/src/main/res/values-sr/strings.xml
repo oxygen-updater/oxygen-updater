@@ -10,8 +10,7 @@
 
 	<string name="update_information_error_title">Не могу преузети најновије информације о ажурирању</string>
 	<string name="update_information_banner_server">Додирните овде да бисте видели важна обавештења</string>
-	<!-- TODO: translate these 2 strings below -->
-	<string name="update_information_banner_advanced_mode_tip">You\'ve selected the \"%1$s\" update method. Enable напредни мод if you plan to switch to this update method.</string>
+	<string name="update_information_banner_advanced_mode_tip">Обележио си \"%1$s\" метод ажурирања. Омогући напредни мод ако желиш да се пребациш на овај метод ажурирања.</string>
 	<string name="update_information_header_advanced_mode_hint">Омогућен је напредни режим</string>
 	<string name="update_information_header_advanced_mode_helper">Пошто сте укључили напредни мод, можете преузети последњи ZIP за \"%1$s\". Можете искључити напредни мод из подешавања.</string>
 	<string name="update_information_different_version_changelog_notice_base">Напомена: овај дневник промена је за најновију доступну верзију (%1$s) у методи ажурирања \"%2$s\"</string>
@@ -32,8 +31,7 @@
 	<string name="new_app_version_inapp_failed">Ажурирање се не може извршити. Кликните овде да отворите Play продавницу и урадите ажурирање апликације.</string>
 
 	<!-- Downloader strings-->
-	<!-- TODO: translate this string below -->
-	<string name="grant_all_files_access">Please enable \"All files access\" for the app, which is used only for downloading OTA ZIPs to the topmost directory of internal storage</string>
+	<string name="grant_all_files_access">Молим те омогући \"Приступ свим фајловима\" за ову апликацију, који се користи само за OTA ZIPs у највишем директоријуму интерне меморије</string>
 	<string name="download">Преузмите ажурирање</string>
 	<string name="downloaded">Ажурирање преузето</string>
 	<string name="downloading">Преузимање ажурирања…</string>
@@ -91,7 +89,6 @@
 	<string name="summary_off">Онемогућено</string>
 	<string name="summary_please_wait">Молимо сачекајте…</string>
 	<string name="summary_update_method">Прво селектујте уређај</string>
-	<!-- TODO: check the following translation -->
 	<string name="summary_important_notifications_disabled">Нека важна обавештења су онемогућена:</string>
 	<string name="summary_privacy_policy">Погледајте на интернету</string>
 	<string name="summary_rate_app">Оставите нам 5 звездица</string>
@@ -100,7 +97,7 @@
 	<string name="label_theme">Тема</string>
 	<string name="label_language">Језик</string>
 	<string name="label_privacy_policy">Политика приватности</string>
-	<string name="label_rate_app">Rate this app</string>
+	<string name="label_rate_app">Оцени ову апликацију</string>
 
 	<string name="theme_light">Светло</string>
 	<string name="theme_dark">Тамно</string>
@@ -186,10 +183,9 @@
 
 	<!-- About screen strings -->
 	<string name="about">О томе</string>
-	<!-- TODO: translate these 3 strings below -->
-	<string name="about_description">This app downloads official updates directly from OPPO/OnePlus servers, and even verifies the integrity of the downloaded ZIP before allowing you to install. By doing so, the app allows you to skip the rollout queue and install official updates ASAP. If you encounter bugs in the OS, report them to OPPO/OnePlus directly: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. You might want to join our <a href="https://discord.gg/5TXdhKJ">Discord server</a> as well, so that you can talk to other users about the latest updates. Otherwise feel free to email us at <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> with your suggestions/feedback.</string>
-	<string name="about_support">If you\'d like to support us, you can either buy the ad-free unlock (app\'s settings), or check our <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
-	<string name="about_background_story_header">Background story</string>
+	<string name="about_description">Ова апликација преузима ажурирања директно са OPPO/OnePlus сервера, чак и проверава интегритет преузетих ZIP фајлова пре него што ти допусти да их инсталираш. Радећи то, апликација ти омогућава да инсталираш ажурирања без чекања што је пре могуће. Ако наиђеш на багове у оперативном систему, пријави их директно OPPO/OnePlus-у: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. Можеш такође да се придружиш нашем <a href="https://discord.gg/5TXdhKJ">Discord серверу</a> , где можеш да причаш са осталим корисницима. У супротном, можеш нам слободно писати на мејл <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> са твојом сугестијом или повратном информацијом.</string>
+	<string name="about_support">Ако желиш да нас подржиш, можеш да купиш апликацију без реклама у подешавањима апликације, или посетиш нашу <a href="https://patreon.com/oxygenupdater">Patreon страницу</a>.</string>
+	<string name="about_background_story_header">Позадинска прича</string>
 	<string name="about_background_story">Ова апликација је оригинално направљена од стране Arjan Vlek-а као наследник за још једну од његових апликација звану <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (која пружа сличну употребу као ова апликација за Cyanogen OS кориснике).\n\nНакон 4 године, у јулу 2019, Arjan је одлучио да препусти оба пројекта и преда њихово власнишство тиму програмера из различитих држава. Они су преузели одговорност да пруже људима одличне услуге &amp; подршку добијања OPPO/OnePlus ажурирања брже.\nМожете пронаћи више информација о обавештењу <a href="https://oxygenupdater.com/article/81/">here</a>.\n\n14. Август 2019. означава прво издање под новим власништвом, које долази са новим опцијама као што су тамни режим и комплетно мењање дизајна.\n\nЗа више информација о тиму погледајте <a href="https://oxygenupdater.com/team/">веб сајт</a>.</string>
 	<string name="about_third_party_app_notice">Ово није званична OPPO/OnePlus апликација.\nOnePlus име, OPPO/OnePlus лого и OxygenOS/ColorOS су власништво OPPO/OnePlus-а.\nAndroid, Google, Google Play и Google Play лого су регистровани заштитни знакови код Google Inc.\nОва апликација користи податке од OPPO/OnePlus-а и његове матичне компаније Oppo да прикаже податке о ажурирањуn.</string>
 	<string name="about_rate_button_text">Оцените</string>
@@ -202,27 +198,26 @@
 	<string name="notification_new_device_text">%1$s је сада доступан. Отвори апликацију да изабереш овај уређај.</string>
 	<string name="notification_no_notification_support">Инсталирај или ажурирај Google Play сервисе да омогућиш обавештења.</string>
 	<string name="notification_version">%1$s је сада доступан за %2$s!</string>
-	<!-- TODO: translate these 19 strings below -->
-	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
+	<string name="download_and_installation_notifications_group_name">Преузми &amp; Инсталацију</string>
 	<string name="push_notifications_group_name">Обавештења</string>
-	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
+	<string name="miscellaneous_notifications_group_name">Разно</string>
 	<string name="download_and_installation_notifications_group_description">Прикажи сва мање битна обавештења о Oxygen Updater апликацији. То садржи обавештења о статусу преузимања и слично.</string>
 	<string name="push_notifications_group_description">Прикажи сва битна обавештења Oxygen Updater апликације. Ово подразумева обавештења о ажурирању система и битне вести.</string>
-	<string name="download_status_notification_channel_name">Download status</string>
-	<string name="verification_status_notification_channel_name">Verification status</string>
-	<string name="installation_status_notification_channel_name">Installation status</string>
+	<string name="download_status_notification_channel_name">Статус преузимања</string>
+	<string name="verification_status_notification_channel_name">Статус верификације</string>
+	<string name="installation_status_notification_channel_name">Статус инсталирања</string>
 	<string name="update_notification_channel_name">Ажурирање система доступно</string>
-	<string name="news_notification_channel_name">News article published</string>
+	<string name="news_notification_channel_name">Објављени чланци</string>
 	<string name="device_notification_channel_name">Нови уређај подржан</string>
-	<string name="general_notification_channel_name">General</string>
+	<string name="general_notification_channel_name">Генерално</string>
 	<string name="url_submitted_notification_channel_name">ОТА УРЛ је послат</string>
-	<string name="download_status_notification_channel_description">Notifications that reflect the current state of a download: pending, active, completed, or failed</string>
-	<string name="verification_status_notification_channel_description">Notifications that reflect the current state of a file verification task: in-progress, completed, or failed.\nMD5 checksums for downloaded files are verified to ensure the file hasn\'t been tampered with, and is a valid update file.</string>
-	<string name="installation_status_notification_channel_description">Get notified if an update was successfully installed or not</string>
-	<string name="update_notification_channel_description">Get notified when there\'s a new update available for your selected device &amp; update method</string>
-	<string name="news_notification_channel_description">Get notified when we publish a news article</string>
-	<string name="device_notification_channel_description">Get notified when the app adds support for a new device</string>
-	<string name="general_notification_channel_description">General notifications that don\'t fit into other categories</string>
+	<string name="download_status_notification_channel_description">Обавештења која приказују тренутни статус преузимања: на чекању, активно, завршено, или неуспело</string>
+	<string name="verification_status_notification_channel_description">Обевештења која приказују тренутно стање провере датотеке: у процесу, завршено, или неуспело.\nMD5 контролне суме за преузете датотеке се проверавају како би се осигурало да датотека није измењена и да је важећа датотека за ажурирање.</string>
+	<string name="installation_status_notification_channel_description">Прими обавештење уколико је ажурирање успешно завршено или не</string>
+	<string name="update_notification_channel_description">Прими обавештење уколико је ново ажурирање доступно за твој изабрани уређај &amp; метод ажурирања</string>
+	<string name="news_notification_channel_description">Прими обавештење када избацимо нови чланак</string>
+	<string name="device_notification_channel_description">Прими обавештење када апликација добије подршку за нови уређај</string>
+	<string name="general_notification_channel_description">Генерална обавештења која не спадају у остале категорије</string>
 	<string name="url_submitted_notification_channel_description">Примите обавештење када нашем тиму успешно пошаљете ОТА УРЛ адресе.\nМожете да онемогућите аутоматско слање УРЛ-ова у подешавањима апликације.</string>
 
 	<!-- News strings -->
