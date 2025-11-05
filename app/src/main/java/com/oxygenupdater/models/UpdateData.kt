@@ -69,7 +69,11 @@ data class UpdateData(
         putLong("id", id ?: NotSetL)
         putString("versionNumber", versionNumber)
         putString("otaVersionNumber", otaVersionNumber)
-        putString("description", description)
+        /**
+         * [DownloadWorker] only requires the first line of the description, so supply only that.
+         * This not only reduces memory usage, but also avoids #275.
+         */
+        putString("description", description?.splitToSequence("\r\n", "\n", "\r", limit = 2)?.firstOrNull())
         putString("downloadUrl", downloadUrl)
         putLong("downloadSize", downloadSize)
         putString(DownloadWorker.FILENAME, filename)
