@@ -1,13 +1,13 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.12.0"
+agp = "8.13.0"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.6"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
-google-services-plugin = "4.4.3"
+google-services-plugin = "4.4.4"
 
 # https://github.com/google/ksp/releases
 ksp = "2.2.10-2.0.2"
