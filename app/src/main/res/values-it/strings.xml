@@ -43,7 +43,7 @@
 
 	<string name="download_error_internal">"Errore interno."</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Ciò potrebbe significare che OPPO/OnePlus ha rimosso il file di aggiornamento OTA dai propri server."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Nella maggior parte dei casi, ciò indica un problema con i server OTA di OPPO/OnePlus; tuttavia, potrebbe anche trattarsi della connessione a Internet."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Il nostro team è stato avvisato e provvederà ad esaminare il problema il prima possibile. Poiché la nostra app scarica direttamente dai server OTA ufficiali, non possiamo fare molto. Potreste comunque essere in grado di accedere al file di aggiornamento OTA utilizzando una VPN o una connessione Internet diversa. Non esitate a <a href="mailto:support@oxygenupdater.com">inoltrarci un\'e-mail</a> o a unirvi al nostro <a href="https://discord.gg/5TXdhKJ">server discord</a>.]]></string>

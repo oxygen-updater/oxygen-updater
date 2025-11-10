@@ -45,7 +45,7 @@
 	<string name="download_error_server">下载更新时服务器发生错误，请尝试重新下载更新。</string>
 	<string name="download_error_internal">抱歉，下载更新时发生了技术故障，请尝试再次下载。如果这种情况不断发生，请联系此应用开发者以获取帮助。</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"这可能意味着 OPPO/OnePlus 从服务器中删除了 OTA 更新文件。"</string>
 	<string name="download_error_unsuccessful_explanation_generic">"大多数情况下，这表明 OPPO/OnePlus OTA 服务器出现了问题；不过，也可能是您的网络连接出现了问题。"</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[我们的团队已收到通知，我们将尽快调查此事。请注意，由于我们的应用程序直接从官方 OTA 服务器下载，因此我们能做的不多。您仍然可以通过 VPN 或其他网络连接访问 OTA 更新文件。请随时<a href="mailto:support@oxygenupdater.com">给我们发送电子邮件</a>或加入我们的<a href="https://discord.gg/5TXdhKJ">Discord 服务器</a>。]]></string>

@@ -46,7 +46,7 @@
 	<string name="download_error_server">Грешка са сервером је настала приликом преузимања. Молимо вас покушајте да преузмете поново.</string>
 	<string name="download_error_internal">Нажалост, техничка грешка је настала приликом преузимања ажурирања. Молимо вас покушајте да преузмете поново. Ако грешка настави да се појављује, молимо вас контактирајте нас за помоћ.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"То може значити да је ОнеПлус уклонио датотеку ОТА ажурирања са својих сервера."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Већину времена, ово указује на проблем са ОнеПлус ОТА серверима; међутим, то може бити и ваша интернет веза."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Наш тим је обавештен и ми ћемо то размотрити што је пре могуће. Имајте на уму да пошто се наша апликација преузима директно са званичних ОТА сервера, не можемо много да урадимо. Можда ћете и даље моћи да приступите ОТА датотеци за ажурирање користећи ВПН или другу интернет везу. Слободно <a href="mailto:support@oxygenupdater.com">нам пошаљите е-пошту</а> или се придружите нашем <а href="https://discord.gg/5TXdhKJ">Дисцорд серверу</а>.]]></string>
@@ -274,7 +274,7 @@
 	<string name="do_not_show_again_checkbox">Не приказуј поново</string>
 
 	<!-- Purchasing strings -->
-    <string name="purchase_error_pending_payment">Твоја куповина је у \"чекање на плаћање\" статусу. Када плаћање буде завршено, добићете све бенефите који вам припадају.</string>
+	<string name="purchase_error_pending_payment">Твоја куповина је у \"чекање на плаћање\" статусу. Када плаћање буде завршено, добићете све бенефите који вам припадају.</string>
 	<string name="purchase_error_after_payment">Куповина апликације без реклама није успела због интерне грешке. Молимо вас покушајте за неколико минута. Ако сте већ платили, молимо вас контактирајте Google Play подршку.</string>
 
 	<!-- Other strings-->

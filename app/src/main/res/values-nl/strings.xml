@@ -46,7 +46,7 @@
 	<string name="download_error_server">Er deed zich tijdens het downloaden van de update een serverfout voor. Controleer je verbinding en probeer de update opnieuw te downloaden.</string>
 	<string name="download_error_internal">Er deed zich helaas een technische fout voor tijdens het downloaden van de update. Probeer hem opnieuw te downloaden. Als dit zich blijft voordoen, neem dan contact op met de ontwikkelaar van deze app.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Dit kan betekenen dat OPPO/OnePlus het OTA-updatebestand van hun servers heeft verwijderd."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Meestal duidt zo'n fout op een probleem met de OPPO/OnePlus OTA-servers, maar het kan ook je internetverbinding zijn."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Ons team is op de hoogte gesteld en we zullen hier zo snel mogelijk naar kijken. Omdat onze app rechtstreeks downloadt van officiële OTA-servers, kunnen we niet veel doen. Mogelijk kun je nog steeds toegang krijgen tot het OTA-updatebestand door een VPN of een andere internetverbinding te gebruiken. Stuur ons een e-mail op <a href="mailto:support@oxygenupdater.com">email</a> of word lid van onze <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>

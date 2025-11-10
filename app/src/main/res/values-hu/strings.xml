@@ -46,7 +46,7 @@
 	<string name="download_error_server">Szerverhiba történt a frissítés letöltése közben. Próbáld újra letölteni a frissítést.</string>
 	<string name="download_error_internal">Sajnos technikai hiba történt a frissítés letöltése közben. Próbáld meg újra letölteni. Ha ez továbbra is fennáll, kérjük, fordulj segítségért az alkalmazás fejlesztőjéhez.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Ez azt jelentheti, hogy a OPPO/OnePlus eltávolította az OTA frissítési fájlt a szervereiről."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Ez legtöbbször a OPPO/OnePlus OTA-szerverekkel kapcsolatos problémát jelez; azonban az internetkapcsolat is lehet a hiba oka."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Csapatunkat értesítettük, és amint lehet, utánanézünk a dolognak. Ne feledje, hogy mivel az alkalmazásunk közvetlenül a hivatalos OTA-szerverekről tölt le, nem sokat tehetünk. VPN vagy más internetkapcsolat használatával még mindig hozzáférhet az OTA-frissítési fájlhoz. Nyugodtan írj nekünk <a href="mailto:support@oxygenupdater.com">Emailt</a> vagy csatlakozz <a href="https://discord.gg/5TXdhKJ">Discord szerverünkhöz</a>.]]></string>

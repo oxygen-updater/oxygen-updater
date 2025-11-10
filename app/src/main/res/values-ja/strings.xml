@@ -46,7 +46,7 @@
 	<string name="download_error_server">アップデートのダウンロード中にサーバエラーが発生しました。再度ダウンロードを試行して下さい。</string>
 	<string name="download_error_internal">アップロードのダウンロード中に技術的なエラーが発生しました。このエラーが継続している場合、アプリの開発者に連絡してサポートを受けて下さい。</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"これは、OnePlusがサーバーからOTAアップデートファイルを削除したことを意味する可能性があります。"</string>
 	<string name="download_error_unsuccessful_explanation_generic">"ほとんどの場合、これはOnePlusのOTAサーバーに問題があることを示していますが、インターネット接続に問題がある可能性もあります。"</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[私たちのチームには報告済みで、早急に調査します。私たちのアプリは公式OTAサーバーから直接ダウンロードするため、私たちにできることはあまりありません。VPNまたは別のインターネット接続を使用することで、OTAアップデートファイルにアクセスできる可能性があります。 <a href="mailto:support@oxygenupdater.com">メール</a>または<a href="https://discord.gg/5TXdhKJ">Discordサーバー</a>にお気軽にご参加ください。]]></string>

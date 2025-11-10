@@ -45,7 +45,7 @@
 	<string name="download_error_server">A avut loc o eroare de server la descărcarea actualizării. Vă rugăm să încercați din nou descărcarea.</string>
 	<string name="download_error_internal">Din păcate a avut loc o eroare tehnică în timpul descărcării. Încercați să descărcați actualizarea din nou. Dacă problema persistă, vă rugăm să contactați dezvoltatorii aplicației pentru asistență.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Acest lucru poate însemna că OPPO/OnePlus a eliminat fișierul de actualizare OTA de pe serverele sale."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"De cele mai multe ori, acest lucru indică o problemă cu serverele OPPO/OnePlus OTA; cu toate acestea, ar putea fi vorba și de conexiunea dvs. la internet."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Echipa noastră a fost notificată și ne vom ocupa de această problemă cât mai curând posibil. Rețineți că, deoarece aplicația noastră descarcă direct de pe serverele OTA oficiale, nu putem face prea multe. Este posibil să mai puteți accesa fișierul de actualizare OTA utilizând un VPN sau o altă conexiune la internet. Nu ezitați să ne trimiteți <a href="mailto:support@oxygenupdater.com">email</a> sau să vă alăturați serverului nostru <a href="https://discord.gg/5TXdhKJ">Discord</a>.]]></string>

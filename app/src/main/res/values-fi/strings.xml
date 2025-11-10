@@ -45,7 +45,7 @@
 	<string name="download_error_server">Latauksen aikana tapahtui palvelinvirhe. Ole hyvä ja yritä latausta uudelleen.</string>
 	<string name="download_error_internal">Valitettavasti latauksen aikana tapahtui tekninen virhe. Yritä latausta uudelleen. Mikäli ongelma jatkuu, ole hyvä ja ota yhteyttä sovelluksen kehittäjään avun saamiseksi.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Tämä voi tarkoittaa, että OPPO/OnePlus poisti OTA-päivitystiedoston palvelimiltaan."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Useimmiten tämä osoittaa, että OPPO/OnePlus OTA-palvelimissa on ongelma, mutta se voi johtua myös internet-yhteydestäsi."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Tiimillemme on ilmoitettu asiasta, ja tutkimme asiaa mahdollisimman pian. Huomaa, että koska sovelluksemme lataa suoraan virallisilta OTA-palvelimilta, emme voi tehdä paljoakaan. Voit ehkä silti käyttää OTA-päivitystiedostoa käyttämällä VPN:ää tai muuta internet-yhteyttä. Voit vapaasti lähettää <a href="mailto:support@oxygenupdater.com">sähköpostia</a> tai liittyä <a href="https://discord.gg/5TXdhKJ">Discord-palvelimeemme</a>.]]></string>

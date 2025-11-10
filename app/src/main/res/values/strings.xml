@@ -45,7 +45,7 @@
 	<string name="download_error_server">A server error occurred while downloading the update. Please try downloading the update again.</string>
 	<string name="download_error_internal">Unfortunately, a technical error occurred while downloading the update. Try downloading it again. If this keeps occurring, please contact the developer of this app for assistance.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"This may mean that OPPO/OnePlus removed the OTA update file from their servers."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Most of the time, this indicates an issue with OPPO/OnePlus OTA servers; however, it could also be your internet connection."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Our team has been notified, and we\'ll look into this ASAP. Note that because our app downloads directly from official OTA servers, there\'s not much we can do. You may still be able to access the OTA update file by using a VPN or a different internet connection. Feel free to <a href="mailto:support@oxygenupdater.com">email us</a> or join our <a href="https://discord.gg/5TXdhKJ">Discord server</a>.]]></string>

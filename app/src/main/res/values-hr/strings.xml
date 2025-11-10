@@ -299,7 +299,7 @@ Ostali uređaji tako i uređaji koji koriste \"Custom\" ROM-ove nisu podržani."
 	<!-- Internal error when downloading. Never a connection error! -->
 	<string name="download_error_internal">"Nažalost došlo je do tehničkih problema tijekom preuzimanja ažuriranja. Molimo pokušajte ponovno. Ako se problem nastavi molimo kontaktirajte kreatora ove aplikacije za pomoć."</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"To može značiti da je OPPO/OnePlus uklonio OTA datoteku ažuriranja sa svojih poslužitelja."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Većinu vremena to ukazuje na problem s OPPO/OnePlus OTA poslužiteljima; međutim, to može biti i vaša internetska veza."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Naš tim je obaviješten i mi ćemo ovo razmotriti što prije. Imajte na umu da, budući da se naša aplikacija preuzima izravno sa službenih OTA poslužitelja, ne možemo puno učiniti. Možda ćete i dalje moći pristupiti datoteci OTA ažuriranja pomoću VPN-a ili druge internetske veze. Slobodno nam pošaljite <a href="mailto:support@oxygenupdater.com">e-poruku</a> ili se pridružite našem <a href="https://discord.gg/5TXdhKJ">poslužitelju Discord</a>.]]></string>

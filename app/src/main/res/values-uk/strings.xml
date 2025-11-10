@@ -46,7 +46,7 @@
 	<string name="download_error_server">Під час завантаження оновлення сталася помилка на сервері. Будь ласка, спробуйте завантажити оновлення знову.</string>
 	<string name="download_error_internal">На жаль, під час завантаження оновлення виникла технічна помилка. Спробуйте завантажити його знову. Але якщо помилка не зникне, тоді зв\'яжіться з розробником застосунку для консультації.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Це може означати, що OPPO/OnePlus видалив файл оновлення OTA зі своїх серверів."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Здебільшого це вказує на проблему з OTA-серверами OPPO/OnePlus, однак це також може бути пов'язано з вашим інтернет-з'єднанням."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Наша команда була повідомлена, і ми розглянемо це якомога швидше. Зверніть увагу, що оскільки наш додаток завантажується безпосередньо з офіційних OTA-серверів, ми не так багато можемо зробити. Можливо, ви все ще зможете отримати доступ до файлу OTA-оновлення за допомогою VPN або іншого інтернет-з\'єднання. Не соромтеся писати нам <a href="mailto:support@oxygenupdater.com">електронною поштою</a> або приєднуйтесь до нашого <a href="https://discord.gg/5TXdhKJ">сервера обговорення</a>.]]></string>

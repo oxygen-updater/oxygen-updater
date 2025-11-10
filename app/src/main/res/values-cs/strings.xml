@@ -45,7 +45,7 @@
 	<string name="download_error_server">Při stahování aktualizace došlo k chybě serveru. Zkuste prosím stáhnout aktualizaci znovu.</string>
 	<string name="download_error_internal">Při stahování aktualizace bohužel došlo k technické chybě. Zkuste ji stáhnout znovu. Pokud k tomu dochází i nadále, kontaktujte prosím vývojáře této aplikace a požádejte o pomoc.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"To může znamenat, že společnost OPPO/OnePlus odstranila soubor s aktualizací OTA ze svých serverů."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Většinou to znamená problém se servery OTA společnosti OPPO/OnePlus; může to však být také vaše internetové připojení."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Náš tým byl informován a co nejdříve se na to podíváme. Upozorňujeme, že vzhledem k tomu, že naše aplikace stahuje přímo z oficiálních serverů OTA, nemůžeme s tím nic moc dělat. K souboru s aktualizací OTA můžete mít stále přístup pomocí sítě VPN nebo jiného internetového připojení. Neváhejte a <a href="mailto:support@oxygenupdater.com">napište nám</a> nebo se připojte k našemu <a href="https://discord.gg/5TXdhKJ">Discord serveru</a>.]]></string>

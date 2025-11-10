@@ -46,7 +46,7 @@
 	<string name="download_error_server">En netværksfejl opstod under forsøget på at downloade opdateringen. Forsøg at downloade opdateringen igen.</string>
 	<string name="download_error_internal">Desværre opstod der en teknisk fejl, i forsøget på at downloade opdateringen. Forsøg at downloade igen. Kontakt udvikleren af denne app, hvis problemet gentager sig.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Det kan betyde, at OPPO/OnePlus har fjernet OTA-opdateringsfilen fra deres servere."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"For det meste tyder det på et problem med OPPO/OnePlus' OTA-servere, men det kan også være din internetforbindelse."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Vores team har fået besked, og vi ser på det så hurtigt som muligt. Bemærk, at fordi vores app downloader direkte fra officielle OTA-servere, er der ikke meget, vi kan gøre. Du kan muligvis stadig få adgang til OTA-opdateringsfilen ved at bruge en VPN eller en anden internetforbindelse. Du er velkommen til at <a href="mailto:support@oxygenupdater.com">emaile os</a> eller deltage i vores <a href="https://discord.gg/5TXdhKJ">Discord-server</a>.]]></string>

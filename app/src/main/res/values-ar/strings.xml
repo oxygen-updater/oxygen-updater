@@ -50,7 +50,7 @@
 	<string name="download_error_server">حدث خطأ في الخادم أثناء تحميل التحديث. من فضلك حاول التحميل مرة أخرى.</string>
 	<string name="download_error_internal">للأسف, حدث خطأ فني أثناء تحميل التحديث. حاول تحميله مجدداً. إذا إستمر حدوث ذلك, فضلاً قم بالإتصال بمطور هذا التطبيق للمساعدة.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"قد يعني هذا أن OPPO/OnePlus أزال ملف تحديث OTA من خوادمه."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"في معظم الأحيان، يشير هذا إلى وجود مشكلة في خوادم OPPO/OnePlus OTA؛ ومع ذلك، قد يكون السبب أيضًا اتصالك بالإنترنت."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[تم إخطار فريقنا، وسننظر في هذا الأمر في أسرع وقت ممكن. لاحظ أنه نظرًا لأن تطبيقنا يتم تنزيله مباشرةً من خوادم OTA الرسمية، فلا يمكننا فعل الكثير. قد تظل قادرًا على الوصول إلى ملف تحديث OTA باستخدام VPN أو اتصال إنترنت مختلف. لا تتردد في <a href="mailto:support@oxygenupdater.com">إرسال بريد إلكتروني إلينا</a> أو الانضمام إلى <a href="https://discord.gg/5TXdhKJ">خادم ديسكورد</a>.]]></string>

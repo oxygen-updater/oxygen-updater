@@ -45,7 +45,7 @@
 	<string name="download_error_server">אירעה שגיאת שרת בזמן הורדת העדכון. אנא נסה להוריד שנית את העדכון</string>
 	<string name="download_error_internal">למרבה הצער, אירעה שגיאה טכנית במהלך הורדת העדכון. אנא נסה להוריד שנית. אם הודעה זאת ממשיכה להופיע, אנא צור קשר עם מפתחי האפליקציה עבור תמיכה טכנית</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"המשמעות עשויה להיות ש-OnePlus הסירה את קובץ עדכון ה-OTA מהשרתים שלהם."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"לרוב, זה מצביע על בעיה בשרתי OPPO/OnePlus OTA; עם זאת, זה יכול להיות גם חיבור האינטרנט שלך."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[הצוות שלנו קיבל הודעה, ואנו נבדוק זאת בהקדם האפשרי. שימו לב שמכיוון שהאפליקציה שלנו מורידה ישירות משרתי OTA רשמיים, אין הרבה מה לעשות. ייתכן שעדיין תוכל לגשת לקובץ עדכון OTA באמצעות VPN או חיבור אינטרנט אחר. אל תהסס לשלוח לנו <a href="mailto:support@oxygenupdater.com">אימייל</a> או להצטרף ל<a href="https://discord.gg/5TXdhKJ">שרת הדיסקורד</a> שלנו.]]></string>

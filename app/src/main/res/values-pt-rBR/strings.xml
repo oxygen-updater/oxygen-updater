@@ -45,7 +45,7 @@
 	<string name="download_error_server">Ocorreu um erro de servidor durante o download da atualização. Por favor, tente baixar a atualização novamente.</string>
 	<string name="download_error_internal">Infelizmente, ocorreu um erro técnico durante o download da atualização. Tente fazer o download novamente. Se isso continuar ocorrendo, entre em contato com o desenvolvedor deste aplicativo para obter assistência.</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"Isso pode significar que a OPPO/OnePlus removeu o arquivo de atualização OTA de seus servidores."</string>
 	<string name="download_error_unsuccessful_explanation_generic">"Na maioria das vezes, isso indica um problema com os servidores OTA da OPPO/OnePlus; no entanto, também pode ser sua conexão com a Internet."</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[Nossa equipe foi notificada e analisaremos o problema o mais rápido possível. Observe que, como nosso aplicativo faz download diretamente dos servidores OTA oficiais, não há muito que possamos fazer. Talvez você ainda consiga acessar o arquivo de atualização OTA usando uma VPN ou uma conexão de Internet diferente. Sinta-se à vontade para <a href="mailto:support@oxygenupdater.com">enviar-nos um e-mail</a> ou participar de nosso <a href="https://discord.gg/5TXdhKJ">servidor de discórdia</a>.]]></string>

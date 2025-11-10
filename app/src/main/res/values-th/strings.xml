@@ -51,7 +51,7 @@
 	<string name="download_error_server">เซิร์ฟเวอร์เกิดขัดข้องระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง</string>
 	<string name="download_error_internal">ขออภัยในความไม่สะดวก เกิดปัญหาทางเทคนิคระหว่างดาวน์โหลดไฟล์ กรุณาลองดาวน์โหลดใหม่อีกครั้ง ถ้าปัญหานี้ยังคงเกิดขึ้นกรุณาติดต่อนักพัฒนา</string>
 	<!-- Space/NBSP at the end is necessary -->
-	<string name="download_error_unsuccessful_http_code_message">"HTTP $1d: $2s. "</string>
+	<string name="download_error_unsuccessful_http_code_message">"HTTP %1$d: %2$s. "</string>
 	<string name="download_error_unsuccessful_explanation_file_removed">"ซึ่งอาจหมายความว่า OPPO/OnePlus ได้ลบไฟล์อัปเดต OTA ออกจากเซิร์ฟเวอร์ของตน"</string>
 	<string name="download_error_unsuccessful_explanation_generic">"ส่วนใหญ่แล้ว สิ่งนี้บ่งชี้ถึงปัญหาที่เกิดขึ้นกับเซิร์ฟเวอร์ OTA ของ OPPO/OnePlus อย่างไรก็ตาม อาจเกิดจากการเชื่อมต่ออินเทอร์เน็ตของคุณก็ได้"</string>
 	<string name="download_error_unsuccessful_suffix"><![CDATA[ทีมงานของเราได้รับแจ้งแล้ว และเราจะดำเนินการตรวจสอบโดยเร็วที่สุด โปรดทราบว่าเนื่องจากแอปของเราดาวน์โหลดโดยตรงจากเซิร์ฟเวอร์ OTA อย่างเป็นทางการ เราจึงไม่สามารถทำอะไรได้มากนัก คุณอาจยังเข้าถึงไฟล์อัปเดต OTA ได้โดยใช้ VPN หรือการเชื่อมต่ออินเทอร์เน็ตอื่น โปรดอย่าลังเลที่จะ<a href="mailto:support@oxygenupdater.com">ส่งอีเมลถึงเรา</a> หรือเข้าร่วม<a href="https://discord.gg/5TXdhKJ">เซิร์ฟเวอร์ Discord</a> ของเรา]]></string>
