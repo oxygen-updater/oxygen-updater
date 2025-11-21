@@ -81,6 +81,7 @@ import com.oxygenupdater.ui.theme.PreviewWindowSize
 import com.oxygenupdater.utils.UpdateDataVersionFormatter
 import com.oxygenupdater.utils.logInfo
 import java.text.NumberFormat
+import java.util.MissingResourceException
 import kotlin.math.roundToLong
 
 val DefaultDeviceName = "${Build.MANUFACTURER} ${Build.DEVICE}"
@@ -346,7 +347,15 @@ private fun ColumnScope.DeviceHardwareInfo() {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
-    val bytes = remember(context) { Formatter.formatShortFileSize(context, getRamBytes(context)) }
+    val bytes = remember(context) {
+        try {
+            Formatter.formatShortFileSize(context, getRamBytes(context))
+        } catch (_: MissingResourceException) {
+            // Rare crash, probably due to a modified Android system.
+            // Fallback to manually computing to display in GB. (not locale-specific)
+            "${getRamBytes(context) / 1073741824} GB"
+        }
+    }
     if (bytes.isNotEmpty()) Item(
         icon = Symbols.Memory,
         titleResId = R.string.device_information_amount_of_memory,

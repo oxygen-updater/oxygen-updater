@@ -23,6 +23,7 @@ import androidx.core.net.toUri
 import com.oxygenupdater.R
 import com.oxygenupdater.ui.theme.light
 import com.oxygenupdater.utils.logInfo
+import java.util.MissingResourceException
 
 /**
  * Standardizes display of file sizes across the app, regardless of OS versions.
@@ -49,10 +50,24 @@ import com.oxygenupdater.utils.logInfo
  */
 fun Context.formatFileSize(
     sizeBytes: Long,
-): String = Formatter.formatFileSize(
-    this,
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
-)
+): String = try {
+    Formatter.formatFileSize(
+        this,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) (sizeBytes / 1.048576).toLong() else sizeBytes
+    )
+} catch (_: MissingResourceException) {
+    // Rare crash, probably due to a modified Android system.
+    // Fallback to manually computing to display in kB/MB/GB/TB/PB/EB. (not locale-specific)
+    if (sizeBytes <= 1024) "%d B".format(sizeBytes) else {
+        var bytes = sizeBytes
+        var suffixIndex = 0
+        while (bytes > 1048576) {
+            suffixIndex++
+            bytes = bytes shr 10
+        }
+        "%.1f %cB".format(bytes / 1024f, "kMGTPE"[suffixIndex])
+    }
+}
 
 fun Context.showToast(
     @StringRes resId: Int,
