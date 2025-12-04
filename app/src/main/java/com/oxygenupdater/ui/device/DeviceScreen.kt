@@ -49,6 +49,7 @@ import coil3.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.Android
 import com.oxygenupdater.icons.AspectRatio
+import com.oxygenupdater.icons.Commit
 import com.oxygenupdater.icons.DeveloperBoard
 import com.oxygenupdater.icons.Error
 import com.oxygenupdater.icons.Memory
@@ -330,6 +331,28 @@ fun ColumnScope.DeviceSoftwareInfo(showHeader: Boolean = true) {
         Item(
             icon = Symbols.Security,
             titleResId = R.string.device_information_patch_level_version,
+            text = it,
+        )
+    }
+
+    // Kernel version
+    remember {
+        try {
+            // This is displayed in Settings › About device › Version, for example:
+            // 6.6.89-android15-8-g5a0ffb447c1d-ab13771415-4k. Note: `ro.build.kernel.id` is 6.6.89;
+            // `ro.kernel.version` is 6.6. FYI the file `/proc/version` contains far more information,
+            // including the specific https://android.googlesource.com/toolchain/llvm-project commit.
+            val process = Runtime.getRuntime().exec("uname -r")
+            val output = process.inputStream.bufferedReader().use { it.readText().trim() }
+            process.destroy()
+            output.takeIf { it.isNotEmpty() }
+        } catch (_: Exception) {
+            null // ignore
+        }
+    }?.let {
+        Item(
+            icon = Symbols.Commit,
+            titleResId = R.string.device_information_kernel_version,
             text = it,
         )
     }
