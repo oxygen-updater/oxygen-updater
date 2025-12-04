@@ -176,6 +176,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="device_information_cpu_frequency">Processorsnelheid</string>
 	<string name="device_information_screen_size">Schermgrootte</string>
 	<string name="device_information_cameras">Camera\'s</string>
+	<string name="device_information_kernel_version">Kernelversie</string>
 	<string name="device_information_header">Apparaat</string>
 	<string name="device_information_image_description">Afbeelding van jouw apparaat</string>
 	<string name="device_information_incremental_os_version">Incrementele OS-versie</string>

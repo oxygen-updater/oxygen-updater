@@ -172,6 +172,7 @@
 	<string name="device_information_cpu_frequency">Френквенција процесора</string>
 	<string name="device_information_screen_size">Величина екрана</string>
 	<string name="device_information_cameras">Камере</string>
+	<string name="device_information_kernel_version">Верзија језгра</string>
 	<string name="device_information_header">Уређај</string>
 	<string name="device_information_image_description">Слика уређаја</string>
 	<string name="device_information_incremental_os_version">Инкрементална OS верзија</string>

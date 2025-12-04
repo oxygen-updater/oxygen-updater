@@ -180,6 +180,7 @@
 	<string name="device_information_cpu_frequency">Processor Frequency</string>
 	<string name="device_information_screen_size">ขนาดหน้าจอ</string>
 	<string name="device_information_cameras">กล้องถ่ายรูป</string>
+	<string name="device_information_kernel_version">เวอร์ชันเคอร์เนล</string>
 	<string name="device_information_header">อุปกรณ์ของฉัน</string>
 	<string name="device_information_image_description">รูปภาพอุปกรณ์</string>
 	<string name="device_information_incremental_os_version">Incremental OS version</string>

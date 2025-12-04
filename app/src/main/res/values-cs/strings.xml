@@ -173,6 +173,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="device_information_cpu_frequency">Frekvence procesoru</string>
 	<string name="device_information_screen_size">Velikost obrazovky</string>
 	<string name="device_information_cameras">Fotoaparáty</string>
+	<string name="device_information_kernel_version">Verze jádra</string>
 	<string name="device_information_header">Zařízení</string>
 	<string name="device_information_image_description">Obrázek zařízení</string>
 	<string name="device_information_incremental_os_version">Inkrementální verze OS</string>

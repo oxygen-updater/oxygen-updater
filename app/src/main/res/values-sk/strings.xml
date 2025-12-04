@@ -174,6 +174,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="device_information_cpu_frequency">Frekvencia procesora</string>
 	<string name="device_information_screen_size">Veľkosť obrazovky</string>
 	<string name="device_information_cameras">Fotoaparáty</string>
+	<string name="device_information_kernel_version">Verzia jadra</string>
 	<string name="device_information_header">Zariadenie</string>
 	<string name="device_information_image_description">Snímka zariadenia</string>
 	<string name="device_information_incremental_os_version">Inkrementálna verzia OS</string>

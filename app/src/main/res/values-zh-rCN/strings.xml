@@ -170,6 +170,7 @@
 	<string name="device_information_cpu_frequency">处理器频率：</string>
 	<string name="device_information_screen_size">屏幕尺寸</string>
 	<string name="device_information_cameras">相机</string>
+	<string name="device_information_kernel_version">内核版本</string>
 	<string name="device_information_gigahertz">%1$s GHz</string>
 	<string name="device_information_header">我的设备</string>
 	<string name="device_information_image_description">设备图片</string>

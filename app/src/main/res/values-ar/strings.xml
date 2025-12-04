@@ -165,6 +165,7 @@
 	<string name="device_information_cpu_frequency">تردد المعالج</string>
 	<string name="device_information_screen_size">حجم الشاشة</string>
 	<string name="device_information_cameras">الكاميرات</string>
+	<string name="device_information_kernel_version">إصدار النواة</string>
 	<string name="device_information_gigahertz">جيجاهرتز %1$s</string>
 	<string name="device_information_header">جهاز</string>
 	<string name="device_information_image_description">نسخة الجهاز</string>

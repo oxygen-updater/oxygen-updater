@@ -179,6 +179,7 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="device_information_cpu_frequency">"Fréquence du processeur:"</string>
 	<string name="device_information_screen_size">Taille de l\'écran</string>
 	<string name="device_information_cameras">Caméras</string>
+	<string name="device_information_kernel_version">Version du noyau</string>
 	<string name="device_information_header">"Appareil"</string>
 	<string name="device_information_image_description">"Image de l'appareil"</string>
 	<string name="device_information_incremental_os_version">"Version incrémentale de l'OS:"</string>

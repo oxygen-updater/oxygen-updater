@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
@@ -77,6 +78,7 @@ import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierDefaultPaddingTop
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.rememberState
+import com.oxygenupdater.ui.common.tintedPainter
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -255,14 +257,17 @@ private fun DeviceImage(deviceName: String, deviceOsSpec: DeviceOsSpec?, size: D
         val requiredSizeModifier = Modifier.requiredSize(size)
 
         val context = LocalContext.current
-        val defaultImage = rememberVectorPainter(
-            when (deviceOsSpec) {
-                DeviceOsSpec.SupportedDeviceAndOs -> Symbols.MobileCheck // device frame with tick mark
-                DeviceOsSpec.CarrierExclusiveOxygenOs -> Symbols.MobileLockPortrait // device frame with locked icon
-                DeviceOsSpec.UnsupportedDevice -> Symbols.MobileCancel // device frame with cancel mark
-                // Covers UnsupportedDeviceAndOs
-                else -> Symbols.MobileQuestion // device frame with question mark
-            }
+        val defaultImage = tintedPainter(
+            painter = rememberVectorPainter(
+                when (deviceOsSpec) {
+                    DeviceOsSpec.SupportedDeviceAndOs -> Symbols.MobileCheck // device frame with tick mark
+                    DeviceOsSpec.CarrierExclusiveOxygenOs -> Symbols.MobileLockPortrait // device frame with locked icon
+                    DeviceOsSpec.UnsupportedDevice -> Symbols.MobileCancel // device frame with cancel mark
+                    // Covers UnsupportedDeviceAndOs
+                    else -> Symbols.MobileQuestion // device frame with question mark
+                }
+            ),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
         )
         AsyncImage(
             model = deviceName.let {

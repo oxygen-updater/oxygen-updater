@@ -175,6 +175,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="device_information_cpu_frequency">Processzor frekvenciája</string>
 	<string name="device_information_screen_size">Képernyő mérete</string>
 	<string name="device_information_cameras">Kamerák</string>
+	<string name="device_information_kernel_version">Kernel verzió</string>
 	<string name="device_information_header">Eszköz</string>
 	<string name="device_information_image_description">Eszköz kép</string>
 	<string name="device_information_incremental_os_version">Inkrementális OS verzió</string>

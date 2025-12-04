@@ -176,6 +176,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="device_information_cpu_frequency">Prosessorfrekvens:</string>
 	<string name="device_information_screen_size">Skjermstørrelse</string>
 	<string name="device_information_cameras">Kameraer</string>
+	<string name="device_information_kernel_version">Kjerneversjon</string>
 	<string name="device_information_header">Min enhet</string>
 	<string name="device_information_image_description">Enhetsbilde</string>
 	<string name="device_information_incremental_os_version">Inkrementell OS-versjon:</string>
