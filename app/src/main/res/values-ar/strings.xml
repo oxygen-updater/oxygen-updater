@@ -131,6 +131,7 @@
 	<string name="settings_upload_logs">مشاركة بيانات الإستخدام والسجل</string>
 	<string name="settings_ad_privacy">الموافقة على إعلان القانون العام لحماية البيانات (GDPR).</string>
 	<string name="settings_ad_privacy_subtitle">"لمستخدمي المنطقة الاقتصادية الأوروبية/المملكة المتحدة"</string>
+	<string name="settings_clear_cache">مسح ذاكرة التخزين المؤقت</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">التعليمات</string>

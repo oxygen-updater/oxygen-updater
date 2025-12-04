@@ -138,6 +138,7 @@
 	<string name="settings_upload_logs">Споделете податоци за користење и дневници</string>
 	<string name="settings_ad_privacy">Согласност за реклама за GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"За корисници на ЕЕА/Велика Британија"</string>
+	<string name="settings_clear_cache">Исчисти кеш</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">ЧПП</string>

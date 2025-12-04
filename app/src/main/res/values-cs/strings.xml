@@ -138,6 +138,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="settings_upload_logs">Sdílení dat o používání a sdílení protokolů</string>
 	<string name="settings_ad_privacy">Souhlas s reklamou podle GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Pro uživatele v EHP/UK"</string>
+	<string name="settings_clear_cache">Vymazat mezipaměť</string>
 
 	<!-- Řetězce FAQ -->
 	<string name="faq">FAQ</string>

@@ -139,6 +139,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="settings_upload_logs">Zdieľajte údaje o používaní a logy</string>
 	<string name="settings_ad_privacy">Súhlas s reklamou podľa GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Pre používateľov v EHP/UK"</string>
+	<string name="settings_clear_cache">Vymazať vyrovnávaciu pamäť</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

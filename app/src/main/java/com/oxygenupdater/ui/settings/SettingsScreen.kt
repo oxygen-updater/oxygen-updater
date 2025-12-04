@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -45,16 +46,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import coil3.imageLoader
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.R
+import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.extensions.launch
 import com.oxygenupdater.extensions.openAppLocalePage
 import com.oxygenupdater.extensions.openPlayStorePage
 import com.oxygenupdater.extensions.rememberCustomTabsIntent
+import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.icons.AdsClick
 import com.oxygenupdater.icons.Check
 import com.oxygenupdater.icons.CloudDownload
 import com.oxygenupdater.icons.Crowdsource
+import com.oxygenupdater.icons.DeleteSweep
 import com.oxygenupdater.icons.Language
 import com.oxygenupdater.icons.LockOpen
 import com.oxygenupdater.icons.LogoNotification
@@ -99,6 +104,9 @@ import com.oxygenupdater.utils.ContributorUtils
 import com.oxygenupdater.utils.NotifStatus
 import com.oxygenupdater.utils.NotifUtils
 import com.oxygenupdater.utils.logInfo
+import com.oxygenupdater.utils.okHttpCache
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingsScreen(
@@ -173,6 +181,7 @@ fun SettingsScreen(
         showPrivacyOptionsForm = showPrivacyOptionsForm,
         getPrefBool = getPrefBool,
     )
+    ClearCache()
     // endregion
 
     // region About
@@ -447,6 +456,55 @@ fun SettingsAnalytics(
         },
         icon = Symbols.TrackChanges,
         titleResId = R.string.settings_upload_logs,
+    )
+}
+
+@Composable
+private fun ClearCache() {
+    val context = LocalContext.current
+    val coilImageLoader = context.imageLoader
+
+    var recomputationKey by rememberState(false)
+    var size by rememberState(
+        recomputationKey,
+        try {
+            // Only count disk cache sizes
+            (okHttpCache?.size() ?: 0L) + (coilImageLoader.diskCache?.size ?: 0L)
+        } catch (_: Exception) {
+            0L
+        }
+    )
+
+    // For running IO-intensive operations
+    val scope = rememberCoroutineScope { Dispatchers.IO }
+    SettingsItem(
+        onClick = {
+            try {
+                /**
+                 * https://square.github.io/okhttp/features/caching/#pruning-the-cache
+                 * We choose to only clear cache for API calls and images. Other caches, e.g. WebView
+                 * are not deleted. If this decision changes in the future, call `okHttpCache?.delete()`
+                 * to clear everything in the cache directory. For posterity, WebView cache can be
+                 * programmatically cleared via `WebView(context).clearCache(true)`.
+                 */
+                scope.launch {
+                    okHttpCache?.evictAll()
+                    coilImageLoader.diskCache?.clear()
+                    // coilImageLoader.memoryCache?.clear() // is this required?
+                }
+
+                // Toggle to let the `size` calculation run again
+                recomputationKey = !recomputationKey
+
+                context.showToast(androidx.appcompat.R.string.abc_action_mode_done)
+            } catch (e: Exception) {
+                logInfo(SettingsScreenTestTag, "Error when clearing cache", e)
+            }
+        },
+        icon = Symbols.DeleteSweep,
+        titleResId = R.string.settings_clear_cache,
+        subtitle = context.formatFileSize(size),
+        enabled = size != 0L,
     )
 }
 

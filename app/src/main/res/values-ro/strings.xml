@@ -138,6 +138,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="settings_upload_logs">Împărtășiți date de utilizare și jurnale ale aplicației</string>
 	<string name="settings_ad_privacy">Consimțământul pentru reclame GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Pentru utilizatorii din SEE/UK"</string>
+	<string name="settings_clear_cache">Goliți memoria cache</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

@@ -133,6 +133,7 @@ Tästä voi olla hyötyä, jos haluat:"</string>
 	<string name="settings_upload_logs">Jaa käyttötiedot ja lokit</string>
 	<string name="settings_ad_privacy">GDPR-mainonnan suostumus</string>
 	<string name="settings_ad_privacy_subtitle">"ETA:n/UK:n käyttäjille"</string>
+	<string name="settings_clear_cache">Tyhjennä välimuisti</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"UKK"</string>

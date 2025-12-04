@@ -135,6 +135,7 @@
 	<string name="settings_upload_logs">分享使用日誌</string>
 	<string name="settings_ad_privacy">GDPR 廣告同意書</string>
 	<string name="settings_ad_privacy_subtitle">"對於歐洲經濟區/英國用戶"</string>
+	<string name="settings_clear_cache">清除快取</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">常見問題</string>

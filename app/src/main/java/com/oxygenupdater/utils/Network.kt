@@ -27,6 +27,8 @@ private const val DefaultCacheSize = 10L * 1024 * 1024 // 10 MB
 const val AppUserAgent = "Oxygen_updater_" + BuildConfig.VERSION_NAME
 const val ApiBaseUrl = BuildConfig.SERVER_DOMAIN + BuildConfig.SERVER_API_BASE
 
+var okHttpCache: Cache? = null
+
 /** Allows per-request read timeout override via application interceptor */
 const val HeaderReadTimeout = "X-Read-Timeout"
 
@@ -79,7 +81,7 @@ private fun createOkHttpCache(context: Context) = if (SDK_INT >= VERSION_CODES.O
     DefaultCacheSize
 }.let {
     Cache(context.cacheDir, it)
-}
+}.also { okHttpCache = it }
 
 private fun httpClient(cache: Cache) = OkHttpClient.Builder().apply {
     cache(cache)

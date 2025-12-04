@@ -144,6 +144,7 @@
 	<string name="settings_upload_logs">แบ่งปันข้อมูลการใช้และล็อก</string>
 	<string name="settings_ad_privacy">ความยินยอมโฆษณา GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"สำหรับผู้ใช้ EEA/สหราชอาณาจักร"</string>
+	<string name="settings_clear_cache">ล้างแคช</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

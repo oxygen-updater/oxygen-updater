@@ -132,6 +132,7 @@ Dies kann nützlich sein, wenn Sie Folgendes möchten:"</string>
 	<string name="settings_upload_logs">Teile Nutzungsdaten und Protokolle</string>
 	<string name="settings_ad_privacy">GDPR-Zustimmung zur Werbung</string>
 	<string name="settings_ad_privacy_subtitle">"Für Nutzer in EEA/UK"</string>
+	<string name="settings_clear_cache">Cache löschen</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

@@ -136,6 +136,7 @@ Cela peut s'avérer utile si vous souhaitez:"</string>
 	<string name="settings_upload_logs">Envoyer les données d\'utilisation et de crash au développeur</string>
 	<string name="settings_ad_privacy">Consentement à la publicité GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Pour les utilisateurs de l'EEE/du Royaume-Uni"</string>
+	<string name="settings_clear_cache">Vider le cache</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"Foire aux Questions"</string>

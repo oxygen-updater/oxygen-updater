@@ -139,6 +139,7 @@
 	<string name="settings_upload_logs">利用データとログを共有</string>
 	<string name="settings_ad_privacy">GDPR広告の同意</string>
 	<string name="settings_ad_privacy_subtitle">"EEA/UKのユーザー"</string>
+	<string name="settings_clear_cache">キャッシュをクリアする</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">FAQ</string>

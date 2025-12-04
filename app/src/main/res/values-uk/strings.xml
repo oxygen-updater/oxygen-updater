@@ -139,6 +139,7 @@
 	<string name="settings_upload_logs">Ділитися даними про використання та журналом помилок</string>
 	<string name="settings_ad_privacy">Згода на рекламу GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Для користувачів з ЄЕЗ/Великобританії"</string>
+	<string name="settings_clear_cache">Очистити кеш</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">ЧаПи</string>

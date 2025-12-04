@@ -132,6 +132,7 @@ Detta kan vara användbart om du vill:"</string>
 	<string name="settings_upload_logs">Dela användningsdata och loggar</string>
 	<string name="settings_ad_privacy">GDPR samtycke för annonser</string>
 	<string name="settings_ad_privacy_subtitle">"För användare i EES/Storbritannien"</string>
+	<string name="settings_clear_cache">Rensa cacheminnet</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>

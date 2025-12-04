@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SnapshotMutationPolicy
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,6 +27,9 @@ inline fun <T> rememberState(value: T) = remember { mutableStateOf(value) }
 
 @Composable
 inline fun rememberState(value: Int) = remember { mutableIntStateOf(value) }
+
+@Composable
+inline fun rememberState(key1: Any?, value: Long) = remember(key1) { mutableLongStateOf(value) }
 
 @Composable
 inline fun rememberState(value: Float) = remember { mutableFloatStateOf(value) }

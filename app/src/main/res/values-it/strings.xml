@@ -130,6 +130,7 @@ Questo può essere utile se si desidera:"</string>
 	<string name="settings_upload_logs">Condividi uso e logs.</string>
 	<string name="settings_ad_privacy">Consenso agli annunci GDPR</string>
 	<string name="settings_ad_privacy_subtitle">"Per gli utenti nel SEE/UK"</string>
+	<string name="settings_clear_cache">Cancella cache</string>
 
 	<!-- FAQ strings -->
 	<string name="faq">"FAQ"</string>
