@@ -179,6 +179,8 @@ Esto puede ser útil si quieres:"</string>
 
 	<string name="device_information_amount_of_memory">Cantidad de RAM</string>
 	<string name="device_information_cpu_frequency">Frecuencia del procesador</string>
+	<string name="device_information_screen_size">Tamaño de la pantalla</string>
+	<string name="device_information_cameras">Cámaras</string>
 	<string name="device_information_header">Dispositivo</string>
 	<string name="device_information_image_description">Imagen de dispositivo</string>
 	<string name="device_information_incremental_os_version">Versión Incremental del SO</string>

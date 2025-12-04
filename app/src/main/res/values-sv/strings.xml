@@ -171,6 +171,8 @@ Detta kan vara användbart om du vill:"</string>
 
 	<string name="device_information_amount_of_memory">"Mängd av RAM:"</string>
 	<string name="device_information_cpu_frequency">"Processorfrekvens:"</string>
+	<string name="device_information_screen_size">Skärmstorlek</string>
+	<string name="device_information_cameras">Kameror</string>
 	<string name="device_information_header">"Enhet"</string>
 	<string name="device_information_image_description">"Enhetsbild"</string>
 	<string name="device_information_incremental_os_version">Inkrementell OS-version</string>

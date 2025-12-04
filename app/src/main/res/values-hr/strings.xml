@@ -172,6 +172,8 @@ Ovo može biti korisno ako želite:"</string>
 
 	<string name="device_information_amount_of_memory">"Količina rama:"</string>
 	<string name="device_information_cpu_frequency">"Frekvencija procesora:"</string>
+	<string name="device_information_screen_size">Veličina zaslona</string>
+	<string name="device_information_cameras">Kamere</string>
 	<string name="device_information_header">"Uređaj"</string>
 	<string name="device_information_image_description">"Slika uređaja"</string>
 	<string name="device_information_incremental_os_version">"Inkrementalna OS verzija:"</string>

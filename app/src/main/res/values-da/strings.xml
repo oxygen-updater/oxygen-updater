@@ -173,6 +173,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<string name="device_information_amount_of_memory">Mængde af RAM</string>
 	<string name="device_information_cpu_frequency">Processor frekvens</string>
+	<string name="device_information_screen_size">Skærmstørrelse</string>
+	<string name="device_information_cameras">Kameraer</string>
 	<string name="device_information_header">Enhed</string>
 	<string name="device_information_image_description">Enheds billede</string>
 	<string name="device_information_incremental_os_version">Trinvis OS version</string>

@@ -172,6 +172,8 @@
 
 	<string name="device_information_amount_of_memory">Обсяг оперативної пам\'яті</string>
 	<string name="device_information_cpu_frequency">Частота процесора</string>
+	<string name="device_information_screen_size">Розмір екрану</string>
+	<string name="device_information_cameras">Камери</string>
 	<string name="device_information_gigahertz">%1$s ГГц</string>
 	<string name="device_information_header">Пристрій</string>
 	<string name="device_information_image_description">Зображення пристрою</string>

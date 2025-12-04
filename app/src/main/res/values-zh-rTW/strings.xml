@@ -168,6 +168,8 @@
 
 	<string name="device_information_amount_of_memory">記憶體大小：</string>
 	<string name="device_information_cpu_frequency">處理器時脈：</string>
+	<string name="device_information_screen_size">螢幕尺寸</string>
+	<string name="device_information_cameras">相機</string>
 	<string name="device_information_gigahertz">%1$s GHz</string>
 	<string name="device_information_header">我的裝置</string>
 	<string name="device_information_image_description">裝置圖片</string>

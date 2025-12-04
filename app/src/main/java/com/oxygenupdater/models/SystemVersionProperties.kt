@@ -8,7 +8,6 @@ import android.util.Log
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.models.SystemVersionProperties.OplusPipelineLookupKeys
 import com.oxygenupdater.utils.logInfo
-import java.io.BufferedReader
 import java.io.IOException
 import java.io.StringReader
 import java.util.Scanner
@@ -180,7 +179,7 @@ object SystemVersionProperties {
                     // Append pipeline to model number, only if it's not already part of it. A quick check is to
                     // see if the last character is a digit, since pipelines are almost exclusively alphabets.
                     val lastChar = deviceProductName.lastOrNull() ?: '0'
-                    if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
+                    if (lastChar in '0'..'9') deviceProductName += pipeline
                 } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                     // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                     // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
@@ -191,7 +190,7 @@ object SystemVersionProperties {
                     // Append pipeline to model number, only if it's not already part of it. A quick check is to
                     // see if the last character is a digit, since pipelines are almost exclusively alphabets.
                     val lastChar = deviceProductName.lastOrNull() ?: '0'
-                    if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
+                    if (lastChar in '0'..'9') deviceProductName += pipeline
                 }
             }
 
@@ -259,7 +258,7 @@ object SystemVersionProperties {
                         // Append pipeline to model number, only if it's not already part of it. A quick check is to
                         // see if the last character is a digit, since pipelines are almost exclusively alphabets.
                         val lastChar = deviceProductName.lastOrNull() ?: '0'
-                        if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
+                        if (lastChar in '0'..'9') deviceProductName += pipeline
                     } else if (OnePlus7Series.contains(deviceProductName) || OnePlus7TSeries.contains(deviceProductName)) {
                         // Workaround #5 (Build.PRODUCT + ro.vendor.oplus.regionmark): differentiate between GLO/IND
                         // builds for 7- & 7T-series on OOS12. This affects H.31/H.30 & F.17 builds, where the same
@@ -270,7 +269,7 @@ object SystemVersionProperties {
                         // Append pipeline to model number, only if it's not already part of it. A quick check is to
                         // see if the last character is a digit, since pipelines are almost exclusively alphabets.
                         val lastChar = deviceProductName.lastOrNull() ?: '0'
-                        if (lastChar >= '0' && lastChar <= '9') deviceProductName += pipeline
+                        if (lastChar in '0'..'9') deviceProductName += pipeline
                     }
                 }
 
@@ -331,7 +330,7 @@ object SystemVersionProperties {
 
         // Some keys are not present on all devices, so check multiple in-order
         itemKeys.forEach { item ->
-            val reader = BufferedReader(StringReader(properties))
+            val reader = StringReader(properties).buffered()
             var inputLine: String?
 
             while (reader.readLine().also { inputLine = it } != null) {

@@ -177,6 +177,8 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 
 	<string name="device_information_amount_of_memory">RAM miktarı</string>
 	<string name="device_information_cpu_frequency">İşlemci frekansı</string>
+	<string name="device_information_screen_size">Ekran boyutu</string>
+	<string name="device_information_cameras">Kameralar</string>
 	<string name="device_information_header">Cihaz</string>
 	<string name="device_information_image_description">Cihaz imajı</string>
 	<string name="device_information_incremental_os_version">OS versiyonu</string>

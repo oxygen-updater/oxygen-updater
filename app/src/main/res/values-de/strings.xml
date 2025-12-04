@@ -172,6 +172,8 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 
 	<string name="device_information_amount_of_memory">RAM-Größe</string>
 	<string name="device_information_cpu_frequency">Prozessor Frequenz</string>
+	<string name="device_information_screen_size">Bildschirmgröße</string>
+	<string name="device_information_cameras">Kameras</string>
 	<string name="device_information_header">"Gerät"</string>
 	<string name="device_information_image_description">"Geräte Bild"</string>
 	<string name="device_information_incremental_os_version">Inkrementelle OS Version</string>

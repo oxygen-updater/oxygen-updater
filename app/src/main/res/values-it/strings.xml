@@ -169,6 +169,8 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 
 	<string name="device_information_amount_of_memory">"RAM:"</string>
 	<string name="device_information_cpu_frequency">"Frequenza processore:"</string>
+	<string name="device_information_screen_size">Dimensioni dello schermo</string>
+	<string name="device_information_cameras">Telecamere</string>
 	<string name="device_information_header">"Dispositivo"</string>
 	<string name="device_information_image_description">"Immagine Dispositivo"</string>
 	<string name="device_information_incremental_os_version">"Versone di sistema incrementale:"</string>

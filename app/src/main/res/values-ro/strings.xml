@@ -171,6 +171,8 @@ Acest lucru poate fi util dacă doriți să:"</string>
 
 	<string name="device_information_amount_of_memory">Memorie RAM</string>
 	<string name="device_information_cpu_frequency">Frecvență procesor</string>
+	<string name="device_information_screen_size">Dimensiunea ecranului</string>
+	<string name="device_information_cameras">Camere</string>
 	<string name="device_information_header">Dispozitiv</string>
 	<string name="device_information_image_description">Imaginea dispozitivului</string>
 	<string name="device_information_incremental_os_version">Versiunea incrementală de OS</string>

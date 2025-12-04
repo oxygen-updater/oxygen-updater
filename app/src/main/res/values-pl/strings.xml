@@ -183,6 +183,8 @@ Może to być przydatne, jeśli chcesz:"</string>
 
 	<string name="device_information_amount_of_memory">Ilość pamięci RAM</string>
 	<string name="device_information_cpu_frequency">Taktowanie procesora</string>
+	<string name="device_information_screen_size">Rozmiar ekranu</string>
+	<string name="device_information_cameras">Aparaty fotograficzne</string>
 	<string name="device_information_header">Urządzenie</string>
 	<string name="device_information_image_description">Obraz urządzenia</string>
 	<string name="device_information_incremental_os_version">Częściowa wersja systemu operacyjnego</string>

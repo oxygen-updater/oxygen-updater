@@ -171,6 +171,8 @@ This can be useful if you want to:"</string>
 
 	<string name="device_information_amount_of_memory">Amount of RAM</string>
 	<string name="device_information_cpu_frequency">Processor Frequency</string>
+	<string name="device_information_screen_size">Screen size</string>
+	<string name="device_information_cameras">Cameras</string>
 	<string name="device_information_gigahertz" translatable="false">%1$s GHz</string>
 	<string name="device_information_header">Device</string>
 	<string name="device_information_image_description">Device image</string>

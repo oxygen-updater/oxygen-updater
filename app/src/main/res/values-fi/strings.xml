@@ -171,6 +171,8 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="device_information_software_header">Ohjelmisto</string>
 	<string name="device_information_amount_of_memory">"RAM-muistin määrä:"</string>
 	<string name="device_information_cpu_frequency">"Prosessorin kellotaajuus:"</string>
+	<string name="device_information_screen_size">Näytön koko</string>
+	<string name="device_information_cameras">Kamerat</string>
 	<string name="device_information_header">"Laite"</string>
 	<string name="device_information_image_description">"Laitteen kuva"</string>
 	<string name="device_information_incremental_os_version">"Lisäävän päivityksen versio:"</string>

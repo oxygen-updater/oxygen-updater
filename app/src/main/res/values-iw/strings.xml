@@ -171,6 +171,8 @@
 
 	<string name="device_information_amount_of_memory">זיכרון RAM</string>
 	<string name="device_information_cpu_frequency">תדר מעבד</string>
+	<string name="device_information_screen_size">גודל המסך</string>
+	<string name="device_information_cameras">מצלמות</string>
 	<string name="device_information_header">מכשיר</string>
 	<string name="device_information_image_description">תמונת המכשיר</string>
 	<string name="device_information_incremental_os_version">גרסת מערכת הפעלה מצטברת</string>

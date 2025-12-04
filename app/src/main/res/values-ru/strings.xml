@@ -162,6 +162,8 @@
 	<string name="device_information_software_header">ПО</string>
 	<string name="device_information_amount_of_memory">"Объем ОЗУ:"</string>
 	<string name="device_information_cpu_frequency">"Частота процессора:"</string>
+	<string name="device_information_screen_size">Размер экрана</string>
+	<string name="device_information_cameras">Камеры</string>
 	<string name="device_information_gigahertz">%1$s ГГц</string>
 	<string name="device_information_header">"Устройство"</string>
 	<string name="device_information_image_description">"Изображение устройства"</string>

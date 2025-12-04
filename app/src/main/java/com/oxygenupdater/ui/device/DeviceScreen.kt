@@ -48,6 +48,7 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.Android
+import com.oxygenupdater.icons.AspectRatio
 import com.oxygenupdater.icons.DeveloperBoard
 import com.oxygenupdater.icons.Error
 import com.oxygenupdater.icons.Memory
@@ -56,6 +57,7 @@ import com.oxygenupdater.icons.MobileCheck
 import com.oxygenupdater.icons.MobileInfo
 import com.oxygenupdater.icons.MobileLockPortrait
 import com.oxygenupdater.icons.MobileQuestion
+import com.oxygenupdater.icons.PhotoCamera
 import com.oxygenupdater.icons.Security
 import com.oxygenupdater.icons.Speed
 import com.oxygenupdater.icons.Steppers
@@ -65,6 +67,7 @@ import com.oxygenupdater.internal.CpuFrequencies
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.models.systemProperty
 import com.oxygenupdater.ui.common.ConditionalNavBarPadding
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
@@ -418,6 +421,83 @@ private fun ColumnScope.DeviceHardwareInfo() {
         )
     }
 
+    // Screen size(s) in in/cm
+    remember {
+        buildString {
+            // Primary screen (all devices)
+            var primaryIn = systemProperty(ScreenSizePrimaryInLookupKey).takeIf { it != UNKNOWN }
+            var primaryCm = systemProperty(ScreenSizePrimaryCmLookupKey).takeIf { it != UNKNOWN }
+            if (primaryIn == null) {
+                if (primaryCm != null) {
+                    val value = primaryCm.toIntOrNull() ?: 0
+                    if (value != 0) primaryIn = "%.2f".format("${value * CmToInMultiplier}")
+                }
+            } else if (primaryCm == null) {
+                val value = primaryIn.toIntOrNull() ?: 0
+                if (value != 0) primaryCm = "%.2f".format("${value * InToCmMultiplier}")
+            }
+            val validPrimary = primaryIn != null && primaryCm != null
+            if (validPrimary) {
+                append(primaryIn).append('″') // inch symbol
+                append(" (").append(primaryCm).append(" cm").append(')')
+            }
+
+            // Secondary screen (foldables)
+            var secondaryIn = systemProperty(ScreenSizeSecondaryInLookupKey).takeIf { it != UNKNOWN }
+            var secondaryCm = systemProperty(ScreenSizeSecondaryCmLookupKey).takeIf { it != UNKNOWN }
+            if (secondaryIn == null) {
+                if (secondaryCm != null) {
+                    val value = secondaryCm.toIntOrNull() ?: 0
+                    // 1÷2.54, multiplication is faster in bytecode
+                    if (value != 0) secondaryIn = "%.2f".format("${value * CmToInMultiplier}")
+                }
+            } else if (secondaryCm == null) {
+                val value = secondaryIn.toIntOrNull() ?: 0
+                if (value != 0) secondaryCm = "%.2f".format("${value * InToCmMultiplier}")
+            }
+            if (secondaryIn != null && secondaryCm != null) {
+                if (validPrimary) appendLine().append(" • ")
+                append(secondaryIn).append('″') // inch symbol
+                append(" (").append(secondaryCm).append(" cm").append(')')
+            }
+        }
+    }.let {
+        if (it.isNotEmpty()) Item(
+            icon = Symbols.AspectRatio,
+            titleResId = R.string.device_information_screen_size,
+            text = it,
+        )
+    }
+
+    // Camera megapixel counts
+    remember {
+        var count = 0
+        buildString {
+            try {
+                systemProperty(BackCameraLookupKey).takeIf { it != UNKNOWN }?.let {
+                    append("• Rear: $it")
+                    count++
+                }
+                systemProperty(FrontCameraLookupKey).takeIf { it != UNKNOWN }?.let {
+                    if (isNotEmpty()) appendLine()
+                    append("• Front: $it")
+                    count++
+                }
+            } catch (_: UnsupportedOperationException) {
+                // ignore
+            }
+        }.apply {
+            // Remove bullet prefix if single line
+            if (count == 1) removePrefix("• ")
+        }
+    }.let {
+        if (it.isNotEmpty()) Item(
+            icon = Symbols.PhotoCamera,
+            titleResId = R.string.device_information_cameras,
+            text = it,
+        )
+    }
+
     @Suppress("DEPRECATION")
     @SuppressLint("HardwareIds")
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -498,6 +578,20 @@ const val DeviceScreen_NotSupportedIconTestTag = TAG + "_NotSupportedIcon"
 
 @VisibleForTesting
 const val DeviceScreen_MismatchTextTestTag = TAG + "_MismatchText"
+
+private const val ScreenSizePrimaryInLookupKey = "ro.oplus.display.screenSizeInches.primary"
+private const val ScreenSizePrimaryCmLookupKey = "ro.oplus.display.screenSizeCentimeter.primary"
+
+/** Should only be present on foldable devices, e.g. OnePlus Open */
+private const val ScreenSizeSecondaryInLookupKey = "ro.oplus.display.screenSizeInches.secondary"
+private const val ScreenSizeSecondaryCmLookupKey = "ro.oplus.display.screenSizeCentimeter.secondary"
+
+/** In the case of multiple cameras, each value is separated by '+' (without spaces) */
+private const val BackCameraLookupKey = "ro.vendor.oplus.camera.backCamSize"
+private const val FrontCameraLookupKey = "ro.vendor.oplus.camera.frontCamSize"
+
+private const val InToCmMultiplier = 2.54f
+private const val CmToInMultiplier = 1 / InToCmMultiplier
 
 @PreviewThemes
 @Composable
