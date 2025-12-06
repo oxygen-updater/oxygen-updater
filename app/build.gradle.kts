@@ -78,15 +78,15 @@ fun ApplicationBuildType.setupBuildConfig(
     val notifPrefix: String
     if (release) {
         domain = "https://oxygenupdater.com/"
-        apiBase = "api/v2.9/"
+        apiBase = "api/v2.10/"
         notifPrefix = ""
     } else if (localOverride) {
         domain = "http://192.168.1.4:81/"
-        apiBase = "v2.9/"
+        apiBase = "v2.10/"
         notifPrefix = "local_"
     } else {
         domain = "https://test.oxygenupdater.com/"
-        apiBase = "api/v2.9/"
+        apiBase = "api/v2.10/"
         notifPrefix = "test_"
     }
 

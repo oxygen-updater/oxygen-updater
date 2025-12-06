@@ -45,6 +45,9 @@ interface ServerApi {
         @Query("osType") osType: String,
         @Query("fingerprint") fingerprint: String,
         @Query("oplusPipeline") oplusPipeline: String,
+        @Query("oplusPipelineCode") oplusPipelineCode: String,
+        @Query("oplusManifestHash") oplusManifestHash: String,
+        @Query("deviceMarketName") deviceMarketName: String,
         @Query("isEuBuild") isEuBuild: Boolean,
         @Query("appVersion") appVersion: String,
     ): Response<UpdateData>

@@ -6,7 +6,9 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.util.Log
 import com.oxygenupdater.BuildConfig
+import com.oxygenupdater.models.SystemVersionProperties.OplusMyManifestVersionLookupKeys
 import com.oxygenupdater.models.SystemVersionProperties.OplusPipelineLookupKeys
+import com.oxygenupdater.models.SystemVersionProperties.deviceMarketName
 import com.oxygenupdater.utils.logInfo
 import java.io.IOException
 import java.io.StringReader
@@ -74,11 +76,22 @@ object SystemVersionProperties {
         "ro.vendor.oplus.regionmark",
     )
 
+    private val OplusMyManifestVersionLookupKeys = arrayOf(
+        "ro.oplus.version.my_manifest",
+        "ro.oplus.image.my_manifest.version",
+    )
+
     /** Required for workaround #5*/
     private const val VendorOpIndia = "ro.vendor.op.india"
 
     /** Required for `osType` */
     private const val BuildOsTypeLookupKey = "ro.build.os_type"
+
+    /** Required for [deviceMarketName] */
+    private const val OplusMarketName = "ro.vendor.oplus.market.name"
+
+    /** Set to empty if property doesn't exist */
+    val deviceMarketName: String
 
     /** Matchable name of the device */
     val deviceProductName: String
@@ -113,15 +126,22 @@ object SystemVersionProperties {
     /** @see OplusPipelineLookupKeys */
     val pipeline: String
 
+    /** @see OplusMyManifestVersionLookupKeys */
+    val pipelineCode: String
+    val manifestHash: String
+
     val isEuBuild: Boolean
 
     init {
         // Default to something sensible or set to Build.UNKNOWN
+        var deviceMarketName = UNKNOWN
         var deviceProductName = Build.PRODUCT
         var osVersion = Build.DISPLAY
         var otaVersion = UNKNOWN
         var osType = UNKNOWN
         var pipeline = UNKNOWN
+        var pipelineCode = UNKNOWN
+        var manifestHash = UNKNOWN
         var isEuBuild = false
         var securityPatchDate = if (SDK_INT >= VERSION_CODES.M) {
             Build.VERSION.SECURITY_PATCH
@@ -129,6 +149,8 @@ object SystemVersionProperties {
 
         try {
             if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
+
+            deviceMarketName = systemProperty(OplusMarketName)
 
             if (deviceProductName == OnePlus3) {
                 // Workaround #3: don't use `ro.product.name` for OP3/3T; they have the same value.
@@ -198,6 +220,13 @@ object SystemVersionProperties {
             isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
             otaVersion = systemProperty(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY)
+            val myManifestVersion = pickFirstValid(OplusMyManifestVersionLookupKeys) { _, value -> value }
+            myManifestVersion.removePrefix(otaVersion).split(".").filter { it.isNotBlank() }.let {
+                val size = it.size
+                if (size != 2) return@let
+                pipelineCode = it[0]
+                manifestHash = it[1]
+            }
 
             // This prop is present only on 7-series and above
             osType = systemProperty(BuildOsTypeLookupKey).let {
@@ -218,6 +247,8 @@ object SystemVersionProperties {
                 val properties = if (scanner.hasNext()) scanner.next() else ""
 
                 getBuildPropProcess.destroy()
+
+                deviceMarketName = readBuildPropItem(OplusMarketName, properties)
 
                 if (deviceProductName == OnePlus3) {
                     // Workaround #3: don't use `ro.product.name` for OP3/3T; they have the same value.
@@ -277,6 +308,13 @@ object SystemVersionProperties {
                 isEuBuild = if (euBooleanStr == UNKNOWN) pipeline.startsWith("EU") else euBooleanStr.toBoolean()
 
                 otaVersion = readBuildPropItem(BuildConfig.OS_OTA_VERSION_NUMBER_LOOKUP_KEY, properties)
+                val myManifestVersion = readBuildPropItem(OplusMyManifestVersionLookupKeys, properties)
+                myManifestVersion.removePrefix(otaVersion).split(".").filter { it.isNotBlank() }.let {
+                    val size = it.size
+                    if (size != 2) return@let
+                    pipelineCode = it[0]
+                    manifestHash = it[1]
+                }
 
                 // This prop is present only on 7-series and above
                 osType = readBuildPropItem(BuildOsTypeLookupKey, properties).let {
@@ -292,12 +330,15 @@ object SystemVersionProperties {
             }
         }
 
+        this.deviceMarketName = deviceMarketName.takeIf { it != UNKNOWN } ?: "" // unset unknown value
         this.deviceProductName = deviceProductName
         this.osVersion = osVersion
         this.otaVersion = otaVersion
         this.securityPatchDate = securityPatchDate
         this.osType = osType
         this.pipeline = pipeline
+        this.pipelineCode = pipelineCode
+        this.manifestHash = manifestHash
         this.isEuBuild = isEuBuild
     }
 

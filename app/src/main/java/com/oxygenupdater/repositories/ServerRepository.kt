@@ -59,6 +59,9 @@ class ServerRepository @Inject constructor(
             osType = SystemVersionProperties.osType,
             fingerprint = SystemVersionProperties.fingerprint,
             oplusPipeline = SystemVersionProperties.pipeline,
+            oplusPipelineCode = SystemVersionProperties.pipelineCode,
+            oplusManifestHash = SystemVersionProperties.manifestHash,
+            deviceMarketName = SystemVersionProperties.deviceMarketName,
             isEuBuild = SystemVersionProperties.isEuBuild,
             appVersion = BuildConfig.VERSION_NAME,
         )
@@ -147,13 +150,16 @@ class ServerRepository @Inject constructor(
 
     suspend fun osInfoHeartbeat(fromIntentAction: String) = performServerRequest {
         serverApi.osInfoHeartbeat(
-            ArrayMap<String, Any>(8).apply {
+            ArrayMap<String, Any>(11).apply {
                 put("fromAction", fromIntentAction)
                 put("otaVersion", SystemVersionProperties.otaVersion)
                 put("osVersion", SystemVersionProperties.osVersion)
                 put("osType", SystemVersionProperties.osType)
                 put("fingerprint", SystemVersionProperties.fingerprint)
                 put("oplusPipeline", SystemVersionProperties.pipeline)
+                put("oplusPipelineCode", SystemVersionProperties.pipelineCode)
+                put("oplusManifestHash", SystemVersionProperties.manifestHash)
+                put("deviceMarketName", SystemVersionProperties.deviceMarketName)
                 put("isEuBuild", SystemVersionProperties.isEuBuild)
                 put("appVersion", BuildConfig.VERSION_NAME)
             }
