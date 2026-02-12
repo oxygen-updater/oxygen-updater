@@ -21,6 +21,7 @@ import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
+import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logVerbose
@@ -74,6 +75,28 @@ class ServerRepository @Inject constructor(
         } else it
     }.let {
         updateDataDao.refresh(it)
+    }
+
+    suspend fun getFreshUpdateDataDownloadUrl(
+        deviceId: Long,
+        methodId: Long,
+        updateData: UpdateData,
+    ) = performServerRequest {
+        serverApi.getFreshUpdateDataDownloadUrl(
+            deviceId = deviceId,
+            updateMethodId = methodId,
+            appVersion = BuildConfig.VERSION_NAME,
+            body = ArrayMap<String, Any>(4).apply {
+                put("id", updateData.id)
+                put("otaVersionNumber", updateData.otaVersionNumber)
+                put("downloadUrl", updateData.downloadUrl)
+                put("md5sum", updateData.md5sum)
+            }
+        )
+    }.let {
+        if (it == null || !it.success) return@let
+        val result = it.result ?: return@let
+        updateDataDao.updateDownloadUrl(updateData.id ?: return@let, result)
     }
 
     suspend fun fetchServerStatus() = performServerRequest { serverApi.fetchServerStatus() }.let { status ->

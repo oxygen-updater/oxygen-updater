@@ -37,6 +37,9 @@ interface UpdateDataDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(data: UpdateData)
 
+    @Query("UPDATE `update_data` SET `download_url` = :downloadUrl WHERE `id` = :id")
+    fun updateDownloadUrl(id: Long, downloadUrl: String)
+
     @Query("DELETE FROM `update_data`")
     fun deleteAll()
 }

@@ -61,7 +61,6 @@ import com.oxygenupdater.models.DeviceRequestFilter
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerStatus
 import com.oxygenupdater.models.SystemVersionProperties
-import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.update.DownloadStatus
@@ -280,11 +279,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun enqueueDownloadWork(updateData: UpdateData) = workManager.enqueueUniqueWork(
+    fun enqueueDownloadWork() = workManager.enqueueUniqueWork(
         WorkUniqueDownload,
         ExistingWorkPolicy.REPLACE,
         OneTimeWorkRequestBuilder<DownloadWorker>()
-            .setInputData(updateData.toWorkData())
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())

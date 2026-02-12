@@ -5,8 +5,8 @@ import android.app.Notification.CATEGORY_PROGRESS
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
+import android.os.Build.VERSION_CODES
 import android.os.Environment
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +14,7 @@ import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
@@ -31,9 +32,11 @@ import com.oxygenupdater.extensions.set
 import com.oxygenupdater.extensions.showToast
 import com.oxygenupdater.internal.NotSet
 import com.oxygenupdater.internal.NotSetL
+import com.oxygenupdater.internal.settings.KeyDeviceId
 import com.oxygenupdater.internal.settings.KeyDownloadBytesDone
+import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.TimeRemaining
-import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.update.DownloadFailure
 import com.oxygenupdater.ui.update.DownloadStatus
 import com.oxygenupdater.ui.update.Md5VerificationFailure
@@ -54,12 +57,19 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import okhttp3.ResponseBody
+import retrofit2.HttpException
+import retrofit2.Response
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.RandomAccessFile
 import java.math.BigInteger
+import java.net.HttpURLConnection
 import java.security.DigestInputStream
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -77,14 +87,39 @@ class DownloadWorker @AssistedInject constructor(
     @Assisted parameters: WorkerParameters,
     private val sharedPreferences: SharedPreferences,
     private val downloadApi: DownloadApi,
+    private val serverRepository: ServerRepository,
     private val workManager: WorkManager,
     private val crashlytics: FirebaseCrashlytics,
 ) : CoroutineWorker(context, parameters) {
 
     private var isFirstPublish = true
     private var previousProgressTimeMs = 0L
+    private var secondsRemaining = NotSetL
     private val measurements = ArrayList<Double>()
-    private val updateData = UpdateData.createFromWorkData(parameters.inputData)
+
+    /**
+     * To be used in [getFreshDownloadUrl]. We retrieve device/method IDs only once,
+     * to act only on the settings that the user had when they started this download.
+     *
+     * If they change device/method while a download is in progress, we let the user
+     * manually cancel any existing download, because they initiated it in the first place.
+     */
+    private val deviceId = sharedPreferences[KeyDeviceId, NotSetL]
+    private val methodId = sharedPreferences[KeyUpdateMethodId, NotSetL]
+
+    private val updateDataFlow = serverRepository.updateDataFlow.distinctUntilChanged()
+    private val updateData = runBlocking(Dispatchers.IO) { updateDataFlow.firstOrNull() }
+
+    // Android 16+ links should all be dynamic/refreshable, but the SDK_INT check isn't enough
+    // by itself. After all, an A15 device could also receive the A16 update. We also set this
+    // to `false` below, if the download URL doesn't contain any numeric 'expires' query param.
+    private var refreshableLink = SDK_INT >= VERSION_CODES.BAKLAVA ||
+            updateData?.let {
+                // OS versions are in the format 'CPHxxxx_<androidVersion>.x.y.z(EX01)'
+                it.versionNumber?.split("_")?.getOrNull(1)?.startsWith("16") == true ||
+                        it.description?.splitToSequence("\r\n", "\n", "\r", limit = 2)?.firstOrNull()
+                            ?.split("_")?.getOrNull(1)?.startsWith("16") == true
+            } == true
 
     private lateinit var tempFile: File
     private lateinit var zipFile: File
@@ -95,13 +130,7 @@ class DownloadWorker @AssistedInject constructor(
         trySetForeground(createInitialNotification())
 
         when {
-            updateData?.downloadUrl == null -> {
-                showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
-
-                Result.failure(Data.Builder().apply {
-                    putInt(WorkDataDownloadFailureType, DownloadFailure.NullUpdateDataOrDownloadUrl.value)
-                }.build())
-            }
+            updateData?.downloadUrl == null -> failureNullUpdateDataOrDownloadUrl()
 
             !updateData.downloadUrl.contains("http") -> {
                 showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
@@ -213,14 +242,16 @@ class DownloadWorker @AssistedInject constructor(
         if (::notification.isInitialized) notification else createInitialNotification()
     )
 
-    private fun foregroundInfo(notification: Notification) = if (SDK_INT >= Build.VERSION_CODES.Q) ForegroundInfo(
+    private fun foregroundInfo(notification: Notification) = if (SDK_INT >= VERSION_CODES.Q) ForegroundInfo(
         NotificationIds.LocalDownloadForeground, notification,
         ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC // keep in sync with `foregroundServiceType` in AndroidManifest
     ) else ForegroundInfo(NotificationIds.LocalDownloadForeground, notification)
 
-    private suspend fun download(): Result = withContext(Dispatchers.IO) {
-        tempFile = File(context.getExternalFilesDir(null), updateData!!.filename!!)
-        zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, updateData.filename!!)
+    private suspend fun download() = withContext(Dispatchers.IO) {
+        if (updateData?.filename == null) return@withContext failureNullUpdateDataOrDownloadUrl()
+
+        tempFile = File(context.getExternalFilesDir(null), updateData.filename)
+        zipFile = File(Environment.getExternalStoragePublicDirectory(DirectoryRoot).absolutePath, updateData.filename)
 
         var startingByte = sharedPreferences[KeyDownloadBytesDone, NotSetL]
         var rangeHeader = if (startingByte != NotSetL) "bytes=$startingByte-" else null
@@ -242,138 +273,164 @@ class DownloadWorker @AssistedInject constructor(
             }
         }
 
-        val response = downloadApi.downloadZip(updateData.downloadUrl!!, rangeHeader)
-        val body = response.body()
+        // Preemptively refresh a download URL if it's about to expire
+        var downloadUrl = updateData.downloadUrl!!
+        if (refreshableLink) getDownloadExpiresMs(downloadUrl).let { expiresMs ->
+            if (expiresMs == NotSetL) {
+                // Link doesn't expire, nothing to refresh
+                refreshableLink = false
+                return@let
+            }
 
-        if (!response.isSuccessful || body == null) {
-            return@withContext Result.failure(Data.Builder().apply {
+            val validForMs = expiresMs - System.currentTimeMillis()
+            /**
+             * Refresh only if the link has already expired, or if it will expire within 5s of expected completion.
+             * Note that this logic is currently only used *before* a download even begins, so [secondsRemaining]
+             * will always be -1 here. The original idea was to regularly check this within a loop, but that was
+             * abandoned due to unnecessary complexity. Instead, we refresh it again only on a 403 failure, on
+             * the assumption that the OTA server won't kill an existing download. Still, this line is kept as-is
+             * to aid in a quicker turnaround time later.
+             */
+            if (validForMs >= 0 &&
+                (validForMs - (secondsRemaining * 1000) > MaxMsDifferenceBetweenExpiryAndCompletion)
+            ) return@let
+
+            /** This will indirectly update [updateDataFlow] */
+            downloadUrl = getFreshDownloadUrl() ?: return@withContext failureNullUpdateDataOrDownloadUrl()
+        }
+
+        while (true) {
+            val response = try {
+                downloadApi.downloadZip(downloadUrl, rangeHeader)
+            } catch (e: Exception) {
+                val response = Response.error<ResponseBody>(
+                    // Use 418 I'm a teapot for our own 'default' error response.
+                    // Note that the code must be >= 400, otherwise Retrofit will throw an error.
+                    if (refreshableLink) HttpURLConnection.HTTP_FORBIDDEN else 418,
+                    ResponseBody.EMPTY,
+                )
+                val result = handleException(
+                    response = response,
+                    downloadUrl = downloadUrl,
+                    exception = e,
+                )
+
+                // This will only be set if the download URL was refreshed
+                val newDownloadUrl = result.outputData.getString(NewDownloadUrlFailureFlag)
+                    ?: return@withContext result
+                if (newDownloadUrl.isBlank()) return@withContext failureNullUpdateDataOrDownloadUrl()
+                else {
+                    // Continue to the next iteration of the loop only if we're sure there's a new download URL to try
+                    downloadUrl = newDownloadUrl
+                    continue
+                }
+            }
+
+            fun failureUnsuccessfulResponse() = Result.failure(Data.Builder().apply {
                 putInt(WorkDataDownloadFailureType, DownloadFailure.UnsuccessfulResponse.value)
-                putString(WorkDataDownloadFailureExtraUrl, updateData.downloadUrl)
+                putString(WorkDataDownloadFailureExtraUrl, downloadUrl)
                 putString(WorkDataDownloadFailureExtraFilename, updateData.filename)
                 putString(WorkDataDownloadFailureExtraVersion, updateData.versionNumber)
                 putString(WorkDataDownloadFailureExtraOtaVersion, updateData.otaVersionNumber)
                 putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
                 putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
             }.build())
-        }
 
-        body.byteStream().use { stream ->
-            logInfo(TAG, "Downloading ZIP from ${startingByte.fastCoerceAtLeast(0L)} bytes")
+            if (!response.isSuccessful) {
+                if (!refreshableLink) return@withContext failureUnsuccessfulResponse()
 
-            // Copy stream to file
-            // We could have used the [InputStream.copyTo] extension defined in [IOStreams.kt],
-            // but we need to support pause/resume functionality, as well as publish progress
-            RandomAccessFile(tempFile, "rw").use { randomAccessFile ->
-                val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-                var bytes: Int
-                var bytesRead = startingByte.fastCoerceAtLeast(0L)
-                val contentLength = bytesRead + body.contentLength()
+                val result = handleException(
+                    response = response,
+                    downloadUrl = downloadUrl,
+                    exception = HttpException(response),
+                )
 
-                if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) {
-                    crashlytics.logWarning(
-                        TAG,
-                        "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
-                    )
+                // This will only be set if the download URL was refreshed
+                val newDownloadUrl = result.outputData.getString(NewDownloadUrlFailureFlag)
+                    ?: return@withContext result
+                if (newDownloadUrl.isBlank()) return@withContext failureNullUpdateDataOrDownloadUrl()
+                else {
+                    // Continue to the next iteration of the loop only if we're sure there's a new download URL to try
+                    downloadUrl = newDownloadUrl
+                    continue
                 }
+            }
 
-                if (startingByte != NotSetL) {
-                    logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
-                    randomAccessFile.seek(startingByte)
-                }
+            val body = response.body() ?: return@withContext failureUnsuccessfulResponse()
+            body.byteStream().use { stream ->
+                logInfo(TAG, "Downloading ZIP from ${startingByte.fastCoerceAtLeast(0L)} bytes")
 
-                try {
-                    while (stream.read(buffer).also { bytes = it } >= 0) {
-                        randomAccessFile.write(buffer, 0, bytes)
-                        bytesRead += bytes
+                // Copy stream to file
+                // We could have used the [InputStream.copyTo] extension defined in [IOStreams.kt],
+                // but we need to support pause/resume functionality, as well as publish progress
+                RandomAccessFile(tempFile, "rw").use { randomAccessFile ->
+                    val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+                    var bytes: Int
+                    var bytesRead = startingByte.fastCoerceAtLeast(0L)
+                    val contentLength = bytesRead + body.contentLength()
 
-                        publishDownloadProgress(bytesDone = bytesRead, totalBytes = contentLength)
+                    if (abs(contentLength - updateData.downloadSize) > ThresholdBytesDifferenceWithBackend) {
+                        crashlytics.logWarning(
+                            TAG,
+                            "Content length reported by the download server differs from UpdateData.downloadSize ($contentLength vs ${updateData.downloadSize})"
+                        )
                     }
-                } catch (e: Exception) {
-                    return@withContext if (isStopped) {
-                        logDebug(TAG, "Ignoring exception since worker is in stopped state: ${e.message}")
-                        // Mark success as download completed only
-                        Result.success()
-                    } else {
-                        crashlytics.logError(TAG, "Exception while reading from byteStream", e)
 
-                        val retryCount = runAttemptCount + 1
+                    if (startingByte != NotSetL) {
+                        logDebug(TAG, "Looks like a resume operation. Seeking to $startingByte bytes")
+                        randomAccessFile.seek(startingByte)
+                    }
 
-                        when {
-                            isNetworkError(e) -> {
-                                if (retryCount <= MaxRetries) {
-                                    logDebug(TAG, "Network error encountered. Retrying ($retryCount/$MaxRetries)")
-                                    Result.retry()
-                                } else {
-                                    showDownloadFailedNotification(
-                                        context,
-                                        false,
-                                        R.string.download_error_server,
-                                        R.string.download_notification_error_server
-                                    )
+                    try {
+                        while (stream.read(buffer).also { bytes = it } >= 0) {
+                            randomAccessFile.write(buffer, 0, bytes)
+                            bytesRead += bytes
 
-                                    Result.failure(Data.Builder().apply {
-                                        putInt(WorkDataDownloadFailureType, DownloadFailure.ServerError.value)
-                                        putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
-                                        putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
-                                    }.build())
-                                }
-                            }
+                            publishDownloadProgress(bytesDone = bytesRead, totalBytes = contentLength)
+                        }
+                    } catch (e: Exception) {
+                        val result = handleException(
+                            response = response,
+                            downloadUrl = downloadUrl,
+                            exception = e,
+                        )
 
-                            e is IOException -> if (retryCount <= MaxRetries) {
-                                logDebug(TAG, "IOException encountered. Retrying ($retryCount/$MaxRetries)")
-                                Result.retry()
-                            } else {
-                                showDownloadFailedNotification(
-                                    context,
-                                    false,
-                                    R.string.download_error_server,
-                                    R.string.download_notification_error_internal
-                                )
-
-                                Result.failure(Data.Builder().apply {
-                                    putInt(WorkDataDownloadFailureType, DownloadFailure.ConnectionError.value)
-                                }.build())
-                            }
-
-                            else -> {
-                                // Delete any associated tracker preferences to allow retrying this work with a fresh state
-                                sharedPreferences.remove(KeyDownloadBytesDone)
-
-                                // Try deleting the file to allow retrying this work with a fresh state
-                                // Even if it doesn't get deleted, we can overwrite data to the same file
-                                if (!tempFile.delete()) crashlytics.logWarning(
-                                    TAG, "Could not delete the partially downloaded ZIP"
-                                )
-
-                                Result.failure(Data.Builder().apply {
-                                    putInt(WorkDataDownloadFailureType, DownloadFailure.Unknown.value)
-                                }.build())
-                            }
+                        // This will only be set if the download URL was refreshed
+                        val newDownloadUrl = result.outputData.getString(NewDownloadUrlFailureFlag)
+                            ?: return@withContext result
+                        if (newDownloadUrl.isBlank()) return@withContext failureNullUpdateDataOrDownloadUrl()
+                        else {
+                            // Continue to the next iteration of the loop only if we're sure there's a new download URL to try
+                            downloadUrl = newDownloadUrl
+                            continue
                         }
                     }
-                }
 
-                logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
-                sharedPreferences.remove(KeyDownloadBytesDone)
+                    logDebug(TAG, "Download completed. Deleting any associated tracker preferences")
+                    sharedPreferences.remove(KeyDownloadBytesDone)
 
-                setProgress(Data.Builder().apply {
-                    putLong(WorkDataDownloadBytesDone, contentLength)
-                    putLong(WorkDataDownloadTotalBytes, contentLength)
-                    putInt(WorkDataDownloadProgress, 100)
-                }.build())
-
-                // Copy file to root directory of internal storage
-                // Note: this requires the storage permission to be granted
-                try {
-                    moveTempFileToCorrectLocation()
-                } catch (e: IOException) {
-                    crashlytics.logError(TAG, "Could not rename file", e)
-
-                    return@withContext Result.failure(Data.Builder().apply {
-                        putInt(WorkDataDownloadFailureType, DownloadFailure.CouldNotMoveTempFile.value)
+                    setProgress(Data.Builder().apply {
+                        putLong(WorkDataDownloadBytesDone, contentLength)
+                        putLong(WorkDataDownloadTotalBytes, contentLength)
+                        putInt(WorkDataDownloadProgress, 100)
                     }.build())
                 }
             }
+
+            // If we reach here, download has completed successfully, so break out of the loop
+            break
+        }
+
+        // Copy file to root directory of internal storage
+        // Note: this requires the storage permission to be granted
+        try {
+            moveTempFileToCorrectLocation()
+        } catch (e: IOException) {
+            crashlytics.logError(TAG, "Could not rename file", e)
+
+            return@withContext Result.failure(Data.Builder().apply {
+                putInt(WorkDataDownloadFailureType, DownloadFailure.CouldNotMoveTempFile.value)
+            }.build())
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -384,6 +441,30 @@ class DownloadWorker @AssistedInject constructor(
         LocalNotifications.showVerifyingNotification(context)
         publishVerificationProgress()
         verify()
+    }
+
+    /**
+     * Refreshing download links is only required for Android 16+ updates, but an SDK check is not
+     * enough alone. We also need to check the update's OS version, as well as the download URL
+     * itself (to see if it has any 'expires' query param).
+     *
+     * Calls to this function must be guarded by [refreshableLink].
+     */
+    // @RequiresApi(VERSION_CODES.BAKLAVA)
+    private suspend inline fun getFreshDownloadUrl(): String? {
+        if (deviceId == NotSetL || methodId == NotSetL) return null
+
+        /** This will complete asynchronously, monitor [updateDataFlow] for response */
+        serverRepository.getFreshUpdateDataDownloadUrl(
+            deviceId = deviceId,
+            methodId = methodId,
+            updateData = updateData ?: return null,
+        )
+
+        return updateDataFlow.firstOrNull()?.let {
+            // Return only if filename is the same
+            if (it.filename == updateData.filename) it.downloadUrl else null
+        }
     }
 
     /**
@@ -585,8 +666,6 @@ class DownloadWorker @AssistedInject constructor(
         totalBytes: Long,
     ): TimeRemaining? {
         val bytesDonePerSecond: Double
-        var secondsRemaining = NotSetL
-
         if (previousBytesDone != NotSetL) {
             val secondsElapsed = TimeUnit.MILLISECONDS.toSeconds(currentTimeMs - previousProgressTimeMs)
             bytesDonePerSecond = if (secondsElapsed > 0L) {
@@ -617,10 +696,132 @@ class DownloadWorker @AssistedInject constructor(
         return if (secondsRemaining != NotSetL) TimeRemaining(secondsRemaining) else null
     }
 
+    private suspend fun handleException(
+        response: Response<ResponseBody>,
+        downloadUrl: String,
+        exception: Exception,
+    ): Result = withContext(Dispatchers.IO) {
+        if (isStopped) {
+            logDebug(TAG, "Ignoring exception since worker is in stopped state: ${exception.message}")
+            // Mark success as download completed only
+            return@withContext Result.success()
+        }
+
+        crashlytics.logError(TAG, exception.message ?: "handleException", exception)
+        val retryCount = runAttemptCount + 1
+
+        // TODO(download): handle SSLProtocolException: Read error for a URL that hasn't
+        //  expired yet. Instead of refreshing, check if it's expired first; if not,
+        //  simply `continue` to the next loop iteration. Response code will not be 403
+        //  in this case, it'll probably be 206 Partial Content.
+        //  Could perhaps be specific to ProtonVPN? Still, must be handled.
+
+        // TODO(download): check for cases where response code isn't 403, e.g.
+        //  IOException: unexpected end of stream or SocketTimeoutException: read timed out.
+        if (isNetworkError(exception)) return@withContext if (refreshableLink
+            && response.code() == HttpURLConnection.HTTP_FORBIDDEN
+        ) {
+            // Refresh if possible. Meant only for Oplus Android 16+ links.
+            val newDownloadUrl = getFreshDownloadUrl()
+                ?: return@withContext failureNullUpdateDataOrDownloadUrl()
+
+            // If download URL has not changed, report as a failure
+            if (newDownloadUrl == downloadUrl) {
+                showDownloadFailedNotification(
+                    context,
+                    false,
+                    R.string.download_error_server,
+                    R.string.download_notification_error_server
+                )
+
+                Result.failure(Data.Builder().apply {
+                    putInt(WorkDataDownloadFailureType, DownloadFailure.ServerError.value)
+                    putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
+                    putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
+                }.build())
+            } else {
+                logDebug(TAG, "Retrying with a new dynamic download URL")
+                /** Retry ourselves, because [Result.retry] has a min backoff of 10s */
+                Result.failure(Data.Builder().putString(NewDownloadUrlFailureFlag, newDownloadUrl).build())
+            }
+        } else if (retryCount <= MaxRetries) {
+            logDebug(TAG, "Network error encountered. Retrying ($retryCount/$MaxRetries)")
+            Result.retry()
+        } else {
+            showDownloadFailedNotification(
+                context,
+                false,
+                R.string.download_error_server,
+                R.string.download_notification_error_server
+            )
+
+            Result.failure(Data.Builder().apply {
+                putInt(WorkDataDownloadFailureType, DownloadFailure.ServerError.value)
+                putInt(WorkDataDownloadFailureExtraHttpCode, response.code())
+                putString(WorkDataDownloadFailureExtraHttpMessage, response.message())
+            }.build())
+        } else if (exception is IOException) {
+            if (retryCount <= MaxRetries) {
+                logDebug(TAG, "IOException encountered. Retrying ($retryCount/$MaxRetries)")
+                Result.retry()
+            } else {
+                showDownloadFailedNotification(
+                    context,
+                    false,
+                    R.string.download_error_server,
+                    R.string.download_notification_error_internal
+                )
+
+                Result.failure(Data.Builder().apply {
+                    putInt(WorkDataDownloadFailureType, DownloadFailure.ConnectionError.value)
+                }.build())
+            }
+        } else {
+            // Delete any associated tracker preferences to allow retrying this work with a fresh state
+            sharedPreferences.remove(KeyDownloadBytesDone)
+
+            // Try deleting the file to allow retrying this work with a fresh state
+            // Even if it doesn't get deleted, we can overwrite data to the same file
+            if (!tempFile.delete()) crashlytics.logWarning(
+                TAG, "Could not delete the partially downloaded ZIP"
+            )
+
+            Result.failure(Data.Builder().apply {
+                putInt(WorkDataDownloadFailureType, DownloadFailure.Unknown.value)
+            }.build())
+        }
+    }
+
+    /** Should only be compared against [System.currentTimeMillis] directly */
+    private fun getDownloadExpiresMs(downloadUrl: String) = downloadUrl.toUri().let { downloadUri ->
+        // x-oss-expires is the actual parameter we've seen, but we're intentionally
+        // generalizing the check to preemptively accommodate any future changes.
+        downloadUri.queryParameterNames.firstOrNull {
+            it.contains("expires")
+        }?.let {
+            downloadUri.getQueryParameter(it)?.toLongOrNull()
+        } ?: NotSetL
+    }
+
+    private fun failureNullUpdateDataOrDownloadUrl(): Result {
+        showDownloadFailedNotification(context, false, R.string.download_error_internal, R.string.download_notification_error_internal)
+
+        return Result.failure(Data.Builder().apply {
+            putInt(WorkDataDownloadFailureType, DownloadFailure.NullUpdateDataOrDownloadUrl.value)
+        }.build())
+    }
+
     companion object {
         private const val TAG = "DownloadWorker"
-        const val FILENAME = "filename"
-        const val MD5 = "md5"
+        private const val NewDownloadUrlFailureFlag = TAG + "_NewDownloadUrl"
+
+        /**
+         * The window within which we continue to download with the same URL, assuming it can complete before expiry.
+         * Only applicable for links that can expire.
+         *
+         * @see secondsRemaining
+         */
+        private const val MaxMsDifferenceBetweenExpiryAndCompletion = 5000L
 
         /**
          * Minimum difference between file size reported by `body.contentLength()` and what's saved in our backend.

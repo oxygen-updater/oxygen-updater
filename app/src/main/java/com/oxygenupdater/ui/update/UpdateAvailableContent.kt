@@ -399,6 +399,8 @@ private fun DownloadButtonContainer(
     // Since params are set automatically (i.e. without user action), we need an extra flag to control
     // when dialog can be shown, to avoid infinitely re-showing it on every state change.
     var canShowDownloadErrorDialog by rememberState(forceDownloadErrorDialog)
+    // TODO(download): downloadErrorDialogParams seems to preserve the previous error state when
+    //  enqueueing a download again.
     var downloadErrorDialogParams by rememberState<DownloadErrorParams?>(null)
     if (canShowDownloadErrorDialog) downloadErrorDialogParams?.let {
         ModalBottomSheet({

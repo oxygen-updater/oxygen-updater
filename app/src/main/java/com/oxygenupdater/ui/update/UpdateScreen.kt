@@ -39,7 +39,7 @@ fun UpdateScreen(
     getPrefStr: (key: String, default: String) -> String,
     getPrefBool: (key: String, default: Boolean) -> Boolean,
     setSubtitleResId: (Int) -> Unit,
-    enqueueDownload: (UpdateData) -> Unit,
+    enqueueDownload: () -> Unit,
     pauseDownload: () -> Unit,
     cancelDownload: (filename: String?) -> Unit,
     deleteDownload: (filename: String?) -> Boolean,
@@ -109,7 +109,7 @@ fun UpdateScreen(
             getPrefStr = getPrefStr,
             downloadAction = {
                 when (it) {
-                    DownloadAction.Enqueue -> enqueueDownload(updateData)
+                    DownloadAction.Enqueue -> enqueueDownload()
 
                     DownloadAction.Pause -> {
                         pauseDownload()

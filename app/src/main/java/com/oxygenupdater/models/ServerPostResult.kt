@@ -9,6 +9,9 @@ import com.squareup.moshi.JsonClass
 data class ServerPostResult(
     val success: Boolean = false,
 
+    /** Only used for [com.oxygenupdater.apis.ServerApi.getFreshUpdateDataDownloadUrl] */
+    val result: String? = null,
+
     @Json(name = "error_message")
     val errorMessage: String? = null,
 )

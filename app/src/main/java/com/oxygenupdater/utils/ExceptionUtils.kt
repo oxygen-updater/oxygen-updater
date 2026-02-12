@@ -1,5 +1,6 @@
 package com.oxygenupdater.utils
 
+import retrofit2.HttpException
 import java.io.FileNotFoundException
 import java.net.ProtocolException
 import java.net.SocketException
@@ -12,7 +13,8 @@ import javax.net.ssl.SSLException
  * @author [Arjan Vlek](https://github.com/arjanvlek)
  */
 fun isNetworkError(t: Throwable): Boolean {
-    return (t is SocketException
+    return (t is HttpException
+            || t is SocketException
             || t is SocketTimeoutException
             || t is SSLException
             || t is ProtocolException

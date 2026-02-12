@@ -58,6 +58,14 @@ interface ServerApi {
         @Path("updateMethodId") updateMethodId: Long,
     ): Response<UpdateData>
 
+    @POST("updateDataDownloadUrl/{deviceId}/{updateMethodId}")
+    suspend fun getFreshUpdateDataDownloadUrl(
+        @Path("deviceId") deviceId: Long,
+        @Path("updateMethodId") updateMethodId: Long,
+        @Query("appVersion") appVersion: String,
+        @Body body: Map<String, @JvmSuppressWildcards Any>,
+    ): Response<ServerPostResult>
+
     @GET("serverStatus")
     suspend fun fetchServerStatus(): Response<ServerStatus>
 
