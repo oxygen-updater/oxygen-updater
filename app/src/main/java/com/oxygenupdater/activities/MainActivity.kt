@@ -698,7 +698,7 @@ class MainActivity : AppCompatActivity() {
 
                             /**
                              * Note: keep in sync with
-                             * [androidx.compose.material3.tokens.NavigationRailTokens.ContainerWidth]
+                             * [androidx.compose.material3.tokens.NavigationRailCollapsedTokens.NarrowContainerWidth]
                              * */
                             val sideRailWidth = if (orientation == ORIENTATION_LANDSCAPE) 80 + 1 else 0
                             (adWidthPx / density.fastCoerceAtLeast(1f)).toInt() - sideRailWidth

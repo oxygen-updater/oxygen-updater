@@ -130,9 +130,17 @@ const val BottomSheet_ItemRowTestTag = TAG + "_ItemRow"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreviewModalBottomSheet(content: @Composable ColumnScope.() -> Unit) = PreviewAppTheme {
+    val density = LocalDensity.current
     ModalBottomSheet(
         onDismissRequest = {},
-        sheetState = SheetState(true, LocalDensity.current, SheetValue.Expanded),
+        sheetState = SheetState(
+            skipPartiallyExpanded = true,
+            /** [androidx.compose.material3.BottomSheetDefaults.PositionalThreshold] */
+            positionalThreshold = { with(density) { 56.dp.toPx() } },
+            /** [androidx.compose.material3.BottomSheetDefaults.VelocityThreshold] */
+            velocityThreshold = { with(density) { 125.dp.toPx() } },
+            initialValue = SheetValue.Expanded,
+        ),
         content = content
     )
 }

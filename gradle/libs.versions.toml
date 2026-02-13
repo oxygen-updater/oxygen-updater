@@ -1,7 +1,7 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "8.13.0"
+agp = "8.13.2"
 
 # https://firebase.google.com/support/release-notes/android
 crashlytics-plugin = "3.0.6"
@@ -10,32 +10,32 @@ crashlytics-plugin = "3.0.6"
 google-services-plugin = "4.4.4"
 
 # https://github.com/google/ksp/releases
-ksp = "2.2.10-2.0.2"
+ksp = "2.2.21-2.0.5"
 
 # https://kotlinlang.org/docs/releases.html#release-details
 # https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
 # https://blog.jetbrains.com/kotlin/category/releases/
-kotlin = "2.2.10"
+kotlin = "2.2.21"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.10.2"
 
 # https://developer.android.com/jetpack/androidx/releases/compose#versions
-compose = "1.9.0" # keep in sync with Accompanist version
-compose-m3 = "1.3.2" # update sideRailWidth in MainActivity if changed
+compose = "1.9.5" # keep in sync with Accompanist version
+compose-m3 = "1.4.0" # update sideRailWidth in MainActivity if changed
 
 # https://github.com/google/accompanist#compose-versions
 # https://github.com/google/accompanist/releases
 accompanist = "0.37.3" # keep in sync with Compose version
 
 # https://developer.android.com/jetpack/androidx/releases/activity
-activity-compose = "1.10.1"
+activity-compose = "1.11.0"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation
-navigation-compose = "2.9.3"
+navigation-compose = "2.9.7"
 
 # https://github.com/eygraber/compose-placeholder/releases
-eygraber-placeholder-compose = "1.0.11"
+eygraber-placeholder-compose = "1.0.12"
 
 # https://github.com/coil-kt/coil/blob/main/CHANGELOG.md
 coil = "3.3.0"
@@ -47,6 +47,7 @@ appcompat = "1.7.1"
 annotation = "1.9.1"
 
 # https://developer.android.com/google/play/billing/release-notes
+# noinspection GradleDependency pin to 8.0.0; 8.1+ requires minSdk 23
 billing = "8.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/browser
@@ -54,7 +55,7 @@ browser = "1.9.0"
 
 # https://developer.android.com/jetpack/androidx/releases/core
 core = "1.17.0"
-core-splashscreen = "1.0.1"
+core-splashscreen = "1.2.0"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
 desugar = "2.1.5"
@@ -64,21 +65,22 @@ desugar = "2.1.5"
 firebase-bom = "33.16.0"
 
 # https://github.com/google/dagger/releases
-dagger = "2.57"
+dagger = "2.58"
 # https://developer.android.com/jetpack/androidx/releases/hilt
+# noinspection GradleDependency pin to 1.2.0; 1.3+ requires minSdk 23
 hilt = "1.2.0"
 
 # https://github.com/junit-team/junit4/releases
 junit = "4.13.2"
 
 # https://github.com/jacoco/jacoco/releases
-jacoco = "0.8.13"
+jacoco = "0.8.14"
 
 # https://github.com/topjohnwu/libsu/blob/master/CHANGELOG.md
 libsu = "6.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/lifecycle
-lifecycle = "2.9.2"
+lifecycle = "2.9.4"
 
 # https://github.com/square/moshi/blob/master/CHANGELOG.md
 moshi = "1.15.2"
@@ -86,16 +88,18 @@ moshi = "1.15.2"
 # https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
 # https://github.com/square/okhttp/blob/master/CHANGELOG.md
 # https://square.github.io/okhttp/changelog/
-okhttp = "5.1.0"
+okhttp = "5.3.2"
 
 # https://developer.android.com/reference/com/google/android/play/core/release-notes-in_app_updates
 play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
+# noinspection GradleDependency pin to 18.7.2; 18.8+ requires minSdk 23
 play-services-base = "18.7.2"
 # https://developers.google.com/admob/android/rel-notes
 # noinspection GradleDependency pin to 23.6.0; 24+ requires minSdk 23
 play-services-ads = "23.6.0"
 # https://developers.google.com/admob/android/privacy/release-notes
+# noinspection GradleDependency pin to 3.2.0; 4+ requires minSdk 23
 ump = "3.2.0"
 
 # https://github.com/square/retrofit/tags
@@ -103,10 +107,12 @@ ump = "3.2.0"
 retrofit = "3.0.0"
 
 # https://developer.android.com/jetpack/androidx/releases/room
+# noinspection GradleDependency pin to 2.7.2; 2.8+ requires minSdk 23
 room = "2.7.2"
 
 # https://developer.android.com/jetpack/androidx/releases/work
-work-runtime = "2.10.3"
+# noinspection GradleDependency pin to 2.10.3; 2.11+ requires minSdk 23
+work-runtime = "2.10.5"
 
 # https://developer.android.com/jetpack/androidx/releases/test
 test-core = "1.7.0"
