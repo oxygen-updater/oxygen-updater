@@ -76,6 +76,7 @@ if [[ "$existing_version_name" != "$version_name" ]]; then
   existing_commit_message=$(cat "$COMMITMSG_FILE")
   # Don't commit automatically. Instead, prepare a "release" commit message (preserving existing).
   git commit -em "Release $version_name
+
 https://github.com/oxygen-updater/oxygen-updater/releases/tag/oxygen-updater-$version_name
 
 $existing_commit_message"
