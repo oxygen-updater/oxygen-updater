@@ -196,12 +196,6 @@
 			android:name="com.google.android.gms.version"
 			android:value="@integer/google_play_services_version" />
 
-		<!-- https://issuetracker.google.com/issues/327696048 -->
-		<property
-			android:name="android.adservices.AD_SERVICES_CONFIG"
-			android:resource="@xml/gma_ad_services_config"
-			tools:replace="android:resource" />
-
 		<meta-data
 			android:name="com.google.android.gms.ads.APPLICATION_ID"
 			android:value="${advertisingAppId}" />
@@ -209,14 +203,6 @@
 		<!-- Delay app measurement until MobileAds.initialize() is called. -->
 		<meta-data
 			android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
-			android:value="true" />
-
-		<!-- https://developers.google.com/admob/android/optimize-initialization -->
-		<meta-data
-			android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
-			android:value="true" />
-		<meta-data
-			android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
 			android:value="true" />
 
 		<!-- Opt out of WebView usage statistics collection -->

@@ -1,8 +1,6 @@
 package com.oxygenupdater.ui.news
 
 import android.annotation.SuppressLint
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES
 import android.text.format.DateUtils
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.layout.Column
@@ -208,10 +206,8 @@ private fun RefreshAwareWebView(
         progress = { loading.progress },
         modifier = paddingTop then modifierMaxWidth
     ) else if (loading == LoadingState.Finished) {
-        val error = if (SDK_INT >= VERSION_CODES.M) {
-            /** Errors not for our URLs are filtered out in [WebViewClient] */
-            webViewState.errorForCurrentRequest?.errorCodeString
-        } else null
+        /** Errors not for our URLs are filtered out in [WebViewClient] */
+        val error = webViewState.errorForCurrentRequest?.errorCodeString
 
         // Ensure finished & error callbacks are done just once per load
         LaunchedEffect(error) {

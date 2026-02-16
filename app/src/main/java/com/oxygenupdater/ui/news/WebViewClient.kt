@@ -1,5 +1,6 @@
 package com.oxygenupdater.ui.news
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -12,7 +13,6 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import androidx.annotation.RequiresApi
 import com.oxygenupdater.extensions.copyToClipboard
 import com.oxygenupdater.extensions.openLink
 import com.oxygenupdater.utils.ApiBaseUrl
@@ -49,7 +49,8 @@ class WebViewClient(private val context: Context) : android.webkit.WebViewClient
      * Sets [WebViewState.loadingState] to [LoadingState.Finished], but only
      * below API 23. See [onPageCommitVisible] for API >= 23.
      */
-    override fun onPageFinished(view: WebView, url: String?) = super.onPageFinished(view, url).also {
+    override fun onPageFinished(view: WebView, url: String?): Unit = super.onPageFinished(view, url).also {
+        @SuppressLint("ObsoleteSdkInt")
         if (SDK_INT >= VERSION_CODES.M) return
 
         logDebug(TAG, "Page finished: $url")
@@ -98,7 +99,7 @@ class WebViewClient(private val context: Context) : android.webkit.WebViewClient
         val uri = request.url
         try {
             context.startActivity(Intent(Intent.ACTION_VIEW, uri))
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             // Fallback: copy to clipboard instead
             context.copyToClipboard(uri.toString())
         }
@@ -114,7 +115,6 @@ class WebViewClient(private val context: Context) : android.webkit.WebViewClient
         return true
     }
 
-    @RequiresApi(VERSION_CODES.M)
     override fun onReceivedError(
         view: WebView,
         request: WebResourceRequest?,
@@ -146,7 +146,6 @@ class WebViewClient(private val context: Context) : android.webkit.WebViewClient
         updateError(error, failingUrl)
     }
 
-    @RequiresApi(VERSION_CODES.M)
     override fun onReceivedHttpError(
         view: WebView,
         request: WebResourceRequest?,

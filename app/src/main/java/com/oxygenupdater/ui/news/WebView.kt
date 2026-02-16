@@ -19,7 +19,6 @@ package com.oxygenupdater.ui.news
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.net.http.SslError
-import android.os.Build.VERSION_CODES
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.webkit.WebResourceError
@@ -28,7 +27,6 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.activity.compose.BackHandler
-import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -197,12 +195,6 @@ data class WebViewError(
     }
 
     companion object {
-
-        /**
-         * API is restricted because the non-deprecated [WebViewClient.onReceivedError]
-         * callback was added in API 23 (Marshmallow)
-         */
-        @RequiresApi(VERSION_CODES.M)
         fun from(resourceError: WebResourceError?) = WebViewError(
             resourceError?.errorCode ?: AndroidWebViewClient.ERROR_UNKNOWN,
             resourceError?.description as? String ?: "ERROR_UNKNOWN",
@@ -212,13 +204,6 @@ data class WebViewError(
             sslError?.primaryError ?: AndroidWebViewClient.ERROR_UNKNOWN,
         )
 
-        /**
-         * API is restricted because the [WebViewClient.onReceivedHttpError] callback
-         * was added in API 23 (Marshmallow).
-         *
-         * The callback is called only for status codes >= 400.
-         */
-        @RequiresApi(VERSION_CODES.M)
         fun from(errorResponse: WebResourceResponse?) = WebViewError(
             errorResponse?.statusCode ?: AndroidWebViewClient.ERROR_UNKNOWN,
         )

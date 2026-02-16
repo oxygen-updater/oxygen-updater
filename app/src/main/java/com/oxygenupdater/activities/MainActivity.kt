@@ -11,7 +11,6 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
@@ -37,6 +36,7 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Composer
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,6 +45,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.tooling.ComposeStackTraceMode
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -61,7 +62,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.core.os.postDelayed
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -338,18 +339,6 @@ class MainActivity : AppCompatActivity() {
             statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { !light },
             navigationBarStyle = navigationBarStyle,
         )
-
-        // Below Android 6/Marshmallow, the above function adds window flags to
-        // draw system bars as translucent for better legibility, because status
-        // bar content & nav bar icons are always white on these old Android
-        // versions. However, if a dark theme is active, the background is
-        // guaranteed to be a dark enough colour, and so it's better if we clear
-        // these flags for the same "proper" edge-to-edge as on newer versions.
-        @Suppress("DEPRECATION")
-        if (SDK_INT < VERSION_CODES.M && !light) window.run {
-            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
-        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -600,7 +589,6 @@ class MainActivity : AppCompatActivity() {
                         status = it.installStatus(),
                         bytesDownloaded = it::bytesDownloaded,
                         totalBytesToDownload = it::totalBytesToDownload,
-                        snackbarMessageId = { snackbarText?.first },
                         updateSnackbarText = { snackbarText = it },
                         unregisterAppUpdateListener = viewModel::unregisterAppUpdateListener,
                     )
@@ -1093,6 +1081,8 @@ class MainActivity : AppCompatActivity() {
         // Must be before calling setContent, because it uses intent-values
         val startScreen = handleIntentAndGetStartScreen(intent)
 
+        // https://kotlinlang.org/docs/whatsnew23.html#compose-compiler-stack-traces-for-minified-android-applications
+        Composer.setDiagnosticStackTraceMode(ComposeStackTraceMode.GroupKeys)
         setContent {
             val windowSize = calculateWindowSizeClass(this)
 

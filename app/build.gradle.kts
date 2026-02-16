@@ -8,11 +8,10 @@ plugins {
     alias(libs.plugins.firebase.crashlytics)
     alias(libs.plugins.gms.services)
     alias(libs.plugins.devtools.ksp)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
-    id("kotlin-parcelize")
 }
 
 fun loadProperties(
@@ -126,7 +125,7 @@ android {
     namespace = "com.oxygenupdater"
 
     // https://developer.android.com/studio/releases/build-tools
-    buildToolsVersion = "36.0.0"
+    buildToolsVersion = "36.1.0"
     compileSdk = 36
 
     testBuildType = "instrumentation"
@@ -134,7 +133,7 @@ android {
     defaultConfig {
         applicationId = "com.arjanvlek.oxygenupdater"
 
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
 
         versionCode = 131
@@ -157,7 +156,6 @@ android {
         buildConfigField("String[]", "SUPPORTED_LANGUAGES", "{\"en\", $languages}")
 
         testApplicationId = "$namespace.$testBuildType"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testHandleProfiling = true
 
         proguardFiles(
@@ -188,6 +186,7 @@ android {
     // This ensures that the app won't crash if the user selects a
     // language that isn't in their device language list.
     // This'll obviously increase APK size significantly.
+    @Suppress("UnstableApiUsage")
     bundle.language.enableSplit = false
 
     packaging.resources.excludes += setOf(
@@ -253,10 +252,8 @@ android {
         compose = true
         // AGP 8+ doesn't generate BuildConfig by default
         buildConfig = true
-    }
-
-    room {
-        schemaDirectory("$projectDir/schemas")
+        // AGP 9+ doesn't allow custom resource values by default
+        resValues = true
     }
 
     // https://developer.android.com/guide/topics/resources/app-languages#auto-localeconfig
@@ -290,10 +287,8 @@ kotlin {
     }
 }
 
-ksp {
-    // Add Room-specific arguments: https://developer.android.com/jetpack/androidx/releases/room#compiler-options
-    arg("room.incremental", "true")
-    arg("room.generateKotlin", "true")
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 hilt {
@@ -319,7 +314,7 @@ dependencies {
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.work)
     ksp(libs.androidx.hilt.compiler)
 

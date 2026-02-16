@@ -8,15 +8,13 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Build.VERSION.SDK_INT
-import android.os.Build.VERSION_CODES
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.PRIORITY_LOW
 import androidx.core.app.NotificationCompat.VISIBILITY_PUBLIC
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
@@ -42,7 +40,7 @@ object LocalNotifications {
             // Since MainActivity's `launchMode` is `singleTask`, we don't
             // need to add any flags to avoid creating multiple instances
             Intent(context, MainActivity::class.java),
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
+            FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
         val title = context.getString(R.string.contribute_successful_notification_title)
@@ -81,11 +79,11 @@ object LocalNotifications {
             0,
             Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(OuSchemeSuffixed + ChildScreen.Guide.value + "$DownloadedArg=true"),
+                (OuSchemeSuffixed + ChildScreen.Guide.value + "$DownloadedArg=true").toUri(),
                 context,
                 MainActivity::class.java
             ),
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
+            FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
         val title = context.getString(R.string.download_complete)
@@ -127,7 +125,7 @@ object LocalNotifications {
             context,
             0,
             intent,
-            FLAG_UPDATE_CURRENT or if (SDK_INT >= VERSION_CODES.M) FLAG_IMMUTABLE else 0
+            FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
         )
 
         val notification = NotificationCompat.Builder(context, DownloadStatusNotifChannelId)

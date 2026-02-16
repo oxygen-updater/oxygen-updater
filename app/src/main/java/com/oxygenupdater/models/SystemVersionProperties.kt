@@ -22,7 +22,6 @@ import java.util.Scanner
 object SystemVersionProperties {
 
     private const val TAG = "SystemVersionProperties"
-    private const val SecurityPatchLookupKey = "ro.build.version.security_patch"
 
     /** Required for workaround #1 */
     private const val H2OS = "H2OS"
@@ -103,7 +102,7 @@ object SystemVersionProperties {
     val otaVersion: String
 
     /** Shown in the "Device" tab */
-    val securityPatchDate: String
+    val securityPatchDate: String = Build.VERSION.SECURITY_PATCH
 
     /** Used for checking device/OS compatibility */
     val fingerprint = Build.FINGERPRINT.trim()
@@ -143,9 +142,6 @@ object SystemVersionProperties {
         var pipelineCode = UNKNOWN
         var manifestHash = UNKNOWN
         var isEuBuild = false
-        var securityPatchDate = if (SDK_INT >= VERSION_CODES.M) {
-            Build.VERSION.SECURITY_PATCH
-        } else UNKNOWN // read later on
 
         try {
             if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
@@ -232,11 +228,6 @@ object SystemVersionProperties {
             osType = systemProperty(BuildOsTypeLookupKey).let {
                 if (it.isBlank()) "Stable" else if (it == UNKNOWN) "" else it
             }
-
-            // On Android >= 6/Marshmallow, security patch is picked up from `Build.VERSION.SECURITY_PATCH` above
-            if (SDK_INT < VERSION_CODES.M) {
-                securityPatchDate = systemProperty(SecurityPatchLookupKey)
-            }
         } catch (e: Exception) {
             try {
                 logInfo(TAG, "Fast path via `android.os.SystemProperties` failed; falling back to slower getprop output parse", e)
@@ -320,11 +311,6 @@ object SystemVersionProperties {
                 osType = readBuildPropItem(BuildOsTypeLookupKey, properties).let {
                     if (it.isBlank()) "Stable" else if (it == UNKNOWN) "" else it
                 }
-
-                // On Android >= 6/Marshmallow, security patch is picked up from `Build.VERSION.SECURITY_PATCH` above
-                if (SDK_INT < VERSION_CODES.M) {
-                    securityPatchDate = readBuildPropItem(SecurityPatchLookupKey, properties)
-                }
             } catch (e: Exception) {
                 Log.e(TAG, e.localizedMessage ?: "$e", e)
             }
@@ -334,7 +320,6 @@ object SystemVersionProperties {
         this.deviceProductName = deviceProductName
         this.osVersion = osVersion
         this.otaVersion = otaVersion
-        this.securityPatchDate = securityPatchDate
         this.osType = osType
         this.pipeline = pipeline
         this.pipelineCode = pipelineCode

@@ -373,6 +373,7 @@ private fun DownloadButtonContainer(
             // So, make an educated guess: on API < 23 both READ & WRITE permissions
             // are granted automatically, while on API >= 23 only READ is granted
             // automatically. A simple SDK version check should suffice.
+            @Suppress("KotlinConstantConditions")
             SDK_INT <= VERSION_CODES.M
         }
     }

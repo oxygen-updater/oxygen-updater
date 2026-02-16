@@ -425,6 +425,7 @@ private fun ColumnScope.DeviceHardwareInfo() {
             buildString {
                 cpuFrequencies.forEach { frequency, count ->
                     val formatted = try {
+                        @SuppressLint("LocalContextGetResourceValueCall")
                         context.getString(
                             R.string.device_information_gigahertz,
                             instance.format(frequency).ifEmpty { return@forEach }

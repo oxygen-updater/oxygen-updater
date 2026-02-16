@@ -9,8 +9,6 @@ import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.StrictMode
 import android.util.Log
-import androidx.compose.runtime.Composer
-import androidx.compose.runtime.ExperimentalComposeRuntimeApi
 import androidx.core.content.getSystemService
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
@@ -107,9 +105,6 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
         setupCrashReporting()
         setupNetworkCallback()
 
-        @OptIn(ExperimentalComposeRuntimeApi::class)
-        Composer.setDiagnosticStackTraceEnabled(BuildConfig.DEBUG)
-
         if (SDK_INT >= VERSION_CODES.O) NotifUtils.refreshNotificationChannels(this)
 
         // Save app's version code to aid in future migrations (added in 5.4.0)
@@ -149,8 +144,8 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
             StrictMode.ThreadPolicy.Builder().apply {
                 detectNetwork()
                 detectCustomSlowCalls()
+                detectResourceMismatches()
 
-                if (SDK_INT >= VERSION_CODES.M) detectResourceMismatches()
                 if (SDK_INT >= VERSION_CODES.O) detectUnbufferedIo()
                 if (SDK_INT >= VERSION_CODES.UPSIDE_DOWN_CAKE) detectExplicitGc()
             }.penaltyLog().build()

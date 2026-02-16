@@ -28,7 +28,7 @@ data class ServerStatus(
      */
     fun shouldShowAppUpdateNotice(
         currentVersionName: String = BuildConfig.VERSION_NAME,
-    ) = if (latestAppVersion == currentVersionName) false else try {
+    ): Boolean = if (latestAppVersion == currentVersionName) false else try {
         val currentSemverInts = currentVersionName.toSemverInts()
         val latestSemverInts = latestAppVersion!!.toSemverInts()
         repeat(3) { // limit to 3; our versions are strictly `major.minor.patch`

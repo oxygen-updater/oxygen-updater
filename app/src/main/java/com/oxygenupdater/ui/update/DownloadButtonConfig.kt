@@ -159,7 +159,7 @@ fun downloadButtonConfig(
         ).also { config ->
             previousProgress = null
             previousProgressText = null
-            setDownloadErrorDialogParams(DownloadErrorParams(context.getString(R.string.download_error_corrupt)) {
+            setDownloadErrorDialogParams(DownloadErrorParams(stringResource(R.string.download_error_corrupt)) {
                 setCanShowDownloadErrorDialog()
                 config.onDownloadClick?.invoke()
             })

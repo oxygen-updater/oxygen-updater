@@ -1,3 +1,5 @@
+@file:Suppress("UnusedReceiverParameter")
+
 package com.oxygenupdater.icons
 
 import androidx.compose.material3.Icon

@@ -20,6 +20,7 @@ import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingWorkPolicy
+import androidx.work.ExperimentalWorkRequestBuilderApi
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
@@ -173,6 +174,7 @@ class MainViewModel @Inject constructor(
      * unregistering in [unregisterAppUpdateListener] properly. The Kotlin lambda wouldn't match any
      * registered listener in the first place.
      */
+    @Suppress("ObjectLiteralToLambda")
     private val flexibleAppUpdateListener = object : InstallStateUpdatedListener {
         override fun onStateUpdate(state: InstallState) {
             appUpdateStatusFlow.tryEmit(state)
@@ -279,12 +281,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalWorkRequestBuilderApi::class)
     fun enqueueDownloadWork() = workManager.enqueueUniqueWork(
         WorkUniqueDownload,
         ExistingWorkPolicy.REPLACE,
         OneTimeWorkRequestBuilder<DownloadWorker>()
             .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .setBackoffCriteria(BackoffPolicy.LINEAR, MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)
+            .setBackoffForSystemInterruptions()
             .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
             .build()
     )
@@ -429,7 +433,7 @@ class MainViewModel @Inject constructor(
                     .putExtra(Intent.EXTRA_EMAIL, arrayOf("support@oxygenupdater.com"))
                     .putExtra(Intent.EXTRA_TEXT, emailBody)
             )
-        } catch (e: ActivityNotFoundException) {
+        } catch (_: ActivityNotFoundException) {
             // TODO(translate)
             context.showToast("You don't appear to have an email client installed on your phone")
         }

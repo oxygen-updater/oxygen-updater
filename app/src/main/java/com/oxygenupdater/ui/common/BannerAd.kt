@@ -42,7 +42,7 @@ fun ColumnScope.BannerAd(
              *  meaning [AdView.setAdSize] is never updated. Ideally we want it to, and also
              *  have the ad reloaded for an orientation change.
              */
-            setAdSize(AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth))
+            setAdSize(AdSize.getLargeAnchoredAdaptiveBannerAdSize(context, adWidth))
 
             adListener?.let { setAdListener(it) }
         }

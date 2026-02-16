@@ -17,7 +17,6 @@ fun FlexibleAppUpdateProgress(
     @InstallStatus status: Int,
     bytesDownloaded: () -> Long, // deferred read
     totalBytesToDownload: () -> Long,
-    snackbarMessageId: () -> Int?,
     updateSnackbarText: (IntIntPair?) -> Unit,
     unregisterAppUpdateListener: () -> Unit,
 ) {
