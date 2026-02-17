@@ -297,93 +297,38 @@ hilt {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     coreLibraryDesugaring(libs.android.desugar)
 
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.bundles.kotlinx.coroutines)
 
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.annotation)
-    implementation(libs.androidx.browser)
-    implementation(libs.androidx.work.runtime)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.core.splashscreen)
-
-    implementation(libs.dagger.hilt.android)
-    ksp(libs.dagger.hilt.android.compiler)
-    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.hilt.work)
-    ksp(libs.androidx.hilt.compiler)
-
-    implementation(libs.androidx.lifecycle.common.java8)
-    implementation(libs.androidx.lifecycle.livedata)
-    implementation(libs.androidx.lifecycle.viewmodel)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.runtime)
+    implementation(libs.bundles.androidx)
+    implementation(libs.bundles.androidx.core)
+    implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.bundles.androidx.room)
+    implementation(libs.bundles.androidx.hilt)
     ksp(libs.androidx.room.compiler)
+    ksp(libs.bundles.androidx.hilt.compiler)
 
-    implementation(libs.androidx.compose.animation)
-    implementation(libs.androidx.compose.animation.graphics)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material3.window.size)
-    implementation(libs.androidx.compose.runtime.livedata)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.text.google.fonts)
+    implementation(libs.bundles.androidx.compose)
     debugImplementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    implementation(libs.accompanist.permissions)
-
     implementation(libs.eygraber.compose.placeholder.material3)
 
-    implementation(platform(libs.coil.bom))
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-    implementation(libs.coil.network.cache)
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.messaging)
-
-    implementation(libs.billing)
-    implementation(libs.billing.ktx)
-
-    implementation(libs.google.play.app.update)
-    implementation(libs.google.play.services.base)
-    implementation(libs.google.play.services.ads)
-    implementation(libs.google.ump)
-
-    implementation(libs.okhttp.logging.interceptor)
-
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.moshi)
+    implementation(libs.bundles.retrofit)
     ksp(libs.moshi.kotlin.codegen)
 
-    implementation(libs.libsu.core)
-    implementation(libs.libsu.nio)
-    implementation(libs.libsu.service)
+    implementation(platform(libs.coil.bom))
+    implementation(libs.bundles.coil)
 
-    testImplementation(libs.junit)
-    testImplementation(libs.kotlin.test.junit)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+    implementation(libs.bundles.google.play)
+
+    implementation(libs.bundles.libsu)
+
+    testImplementation(libs.bundles.junit)
     testImplementation(libs.androidx.annotation)
 
-    androidTestImplementation(libs.androidx.test.core)
-    androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.androidx.test.rules)
-    androidTestImplementation(libs.androidx.test.ext.truth)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.bundles.androidx.test)
 
     val testBuildTypeImplementation = "${android.testBuildType}Implementation"
     // Needed for createAndroidComposeRule, but not createComposeRule
