@@ -1,13 +1,18 @@
 package com.oxygenupdater.ui.common
 
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.test.assertWidthIsAtLeast
+import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeDown
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.ComposeBaseTest
+import com.oxygenupdater.R
 import com.oxygenupdater.get
 import com.oxygenupdater.ui.RefreshAwareState
+import com.oxygenupdater.validateColumnLayout
 import org.junit.Test
 
 class PullRefreshTest : ComposeBaseTest() {
@@ -19,7 +24,10 @@ class PullRefreshTest : ComposeBaseTest() {
             it == null
         }
 
-        rule[PullRefresh_ProgressIndicatorTestTag].assertExists()
+        rule[PullRefresh_ProgressIndicatorTestTag].validateColumnLayout(2).run {
+            get(0).assert(hasProgressBarRangeInfo(ProgressBarRangeInfo.Indeterminate))
+            get(1).assertHasTextExactly(R.string.loading)
+        }
         rule[PullRefresh_ContentTestTag].assertDoesNotExist()
         rule[PullRefresh_IndicatorContainerTestTag].assertDoesNotExist()
     }
