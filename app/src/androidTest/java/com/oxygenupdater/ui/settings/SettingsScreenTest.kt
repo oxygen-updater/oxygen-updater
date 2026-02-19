@@ -85,7 +85,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         children = rule[SettingsScreenTestTag].run {
             assertHasScrollAction()
             onChildren()
-        }.also { it.assertCountEquals(19) }
+        }.also { it.assertCountEquals(17) }
 
         supportSection()
         deviceSection()

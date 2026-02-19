@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
@@ -19,9 +18,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,45 +69,45 @@ fun <T : SelectableModel> ColumnScope.SelectableSheet(
 ) {
     var query by rememberState("") // not saveable
     if (filter == null) SheetHeader(titleResId) else {
-        SearchBar(
-            inputField = {
-                SearchBarDefaults.InputField(
-                    query = query,
-                    // Don't trim `query` here, to allow inputting spaces
-                    onQueryChange = { query = it },
-                    onSearch = {},
-                    expanded = false,
-                    onExpandedChange = {},
-                    placeholder = {
-                        Text(
-                            text = stringResource(titleResId),
-                            overflow = TextOverflow.Ellipsis, maxLines = 1,
-                            style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(start = 4.dp) // line up with list
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Symbols.Search,
-                            contentDescription = stringResource(android.R.string.search_go),
-                        )
-                    },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = { query = "" },
-                            modifier = Modifier.requiredWidth(40.dp)
-                        ) {
-                            Icon(Symbols.Backspace, "Clear")
-                        }
-                    },
-                    modifier = Modifier.testTag(SelectableSheet_SearchBarFieldTestTag)
-                )
-            },
-            expanded = false,
-            onExpandedChange = {},
-            windowInsets = WindowInsets(0.dp),
-            modifier = modifierMaxWidth.testTag(SelectableSheet_SearchBarTestTag)
-        ) {}
+        val colors = SearchBarDefaults.colors()
+        Surface(
+            shape = RectangleShape,
+            color = colors.containerColor,
+            contentColor = contentColorFor(colors.containerColor),
+        ) {
+            SearchBarDefaults.InputField(
+                query = query,
+                // Don't trim `query` here, to allow inputting spaces
+                onQueryChange = { query = it },
+                onSearch = {},
+                expanded = false,
+                onExpandedChange = {},
+                placeholder = {
+                    Text(
+                        text = stringResource(titleResId),
+                        overflow = TextOverflow.Ellipsis, maxLines = 1,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(start = 4.dp) // line up with list
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Symbols.Search,
+                        contentDescription = stringResource(android.R.string.search_go),
+                    )
+                },
+                trailingIcon = {
+                    IconButton(
+                        onClick = { query = "" },
+                        modifier = Modifier.requiredWidth(40.dp)
+                    ) {
+                        Icon(Symbols.Backspace, "Clear")
+                    }
+                },
+                colors = colors.inputFieldColors,
+                modifier = modifierMaxWidth.testTag(SelectableSheet_SearchBarFieldTestTag)
+            )
+        }
     }
 
     val (list, recommendedId, selectedId) = config
@@ -194,9 +195,6 @@ private const val TAG = "SelectableSheet"
 
 @VisibleForTesting
 const val SelectableSheet_LazyColumnTestTag = TAG + "_LazyColumn"
-
-@VisibleForTesting
-const val SelectableSheet_SearchBarTestTag = TAG + "_SearchBar"
 
 @VisibleForTesting
 const val SelectableSheet_SearchBarFieldTestTag = TAG + "_SearchBarField"

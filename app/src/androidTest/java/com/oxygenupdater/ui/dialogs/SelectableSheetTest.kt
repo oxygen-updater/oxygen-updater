@@ -77,7 +77,6 @@ class SelectableSheetTest : ComposeBaseTest() {
             it.id == DeviceSettingsListConfig.recommendedId
         }!!
 
-        rule[SelectableSheet_SearchBarTestTag].assertExists()
         rule[SelectableSheet_SearchBarFieldTestTag].run {
             assert(
                 // Test only the semantics we care about
