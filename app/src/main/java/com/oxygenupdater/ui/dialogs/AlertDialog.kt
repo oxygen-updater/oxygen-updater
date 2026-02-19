@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.oxygenupdater.R
-import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.IconTextButton
 
 @Composable
 @NonRestartableComposable
@@ -30,10 +30,11 @@ fun AlertDialog(
     onDismissRequest = { action(false) },
     confirmButton = confirm@{
         val (icon, resId) = confirmIconAndResId ?: return@confirm
-        OutlinedIconButton(
+        IconTextButton(
             onClick = { action(true) },
             icon = icon,
             textResId = resId,
+            filled = false,
         )
     },
     dismissButton = {

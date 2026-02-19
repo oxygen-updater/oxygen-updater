@@ -64,7 +64,7 @@ fun ErrorState(
                 .testTag(ErrorState_TextTestTag)
         )
 
-        if (onRefreshClick != null) OutlinedIconButton(
+        if (onRefreshClick != null) IconTextButton(
             onClick = onRefreshClick,
             icon = Symbols.Refresh,
             textResId = R.string.download_error_retry,
@@ -102,7 +102,7 @@ fun ErrorState(
         modifier = modifierDefaultPadding.testTag(ErrorState_TextTestTag)
     )
 
-    if (onRefreshClick != null) OutlinedIconButton(
+    if (onRefreshClick != null) IconTextButton(
         onClick = onRefreshClick,
         icon = Symbols.Refresh,
         textResId = R.string.download_error_retry,

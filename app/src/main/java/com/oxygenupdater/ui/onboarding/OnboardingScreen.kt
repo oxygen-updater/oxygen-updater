@@ -38,8 +38,8 @@ import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.UpdateMethod
 import com.oxygenupdater.ui.SettingsListConfig
 import com.oxygenupdater.ui.common.CheckboxText
+import com.oxygenupdater.ui.common.IconTextButton
 import com.oxygenupdater.ui.common.ListItemTextIndent
-import com.oxygenupdater.ui.common.OutlinedIconButton
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
 import com.oxygenupdater.ui.common.modifierMaxSize
@@ -212,7 +212,7 @@ private fun StartApp(onClick: (contribute: Boolean) -> Unit) = Row(
         if (showSheet) ModalBottomSheet({ showSheet = false }) { ContributorSheet(it) }
     } else Spacer(Modifier.weight(1f)) // always right-align start button
 
-    OutlinedIconButton(
+    IconTextButton(
         onClick = { onClick(contribute) },
         icon = Symbols.DoneAll,
         textResId = R.string.onboarding_finished_button,

@@ -50,6 +50,6 @@ class ContributorSheetTest : ModalBottomSheetTest() {
         // composeTestRule[CheckboxText_CheckboxTestTag].assertDoesNotExist()
         // composeTestRule[CheckboxText_TextTestTag].assertDoesNotExist()
         // composeTestRule[BottomSheet_DismissButtonTestTag].assertDoesNotExist()
-        // composeTestRule[OutlinedIconButtonTestTag].assertDoesNotExist()
+        // composeTestRule[IconTextButtonTestTag].assertDoesNotExist()
     }
 }

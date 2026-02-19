@@ -64,7 +64,7 @@ class ErrorStateTest : ComposeBaseTest() {
         // First we test for initial values of `rich = true` and non-null onRefreshClick
         rule[RichText_ContainerTestTag].assertExists()
         rule[ErrorState_TextTestTag].assertDoesNotExist()
-        rule[OutlinedIconButtonTestTag].run {
+        rule[IconTextButtonTestTag].run {
             assertAndPerformClick()
             ensureCallbackInvokedExactlyOnce("onRefreshClick")
         }
@@ -78,7 +78,7 @@ class ErrorStateTest : ComposeBaseTest() {
 
         // Then for button not being shown (onRefreshClick = null)
         onRefreshClick = null
-        rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+        rule[IconTextButtonTestTag].assertDoesNotExist()
     }
 
     private fun setContent(navType: NavType) = setContent {

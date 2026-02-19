@@ -33,7 +33,7 @@ import com.oxygenupdater.assertSizeIsEqualTo
 import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.get
 import com.oxygenupdater.internal.NotSet
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.common.RichText_ContainerTestTag
 import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.dialogs.BottomSheet_ContentTestTag
@@ -418,10 +418,10 @@ class UpdateAvailableContentTest : ComposeBaseTest() {
         rule[BottomSheet_HeaderTestTag].assertHasTextExactly(headerResId)
         rule[BottomSheet_ContentTestTag].assertHasTextExactly(contentResId)
 
-        if (confirmResId != null) rule[OutlinedIconButtonTestTag].run {
+        if (confirmResId != null) rule[IconTextButtonTestTag].run {
             assertHasClickAction()
             assertHasTextExactly(confirmResId)
-        } else rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+        } else rule[IconTextButtonTestTag].assertDoesNotExist()
 
         rule[BottomSheet_DismissButtonTestTag].run {
             assertHasTextExactly(dismissResId)

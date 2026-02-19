@@ -26,7 +26,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.oxygenupdater.ui.common.OutlinedIconButton
+import com.oxygenupdater.ui.common.IconTextButton
 import com.oxygenupdater.ui.common.modifierDefaultPadding
 import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.theme.PreviewAppTheme
@@ -81,14 +81,13 @@ fun SheetButtons(
     TextButton(
         onClick = onDismiss,
         colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
-        modifier = Modifier
-            .padding(end = 8.dp)
+        modifier = (if (onConfirm != null) Modifier.padding(end = 16.dp) else Modifier)
             .testTag(BottomSheet_DismissButtonTestTag),
     ) {
         Text(stringResource(dismissResId))
     }
 
-    if (onConfirm != null) OutlinedIconButton(
+    if (onConfirm != null) IconTextButton(
         onClick = onConfirm,
         icon = confirmIcon,
         textResId = confirmResId,

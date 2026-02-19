@@ -28,7 +28,7 @@ import com.oxygenupdater.get
 import com.oxygenupdater.internal.settings.KeyShareAnalyticsAndLogs
 import com.oxygenupdater.repositories.BillingRepository.SkuState
 import com.oxygenupdater.ui.Theme
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.ui.dialogs.BottomSheetTestTag
 import com.oxygenupdater.ui.dialogs.BottomSheet_ItemRowTestTag
@@ -230,7 +230,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
 
             assertAndPerformClick()
             sheet.assertIsDisplayed()
-            rule[OutlinedIconButtonTestTag].assertAndPerformClick()
+            rule[IconTextButtonTestTag].assertAndPerformClick()
             sheet.assertIsNotDisplayed()
             ensureCallbackInvokedExactlyOnce("onAdvancedModeChange: true")
             assertHasTextExactly(R.string.settings_advanced_mode, R.string.summary_on)

@@ -14,7 +14,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.get
 import com.oxygenupdater.icons.Logos
 import com.oxygenupdater.icons.PlayStore
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import org.junit.Test
 
 class AlertDialogTest : ComposeBaseTest() {
@@ -43,13 +43,13 @@ class AlertDialogTest : ComposeBaseTest() {
         rule[AlertDialog_DismissButtonTestTag].assertExists()
 
         // First we test for the default null values of state variables
-        rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+        rule[IconTextButtonTestTag].assertDoesNotExist()
         rule[AlertDialog_ContentTestTag].assertDoesNotExist()
 
         // Then for non-null
         confirmIconAndResId = Logos.PlayStore to R.string.error_google_play_button_text
         content = {}
-        rule[OutlinedIconButtonTestTag].assertExists()
+        rule[IconTextButtonTestTag].assertExists()
         rule[AlertDialog_ContentTestTag].assertExists()
     }
 }

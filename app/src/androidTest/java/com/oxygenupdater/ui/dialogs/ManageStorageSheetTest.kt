@@ -12,7 +12,7 @@ import androidx.core.content.getSystemService
 import androidx.test.filters.SdkSuppress
 import com.oxygenupdater.R
 import com.oxygenupdater.get
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import org.junit.Test
 import java.util.UUID
 
@@ -86,7 +86,7 @@ class ManageStorageSheetTest : ModalBottomSheetTest() {
 
     private fun trueIfConfirmButtonNotFocused() = try {
         isNotFocused().matches(
-            rule[OutlinedIconButtonTestTag].fetchSemanticsNode()
+            rule[IconTextButtonTestTag].fetchSemanticsNode()
         )
     } catch (e: IllegalStateException) {
         // This is likely "No compose hierarchies found in the app", which is fine

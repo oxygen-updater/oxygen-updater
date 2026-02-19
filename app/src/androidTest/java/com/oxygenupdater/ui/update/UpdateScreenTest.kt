@@ -14,7 +14,7 @@ import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorStateTestTag
 import com.oxygenupdater.ui.common.ErrorState_TitleTestTag
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.common.RichText_ContainerTestTag
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.main.Screen
@@ -33,7 +33,7 @@ class UpdateScreenTest : UsesSharedPreferencesTest() {
         rule[ErrorState_TitleTestTag].assertHasTextExactly(R.string.update_information_error_title)
         rule[RichText_ContainerTestTag].assertExists()
 
-        rule[OutlinedIconButtonTestTag].assertAndPerformClick()
+        rule[IconTextButtonTestTag].assertAndPerformClick()
         ensureCallbackInvokedExactlyOnce("onRefresh")
 
         rule[UpToDateContentTestTag].assertDoesNotExist()

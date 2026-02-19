@@ -12,31 +12,31 @@ import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.validateRowLayout
 import org.junit.Test
 
-class OutlinedIconButtonTest : ComposeBaseTest() {
+class IconTextButtonTest : ComposeBaseTest() {
 
     @Test
-    fun outlinedIconButton() {
+    fun iconTextButton() {
         setContent {
-            OutlinedIconButton(
+            IconTextButton(
                 onClick = { trackCallback("onClick") },
                 icon = Symbols.Android,
                 textResId = R.string.app_name,
             )
         }
 
-        rule[OutlinedIconButtonTestTag].run {
+        rule[IconTextButtonTestTag].run {
             assertAndPerformClick()
             ensureCallbackInvokedExactlyOnce("onClick")
         }
 
         // Icon
-        rule[OutlinedIconButton_IconTestTag, true].run {
+        rule[IconTextButton_IconTestTag, true].run {
             assertSizeIsEqualTo(18.dp)
             onParent().validateRowLayout(2)
         }
 
         // Text
-        rule[OutlinedIconButton_TextTestTag, true].run {
+        rule[IconTextButton_TextTestTag, true].run {
             assertHasTextExactly(R.string.app_name)
             onParent().validateRowLayout(2)
         }

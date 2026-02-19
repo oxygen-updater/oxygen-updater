@@ -12,8 +12,8 @@ import com.oxygenupdater.ComposeBaseTest
 import com.oxygenupdater.R
 import com.oxygenupdater.get
 import com.oxygenupdater.models.ServerStatus.Status
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
-import com.oxygenupdater.ui.common.OutlinedIconButton_TextTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButton_TextTestTag
 import com.oxygenupdater.ui.dialogs.AlertDialogTestTag
 import com.oxygenupdater.ui.dialogs.AlertDialog_TextTestTag
 import com.oxygenupdater.ui.dialogs.AlertDialog_TitleTestTag
@@ -66,10 +66,10 @@ class ServerStatusDialogsTest : ComposeBaseTest() {
         rule[AlertDialog_TitleTestTag].assertHasTextExactly(titleResId)
         rule[AlertDialog_TextTestTag].assertHasTextExactly(textResId)
         if (confirmTextResId == null) {
-            rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+            rule[IconTextButtonTestTag].assertDoesNotExist()
         } else {
-            rule[OutlinedIconButton_TextTestTag, true].assertHasTextExactly(confirmTextResId)
-            rule[OutlinedIconButtonTestTag].run {
+            rule[IconTextButton_TextTestTag, true].assertHasTextExactly(confirmTextResId)
+            rule[IconTextButtonTestTag].run {
                 performClick()
                 ensureCallbackInvokedExactlyOnce("openPlayStorePage")
             }

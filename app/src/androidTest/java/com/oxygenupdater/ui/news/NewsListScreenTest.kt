@@ -37,8 +37,8 @@ import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorStateTestTag
 import com.oxygenupdater.ui.common.ErrorState_TextTestTag
 import com.oxygenupdater.ui.common.ErrorState_TitleTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.common.IconTextTestTag
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.validateLazyColumn
 import org.junit.Test
@@ -62,7 +62,7 @@ class NewsListScreenTest : ComposeBaseTest() {
         rule[ErrorState_TitleTestTag].assertHasTextExactly(R.string.news_empty_state_all_read_header)
         rule[ErrorState_TextTestTag].assertHasTextExactly(R.string.news_empty_state_all_read_text)
 
-        rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+        rule[IconTextButtonTestTag].assertDoesNotExist()
         rule[NewsListScreen_LazyColumnTestTag].assertDoesNotExist()
         rule[NewsListScreen_LazyVerticalGridTestTag].assertDoesNotExist()
     }
@@ -79,7 +79,7 @@ class NewsListScreenTest : ComposeBaseTest() {
         rule[ErrorState_TitleTestTag].assertHasTextExactly(R.string.news_empty_state_none_available_header)
         rule[ErrorState_TextTestTag].assertHasTextExactly(R.string.news_empty_state_none_available_text)
 
-        rule[OutlinedIconButtonTestTag].assertAndPerformClick()
+        rule[IconTextButtonTestTag].assertAndPerformClick()
         ensureCallbackInvokedExactlyOnce("onRefresh")
 
         rule[NewsListScreen_LazyColumnTestTag].assertDoesNotExist()

@@ -13,7 +13,7 @@ import com.oxygenupdater.assertAndPerformClick
 import com.oxygenupdater.assertHasScrollAction
 import com.oxygenupdater.get
 import com.oxygenupdater.internal.settings.KeyShareAnalyticsAndLogs
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.dialogs.BottomSheetTestTag
 import com.oxygenupdater.ui.dialogs.BottomSheet_ItemRowTestTag
 import com.oxygenupdater.ui.settings.DeviceSettingsListConfig
@@ -59,7 +59,7 @@ class OnboardingScreenTest : UsesSharedPreferencesTest() {
 
     private fun common(children: SemanticsNodeInteractionCollection) {
         // Start app button
-        rule[OutlinedIconButtonTestTag].run {
+        rule[IconTextButtonTestTag].run {
             assertHasTextExactly(R.string.onboarding_finished_button)
             assertAndPerformClick()
             ensureCallbackInvokedExactlyOnce("onStartAppClick: true")

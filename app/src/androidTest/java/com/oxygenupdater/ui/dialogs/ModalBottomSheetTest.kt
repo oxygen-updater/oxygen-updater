@@ -6,8 +6,8 @@ import androidx.compose.ui.test.performClick
 import com.oxygenupdater.ComposeBaseTest
 import com.oxygenupdater.LineHeightForTextStyle
 import com.oxygenupdater.get
-import com.oxygenupdater.ui.common.OutlinedIconButtonTestTag
-import com.oxygenupdater.ui.common.OutlinedIconButton_TextTestTag
+import com.oxygenupdater.ui.common.IconTextButtonTestTag
+import com.oxygenupdater.ui.common.IconTextButton_TextTestTag
 
 open class ModalBottomSheetTest : ComposeBaseTest() {
 
@@ -68,7 +68,7 @@ open class ModalBottomSheetTest : ComposeBaseTest() {
         )
 
         if (confirmResId == null) {
-            rule[OutlinedIconButtonTestTag].assertDoesNotExist()
+            rule[IconTextButtonTestTag].assertDoesNotExist()
         } else {
             resetHidden()
             validateConfirmButton(
@@ -104,12 +104,12 @@ open class ModalBottomSheetTest : ComposeBaseTest() {
         result: () -> Boolean?,
         resultFailureMessage: () -> String,
     ) {
-        /** Must be before [OutlinedIconButtonTestTag] just in case clicking leaves the app */
-        rule[OutlinedIconButton_TextTestTag, true].run {
+        /** Must be before [IconTextButtonTestTag] just in case clicking leaves the app */
+        rule[IconTextButton_TextTestTag, true].run {
             assertHasTextExactly(confirmResId)
         }
 
-        rule[OutlinedIconButtonTestTag].run {
+        rule[IconTextButtonTestTag].run {
             // Verify row layout. `onParent().validateRowLayout(2)` won't work because `Row` is inline.
             // Must be before `performClick` just in case clicking leaves the app.
             val left = fetchSemanticsNode().positionInRoot.x
