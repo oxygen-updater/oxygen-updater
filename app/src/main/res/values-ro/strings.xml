@@ -242,7 +242,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="contribute">Deveniți un contribuitor</string>
 	<string name="contribute_title">Ajutați-ne să îmbunătățim aplicația Oxygen Updater</string>
 	<string name="contribute_explanation">Pentru a vă oferi cele mai recente actualizări, trebuie să capturăm URL-urile OTA ZIP.\n\nCum vă pot ajuta?\n\nOxygen Updater poate trimite automat noile URL-uri OTA către administratorii noștri. Acest lucru va utiliza o cantitate mică de date și poate consuma puțin din bateria dvs. Va trebui să acordați permisiunea de root aplicației, deoarece aceasta citește un fișier de bază de date care este accesibil doar prin root. Veți fi notificat atunci când un URL a fost trimis cu succes.</string>
-	<string name="contribute_agree">Aș dori să ajut și sunt de acord să trimit URL-urile OTA către administratorii noștri</string>
+	<string name="contribute_agree">Contribuie cu adrese URL OTA (necesită drepturi de administrator)</string>
 	<string name="contribute_save">Salvează setările</string>
 	<string name="contribute_more_info">Mai multe informații…</string>
 	<string name="contribute_allow_storage">Vă rugăm să acordați permisiuni de stocare și root pentru a ajuta la îmbunătățirea aplicației</string>

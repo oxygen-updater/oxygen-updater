@@ -242,7 +242,7 @@
 	<string name="contribute">עזור לנו לשפר את האפליקציה</string>
 	<string name="contribute_title">עזור לשפר את Oxygen Updater</string>
 	<string name="contribute_explanation">על מנת לתת לך את העדכונים האחרונים, עלינו ללכוד כתובות URL של OTA ZIP.\n\nאיך אני יכול לעזור?\n\nOxygen Updater יכול להגיש אוטומטית כתובות OTA חדשות למנהלים שלנו. פעולה זו תשתמש בכמות קטנה של נתונים ועשויה לנצל מעט מהסוללה שלך. תצטרך להעניק הרשאת שורש לאפליקציה, מכיוון שהיא קוראת קובץ מסד נתונים שנגיש רק דרך השורש. תקבל הודעה כאשר כתובת אתר נשלחה בהצלחה.</string>
-	<string name="contribute_agree">אני רוצה לעזור ולהסכים לשלוח כתובות OTA למנהלי המערכת שלנו</string>
+	<string name="contribute_agree">תרום כתובות URL של OTA (נדרשת הרשאת root)</string>
 	<string name="contribute_save">שמור הגדרות</string>
 	<string name="contribute_more_info">מידע נוסף</string>
 	<string name="contribute_allow_storage">אנא הענק הרשאות אחסון ובסיס כדי לעזור בשיפור האפליקציה</string>

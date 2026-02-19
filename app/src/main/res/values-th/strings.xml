@@ -255,7 +255,7 @@
 	<string name="contribute">เป็นผู้มีส่วนร่วม</string>
 	<string name="contribute_title">ช่วยปรับปรุง Oxygen Updater</string>
 	<string name="contribute_explanation">เพื่อให้การอัปเดตล่าสุดแก่คุณ เราจำเป็นต้องบันทึก OTA ZIP URL\n\nฉันจะช่วยได้อย่างไร?\n\nOxygen Updater สามารถส่ง OTA URL ใหม่ไปยังผู้ดูแลระบบของเราได้โดยอัตโนมัติ การดำเนินการนี้จะใช้ข้อมูลจำนวนเล็กน้อยและอาจใช้แบตเตอรี่ของคุณเล็กน้อย คุณจะต้องให้สิทธิ์การรูทแก่แอป เนื่องจากแอปจะอ่านไฟล์ฐานข้อมูลที่เข้าถึงได้ผ่านทางรูทเท่านั้น คุณจะได้รับแจ้งเมื่อส่ง URL สำเร็จ</string>
-	<string name="contribute_agree">ฉันต้องการช่วยเหลือและตกลงที่จะส่ง OTA URL ให้กับผู้ดูแลระบบของเรา</string>
+	<string name="contribute_agree">ร่วมส่ง URL สำหรับการอัปเดต OTA (ต้องใช้สิทธิ์ root)</string>
 	<string name="contribute_save">บันทึกการตั้งค่า</string>
 	<string name="contribute_more_info">ข้อมูลเพิ่มเติม</string>
 	<string name="contribute_allow_storage">โปรดให้สิทธิ์พื้นที่เก็บข้อมูลและรูทเพื่อช่วยปรับปรุงแอป</string>

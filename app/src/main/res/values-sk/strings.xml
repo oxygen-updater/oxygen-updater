@@ -243,7 +243,7 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="contribute">Staňte sa prispievateľom</string>
 	<string name="contribute_title">Pomôžte vylepšiť Oxygen Updater</string>
 	<string name="contribute_explanation">Aby sme vám mohli poskytnúť najnovšie aktualizácie, musíme zachytiť adresy URL ZIP OTA.\n\nAko môžem pomôcť?\n\nAplikácia Oxygen Updater môže automaticky odosielať nové adresy URL OTA našim správcom. Použije sa pri tom malé množstvo údajov a môže sa trochu spotrebovať vaša batéria. Aplikácii budete musieť udeliť oprávnenie root, pretože číta databázový súbor, ktorý je prístupný len cez root. Po úspešnom odoslaní adresy URL budete informovaní.</string>
-	<string name="contribute_agree">Rád by som pomohol a súhlasím s odoslaním OTA URL našim administrátorom</string>
+	<string name="contribute_agree">Pridajte URL adresy OTA (vyžaduje root)</string>
 	<string name="contribute_save">Uložiť nastavenia</string>
 	<string name="contribute_more_info">Viac informácií</string>
 	<string name="contribute_allow_storage">Prosím, udeľte oprávnenia na ukladanie a root, aby ste pomohli zlepšiť aplikáciu</string>

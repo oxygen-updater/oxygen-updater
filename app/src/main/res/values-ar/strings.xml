@@ -241,7 +241,7 @@
 	<string name="contribute">كن مساهماً</string>
 	<string name="contribute_title">المساعدة في تحسين Oxygen Updater</string>
 	<string name="contribute_explanation">من أجل تزويدك بآخر التحديثات ، نحتاج إلى التقاط عناوين OTA ZIP.\n\nكيف يمكنني أن أقدم المساعدة؟\n\nيمكن لبرنامج Oxygen Updater إرسال عناوين OTA الجديدة تلقائيًا إلى مسؤولينا. سيستخدم هذا قدرًا صغيرًا من البيانات وقد يستهلك القليل من بطاريتك. ستحتاج إلى منح إذن الجذر للتطبيق ، لأنه يقرأ ملف قاعدة بيانات لا يمكن الوصول إليه إلا عبر الجذر. سيتم إخطارك عند إرسال عنوان URL بنجاح.</string>
-	<string name="contribute_agree">أرغب في المساعدة والموافقة على إرسال عناوين OTA إلى مسؤولينا</string>
+	<string name="contribute_agree">المساهمة بعناوين URL OTA (يتطلب حق الوصول إلى الجذر)</string>
 	<string name="contribute_save">حفظ الإعدادات</string>
 	<string name="contribute_more_info">معلومات إضافية</string>
 	<string name="contribute_allow_storage">يرجى منح أذونات التخزين والجذر للمساعدة في تحسين التطبيق</string>

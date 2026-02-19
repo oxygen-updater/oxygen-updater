@@ -242,7 +242,7 @@
 	<string name="contribute">Станете соработник</string>
 	<string name="contribute_title">Помогнете да се подобри Oxygen Updater</string>
 	<string name="contribute_explanation">За да ви ги дадеме најновите ажурирања, треба да снимиме OTA ZIP URL-адреси.\n\nКако можам да помогнам?\n\nOxygen Updater може автоматски да испраќа нови OTA URL-адреси до нашите администратори. Ова ќе користи мала количина на податоци и може да потроши малку од вашата батерија. Ќе треба да и дадете дозвола за root на апликацијата, бидејќи таа чита датотека со база на податоци до која е достапна само преку root. Ќе бидете известени кога URL-то е успешно испратено.</string>
-	<string name="contribute_agree">Би сакал да помогнам и да се согласам да поднесам OTA URL до нашите администратори</string>
+	<string name="contribute_agree">Придонесете OTA-URL-адреси (потребен е root)</string>
 	<string name="contribute_save">Зачувај поставки</string>
 	<string name="contribute_more_info">Повеќе информации</string>
 	<string name="contribute_allow_storage">Доделете дозволи за складирање и root за да помогнете во подобрување на апликацијата</string>

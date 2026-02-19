@@ -254,7 +254,7 @@ Eğer isterseniz bu faydalı olabilir:"</string>
 	<string name="contribute">Katkıda bulunan biri olun</string>
 	<string name="contribute_title">Oxygen Updater\'ı geliştirmemizde yardımcı olun.</string>
 	<string name="contribute_explanation">Size en son güncellemeleri verebilmemiz için OTA ZIP URL\'lerini yakalamamız gerekiyor.\n\nNasıl yardımcı olabilirim?\n\nOxygen Updater yeni OTA URL\'lerini otomatik olarak yöneticilerimize gönderebilir. Bu işlem az miktarda veri kullanır ve pilinizi biraz tüketebilir. Uygulamaya root izni vermeniz gerekir, çünkü yalnızca root ile erişilebilen bir veritabanı dosyasını okur. Bir URL başarıyla gönderildiğinde size bildirim gönderilecektir.</string>
-	<string name="contribute_agree">Yardım etmek ve OTA URL\'lerini yöneticilerimize göndermeyi kabul etmek istiyorum</string>
+	<string name="contribute_agree">OTA URL\'leri ekle (root gerektirir)</string>
 	<string name="contribute_save">Ayarları Kaydet</string>
 	<string name="contribute_more_info">Daha fazla bilgi</string>
 	<string name="contribute_allow_storage">Uygulamayı geliştirmeye yardımcı olmak için lütfen depolama ve kök izinlerini verin</string>

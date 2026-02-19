@@ -241,7 +241,7 @@
 	<string name="contribute">參與共研</string>
 	<string name="contribute_title">加入 Oxygen 更新器共同研究計畫</string>
 	<string name="contribute_explanation">為了向您提供最新更新，我們需要捕獲 OTA ZIP URL。\n\n我能提供什麼幫助？\n\nOxygen Updater 可以自動向我們的管理員提交新的 OTA URL。 這將使用少量數據，並且可能會消耗一些電池電量。 您需要授予該應用程序 root 權限，因為它讀取的數據庫文件只能通過 root 訪問。 成功提交 URL 後，您將收到通知。</string>
-	<string name="contribute_agree">我願意提供幫助並同意將 OTA URL 提交給我們的管理員</string>
+	<string name="contribute_agree">貢獻 OTA 網址（需 root 權限）</string>
 	<string name="contribute_save">儲存設定</string>
 	<string name="contribute_more_info">了解更多</string>
 	<string name="contribute_allow_storage">請授予存儲和根權限以幫助改進應用程序</string>

@@ -260,7 +260,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="contribute">Zostań osoba wnoszącą wkład</string>
 	<string name="contribute_title">Pomóż w ulepszaniu Oxygen Updater</string>
 	<string name="contribute_explanation">Aby dostarczać najnowsze aktualizacje, musimy przechwytywać adresy URL OTA ZIP.\n\nJak mogę pomóc?\n\nOxygen Updater może automatycznie przesyłać nowe adresy URL OTA do naszych administratorów. Będzie to wykorzystywać niewielką ilość danych i może zużywać trochę baterii. Będziesz musiał przyznać aplikacji uprawnienia roota, ponieważ odczytuje ona plik bazy danych, który jest dostępny tylko przez roota. Zostaniesz powiadomiony, gdy adres URL zostanie pomyślnie przesłany.</string>
-	<string name="contribute_agree">Chciałbym pomóc i zgadzam się na przesyłanie adresów URL OTA do naszych administratorów</string>
+	<string name="contribute_agree">Dodaj adresy URL OTA (wymagane uprawnienia administratora)</string>
 	<string name="contribute_save">Zapisz ustawienia</string>
 	<string name="contribute_more_info">Więcej informacji</string>
 	<string name="contribute_allow_storage">Prosimy o przyznanie uprawnień do pamięci masowej i roota, aby pomóc ulepszyć aplikację</string>

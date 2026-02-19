@@ -249,7 +249,7 @@ Ovo može biti korisno ako želite:"</string>
 	<string name="contribute">Postanite suradnik</string>
 	<string name="contribute_title">Pomozite poboljšati Oxygen Updater</string>
 	<string name="contribute_explanation">Kako bismo vam dali najnovija ažuriranja, moramo uhvatiti OTA ZIP URL-ove.\n\nKako mogu pomoći?\n\nOxygen Updater može automatski poslati nove OTA URL-ove našim administratorima. To će upotrijebiti malu količinu podataka i može potrošiti malo baterije. Aplikaciji ćete morati dodijeliti root dozvolu jer ona čita datoteku baze podataka kojoj se može pristupiti samo putem roota. Bit ćete obaviješteni kada URL bude uspješno poslan.</string>
-	<string name="contribute_agree">Želio bih pomoći i pristajem na slanje OTA URL-ova našim administratorima</string>
+	<string name="contribute_agree">Doprinesite OTA URL-ovima (zahtijeva root)</string>
 	<string name="contribute_save">Spremi postavke</string>
 	<string name="contribute_more_info">Više informacija</string>
 	<string name="contribute_allow_storage">Dajte dopuštenja za pohranu i root kako biste poboljšali aplikaciju</string>

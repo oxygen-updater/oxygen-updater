@@ -148,8 +148,8 @@ This can be useful if you want to:"</string>
 	<string name="onboarding">Setup</string>
 	<string name="onboarding_finished_button">Start app</string>
 
-	<string name="onboarding_app_uses">This app will allow you to:\n\n&#8226; Get faster access to the latest Android updates for your OxygenOS/ColorOS powered device\n&#8226; Easily update a rooted device\n&#8226; View what\'s new in the system software you are currently using\n&#8226; Read the latest news about OPPO/OnePlus and OxygenOS/ColorOS</string>
-	<string name="onboarding_disclaimer">This is not an official OPPO/OnePlus application. Usage of this app is completely at your own risk. Neither OPPO/OnePlus nor the developer of the app are liable for your actions, including any damage caused by using this app. By using this app, you agree to the terms and conditions as stated above.</string>
+	<string name="onboarding_app_uses">This app allows you to:\n\n&#8226; Get faster access to the latest OxygenOS/ColorOS updates\n&#8226; Easily update your device, even if it\'s rooted\n&#8226; View the release notes of your current OS version\n&#8226; Read the latest news about OPPO/OnePlus and OxygenOS/ColorOS</string>
+	<string name="onboarding_disclaimer">This is not an official OPPO/OnePlus application. Usage of this app is at your own risk. Neither OPPO/OnePlus nor the app\'s developer are liable for your actions, including any damage caused by using this app. If you continue, you agree to these T&amp;Cs.</string>
 	<string name="onboarding_device_chooser_caption">Your device is usually already selected above</string>
 	<string name="onboarding_method_chooser_caption">“Incremental” is often the best choice, as it\'s usually a much smaller download</string>
 	<string name="onboarding_caption">Enjoy using this app! You can always change your settings later on.</string>
@@ -246,7 +246,7 @@ This can be useful if you want to:"</string>
 	<string name="contribute">Become a contributor</string>
 	<string name="contribute_title">Help improve Oxygen Updater</string>
 	<string name="contribute_explanation">In order to give you the latest updates, we need to capture OTA ZIP URLs.\n\nHow can I help?\n\nOxygen Updater can automatically submit new OTA URLs to our admins. This will use a small amount of data and may use a bit of your battery. You\'ll need to grant root permission to the app, because it reads a database file that\'s accessible only via root. You will be notified when a URL has been successfully submitted.</string>
-	<string name="contribute_agree">I\'d like to help and agree to submit OTA URLs to our admins</string>
+	<string name="contribute_agree">Contribute OTA URLs (requires root)</string>
 	<string name="contribute_save">Save settings</string>
 	<string name="contribute_more_info">More info</string>
 	<string name="contribute_allow_storage">Please grant storage &amp; root permissions to help improve the app</string>

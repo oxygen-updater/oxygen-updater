@@ -244,7 +244,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="contribute">Közreműködés</string>
 	<string name="contribute_title">Segíts az Oxygen Updater javításában</string>
 	<string name="contribute_explanation">Ahhoz, hogy a legfrissebb frissítésekkel szolgálhassunk, az OTA ZIP URL-eket kell rögzítenünk.\n\nHogyan segíthetek?\n\nAz Oxygen Updater automatikusan elküldheti az új OTA URL-eket az adminisztrátorainknak. Ez kis mennyiségű adatot használ, és egy kicsit igénybe veheti az akkumulátorát. Az alkalmazásnak root jogosultságot kell adnia, mivel egy olyan adatbázisfájlt olvas be, amely csak a root rendszeren keresztül érhető el. Értesítést kap, ha egy URL-t sikeresen elküldött.</string>
-	<string name="contribute_agree">Szeretnék segíteni, és beleegyezem, hogy OTA URL-eket küldjek az adminisztrátorainknak</string>
+	<string name="contribute_agree">OTA URL-ek hozzáadása (root jogosultság szükséges)</string>
 	<string name="contribute_save">Beállítások mentése</string>
 	<string name="contribute_more_info">Bővebb információ</string>
 	<string name="contribute_allow_storage">Kérjük, adjon tárhely- és root-jogosultságokat az alkalmazás fejlesztéséhez</string>
