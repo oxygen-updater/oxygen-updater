@@ -58,7 +58,7 @@ class UpToDateContentTest : ComposeBaseTest() {
             assertHasScrollAction()
             onChildren()
         }.also {
-            it.ensureCountIncludingSoftwareItems(7)
+            it.ensureCountIncludingSoftwareItems(10)
         }
 
         children[0].run {
@@ -102,7 +102,7 @@ class UpToDateContentTest : ComposeBaseTest() {
             assertHasScrollAction()
             onChildren()
         }.also {
-            it.ensureCountIncludingSoftwareItems(10)
+            it.ensureCountIncludingSoftwareItems(13)
         }
 
         // AdvancedModeTip

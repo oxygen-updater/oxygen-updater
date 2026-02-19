@@ -22,13 +22,13 @@ class FlexibleAppUpdateProgressTest : ComposeBaseTest() {
     fun flexibleAppUpdateProgress() {
         var bytesDownloaded by mutableStateOf(1L)
         var totalBytesToDownload by mutableStateOf(2L)
-        setContent {
+        setContent(true) {
             FlexibleAppUpdateProgress(
                 status = status,
                 bytesDownloaded = { bytesDownloaded },
                 totalBytesToDownload = { totalBytesToDownload },
-                snackbarMessageId = { snackbarText?.first },
                 updateSnackbarText = { snackbarText = it },
+                unregisterAppUpdateListener = { trackCallback("unregisterAppUpdateListener") },
             )
         }
 

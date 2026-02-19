@@ -113,7 +113,7 @@ class UpdateScreenTest : UsesSharedPreferencesTest() {
             getPrefStr = ::getPrefStr,
             getPrefBool = currentGetPrefBool,
             setSubtitleResId = { trackCallback("setSubtitleResId: $it") },
-            enqueueDownload = { trackCallback("enqueueDownload: ${it.id}") },
+            enqueueDownload = { trackCallback("enqueueDownload") },
             pauseDownload = { trackCallback("pauseDownload") },
             cancelDownload = { trackCallback("cancelDownload: $it") },
             deleteDownload = { false },
