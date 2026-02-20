@@ -237,7 +237,7 @@ Isso pode ser útil se você quiser:"</string>
 	<string name="news_empty_state_none_available_header">Ainda não há artigos</string>
 	<string name="news_empty_state_all_read_header"> Não há mais nada para ler</string>
 	<string name="news_empty_state_none_available_text">Não há artigos disponíveis no momento, verifique novamente mais tarde.</string>
-	<string name="news_empty_state_all_read_text">Você leu todos os artigos. Bom trabalho!\nEsperamos que você tenha gostado de ler nossos artigos e aprendido algo novo com eles.\n\nToque no banner novamente para mostrar todos os artigos de notícias.</string>
+	<string name="news_empty_state_all_read_text">Você leu todos os artigos. Bom trabalho! Esperamos que você tenha gostado de ler nossos artigos e aprendido algo novo com eles. Toque no banner novamente para mostrar todos os artigos de notícias.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Torne-se um contribuidor</string>

@@ -236,7 +236,7 @@
 	<string name="news_empty_state_none_available_header">אין מאמרים עדיין</string>
 	<string name="news_empty_state_all_read_header">אין כתבה שלא קראת!</string>
 	<string name="news_empty_state_none_available_text">אין מאמרים זמינים ברגע זה, בדוק שוב מאוחר יותר.</string>
-	<string name="news_empty_state_all_read_text">קראת את כל הכתבות. עבודה טובה!\nאנחנו מקווים שנהנתה לקרוא את הכתבות שלנו, ולמדת משהו חדש מהם.\n\nהקש על הבאנר שנית כדי להציג את כל הכתבות.</string>
+	<string name="news_empty_state_all_read_text">קראת את כל הכתבות. עבודה טובה! אנחנו מקווים שנהנתה לקרוא את הכתבות שלנו, ולמדת משהו חדש מהם. הקש על הבאנר שנית כדי להציג את כל הכתבות.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">עזור לנו לשפר את האפליקציה</string>

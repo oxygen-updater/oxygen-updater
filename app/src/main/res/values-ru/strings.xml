@@ -228,7 +228,7 @@
 	<string name="news_empty_state_none_available_header">Еще нет статей</string>
 	<string name="news_empty_state_all_read_header">Больше нечего читать</string>
 	<string name="news_empty_state_none_available_text">В данный момент нет доступных статей, проверьте позже.</string>
-	<string name="news_empty_state_all_read_text">Вы прочитали все статьи. Хорошая работа!\nМы надеемся, что вам понравилось читать наши статьи, и вы узнали из них что-то новое.\n\nСнова нажмите на баннер, чтобы показать все новостные статьи.</string>
+	<string name="news_empty_state_all_read_text">Вы прочитали все статьи. Хорошая работа! Мы надеемся, что вам понравилось читать наши статьи, и вы узнали из них что-то новое. Снова нажмите на баннер, чтобы показать все новостные статьи.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Стать участником</string>

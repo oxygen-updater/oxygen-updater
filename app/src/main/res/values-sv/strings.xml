@@ -238,7 +238,7 @@ Detta kan vara användbart om du vill:"</string>
 	<string name="news_empty_state_none_available_header">Inga artiklar än</string>
 	<string name="news_empty_state_all_read_header">Det finns inget mer att läsa.</string>
 	<string name="news_empty_state_none_available_text">Det finns inga artiklar tillgängliga just nu, kom tillbaka senare.</string>
-	<string name="news_empty_state_all_read_text">Du har läst alla artiklar. Bra jobbat!\nVi hoppas att du tyckte om våra artiklar och lärde dig något nytt.\n\nTryck på rubriken igen för att visa alla nyhetsartiklar</string>
+	<string name="news_empty_state_all_read_text">Du har läst alla artiklar. Bra jobbat! Vi hoppas att du tyckte om våra artiklar och lärde dig något nytt. Tryck på rubriken igen för att visa alla nyhetsartiklar</string>
 
 	<string name="contribute">Bli en bidragare</string>
 	<string name="contribute_title">Hjälp till att förbättra Oxygen Updater</string>

@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oxygenupdater.R
 import com.oxygenupdater.icons.Error
+import com.oxygenupdater.icons.FullCoverage
 import com.oxygenupdater.icons.Refresh
 import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.main.NavType
@@ -56,9 +58,11 @@ fun ErrorState(
 
         if (rich) RichText(
             text = stringResource(textResId),
+            textAlign = TextAlign.Justify,
             modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
         ) else Text(
             text = stringResource(textResId),
+            textAlign = TextAlign.Justify,
             modifier = Modifier
                 .padding(top = 4.dp, bottom = 16.dp)
                 .testTag(ErrorState_TextTestTag)
@@ -76,29 +80,33 @@ fun ErrorState(
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = modifierMaxSize.testTag(ErrorStateTestTag)
 ) {
-    Text(
-        text = stringResource(titleResId),
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.titleLarge,
-        modifier = modifierDefaultPadding.testTag(ErrorState_TitleTestTag)
-    )
+    // Referential equality is faster, we only check for the default param value
+    val error = icon === Symbols.Error
 
     Icon(
         imageVector = icon,
         contentDescription = stringResource(R.string.icon),
-        tint = MaterialTheme.colorScheme.primary,
+        tint = if (error) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
         modifier = Modifier
             .requiredSize(150.dp)
             .testTag(ErrorState_IconTestTag)
     )
 
+    Text(
+        text = stringResource(titleResId),
+        color = if (error) MaterialTheme.colorScheme.error else Color.Unspecified,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.titleLarge,
+        modifier = modifierDefaultPadding.testTag(ErrorState_TitleTestTag)
+    )
+
     if (rich) RichText(
         text = stringResource(textResId),
-        textAlign = TextAlign.Center,
+        textAlign = TextAlign.Justify,
         modifier = modifierDefaultPadding
     ) else Text(
         text = stringResource(textResId),
-        textAlign = TextAlign.Center,
+        textAlign = TextAlign.Justify,
         modifier = modifierDefaultPadding.testTag(ErrorState_TextTestTag)
     )
 
@@ -130,6 +138,42 @@ fun PreviewErrorState() = PreviewAppTheme {
     ErrorState(
         navType = NavType.from(PreviewWindowSize.widthSizeClass),
         titleResId = R.string.error_maintenance,
+        onRefreshClick = {},
+    )
+}
+
+@PreviewThemes
+@Composable
+fun PreviewErrorStateUpdateScreen() = PreviewAppTheme {
+    ErrorState(
+        navType = NavType.from(PreviewWindowSize.widthSizeClass),
+        titleResId = R.string.update_information_error_title,
+        onRefreshClick = {},
+    )
+}
+
+@PreviewThemes
+@Composable
+fun PreviewErrorStateNewsListScreen1() = PreviewAppTheme {
+    ErrorState(
+        navType = NavType.from(PreviewWindowSize.widthSizeClass),
+        titleResId = R.string.news_empty_state_all_read_header,
+        icon = Symbols.FullCoverage,
+        textResId = R.string.news_empty_state_all_read_text,
+        rich = false,
+        onRefreshClick = null,
+    )
+}
+
+@PreviewThemes
+@Composable
+fun PreviewErrorStateNewsListScreen2() = PreviewAppTheme {
+    ErrorState(
+        navType = NavType.from(PreviewWindowSize.widthSizeClass),
+        titleResId = R.string.news_empty_state_none_available_header,
+        icon = Symbols.FullCoverage,
+        textResId = R.string.news_empty_state_none_available_text,
+        rich = false,
         onRefreshClick = {},
     )
 }

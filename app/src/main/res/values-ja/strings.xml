@@ -238,7 +238,7 @@
 	<string name="news_empty_state_none_available_header">まだ記事がありません</string>
 	<string name="news_empty_state_all_read_header">読む物がありません</string>
 	<string name="news_empty_state_none_available_text">今はまだ記事がありません、後ほどチェックしてみてください。</string>
-	<string name="news_empty_state_all_read_text">すべての記事を読みました。お疲れ様！\n私たちの記事を読み、新しい何かを学んでいただけたら幸いです。\n\nここをタップしてすべてのニュース記事を再表示します。</string>
+	<string name="news_empty_state_all_read_text">すべての記事を読みました。お疲れ様！ 私たちの記事を読み、新しい何かを学んでいただけたら幸いです。 ここをタップしてすべてのニュース記事を再表示します。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>

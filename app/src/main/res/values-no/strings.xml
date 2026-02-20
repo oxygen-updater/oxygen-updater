@@ -242,7 +242,7 @@ Dette kan være nyttig hvis du vil:"</string>
 	<string name="news_empty_state_none_available_header">Ingen artikler ennå</string>
 	<string name="news_empty_state_all_read_header">Det er ingenting igjen å lese</string>
 	<string name="news_empty_state_none_available_text">Det er ingen tilgjengelige artikler for øyeblikket, prøv igjen senere.</string>
-	<string name="news_empty_state_all_read_text">Du har lest alle artiklene. Bra jobb!\nVi håper du likte å lese artiklene våre, og lærte noe nytt av dem.\n\nTrykk på banneret igjen for å vise alle nyhetsartikler.</string>
+	<string name="news_empty_state_all_read_text">Du har lest alle artiklene. Bra jobb! Vi håper du likte å lese artiklene våre, og lærte noe nytt av dem. Trykk på banneret igjen for å vise alle nyhetsartikler.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Bli en bidragsyter</string>

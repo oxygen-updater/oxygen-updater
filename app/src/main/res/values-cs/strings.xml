@@ -238,7 +238,7 @@ To může být užitečné, pokud chcete:"</string>
 	<string name="news_empty_state_none_available_header">Zatím nejsou žádné články</string>
 	<string name="news_empty_state_all_read_header">Není už nic ke čtení</string>
 	<string name="news_empty_state_none_available_text">V tuto chvíli nejsou k dispozici žádné články, podívejte se později </string>.
-	<string name="news_empty_state_all_read_text">Přečetli jste všechny články. Dobrá práce!\nDoufáme, že se vám naše články líbily a že jste se z nich dozvěděli něco nového.\n\nZnovu klepněte na banner pro zobrazení všech novinek.</string>
+	<string name="news_empty_state_all_read_text">Přečetli jste všechny články. Dobrá práce! Doufáme, že se vám naše články líbily a že jste se z nich dozvěděli něco nového. Znovu klepněte na banner pro zobrazení všech novinek.</string>
 
 	<!-- Příspěvkové řetězce -->
 	<string name="contribute">Staňte se přispěvatelem</string>

@@ -238,7 +238,7 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="news_empty_state_none_available_header">Még nincsenek cikkek</string>
 	<string name="news_empty_state_all_read_header">Nincs mit elolvasni</string>
 	<string name="news_empty_state_none_available_text">Jelenleg nincs elérhető cikk, ellenőrizd később.</string>
-	<string name="news_empty_state_all_read_text">Elolvastad az összes cikket. Szép munka!\nReméljük, hogy élvezted a cikkek elolvasását, és valami újat tanultál belőlük.\n\nAz összes hír megjelenítéséhez érintsd meg ismét a szalagot.</string>
+	<string name="news_empty_state_all_read_text">Elolvastad az összes cikket. Szép munka! Reméljük, hogy élvezted a cikkek elolvasását, és valami újat tanultál belőlük. Az összes hír megjelenítéséhez érintsd meg ismét a szalagot.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Közreműködés</string>

@@ -243,7 +243,7 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="news_empty_state_none_available_header">Ingen nyhedsartikler endnu</string>
 	<string name="news_empty_state_all_read_header">Du har læst alle nyhedsartikler</string>
 	<string name="news_empty_state_none_available_text">Der er ikke nogen nyheder tilgængelige i øjeblikket, kig forbi senere.</string>
-	<string name="news_empty_state_all_read_text">Du har læst alle artikler. Good job!\nVi håber du har nydt artiklerne og fået et godt udbytte fra dem.\n\nTryk på banneret for at få artikler vist.</string>
+	<string name="news_empty_state_all_read_text">Du har læst alle artikler. Good job! Vi håber du har nydt artiklerne og fået et godt udbytte fra dem. Tryk på banneret for at få artikler vist.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Bliv bidragsyder</string>

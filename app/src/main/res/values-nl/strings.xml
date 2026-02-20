@@ -239,7 +239,7 @@ Dit kan handig zijn als je:"</string>
 	<string name="news_empty_state_none_available_header">Nog geen artikelen</string>
 	<string name="news_empty_state_all_read_header">Er is niets meer te lezen</string>
 	<string name="news_empty_state_none_available_text">Er zijn geen artikelen beschikbaar op dit moment, kom later terug.</string>
-	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan!\nWe hopen dat je hebt genoten van onze artikelen en dat je er iets van hebt geleerd.\n\nTik op de banner om alle nieuwsartikelen te tonen.</string>
+	<string name="news_empty_state_all_read_text">Je hebt alle artikelen gelezen. Goed gedaan! We hopen dat je hebt genoten van onze artikelen en dat je er iets van hebt geleerd. Tik op de banner om alle nieuwsartikelen te tonen.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>

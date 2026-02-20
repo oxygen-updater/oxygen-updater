@@ -235,7 +235,7 @@
 	<string name="news_empty_state_none_available_header">暫時沒有文章</string>
 	<string name="news_empty_state_all_read_header">全部讀完了</string>
 	<string name="news_empty_state_none_available_text">暫時沒有可讀的文章，請稍候再試</string>
-	<string name="news_empty_state_all_read_text">所有文章都已閱讀完畢，做的真好！\n希望您喜歡我們的文章，並能夠從中了解到新的訊息。\n\n再次點選横幅即可顯示所有新聞文章。</string>
+	<string name="news_empty_state_all_read_text">所有文章都已閱讀完畢，做的真好！ 希望您喜歡我們的文章，並能夠從中了解到新的訊息。 再次點選横幅即可顯示所有新聞文章。</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">參與共研</string>

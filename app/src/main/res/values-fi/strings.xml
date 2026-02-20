@@ -240,7 +240,7 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="news_empty_state_none_available_header">Ei artikkeleita</string>
 	<string name="news_empty_state_all_read_header">Ei luettavaa jäljellä</string>
 	<string name="news_empty_state_none_available_text">Ei artikkeleita. Tule takaisin myöhemmin.</string>
-	<string name="news_empty_state_all_read_text">Olet lukenut kaikki artikkelit. Hyvin tehty!\nToivomme, että pidät niistä ja olet oppinut jotain uutta.\n\nBannerin painaminen näyttää kaikki artikkelit.</string>
+	<string name="news_empty_state_all_read_text">Olet lukenut kaikki artikkelit. Hyvin tehty! Toivomme, että pidät niistä ja olet oppinut jotain uutta. Bannerin painaminen näyttää kaikki artikkelit.</string>
 
 	<string name="contribute">Tule tukijaksi</string>
 	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>

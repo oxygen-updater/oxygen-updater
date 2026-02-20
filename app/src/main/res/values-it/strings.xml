@@ -234,7 +234,7 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="news_empty_state_none_available_header">Nessun articolo disponibile</string>
 	<string name="news_empty_state_all_read_header">Non c\'è più nulla da leggere!</string>
 	<string name="news_empty_state_none_available_text">Non c\'è nulla da leggere, riprova più tardi.</string>
-	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni!\nSperiamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa.\n\nPremi il banner per rivedere tutti gli articoli.</string>
+	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni! Speriamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa. Premi il banner per rivedere tutti gli articoli.</string>
 
 	<string name="contribute">Diventa un contributor</string>
 	<string name="contribute_title">Migliora Oxygen Updater</string>

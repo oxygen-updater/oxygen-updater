@@ -238,7 +238,7 @@
 	<string name="news_empty_state_none_available_header">Немає новин</string>
 	<string name="news_empty_state_all_read_header">Не залишилось нічого, що можна почитати</string>
 	<string name="news_empty_state_none_available_text">На даний момент немає новин, перевірте пізніше.</string>
-	<string name="news_empty_state_all_read_text">Ви прочитали всі новини. Чудово!\nСподіваємося, вам сподобалося читати наші новини, і надіємося що ви почерпнули щось нове для себе.\n\nНатисніть на банер, щоб знову показати всі новини.</string>
+	<string name="news_empty_state_all_read_text">Ви прочитали всі новини. Чудово! Сподіваємося, вам сподобалося читати наші новини, і надіємося що ви почерпнули щось нове для себе. Натисніть на банер, щоб знову показати всі новини.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Стати помічником</string>

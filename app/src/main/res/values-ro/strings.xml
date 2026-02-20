@@ -236,7 +236,7 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="news_empty_state_none_available_header">Niciun articol momentan</string>
 	<string name="news_empty_state_all_read_header">Nu mai este nimic nou de citit</string>
 	<string name="news_empty_state_none_available_text">Nu există articole disponibile momentan, reveniți mai târziu.</string>
-	<string name="news_empty_state_all_read_text">Ați citit toate articolele. Felicitări!\nSperăm că le-ați citit cu plăcere și că ați aflat ceva nou.\n\nApăsați banner-ul din nou pentru a vedea toate articolele.</string>
+	<string name="news_empty_state_all_read_text">Ați citit toate articolele. Felicitări! Sperăm că le-ați citit cu plăcere și că ați aflat ceva nou. Apăsați banner-ul din nou pentru a vedea toate articolele.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Deveniți un contribuitor</string>

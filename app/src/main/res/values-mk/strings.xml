@@ -236,7 +236,7 @@
 	<string name="news_empty_state_none_available_header">Нема статии</string>
 	<string name="news_empty_state_all_read_header">Нема ништо преостанато за читање</string>
 	<string name="news_empty_state_none_available_text">Нема никакви статии во моментов, проверете подоцна.</string>
-	<string name="news_empty_state_all_read_text">Ги прочитавте сите статии. Браво!\nСе надеваме дека ви се допаѓаат нашите статии, и дека научивте нешто ново од нив.\n\nПовторно кликнете го банерот за да се прикажат сите статии.</string>
+	<string name="news_empty_state_all_read_text">Ги прочитавте сите статии. Браво! Се надеваме дека ви се допаѓаат нашите статии, и дека научивте нешто ново од нив. Повторно кликнете го банерот за да се прикажат сите статии.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Станете соработник</string>

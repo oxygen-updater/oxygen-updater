@@ -244,7 +244,7 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 	<string name="news_empty_state_none_available_header">Aucun article n\'est présent</string>
 	<string name="news_empty_state_all_read_header">Aucun article non lu</string>
 	<string name="news_empty_state_none_available_text">Aucun article n\'est disponible pour l\'instant, veuillez réessayez plus tard.</string>
-	<string name="news_empty_state_all_read_text">Félicitations, vous avez lu tous les articles! Nous espérons que vous les avez aimé.\n\nAppuyez sur la bannière pour les revoir.</string>
+	<string name="news_empty_state_all_read_text">Félicitations, vous avez lu tous les articles! Nous espérons que vous les avez aimé. Appuyez sur la bannière pour les revoir.</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Devenez un contributeur</string>

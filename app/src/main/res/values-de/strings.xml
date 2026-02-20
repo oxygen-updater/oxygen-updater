@@ -237,7 +237,7 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="news_empty_state_none_available_header">Noch keine Artikel</string>
 	<string name="news_empty_state_all_read_header">Es gibt nichts mehr zu lesen</string>
 	<string name="news_empty_state_none_available_text">Zurzeit sind keine Artikel verfügbar, komme später noch einmal.</string>
-	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit!\nWir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt.\n\nTippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
+	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit! Wir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt. Tippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
 
 	<string name="contribute">Hilf mit</string>
 	<string name="contribute_title">Hilf mit Oxygen Updater zu verbessern</string>
