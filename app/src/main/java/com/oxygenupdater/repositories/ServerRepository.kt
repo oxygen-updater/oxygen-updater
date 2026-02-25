@@ -19,9 +19,14 @@ import com.oxygenupdater.internal.settings.KeyNotificationDelayInSeconds
 import com.oxygenupdater.internal.settings.KeyUpdateMethodId
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.DeviceRequestFilter
+import com.oxygenupdater.models.DownloadErrorBody
+import com.oxygenupdater.models.FreshUpdateDataDownloadUrlBody
+import com.oxygenupdater.models.OsInfoBody
 import com.oxygenupdater.models.ServerStatus
+import com.oxygenupdater.models.SubmitOtaDbBody
 import com.oxygenupdater.models.SystemVersionProperties
 import com.oxygenupdater.models.UpdateData
+import com.oxygenupdater.models.VerifyPurchaseBody
 import com.oxygenupdater.utils.logError
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.utils.logVerbose
@@ -86,12 +91,12 @@ class ServerRepository @Inject constructor(
             deviceId = deviceId,
             updateMethodId = methodId,
             appVersion = BuildConfig.VERSION_NAME,
-            body = ArrayMap<String, Any>(4).apply {
-                put("id", updateData.id)
-                put("otaVersionNumber", updateData.otaVersionNumber)
-                put("downloadUrl", updateData.downloadUrl)
-                put("md5sum", updateData.md5sum)
-            }
+            body = FreshUpdateDataDownloadUrlBody(
+                id = updateData.id,
+                otaVersionNumber = updateData.otaVersionNumber,
+                downloadUrl = updateData.downloadUrl,
+                md5sum = updateData.md5sum,
+            )
         )
     }.let {
         if (it == null || !it.success) return@let
@@ -172,35 +177,11 @@ class ServerRepository @Inject constructor(
     }
 
     suspend fun osInfoHeartbeat(fromIntentAction: String) = performServerRequest {
-        serverApi.osInfoHeartbeat(
-            ArrayMap<String, Any>(11).apply {
-                put("fromAction", fromIntentAction)
-                put("otaVersion", SystemVersionProperties.otaVersion)
-                put("osVersion", SystemVersionProperties.osVersion)
-                put("osType", SystemVersionProperties.osType)
-                put("fingerprint", SystemVersionProperties.fingerprint)
-                put("oplusPipeline", SystemVersionProperties.pipeline)
-                put("oplusPipelineCode", SystemVersionProperties.pipelineCode)
-                put("oplusManifestHash", SystemVersionProperties.manifestHash)
-                put("deviceMarketName", SystemVersionProperties.deviceMarketName)
-                put("isEuBuild", SystemVersionProperties.isEuBuild)
-                put("appVersion", BuildConfig.VERSION_NAME)
-            }
-        )
+        serverApi.osInfoHeartbeat(OsInfoBody.from(fromIntentAction))
     }
 
-    suspend fun submitOtaDbRows(rows: List<Map<String, Any?>>) = performServerRequest {
-        serverApi.submitOtaDbRows(
-            ArrayMap<String, Any>(7).apply {
-                put("rows", rows)
-                put("fingerprint", SystemVersionProperties.fingerprint)
-                put("currentOtaVersion", SystemVersionProperties.otaVersion)
-                put("isEuBuild", SystemVersionProperties.isEuBuild)
-                put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
-                put("actualDeviceName", SystemVersionProperties.deviceProductName)
-            }
-        )
+    suspend fun submitOtaDbRows(rows: List<Map<String, String?>>) = performServerRequest {
+        serverApi.submitOtaDbRows(SubmitOtaDbBody.from(rows, sharedPreferences[KeyDevice, "<UNKNOWN>"]))
     }
 
     suspend fun logDownloadError(
@@ -212,17 +193,17 @@ class ServerRepository @Inject constructor(
         httpMessage: String?,
     ) = performServerRequest {
         serverApi.logDownloadError(
-            ArrayMap<String, Any?>(9).apply {
-                put("url", url)
-                put("filename", filename)
-                put("version", version)
-                put("otaVersion", otaVersion)
-                put("httpCode", httpCode)
-                put("httpMessage", httpMessage)
-                put("appVersion", BuildConfig.VERSION_NAME)
-                put("deviceName", sharedPreferences[KeyDevice, "<UNKNOWN>"])
-                put("actualDeviceName", SystemVersionProperties.deviceProductName)
-            }
+            DownloadErrorBody(
+                url = url,
+                filename = filename,
+                version = version,
+                otaVersion = otaVersion,
+                httpCode = httpCode,
+                httpMessage = httpMessage,
+                appVersion = BuildConfig.VERSION_NAME,
+                deviceName = sharedPreferences[KeyDevice, "<UNKNOWN>"],
+                actualDeviceName = SystemVersionProperties.deviceProductName,
+            )
         )
     }
 
@@ -232,21 +213,11 @@ class ServerRepository @Inject constructor(
         purchaseType: PurchaseType,
     ) = performServerRequest {
         serverApi.verifyPurchase(
-            ArrayMap<String, Any?>(13).apply {
-                put("orderId", purchase.orderId)
-                put("packageName", purchase.packageName)
-                put("productId", purchase.products.joinToString(","))
-                put("purchaseTime", purchase.purchaseTime)
-                put("purchaseState", purchase.purchaseState)
-                put("developerPayload", purchase.developerPayload)
-                put("token", purchase.purchaseToken)
-                put("purchaseToken", purchase.purchaseToken)
-                put("autoRenewing", purchase.isAutoRenewing)
-                put("purchaseType", purchaseType.name)
-                put("itemType", purchaseType.type)
-                put("signature", purchase.signature)
-                put("amount", amount)
-            }
+            VerifyPurchaseBody.from(
+                purchase = purchase,
+                purchaseType = purchaseType,
+                amount = amount,
+            )
         )
     }
 

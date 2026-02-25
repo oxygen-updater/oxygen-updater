@@ -4,19 +4,19 @@ import android.content.Context
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES
 import android.os.storage.StorageManager
+import androidx.annotation.VisibleForTesting
 import androidx.core.content.getSystemService
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.apis.DownloadApi
 import com.oxygenupdater.apis.ServerApi
-import com.oxygenupdater.internal.BooleanJsonAdapter
-import com.oxygenupdater.internal.CsvListJsonAdapter
-import com.squareup.moshi.Moshi
+import kotlinx.serialization.json.Json
 import okhttp3.Cache
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
 import java.util.concurrent.TimeUnit
 
@@ -32,16 +32,22 @@ var okHttpCache: Cache? = null
 /** Allows per-request read timeout override via application interceptor */
 const val HeaderReadTimeout = "X-Read-Timeout"
 
+@VisibleForTesting
+val json = Json {
+    ignoreUnknownKeys = true
+
+    // Can't use this globally because it's applied both ways, i.e. serialization & deserialization,
+    // and it isn't possible to selectively turn it off after the fact. We require this strategy
+    // only when deserializing responses from the server (we send some requests with camelCase fields).
+    // So, @JsonNames is used on each field that requires it.
+    // @Suppress("OPT_IN_USAGE") namingStrategy = JsonNamingStrategy.SnakeCase
+}
+
 fun createServerApi(context: Context) = Retrofit.Builder()
     .baseUrl(ApiBaseUrl)
     .client(httpClient(createOkHttpCache(context)))
     .addConverterFactory(
-        MoshiConverterFactory.create(
-            Moshi.Builder()
-                .add(BooleanJsonAdapter()) // coerce strings/numbers to boolean
-                .add(CsvListJsonAdapter())
-                .build()
-        )
+        json.asConverterFactory("application/json; charset=utf-8".toMediaType())
     ).build().create<ServerApi>()
 
 fun createDownloadApi() = Retrofit.Builder()

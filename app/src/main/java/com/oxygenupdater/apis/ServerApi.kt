@@ -2,13 +2,18 @@ package com.oxygenupdater.apis
 
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.models.Device
+import com.oxygenupdater.models.DownloadErrorBody
+import com.oxygenupdater.models.FreshUpdateDataDownloadUrlBody
 import com.oxygenupdater.models.InAppFaq
 import com.oxygenupdater.models.InstallGuide
+import com.oxygenupdater.models.OsInfoBody
 import com.oxygenupdater.models.ServerMessage
 import com.oxygenupdater.models.ServerPostResult
 import com.oxygenupdater.models.ServerStatus
+import com.oxygenupdater.models.SubmitOtaDbBody
 import com.oxygenupdater.models.UpdateData
 import com.oxygenupdater.models.UpdateMethod
+import com.oxygenupdater.models.VerifyPurchaseBody
 import com.oxygenupdater.ui.currentLanguage
 import com.oxygenupdater.ui.currentLocale
 import com.oxygenupdater.utils.HeaderReadTimeout
@@ -63,7 +68,7 @@ interface ServerApi {
         @Path("deviceId") deviceId: Long,
         @Path("updateMethodId") updateMethodId: Long,
         @Query("appVersion") appVersion: String,
-        @Body body: Map<String, @JvmSuppressWildcards Any>,
+        @Body body: FreshUpdateDataDownloadUrlBody,
     ): Response<ServerPostResult>
 
     @GET("serverStatus")
@@ -99,7 +104,7 @@ interface ServerApi {
     suspend fun markArticleRead(@Body id: Map<String, Long>): Response<ServerPostResult>
 
     @POST("osInfoHeartbeat")
-    suspend fun osInfoHeartbeat(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ServerPostResult>
+    suspend fun osInfoHeartbeat(@Body body: OsInfoBody): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
@@ -111,7 +116,7 @@ interface ServerApi {
      * * `actualDeviceName: String`,
      */
     @POST("submit-update-url")
-    suspend fun submitOtaDbRows(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<ServerPostResult>
+    suspend fun submitOtaDbRows(@Body body: SubmitOtaDbBody): Response<ServerPostResult>
 
     /**
      * @param body includes the following fields:
@@ -123,9 +128,9 @@ interface ServerApi {
      * * `deviceName: String`
      */
     @POST("log-download-error")
-    suspend fun logDownloadError(@Body body: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
+    suspend fun logDownloadError(@Body body: DownloadErrorBody): Response<ServerPostResult>
 
     @POST("verify-purchase")
     @Headers("$HeaderReadTimeout:99")
-    suspend fun verifyPurchase(@Body purchaseData: Map<String, @JvmSuppressWildcards Any?>): Response<ServerPostResult>
+    suspend fun verifyPurchase(@Body body: VerifyPurchaseBody): Response<ServerPostResult>
 }

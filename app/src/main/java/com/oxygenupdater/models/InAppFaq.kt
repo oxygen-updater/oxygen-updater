@@ -4,22 +4,22 @@ import android.os.Parcelable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import com.oxygenupdater.internal.ForceBoolean
-import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Parcelize
 @Stable
-@JsonClass(generateAdapter = true)
 data class InAppFaq(
-    val id: Long,
+    val id: Long = 0,
 
-    val title: String?,
-    val body: String?,
-    @ForceBoolean val important: Boolean = false,
+    val title: String? = null,
+    val body: String? = null,
+    val important: ForceBoolean = false,
 
     /** Either `category` or `item` */
-    val type: String,
+    val type: String = "category", // categories are rendered as Text, reasonable default
 ) : Parcelable {
 
     /** To preserve expand/collapse state in LazyColumn */

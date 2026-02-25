@@ -5,19 +5,22 @@ import androidx.compose.runtime.Immutable
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.internal.CsvList
 import com.oxygenupdater.internal.ForceBoolean
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.json.JsonNames
 
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
 @Immutable // required because we have a List field (productNames)
-@JsonClass(generateAdapter = true)
 data class Device(
-    override val id: Long,
-    override val name: String?,
+    override val id: Long = 0,
+    override val name: String? = null,
 
-    @Json(name = "product_names")
-    @CsvList val productNames: List<String>,
+    @JsonNames("product_names")
+    val productNames: CsvList = listOf(),
 
-    @ForceBoolean val enabled: Boolean,
+    val enabled: ForceBoolean = true, // most are enabled, reasonable default
 ) : SelectableModel {
 
     /**

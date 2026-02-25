@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import androidx.collection.ArrayMap
 import androidx.collection.ArraySet
+import androidx.collection.MutableScatterMap
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -90,14 +90,14 @@ class ReadOtaDbWorker @AssistedInject constructor(
         val size = otaDbCopies.size
         urls = ArraySet(size)
         val validSubmittedFilenames = ArraySet<String>(size)
-        val rows = ArrayList<Map<String, Any?>>(size) // Cursor.toMap ensures unique (based on URL) entries
+        val rows = ArrayList<Map<String, String?>>(size) // Cursor.toMap ensures unique (based on URL) entries
         otaDbCopies.forEach { file ->
             val filename = file.name
             if (!file.canRead()) return@forEach logDebug(TAG, "Can't read copied $filename")
 
             val db = try {
                 SQLiteDatabase.openDatabase(file.path, null, SQLiteDatabase.OPEN_READONLY)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 return@forEach logDebug(TAG, "Can't open copied $filename")
             }
 
@@ -109,7 +109,7 @@ class ReadOtaDbWorker @AssistedInject constructor(
                         TAG, "Already submitted or null"
                     ) while (cursor.moveToNext())
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 // ignore
             }
         }
@@ -155,24 +155,46 @@ class ReadOtaDbWorker @AssistedInject constructor(
         if (failed) Result.failure() else Result.success()
     }
 
+    /**
+     * We're saving values as strings to allow easy serialization (there's no serializer for `Any`).
+     * Moshi could opaquely handle `Any`, but kotlinx-serialization is stricter. In other areas we've
+     * constructed specific data models where Any-maps were previously used, but that's not possible
+     * with `SELECT *`. Freeing ourselves from explicit column names allows us to avoid needing to
+     * update the app each time any columns are added or removed in the ota.db structure. It isn't
+     * feasible, so instead we're going with simply converting all column values to strings. In the
+     * backend we can always cast back—in some cases we do that already, to be safe from unexpected
+     * type changes in ota.db.
+     *
+     * Note: main operations are done on [MutableScatterMap], which is memory efficient & free of
+     * extraneous allocations, though possibly slower than [HashMap]. We convert back to a regular
+     * [Map][MutableScatterMap.asMap] so that it can be serialized.
+     */
     private inline fun Cursor.toMap() = columnCount.let { columnCount ->
-        // Memory efficient, albeit slower compared to HashMap
-        // Note: we can't use SimpleArrayMap as it doesn't implement Map, thus can't be serialized by Moshi
-        val map = ArrayMap<String, Any?>(columnCount)
+        val map = MutableScatterMap<String, String?>(columnCount)
         for (index in 0 until columnCount) when (getType(index)) {
             Cursor.FIELD_TYPE_NULL -> map[getColumnName(index)] = null
             Cursor.FIELD_TYPE_BLOB -> {} // ignore
-            Cursor.FIELD_TYPE_FLOAT -> map[getColumnName(index)] = getFloat(index)
-            Cursor.FIELD_TYPE_INTEGER -> map[getColumnName(index)] = getInt(index)
+            Cursor.FIELD_TYPE_FLOAT -> map[getColumnName(index)] = try {
+                getString(index)
+            } catch (_: Exception) { // in case `getString` fails
+                getFloat(index).toString()
+            }
+
+            Cursor.FIELD_TYPE_INTEGER -> map[getColumnName(index)] = try {
+                getString(index)
+            } catch (_: Exception) { // in case `getString` fails
+                getInt(index).toString()
+            }
+
             Cursor.FIELD_TYPE_STRING -> map[getColumnName(index)] = getString(index)
         }
 
         // TODO(root): return only if it's an OTA ZIP, not component (non-AB devices like Nord 2, Nord CE 2).
         //  I think only OTA ZIPs have payload.bin, so we could check if `streaming_property_files` contains it.
 
-        val url = (map["active_url"] ?: map["url"]) as? String
+        val url = map["active_url"] ?: map["url"]
         if (url.isNullOrBlank() || submittedUpdateFilesDao.isUrlAlreadySubmitted(url)) null
-        else if (!urls.add(url)) null else map
+        else if (!urls.add(url)) null else map.asMap()
     }
 
     /**

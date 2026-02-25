@@ -7,36 +7,38 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.oxygenupdater.OxygenUpdater
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
 @Parcelize
 @Immutable
 @Entity(tableName = "update_data")
-@JsonClass(generateAdapter = true)
 data class UpdateData(
     @PrimaryKey
-    val id: Long?,
+    val id: Long? = 0,
 
     @ColumnInfo("version_number")
-    @Json(name = "version_number")
+    @JsonNames("version_number")
     val versionNumber: String? = null,
 
     @ColumnInfo("ota_version_number")
-    @Json(name = "ota_version_number")
+    @JsonNames("ota_version_number")
     val otaVersionNumber: String? = null,
 
     val changelog: String? = null,
     val description: String? = null,
 
     @ColumnInfo("download_url")
-    @Json(name = "download_url")
+    @JsonNames("download_url")
     val downloadUrl: String? = null,
 
     @ColumnInfo("download_size")
-    @Json(name = "download_size")
+    @JsonNames("download_size")
     val downloadSize: Long = 0,
 
     val filename: String? = null,
@@ -44,11 +46,11 @@ data class UpdateData(
     val information: String? = null,
 
     @ColumnInfo("update_information_available")
-    @Json(name = "update_information_available")
+    @JsonNames("update_information_available")
     val updateInformationAvailable: Boolean = false,
 
     @ColumnInfo("system_is_up_to_date", defaultValue = "0")
-    @Json(name = "system_is_up_to_date")
+    @JsonNames("system_is_up_to_date")
     val systemIsUpToDate: Boolean = false,
 ) : Parcelable {
 

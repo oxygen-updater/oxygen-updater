@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.room)
 }
@@ -299,6 +300,7 @@ hilt {
 dependencies {
     coreLibraryDesugaring(libs.android.desugar)
 
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.bundles.kotlinx.coroutines)
 
     implementation(libs.bundles.androidx)
@@ -314,7 +316,6 @@ dependencies {
     implementation(libs.eygraber.compose.placeholder.material3)
 
     implementation(libs.bundles.retrofit)
-    ksp(libs.moshi.kotlin.codegen)
 
     implementation(platform(libs.coil.bom))
     implementation(libs.bundles.coil)

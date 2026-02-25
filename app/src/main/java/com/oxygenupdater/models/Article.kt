@@ -12,39 +12,42 @@ import androidx.room.PrimaryKey
 import com.oxygenupdater.BuildConfig
 import com.oxygenupdater.utils.ApiBaseUrl
 import com.oxygenupdater.utils.Utils
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.json.JsonNames
 import java.time.LocalDateTime
 
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
 @Parcelize
 @Stable
 @Entity(tableName = "news_item")
-@JsonClass(generateAdapter = true)
 data class Article(
     @PrimaryKey
-    val id: Long?,
+    val id: Long? = 0,
 
-    val title: String?,
-    val subtitle: String?,
-    val text: String?,
+    val title: String? = null,
+    val subtitle: String? = null,
+    val text: String? = null,
 
     @ColumnInfo("image_url")
-    @Json(name = "image_url")
-    val imageUrl: String?,
+    @JsonNames("image_url")
+    val imageUrl: String? = null,
 
     @ColumnInfo("date_published")
-    @Json(name = "date_published")
-    val datePublished: String?,
+    @JsonNames("date_published")
+    val datePublished: String? = null,
 
     @ColumnInfo("date_last_edited")
-    @Json(name = "date_last_edited")
-    val dateLastEdited: String?,
+    @JsonNames("date_last_edited")
+    val dateLastEdited: String? = null,
 
     @ColumnInfo("author_name")
-    @Json(name = "author_name")
-    val authorName: String?,
+    @JsonNames("author_name")
+    val authorName: String? = null,
 
     @ColumnInfo(defaultValue = "0")
     @Transient
