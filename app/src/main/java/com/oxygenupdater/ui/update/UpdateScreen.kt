@@ -7,6 +7,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -18,8 +19,8 @@ import com.oxygenupdater.ui.RefreshAwareState
 import com.oxygenupdater.ui.common.ErrorState
 import com.oxygenupdater.ui.common.PullRefresh
 import com.oxygenupdater.ui.common.rememberState
+import com.oxygenupdater.ui.main.MainRoute
 import com.oxygenupdater.ui.main.NavType
-import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.workers.DirectoryRoot
@@ -63,15 +64,22 @@ fun UpdateScreen(
     val updateData = if (!refreshing) rememberSaveable(data.id) { data } else data
     val filename = updateData.filename
 
+    val currentSetSubtitleResId by rememberUpdatedState(setSubtitleResId)
     if (updateData.id == null || !updateData.isUpdateInformationAvailable
         || (updateData.systemIsUpToDate && !getPrefBool(KeyAdvancedMode, false))
     ) {
         (if (updateData.isUpdateInformationAvailable) R.string.update_information_system_is_up_to_date
         else R.string.update_information_no_update_data_available).let {
-            LaunchedEffect(it) { setSubtitleResId(it) }
+            // Lifecycle is only STARTED when transitioning (e.g. predictive back).
+            // RESUMED is reached only if this screen is fully active, which is when
+            // we want the subtitle to be updated.
+            LifecycleResumeEffect(it) {
+                currentSetSubtitleResId(it)
+                onPauseOrDispose {}
+            }
         }
 
-        Screen.Update.badge = null
+        MainRoute.Update.badge = null
 
         UpToDate(
             navType = navType,
@@ -83,10 +91,16 @@ fun UpdateScreen(
     } else {
         (if (updateData.systemIsUpToDate) R.string.update_information_header_advanced_mode_hint
         else R.string.update_notification_channel_name).let {
-            LaunchedEffect(it) { setSubtitleResId(it) }
+            // Lifecycle is only STARTED when transitioning (e.g. predictive back).
+            // RESUMED is reached only if this screen is fully active, which is when
+            // we want the subtitle to be updated.
+            LifecycleResumeEffect(it) {
+                currentSetSubtitleResId(it)
+                onPauseOrDispose {}
+            }
         }
 
-        Screen.Update.badge = if (updateData.systemIsUpToDate) null else "new"
+        MainRoute.Update.badge = if (updateData.systemIsUpToDate) null else "new"
 
         val context = LocalContext.current
         var downloadStatus by rememberState(_downloadStatus, _downloadStatus)

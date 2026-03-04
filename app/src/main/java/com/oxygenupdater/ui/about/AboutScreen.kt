@@ -34,7 +34,9 @@ import com.oxygenupdater.ui.common.GridItem
 import com.oxygenupdater.ui.common.LazyVerticalGrid
 import com.oxygenupdater.ui.common.RichText
 import com.oxygenupdater.ui.common.modifierDefaultPaddingStartTopEnd
-import com.oxygenupdater.ui.main.ChildScreen
+import com.oxygenupdater.ui.main.ChildRoute
+import com.oxygenupdater.ui.main.FaqRoute
+import com.oxygenupdater.ui.main.GuideRoute
 import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
@@ -44,7 +46,7 @@ import com.oxygenupdater.ui.theme.PreviewWindowSize
 fun AboutScreen(
     navType: NavType,
     windowWidthSize: WindowWidthSizeClass,
-    navigateTo: (ChildScreen) -> Unit,
+    navigateTo: (ChildRoute) -> Unit,
     openEmail: () -> Unit,
 ) = Column(
     Modifier
@@ -97,17 +99,17 @@ fun AboutScreen(
 @Composable
 private fun Buttons(
     columnCount: Int,
-    navigateTo: (ChildScreen) -> Unit,
+    navigateTo: (ChildRoute) -> Unit,
     openEmail: () -> Unit,
 ) = with(LocalContext.current) {
     LazyVerticalGrid(
         columnCount = columnCount,
         items = arrayOf(
             GridItem(Symbols.Help, R.string.install_guide) {
-                navigateTo(ChildScreen.Guide)
+                navigateTo(GuideRoute(false))
             },
             GridItem(Symbols.Forum, R.string.faq_menu_item) {
-                navigateTo(ChildScreen.Faq)
+                navigateTo(FaqRoute)
             },
             GridItem(Logos.Discord, R.string.about_discord_button_text) { openLink(LinkType.Discord.value) },
             GridItem(Symbols.Mail, R.string.about_email_button_text, openEmail),

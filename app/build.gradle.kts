@@ -305,6 +305,7 @@ dependencies {
 
     implementation(libs.bundles.androidx)
     implementation(libs.bundles.androidx.core)
+    implementation(libs.bundles.androidx.navigation3)
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.bundles.androidx.room)
     implementation(libs.bundles.androidx.hilt)

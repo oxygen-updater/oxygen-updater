@@ -12,7 +12,6 @@ import android.os.Looper
 import android.provider.Settings
 import android.view.WindowInsets
 import androidx.activity.SystemBarStyle
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -42,9 +41,11 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.referentialEqualityPolicy
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.tooling.ComposeStackTraceMode
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -63,20 +64,14 @@ import androidx.compose.ui.util.fastCoerceAtLeast
 import androidx.core.os.postDelayed
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
-import androidx.navigation.NavOptions
-import androidx.navigation.NavType.Companion.BoolType
-import androidx.navigation.NavType.Companion.LongType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import androidx.navigation.navDeepLink
+import androidx.lifecycle.compose.dropUnlessResumed
+import androidx.navigation3.runtime.EntryProviderScope
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.ui.NavDisplay
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.size.Size
@@ -135,33 +130,37 @@ import com.oxygenupdater.ui.faq.FaqScreen
 import com.oxygenupdater.ui.faq.FaqViewModel
 import com.oxygenupdater.ui.install.InstallGuideScreen
 import com.oxygenupdater.ui.install.InstallGuideViewModel
-import com.oxygenupdater.ui.main.AboutRoute
 import com.oxygenupdater.ui.main.AppUpdateInfo
 import com.oxygenupdater.ui.main.ArticleRoute
-import com.oxygenupdater.ui.main.ChildScreen
-import com.oxygenupdater.ui.main.DeviceRoute
+import com.oxygenupdater.ui.main.ChildRoute
+import com.oxygenupdater.ui.main.DeepLinkAbout
+import com.oxygenupdater.ui.main.DeepLinkArticle
+import com.oxygenupdater.ui.main.DeepLinkDevice
+import com.oxygenupdater.ui.main.DeepLinkFaq
+import com.oxygenupdater.ui.main.DeepLinkGuide
+import com.oxygenupdater.ui.main.DeepLinkNewsList
+import com.oxygenupdater.ui.main.DeepLinkSettings
+import com.oxygenupdater.ui.main.DeepLinkUpdate
 import com.oxygenupdater.ui.main.DownloadedArg
 import com.oxygenupdater.ui.main.ExternalArg
 import com.oxygenupdater.ui.main.FaqRoute
 import com.oxygenupdater.ui.main.FlexibleAppUpdateProgress
 import com.oxygenupdater.ui.main.GuideRoute
-import com.oxygenupdater.ui.main.IdArg
 import com.oxygenupdater.ui.main.MainMenu
 import com.oxygenupdater.ui.main.MainNavigationBar
 import com.oxygenupdater.ui.main.MainNavigationRail
-import com.oxygenupdater.ui.main.MainScreens
+import com.oxygenupdater.ui.main.MainRoute
 import com.oxygenupdater.ui.main.MainSnackbar
 import com.oxygenupdater.ui.main.NavType
-import com.oxygenupdater.ui.main.NewsListRoute
 import com.oxygenupdater.ui.main.NoConnectionSnackbarData
 import com.oxygenupdater.ui.main.NotificationPermission
 import com.oxygenupdater.ui.main.OuScheme
-import com.oxygenupdater.ui.main.OuSchemeSuffixed
-import com.oxygenupdater.ui.main.Screen
+import com.oxygenupdater.ui.main.Route
 import com.oxygenupdater.ui.main.ServerStatusBanner
 import com.oxygenupdater.ui.main.ServerStatusDialogs
-import com.oxygenupdater.ui.main.SettingsRoute
-import com.oxygenupdater.ui.main.UpdateRoute
+import com.oxygenupdater.ui.main.directionalScalePredictivePopTransitionSpec
+import com.oxygenupdater.ui.main.scaleChildTransitionSpec
+import com.oxygenupdater.ui.main.scalePopTransitionSpec
 import com.oxygenupdater.ui.news.ArticleScreen
 import com.oxygenupdater.ui.news.ArticleViewModel
 import com.oxygenupdater.ui.news.NewsListScreen
@@ -231,7 +230,7 @@ class MainActivity : AppCompatActivity() {
     private var interstitialAd: InterstitialAd? = null
 
     @Volatile
-    private var currentRoute: String? = null
+    private var currentRoute: Route? = null
 
     private val fullScreenAdContentCallback = object : FullScreenContentCallback() {
         override fun onAdDismissedFullScreenContent() {
@@ -275,7 +274,7 @@ class MainActivity : AppCompatActivity() {
                     // Show immediately if roughly 5s have already passed
                     // between requesting an ad load, and the ad being loaded.
                     // Also, show only if we're still in the article screen.
-                    if (ms >= 4900L && currentRoute?.startsWith(ChildScreen.Article.value) == true) {
+                    if (ms >= 4900L && currentRoute?.let { it is ArticleRoute } == true) {
                         logDebug(TAG, "Showing interstitial ad now")
                         ad.show(this@MainActivity)
                     }
@@ -291,7 +290,7 @@ class MainActivity : AppCompatActivity() {
                             // Show only if we're still in the article screen.
                             // Note: AdMob won't show the interstitial if app is not
                             // in foreground, so we don't need to handle it ourselves.
-                            if (currentRoute?.startsWith(ChildScreen.Article.value) == true) {
+                            if (currentRoute?.let { it is ArticleRoute } == true) {
                                 interstitialAd?.show(this@MainActivity)
                             }
                         }
@@ -311,8 +310,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var consentInformation: ConsentInformation
 
-    private lateinit var navController: NavHostController
-    private lateinit var defaultNavOptions: NavOptions
+    private lateinit var startRoute: MainRoute
+    private lateinit var backStack: SnapshotStateList<Route>
 
     /**
      * Passthrough from [MainViewModel] to avoid sending a request again, but only after server request for
@@ -431,7 +430,7 @@ class MainActivity : AppCompatActivity() {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    private fun Content(windowSize: WindowSizeClass, startScreen: Screen) {
+    private fun Content(windowSize: WindowSizeClass) {
         LaunchedEffect(Unit) { // run only on init
             viewModel.fetchServerMessages()
         }
@@ -439,7 +438,7 @@ class MainActivity : AppCompatActivity() {
         val showDeviceBadge = viewModel.deviceOsSpec.let {
             it != null && it != DeviceOsSpec.SupportedDeviceAndOs
         } || viewModel.deviceMismatch.let { it != null && it.first }
-        Screen.Device.badge = if (showDeviceBadge) "!" else null
+        MainRoute.Device.badge = if (showDeviceBadge) "!" else null
 
         val allDevices by viewModel.allDevicesState.collectAsStateWithLifecycle()
         val enabledDevices = remember(allDevices) { allDevices?.filter { it.enabled } }
@@ -494,20 +493,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         Row {
-            var subtitleResId by rememberState(if (startScreen.useVersionName) 0 else startScreen.labelResId)
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            currentRoute = navBackStackEntry?.destination?.route
-
             val windowWidthSize = windowSize.widthSizeClass
             val navType = NavType.from(windowWidthSize)
-
-            /** Check if the current screen is ["main"][MainScreens], i.e. not a [ChildScreen] */
-            val isMainScreen = currentRoute?.let { !ChildScreen.check(it) } != false
             val isNavTypeBottomBar = navType == NavType.BottomBar
 
-            val onNavIconClick = {
-                if (isMainScreen) navController.navigateWithDefaults(AboutRoute)
-                else navController.popBackStack().let {}
+            currentRoute = backStack.lastOrNull() // declare/assign before use
+            // Main => top-level destination
+            val isMainScreen = currentRoute?.let { it is MainRoute } == true
+
+            var subtitleResId by rememberState(currentRoute, (currentRoute ?: startRoute).let {
+                if (it is MainRoute && it.useVersionName) 0 else it.labelResId
+            })
+
+            val onNavIconClick = dropUnlessResumed {
+                if (isMainScreen) backStack.navigate(MainRoute.About)
+                // Nav icon to go back is only a behaviour in child routes
+                else backStack.removeLastOrNull().let {}
             }
 
             AnimatedVisibility(!isNavTypeBottomBar) {
@@ -515,8 +516,7 @@ class MainActivity : AppCompatActivity() {
                     currentRoute = currentRoute,
                     onNavIconClick = onNavIconClick,
                     root = isMainScreen,
-                    navigateTo = { navController.navigateWithDefaults(it) },
-                    setSubtitleResId = { subtitleResId = it },
+                    navigateTo = { backStack.navigate(it) },
                 )
             }
 
@@ -525,7 +525,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             Column {
-                val isArticleScreen = currentRoute?.startsWith(ChildScreen.Article.value) == true
+                val isArticleScreen = currentRoute?.let { it is ArticleRoute } == true
                 val scrollBehavior = if (isArticleScreen) {
                     TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
                 } else TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -574,7 +574,7 @@ class MainActivity : AppCompatActivity() {
                         MainMenu(
                             serverMessages = serverMessages,
                             getPrefBool = viewModel::getPref,
-                            showMarkAllRead = subtitleResId == Screen.NewsList.labelResId,
+                            showMarkAllRead = currentRoute === MainRoute.NewsList,
                             onMarkAllReadClick = newsListViewModel::markAllRead,
                             onContributorEnrollmentChange = {
                                 contributorUtils.flushSettings(this@MainActivity, it)
@@ -601,73 +601,67 @@ class MainActivity : AppCompatActivity() {
                 // Note: if using `by`, they must be passed lazily, i.e. via a lambda.
                 // Otherwise updated values don't propagate to children that use them.
                 val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
-                NavHost(
-                    navController = navController,
-                    startDestination = startScreen.route,
+                NavDisplay(
+                    backStack = backStack,
+                    onBack = {
+                        if (backStack.shouldStopNavigateAwayFromSettings) showSettingsWarning()
+                        else backStack.removeLastOrNull() // default behaviour
+                    },
+                    popTransitionSpec = remember(calculation = ::scalePopTransitionSpec),
+                    predictivePopTransitionSpec = remember(calculation = ::directionalScalePredictivePopTransitionSpec),
+                    entryProvider = entryProvider {
+                        updateScreen(
+                            navType = navType,
+                            windowWidthSize = windowWidthSize,
+                            setSubtitleResId = { subtitleResId = it },
+                            openInstallGuide = dropUnlessResumed {
+                                backStack.navigate(GuideRoute(true))
+                            }
+                        )
+
+                        val currentLifecycleState = LocalLifecycleOwner.current.lifecycle.currentState
+                        newsListScreen(
+                            navType = navType,
+                            windowSize = windowSize,
+                            showAds = { showAds },
+                        ) {
+                            // Manage `dropUnlessResumed` ourselves, because we have an argument to pass
+                            if (currentLifecycleState.isAtLeast(Lifecycle.State.RESUMED)) {
+                                backStack.navigate(ArticleRoute(it))
+                            }
+                        }
+
+                        deviceScreen(
+                            navType = navType,
+                            windowWidthSize = windowWidthSize,
+                            allDevices = allDevices,
+                        )
+
+                        aboutScreen(
+                            navType = navType,
+                            windowWidthSize = windowWidthSize,
+                        ) {
+                            // Manage `dropUnlessResumed` ourselves, because we have an argument to pass
+                            if (currentLifecycleState.isAtLeast(Lifecycle.State.RESUMED)) {
+                                backStack.navigate(it)
+                            }
+                        }
+
+                        settingsScreen(
+                            navType = navType,
+                            cachedEnabledDevices = enabledDevices,
+                            updateMismatchStatus = viewModel::updateDeviceMismatch,
+                            openAboutScreen = dropUnlessResumed { backStack.navigate(MainRoute.About) },
+                        )
+
+                        articleScreen(showAds = { showAds }, scrollBehavior = scrollBehavior)
+                        installGuideScreen()
+                        faqScreen()
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .nestedScroll(scrollBehavior.nestedScrollConnection)
-                ) {
-                    updateScreen(
-                        navType = navType,
-                        windowWidthSize = windowWidthSize,
-                        setSubtitleResId = { subtitleResId = it },
-                        openInstallGuide = {
-                            navController.navigateWithDefaults(
-                                route = ChildScreen.Guide.value + "$DownloadedArg=true",
-                                isChildRoute = true,
-                            )
-                        }
-                    )
-
-                    newsListScreen(
-                        navType = navType,
-                        windowSize = windowSize,
-                        showAds = { showAds },
-                    )
-
-                    deviceScreen(
-                        navType = navType,
-                        windowWidthSize = windowWidthSize,
-                        allDevices = allDevices,
-                    )
-
-                    aboutScreen(
-                        navType = navType,
-                        windowWidthSize = windowWidthSize,
-                    ) {
-                        when (it) {
-                            ChildScreen.Guide -> navController.navigateWithDefaults(
-                                route = it.value + "$DownloadedArg=false",
-                                isChildRoute = true,
-                            )
-
-                            ChildScreen.Faq -> navController.navigateWithDefaults(
-                                route = it.value,
-                                isChildRoute = true,
-                            )
-                        }
-                    }
-
-                    settingsScreen(
-                        navType = navType,
-                        cachedEnabledDevices = enabledDevices,
-                        updateMismatchStatus = viewModel::updateDeviceMismatch,
-                        openAboutScreen = { navController.navigateWithDefaults(AboutRoute) },
-                    )
-
-                    articleScreen(showAds = { showAds }, scrollBehavior = scrollBehavior)
-                    installGuideScreen(setSubtitleResId = { subtitleResId = it })
-                    faqScreen(setSubtitleResId = { subtitleResId = it })
-                }
-
-                // This must be defined on the same level as NavHost, otherwise it won't work
-                BackHandler {
-                    with(navController) {
-                        if (shouldStopNavigateAwayFromSettings) showSettingsWarning()
-                        else if (!popBackStack()) finishAffinity() // nothing to back to => exit
-                    }
-                }
+                )
 
                 val showNavBar = isNavTypeBottomBar && isMainScreen
                 if (showAds) {
@@ -701,8 +695,7 @@ class MainActivity : AppCompatActivity() {
                 AnimatedVisibility(showNavBar) {
                     MainNavigationBar(
                         currentRoute = currentRoute,
-                        navigateTo = { navController.navigateWithDefaults(it) },
-                        setSubtitleResId = { subtitleResId = it },
+                        navigateTo = { backStack.navigate(it) },
                     )
                 }
             }
@@ -716,20 +709,25 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun NavController.navigateWithDefaults(
-        route: String,
-        isChildRoute: Boolean = false,
-    ) = if (shouldStopNavigateAwayFromSettings) showSettingsWarning() else navigate(
-        route = route,
-        navOptions = if (isChildRoute) buildNavOptions(null) else defaultNavOptions,
-    )
+    /**
+     * @param metadata allows overriding transition specs per route
+     */
+    private inline fun <reified T : Route> EntryProviderScope<Route>.surfacedEntry(
+        metadata: Map<String, Any> = emptyMap(),
+        noinline content: @Composable (T) -> Unit,
+    ) = entry<T>(metadata = metadata) {
+        // Each screen needs a background of its own; otherwise, when 2 screens
+        // are shown together (during predictive back), there's no clear visual
+        // separation of foreground elements.
+        Surface { content(it) }
+    }
 
-    private fun NavGraphBuilder.updateScreen(
+    private fun EntryProviderScope<Route>.updateScreen(
         navType: NavType,
         windowWidthSize: WindowWidthSizeClass,
         setSubtitleResId: (Int) -> Unit,
         openInstallGuide: () -> Unit,
-    ) = composable(UpdateRoute) {
+    ) = surfacedEntry<MainRoute.Update> {
         DisposableEffect(Unit) {
             // Run this every time this screen is visited
             settingsViewModel.updateCrashlyticsUserId()
@@ -740,7 +738,7 @@ class MainActivity : AppCompatActivity() {
             onDispose(viewModel::maybePruneWork)
         }
 
-        val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@composable
+        val state = updateViewModel.state.collectAsStateWithLifecycle(null).value ?: return@surfacedEntry
         val (workInfo, downloadStatus) = viewModel.workInfoWithStatus.collectAsStateWithLifecycle().value
 
         val outputData = workInfo?.outputData
@@ -796,16 +794,12 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun NavGraphBuilder.newsListScreen(
+    private fun EntryProviderScope<Route>.newsListScreen(
         navType: NavType,
         windowSize: WindowSizeClass,
         showAds: () -> Boolean,
-    ) = composable(
-        route = NewsListRoute,
-        deepLinks = listOf(
-            navDeepLink { uriPattern = OuSchemeSuffixed + NewsListRoute },
-        ),
-    ) {
+        openArticle: (Long) -> Unit,
+    ) = surfacedEntry<MainRoute.NewsList> {
         LaunchedEffect(Unit) {
             // Eagerly load an interstitial ad to eventually show when clicking on an item
             if (showAds()) loadInterstitialAd(InterstitialAdLoadType.LoadOnly)
@@ -835,19 +829,16 @@ class MainActivity : AppCompatActivity() {
 
                 // TODO(compose/news): handle shared element transition, see
                 //  https://developer.android.com/develop/ui/compose/animation/shared-elements
-                navController.navigateWithDefaults(
-                    route = ChildScreen.Article.value + it,
-                    isChildRoute = true,
-                )
+                openArticle(it)
             },
         )
     }
 
-    private fun NavGraphBuilder.deviceScreen(
+    private fun EntryProviderScope<Route>.deviceScreen(
         navType: NavType,
         windowWidthSize: WindowWidthSizeClass,
         allDevices: List<Device>?,
-    ) = composable(DeviceRoute) {
+    ) = surfacedEntry<MainRoute.Device> {
         DeviceScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
@@ -861,11 +852,11 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun NavGraphBuilder.aboutScreen(
+    private fun EntryProviderScope<Route>.aboutScreen(
         navType: NavType,
         windowWidthSize: WindowWidthSizeClass,
-        showChildScreen: (ChildScreen) -> Unit,
-    ) = composable(AboutRoute) {
+        showChildScreen: (ChildRoute) -> Unit,
+    ) = surfacedEntry<MainRoute.About> {
         AboutScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
@@ -874,12 +865,12 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun NavGraphBuilder.settingsScreen(
+    private fun EntryProviderScope<Route>.settingsScreen(
         navType: NavType,
         cachedEnabledDevices: List<Device>?,
         updateMismatchStatus: () -> Unit,
         openAboutScreen: () -> Unit,
-    ) = composable(SettingsRoute) {
+    ) = surfacedEntry<MainRoute.Settings> {
         PassthroughEnabledDevicesToSettingsViewModel(cachedEnabledDevices)
 
         val adFreePrice by billingViewModel.adFreePrice.collectAsStateWithLifecycle(null)
@@ -958,32 +949,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
-    private fun NavGraphBuilder.articleScreen(
+    private fun EntryProviderScope<Route>.articleScreen(
         showAds: () -> Boolean,
         scrollBehavior: TopAppBarScrollBehavior,
-    ) = composable(
-        route = ArticleRoute,
-        arguments = listOf(
-            // Required argument, must be passed
-            navArgument(IdArg) { type = LongType },
-            /**
-             * Optional argument, should be set only when opening via notification
-             *
-             * @see com.oxygenupdater.workers.DisplayDelayedNotificationWorker.getNotificationIntent
-             */
-            navArgument(ExternalArg) {
-                type = BoolType
-                defaultValue = false
-            },
-        ),
-        deepLinks = listOf(
-            navDeepLink { uriPattern = OuSchemeSuffixed + ArticleRoute },
-            navDeepLink { uriPattern = BuildConfig.SERVER_DOMAIN + "api/.*/news-content/{$IdArg}/.*" },
-            navDeepLink { uriPattern = BuildConfig.SERVER_DOMAIN + "article/{$IdArg}/" },
-        )
-    ) { entry ->
-        val id = entry.arguments?.getLong(IdArg, NotSetL) ?: return@composable
-        if (id == NotSetL) return@composable
+    ) = surfacedEntry<ArticleRoute> { // no transition override, looks worse than default
+        val id = it.id
+        if (id == NotSetL) return@surfacedEntry
 
         ArticleScreen(
             viewModel = hiltViewModel<ArticleViewModel>(this@MainActivity),
@@ -997,39 +968,20 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun NavGraphBuilder.installGuideScreen(
-        setSubtitleResId: (Int) -> Unit,
-    ) = composable(
-        route = GuideRoute,
-        arguments = listOf(
-            // Optional argument, defaults to `false`
-            navArgument(DownloadedArg) {
-                type = BoolType
-                defaultValue = false
-            },
-        ),
-        deepLinks = listOf(
-            navDeepLink { uriPattern = OuSchemeSuffixed + GuideRoute },
-        )
+    private fun EntryProviderScope<Route>.installGuideScreen() = surfacedEntry<GuideRoute>(
+        metadata = NavDisplay.transitionSpec(scaleChildTransitionSpec()),
     ) {
         InstallGuideScreen(
             viewModel = hiltViewModel<InstallGuideViewModel>(this@MainActivity),
-            downloaded = it.arguments?.getBoolean(DownloadedArg, false) == true,
-            setSubtitleResId = setSubtitleResId,
+            downloaded = it.downloaded,
         )
     }
 
-    private fun NavGraphBuilder.faqScreen(
-        setSubtitleResId: (Int) -> Unit,
-    ) = composable(
-        route = FaqRoute,
-        deepLinks = listOf(
-            navDeepLink { uriPattern = OuSchemeSuffixed + FaqRoute },
-        )
+    private fun EntryProviderScope<Route>.faqScreen() = surfacedEntry<FaqRoute>(
+        metadata = NavDisplay.transitionSpec(scaleChildTransitionSpec()),
     ) {
         FaqScreen(
             viewModel = hiltViewModel<FaqViewModel>(this@MainActivity),
-            setSubtitleResId = setSubtitleResId,
         )
     }
 
@@ -1078,16 +1030,40 @@ class MainActivity : AppCompatActivity() {
 
         lifecycle.addObserver(billingViewModel.lifecycleObserver)
 
-        // Must be before calling setContent, because it uses intent-values
-        val startScreen = handleIntentAndGetStartScreen(intent)
+        /** Do this as early as possible because it's used in [onNewIntent] */
+        var deepLink: Route? = null
+        // Action will be set if opened from a shortcut. Start route will never change once set.
+        startRoute = when (intent?.action) {
+            ActionPageUpdate -> MainRoute.Update
+            ActionPageNews -> MainRoute.NewsList
+            ActionPageDevice -> MainRoute.Device
+            else -> {
+                val isArticleDeepLink = getDeepLinkFromIntent(intent)?.let {
+                    deepLink = it
+                    it is ArticleRoute
+                } == true
+                if (isArticleDeepLink) MainRoute.NewsList else MainRoute.Update
+            }
+        }
+        backStack = mutableStateListOf(startRoute)
+        // Add deep link over the starting/base route
+        deepLink?.let { backStack.addIfNot(it) }
+
+        // Force-show download error dialog if started from an intent with error info
+        // TODO(compose/update): download error dialog logic is simplified in UpdateScreen. Verify if the dialog meant
+        //  to be shown after clicking the download failed notification (i.e. on activity start) is shown
+        //  immediately in the UI itself, in both cases: app in foreground and background/killed.
+        //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
+        downloadErrorMessage = try {
+            intent?.getStringExtra(KeyDownloadErrorMessage)
+        } catch (_: IndexOutOfBoundsException) {
+            null
+        }
 
         // https://kotlinlang.org/docs/whatsnew23.html#compose-compiler-stack-traces-for-minified-android-applications
         Composer.setDiagnosticStackTraceMode(ComposeStackTraceMode.GroupKeys)
         setContent {
             val windowSize = calculateWindowSizeClass(this)
-
-            /** Do this as early as possible because it's used in [onNewIntent] */
-            navController = rememberNavController()
 
             AppTheme(settingsViewModel.theme) {
                 EdgeToEdge()
@@ -1117,7 +1093,7 @@ class MainActivity : AppCompatActivity() {
                                 hide = { viewModel.persist(KeyIgnoreNotificationPermissionSheet, it) }
                             )
 
-                            Content(windowSize, startScreen)
+                            Content(windowSize)
                         }
                     }
                 }
@@ -1126,49 +1102,6 @@ class MainActivity : AppCompatActivity() {
 
         if (!viewModel.shouldShowOnboarding) contributorUtils.startOrStop(this)
     }
-
-    /** @return start [Screen] */
-    private fun handleIntentAndGetStartScreen(intent: Intent?): Screen {
-        checkIntentForExternalArticleUri(intent, true)
-
-        // Action will be set if opened from a shortcut
-        val startScreen = when (intent?.action) {
-            ActionPageUpdate -> Screen.Update
-            ActionPageNews -> Screen.NewsList
-            ActionPageDevice -> Screen.Device
-            /**
-             * If [currentRoute] has been set by [checkIntentForExternalArticleUri],
-             * then it's a deep link to open an article. When the user presses back,
-             * they should go to the NewsList screen as that's the natural path.
-             */
-            else -> if (currentRoute == ArticleRoute) Screen.NewsList else Screen.Update
-        }
-
-        defaultNavOptions = buildNavOptions(startScreen.route)
-
-        // Force-show download error dialog if started from an intent with error info
-        // TODO(compose/update): download error dialog logic is simplified in UpdateScreen. Verify if the dialog meant
-        //  to be shown after clicking the download failed notification (i.e. on activity start) is shown
-        //  immediately in the UI itself, in both cases: app in foreground and background/killed.
-        //  Otherwise, see KEY_DOWNLOAD_ERROR_MESSAGE in UIF.setupServerResponseObservers()
-        downloadErrorMessage = try {
-            intent?.getStringExtra(KeyDownloadErrorMessage)
-        } catch (_: IndexOutOfBoundsException) {
-            null
-        }
-
-        return startScreen
-    }
-
-    private fun buildNavOptions(popUpTo: String?) = NavOptions.Builder()
-        // Avoid multiple copies of the same destination when reselecting
-        .setLaunchSingleTop(true)
-        // Restore state on reselect
-        .setRestoreState(true).apply {
-            // Pop up to the start destination to avoid polluting back stack
-            if (popUpTo != null) setPopUpTo(popUpTo, inclusive = false, saveState = true)
-        }
-        .build()
 
     private fun setupUmp() {
         val params = ConsentRequestParameters.Builder()
@@ -1251,19 +1184,10 @@ class MainActivity : AppCompatActivity() {
         loadBannerAd(bannerAdView)
     }
 
-    /**
-     * Required because we use `android:launchMode="singleTask"` in AndroidManifest.xml
-     *
-     * @see <a href="https://developer.android.com/guide/navigation/design/deep-link#handle">AndroidX Navigation — Handling deep links</a>
-     */
+    /** Required because we use `android:launchMode="singleTask"` in AndroidManifest.xml */
     override fun onNewIntent(intent: Intent) = super.onNewIntent(intent).also {
-        checkIntentForExternalArticleUri(intent, false)
-
-        try {
-            navController.handleDeepLink(intent)
-        } catch (e: Exception) {
-            crashlytics.logWarning(TAG, "NavController can't handle deep link", e)
-        }
+        // We always add to the back stack if we receive an intent while the app was already open
+        getDeepLinkFromIntent(intent)?.let { backStack.addIfNot(it) }
     }
 
     override fun onResume() = super.onResume().also {
@@ -1281,9 +1205,59 @@ class MainActivity : AppCompatActivity() {
         viewModel.unregisterAppUpdateListener()
     }
 
-    /** @return true if we're on [Screen.Settings] and required prefs aren't saved */
-    private val NavController.shouldStopNavigateAwayFromSettings
-        get() = currentDestination?.route == SettingsRoute && !viewModel.isDeviceAndMethodSet
+    /**
+     * Navigates to the specified [route] (either a [ChildRoute] or [MainRoute], i.e.
+     * top-level destination). The following constraints are respected:
+     * - Child routes are always added over main routes, and vice versa
+     * - Exiting [MainRoute.Settings] isn't allowed until important settings are saved
+     * - Main routes replace each other unless it's the [startRoute]. We preserve that
+     *   because the user may consider it the 'homescreen' of the app, which means they
+     *   might expect to return back to that before exiting the app.
+     *
+     * **Note:** should be protected with [dropUnlessResumed] or similar.
+     */
+    private fun SnapshotStateList<Route>.navigate(route: Route) {
+        // Child routes should always be added over main routes
+        if (route is ChildRoute) addIfNot(route)
+        // Child routes can never be the Settings screen
+        else if (shouldStopNavigateAwayFromSettings) showSettingsWarning()
+        // If user goes back to the starting route, we reset the whole stack
+        else if (route === startRoute) {
+            if (firstOrNull() === startRoute) { // double-check
+                val size = size
+                if (size > 1) removeRange(1, size) // remove others
+            } else {
+                // Fallback to recreating the stack
+                clear()
+                add(route)
+            }
+        } else {
+            val lastIndex = lastIndex
+            if (lastIndex < 0) {
+                // Somehow if we don't have anything in the stack, make corrections
+                add(startRoute) // always maintain the starting route
+                addIfNot(route) // then add the new route if needed
+                return // nothing more to do
+            }
+
+            // Now it's guaranteed that IndexOutOfBoundsException won't be thrown
+            val lastRoute = this[lastIndex]
+            // Add on top of the stack if the previous route was a child route,
+            // or if the only route on the stack is what we started with.
+            if (lastRoute is ChildRoute || (lastIndex == 0 && lastRoute === startRoute)) addIfNot(route)
+            // Otherwise, top-level destinations should be switched to directly
+            else set(lastIndex, route)
+        }
+    }
+
+    /** Only add if we're not already on the same screen */
+    private inline fun SnapshotStateList<Route>.addIfNot(route: Route) {
+        if (lastOrNull() != route) add(route)
+    }
+
+    /** @return true if we're on [MainRoute.Settings] and required prefs aren't saved */
+    private inline val SnapshotStateList<Route>.shouldStopNavigateAwayFromSettings
+        get() = lastOrNull() == MainRoute.Settings && !viewModel.isDeviceAndMethodSet
 
     private fun showSettingsWarning() {
         val deviceId = viewModel.deviceId
@@ -1316,75 +1290,93 @@ class MainActivity : AppCompatActivity() {
     private var interstitialLoadCallMs = 0L
 
     /**
-     * Meant to be used in [onNewIntent] *before* [NavController.handleDeepLink],
-     * and also in [handleIntentAndGetStartScreen] for cold launches.
-     *
-     * An [intent] is considered to be an "external article URI" iff we're
-     * receiving it from outside the app entirely (web URLs), or from outside
-     * the [internal navigation][navController], e.g. from a notification.
-     *
-     * If it is so, we [loadInterstitialAd] with [InterstitialAdLoadType.LoadAndShowDelayed].
+     * Used in [onNewIntent] and also in [onCreate] for cold launches.
      *
      * @param intent the [Intent], whose [data][Intent.getData] we check
-     * @param firstLaunch should be `true` only when called from [onCreate] (via
-     *   [handleIntentAndGetStartScreen]. `false` if from [onNewIntent], because
-     *   that means the app was already running, and thus [currentRoute] would
-     *   already be set correctly to [ArticleRoute].
-     *   (We use this to cancel showing the interstitial in [interstitialAdLoadCallback]).
+     *
+     * @return the resolved [ChildRoute] for the deep link. Meant to be added to [backStack].
      */
-    private fun checkIntentForExternalArticleUri(
-        intent: Intent?,
-        firstLaunch: Boolean,
-    ) {
-        val uri = intent?.data?.normalizeScheme() ?: return
-        val host = uri.host ?: return
+    private fun getDeepLinkFromIntent(intent: Intent?): Route? {
+        val uri = intent?.data?.normalizeScheme() ?: return null
+        val host = uri.host
+        if (host.isNullOrEmpty()) return null
 
-        val isExternalArticleUri = when (uri.scheme ?: return) {
+        return when (uri.scheme ?: return null) {
             // Compare host without the `https://` at the beginning.
             // If it's somehow not our domain, return early.
-            "http", "https" -> if ("$host/" != BuildConfig.SERVER_DOMAIN.substring(8)) false else {
+            "http", "https" -> {
+                if ("$host/" != BuildConfig.SERVER_DOMAIN.substring(8)) return null
+
                 val segments = uri.pathSegments
-                if (segments.isNullOrEmpty()) false
+                if (segments.isNullOrEmpty()) return null
+
                 // Compare path segments:
                 // - First one must be either "api" or "article"
                 // - if "api", the consecutive segments must be "news-content" followed by a number
                 // - if "article", the next segment must be a number
-                else {
-                    val type = segments.getOrNull(0)
-                    if (type.isNullOrEmpty()) false else when (type) {
-                        // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
-                        "api" -> {
-                            if (segments.getOrNull(2) != "news-content") false
-                            else segments.getOrNull(3)?.toLongOrNull() != null
-                        }
-                        // https://oxygenupdater.com/article/<id>/
-                        "article" -> segments.getOrNull(1)?.toLongOrNull() != null
-                        else -> false
+                val type = segments.getOrNull(0)
+                if (type.isNullOrEmpty()) return null
+
+                when (type) {
+                    // https://oxygenupdater.com/api/<version>/news-content/<id>/<lang>/<theme>
+                    "api" -> {
+                        // Other API paths aren't deep links into the app
+                        if (segments.getOrNull(2) != "news-content") return null
+
+                        val id = segments.getOrNull(3)?.toLongOrNull() ?: return null
+                        // Web article links are always 'external'
+                        if (id <= 0L) null else ArticleRoute(id, true)
                     }
+                    // https://oxygenupdater.com/article/<id>/
+                    DeepLinkArticle -> {
+                        val id = segments.getOrNull(1)?.toLongOrNull() ?: return null
+                        // Web article links are always 'external'
+                        if (id <= 0L) null else ArticleRoute(id, true)
+                    }
+
+                    // No other domain URLs are deep linked into the app
+                    else -> null
                 }
             }
 
-            OuScheme -> if ("$host/" != ChildScreen.Article.value
-                // Can't use `uri.path` as it's prefixed by "/"
-                || uri.pathSegments.getOrNull(0)?.toLongOrNull() == null
-            ) false else uri.getBooleanQueryParameter(ExternalArg, false)
-            // ^ It's marked as "external" only if intent is from a notification
+            OuScheme -> when (host) {
+                DeepLinkArticle -> {
+                    // Can't use `uri.path` as it's prefixed by "/"
+                    val segments = uri.pathSegments
+                    if (segments.isNullOrEmpty()) return null
 
-            else -> false
+                    val id = segments.getOrNull(0)?.toLongOrNull() ?: return null
+                    if (id <= 0L) null else {
+                        // It's marked as "external" only if intent is from a notification
+                        val external = uri.getBooleanQueryParameter(ExternalArg, false)
+                        if (external && billingViewModel.shouldShowAds.value) {
+                            // If an article deep link came from outside the app, we
+                            // need to delay showing the interstitial ad for better UX.
+                            loadInterstitialAd(InterstitialAdLoadType.LoadAndShowDelayed)
+                        }
+
+                        ArticleRoute(id, external)
+                    }
+                }
+
+                DeepLinkGuide -> GuideRoute(uri.getBooleanQueryParameter(DownloadedArg, false))
+                DeepLinkFaq -> FaqRoute
+
+                DeepLinkUpdate -> MainRoute.Update
+                DeepLinkNewsList -> MainRoute.NewsList
+                DeepLinkDevice -> MainRoute.Device
+                DeepLinkAbout -> MainRoute.About
+                DeepLinkSettings -> MainRoute.Settings
+
+                // No other OuScheme URLs are deep linked
+                else -> null
+            }
+
+            else -> null
+        }.also {
+            if (it == null) logDebug(TAG, "Intent data: $uri")
+            else logDebug(TAG, "Handled deep link for '$uri': $it")
         }
-
-        if (!isExternalArticleUri) return logDebug(TAG, "Intent data: $uri")
-        logDebug(TAG, "External article URI detected: $uri")
-
-        if (billingViewModel.shouldShowAds.value) {
-            // If an article deep link came from outside the app, we
-            // need to delay showing the interstitial ad for better UX.
-            loadInterstitialAd(InterstitialAdLoadType.LoadAndShowDelayed)
-        }
-
-        // We need to manually set this because it is always set to "update"
-        // when receiving this URI for the first time after launching.
-        if (firstLaunch) currentRoute = ArticleRoute
     }
 
     @Immutable

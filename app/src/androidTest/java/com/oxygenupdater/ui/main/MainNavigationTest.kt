@@ -26,12 +26,12 @@ import org.junit.Test
 
 class MainNavigationTest : ComposeBaseTest() {
 
-    private val itemCount = MainScreens.size
-    private var currentRoute by mutableStateOf(UpdateRoute)
+    private val itemCount = MainRoutes.size
+    private var currentRoute by mutableStateOf<MainRoute>(MainRoute.Update)
 
     @Before
     fun setup() {
-        currentRoute = UpdateRoute
+        currentRoute = MainRoute.Update
     }
 
     @Test
@@ -40,7 +40,6 @@ class MainNavigationTest : ComposeBaseTest() {
             MainNavigationBar(
                 currentRoute = currentRoute,
                 navigateTo = { currentRoute = it },
-                setSubtitleResId = { trackCallback("setSubtitleResId: $it") },
             )
         }
 
@@ -62,7 +61,6 @@ class MainNavigationTest : ComposeBaseTest() {
                 root = false,
                 onNavIconClick = { trackCallback("onNavIconClick") },
                 navigateTo = { currentRoute = it },
-                setSubtitleResId = { trackCallback("setSubtitleResId: $it") },
             )
         }
 
@@ -86,21 +84,16 @@ class MainNavigationTest : ComposeBaseTest() {
     }
 
     private fun SemanticsNodeInteractionCollection.validateItems() = repeat(itemCount) { index ->
-        val screen = MainScreens[index]
+        val route = MainRoutes[index]
         val child = get(index)
-        child.assertHasTextExactly(screen.labelResId)
+        child.assertHasTextExactly(route.labelResId)
 
-        val route = screen.route
         if (route == currentRoute) child.assertIsSelected() else child.assertIsNotSelected()
 
         child.assertHasClickAction(); child.performClick(); advanceFrame() // should change currentRoute
         assert(route == currentRoute) {
             "Current route did not change. Expected: $route, actual: $currentRoute."
         }
-
-        if (screen != Screen.Update) ensureCallbackInvokedExactlyOnce(
-            "setSubtitleResId: ${if (screen.useVersionName) 0 else screen.labelResId}",
-        ) else ensureNoCallbacksWereInvoked()
     }
 
     private fun validateLabelMaxLines() = rule.onAllNodesWithTag(

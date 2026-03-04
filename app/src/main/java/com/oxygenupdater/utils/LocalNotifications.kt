@@ -19,7 +19,7 @@ import com.oxygenupdater.R
 import com.oxygenupdater.activities.MainActivity
 import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.extensions.tryNotify
-import com.oxygenupdater.ui.main.ChildScreen
+import com.oxygenupdater.ui.main.DeepLinkGuide
 import com.oxygenupdater.ui.main.DownloadedArg
 import com.oxygenupdater.ui.main.OuSchemeSuffixed
 import com.oxygenupdater.ui.update.KeyDownloadErrorMessage
@@ -79,7 +79,7 @@ object LocalNotifications {
             0,
             Intent(
                 Intent.ACTION_VIEW,
-                (OuSchemeSuffixed + ChildScreen.Guide.value + "$DownloadedArg=true").toUri(),
+                "$OuSchemeSuffixed$DeepLinkGuide?$DownloadedArg=true".toUri(),
                 context,
                 MainActivity::class.java
             ),

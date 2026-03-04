@@ -116,8 +116,8 @@ import com.oxygenupdater.ui.common.scrollbar.Scrollbar
 import com.oxygenupdater.ui.common.scrollbar.rememberDraggableScroller
 import com.oxygenupdater.ui.common.scrollbar.scrollbarState
 import com.oxygenupdater.ui.common.withPlaceholder
+import com.oxygenupdater.ui.main.MainRoute
 import com.oxygenupdater.ui.main.NavType
-import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 import com.oxygenupdater.ui.theme.PreviewWindowSize
@@ -152,7 +152,7 @@ fun NewsListScreen(
     }
 
     val unreadCount by remember { unreadCountState }
-    Screen.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
+    MainRoute.NewsList.badge = unreadCount.let { if (it == 0) null else it.toString() }
 
     Column {
         Banner(

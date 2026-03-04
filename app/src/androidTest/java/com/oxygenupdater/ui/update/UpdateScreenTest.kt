@@ -16,8 +16,8 @@ import com.oxygenupdater.ui.common.ErrorStateTestTag
 import com.oxygenupdater.ui.common.ErrorState_TitleTestTag
 import com.oxygenupdater.ui.common.IconTextButtonTestTag
 import com.oxygenupdater.ui.common.RichText_ContainerTestTag
+import com.oxygenupdater.ui.main.MainRoute
 import com.oxygenupdater.ui.main.NavType
-import com.oxygenupdater.ui.main.Screen
 import com.oxygenupdater.ui.theme.PreviewWindowSize
 import org.junit.Test
 
@@ -142,7 +142,7 @@ class UpdateScreenTest : UsesSharedPreferencesTest() {
         ensureCallbackInvokedExactlyOnce("setSubtitleResId: $subtitleResId")
     }
 
-    private fun assertBadge(value: String?) = assert(Screen.Update.badge == value) {
-        "Badge did not match. Expected: $value, actual: ${Screen.Update.badge}."
+    private fun assertBadge(value: String?) = assert(MainRoute.Update.badge == value) {
+        "Badge did not match. Expected: $value, actual: ${MainRoute.Update.badge}."
     }
 }

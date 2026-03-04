@@ -34,9 +34,6 @@ accompanist = "0.37.3" # keep in sync with Compose version
 # https://developer.android.com/jetpack/androidx/releases/activity
 activity-compose = "1.13.0"
 
-# https://developer.android.com/jetpack/androidx/releases/navigation
-navigation-compose = "2.9.7"
-
 # https://github.com/eygraber/compose-placeholder/releases
 eygraber-placeholder-compose = "1.0.12"
 
@@ -58,6 +55,9 @@ browser = "1.10.0"
 # https://developer.android.com/jetpack/androidx/releases/core
 core = "1.18.0"
 core-splashscreen = "1.2.0"
+
+# https://developer.android.com/jetpack/androidx/releases/navigation3
+navigation3 = "1.0.1"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
 desugar = "2.1.5"
@@ -131,6 +131,9 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "core-splashscreen" }
 
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+
 androidx-lifecycle-common-java8 = { module = "androidx.lifecycle:lifecycle-common-java8", version.ref = "lifecycle" }
 androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
@@ -158,7 +161,6 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
@@ -218,6 +220,11 @@ androidx-core = [
     "androidx-core-splashscreen",
 ]
 
+androidx-navigation3 = [
+    "androidx-navigation3-runtime",
+    "androidx-navigation3-ui",
+]
+
 androidx-lifecycle = [
     "androidx-lifecycle-common-java8",
     "androidx-lifecycle-livedata",
@@ -251,7 +258,6 @@ androidx-compose = [
     "androidx-compose-ui-text-google-fonts",
     "androidx-compose-ui-tooling-preview",
     "androidx-activity-compose",
-    "androidx-navigation-compose",
     "androidx-lifecycle-runtime-compose",
     "accompanist-permissions",
 ]

@@ -34,9 +34,9 @@ import com.oxygenupdater.extensions.setBigTextStyle
 import com.oxygenupdater.extensions.tryNotify
 import com.oxygenupdater.internal.NotSetL
 import com.oxygenupdater.ui.currentLocale
-import com.oxygenupdater.ui.main.ChildScreen
+import com.oxygenupdater.ui.main.DeepLinkArticle
+import com.oxygenupdater.ui.main.DeepLinkNewsList
 import com.oxygenupdater.ui.main.ExternalArg
-import com.oxygenupdater.ui.main.NewsListRoute
 import com.oxygenupdater.ui.main.OuSchemeSuffixed
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.DeviceNotifChannelId
 import com.oxygenupdater.utils.NotificationChannels.PushNotificationsGroup.GeneralNotifChannelId
@@ -287,8 +287,8 @@ class DisplayDelayedNotificationWorker @AssistedInject constructor(
                 // that interstitial ad is shown after a delay for better UX.
                 // Otherwise, open NewsListScreen.
                 if (id != NotSetL) {
-                    (OuSchemeSuffixed + ChildScreen.Article.value + "$id?${ExternalArg}=true").toUri()
-                } else (OuSchemeSuffixed + NewsListRoute).toUri(),
+                    "$OuSchemeSuffixed$DeepLinkArticle/$id?${ExternalArg}=true".toUri()
+                } else (OuSchemeSuffixed + DeepLinkNewsList).toUri(),
                 context,
                 MainActivity::class.java
             )

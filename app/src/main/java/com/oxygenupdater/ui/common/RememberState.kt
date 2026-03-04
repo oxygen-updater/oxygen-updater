@@ -29,6 +29,9 @@ inline fun <T> rememberState(value: T) = remember { mutableStateOf(value) }
 inline fun rememberState(value: Int) = remember { mutableIntStateOf(value) }
 
 @Composable
+inline fun rememberState(key1: Any?, value: Int) = remember(key1) { mutableIntStateOf(value) }
+
+@Composable
 inline fun rememberState(key1: Any?, value: Long) = remember(key1) { mutableLongStateOf(value) }
 
 @Composable

@@ -13,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -46,10 +45,7 @@ import com.oxygenupdater.ui.theme.PreviewThemes
 fun InstallGuideScreen(
     viewModel: InstallGuideViewModel,
     downloaded: Boolean,
-    setSubtitleResId: (Int) -> Unit,
 ) {
-    LaunchedEffect(Unit) { setSubtitleResId(R.string.install_guide) }
-
     val state by viewModel.state.collectAsStateWithLifecycle()
     InstallGuideScreen(
         state = state,

@@ -11,7 +11,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.oxygenupdater.R
 import com.oxygenupdater.icons.KeyboardArrowDown
 import com.oxygenupdater.icons.KeyboardArrowUp
 import com.oxygenupdater.icons.Symbols
@@ -39,12 +37,7 @@ import com.oxygenupdater.ui.theme.PreviewAppTheme
 import com.oxygenupdater.ui.theme.PreviewThemes
 
 @Composable
-fun FaqScreen(
-    viewModel: FaqViewModel,
-    setSubtitleResId: (Int) -> Unit,
-) {
-    LaunchedEffect(Unit) { setSubtitleResId(R.string.faq) }
-
+fun FaqScreen(viewModel: FaqViewModel) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     FaqScreen(state = state, onRefresh = viewModel::refresh)
 }

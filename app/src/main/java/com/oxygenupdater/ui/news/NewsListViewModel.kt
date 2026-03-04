@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.oxygenupdater.models.Article
 import com.oxygenupdater.repositories.ServerRepository
 import com.oxygenupdater.ui.RefreshAwareState
-import com.oxygenupdater.ui.main.Screen
+import com.oxygenupdater.ui.main.MainRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,7 +62,7 @@ class NewsListViewModel @Inject constructor(
         flow.value.forEach { it.readState = true }
 
         withContext(Dispatchers.Main) {
-            Screen.NewsList.badge = null
+            MainRoute.NewsList.badge = null
             unreadCount.intValue = 0
         }
     }
@@ -76,7 +76,7 @@ class NewsListViewModel @Inject constructor(
 
         // Update unread badge and reduce count (but coerce to at least 0, just in case there's an inconsistency)
         if (unreadCount.intValue > 0) unreadCount.intValue--.also {
-            Screen.NewsList.badge = if (it == 0) null else "$it"
+            MainRoute.NewsList.badge = if (it == 0) null else "$it"
         }
 
         // Mark read on server
@@ -93,7 +93,7 @@ class NewsListViewModel @Inject constructor(
     private suspend fun updateUnreadCountAndBadge() = withContext(Dispatchers.Main) {
         @Suppress("DEPRECATION")
         unreadCount.intValue = flow.value.count { !it.read }.also {
-            Screen.NewsList.badge = if (it == 0) null else "$it"
+            MainRoute.NewsList.badge = if (it == 0) null else "$it"
         }
     }
 
