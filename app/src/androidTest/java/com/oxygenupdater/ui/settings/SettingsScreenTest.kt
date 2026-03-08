@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.SemanticsNodeInteractionCollection
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertHasClickAction
+import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsOff
@@ -24,6 +25,7 @@ import com.oxygenupdater.UsesSharedPreferencesTest
 import com.oxygenupdater.assertAndPerformClick
 import com.oxygenupdater.assertHasScrollAction
 import com.oxygenupdater.enums.PurchaseType
+import com.oxygenupdater.extensions.formatFileSize
 import com.oxygenupdater.get
 import com.oxygenupdater.internal.settings.KeyShareAnalyticsAndLogs
 import com.oxygenupdater.repositories.BillingRepository.SkuState
@@ -100,59 +102,65 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
     }
 
     private fun supportSection() {
-        children[0].assertHasTextExactly(R.string.preference_header_support)
-        children[2].assertHasTextExactly(R.string.label_buy_ad_free)
-        children[3].run {
-            // First we test for the initial null value
-            assertHasTextExactly(R.string.settings_buy_ad_free_label)
-            ensureNoCallbacksWereInvoked()
+        // This section has a surfaceContainer bg, so it'll be wrapped in `RectangleShape`.
+        children[0].onChildren().run {
+            this[0].assertHasTextExactly(R.string.preference_header_support)
 
-            // Then for other non null values
-            adFreeState = SkuState.Purchased
-            assertHasTextExactly(R.string.settings_buy_ad_free_label)
-            ensureNoCallbacksWereInvoked()
+            // Remove ads section would be disabled on tests
+            // Compose M3 wraps disabled elements in a `RectangleShape`.
+            this[1].assertHasNoClickAction().onChildren().run {
+                // First we test for the initial null value
+                this[1].assertHasTextExactly(R.string.label_buy_ad_free)
+                this[2].assertHasTextExactly(R.string.settings_buy_ad_free_label)
+                ensureNoCallbacksWereInvoked()
 
-            adFreeState = SkuState.Unknown
-            assertHasTextExactly(R.string.settings_buy_button_not_possible)
-            ensureCallbackInvokedExactlyOnce("logBillingError")
+                // Then for other non null values
+                adFreeState = SkuState.Purchased
+                this[2].assertHasTextExactly(R.string.settings_buy_ad_free_label)
+                ensureNoCallbacksWereInvoked()
 
-            adFreeState = SkuState.PurchaseInitiated
-            assertHasTextExactly(R.string.summary_please_wait)
-            ensureNoCallbacksWereInvoked()
+                adFreeState = SkuState.Unknown
+                this[2].assertHasTextExactly(R.string.settings_buy_button_not_possible)
+                ensureCallbackInvokedExactlyOnce("logBillingError")
 
-            adFreeState = SkuState.Pending
-            assertHasTextExactly(R.string.processing)
-            ensureCallbackInvokedExactlyOnce("markPending")
+                adFreeState = SkuState.PurchaseInitiated
+                this[2].assertHasTextExactly(R.string.summary_please_wait)
+                ensureNoCallbacksWereInvoked()
 
-            adFreeState = SkuState.PurchasedAndAcknowledged
-            assertHasTextExactly(R.string.settings_buy_button_bought)
-            ensureNoCallbacksWereInvoked()
-        }
+                adFreeState = SkuState.Pending
+                this[2].assertHasTextExactly(R.string.processing)
+                ensureCallbackInvokedExactlyOnce("markPending")
 
-        /**
-         * Finally, for the [SkuState.NotPurchased] state. As this is the only
-         * "enabled" state (with non-null onClick), this item is grouped into
-         * being the first child. This is in contrast to how it was above: the
-         * first child was an icon, second & third were title & subtitle resp.
-         * As such, the total number of children will now be 17, not 19.
-         */
-        adFreeState = SkuState.NotPurchased
-        children[1].run {
-            assertHasTextExactly(
-                R.string.label_buy_ad_free,
-                activity.getString(R.string.settings_buy_button_buy, "price"),
-            )
-            assertAndPerformClick()
-            ensureCallbackInvokedExactlyOnce("makePurchase: ${PurchaseType.AD_FREE.sku}")
+                adFreeState = SkuState.PurchasedAndAcknowledged
+                this[2].assertHasTextExactly(R.string.settings_buy_button_bought)
+                ensureNoCallbacksWereInvoked()
+            }
+
+            /**
+             * Finally, for the [SkuState.NotPurchased] state. As this is the only
+             * "enabled" state (with non-null onClick), this item is grouped into
+             * being the first child. This is in contrast to how it was above: the
+             * first child was an icon, second & third were title & subtitle resp.
+             * As such, the total number of children will now be 17, not 19.
+             */
+            adFreeState = SkuState.NotPurchased
+            this[1].run {
+                assertHasTextExactly(
+                    R.string.label_buy_ad_free,
+                    activity.getString(R.string.settings_buy_button_buy, "price"),
+                )
+                assertAndPerformClick()
+                ensureCallbackInvokedExactlyOnce("makePurchase: ${PurchaseType.AD_FREE.sku}")
+            }
         }
     }
 
     private fun deviceSection() {
         // Header
-        children[2].assertHasTextExactly(R.string.preference_header_device)
+        children[1].assertHasTextExactly(R.string.preference_header_device)
 
         // DeviceChooser
-        children[3].run {
+        children[2].run {
             assertHasTextExactly(R.string.settings_device, androidx.compose.ui.R.string.not_selected)
 
             assertAndPerformClick()
@@ -163,7 +171,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         }
 
         // MethodChooser
-        children[4].run {
+        children[3].run {
             assertHasTextExactly(R.string.settings_update_method, androidx.compose.ui.R.string.not_selected)
 
             assertAndPerformClick()
@@ -174,7 +182,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         }
 
         // Notifications
-        children[5].run {
+        children[4].run {
             assertHasTextExactly(R.string.preference_header_notifications, R.string.summary_on)
             assertHasClickAction()
             // Don't performClick because that'll leave the app, which will fail subsequent tests
@@ -182,10 +190,10 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
     }
 
     private fun uiSection() {
-        children[6].assertHasTextExactly(R.string.preference_header_ui)
+        children[5].assertHasTextExactly(R.string.preference_header_ui)
 
         // Theme
-        children[7].run {
+        children[6].run {
             assertHasTextExactly(R.string.label_theme, Theme.System.titleResId)
 
             assertAndPerformClick()
@@ -196,7 +204,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         }
 
         // Language
-        children[8].run {
+        children[7].run {
             assertHasTextExactly(
                 R.string.label_language,
                 with(currentLocale) {
@@ -221,10 +229,10 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
     }
 
     private fun advancedSection() {
-        children[9].assertHasTextExactly(R.string.preference_header_advanced)
+        children[8].assertHasTextExactly(R.string.preference_header_advanced)
 
         // Advanced mode switch
-        children[10].run {
+        children[9].run {
             assertHasTextExactly(R.string.settings_advanced_mode, R.string.summary_off)
             val switch = onChild().assertIsOff()
 
@@ -238,7 +246,7 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         }
 
         // Analytics switch
-        children[11].run {
+        children[10].run {
             assertHasTextExactly(R.string.settings_upload_logs, R.string.summary_on)
             val switch = onChild().assertIsOn()
 
@@ -250,10 +258,18 @@ class SettingsScreenTest : UsesSharedPreferencesTest() {
         }
 
         // GDPR ad consent
-        children[12].run {
+        children[11].run {
             assertHasTextExactly(R.string.settings_ad_privacy, R.string.settings_ad_privacy_subtitle)
             assertHasClickAction()
             // Don't performClick because that'll leave the app, which will fail subsequent tests
+        }
+
+        // Clear cache (flaky test, depends on cache size)
+        // This is disabled if disk cache size is 0, which should be the case for tests.
+        // Compose M3 wraps disabled elements in a `RectangleShape`.
+        children[12].assertHasNoClickAction().onChildren().run {
+            this[1].assertHasTextExactly(R.string.settings_clear_cache)
+            this[2].assertHasTextExactly(activity.formatFileSize(0))
         }
     }
 
