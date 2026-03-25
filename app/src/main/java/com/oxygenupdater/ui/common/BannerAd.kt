@@ -51,16 +51,32 @@ fun ColumnScope.BannerAd(
     modifier = modifier
 )
 
+/**
+ * @param collapsibleBanner Default `false`. Controls whether we use Google's new collapsible
+ *        banner ad format: https://developers.google.com/admob/android/banner/collapsible.
+ *        **Note**: while collapsible banner ads have higher eCPMs, they have terrible UX,
+ *        and so it shouldn't be enabled again unless Google improves on this front. Firstly,
+ *        the button to collapse it is sometimes either very small, or in some cases it's not
+ *        there at all (we've received screenshots over email). It also has a bug that has
+ *        existed at least since https://github.com/oxygen-updater/oxygen-updater/commit/79a7eb9f0cc4969bfad4234f8681c6fd1c922425.
+ *        Back then (Aug 16, 2024), this format was marked 'experimental', but this bug still
+ *        exists even though it's not experimental anymore. By memory, the culprit ads usually
+ *        were TikTok or Temu that were full-height without collapsible buttons. Not sure.
+ *        This entire doc-comment is kept so that the next time we feel tempted to turn it on
+ *        again, we're reminded of everything wrong with the format. (especially user experience!)
+ */
 inline fun buildAdRequest(
-    additionalConfig: AdRequest.Builder.() -> Unit = {},
-) = AdRequest.Builder().apply { additionalConfig() }.build()
-
-fun loadBannerAd(adView: AdView?) = adView?.loadAd(buildAdRequest {
+    collapsibleBanner: Boolean = false,
+) = AdRequest.Builder().apply {
     // https://developers.google.com/admob/android/banner/collapsible
-    addNetworkExtrasBundle(AdMobAdapter::class.java, Bundle().apply {
+    if (collapsibleBanner) addNetworkExtrasBundle(AdMobAdapter::class.java, Bundle().apply {
         putString("collapsible", "bottom")
     })
-})?.also { logDebug(TAG, "loading") } ?: logDebug(TAG, "adView = null")
+}.build()
+
+fun loadBannerAd(adView: AdView?) = adView?.loadAd(buildAdRequest())?.also {
+    logDebug(TAG, "loading")
+} ?: logDebug(TAG, "adView = null")
 
 fun adLoadListener(callback: (loaded: Boolean) -> Unit) = object : AdListener() {
     override fun onAdFailedToLoad(error: LoadAdError) {
