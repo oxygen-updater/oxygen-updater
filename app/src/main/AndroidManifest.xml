@@ -30,6 +30,7 @@
 		android:name=".OxygenUpdater"
 		android:allowBackup="false"
 		android:dataExtractionRules="@xml/data_extraction_rules"
+		android:networkSecurityConfig="${networkXml}"
 		android:enableOnBackInvokedCallback="true"
 		android:fullBackupContent="false"
 		android:icon="@mipmap/ic_launcher"

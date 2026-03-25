@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+	<!--
+	This file should only be used for local builds. Note: when running on API < 24, `usesCleartextTraffic`
+	still needs to be set to true in AndroidManifest.xml.
+	See https://developer.android.com/about/versions/17/behavior-changes-all#uses-clear-traffic-deprecation.
+	-->
+	<domain-config cleartextTrafficPermitted="true">
+		<domain includeSubdomains="false">192.168.1.3</domain>  <!-- keep in sync with build.gradle.kts -->
+		<domain includeSubdomains="false">10.2.0.2</domain>     <!-- for emulators if VPN is on -->
+	</domain-config>
+</network-security-config>

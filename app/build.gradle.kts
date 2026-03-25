@@ -81,7 +81,8 @@ fun ApplicationBuildType.setupBuildConfig(
         apiBase = "api/v2.10/"
         notifPrefix = ""
     } else if (localOverride) {
-        domain = "http://192.168.1.4:81/"
+        domain = "http://192.168.1.3:81/"
+        // domain = "http://10.2.0.2:81/" // for emulators if VPN is on
         apiBase = "v2.10/"
         notifPrefix = "local_"
     } else {
@@ -91,10 +92,11 @@ fun ApplicationBuildType.setupBuildConfig(
     }
 
     addManifestPlaceholders(
-        mapOf(
-            "hostName" to URI(domain).host,
-            "shortcutXml" to "@xml/shortcuts_${buildName.lowercase()}",
-        )
+        buildMap {
+            put("hostName", URI(domain).host)
+            put("shortcutXml", "@xml/shortcuts_${buildName.lowercase()}")
+            put("networkXml", "@xml/network_" + if (localOverride) "local" else "default")
+        }
     )
 
     buildConfigField("String", "SERVER_DOMAIN", "\"$domain\"")
