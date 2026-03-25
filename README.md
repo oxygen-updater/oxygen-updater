@@ -15,6 +15,10 @@ These are the two places where we publish new versions; all others should not be
 
 Note: installing via GitHub still supports auto-updates via the Play Store. Both releases are completely identical (except for format differences: AAB vs APK), since they're built on the exact same codebase & commit. Usually, we release on the Play Store first (100% rollout target), and a GitHub release follows shortly after.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=oxygen-updater/oxygen-updater&type=date&legend=top-left)](https://www.star-history.com/#oxygen-updater/oxygen-updater&type=date&legend=top-left)
+
 ## Development
 
 | **Recommended**                    | **Alternatives**                                                                                    | Note for alternatives                                                                                                                          |
