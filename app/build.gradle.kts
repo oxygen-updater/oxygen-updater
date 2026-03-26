@@ -139,8 +139,8 @@ android {
         minSdk = 23
         targetSdk = 36
 
-        versionCode = 131
-        versionName = "6.8.0"
+        versionCode = 132
+        versionName = "6.8.1"
 
         addManifestPlaceholders(mapOf("advertisingAppId" to "ca-app-pub-1816831161514116~4275332954"))
         buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")
