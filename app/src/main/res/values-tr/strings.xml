@@ -109,11 +109,11 @@
 	<string name="theme_system">Sistem rengi</string>
 	<string name="theme_auto">Otomatik</string>
 
-	<string name="theme_light_subtitle">Beyaz bir tema.</string>
-	<string name="theme_dark_subtitle">Koyu tema, pili daha da az kullanmak için işinize yarayabilir. Özellikle AMOLED ekranlarda.</string>
-	<string name="theme_system_subtitle">Sisteminizin karanlık modu. Telefonunuzun ayarlarındaki tema rengi.</string>
+	<string name="theme_light_subtitle">Açık renkli arka plan, koyu renkli metin</string>
+	<string name="theme_dark_subtitle">AMOLED ekranlarda pil tasarrufu sağlayabilir</string>
+	<string name="theme_system_subtitle">İşletim sisteminin karanlık mod ayarını kullanın. Cihaza göre değişiklik gösterebilir.</string>
 	<string name="theme_auto_subtitle">Saate göre koyu ve açık tema arasında geçiş yapar.</string>
-	<string name="theme_additional_note">Not: Eğer "otomatik" geçiş seçiliyse ve pil tasarrufu açıksa, otomatik olarak koyu temaya geçilir.</string>
+	<string name="theme_additional_note">Tüm temalar Material 3/You uyumludur. Not: Eğer "otomatik" geçiş seçiliyse ve pil tasarrufu açıksa, otomatik olarak koyu temaya geçilir.</string>
 
 	<string name="settings">Ayarlar</string>
 	<string name="settings_buy_button_buy">Satın al (%1$s)</string>

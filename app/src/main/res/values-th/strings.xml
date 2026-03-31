@@ -110,11 +110,11 @@
 	<string name="theme_system">ระบบ</string>
 	<string name="theme_auto">อัตโนมัติ</string>
 
-	<string name="theme_light_subtitle">ธีมที่ใช้พื้นหลังเป็นสีขาวและสีหลักเป็นสีแดงแบบ OnePlus</string>
-	<string name="theme_dark_subtitle">ธีมที่ใช้พื้นหลังเป็นสีดำและสีหลักเป็นสีแดงแบบ OnePlus ธีมนี้จะช่วยประหยัดพลังงานสำหรับจอ OLED</string>
-	<string name="theme_system_subtitle">ธีมจะเปลี่ยรให้เข้ากับธีมระบบใช้อยู่ขณะนี้</string>
+	<string name="theme_light_subtitle">พื้นหลังสีอ่อน ตัวอักษรสีเข้ม</string>
+	<string name="theme_dark_subtitle">อาจช่วยประหยัดแบตเตอรี่บนหน้าจอ AMOLED</string>
+	<string name="theme_system_subtitle">ปฏิบัติตามการตั้งค่าโหมดมืดของระบบปฏิบัติการ (OS) ซึ่งจะแตกต่างกันไปตามอุปกรณ์</string>
 	<string name="theme_auto_subtitle">เปลี่ยนธีมระหว่างสว่างและมืดโดยขึ้นอยู่กับเวลา ช่วยถนอมสายตาในเวลากลางคืน</string>
-	<string name="theme_additional_note">หมายเหตุ: ระหว่างที่เปิดใช้โหมดอัตโนมัติและประหยัดพลังงาน ธีมจะถูกเปลี่ยนเป็นธีมมืดโดยอัตโนมัติ</string>
+	<string name="theme_additional_note">ธีมทั้งหมดรองรับ Material 3/You หมายเหตุ: ระหว่างที่เปิดใช้โหมดอัตโนมัติและประหยัดพลังงาน ธีมจะถูกเปลี่ยนเป็นธีมมืดโดยอัตโนมัติ</string>
 
 	<string name="settings">ตั้งค่า</string>
 	<string name="settings_buy_button_buy">ซื้อ (%1$s)</string>

@@ -105,11 +105,11 @@
 	<string name="theme_auto">אוטומטי</string>
 
 
-	<string name="theme_light_subtitle">עיצוב עם רקע לבן ואדום של OnePlus כצבע ראשי</string>
-	<string name="theme_dark_subtitle">צבע ראשי אדום של OnePlus ביחד עם רקע כמעט שחור. מומלץ להשתמש בעיצוב זה כדי לחסור בחיי סוללה, במיוחד במכשירים עם פאנל AMOLED.</string>
-	<string name="theme_system_subtitle">השתמש בעיצוב הנוכחי של המערכת. (ניתן להגדיר זאת בהגדרות תצוגה) משתנה לפי ההגדרות של המכשיר</string>
+	<string name="theme_light_subtitle">רקע בהיר, טקסט כהה</string>
+	<string name="theme_dark_subtitle">יכול לחסוך בסוללה במסכי AMOLED</string>
+	<string name="theme_system_subtitle">פעל לפי הגדרת מצב כהה של מערכת ההפעלה. ההגדרה משתנה בהתאם למכשיר.</string>
 	<string name="theme_auto_subtitle">הפעל בין עיצוב בהיר לכהה על ידי השעה של היום, בשביל למנוע כאב לעיניים בשעות הלילה.</string>
-	<string name="theme_additional_note">הערה: אם מצב \"אוטומטי\" מופעל וחיסכון בסוללה מופעל, עיצוב כהה יופעל למשך כל שעות היום.</string>
+	<string name="theme_additional_note">כל העיצובים תומכים ב-Material 3 וב-You. הערה: אם מצב \"אוטומטי\" מופעל וחיסכון בסוללה מופעל, עיצוב כהה יופעל למשך כל שעות היום.</string>
 
 	<string name="settings">הגדרות</string>
 	<string name="settings_buy_button_buy">קנה (%1$s)</string>

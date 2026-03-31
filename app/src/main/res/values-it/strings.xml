@@ -100,11 +100,11 @@
 	<string name="theme_system">Sistema</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_light_subtitle">Sfondo bianco e rosso OnePlus come colore primario.</string>
-	<string name="theme_dark_subtitle">Rosso OnePlus mutato come colore primario, con uno sfondo quasi nero. Usa questo tema per conservare la batteria, specialmente nei pannelli AMOLED.</string>
-	<string name="theme_system_subtitle">Utilizza la modalità notte del sistema</string>
-	<string name="theme_auto_subtitle">Cambia tra light e dark in base all\'ora del giorno.</string>
-	<string name="theme_additional_note">Nel caso il risparmio energetico fosse attivo, il tema dark sarà utilizzato per conservare la batteria.</string>
+	<string name="theme_light_subtitle">Sfondo chiaro, testo scuro</string>
+	<string name="theme_dark_subtitle">Potrebbe consentire di risparmiare batteria sugli schermi AMOLED</string>
+	<string name="theme_system_subtitle">Segui le impostazioni della modalità scura del sistema operativo. Può variare a seconda del dispositivo.</string>
+	<string name="theme_auto_subtitle">Passa dalla modalità chiara a quella scura in base all\'ora del giorno, per evitare l\'affaticamento degli occhi durante la notte</string>
+	<string name="theme_additional_note">Tutti i temi sono compatibili con Material 3/You. Nel caso il risparmio energetico fosse attivo, il tema dark sarà utilizzato per conservare la batteria.</string>
 
 	<string name="settings">"Impostazioni"</string>
 	<string name="settings_buy_button_buy">"Acquista (%1$s)"</string>

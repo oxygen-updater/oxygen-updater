@@ -105,11 +105,11 @@
 	<string name="theme_system">システム</string>
 	<string name="theme_auto">自動</string>
 
-	<string name="theme_light_subtitle">白い背景、OnePlus Red のテーマ</string>
-	<string name="theme_dark_subtitle">黒い背景、OnePlus Red のテーマ。バッテリー使用量を低減するのに最適（特に AMOLED スクリーン機種で）</string>
-	<string name="theme_system_subtitle">（ディスプレイもしくは開発者オプションで設定可能な）システムの夜間モードを使用します。デバイスにより異なります。</string>
+	<string name="theme_light_subtitle">明るい背景、暗い文字</string>
+	<string name="theme_dark_subtitle">AMOLEDディスプレイのバッテリー消費を抑えられる可能性があります</string>
+	<string name="theme_system_subtitle">OSのダークモード設定に従ってください。端末によって異なります。</string>
 	<string name="theme_auto_subtitle">夜間の眼精疲労帽子のため、ライト・ダークテーマをその日の時間によって切替します。</string>
-	<string name="theme_additional_note">注意： \'自動\' テーマを選択し、バッテリセーバーが有効な場合、ダークテーマはバッテリーを節約するために時刻に関係なく自動的に使用されます。</string>
+	<string name="theme_additional_note">すべてのテーマはMaterial 3およびYouに対応しています。注意： \'自動\' テーマを選択し、バッテリセーバーが有効な場合、ダークテーマはバッテリーを節約するために時刻に関係なく自動的に使用されます。</string>
 
 	<string name="settings">設定</string>
 	<string name="settings_buy_button_buy">購入 (%1$s)</string>

@@ -105,11 +105,11 @@
 	<string name="theme_system">Systémový</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_light_subtitle">Motív s bielym pozadím a primárnou farbou OnePlus Red.</string>
-	<string name="theme_dark_subtitle">Tlmená základná farba OnePlus Red s takmer čiernym pozadím. Tento motív použite na šetrenie batérie, najmä na obrazovkách AMOLED.</string>
-	<string name="theme_system_subtitle">Použite nočný režim systému (môžete ho nastaviť v nastaveniach displeja alebo v možnostiach pre vývojárov). Líši sa podľa zariadenia.</string>
+	<string name="theme_light_subtitle">Svetlé pozadie, tmavý text</string>
+	<string name="theme_dark_subtitle">Mohlo by to šetriť batériu na displejoch AMOLED</string>
+	<string name="theme_system_subtitle">Postupujte podľa nastavení tmavého režimu operačného systému. Môže sa líšiť v závislosti od zariadenia.</string>
 	<string name="theme_auto_subtitle">Prepínajte medzi svetlými a tmavými motívmi podľa dennej doby, aby ste zabránili namáhaniu očí v noci.</string>
-	<string name="theme_additional_note">Poznámka: ak je aktívny motív \"Auto\" a je povolený šetrič batérie, tmavý motív sa automaticky použije bez ohľadu na dennú dobu na šetrenie batérie.</string>
+	<string name="theme_additional_note">Všetky motívy podporujú Material 3/You. Poznámka: ak je aktívny motív \"Auto\" a je povolený šetrič batérie, tmavý motív sa automaticky použije bez ohľadu na dennú dobu na šetrenie batérie.</string>
 
 	<string name="settings">Nastavenia</string>
 	<string name="settings_buy_button_buy">Kúpiť (%1$s)</string>

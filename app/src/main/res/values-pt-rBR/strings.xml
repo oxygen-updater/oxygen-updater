@@ -104,12 +104,11 @@
 	<string name="theme_system">Sistema</string>
 	<string name="theme_auto">Automático</string>
 
-	<string name="theme_light_subtitle">Tema com fundo branco e cor primária e vermelho OnePlus</string>
-	<string name="theme_dark_subtitle">Vermelho OnePlus com um fundo quase preto. Use este tema para economizar bateria, especialmente em telas AMOLED.</string>
-	<string name="theme_system_subtitle">Use o modo noturno do sistema (você pode definir isso nas configurações de tela ou nas opções do desenvolvedor). Varia de acordo com o dispositivo</string>
+	<string name="theme_light_subtitle">Fundo claro, texto escuro</string>
+	<string name="theme_dark_subtitle">Pode economizar bateria em telas AMOLED</string>
+	<string name="theme_system_subtitle">Siga a configuração do modo escuro do sistema operacional. Varia de acordo com o dispositivo.</string>
 	<string name="theme_auto_subtitle">Alterne entre temas claros e escuros com base na hora do dia para evitar cansaço visual à noite</string>
-	<string name="theme_additional_note">Observação: se o tema \"Automático\" estiver ativo e a economia de bateria estiver ativada, o tema escuro será usado automaticamente independentemente da hora do dia para
-conservar bateria</string>
+	<string name="theme_additional_note">Todos os temas são compatíveis com o Material 3/You. Observação: se o tema \"Automático\" estiver ativo e a economia de bateria estiver ativada, o tema escuro será usado automaticamente independentemente da hora do dia para conservar bateria.</string>
 
 	<string name="settings">Configurações</string>
 	<string name="settings_buy_button_buy">Comprar (%1$s)</string>

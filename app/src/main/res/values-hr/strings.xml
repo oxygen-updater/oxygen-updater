@@ -98,13 +98,11 @@
 	<string name="theme_system">Sustav</string>
 	<string name="theme_auto">Auto</string>
 
-	<!-- TODO: translate these lines -->
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Svijetla pozadina, tamni tekst</string>
+	<string name="theme_dark_subtitle">Moglo bi uštedjeti bateriju na AMOLED zaslonima</string>
+	<string name="theme_system_subtitle">Befolge die Einstellungen für den Dunkelmodus des Betriebssystems. Dies kann je nach Gerät variieren.</string>
+	<string name="theme_auto_subtitle">Prelazite između svijetle i tamne teme ovisno o dobu dana kako biste spriječili naprezanje očiju noću.</string>
+	<string name="theme_additional_note">Sve teme su omogućene za Material 3/You. Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to conserve battery.</string>
 
 	<string name="settings">"Postavke"</string>
 	<string name="settings_buy_button_buy">"Kupi (%1$s)"</string>

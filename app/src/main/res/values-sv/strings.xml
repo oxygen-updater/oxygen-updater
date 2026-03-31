@@ -103,10 +103,11 @@
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_dark_subtitle">Nedtonad OnePlus-röd primär färg, med en nästan svart bakgrund. Använd detta tema för att spara batteri, framför allt på AMOLED-skärmar.</string>
-	<string name="theme_system_subtitle">Använd systemets nattläge (du kan ställa in det i antingen skärminställningar eller utvecklarinställningar). Beror på enhet.</string>
+	<string name="theme_light_subtitle">Ljus bakgrund, mörk text</string>
+	<string name="theme_dark_subtitle">Kan spara batteri på AMOLED-skärmar</string>
+	<string name="theme_system_subtitle">Följ inställningarna för mörkt läge i operativsystemet. Kan variera beroende på enhet.</string>
 	<string name="theme_auto_subtitle">Byt mellan ljusa och mörka teman baserat på tid på dagen, för att undvika ansträngning för ögonen på natten</string>
-	<string name="theme_additional_note">Obs. om \"Auto\" är aktivt och batterispararläget är på kommer det mörka temat användas oavsett tid på dygnet för att spara batteri</string>
+	<string name="theme_additional_note">Alla teman är kompatibla med Material 3/You. Obs. om \"Auto\" är aktivt och batterispararläget är på kommer det mörka temat användas oavsett tid på dygnet för att spara batteri.</string>
 
 	<string name="settings">"Inställningar"</string>
 	<string name="settings_buy_button_buy">"Köp (%1$s)"</string>
@@ -289,6 +290,5 @@ Andra enheter samt OPPO/OnePlus enheter som har \"Custom ROMs\" installerade är
 	<string name="loading">"Laddar…"</string>
 	<string name="processing">"Bearbetar…"</string>
 	<string name="update_information_description_not_available">"Det finns ingen officiell information om de nya funktionerna denna uppdatering innehåller. Vanligtvis innehåller en sådan uppdatering buggfixar, prestandaförbättringar och / eller viktiga säkerhetsuppdateringar för din enhet."</string>
-	<string name="theme_light_subtitle">Tema med en vit bakgrund och OnePlus-röd primär färg</string>
 
 </resources>

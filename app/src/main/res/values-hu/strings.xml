@@ -106,11 +106,11 @@
 	<string name="theme_system">Rendszer</string>
 	<string name="theme_auto">Automatikus</string>
 
-	<string name="theme_light_subtitle">Téma fehér háttérrel és OnePlus Red elsődleges színnel</string>
-	<string name="theme_dark_subtitle">Tompa OnePlus Red elsődleges szín, szinte fekete háttérrel. Használd ezt a témát az akkumulátor megtakarításához, különösen AMOLED képernyőkön.</string>
-	<string name="theme_system_subtitle">Használja a rendszer éjszakai módját (ezt beállíthatod a Kijelző beállításaiban vagy a Fejlesztői beállításokban). Eszközönként változik.</string>
+	<string name="theme_light_subtitle">Világos háttér, sötét szöveg</string>
+	<string name="theme_dark_subtitle">Ezzel megtakarítható az akkumulátor az AMOLED-képernyőkön</string>
+	<string name="theme_system_subtitle">Kövesse az operációs rendszer sötét módra vonatkozó beállításait. Ez készülékenként eltérő lehet.</string>
 	<string name="theme_auto_subtitle">Váltás a világos és a sötét témák között a napszak alapján, az éjszakai szemfeszültség elkerülése érdekében</string>
-	<string name="theme_additional_note">Megjegyzés: Ha az \"Automatikus\" téma aktív, és az akkumulátor kímélő engedélyezve van, akkor a sötét téma napszaktól függetlenül automatikusan engedélyezve lesz az akkumulátor megtakarításának érdekében.</string>
+	<string name="theme_additional_note">Minden téma támogatja a Material 3/You stílust. Megjegyzés: Ha az \"Automatikus\" téma aktív, és az akkumulátor kímélő engedélyezve van, akkor a sötét téma napszaktól függetlenül automatikusan engedélyezve lesz az akkumulátor megtakarításának érdekében.</string>
 
 	<string name="settings">Beállítások</string>
 	<string name="settings_buy_button_buy">(%1$s) megvásárlása</string>

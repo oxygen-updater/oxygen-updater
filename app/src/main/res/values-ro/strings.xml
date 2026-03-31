@@ -104,11 +104,11 @@
 	<string name="theme_system">Sistem</string>
 	<string name="theme_auto">Automată</string>
 
-	<string name="theme_light_subtitle">Temă cu accent roșu OnePlus și fundal alb.</string>
-	<string name="theme_dark_subtitle">Accent roșu OnePlus, cu fundal aproape negru. Folosiți această temă pentru a economisi bateria, în special dacă utilizați un ecran AMOLED.</string>
-	<string name="theme_system_subtitle">Folosiți modul de noapte al sistemului (puteți alege această opțiune fie în setările de Afișaj, fie în Opțiunile pentru dezvoltatori). Aceasta poate varia în funcție de dispozitiv.</string>
+	<string name="theme_light_subtitle">Fundal deschis, text închis la culoare</string>
+	<string name="theme_dark_subtitle">Ar putea economisi bateria pe ecranele AMOLED</string>
+	<string name="theme_system_subtitle">Respectă setările modului întunecat ale sistemului de operare. Acestea pot varia în funcție de dispozitiv.</string>
 	<string name="theme_auto_subtitle">Faceți trecerea de la tema đeschisă la tema întunecată în funcție de momentul zilei, pentru de a reduce oboseala ochilor pe timp de noapte.</string>
-	<string name="theme_additional_note">Atenție: dacă tema \"Automată\" este activă și economizorul bateriei este pornit, se va trece automat la tema întunecată, indiferent de momentul zilei, pentru a prelungi durata de viață a bateriei.</string>
+	<string name="theme_additional_note">Toate temele sunt compatibile cu Material 3/You. Atenție: dacă tema \"Automată\" este activă și economizorul bateriei este pornit, se va trece automat la tema întunecată, indiferent de momentul zilei, pentru a prelungi durata de viață a bateriei.</string>
 
 	<string name="settings">Setări</string>
 	<string name="settings_buy_button_buy">Cumpărați (%1$s)</string>

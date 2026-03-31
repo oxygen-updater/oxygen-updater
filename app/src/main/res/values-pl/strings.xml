@@ -111,15 +111,11 @@
 	<string name="theme_system">Systemowy</string>
 	<string name="theme_auto">Automatyczny</string>
 
-	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
-	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-
-	<string name="theme_light_subtitle">Motyw z białym tłem oraz OnePlusowym czerwonym kolorem podstawowym</string>
-	<string name="theme_dark_subtitle">Wyciszony OnePlusowy czerwony kolor podstawowy, z prawie czarnym tłem. Użyj tego motywu w celu oszczędzania baterii, szczególnie w przypadku ekranów AMOLED.</string>
-	<string name="theme_system_subtitle">Użyj systemowego trybu nocnego (możesz go ustawić albo w Ustawieniach ekranu albo w Opcjach programistycznych). Zależy od urządzenia.</string>
+	<string name="theme_light_subtitle">Jasne tło, ciemny tekst</string>
+	<string name="theme_dark_subtitle">Może to pomóc w oszczędzaniu baterii w ekranach AMOLED</string>
+	<string name="theme_system_subtitle">Zastosuj ustawienia trybu ciemnego systemu operacyjnego. Różni się w zależności od urządzenia.</string>
 	<string name="theme_auto_subtitle">Przełączaj pomiędzy jasnym a ciemnym motywem zależnie od pory dnia, aby zapobiec przemęczeniu oczu w nocy</string>
-	<string name="theme_additional_note">Uwaga: Jeśli motyw \"Auto\" jest aktywny oraz oszczędzanie baterii jest włączone, ciemny motyw będzie używany automatycznie niezależnie od pory dnia
-		aby oszczędzać baterię.</string>
+	<string name="theme_additional_note">Wszystkie motywy obsługują Material 3/You. Uwaga: Jeśli motyw \"Auto\" jest aktywny oraz oszczędzanie baterii jest włączone, ciemny motyw będzie używany automatycznie niezależnie od pory dnia aby oszczędzać baterię.</string>
 
 	<string name="settings">Ustawienia</string>
 	<string name="settings_buy_button_buy">Kup (%1$s)</string>
@@ -146,6 +142,7 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="settings_advanced_mode_caption">"Tryb zaawansowany może być potrzebny tylko w powyższych sytuacjach. Nie powinieneś go włączać, jeśli nie wiesz, co robisz."</string>
 
 	<string name="settings_update_method">Metoda aktualizacji</string>
+	<!-- Value cannot be changed - is from older version where it was called 'upload_logs' -->
 	<string name="settings_upload_logs">Udostępnij dane użytkowania oraz logi</string>
 	<string name="settings_ad_privacy">Zgoda na reklamy RODO</string>
 	<string name="settings_ad_privacy_subtitle">"Dla użytkowników w EOG/Wielkiej Brytanii"</string>

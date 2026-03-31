@@ -104,11 +104,11 @@
 	<string name="theme_system">Dle systému</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_light_subtitle">Téma s bílým pozadím a základní barvou OnePlus červená</string>.
-	<string name="theme_dark_subtitle">Ztlumená primární barva OnePlus červená s téměř černým pozadím. Toto téma použijte k úspoře baterie, zejména na AMOLED obrazovkách.</string>
-	<string name="theme_system_subtitle">Používejte noční režim systému (můžete jej nastavit buď v nastavení displeje, nebo v možnostech pro vývojáře). Liší se podle zařízení.</string>
+	<string name="theme_light_subtitle">Světlé pozadí, tmavý text</string>.
+	<string name="theme_dark_subtitle">Mohlo by to šetřit baterii u displejů AMOLED</string>
+	<string name="theme_system_subtitle">Postupujte podle nastavení tmavého režimu operačního systému. Liší se podle zařízení.</string>
 	<string name="theme_auto_subtitle">Přepínání mezi světlými a tmavými motivy podle denní doby, aby se zabránilo namáhání očí v noci</string>.
-	<string name="theme_additional_note">Poznámka: pokud je aktivní téma \"Auto\" a je povolen spořič baterie, bude automaticky použito tmavé téma bez ohledu na denní dobu, aby se šetřila baterie</string>
+	<string name="theme_additional_note">Všechny šablony podporují Material 3/You. Poznámka: pokud je aktivní téma \"Auto\" a je povolen spořič baterie, bude automaticky použito tmavé téma bez ohledu na denní dobu, aby se šetřila baterie.</string>
 
 	<string name="settings">Nastavení</string>
 	<string name="settings_buy_button_buy">Koupit (%1$s)</string>

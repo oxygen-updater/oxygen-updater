@@ -103,12 +103,11 @@
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_light_subtitle">Theme with a white background and OnePlus Red primary color</string>
-	<string name="theme_dark_subtitle">Muted OnePlus Red primary color, with an almost-black background. Use this theme to save battery, especially on AMOLED screens.</string>
-	<string name="theme_system_subtitle">Use the system\'s night mode (you can set this either in Display settings or in developer options). Varies by device.</string>
-	<string name="theme_auto_subtitle">Switch between light and dark themes based on the time of the day, to prevent eye strain at night</string>
-	<string name="theme_additional_note">Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to
-		conserve battery</string>
+	<string name="theme_light_subtitle">Light background, dark text</string>
+	<string name="theme_dark_subtitle">Could save battery on AMOLED screens</string>
+	<string name="theme_system_subtitle">Follow the OS dark mode setting. Varies by device.</string>
+	<string name="theme_auto_subtitle">Switch between light &amp; dark based on the time of day, to prevent eye strain at night</string>
+	<string name="theme_additional_note">All themes are Material 3/You-enabled. Note: if the \"Auto\" theme is active and battery saver is enabled, dark theme will automatically be used regardless of time of day to conserve battery.</string>
 
 	<string name="settings">Settings</string>
 	<string name="settings_buy_button_buy">Purchase (%1$s)</string>

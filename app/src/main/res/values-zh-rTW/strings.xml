@@ -103,11 +103,11 @@
 	<string name="theme_system">系統預設</string>
 	<string name="theme_auto">自動</string>
 
-	<string name="theme_light_subtitle">輕快的白色背景，搭配 OnePlus 經典紅色作為強調色</string>
-	<string name="theme_dark_subtitle">近乎純黑的深邃背景，搭配更加柔和的 OnePlus 紅色。如果您的裝置使用 AMOLED 螢幕，使用此佈景主題更能幫您節省您手機的電量</string>
-	<string name="theme_system_subtitle">使用系統提供的深色模式（您可以在顯示設定或者開發人員選項中開啟）。可能會根據您的裝置而產生不同的效果</string>
+	<string name="theme_light_subtitle">淺色背景，深色文字</string>
+	<string name="theme_dark_subtitle">這有助於節省 AMOLED 螢幕的電量</string>
+	<string name="theme_system_subtitle">請依照作業系統的深色模式設定。設定方式因裝置而異。</string>
 	<string name="theme_auto_subtitle">根據您所在地區的時間，自動切換深色或者淺色佈景主題。這樣可以保護您的眼睛在夜間不被強光傷害</string>
-	<string name="theme_additional_note">注意：如果您在使用「自動」切換佈景主題的時候同時啟用了省電模式，那麼將會無視目前時間，強制調至深色模式以達到節省電量的目的</string>
+	<string name="theme_additional_note">所有主題均支援 Material 3/You。注意：如果您在使用「自動」切換佈景主題的時候同時啟用了省電模式，那麼將會無視目前時間，強制調至深色模式以達到節省電量的目的</string>
 
 	<string name="settings">設定</string>
 	<string name="settings_buy_button_buy">購買 (%1$s)</string>

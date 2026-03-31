@@ -103,12 +103,12 @@
 	<string name="theme_dark">Темно</string>
 	<string name="theme_system">Систем</string>
 	<string name="theme_auto">Автоматски</string>
-	<string name="theme_light_subtitle">Тема со бела позадина и OnePlus црвена примарна боја</string>
-	<string name="theme_dark_subtitle">Пригушена OnePlus Red примарна боја, со скоро црна позадина. Користете ја оваа тема да заштедите батерија, поготово на AMOLED екрани.</string>
-	<string name="theme_system_subtitle">Користете го системскиот ноќен режим (можете да го подесите во поставките за екран или развивачките поставки). Зависи од уредот.</string>
+
+	<string name="theme_light_subtitle">Светла позадина, темно писмо</string>
+	<string name="theme_dark_subtitle">Може да заштеди батерија на AMOLED екраните</string>
+	<string name="theme_system_subtitle">Следете го подесувањето за темна тема на оперативниот систем. Се разликува во зависност од уредот.</string>
 	<string name="theme_auto_subtitle">Променете помеѓу светла и темна тема во зависност од времето во денот, за да ги заштитите очите од замор навечер.</string>
-	<string name="theme_additional_note">Забелешка: ако \"Auto\" темата е активирана и штедачот на батерија е уклучен, темната тема автоматски ќе биде користена независно од времето во денот со цел да се
-		заштеди батерија</string>
+	<string name="theme_additional_note">Сите теми се овозможени за Material 3/You. Забелешка: ако \"Auto\" темата е активирана и штедачот на батерија е уклучен, темната тема автоматски ќе биде користена независно од времето во денот со цел да се заштеди батерија.</string>
 
 	<string name="settings">Поставки</string>
 	<string name="settings_buy_button_buy">Купи (%1$s)</string>

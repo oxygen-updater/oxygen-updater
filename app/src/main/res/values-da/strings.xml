@@ -105,11 +105,11 @@
 	<string name="theme_system">System</string>
 	<string name="theme_auto">Auto</string>
 
-	<string name="theme_light_subtitle">Tema med en hvid baggrund, og OnePlus\' røde primære farve</string>
-	<string name="theme_dark_subtitle">Dæmpet OnePlus rød primær farve, med en næsten sort baggrund. Anvend dette tema og spar på batteri, især hvis du anvender AMOLED skærme.</string>
-	<string name="theme_system_subtitle">Anvend systemets nat-indstilling (du kan indstille dette via Skærmindstillinger, eller i enhedens Udvikller-menu). Dette varierer afhængigt af hvilken enhed du har.</string>
+	<string name="theme_light_subtitle">Lys baggrund, mørk tekst</string>
+	<string name="theme_dark_subtitle">Kan spare på batteriet på AMOLED-skærme</string>
+	<string name="theme_system_subtitle">Følg indstillingen for mørk tilstand i operativsystemet. Afhænger af enheden.</string>
 	<string name="theme_auto_subtitle">Skift mellem lyst og mærk tema, afhængig af hvad klokken er, for day, to at undgå trætte øjne, om natten</string>
-	<string name="theme_additional_note">Hint: Hvis \"Auto\" tema er aktiveret og batterisparefunktionen er aktivertet, så vil det mørke tema automatisk blive anvendt, uanset hvad klokken er, for at spare batteri</string>
+	<string name="theme_additional_note">Alle temaer understøtter Material 3/You. Hint: Hvis \"Auto\" tema er aktiveret og batterisparefunktionen er aktivertet, så vil det mørke tema automatisk blive anvendt, uanset hvad klokken er, for at spare batteri.</string>
 
 	<string name="settings">Indstillinger</string>
 	<string name="settings_buy_button_buy">Køb (%1$s)</string>

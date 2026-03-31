@@ -103,12 +103,11 @@
 	<string name="theme_system">النظام</string>
 	<string name="theme_auto">تلقائي</string>
 
-	<!-- Typo can't be fixed due to older versions of the app being released with it -->
-	<string name="theme_light_subtitle">شكل ذو خلفية بيضاء مع اللون الأحمر الرئيسي لجهاز ون بلس</string>
-	<string name="theme_dark_subtitle">خفف اللون الأحمر الرئيسي لجهاز ون بلس, مع خلفية سوداء تقريباً. إستخدام هذا الشكل يقلل من إستهلاك البطارية, خاصتاً مع شاشات أموليد</string>
-	<string name="theme_system_subtitle">إستخدم الوضع الليلي للنظام (يمكنك إختيار ذلك من إعدادات الشاشة أو من داخل خيارات المطورين). تختلف من جهاز لآخر</string>
+	<string name="theme_light_subtitle">خلفية فاتحة، نص داكن</string>
+	<string name="theme_dark_subtitle">قد يساعد في توفير طاقة البطارية على شاشات AMOLED</string>
+	<string name="theme_system_subtitle">اتبع إعدادات الوضع المظلم في نظام التشغيل. تختلف حسب الجهاز.</string>
 	<string name="theme_auto_subtitle">الإنتقال بين الشكل الفاتح والداكن إعتماداً على أي وقت من اليوم, وذلك تجنباً لإجهاد العين ليلاً</string>
-	<string name="theme_additional_note">ملحوظة: إذا كان وضع إختيار الشكل تلقائياً نشط ووضع حفظ البطارية فعال, فسيتم تفعيل الشكل الداكن تلقائياً بغض النظر عن الوقت سواء أكان ليلاً أو نهاراً وذلك لحفظ البطارية</string>
+	<string name="theme_additional_note">جميع السمات متوافقة مع Material 3 وYou. ملحوظة: إذا كان وضع إختيار الشكل تلقائياً نشط ووضع حفظ البطارية فعال, فسيتم تفعيل الشكل الداكن تلقائياً بغض النظر عن الوقت سواء أكان ليلاً أو نهاراً وذلك لحفظ البطارية</string>
 	<string name="settings">الإعدادات</string>
 	<string name="settings_buy_button_buy">إشتري (%1$s)</string>
 	<string name="settings_buy_button_bought">تم الشراء</string>

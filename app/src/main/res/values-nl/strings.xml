@@ -104,11 +104,11 @@
 	<string name="theme_system">Systeeminstelling</string>
 	<string name="theme_auto">Automatisch</string>
 
-	<string name="theme_light_subtitle">Thema met lichte achtergronden en een helderrode bovenbalk. Dit is het standaard thema.</string>
-	<string name="theme_dark_subtitle">Thema met bijna-zwarte achtergronden en een vleugje donkerrood. Je kunt dit thema ook gebruiken om de batterij te sparen (alleen op AMOLED-schermen).</string>
-	<string name="theme_system_subtitle">Licht of donker thema op basis van de systeeminstellingen (instelbaar in de weergave- of ontwikkelaarsopties van het apparaat). Beschikbaarheid varieert per apparaat.</string>
+	<string name="theme_light_subtitle">Lichte achtergrond, donkere tekst</string>
+	<string name="theme_dark_subtitle">Dit kan de batterij op AMOLED-schermen sparen</string>
+	<string name="theme_system_subtitle">Volg de instellingen voor de donkere modus van het besturingssysteem. Dit verschilt per apparaat.</string>
 	<string name="theme_auto_subtitle">Wisselt automatisch tussen het lichte en donkere thema op basis van de huidige tijd.</string>
-	<string name="theme_additional_note">Opmerking: als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen</string>
+	<string name="theme_additional_note">Alle thema’s ondersteunen Material 3/You. Opmerking: als het automatische thema actief is en de modus "Energiebesparing" actief is, zal het donkere thema worden getoond om de batterij te sparen.</string>
 
 	<string name="settings">Instellingen</string>
 	<string name="settings_buy_button_buy">Koop (%1$s)</string>
