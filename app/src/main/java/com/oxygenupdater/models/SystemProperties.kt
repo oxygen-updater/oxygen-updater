@@ -5,6 +5,9 @@ import android.os.Build.UNKNOWN
 @Volatile
 var useSystemProperties = true
 
+/**
+ * @throws UnsupportedOperationException if [useSystemProperties] is false
+ */
 @Throws(UnsupportedOperationException::class)
 private inline fun invokeGet(key: String) = with(ClassAndMethod) {
     if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
@@ -12,7 +15,7 @@ private inline fun invokeGet(key: String) = with(ClassAndMethod) {
     try {
         val value = second?.invoke(first, key) as? String
         if (value.isNullOrEmpty()) UNKNOWN else value // ensure we never return null/empty
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         useSystemProperties = false
         throw UnsupportedOperationException("`useSystemProperties` is false")
     }

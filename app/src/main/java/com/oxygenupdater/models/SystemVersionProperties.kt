@@ -454,9 +454,11 @@ object SystemVersionProperties {
         return default
     }
 
+    /** @throws IOException */
     @Throws(IOException::class)
     private fun readBuildPropItem(itemKey: String, properties: String?) = readBuildPropItem(arrayOf(itemKey), properties)
 
+    /** @throws IOException */
     @Throws(IOException::class)
     private fun readBuildPropItem(itemKeys: Array<String>, properties: String?, default: String = UNKNOWN): String {
         if (properties.isNullOrEmpty()) return default

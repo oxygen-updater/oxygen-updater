@@ -123,11 +123,13 @@ fun Context.openLink(url: String) = try {
     copyToClipboard(url)
 }
 
+/** @throws ActivityNotFoundException */
 @Throws(ActivityNotFoundException::class)
 inline fun Context.openAppDetailsPage() = startActivity(
     Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, packageNameUri)
 )
 
+/** @throws ActivityNotFoundException */
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Throws(ActivityNotFoundException::class)
 inline fun Context.openAppLocalePage() = startActivity(
