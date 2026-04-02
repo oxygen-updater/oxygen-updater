@@ -338,21 +338,24 @@ class MainViewModel @Inject constructor(
         appUpdateInfoFlow.tryEmit(it)
     }
 
-    /**
-     * @throws IntentSender.SendIntentException if a stale [appUpdateInfo] is being used (probably, not sure)
-     */
-    @Throws(IntentSender.SendIntentException::class)
     fun requestImmediateAppUpdate(
         launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
     ) {
         resetAppUpdateIgnoreCount()
 
         // If an in-app update is already running, resume the update.
-        appUpdateManager.startUpdateFlowForResult(
-            appUpdateInfoFlow.value ?: return,
-            launcher,
-            AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
-        )
+        try {
+            appUpdateManager.startUpdateFlowForResult(
+                appUpdateInfoFlow.value ?: return,
+                launcher,
+                AppUpdateOptions.defaultOptions(AppUpdateType.IMMEDIATE),
+            )
+        } catch (e: Exception) {
+            /**
+             * [IntentSender.SendIntentException] is probably thrown if a stale [appUpdateInfo] is being used, not sure
+             */
+            crashlytics.logWarning(TAG, "`appUpdateManager.startUpdateFlowForResult` failed", e)
+        }
     }
 
     /**
@@ -362,10 +365,7 @@ class MainViewModel @Inject constructor(
      * * [AppUpdateInfo.clientVersionStalenessDays] exceeds the max threshold
      * * The user has ignored the flexible update too many times
      * If [AppUpdateType.FLEXIBLE] isn't allowed, then it's [AppUpdateType.IMMEDIATE]
-     *
-     * @throws IntentSender.SendIntentException if a stale [AppUpdateInfo] is being used (probably, not sure)
      */
-    @Throws(IntentSender.SendIntentException::class)
     fun requestUpdate(
         launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>,
     ) {
@@ -389,7 +389,18 @@ class MainViewModel @Inject constructor(
             appUpdateManager.registerListener(flexibleAppUpdateListener)
         }
 
-        appUpdateManager.startUpdateFlowForResult(info, launcher, AppUpdateOptions.defaultOptions(appUpdateType))
+        try {
+            appUpdateManager.startUpdateFlowForResult(
+                info,
+                launcher,
+                AppUpdateOptions.defaultOptions(appUpdateType)
+            )
+        } catch (e: Exception) {
+            /**
+             * [IntentSender.SendIntentException] is probably thrown if a stale [appUpdateInfo] is being used, not sure
+             */
+            crashlytics.logWarning(TAG, "`appUpdateManager.startUpdateFlowForResult` failed", e)
+        }
     }
 
     fun completeAppUpdate() = appUpdateManager.completeUpdate()
