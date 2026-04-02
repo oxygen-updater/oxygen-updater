@@ -89,6 +89,20 @@ object SystemVersionProperties {
     /** Required for [deviceMarketName] */
     private const val OplusMarketName = "ro.vendor.oplus.market.name"
 
+    private const val ScreenSizePrimaryInLookupKey = "ro.oplus.display.screenSizeInches.primary"
+    private const val ScreenSizePrimaryCmLookupKey = "ro.oplus.display.screenSizeCentimeter.primary"
+
+    /** Should only be present on foldable devices, e.g. OnePlus Open */
+    private const val ScreenSizeSecondaryInLookupKey = "ro.oplus.display.screenSizeInches.secondary"
+    private const val ScreenSizeSecondaryCmLookupKey = "ro.oplus.display.screenSizeCentimeter.secondary"
+
+    /** In the case of multiple cameras, each value is separated by '+' (without spaces) */
+    private const val BackCameraLookupKey = "ro.vendor.oplus.camera.backCamSize"
+    private const val FrontCameraLookupKey = "ro.vendor.oplus.camera.frontCamSize"
+
+    private const val InToCmMultiplier = 2.54f
+    private const val CmToInMultiplier = 1 / InToCmMultiplier
+
     /** Set to empty if property doesn't exist */
     val deviceMarketName: String
 
@@ -131,6 +145,13 @@ object SystemVersionProperties {
 
     val isEuBuild: Boolean
 
+    // Hardware info shown in DeviceScreen. Not used anywhere else, but because the values are
+    // constructed from system/getprop fields, we're keeping it in this class to avoid code
+    // duplication. Direct access of system properties may throw an exception, so a getprop
+    // fallback is always required.
+    val screenSizes: String
+    val cameraMegapixelCounts: String
+
     init {
         // Default to something sensible or set to Build.UNKNOWN
         var deviceMarketName = UNKNOWN
@@ -142,6 +163,8 @@ object SystemVersionProperties {
         var pipelineCode = UNKNOWN
         var manifestHash = UNKNOWN
         var isEuBuild = false
+        var screenSizes = ""
+        var cameraMegapixelCounts = ""
 
         try {
             if (!useSystemProperties) throw UnsupportedOperationException("`useSystemProperties` is false")
@@ -228,6 +251,26 @@ object SystemVersionProperties {
             osType = systemProperty(BuildOsTypeLookupKey).let {
                 if (it.isBlank()) "Stable" else if (it == UNKNOWN) "" else it
             }
+
+            screenSizes = buildString {
+                // Primary screen (all devices)
+                appendScreenSize(
+                    inValue = systemProperty(ScreenSizePrimaryInLookupKey),
+                    cmValue = systemProperty(ScreenSizePrimaryCmLookupKey),
+                )
+
+                // Secondary screen (foldables)
+                appendScreenSize(
+                    inValue = systemProperty(ScreenSizeSecondaryInLookupKey),
+                    cmValue = systemProperty(ScreenSizeSecondaryCmLookupKey),
+                    appendSeparator = isNotEmpty(),
+                )
+            }
+
+            cameraMegapixelCounts = cameraMegapixelCounts(
+                backValue = systemProperty(BackCameraLookupKey),
+                frontValue = systemProperty(FrontCameraLookupKey),
+            )
         } catch (e: Exception) {
             try {
                 logInfo(TAG, "Fast path via `android.os.SystemProperties` failed; falling back to slower getprop output parse", e)
@@ -311,6 +354,26 @@ object SystemVersionProperties {
                 osType = readBuildPropItem(BuildOsTypeLookupKey, properties).let {
                     if (it.isBlank()) "Stable" else if (it == UNKNOWN) "" else it
                 }
+
+                screenSizes = buildString {
+                    // Primary screen (all devices)
+                    appendScreenSize(
+                        inValue = readBuildPropItem(ScreenSizePrimaryInLookupKey, properties),
+                        cmValue = readBuildPropItem(ScreenSizePrimaryCmLookupKey, properties),
+                    )
+
+                    // Secondary screen (foldables)
+                    appendScreenSize(
+                        inValue = readBuildPropItem(ScreenSizeSecondaryInLookupKey, properties),
+                        cmValue = readBuildPropItem(ScreenSizeSecondaryCmLookupKey, properties),
+                        appendSeparator = isNotEmpty(),
+                    )
+                }
+
+                cameraMegapixelCounts = cameraMegapixelCounts(
+                    backValue = readBuildPropItem(BackCameraLookupKey, properties),
+                    frontValue = readBuildPropItem(FrontCameraLookupKey, properties),
+                )
             } catch (e: Exception) {
                 Log.e(TAG, e.localizedMessage ?: "$e", e)
             }
@@ -325,6 +388,52 @@ object SystemVersionProperties {
         this.pipelineCode = pipelineCode
         this.manifestHash = manifestHash
         this.isEuBuild = isEuBuild
+        this.screenSizes = screenSizes
+        this.cameraMegapixelCounts = cameraMegapixelCounts
+    }
+
+    private fun StringBuilder.appendScreenSize(
+        inValue: String?,
+        cmValue: String?,
+        appendSeparator: Boolean = false,
+    ) {
+        var inValue = inValue.takeIf { it != UNKNOWN }
+        var cmValue = cmValue.takeIf { it != UNKNOWN }
+        if (inValue == null) {
+            if (cmValue != null) {
+                val value = cmValue.toIntOrNull() ?: 0
+                // 1÷2.54, multiplication is faster in bytecode
+                if (value != 0) inValue = "%.2f".format("${value * CmToInMultiplier}")
+            }
+        } else if (cmValue == null) {
+            val value = inValue.toIntOrNull() ?: 0
+            if (value != 0) cmValue = "%.2f".format("${value * InToCmMultiplier}")
+        }
+
+        if (inValue != null && cmValue != null) {
+            if (appendSeparator) append(" • ")
+            append(inValue).append('″') // inch symbol
+            append(" (").append(cmValue).append(" cm").append(')')
+        }
+    }
+
+    private fun cameraMegapixelCounts(backValue: String?, frontValue: String?) = buildString {
+        var count = 0
+        try {
+            backValue.takeIf { it != UNKNOWN }?.let {
+                append("• Rear: $it")
+                count++
+            }
+            frontValue.takeIf { it != UNKNOWN }?.let {
+                if (isNotEmpty()) appendLine()
+                append("• Front: $it")
+                count++
+            }
+        } catch (_: UnsupportedOperationException) {
+            // ignore
+        }
+
+        if (count == 1) removePrefix("• ")
     }
 
     private inline fun pickFirstValid(
