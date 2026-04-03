@@ -41,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.dropUnlessResumed
 import androidx.navigation3.scene.Scene
 import androidx.navigationevent.NavigationEvent
 import com.oxygenupdater.R
@@ -62,7 +63,7 @@ fun MainNavigationBar(
             val selected = currentRoute === screen
             NavigationBarItem(
                 selected = selected,
-                onClick = { navigateTo(screen) },
+                onClick = dropUnlessResumed { navigateTo(screen) },
                 icon = {
                     val badge = screen.badge
                     if (badge == null) Icon(screen.icon, label) else BadgedBox({
@@ -115,7 +116,7 @@ fun MainNavigationRail(
             val selected = currentRoute === screen
             NavigationRailItem(
                 selected = selected,
-                onClick = { navigateTo(screen) },
+                onClick = dropUnlessResumed { navigateTo(screen) },
                 icon = {
                     val badge = screen.badge
                     if (badge == null) Icon(screen.icon, label) else BadgedBox({

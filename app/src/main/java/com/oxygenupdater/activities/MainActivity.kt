@@ -603,7 +603,7 @@ class MainActivity : AppCompatActivity() {
                 val showAds by billingViewModel.shouldShowAds.collectAsStateWithLifecycle()
                 NavDisplay(
                     backStack = backStack,
-                    onBack = {
+                    onBack = dropUnlessResumed {
                         if (backStack.shouldStopNavigateAwayFromSettings) showSettingsWarning()
                         else backStack.removeLastOrNull() // default behaviour
                     },
