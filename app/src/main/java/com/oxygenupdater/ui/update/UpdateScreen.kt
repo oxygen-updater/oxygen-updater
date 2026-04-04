@@ -5,13 +5,13 @@ import android.os.Environment
 import androidx.annotation.VisibleForTesting
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.lifecycle.lifecycleScope
 import com.oxygenupdater.R
 import com.oxygenupdater.internal.settings.KeyAdvancedMode
 import com.oxygenupdater.models.UpdateData
@@ -24,6 +24,8 @@ import com.oxygenupdater.ui.main.NavType
 import com.oxygenupdater.utils.logDebug
 import com.oxygenupdater.utils.logInfo
 import com.oxygenupdater.workers.DirectoryRoot
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 @Composable
@@ -105,8 +107,16 @@ fun UpdateScreen(
         val context = LocalContext.current
         var downloadStatus by rememberState(_downloadStatus, _downloadStatus)
         LifecycleResumeEffect(context, filename) {
-            // Correct download status onResume
-            downloadStatus = correctStatus(context, downloadStatus, filename)
+            // Correct download status onResume. Some logic is duplicated across branches,
+            // but it's done this way so that we only launch a coroutine when we need to:
+            // file ops on the IO thread to avoid main thread ANRs.
+            if (filename == null) {
+                logInfo(TAG, "Can't check if download completed/paused; filename = null")
+                downloadStatus = correctStatusWhenFilenameIsNull(downloadStatus)
+            } else lifecycleScope.launch(Dispatchers.IO) {
+                downloadStatus = correctStatus(downloadStatus, filename, context)
+            }
+
             onPauseOrDispose {}
         }
 
@@ -149,23 +159,47 @@ fun UpdateScreen(
     }
 }
 
-private fun checkDownloadCompleted(filename: String?) = if (filename == null) {
-    logInfo(TAG, "Can't check download completion; filename = null")
-    false
-} else File(Environment.getExternalStoragePublicDirectory(DirectoryRoot), filename).exists()
+/** To be used for basic/fallback corrections when filename is null */
+private inline fun correctStatusWhenFilenameIsNull(status: DownloadStatus) = when (status) {
+    // File doesn't exist, correct existing status to NotDownloading
+    // (e.g. user manually deleted the file and switched back to the app)
+    DownloadStatus.DownloadCompleted -> {
+        logDebug(TAG, "OTA ZIP does not exist; setting status to NOT_DOWNLOADING")
+        DownloadStatus.NotDownloading
+    }
 
-private fun checkDownloadPaused(context: Context?, filename: String?) = if (filename == null) {
-    logInfo(TAG, "Can't check download paused; filename = null")
-    false
-} else context?.let {
-    File(it.getExternalFilesDir(null), filename).exists()
-} == true
+    DownloadStatus.NotDownloading, DownloadStatus.DownloadPaused -> {
+        logDebug(TAG, "Temporary OTA ZIP does not exist; setting status to NOT_DOWNLOADING")
+        DownloadStatus.NotDownloading
+    }
 
-private fun correctStatus(
-    context: Context?,
+    else -> {
+        logDebug(TAG, "No download status corrections needed; $status")
+        status
+    }
+}
+
+/**
+ * To be used when we need to perform file ops to check completed/paused status. Offloaded to an
+ * I/O thread to avoid rare main thread ANRs. The exact Firebase-reported ANR log for file ops is:
+ * > This binder call may be taking too long, causing the main thread to wait and triggering the ANR
+ *
+ * Firebase insight:
+ * > The main thread was busy doing a binder call that was potentially slow. The latency of a binder call is
+ * > hard to predict. It can be affected not only by the complexity of the call itself, but also by
+ * > intermittent factors such as system server lock contention. You should treat them as you would treat I/O
+ * > calls, and avoid, if possible, making binder calls in the main thread. If making a binder call from the
+ * > main thread is unavoidable, make sure that you instrument and monitor such calls to detect slowness.
+ */
+@Suppress("RedundantSuspendModifier") // must be called from an IO coroutine
+private suspend inline fun correctStatus(
     status: DownloadStatus,
-    filename: String?,
-) = if (checkDownloadCompleted(filename)) {
+    filename: String,
+    context: Context,
+) = if (
+// Check if completed, i.e. final file exists
+    File(Environment.getExternalStoragePublicDirectory(DirectoryRoot), filename).exists()
+) {
     logDebug(TAG, "$filename exists; setting status to COMPLETED")
     DownloadStatus.DownloadCompleted
 } else when (status) {
@@ -175,8 +209,11 @@ private fun correctStatus(
         logDebug(TAG, "$filename does not exist; setting status to NOT_DOWNLOADING")
         DownloadStatus.NotDownloading
     }
-    // Correct initial status by checking for pause status (e.g. user paused and exited the app, then returned later)
-    DownloadStatus.NotDownloading, DownloadStatus.DownloadPaused -> if (checkDownloadPaused(context, filename)) {
+
+    // Check if paused, i.e. temporary file exists
+    DownloadStatus.NotDownloading, DownloadStatus.DownloadPaused -> if (
+        File(context.getExternalFilesDir(null), filename).exists()
+    ) {
         logDebug(TAG, "Temporary $filename exists; setting status to PAUSED")
         // Temp file exists; download was in progress but paused by user
         DownloadStatus.DownloadPaused
