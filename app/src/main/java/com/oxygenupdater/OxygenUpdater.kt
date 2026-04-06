@@ -195,16 +195,10 @@ class OxygenUpdater : Application(), Configuration.Provider, SingletonImageLoade
         }
     }
 
-    @Suppress("unused")
     companion object {
         private const val TAG = "OxygenUpdater"
 
         private val _isNetworkAvailable = MutableStateFlow(true)
         val isNetworkAvailable = _isNetworkAvailable.asStateFlow()
-
-        const val UnableToFindAMoreRecentBuild = "unable to find a more recent build"
-        const val NetworkConnectionError = "NETWORK_CONNECTION_ERROR"
-        const val ServerMaintenanceError = "SERVER_MAINTENANCE_ERROR"
-        const val AppOutdatedError = "APP_OUTDATED_ERROR"
     }
 }

@@ -6,7 +6,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.oxygenupdater.OxygenUpdater
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -62,9 +61,11 @@ data class UpdateData(
     @IgnoredOnParcel
     @Ignore
     @JvmField
-    val shouldFetchMostRecent = information != null && information == OxygenUpdater.UnableToFindAMoreRecentBuild && isUpdateInformationAvailable && systemIsUpToDate
+    val shouldFetchMostRecent = information != null && information == UnableToFindAMoreRecentBuild && isUpdateInformationAvailable && systemIsUpToDate
 
     companion object {
+        private const val UnableToFindAMoreRecentBuild = "unable to find a more recent build"
+
         fun getBuildDate(otaVersionNumber: String?) = otaVersionNumber?.substringAfterLast('_')?.toLongOrNull() ?: 0
     }
 }
