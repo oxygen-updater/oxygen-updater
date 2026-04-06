@@ -124,6 +124,7 @@ import com.oxygenupdater.ui.common.rememberSaveableState
 import com.oxygenupdater.ui.common.rememberState
 import com.oxygenupdater.ui.device.DefaultDeviceName
 import com.oxygenupdater.ui.device.DeviceScreen
+import com.oxygenupdater.ui.device.DeviceViewModel
 import com.oxygenupdater.ui.device.IncorrectDeviceDialog
 import com.oxygenupdater.ui.device.UnsupportedDeviceOsSpecDialog
 import com.oxygenupdater.ui.faq.FaqScreen
@@ -839,6 +840,9 @@ class MainActivity : AppCompatActivity() {
         windowWidthSize: WindowWidthSizeClass,
         allDevices: List<Device>?,
     ) = surfacedEntry<MainRoute.Device> {
+        val cpuFrequencies by hiltViewModel<DeviceViewModel>(this@MainActivity)
+            .cpuFrequencies.collectAsStateWithLifecycle()
+
         DeviceScreen(
             navType = navType,
             windowWidthSize = windowWidthSize,
@@ -849,6 +853,7 @@ class MainActivity : AppCompatActivity() {
             },
             deviceOsSpec = viewModel.deviceOsSpec,
             deviceMismatchStatus = viewModel.deviceMismatch,
+            cpuFrequencies = cpuFrequencies,
         )
     }
 

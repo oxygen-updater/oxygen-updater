@@ -8,6 +8,8 @@ import android.os.Build.UNKNOWN
 import android.text.format.Formatter
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.collection.ScatterMap
+import androidx.collection.emptyScatterMap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -65,7 +67,6 @@ import com.oxygenupdater.icons.Speed
 import com.oxygenupdater.icons.Steppers
 import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.icons.TripOrigin
-import com.oxygenupdater.internal.CpuFrequencies
 import com.oxygenupdater.models.Device
 import com.oxygenupdater.models.DeviceOsSpec
 import com.oxygenupdater.models.SystemVersionProperties
@@ -98,6 +99,7 @@ fun DeviceScreen(
     deviceName: String,
     deviceOsSpec: DeviceOsSpec?,
     deviceMismatchStatus: Triple<Boolean, String, String>?,
+    cpuFrequencies: ScatterMap<Float, Int>,
 ) = if (windowWidthSize == WindowWidthSizeClass.Expanded) Row(modifierMaxWidth) {
     DeviceHeaderExpanded(
         navType = navType,
@@ -116,7 +118,7 @@ fun DeviceScreen(
 
         DeviceSoftwareInfo()
         HorizontalDivider(modifierDefaultPaddingTop)
-        DeviceHardwareInfo()
+        DeviceHardwareInfo(cpuFrequencies)
 
         ConditionalNavBarPadding(navType)
     }
@@ -133,7 +135,7 @@ fun DeviceScreen(
 
     DeviceSoftwareInfo()
     HorizontalDivider(modifierDefaultPaddingTop)
-    DeviceHardwareInfo()
+    DeviceHardwareInfo(cpuFrequencies)
 
     ConditionalNavBarPadding(navType)
 }
@@ -373,7 +375,7 @@ private fun Header(@StringRes textResId: Int) = Text(
 
 @Suppress("UnusedReceiverParameter")
 @Composable
-private fun ColumnScope.DeviceHardwareInfo() {
+private fun ColumnScope.DeviceHardwareInfo(cpuFrequencies: ScatterMap<Float, Int>) {
     Header(R.string.device_information_hardware_header)
 
     val context = LocalContext.current
@@ -413,9 +415,7 @@ private fun ColumnScope.DeviceHardwareInfo() {
         },
     )
 
-    CpuFrequencies.let { cpuFrequencies ->
-        if (cpuFrequencies.isEmpty()) return@let
-
+    if (cpuFrequencies.isNotEmpty()) {
         val locale = currentLocale()
         // Format according to locale (decimal vs comma)
         val formatted = remember(locale) {
@@ -559,5 +559,6 @@ fun PreviewDeviceScreen() = PreviewAppTheme {
         deviceName = name,
         deviceOsSpec = DeviceOsSpec.SupportedDeviceAndOs,
         deviceMismatchStatus = Triple(false, name, name),
+        cpuFrequencies = emptyScatterMap(),
     )
 }
