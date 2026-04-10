@@ -237,8 +237,8 @@ Se è stato riscontrato un errore, apri l'app e ritenta il download. Assicurati 
 	<string name="news_empty_state_all_read_text">Hai letto tutto, congratulazioni! Speriamo ti piacciano i nostri articoli e che ne abbia tratto qualcosa. Premi il banner per rivedere tutti gli articoli.</string>
 
 	<string name="contribute">Diventa un contributor</string>
-	<string name="contribute_title">Migliora Oxygen Updater</string>
-	<string name="contribute_explanation">Per potervi fornire gli ultimi aggiornamenti, abbiamo bisogno di acquisire gli URL OTA ZIP.\n\nCome posso aiutarvi?\n\nOxygen Updater può inviare automaticamente nuovi URL OTA ai nostri amministratori. Questa operazione utilizza una piccola quantità di dati e potrebbe consumare un po\' di batteria. È necessario concedere i permessi di root all\'applicazione, perché legge un file di database accessibile solo tramite root. L\'utente riceverà una notifica quando un URL è stato inviato con successo.</string>
+	<string name="contribute_title">Migliora OS Updater</string>
+	<string name="contribute_explanation">Per potervi fornire gli ultimi aggiornamenti, abbiamo bisogno di acquisire gli URL OTA ZIP.\n\nCome posso aiutarvi?\n\nOS Updater può inviare automaticamente nuovi URL OTA ai nostri amministratori. Questa operazione utilizza una piccola quantità di dati e potrebbe consumare un po\' di batteria. È necessario concedere i permessi di root all\'applicazione, perché legge un file di database accessibile solo tramite root. L\'utente riceverà una notifica quando un URL è stato inviato con successo.</string>
 	<string name="contribute_agree">Contribuisci con URL OTA (richiede root)</string>
 	<string name="contribute_save">Salva</string>
 	<string name="contribute_more_info">Ulteriori info</string>

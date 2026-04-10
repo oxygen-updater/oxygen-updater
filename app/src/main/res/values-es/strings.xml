@@ -217,8 +217,8 @@ Esto puede ser útil si quieres:"</string>
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">Notificaciones push</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">Muestra todas las notificaciones que no sean importantes de la app Oxygen Updater. Muestra el progreso de las descargas.</string>
-	<string name="push_notifications_group_description">Muestra todas las notificaciones importanmtes de la app Oxygen Updater. Estas incluyen notificaciones de actualizaciones del sistema y notificaciones de nuevas noticias.</string>
+	<string name="download_and_installation_notifications_group_description">Muestra todas las notificaciones que no sean importantes de la app OS Updater. Muestra el progreso de las descargas.</string>
+	<string name="push_notifications_group_description">Muestra todas las notificaciones importanmtes de la app OS Updater. Estas incluyen notificaciones de actualizaciones del sistema y notificaciones de nuevas noticias.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -254,8 +254,8 @@ Esto puede ser útil si quieres:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Hazte colaborador</string>
-	<string name="contribute_title">Ayuda a mejorar Oxygen Updater</string>
-	<string name="contribute_explanation">Para poder ofrecerte las últimas actualizaciones, necesitamos capturar las URL ZIP OTA.\n\n¿Cómo puedo ayudar?\n\nOxygen Updater puede enviar automáticamente nuevas URL OTA a nuestros administradores. Esto utilizará una pequeña cantidad de datos y puede usar un poco de tu batería. Tendrás que conceder permisos de root a la aplicación, ya que lee un archivo de base de datos al que sólo se puede acceder a través de root. Recibirás una notificación cuando una URL se haya enviado correctamente.</string>
+	<string name="contribute_title">Ayuda a mejorar OS Updater</string>
+	<string name="contribute_explanation">Para poder ofrecerte las últimas actualizaciones, necesitamos capturar las URL ZIP OTA.\n\n¿Cómo puedo ayudar?\n\nOS Updater puede enviar automáticamente nuevas URL OTA a nuestros administradores. Esto utilizará una pequeña cantidad de datos y puede usar un poco de tu batería. Tendrás que conceder permisos de root a la aplicación, ya que lee un archivo de base de datos al que sólo se puede acceder a través de root. Recibirás una notificación cuando una URL se haya enviado correctamente.</string>
 	<string name="contribute_agree">Contribuir con URL OTA (requiere root)</string>
 	<string name="contribute_save">Guardar ajustes</string>
 	<string name="contribute_more_info">Más información</string>

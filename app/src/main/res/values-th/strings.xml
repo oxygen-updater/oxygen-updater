@@ -216,8 +216,8 @@
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">การแจ้งเตือนแบบพุช</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">แสดงการแจ้งเตือนที่ไม่สำคัญทั้งหมดของแอพ Oxygen Updater รวมถึงตัวบ่งชี้สถานะที่แสดงในระหว่างการดาวน์โหลด</string>
-	<string name="push_notifications_group_description">แสดงการแจ้งเตือนที่สำคัญทั้งหมดของแอพ Oxygen Updater เหล่านี้รวมถึงการแจ้งเตือนการอัปเดตระบบและการแจ้งเตือนข่าวด่วน</string>
+	<string name="download_and_installation_notifications_group_description">แสดงการแจ้งเตือนที่ไม่สำคัญทั้งหมดของแอพ OS Updater รวมถึงตัวบ่งชี้สถานะที่แสดงในระหว่างการดาวน์โหลด</string>
+	<string name="push_notifications_group_description">แสดงการแจ้งเตือนที่สำคัญทั้งหมดของแอพ OS Updater เหล่านี้รวมถึงการแจ้งเตือนการอัปเดตระบบและการแจ้งเตือนข่าวด่วน</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -253,8 +253,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">เป็นผู้มีส่วนร่วม</string>
-	<string name="contribute_title">ช่วยปรับปรุง Oxygen Updater</string>
-	<string name="contribute_explanation">เพื่อให้การอัปเดตล่าสุดแก่คุณ เราจำเป็นต้องบันทึก OTA ZIP URL\n\nฉันจะช่วยได้อย่างไร?\n\nOxygen Updater สามารถส่ง OTA URL ใหม่ไปยังผู้ดูแลระบบของเราได้โดยอัตโนมัติ การดำเนินการนี้จะใช้ข้อมูลจำนวนเล็กน้อยและอาจใช้แบตเตอรี่ของคุณเล็กน้อย คุณจะต้องให้สิทธิ์การรูทแก่แอป เนื่องจากแอปจะอ่านไฟล์ฐานข้อมูลที่เข้าถึงได้ผ่านทางรูทเท่านั้น คุณจะได้รับแจ้งเมื่อส่ง URL สำเร็จ</string>
+	<string name="contribute_title">ช่วยปรับปรุง OS Updater</string>
+	<string name="contribute_explanation">เพื่อให้การอัปเดตล่าสุดแก่คุณ เราจำเป็นต้องบันทึก OTA ZIP URL\n\nฉันจะช่วยได้อย่างไร?\n\nOS Updater สามารถส่ง OTA URL ใหม่ไปยังผู้ดูแลระบบของเราได้โดยอัตโนมัติ การดำเนินการนี้จะใช้ข้อมูลจำนวนเล็กน้อยและอาจใช้แบตเตอรี่ของคุณเล็กน้อย คุณจะต้องให้สิทธิ์การรูทแก่แอป เนื่องจากแอปจะอ่านไฟล์ฐานข้อมูลที่เข้าถึงได้ผ่านทางรูทเท่านั้น คุณจะได้รับแจ้งเมื่อส่ง URL สำเร็จ</string>
 	<string name="contribute_agree">ร่วมส่ง URL สำหรับการอัปเดต OTA (ต้องใช้สิทธิ์ root)</string>
 	<string name="contribute_save">บันทึกการตั้งค่า</string>
 	<string name="contribute_more_info">ข้อมูลเพิ่มเติม</string>

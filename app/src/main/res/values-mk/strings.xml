@@ -206,8 +206,8 @@
 	<string name="download_and_installation_notifications_group_name">Превземи &amp; Инсталација</string>
 	<string name="push_notifications_group_name">Нотификации</string>
 	<string name="miscellaneous_notifications_group_name">Разно</string>
-	<string name="download_and_installation_notifications_group_description">Прикажи ги сите небитни нотификации од апликацијата Oxygen Updater. Ги содржи индикаторите за статус прикажани при превземање.</string>
-	<string name="push_notifications_group_description">Ги прикажува сите важни нотификации од апликацијата Oxygen Updater. Ги содржи нотификациите за системски ажурирања и вондредни вести.</string>
+	<string name="download_and_installation_notifications_group_description">Прикажи ги сите небитни нотификации од апликацијата OS Updater. Ги содржи индикаторите за статус прикажани при превземање.</string>
+	<string name="push_notifications_group_description">Ги прикажува сите важни нотификации од апликацијата OS Updater. Ги содржи нотификациите за системски ажурирања и вондредни вести.</string>
 	<string name="download_status_notification_channel_name">Статус на превземање</string>
 	<string name="verification_status_notification_channel_name">Статус на верификација</string>
 	<string name="installation_status_notification_channel_name">Статус на инсталација</string>
@@ -240,8 +240,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">Станете соработник</string>
-	<string name="contribute_title">Помогнете да се подобри Oxygen Updater</string>
-	<string name="contribute_explanation">За да ви ги дадеме најновите ажурирања, треба да снимиме OTA ZIP URL-адреси.\n\nКако можам да помогнам?\n\nOxygen Updater може автоматски да испраќа нови OTA URL-адреси до нашите администратори. Ова ќе користи мала количина на податоци и може да потроши малку од вашата батерија. Ќе треба да и дадете дозвола за root на апликацијата, бидејќи таа чита датотека со база на податоци до која е достапна само преку root. Ќе бидете известени кога URL-то е успешно испратено.</string>
+	<string name="contribute_title">Помогнете да се подобри OS Updater</string>
+	<string name="contribute_explanation">За да ви ги дадеме најновите ажурирања, треба да снимиме OTA ZIP URL-адреси.\n\nКако можам да помогнам?\n\nOS Updater може автоматски да испраќа нови OTA URL-адреси до нашите администратори. Ова ќе користи мала количина на податоци и може да потроши малку од вашата батерија. Ќе треба да и дадете дозвола за root на апликацијата, бидејќи таа чита датотека со база на податоци до која е достапна само преку root. Ќе бидете известени кога URL-то е успешно испратено.</string>
 	<string name="contribute_agree">Придонесете OTA-URL-адреси (потребен е root)</string>
 	<string name="contribute_save">Зачувај поставки</string>
 	<string name="contribute_more_info">Повеќе информации</string>

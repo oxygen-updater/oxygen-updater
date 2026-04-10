@@ -209,8 +209,8 @@ This can be useful if you want to:"</string>
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">Push notifications</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">Displays all non-important notifications of the Oxygen Updater app. Contains the status indicators shown during downloading.</string>
-	<string name="push_notifications_group_description">Displays all important notifications of the Oxygen Updater app. These include system update notifications and breaking news notifications.</string>
+	<string name="download_and_installation_notifications_group_description">Displays all non-important notifications of the OS Updater app. Contains the status indicators shown during downloading.</string>
+	<string name="push_notifications_group_description">Displays all important notifications of the OS Updater app. These include system update notifications and breaking news notifications.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -243,8 +243,8 @@ This can be useful if you want to:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Become a contributor</string>
-	<string name="contribute_title">Help improve Oxygen Updater</string>
-	<string name="contribute_explanation">In order to give you the latest updates, we need to capture OTA ZIP URLs.\n\nHow can I help?\n\nOxygen Updater can automatically submit new OTA URLs to our admins. This will use a small amount of data and may use a bit of your battery. You\'ll need to grant root permission to the app, because it reads a database file that\'s accessible only via root. You will be notified when a URL has been successfully submitted.</string>
+	<string name="contribute_title">Help improve OS Updater</string>
+	<string name="contribute_explanation">In order to give you the latest updates, we need to capture OTA ZIP URLs.\n\nHow can I help?\n\nOS Updater can automatically submit new OTA URLs to our admins. This will use a small amount of data and may use a bit of your battery. You\'ll need to grant root permission to the app, because it reads a database file that\'s accessible only via root. You will be notified when a URL has been successfully submitted.</string>
 	<string name="contribute_agree">Contribute OTA URLs (requires root)</string>
 	<string name="contribute_save">Save settings</string>
 	<string name="contribute_more_info">More info</string>

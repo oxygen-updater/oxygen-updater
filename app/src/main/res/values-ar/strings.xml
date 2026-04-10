@@ -201,8 +201,8 @@
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">الإشعارات</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">يعرض جميع الإشعارات غير المهمة لتطبيق Oxygen Updater. محتوياً على مؤشرات الحالة التي تظهر أثناء التحميل.</string>
-	<string name="push_notifications_group_description">يعرض جميع الإخطارات المهمة في تطبيق Oxygen Updater. ويشتمل هذا على إشعارات تحديث النظام وإشعارات الأخبار العاجلة.</string>
+	<string name="download_and_installation_notifications_group_description">يعرض جميع الإشعارات غير المهمة لتطبيق OS Updater. محتوياً على مؤشرات الحالة التي تظهر أثناء التحميل.</string>
+	<string name="push_notifications_group_description">يعرض جميع الإخطارات المهمة في تطبيق OS Updater. ويشتمل هذا على إشعارات تحديث النظام وإشعارات الأخبار العاجلة.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -238,8 +238,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">كن مساهماً</string>
-	<string name="contribute_title">المساعدة في تحسين Oxygen Updater</string>
-	<string name="contribute_explanation">من أجل تزويدك بآخر التحديثات ، نحتاج إلى التقاط عناوين OTA ZIP.\n\nكيف يمكنني أن أقدم المساعدة؟\n\nيمكن لبرنامج Oxygen Updater إرسال عناوين OTA الجديدة تلقائيًا إلى مسؤولينا. سيستخدم هذا قدرًا صغيرًا من البيانات وقد يستهلك القليل من بطاريتك. ستحتاج إلى منح إذن الجذر للتطبيق ، لأنه يقرأ ملف قاعدة بيانات لا يمكن الوصول إليه إلا عبر الجذر. سيتم إخطارك عند إرسال عنوان URL بنجاح.</string>
+	<string name="contribute_title">المساعدة في تحسين OS Updater</string>
+	<string name="contribute_explanation">من أجل تزويدك بآخر التحديثات ، نحتاج إلى التقاط عناوين OTA ZIP.\n\nكيف يمكنني أن أقدم المساعدة؟\n\nيمكن لبرنامج OS Updater إرسال عناوين OTA الجديدة تلقائيًا إلى مسؤولينا. سيستخدم هذا قدرًا صغيرًا من البيانات وقد يستهلك القليل من بطاريتك. ستحتاج إلى منح إذن الجذر للتطبيق ، لأنه يقرأ ملف قاعدة بيانات لا يمكن الوصول إليه إلا عبر الجذر. سيتم إخطارك عند إرسال عنوان URL بنجاح.</string>
 	<string name="contribute_agree">المساهمة بعناوين URL OTA (يتطلب حق الوصول إلى الجذر)</string>
 	<string name="contribute_save">حفظ الإعدادات</string>
 	<string name="contribute_more_info">معلومات إضافية</string>

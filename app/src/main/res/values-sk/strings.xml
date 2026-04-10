@@ -207,8 +207,8 @@ To môže byť užitočné, ak chcete:"</string>
 	<string name="download_and_installation_notifications_group_name">Stiahnutie &amp; Inštalácia</string>
 	<string name="push_notifications_group_name">Push notifikácie</string>
 	<string name="miscellaneous_notifications_group_name">Zmiešané</string>
-	<string name="download_and_installation_notifications_group_description">Zobrazuje všetky nedôležité oznámenia aplikácie Oxygen Updater. Obsahuje indikátory stavu počas sťahovania.</string>
-	<string name="push_notifications_group_description">Zobrazuje všetky dôležité upozornenia Oxygen Updater. Patria sem oznámenia o aktualizácii systému a oznámenia o najnovších správach.</string>
+	<string name="download_and_installation_notifications_group_description">Zobrazuje všetky nedôležité oznámenia aplikácie OS Updater. Obsahuje indikátory stavu počas sťahovania.</string>
+	<string name="push_notifications_group_description">Zobrazuje všetky dôležité upozornenia OS Updater. Patria sem oznámenia o aktualizácii systému a oznámenia o najnovších správach.</string>
 	<string name="download_status_notification_channel_name">Stav sťahovania</string>
 	<string name="verification_status_notification_channel_name">Stav overenia</string>
 	<string name="installation_status_notification_channel_name">Stav inštalácie</string>
@@ -241,8 +241,8 @@ To môže byť užitočné, ak chcete:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Staňte sa prispievateľom</string>
-	<string name="contribute_title">Pomôžte vylepšiť Oxygen Updater</string>
-	<string name="contribute_explanation">Aby sme vám mohli poskytnúť najnovšie aktualizácie, musíme zachytiť adresy URL ZIP OTA.\n\nAko môžem pomôcť?\n\nAplikácia Oxygen Updater môže automaticky odosielať nové adresy URL OTA našim správcom. Použije sa pri tom malé množstvo údajov a môže sa trochu spotrebovať vaša batéria. Aplikácii budete musieť udeliť oprávnenie root, pretože číta databázový súbor, ktorý je prístupný len cez root. Po úspešnom odoslaní adresy URL budete informovaní.</string>
+	<string name="contribute_title">Pomôžte vylepšiť OS Updater</string>
+	<string name="contribute_explanation">Aby sme vám mohli poskytnúť najnovšie aktualizácie, musíme zachytiť adresy URL ZIP OTA.\n\nAko môžem pomôcť?\n\nAplikácia OS Updater môže automaticky odosielať nové adresy URL OTA našim správcom. Použije sa pri tom malé množstvo údajov a môže sa trochu spotrebovať vaša batéria. Aplikácii budete musieť udeliť oprávnenie root, pretože číta databázový súbor, ktorý je prístupný len cez root. Po úspešnom odoslaní adresy URL budete informovaní.</string>
 	<string name="contribute_agree">Pridajte URL adresy OTA (vyžaduje root)</string>
 	<string name="contribute_save">Uložiť nastavenia</string>
 	<string name="contribute_more_info">Viac informácií</string>

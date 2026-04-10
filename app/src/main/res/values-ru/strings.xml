@@ -137,7 +137,7 @@
 &#8226; Легко обновить устройство с рутом
 &#8226; Просмотреть, что нового в установленной прошивке
 &#8226; Читать последние новости о OPPO/OnePlus и OxygenOS/ColorOS"</string>
-	<string name="onboarding_disclaimer">"Данное приложение не является официальным приложением OPPO/OnePlus. Вы используете его на свой страх и риск. OPPO/OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству. Используя Oxygen Updater, вы соглашаетесь с условиями, указанными выше."</string>
+	<string name="onboarding_disclaimer">"Данное приложение не является официальным приложением OPPO/OnePlus. Вы используете его на свой страх и риск. OPPO/OnePlus и разработчик этого приложения не несут ответственности за нанесение какого-либо вреда вашему устройству. Используя OS Updater, вы соглашаетесь с условиями, указанными выше."</string>
 	<string name="onboarding_device_chooser_caption">"Обычно устройство определяется автоматически"</string>
 	<string name="onboarding_method_chooser_caption">"“Incremental” вариант часто является лучшим выбором, так как он обычно загружается в гораздо меньшем объеме"</string>
 	<string name="onboarding_caption">"Наслаждайтесь использованием данного приложения! Вы всегда можете изменить настройки приложения."</string>
@@ -197,8 +197,8 @@
 	<string name="download_and_installation_notifications_group_name">Загрузка и установка</string>
 	<string name="push_notifications_group_name">"Push-уведомления"</string>
 	<string name="miscellaneous_notifications_group_name">Разное</string>
-	<string name="download_and_installation_notifications_group_description">"Отображает все неважные уведомления приложения Oxygen Updater. Содержит индикаторы состояния, отображаемые во время загрузки."</string>
-	<string name="push_notifications_group_description">"Отображает все важные уведомления приложения Oxygen Updater. К ним относятся уведомления об обновлении системы и уведомления о новостях."</string>
+	<string name="download_and_installation_notifications_group_description">"Отображает все неважные уведомления приложения OS Updater. Содержит индикаторы состояния, отображаемые во время загрузки."</string>
+	<string name="push_notifications_group_description">"Отображает все важные уведомления приложения OS Updater. К ним относятся уведомления об обновлении системы и уведомления о новостях."</string>
 	<string name="download_status_notification_channel_name">Статус загрузки</string>
 	<string name="verification_status_notification_channel_name">Статус проверки</string>
 	<string name="installation_status_notification_channel_name">Статус установки</string>
@@ -231,8 +231,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">Стать участником</string>
-	<string name="contribute_title">Помогите улучшить Oxygen Updater</string>
-	<string name="contribute_explanation">Чтобы предоставлять вам последние обновления, нам необходимо получать URL-адреса OTA ZIP.\n\nКак я могу помочь?\n\nOxygen Updater может автоматически отправлять новые OTA URL нашим администраторам. При этом будет использоваться небольшой объем данных и может расходоваться немного заряда батареи. Вам нужно будет предоставить приложению права root, поскольку оно считывает файл базы данных, доступ к которому возможен только через root. Вы получите уведомление, когда URL будет успешно отправлен.</string>
+	<string name="contribute_title">Помогите улучшить OS Updater</string>
+	<string name="contribute_explanation">Чтобы предоставлять вам последние обновления, нам необходимо получать URL-адреса OTA ZIP.\n\nКак я могу помочь?\n\nOS Updater может автоматически отправлять новые OTA URL нашим администраторам. При этом будет использоваться небольшой объем данных и может расходоваться немного заряда батареи. Вам нужно будет предоставить приложению права root, поскольку оно считывает файл базы данных, доступ к которому возможен только через root. Вы получите уведомление, когда URL будет успешно отправлен.</string>
 	<string name="contribute_agree">Добавление URL-адресов OTA (требуются права root)</string>
 	<string name="contribute_save">Сохранить настройки</string>
 	<string name="contribute_more_info">Больше инфо</string>

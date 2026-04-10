@@ -207,8 +207,8 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">"Push Nachrichten"</string>
 	<string name="miscellaneous_notifications_group_name">Verschiedenes</string>
-	<string name="download_and_installation_notifications_group_description">Zeigt alle nicht-kritischen Nachrichten von der Oxygen Updater App. Beinhaltet den Status Indikator der während des Downloads angezeigt wird.</string>
-	<string name="push_notifications_group_description">"Zeigt alle wichtigen Nachrichten von der Oxygen Updater App. Dies beinhaltet System Update Nachrichten und Neuigkeiten."</string>
+	<string name="download_and_installation_notifications_group_description">Zeigt alle nicht-kritischen Nachrichten von der OS Updater App. Beinhaltet den Status Indikator der während des Downloads angezeigt wird.</string>
+	<string name="push_notifications_group_description">"Zeigt alle wichtigen Nachrichten von der OS Updater App. Dies beinhaltet System Update Nachrichten und Neuigkeiten."</string>
 	<string name="download_status_notification_channel_name">Download Status</string>
 	<string name="verification_status_notification_channel_name">Verifikations Status</string>
 	<string name="installation_status_notification_channel_name">Installations Status</string>
@@ -240,8 +240,8 @@ Falls es einen Download Fehler gibt, öffne die App und versuche das Update erne
 	<string name="news_empty_state_all_read_text">Du hast alle Artikel gelesen. Gute Arbeit! Wir hoffen du hattest Spaß beim Lesen unserer Artikel und hast etwas neues gelernt. Tippe das Banner erneut um alle Nachrichten anzuzeigen.</string>
 
 	<string name="contribute">Hilf mit</string>
-	<string name="contribute_title">Hilf mit Oxygen Updater zu verbessern</string>
-	<string name="contribute_explanation">Um Ihnen die neuesten Updates zur Verfügung stellen zu können, müssen wir die OTA-ZIP-URLs erfassen.\n\nWie kann ich Ihnen dabei helfen?\n\nOxygen Updater kann automatisch neue OTA-URLs an unsere Administratoren übermitteln. Dies erfordert eine geringe Datenmenge und kann Ihren Akku ein wenig belasten. Sie müssen der Anwendung Root-Rechte erteilen, da sie eine Datenbankdatei liest, die nur über Root zugänglich ist. Sie werden benachrichtigt, wenn eine URL erfolgreich übermittelt wurde.</string>
+	<string name="contribute_title">Hilf mit OS Updater zu verbessern</string>
+	<string name="contribute_explanation">Um Ihnen die neuesten Updates zur Verfügung stellen zu können, müssen wir die OTA-ZIP-URLs erfassen.\n\nWie kann ich Ihnen dabei helfen?\n\nOS Updater kann automatisch neue OTA-URLs an unsere Administratoren übermitteln. Dies erfordert eine geringe Datenmenge und kann Ihren Akku ein wenig belasten. Sie müssen der Anwendung Root-Rechte erteilen, da sie eine Datenbankdatei liest, die nur über Root zugänglich ist. Sie werden benachrichtigt, wenn eine URL erfolgreich übermittelt wurde.</string>
 	<string name="contribute_agree">OTA-URLs beitragen (erfordert Root-Rechte)</string>
 	<string name="contribute_save">Speichern</string>
 	<string name="contribute_more_info">Mehr Informationen</string>

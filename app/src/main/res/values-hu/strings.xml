@@ -208,8 +208,8 @@ Ez hasznos lehet, ha szeretné:"</string>
 	<string name="download_and_installation_notifications_group_name">Letöltés &amp; Telepítés</string>
 	<string name="push_notifications_group_name">Push értesítések</string>
 	<string name="miscellaneous_notifications_group_name">Egyéb</string>
-	<string name="download_and_installation_notifications_group_description">Megjeleníti az Oxygen Updater alkalmazás összes nem fontos értesítését. A letöltés során megjelenített állapotjelzőket tartalmazza.</string>
-	<string name="push_notifications_group_description">Megjeleníti az Oxygen Updater alkalmazás összes fontos értesítését. Ide tartoznak a rendszerfrissítési értesítések és a friss hírekről szóló értesítések.</string>
+	<string name="download_and_installation_notifications_group_description">Megjeleníti az OS Updater alkalmazás összes nem fontos értesítését. A letöltés során megjelenített állapotjelzőket tartalmazza.</string>
+	<string name="push_notifications_group_description">Megjeleníti az OS Updater alkalmazás összes fontos értesítését. Ide tartoznak a rendszerfrissítési értesítések és a friss hírekről szóló értesítések.</string>
 	<string name="download_status_notification_channel_name">Letöltés állapota</string>
 	<string name="verification_status_notification_channel_name">Ellenőrzés állapota</string>
 	<string name="installation_status_notification_channel_name">Telepítés állapota</string>
@@ -242,8 +242,8 @@ Ez hasznos lehet, ha szeretné:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Közreműködés</string>
-	<string name="contribute_title">Segíts az Oxygen Updater javításában</string>
-	<string name="contribute_explanation">Ahhoz, hogy a legfrissebb frissítésekkel szolgálhassunk, az OTA ZIP URL-eket kell rögzítenünk.\n\nHogyan segíthetek?\n\nAz Oxygen Updater automatikusan elküldheti az új OTA URL-eket az adminisztrátorainknak. Ez kis mennyiségű adatot használ, és egy kicsit igénybe veheti az akkumulátorát. Az alkalmazásnak root jogosultságot kell adnia, mivel egy olyan adatbázisfájlt olvas be, amely csak a root rendszeren keresztül érhető el. Értesítést kap, ha egy URL-t sikeresen elküldött.</string>
+	<string name="contribute_title">Segíts az OS Updater javításában</string>
+	<string name="contribute_explanation">Ahhoz, hogy a legfrissebb frissítésekkel szolgálhassunk, az OTA ZIP URL-eket kell rögzítenünk.\n\nHogyan segíthetek?\n\nAz OS Updater automatikusan elküldheti az új OTA URL-eket az adminisztrátorainknak. Ez kis mennyiségű adatot használ, és egy kicsit igénybe veheti az akkumulátorát. Az alkalmazásnak root jogosultságot kell adnia, mivel egy olyan adatbázisfájlt olvas be, amely csak a root rendszeren keresztül érhető el. Értesítést kap, ha egy URL-t sikeresen elküldött.</string>
 	<string name="contribute_agree">OTA URL-ek hozzáadása (root jogosultság szükséges)</string>
 	<string name="contribute_save">Beállítások mentése</string>
 	<string name="contribute_more_info">Bővebb információ</string>

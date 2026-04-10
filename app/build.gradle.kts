@@ -66,11 +66,11 @@ fun ApplicationBuildType.setupBuildConfig(
 
     // To distinguish in app drawer and allow multiple builds to exist in parallel on the same device
     if (release) {
-        resValue("string", "app_name", "Oxygen Updater")
+        resValue("string", "app_name", "OS Updater")
     } else {
         versionNameSuffix = "-$buildName"
         applicationIdSuffix = ".$buildName"
-        resValue("string", "app_name", "Oxygen Updater ($buildName)")
+        resValue("string", "app_name", "OS Updater ($buildName)")
     }
 
     val domain: String
@@ -139,8 +139,8 @@ android {
         minSdk = 23
         targetSdk = 36
 
-        versionCode = 132
-        versionName = "6.8.1"
+        versionCode = 133
+        versionName = "7.0.0"
 
         addManifestPlaceholders(mapOf("advertisingAppId" to "ca-app-pub-1816831161514116~4275332954"))
         buildConfigField("String", "AD_BANNER_MAIN_ID", "\"ca-app-pub-1816831161514116/9792024147\"")

@@ -212,9 +212,9 @@ Vous pouvez faire cela en visitant la section « Mes applications » dans le P
 	<string name="download_and_installation_notifications_group_name">Téléchargement &amp; Installation</string>
 	<string name="push_notifications_group_name">"Notifications push"</string>
 	<string name="miscellaneous_notifications_group_name">Diverses</string>
-	<string name="download_and_installation_notifications_group_description">"Affiche toutes les notifications non importantes d'Oxygen Updater.
+	<string name="download_and_installation_notifications_group_description">"Affiche toutes les notifications non importantes d'OS Updater.
 Contient les indicateurs de statut montrés durant le téléchargement."</string>
-	<string name="push_notifications_group_description">"Affiche les notifications importantes d'Oxygen Updater.
+	<string name="push_notifications_group_description">"Affiche les notifications importantes d'OS Updater.
 Cela inclut les notifications de mises à jour systèmes et celles de nouveaux articles."</string>
 	<string name="download_status_notification_channel_name">Statut du téléchargement</string>
 	<string name="verification_status_notification_channel_name">Statut de la vérification</string>
@@ -248,8 +248,8 @@ Cela inclut les notifications de mises à jour systèmes et celles de nouveaux a
 
 	<!-- Contribute strings -->
 	<string name="contribute">Devenez un contributeur</string>
-	<string name="contribute_title">Aidez à améliorer Oxygen Updater</string>
-	<string name="contribute_explanation">Afin de vous fournir les dernières mises à jour, nous avons besoin de capturer les URL OTA ZIP.\n\nComment puis-je vous aider ?\n\nOxygen Updater peut soumettre automatiquement les nouvelles URL OTA à nos administrateurs. Cela utilisera une petite quantité de données et peut utiliser un peu de votre batterie. Vous devrez accorder à l\'application le droit d\'accès à la racine, car elle lit un fichier de base de données qui n\'est accessible que par l\'intermédiaire de la racine. Vous serez averti lorsqu\'une URL aura été soumise avec succès.</string>
+	<string name="contribute_title">Aidez à améliorer OS Updater</string>
+	<string name="contribute_explanation">Afin de vous fournir les dernières mises à jour, nous avons besoin de capturer les URL OTA ZIP.\n\nComment puis-je vous aider ?\n\nOS Updater peut soumettre automatiquement les nouvelles URL OTA à nos administrateurs. Cela utilisera une petite quantité de données et peut utiliser un peu de votre batterie. Vous devrez accorder à l\'application le droit d\'accès à la racine, car elle lit un fichier de base de données qui n\'est accessible que par l\'intermédiaire de la racine. Vous serez averti lorsqu\'une URL aura été soumise avec succès.</string>
 	<string name="contribute_agree">Contribuer aux URL OTA (nécessite un accès root)</string>
 	<string name="contribute_save">Enregistrer</string>
 	<string name="contribute_more_info">Plus d\'informations</string>

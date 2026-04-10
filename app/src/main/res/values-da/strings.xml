@@ -209,8 +209,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">Push-underretninger</string>
 	<string name="miscellaneous_notifications_group_name">Diverse</string>
-	<string name="download_and_installation_notifications_group_description">Viser alle ikke-vigtige meddelelser om the Oxygen Updater app\'en. Indeholder statusindikatorerne, der vises under download.</string>
-	<string name="push_notifications_group_description">Viser alle vigtige meddelelser om Oxygen Updater app\'en. Disse inkluderer system-opdateringer, opdaterings-meddelelser og Sidste Nyt-meddelelser.</string>
+	<string name="download_and_installation_notifications_group_description">Viser alle ikke-vigtige meddelelser om the OS Updater app\'en. Indeholder statusindikatorerne, der vises under download.</string>
+	<string name="push_notifications_group_description">Viser alle vigtige meddelelser om OS Updater app\'en. Disse inkluderer system-opdateringer, opdaterings-meddelelser og Sidste Nyt-meddelelser.</string>
 	<string name="download_status_notification_channel_name">Downloadstatus</string>
 	<string name="verification_status_notification_channel_name">Verifikationsstatus</string>
 	<string name="installation_status_notification_channel_name">Installationsstatus</string>
@@ -247,8 +247,8 @@ Det kan være nyttigt, hvis du vil:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Bliv bidragsyder</string>
-	<string name="contribute_title">Bidrag med at gøre Oxygen Updater endnu bedre</string>
-	<string name="contribute_explanation">For at kunne give dig de seneste opdateringer er vi nødt til at indsamle OTA ZIP-URL\'er.\n\nHvordan kan jeg hjælpe?\n\nOxygen Updater kan automatisk sende nye OTA-URL\'er til vores administratorer. Dette vil bruge en lille mængde data og kan bruge en smule af dit batteri. Du skal give root-tilladelse til appen, fordi den læser en databasefil, som kun er tilgængelig via root. Du får besked, når en URL er blevet sendt med succes.</string>
+	<string name="contribute_title">Bidrag med at gøre OS Updater endnu bedre</string>
+	<string name="contribute_explanation">For at kunne give dig de seneste opdateringer er vi nødt til at indsamle OTA ZIP-URL\'er.\n\nHvordan kan jeg hjælpe?\n\nOS Updater kan automatisk sende nye OTA-URL\'er til vores administratorer. Dette vil bruge en lille mængde data og kan bruge en smule af dit batteri. Du skal give root-tilladelse til appen, fordi den læser en databasefil, som kun er tilgængelig via root. Du får besked, når en URL er blevet sendt med succes.</string>
 	<string name="contribute_agree">Bidrag med OTA-URL\'er (kræver root)</string>
 	<string name="contribute_save">Gem indstillinger</string>
 	<string name="contribute_more_info">Mere info</string>

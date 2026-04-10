@@ -150,7 +150,7 @@
 	<string name="onboarding_finished_button">розпочати</string>
 
 	<string name="onboarding_app_uses">Цей застосунок дозволить вам:\n\n&#8226; Отримувати миттєвий доступ до останніх оновлень Android для вашого пристрою під керуванням OxygenOS/ColorOS\n&#8226; Легко оновлювати пристрій з рутом\n&#8226; Переглядати, що нового на встановленій прошивці\n&#8226; Читати останні новини про OPPO/OnePlus і OxygenOS/ColorOS</string>
-	<string name="onboarding_disclaimer">Це не офіційний застосунок від компанії OPPO/OnePlus. Ви використовуєте його на свій страх і ризик. OPPO/OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи Oxygen Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
+	<string name="onboarding_disclaimer">Це не офіційний застосунок від компанії OPPO/OnePlus. Ви використовуєте його на свій страх і ризик. OPPO/OnePlus і розробник цього застосунку не несуть відповідальності за заподіяння будь-якої шкоди вашому пристрою, спричинених цим застосунком. Використовуючи OS Updater, ви погоджуєтеся з умовами, вказаними вище.</string>
 	<string name="onboarding_device_chooser_caption">Зазвичай пристрій визначається автоматично</string>
 	<string name="onboarding_method_chooser_caption">«Incremental» часто є найкращим вибором, оскільки він зазвичай набагато менший за обсягом завантаження</string>
 	<string name="onboarding_caption">Сподіваємося, вам буде приємно користуватися цим застосунком! Ви завжди можете змінити налаштування.</string>
@@ -160,7 +160,7 @@
 
 	<!-- Install guide strings -->
 	<string name="install_guide">Інструкція по встановленню</string>
-	<string name="install_guide_download_instructions">&#8226; Натисніть кнопку \"Завантажити\", щоб розпочати завантаження оновлення.\n&#8226; Внизу застосунку з\'явиться прогрес завантаження, який буде продубльовано в системному сповіщенні.\n&#8226; Коли завантаження завершиться, ви побачите сповіщення з текстом \"Завантаження завершено\". Якщо під час завантаження трапиться помилка, відкрийте застосунок і спробуйте завантажити оновлення ще раз. Якщо і це на спрацює, тоді перевірте з\'єднання з інтернетом. Інакше, зв\'яжіться з розробником застосунку: знайдіть застосунок Oxygen Updater в Google Play > \"Контактні дані розробника\".</string>
+	<string name="install_guide_download_instructions">&#8226; Натисніть кнопку \"Завантажити\", щоб розпочати завантаження оновлення.\n&#8226; Внизу застосунку з\'явиться прогрес завантаження, який буде продубльовано в системному сповіщенні.\n&#8226; Коли завантаження завершиться, ви побачите сповіщення з текстом \"Завантаження завершено\". Якщо під час завантаження трапиться помилка, відкрийте застосунок і спробуйте завантажити оновлення ще раз. Якщо і це на спрацює, тоді перевірте з\'єднання з інтернетом. Інакше, зв\'яжіться з розробником застосунку: знайдіть застосунок OS Updater в Google Play > \"Контактні дані розробника\".</string>
 
 	<!-- Device information strings -->
 	<string name="device_information_supported_oxygen_os">Ваш пристрій підтримується</string>
@@ -208,8 +208,8 @@
 	<string name="download_and_installation_notifications_group_name">Завантаження і встановлення</string>
 	<string name="push_notifications_group_name">Пуш-сповіщення</string>
 	<string name="miscellaneous_notifications_group_name">Вирішення проблем</string>
-	<string name="download_and_installation_notifications_group_description">Показує всі не важливі сповіщення застосунку Oxygen Updater. Включає індикатор завантаження.</string>
-	<string name="push_notifications_group_description">Показує всі важливі сповіщення застосунку Oxygen Updater. Включає сповіщення про оновлення системи і сповіщення про важливі новини.</string>
+	<string name="download_and_installation_notifications_group_description">Показує всі не важливі сповіщення застосунку OS Updater. Включає індикатор завантаження.</string>
+	<string name="push_notifications_group_description">Показує всі важливі сповіщення застосунку OS Updater. Включає сповіщення про оновлення системи і сповіщення про важливі новини.</string>
 	<string name="download_status_notification_channel_name">Стан завантаження</string>
 	<string name="verification_status_notification_channel_name">Стан перевірки</string>
 	<string name="installation_status_notification_channel_name">Стан встановлення</string>
@@ -242,8 +242,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">Стати помічником</string>
-	<string name="contribute_title">Допомога в покращенні Oxygen Updater</string>
-	<string name="contribute_explanation">Для того, щоб надавати вам останні оновлення, нам потрібно перехоплювати URL-адреси OTA ZIP.\n\nЯк я можу допомогти?\n\nOxygen Updater може автоматично надсилати нові OTA-адреси нашим адміністраторам. Для цього буде використано невелику кількість даних і може витрачатися трохи заряду вашого акумулятора. Вам потрібно надати програмі привілеї root, тому що вона читає файл бази даних, доступ до якого є лише у привілейованих користувачів. Ви отримаєте сповіщення, коли URL буде успішно надіслано.</string>
+	<string name="contribute_title">Допомога в покращенні OS Updater</string>
+	<string name="contribute_explanation">Для того, щоб надавати вам останні оновлення, нам потрібно перехоплювати URL-адреси OTA ZIP.\n\nЯк я можу допомогти?\n\nOS Updater може автоматично надсилати нові OTA-адреси нашим адміністраторам. Для цього буде використано невелику кількість даних і може витрачатися трохи заряду вашого акумулятора. Вам потрібно надати програмі привілеї root, тому що вона читає файл бази даних, доступ до якого є лише у привілейованих користувачів. Ви отримаєте сповіщення, коли URL буде успішно надіслано.</string>
 	<string name="contribute_agree">Додайте URL-адреси OTA (потрібні права суперкористувача)</string>
 	<string name="contribute_save">Зберегти налаштування</string>
 	<string name="contribute_more_info">Детальніше</string>

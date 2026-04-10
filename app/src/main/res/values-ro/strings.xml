@@ -206,8 +206,8 @@ Acest lucru poate fi util dacă doriți să:"</string>
 	<string name="download_and_installation_notifications_group_name">Descărcare &amp; Instalare</string>
 	<string name="push_notifications_group_name">Notificări push</string>
 	<string name="miscellaneous_notifications_group_name">Diverse</string>
-	<string name="download_and_installation_notifications_group_description">Afișează toate notificările mai puțin importante ale aplicației Oxygen Updater. Conține indicatorii de stare afișați în timpul descărcării.</string>
-	<string name="push_notifications_group_description">Afișează toate notificările importante ale aplicației Oxygen Updater. Acestea includ notificări de actualizare a sistemului și notificări de știri de ultimă oră.</string>
+	<string name="download_and_installation_notifications_group_description">Afișează toate notificările mai puțin importante ale aplicației OS Updater. Conține indicatorii de stare afișați în timpul descărcării.</string>
+	<string name="push_notifications_group_description">Afișează toate notificările importante ale aplicației OS Updater. Acestea includ notificări de actualizare a sistemului și notificări de știri de ultimă oră.</string>
 	<string name="download_status_notification_channel_name">Stadiul descărcării</string>
 	<string name="verification_status_notification_channel_name">Stadiul verificării</string>
 	<string name="installation_status_notification_channel_name">Stadiul instalării</string>
@@ -240,8 +240,8 @@ Acest lucru poate fi util dacă doriți să:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Deveniți un contribuitor</string>
-	<string name="contribute_title">Ajutați-ne să îmbunătățim aplicația Oxygen Updater</string>
-	<string name="contribute_explanation">Pentru a vă oferi cele mai recente actualizări, trebuie să capturăm URL-urile OTA ZIP.\n\nCum vă pot ajuta?\n\nOxygen Updater poate trimite automat noile URL-uri OTA către administratorii noștri. Acest lucru va utiliza o cantitate mică de date și poate consuma puțin din bateria dvs. Va trebui să acordați permisiunea de root aplicației, deoarece aceasta citește un fișier de bază de date care este accesibil doar prin root. Veți fi notificat atunci când un URL a fost trimis cu succes.</string>
+	<string name="contribute_title">Ajutați-ne să îmbunătățim aplicația OS Updater</string>
+	<string name="contribute_explanation">Pentru a vă oferi cele mai recente actualizări, trebuie să capturăm URL-urile OTA ZIP.\n\nCum vă pot ajuta?\n\nOS Updater poate trimite automat noile URL-uri OTA către administratorii noștri. Acest lucru va utiliza o cantitate mică de date și poate consuma puțin din bateria dvs. Va trebui să acordați permisiunea de root aplicației, deoarece aceasta citește un fișier de bază de date care este accesibil doar prin root. Veți fi notificat atunci când un URL a fost trimis cu succes.</string>
 	<string name="contribute_agree">Contribuie cu adrese URL OTA (necesită drepturi de administrator)</string>
 	<string name="contribute_save">Salvează setările</string>
 	<string name="contribute_more_info">Mai multe informații…</string>

@@ -191,7 +191,7 @@
 	<string name="about_description">אפליקציה זו מורידה עדכונים רשמיים היישר מתוך השרתים של OPPO/OnePlus, ואף מאשרת את שלמות קובץ העדכון לפני שהמשתמש יוכל להוריד אותו מהאפליקציה. על ידי כך, האפליקציה מאפשרת לך לדלג על ההמתנה של שחרור העדכונים ולהוריד עדכונים רשמיים במהירות האפשרית. אם אתם נתקלים בבאגים בתוכנה, דווחו זאת ל־OnePlus ישירות: <a href="https://forums.oneplus.com/feedback">https://forums.oneplus.com/feedback</a>. אתם מוזמנים להצטרף<a href="https://discord.gg/5TXdhKJ"> לשרת ה־Discord שלנו </a>בשביל שתוכלו לדבר עם משתמשים אחרים על העדכונים האחרונים. בנוסף תרגישו חופשי לשלוח לנו אימייל בכתובת <a href="mailto:support@oxygenupdater.com">support@oxygenupdater.com</a> עם הרעיונות/המשוב שלכם.</string>
 	<string name="about_support">אם ברצונך לתמוך בנו, באפשרותך לקנות תוספת המעניקה לך חופש מפרסומות (יישום/ הגדרות), או לתרום לנו בעמוד ה- <a href="https://patreon.com/oxygenupdater">Patreon page</a>.</string>
 	<string name="about_background_story_header">סיפור רקע</string>
-	<string name="about_background_story">אפליקציית Oxygen Updater פותחה במקור על ידי Arjan Vlek ככלי מעקב אחר תוכנה אחרת שלו, המכונה <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (היא מספקת פונקציונליות דומה עבור משתמשי Cyanogen OS).\n\nאחרי 4 שנים, ביולי 2019, Arjan החליט לפרוש משני הפרויקטים והעביר את הבעלות על האפליקציה לצוות מפתחים שמגיעים ממדינות שונות. הם לקחו על עצמם את האחריות לספק לקהילה שירות מצויין ומהיר; תמיכה לקבלת עדכונים למכשירי OPPO/OnePlus מהר יותר.\nהינך מוזמן לקרוא את ההכרזה <a href="https://oxygenupdater.com/article/81/">כאן</a>.\n\nב-14 לאוגוסט 2019 נרשמה המהדורה הראשונה תחת הבעלים החדשים, שהגיע עם תכונות חדשות כמו מצב חושך ועיצוב שונה לגמרי.\n\nעבור עוד מידע על הצוות בדוק את <a href="https://oxygenupdater.com/team/">האתר שלנו</a></string>
+	<string name="about_background_story">אפליקציית OS Updater פותחה במקור על ידי Arjan Vlek ככלי מעקב אחר תוכנה אחרת שלו, המכונה <a href="https://cyanogenupdatetracker.com/">Cyanogen Update Tracker</a> (היא מספקת פונקציונליות דומה עבור משתמשי Cyanogen OS).\n\nאחרי 4 שנים, ביולי 2019, Arjan החליט לפרוש משני הפרויקטים והעביר את הבעלות על האפליקציה לצוות מפתחים שמגיעים ממדינות שונות. הם לקחו על עצמם את האחריות לספק לקהילה שירות מצויין ומהיר; תמיכה לקבלת עדכונים למכשירי OPPO/OnePlus מהר יותר.\nהינך מוזמן לקרוא את ההכרזה <a href="https://oxygenupdater.com/article/81/">כאן</a>.\n\nב-14 לאוגוסט 2019 נרשמה המהדורה הראשונה תחת הבעלים החדשים, שהגיע עם תכונות חדשות כמו מצב חושך ועיצוב שונה לגמרי.\n\nעבור עוד מידע על הצוות בדוק את <a href="https://oxygenupdater.com/team/">האתר שלנו</a></string>
 	<string name="about_third_party_app_notice">שימו לב, זוהי אינה אפליקציה רשמית מ-OnePlus.\nשם ה-OnePlus, לוגו ה-OnePlus ו-OxygenOS/ColorOS הם רכוש של OPPO/OnePlus.\nAndroid, Google, Google Play, Google Play Logo הם סימנים מסחריים רשומים של Google Inc.\nאפליקציה זאת משתמשת בנתונים מבית OPPO/OnePlus ומחברת האם שלה Oppo כדי להראות מידע על עדכונים.</string>
 	<string name="about_rate_button_text">דרג</string>
 	<string name="about_website_button_text">אתר</string>
@@ -206,8 +206,8 @@
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">התראות דחיפה</string>
 	<string name="miscellaneous_notifications_group_name">שונות</string>
-	<string name="download_and_installation_notifications_group_description">מציג את כל ההתראות הלא חשובות של אפליקצית Oxygen Updater. מכיל את מחווני המצב המוצגים במהלך ההורדה</string>
-	<string name="push_notifications_group_description">מציג את כל ההתראות החשובות של אפליקציית הOxygen Updater. אלה כוללים התראות על עדכוני מערכת והודעות חדשות ומתפרצות</string>
+	<string name="download_and_installation_notifications_group_description">מציג את כל ההתראות הלא חשובות של אפליקצית OS Updater. מכיל את מחווני המצב המוצגים במהלך ההורדה</string>
+	<string name="push_notifications_group_description">מציג את כל ההתראות החשובות של אפליקציית הOS Updater. אלה כוללים התראות על עדכוני מערכת והודעות חדשות ומתפרצות</string>
 	<string name="download_status_notification_channel_name">מצב הורדה</string>
 	<string name="verification_status_notification_channel_name">מצב אימות</string>
 	<string name="installation_status_notification_channel_name">מצב התקנה</string>
@@ -240,8 +240,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">עזור לנו לשפר את האפליקציה</string>
-	<string name="contribute_title">עזור לשפר את Oxygen Updater</string>
-	<string name="contribute_explanation">על מנת לתת לך את העדכונים האחרונים, עלינו ללכוד כתובות URL של OTA ZIP.\n\nאיך אני יכול לעזור?\n\nOxygen Updater יכול להגיש אוטומטית כתובות OTA חדשות למנהלים שלנו. פעולה זו תשתמש בכמות קטנה של נתונים ועשויה לנצל מעט מהסוללה שלך. תצטרך להעניק הרשאת שורש לאפליקציה, מכיוון שהיא קוראת קובץ מסד נתונים שנגיש רק דרך השורש. תקבל הודעה כאשר כתובת אתר נשלחה בהצלחה.</string>
+	<string name="contribute_title">עזור לשפר את OS Updater</string>
+	<string name="contribute_explanation">על מנת לתת לך את העדכונים האחרונים, עלינו ללכוד כתובות URL של OTA ZIP.\n\nאיך אני יכול לעזור?\n\nOS Updater יכול להגיש אוטומטית כתובות OTA חדשות למנהלים שלנו. פעולה זו תשתמש בכמות קטנה של נתונים ועשויה לנצל מעט מהסוללה שלך. תצטרך להעניק הרשאת שורש לאפליקציה, מכיוון שהיא קוראת קובץ מסד נתונים שנגיש רק דרך השורש. תקבל הודעה כאשר כתובת אתר נשלחה בהצלחה.</string>
 	<string name="contribute_agree">תרום כתובות URL של OTA (נדרשת הרשאת root)</string>
 	<string name="contribute_save">שמור הגדרות</string>
 	<string name="contribute_more_info">מידע נוסף</string>

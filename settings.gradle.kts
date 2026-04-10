@@ -29,4 +29,4 @@ dependencyResolutionManagement {
 }
 
 include(":app")
-rootProject.name = "Oxygen Updater"
+rootProject.name = "OS Updater"

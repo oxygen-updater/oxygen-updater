@@ -72,7 +72,7 @@ You can still view/fork this repository, submit PRs, and/or raise issues. This i
 All help is welcome, so if you'd like to contribute to the app's code or translations check out [`CONTRIBUTING.md`][contributing].
 
 [badge-ci]: https://github.com/oxygen-updater/oxygen-updater/actions/workflows/ci.yml/badge.svg
-[badge-latest-release]: https://img.shields.io/badge/release-v6.8.1-%23f50514?logo=github
+[badge-latest-release]: https://img.shields.io/badge/release-v7.0.0-%23f50514?logo=github
 
 [contributing]: ./CONTRIBUTING.md
 

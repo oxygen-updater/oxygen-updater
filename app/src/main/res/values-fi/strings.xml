@@ -208,8 +208,8 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">"Push ilmoitukset"</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">"Näyttää kaikki sovelluksen Oxygen Updater ei tärkeät päivitykset. Sisältää tilaindikaattorin kun ladataan päivitystä."</string>
-	<string name="push_notifications_group_description">"Näyttää kaikki sovelluksen Oxygen Updater tärkeät päivitykset. Tämä sisältää järjestelmäpäivitysten sekä viimeisimpien uutisten ilmoitukset."</string>
+	<string name="download_and_installation_notifications_group_description">"Näyttää kaikki sovelluksen OS Updater ei tärkeät päivitykset. Sisältää tilaindikaattorin kun ladataan päivitystä."</string>
+	<string name="push_notifications_group_description">"Näyttää kaikki sovelluksen OS Updater tärkeät päivitykset. Tämä sisältää järjestelmäpäivitysten sekä viimeisimpien uutisten ilmoitukset."</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -243,8 +243,8 @@ Jos latauksessa ilmenee virhe, avaa sovellus ja yritä ladata päivitys uudellee
 	<string name="news_empty_state_all_read_text">Olet lukenut kaikki artikkelit. Hyvin tehty! Toivomme, että pidät niistä ja olet oppinut jotain uutta. Bannerin painaminen näyttää kaikki artikkelit.</string>
 
 	<string name="contribute">Tule tukijaksi</string>
-	<string name="contribute_title">Auta parantamaan Oxygen Updateria</string>
-	<string name="contribute_explanation">Jotta voimme antaa sinulle uusimmat päivitykset, meidän on kerättävä OTA ZIP URL-osoitteet.\n\nMiten voin auttaa?\n\nOxygen Updater voi lähettää uudet OTA-URL-osoitteet automaattisesti ylläpitäjillemme. Tämä käyttää pienen määrän dataa ja saattaa kuluttaa hieman akkuasi. Sinun on annettava sovellukselle pääkäyttäjän oikeudet, koska se lukee tietokantatiedostoa, johon pääsee käsiksi vain pääkäyttäjän kautta. Saat ilmoituksen, kun URL-osoite on lähetetty onnistuneesti.</string>
+	<string name="contribute_title">Auta parantamaan OS Updateria</string>
+	<string name="contribute_explanation">Jotta voimme antaa sinulle uusimmat päivitykset, meidän on kerättävä OTA ZIP URL-osoitteet.\n\nMiten voin auttaa?\n\nOS Updater voi lähettää uudet OTA-URL-osoitteet automaattisesti ylläpitäjillemme. Tämä käyttää pienen määrän dataa ja saattaa kuluttaa hieman akkuasi. Sinun on annettava sovellukselle pääkäyttäjän oikeudet, koska se lukee tietokantatiedostoa, johon pääsee käsiksi vain pääkäyttäjän kautta. Saat ilmoituksen, kun URL-osoite on lähetetty onnistuneesti.</string>
 	<string name="contribute_agree">Lisää OTA-URL-osoitteita (vaatii pääkäyttäjän oikeudet)</string>
 	<string name="contribute_save">Tallenna asetukset</string>
 	<string name="contribute_more_info">Lisätietoja</string>

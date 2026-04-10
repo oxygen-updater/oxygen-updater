@@ -204,8 +204,8 @@
 	<string name="download_and_installation_notifications_group_name">下载 &amp; 安装</string>
 	<string name="push_notifications_group_name">推送通知</string>
 	<string name="miscellaneous_notifications_group_name">杂项</string>
-	<string name="download_and_installation_notifications_group_description">显示 Oxygen 更新器应用程序的所有非重要通知。 包含下载期间显示的状态指示器。</string>
-	<string name="push_notifications_group_description">显示 Oxygen 更新器应用程序的所有重要通知。其中包括系统更新通知和突发新闻通知。</string>
+	<string name="download_and_installation_notifications_group_description">显示 Nitrogen 更新器应用程序的所有非重要通知。 包含下载期间显示的状态指示器。</string>
+	<string name="push_notifications_group_description">显示 Nitrogen 更新器应用程序的所有重要通知。其中包括系统更新通知和突发新闻通知。</string>
 	<string name="download_status_notification_channel_name">下载状态</string>
 	<string name="verification_status_notification_channel_name">验证状态</string>
 	<string name="installation_status_notification_channel_name">安装状态</string>
@@ -239,8 +239,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">参与共研</string>
-	<string name="contribute_title">加入 Oxygen 更新器共研计划</string>
-	<string name="contribute_explanation">为了给你提供最新的更新，我们需要捕获OTA ZIP URL。\n\n我可以如何帮助？\n\nOxygen Updater 可以自动提交新的 OTA URL 给我们的管理员。这将使用少量的数据，并可能使用一点你的电池。您需要授予该应用程序的root权限，因为它读取的数据库文件只能通过root访问。当一个URL被成功提交时，你会得到通知。</string>
+	<string name="contribute_title">加入 Nitrogen 更新器共研计划</string>
+	<string name="contribute_explanation">为了给你提供最新的更新，我们需要捕获OTA ZIP URL。\n\n我可以如何帮助？\n\nOS Updater 可以自动提交新的 OTA URL 给我们的管理员。这将使用少量的数据，并可能使用一点你的电池。您需要授予该应用程序的root权限，因为它读取的数据库文件只能通过root访问。当一个URL被成功提交时，你会得到通知。</string>
 	<string name="contribute_agree">贡献OTA网址（需要root权限）</string>
 	<string name="contribute_save">保存设置</string>
 	<string name="contribute_more_info">了解更多</string>

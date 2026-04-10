@@ -205,8 +205,8 @@
 	<string name="download_and_installation_notifications_group_name">Преузми &amp; Инсталацију</string>
 	<string name="push_notifications_group_name">Обавештења</string>
 	<string name="miscellaneous_notifications_group_name">Разно</string>
-	<string name="download_and_installation_notifications_group_description">Прикажи сва мање битна обавештења о Oxygen Updater апликацији. То садржи обавештења о статусу преузимања и слично.</string>
-	<string name="push_notifications_group_description">Прикажи сва битна обавештења Oxygen Updater апликације. Ово подразумева обавештења о ажурирању система и битне вести.</string>
+	<string name="download_and_installation_notifications_group_description">Прикажи сва мање битна обавештења о OS Updater апликацији. То садржи обавештења о статусу преузимања и слично.</string>
+	<string name="push_notifications_group_description">Прикажи сва битна обавештења OS Updater апликације. Ово подразумева обавештења о ажурирању система и битне вести.</string>
 	<string name="download_status_notification_channel_name">Статус преузимања</string>
 	<string name="verification_status_notification_channel_name">Статус верификације</string>
 	<string name="installation_status_notification_channel_name">Статус инсталирања</string>
@@ -240,7 +240,7 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">Постани сарадник</string>
-	<string name="contribute_title">Помози напредовању Oxygen Updater-а</string>
+	<string name="contribute_title">Помози напредовању OS Updater-а</string>
 	<string name="contribute_explanation">Да бисмо вам дали најновија ажурирања, морамо да ухватимо ОТА ЗИП УРЛ адресе.\n\nКако могу да помогнем?\n\nОкиген Упдатер може аутоматски да пошаље нове ОТА УРЛ адресе нашим администраторима. Ово ће користити малу количину података и можда ће потрошити мало батерије. Мораћете да доделите роот дозволу за апликацију, јер она чита датотеку базе података којој се може приступити само преко роот-а. Бићете обавештени када УРЛ буде успешно послат.</string>
 	<string name="contribute_agree">Допринесите OTA URL-овима (захтева рут)</string>
 	<string name="contribute_save">Сачувај подешавања</string>

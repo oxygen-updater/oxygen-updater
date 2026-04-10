@@ -218,8 +218,8 @@ Może to być przydatne, jeśli chcesz:"</string>
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installation</string>
 	<string name="push_notifications_group_name">Powiadomienia push</string>
 	<string name="miscellaneous_notifications_group_name">Miscellaneous</string>
-	<string name="download_and_installation_notifications_group_description">Wyświetla wszystkie niezbyt ważne powiadomienia w aplikacji Oxygen Updater. Zawiera wskaźniki stanu pokazywane podczas pobierania.</string>
-	<string name="push_notifications_group_description">Wyświetla wszystkie ważne powiadomienia aplikacji Oxygen Updater. Są w nich zawarte powiadomienia o aktualizacjach systemu oraz powiadomienia z ostatniej chwili.</string>
+	<string name="download_and_installation_notifications_group_description">Wyświetla wszystkie niezbyt ważne powiadomienia w aplikacji OS Updater. Zawiera wskaźniki stanu pokazywane podczas pobierania.</string>
+	<string name="push_notifications_group_description">Wyświetla wszystkie ważne powiadomienia aplikacji OS Updater. Są w nich zawarte powiadomienia o aktualizacjach systemu oraz powiadomienia z ostatniej chwili.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verification status</string>
 	<string name="installation_status_notification_channel_name">Installation status</string>
@@ -255,8 +255,8 @@ Może to być przydatne, jeśli chcesz:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Zostań osoba wnoszącą wkład</string>
-	<string name="contribute_title">Pomóż w ulepszaniu Oxygen Updater</string>
-	<string name="contribute_explanation">Aby dostarczać najnowsze aktualizacje, musimy przechwytywać adresy URL OTA ZIP.\n\nJak mogę pomóc?\n\nOxygen Updater może automatycznie przesyłać nowe adresy URL OTA do naszych administratorów. Będzie to wykorzystywać niewielką ilość danych i może zużywać trochę baterii. Będziesz musiał przyznać aplikacji uprawnienia roota, ponieważ odczytuje ona plik bazy danych, który jest dostępny tylko przez roota. Zostaniesz powiadomiony, gdy adres URL zostanie pomyślnie przesłany.</string>
+	<string name="contribute_title">Pomóż w ulepszaniu OS Updater</string>
+	<string name="contribute_explanation">Aby dostarczać najnowsze aktualizacje, musimy przechwytywać adresy URL OTA ZIP.\n\nJak mogę pomóc?\n\nOS Updater może automatycznie przesyłać nowe adresy URL OTA do naszych administratorów. Będzie to wykorzystywać niewielką ilość danych i może zużywać trochę baterii. Będziesz musiał przyznać aplikacji uprawnienia roota, ponieważ odczytuje ona plik bazy danych, który jest dostępny tylko przez roota. Zostaniesz powiadomiony, gdy adres URL zostanie pomyślnie przesłany.</string>
 	<string name="contribute_agree">Dodaj adresy URL OTA (wymagane uprawnienia administratora)</string>
 	<string name="contribute_save">Zapisz ustawienia</string>
 	<string name="contribute_more_info">Więcej informacji</string>

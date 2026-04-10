@@ -208,8 +208,8 @@
 	<string name="download_and_installation_notifications_group_name">ダウンロードとインストール</string>
 	<string name="push_notifications_group_name">通知のプッシュ</string>
 	<string name="miscellaneous_notifications_group_name">その他</string>
-	<string name="download_and_installation_notifications_group_description">Oxygen Updater アプリの重要でない通知をすべて表示します。 ダウンロード中に表示されるステータスインジケータが含まれます。</string>
-	<string name="push_notifications_group_description">Oxygen Updater アプリに重要な通知を表示します。システムアップデート通知やニュース速報を含みます。</string>
+	<string name="download_and_installation_notifications_group_description">OS Updater アプリの重要でない通知をすべて表示します。 ダウンロード中に表示されるステータスインジケータが含まれます。</string>
+	<string name="push_notifications_group_description">OS Updater アプリに重要な通知を表示します。システムアップデート通知やニュース速報を含みます。</string>
 	<string name="download_status_notification_channel_name">ダウンロードの進捗状況</string>
 	<string name="verification_status_notification_channel_name">検証の進捗状況</string>
 	<string name="installation_status_notification_channel_name">インストールの進捗状況</string>
@@ -242,8 +242,8 @@
 
 	<!-- Contribute strings -->
 	<string name="contribute">貢献者になる</string>
-	<string name="contribute_title">Oxygen Updater の改善に協力する</string>
-	<string name="contribute_explanation">最新のアップデートを提供するために、OTA ZIP URLを取得する必要があります。\n\nどうすればいいのでしょうか？\n\nOxygen Updaterは、新しいOTA URLを管理者に自動的に送信することができます。これは少量のデータを使用し、あなたのバッテリーを少し使用するかもしれません。このアプリはroot権限でのみアクセス可能なデータベースファイルを読み込むため、root権限を付与する必要があります。URLの送信に成功すると、通知されます。</string>
+	<string name="contribute_title">OS Updater の改善に協力する</string>
+	<string name="contribute_explanation">最新のアップデートを提供するために、OTA ZIP URLを取得する必要があります。\n\nどうすればいいのでしょうか？\n\nOS Updaterは、新しいOTA URLを管理者に自動的に送信することができます。これは少量のデータを使用し、あなたのバッテリーを少し使用するかもしれません。このアプリはroot権限でのみアクセス可能なデータベースファイルを読み込むため、root権限を付与する必要があります。URLの送信に成功すると、通知されます。</string>
 	<string name="contribute_agree">OTA URLの追加（root権限が必要）</string>
 	<string name="contribute_save">設定を保存</string>
 	<string name="contribute_more_info">詳細情報</string>

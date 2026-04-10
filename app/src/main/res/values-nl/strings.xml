@@ -155,7 +155,7 @@ Dit kan handig zijn als je:"</string>
 
 	<string name="onboarding_method_chooser_caption">“Incrementeel” is vaak de beste keuze, omdat het meestal een veel kleinere download is</string>
 
-	<string name="onboarding_caption">Veel plezier met het gebruik van Oxygen Updater!</string>
+	<string name="onboarding_caption">Veel plezier met het gebruik van OS Updater!</string>
 
 	<!-- Automatic install strings -->
 	<string name="install">Installeren</string>
@@ -209,8 +209,8 @@ Dit kan handig zijn als je:"</string>
 	<string name="download_and_installation_notifications_group_name">Download &amp; Installatie</string>
 	<string name="push_notifications_group_name">Pushberichten</string>
 	<string name="miscellaneous_notifications_group_name">Overige</string>
-	<string name="download_and_installation_notifications_group_description">Toont alle voortgangsindicatoren van de Oxygen Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
-	<string name="push_notifications_group_description">Toont alle pushberichten van de Oxygen Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
+	<string name="download_and_installation_notifications_group_description">Toont alle voortgangsindicatoren van de OS Updater-app. Dit zijn o.a. de meldingen die tijdens het downloaden van updates verschijnen.</string>
+	<string name="push_notifications_group_description">Toont alle pushberichten van de OS Updater-app. Dit zijn o.a. de systeemupdate-meldingen en de meldingen die verschijnen wanneer er belangrijk nieuws is.</string>
 	<string name="download_status_notification_channel_name">Download status</string>
 	<string name="verification_status_notification_channel_name">Verificatiestatus</string>
 	<string name="installation_status_notification_channel_name">Installatiestatus</string>
@@ -243,8 +243,8 @@ Dit kan handig zijn als je:"</string>
 
 	<!-- Contribute strings -->
 	<string name="contribute">Draag bij</string>
-	<string name="contribute_title">Maak Oxygen Updater nóg beter</string>
-	<string name="contribute_explanation">Om je de laatste updates te kunnen geven, moeten we OTA ZIP URL\'s vastleggen.\n\nHoe kan ik helpen?\n\nOxygen Updater kan automatisch nieuwe OTA URL\'s bij onze admins indienen. Dit gebruikt een kleine hoeveelheid data en kan een beetje van je batterij verbruiken. Je moet root permissie geven aan de app, omdat het een databasebestand leest dat alleen toegankelijk is via root. Je krijgt een melding wanneer een URL succesvol is ingediend.</string>
+	<string name="contribute_title">Maak OS Updater nóg beter</string>
+	<string name="contribute_explanation">Om je de laatste updates te kunnen geven, moeten we OTA ZIP URL\'s vastleggen.\n\nHoe kan ik helpen?\n\nOS Updater kan automatisch nieuwe OTA URL\'s bij onze admins indienen. Dit gebruikt een kleine hoeveelheid data en kan een beetje van je batterij verbruiken. Je moet root permissie geven aan de app, omdat het een databasebestand leest dat alleen toegankelijk is via root. Je krijgt een melding wanneer een URL succesvol is ingediend.</string>
 	<string name="contribute_agree">OTA-URL\'s toevoegen (vereist root)</string>
 	<string name="contribute_save">Bewaar keuze</string>
 	<string name="contribute_more_info">Meer informatie</string>
