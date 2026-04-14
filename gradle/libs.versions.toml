@@ -1,10 +1,10 @@
 [versions]
 # https://developer.android.com/studio/releases/gradle-plugin
 # https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-agp = "9.1.0"
+agp = "9.1.1"
 
 # https://firebase.google.com/support/release-notes/android
-crashlytics-plugin = "3.0.6"
+crashlytics-plugin = "3.0.7"
 
 # https://developers.google.com/android/guides/releases#:~:text=com.google.gms%3Agoogle%2Dservices
 google-services-plugin = "4.4.4"
@@ -18,7 +18,7 @@ ksp = "2.3.6"
 kotlin = "2.3.20"
 
 # https://github.com/Kotlin/kotlinx.serialization/releases
-kotlin-serialization = "1.10.0"
+kotlin-serialization = "1.11.0"
 
 # https://github.com/Kotlin/kotlinx.coroutines/releases
 kotlin-coroutines = "1.10.2"
@@ -44,7 +44,7 @@ coil = "3.4.0"
 appcompat = "1.7.1"
 
 # https://developer.android.com/jetpack/androidx/releases/annotation
-annotation = "1.9.1"
+annotation = "1.10.0"
 
 # https://developer.android.com/google/play/billing/release-notes
 billing = "8.3.0"
@@ -57,13 +57,13 @@ core = "1.18.0"
 core-splashscreen = "1.2.0"
 
 # https://developer.android.com/jetpack/androidx/releases/navigation3
-navigation3 = "1.0.1"
+navigation3 = "1.1.0"
 
 # https://github.com/google/desugar_jdk_libs/blob/master/CHANGELOG.md
 desugar = "2.1.5"
 
 # https://firebase.google.com/support/release-notes/android
-firebase-bom = "34.11.0"
+firebase-bom = "34.12.0"
 
 # https://github.com/google/dagger/releases
 dagger = "2.59.2"
@@ -92,7 +92,7 @@ play-app-update = "2.1.0"
 # https://developers.google.com/android/guides/releases#:~:text=com.google.android.gms%3Aplay%2Dservices%2Dbase%3A
 play-services-base = "18.10.0"
 # https://developers.google.com/admob/android/rel-notes
-play-services-ads = "25.1.0"
+play-services-ads = "25.2.0"
 # https://developers.google.com/admob/android/privacy/release-notes
 ump = "4.0.0"
 
