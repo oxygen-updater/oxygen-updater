@@ -25,6 +25,7 @@ import com.oxygenupdater.icons.Symbols
 import com.oxygenupdater.ui.Theme
 import com.oxygenupdater.ui.common.animatedClickable
 import com.oxygenupdater.ui.common.modifierDefaultPadding
+import com.oxygenupdater.ui.common.modifierMaxWidth
 import com.oxygenupdater.ui.common.modifierSemanticsNotSelected
 import com.oxygenupdater.ui.common.modifierSemanticsSelected
 import com.oxygenupdater.ui.theme.LocalTheme
@@ -48,7 +49,7 @@ fun ColumnScope.ThemeSheet(onClick: (Theme) -> Unit) {
         items(items = Themes, key = { it.value }) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
+                modifier = modifierMaxWidth
                     .animatedClickable { onClick(it) }
                     .then(modifierDefaultPadding)
                     .testTag(BottomSheet_ItemRowTestTag)
